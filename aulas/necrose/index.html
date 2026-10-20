@@ -5,13 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Muerte celular y necrosis · sinusal.</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../sinusal.css">
+<link rel="stylesheet" href="../sinusal.css?v=3">
+<link rel="stylesheet" href="../estudo.css?v=1">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="../config.js"></script>
+<script src="../config.js?v=2"></script>
+<script>window.SINUSAL_AULA = { id: 'necrose', titulo: 'Muerte celular y necrosis', materia: 'Anatomía Patológica I', capa: 'secuencia', temas: 16 }</script>
 </head>
 <body class="sx-body">
 <main class="sx-gate" id="sx-gate">
@@ -21,9 +24,28 @@
       <span class="sx-tag">Anatomía Patológica I</span>
       <h1 id="sx-title">Muerte celular y <em>necrosis.</em></h1>
     </div>
-    <p class="sx-sub">A aula em 3D, com as lâminas, o texto da professora e as questões das provas antigas.</p>
+    <p class="sx-sub">A aula em 3D ou em PDF, com as lâminas, o texto da professora e o treino com as questões das provas antigas.</p>
 
-    <form class="sx-form" id="sx-form" novalidate hidden>
+    <div class="sx-abas" id="sx-abas" role="tablist" aria-label="Entrar ou criar conta" hidden>
+      <button type="button" role="tab" data-aba="entrar" aria-selected="true">Entrar</button>
+      <button type="button" role="tab" data-aba="criar" aria-selected="false">Criar conta</button>
+    </div>
+
+    <form class="sx-form" id="f-entrar" novalidate hidden>
+      <div class="sx-field">
+        <label for="sx-email">E-mail</label>
+        <input id="sx-email" type="email" inputmode="email" autocomplete="username" required placeholder="seu@email.com">
+      </div>
+      <div class="sx-field">
+        <label for="sx-senha">Senha</label>
+        <div class="sx-pass"><input id="sx-senha" type="password" autocomplete="current-password" required><button type="button" class="sx-olho" aria-controls="sx-senha" aria-pressed="false">Mostrar</button></div>
+      </div>
+      <button class="sx-btn sx-primary" type="submit">Entrar</button>
+      <button class="sx-link" type="button" id="sx-esqueci">Esqueci minha senha</button>
+    </form>
+
+    <form class="sx-form" id="f-dados" novalidate hidden>
+      <p class="sx-info" id="dados-info" hidden></p>
       <div class="sx-field">
         <label for="sx-nome">Nome completo</label>
         <input id="sx-nome" name="nome" type="text" autocomplete="name" required minlength="3" maxlength="80" placeholder="Seu nome e sobrenome">
@@ -43,150 +65,54 @@
       <div class="sx-field">
         <label for="sx-whats">WhatsApp</label>
         <input id="sx-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+595 981 123 456">
-        <span class="sx-hint">Com o código do país: +595 para Paraguai, +55 para Brasil.</span>
+        <span class="sx-hint">Com o código do país: +595 para Paraguai, +55 para Brasil. Cada número tem uma conta só.</span>
       </div>
-      <button class="sx-btn sx-primary" type="submit" id="sx-entrar">Entrar na aula</button>
+      <div class="sx-form" id="grp-conta">
+        <div class="sx-field">
+          <label for="sx-email2">E-mail</label>
+          <input id="sx-email2" type="email" inputmode="email" autocomplete="username" required placeholder="seu@email.com">
+        </div>
+        <div class="sx-field">
+          <label for="sx-senha2">Crie uma senha</label>
+          <div class="sx-pass"><input id="sx-senha2" type="password" autocomplete="new-password" minlength="6" required placeholder="Pelo menos 6 caracteres"><button type="button" class="sx-olho" aria-controls="sx-senha2" aria-pressed="false">Mostrar</button></div>
+        </div>
+      </div>
+      <button class="sx-btn sx-primary" type="submit" id="dados-ok">Criar conta</button>
     </form>
 
+    <form class="sx-form" id="f-esqueci" novalidate hidden>
+      <p class="sx-info">Escreva o e-mail da sua conta e enviamos um link para criar uma senha nova.</p>
+      <div class="sx-field">
+        <label for="sx-email3">E-mail</label>
+        <input id="sx-email3" type="email" inputmode="email" autocomplete="username" required placeholder="seu@email.com">
+      </div>
+      <button class="sx-btn sx-primary" type="submit">Enviar o link</button>
+      <button class="sx-link" type="button" id="sx-voltar">Voltar para entrar</button>
+    </form>
+
+    <div class="sx-ou" id="sx-ou" hidden><span>ou</span></div>
+    <button class="sx-btn" type="button" id="sx-google" hidden>Entrar com Google</button>
+
     <p class="sx-msg" id="sx-msg" role="status" aria-live="polite"><span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>Carregando…</p>
-    <p class="sx-note">Seus dados ficam com o sinusal. e servem para liberar a aula e avisar você pelo WhatsApp quando sair aula nova. Não passamos para ninguém.</p>
+    <p class="sx-note">Seus dados ficam com o sinusal. e servem para liberar as aulas e avisar você pelo WhatsApp quando sair aula nova. Não passamos para ninguém.</p>
     <div class="sx-foot"><span>sinusal.</span><span>© FELPS</span></div>
   </section>
 </main>
 
-<script>
-(function () {
-  var AULA = 'necrose'
-  var form = document.getElementById('sx-form'), msg = document.getElementById('sx-msg'), entrarBtn = document.getElementById('sx-entrar')
-  function say(t, erro) { msg.textContent = t; msg.classList.toggle('sx-erro', !!erro) }
-  function sayLoading(t) { msg.innerHTML = '<span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>'; msg.appendChild(document.createTextNode(t)); msg.classList.remove('sx-erro') }
+<div class="sx-app" id="sx-app" hidden>
+  <header class="sx-bar" id="sx-bar">
+    <a class="sx-logo" href="#/inicio" aria-label="sinusal. Início"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+    <nav class="sx-tabs" aria-label="Modos de estudo">
+      <a href="#/inicio" data-v="inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Início</a>
+      <a href="#/3d" data-v="3d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>Aula 3D</a>
+      <a href="#/pdf" data-v="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>PDF</a>
+      <a href="#/treino" data-v="treino"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Treino</a>
+    </nav>
+  </header>
+  <main class="sx-view" id="sx-view"></main>
+  <footer class="sx-appfoot"><span>sinusal. · Anatomía Patológica I</span><span><span id="sx-quem"></span> · <button class="sx-link" type="button" id="sx-sair">Sair da conta</button></span><span>© FELPS</span></footer>
+</div>
 
-  var cfg = window.SINUSAL_FIREBASE || {}
-  if (!window.firebase || !cfg.apiKey) { say('A aula ainda está sendo configurada. Volte em instantes.', true); return }
-  firebase.initializeApp(cfg)
-  var auth = firebase.auth(), db = firebase.firestore(), FV = firebase.firestore.FieldValue
-  var montada = false, abrindo = false, enviando = false, perfilRef = null, perfil = null
-
-  function aparelho() { return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'celular' : 'computador' }
-  function soDigitos(t) { return String(t || '').replace(/\D/g, '') }
-
-  // quem já preencheu neste aparelho entra direto; quem não preencheu vê o formulário
-  auth.onAuthStateChanged(function (user) {
-    if (montada || abrindo || enviando) return
-    if (!user) { mostrarForm(); return }
-    perfilRef = db.doc('perfis/' + user.uid)
-    perfilRef.get().then(function (s) {
-      if (s.exists) { perfil = s.data(); abrir(user, false) }
-      else mostrarForm()
-    }).catch(function (e) {
-      if (e && e.code === 'permission-denied') { bloqueado(); return }
-      mostrarForm()
-    })
-  })
-
-  function mostrarForm() { form.hidden = false; say(''); entrarBtn.disabled = false }
-  function bloqueado() { form.hidden = true; say('O seu acesso a esta aula foi bloqueado. Fale com quem te enviou o link.', true) }
-
-  function erroCampo(id, texto) {
-    var el = document.getElementById(id)
-    if (el) { el.setAttribute('aria-invalid', 'true'); el.focus() }
-    say(texto, true)
-  }
-
-  form.addEventListener('submit', function (ev) {
-    ev.preventDefault()
-    form.querySelectorAll('[aria-invalid]').forEach(function (n) { n.removeAttribute('aria-invalid') })
-    var nome = document.getElementById('sx-nome').value.replace(/\s+/g, ' ').trim()
-    var marcada = form.querySelector('input[name="turma"]:checked')
-    var whats = soDigitos(document.getElementById('sx-whats').value)
-    if (nome.length < 3 || nome.indexOf(' ') < 0) return erroCampo('sx-nome', 'Escreva o seu nome e sobrenome.')
-    if (!marcada) { say('Escolha a sua turma (A a G).', true); form.querySelector('input[name="turma"]').focus(); return }
-    if (whats.length < 8 || whats.length > 15) return erroCampo('sx-whats', 'Confira o WhatsApp: use o código do país e o número completo.')
-    entrarBtn.disabled = true
-    enviando = true
-    sayLoading('Liberando a aula…')
-    var dados = { nome: nome, turma: marcada.value, whatsapp: whats }
-    var u = auth.currentUser
-    ;(u ? Promise.resolve({ user: u }) : auth.signInAnonymously()).then(function (r) {
-      var user = r.user || auth.currentUser
-      perfilRef = db.doc('perfis/' + user.uid)
-      perfil = dados
-      dados.primeiro_acesso = FV.serverTimestamp()
-      dados.temas = {}
-      return perfilRef.set(dados).then(function () { abrir(user, true) })
-    }).catch(function (e) {
-      enviando = false
-      entrarBtn.disabled = false
-      if (e && e.code === 'permission-denied') { bloqueado(); return }
-      if (e && e.code === 'auth/operation-not-allowed') { say('A entrada ainda não foi ativada no Firebase.', true); return }
-      say('Não foi possível entrar agora. Verifique a conexão e tente de novo.', true)
-    })
-  })
-
-  function abrir(user, novo) {
-    if (abrindo) return
-    abrindo = true
-    form.hidden = true
-    sayLoading('Abrindo a aula…')
-    db.doc('aulas/' + AULA).get().then(function (snap) {
-      if (!snap.exists) { say('A aula ainda não foi publicada. Volte em instantes.', true); return }
-      registrar(user, novo)
-      montar(snap.data().html || '')
-    }).catch(function (e) {
-      if (e && e.code === 'permission-denied') { bloqueado(); return }
-      say('Não foi possível abrir a aula agora. Tente recarregar a página.', true)
-    })
-  }
-
-  // conta a entrada no cadastro da pessoa e cria um registro com data e aparelho
-  function registrar(user, novo) {
-    var upd = { ultimo_acesso: FV.serverTimestamp(), acessos: FV.increment(1) }
-    perfilRef.set(upd, { merge: true }).catch(function () {})
-    db.collection('acessos').add({ uid: user.uid, aula: AULA, em: FV.serverTimestamp(), aparelho: aparelho() }).catch(function () {})
-  }
-
-  // marca os temas que a pessoa realmente abriu (uma vez por visita)
-  function seguirTemas() {
-    if (!('IntersectionObserver' in window) || !perfilRef) return
-    var vistos = {}
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var id = e.target.id
-        if (!e.isIntersecting || vistos[id]) return
-        vistos[id] = true
-        var t = {}; t[id] = true
-        perfilRef.set({ temas: t }, { merge: true }).catch(function () {})
-        io.unobserve(e.target)
-      })
-    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 })
-    document.querySelectorAll('section.scene[id]').forEach(function (s) { io.observe(s) })
-  }
-
-  // coloca a aula na página: estilos, conteúdo e o script dela
-  function montar(html) {
-    montada = true
-    var doc = new DOMParser().parseFromString(html, 'text/html')
-    if (doc.title) document.title = doc.title + ' · sinusal.'
-    var scripts = Array.prototype.slice.call(doc.querySelectorAll('script'))
-    scripts.forEach(function (s) { s.parentNode.removeChild(s) })
-    doc.querySelectorAll('link[rel="stylesheet"], style').forEach(function (n) { document.head.appendChild(document.importNode(n, true)) })
-    doc.querySelectorAll('title, link[rel="preconnect"], link[rel="stylesheet"], style, meta').forEach(function (n) { n.parentNode && n.parentNode.removeChild(n) })
-    document.body.className = ''
-    document.body.innerHTML = doc.body.innerHTML
-    scripts.forEach(function (s) {
-      var n = document.createElement('script')
-      if (s.src) n.src = s.src; else n.textContent = s.textContent
-      document.body.appendChild(n)
-    })
-    var foot = document.querySelector('footer')
-    if (foot && perfil) {
-      var span = document.createElement('span'); span.className = 'mono'
-      span.textContent = (perfil.nome || '') + ' · turma ' + (perfil.turma || '')
-      foot.appendChild(span)
-    }
-    setTimeout(seguirTemas, 800)
-  }
-})()
-</script>
+<script src="../app.js?v=1"></script>
 </body>
 </html>

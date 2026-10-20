@@ -1,5 +1,6 @@
 /* sinusal. · telas de entrada e painel das aulas (classes com prefixo sx- para não colidir com a aula) */
 [hidden]{display:none!important}
+.sx-body *,.sx-body *::before,.sx-body *::after{box-sizing:border-box}
 :root{
   --sx-bg:#ffffff;--sx-ink:#202c28;--sx-ink2:#46524d;--sx-ink3:#5d6863;--sx-line:#e2ebe6;
   --sx-green:#176e5b;--sx-green-d:#125644;--sx-green-b:#38ae8b;--sx-mint:#e5f2eb;--sx-soft:#f5faf7;
@@ -54,3 +55,23 @@
 .sx-turmas input:checked+span{background:var(--sx-green);border-color:var(--sx-green);color:#fff}
 .sx-turmas input:focus-visible+span{outline:2px solid var(--sx-green);outline-offset:2px}
 .sx-form .sx-btn{margin-top:4px}
+
+/* entrada com conta: abas, senha, "ou", links */
+.sx-field input[type=email],.sx-field input[type=password]{height:48px;border-radius:14px;border:1px solid #d3e8de;background:#fff;padding:0 14px;font:16px var(--sx-sans);color:var(--sx-ink);width:100%;box-sizing:border-box}
+.sx-field input[type=text],.sx-field input[type=tel]{width:100%;box-sizing:border-box}
+.sx-abas{display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:15px;background:#eef5f1;border:1px solid var(--sx-line)}
+.sx-abas button{min-height:42px;border:0;border-radius:11px;background:none;font:600 15px var(--sx-sans);color:var(--sx-ink2);cursor:pointer}
+.sx-abas button[aria-selected=true]{background:#fff;color:var(--sx-green-d);box-shadow:0 1px 5px rgba(16,60,44,.14)}
+.sx-abas button:focus-visible{outline:2px solid var(--sx-green);outline-offset:1px}
+.sx-pass{position:relative}
+.sx-pass input{padding-right:92px!important}
+.sx-olho{position:absolute;right:6px;top:6px;height:36px;padding:0 12px;border:0;border-radius:10px;background:var(--sx-soft);font:600 13px var(--sx-sans);color:var(--sx-ink2);cursor:pointer}
+.sx-olho:focus-visible{outline:2px solid var(--sx-green);outline-offset:1px}
+.sx-link{align-self:center;border:0;background:none;padding:8px 4px;font:600 14px var(--sx-sans);color:var(--sx-green-d);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.sx-link:hover{color:var(--sx-green)}
+.sx-ou{display:flex;align-items:center;gap:12px;color:var(--sx-ink3);font-size:13px}
+.sx-ou::before,.sx-ou::after{content:"";flex:1;border-top:1px solid var(--sx-line)}
+.sx-info{margin:0;padding:12px 14px;border-radius:14px;background:var(--sx-soft);border:1px solid var(--sx-line);font-size:14.5px;color:var(--sx-ink2)}
+.sx-info .sx-link{padding:0;font-size:14px}
+.sx-msg.sx-ok{color:var(--sx-green-d)}
+.sx-appfoot .sx-link{padding:0;font-size:12.5px;color:var(--sx-ink3)}
