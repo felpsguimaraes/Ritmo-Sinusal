@@ -1,12 +1,8 @@
-// sinusal. · ligação do site com o Firebase (login Google + registro de acessos)
-// Cole aqui o firebaseConfig do seu projeto (Configurações do projeto → Seus apps → Web).
-// Estes valores são públicos por natureza: quem protege os dados são as regras do Firestore.
+// Chaves públicas do app web do Firebase (projeto sinus-b1bfb). Não são senhas: quem protege os dados são as regras do Firestore.
 window.SINUSAL_FIREBASE = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  appId: ""
+  apiKey: "AIzaSyBRiOt8mAyCv9WBpkLpQHbR5Bw8h84BT1Q",
+  authDomain: "sinus-b1bfb.firebaseapp.com",
+  projectId: "sinus-b1bfb",
+  appId: "1:181891011103:web:384c0d6a30c5e6026cfb2a"
 };
-
-// e-mail do dono: o único que abre o painel e publica as aulas
 window.SINUSAL_DONO = "felpsguimaraes@gmail.com";
