@@ -1,26 +1,25 @@
-# Aulas do sinusal. com cadastro de entrada
+# Aulas do sinusal.
 
 - Aula de Necrose: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/necrose/
 - Painel do dono: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/painel.html
 
-Quem abre o link preenche nome, turma (A a G do 5º período) e WhatsApp, todos obrigatórios, e a aula abre. No mesmo aparelho, da próxima vez entra direto. O painel mostra cada pessoa com turma e WhatsApp, quantas vezes entrou, quando e quais temas abriu; filtra por turma, baixa a lista em CSV e permite bloquear alguém. Só o e-mail `felpsguimaraes@gmail.com` abre o painel, entrando com Google.
+## Como funciona para o aluno
 
-O texto da aula (conteúdo, questões, mapa) fica guardado no Firestore e só é entregue a quem preencheu o cadastro e não foi bloqueado. As imagens das lâminas ficam nesta pasta do GitHub, que é pública.
+1. **Conta**: na primeira vez a pessoa cria a conta (nome, turma A a G do 5º período, WhatsApp, e-mail e senha) ou entra com o Google e completa nome, turma e WhatsApp. Depois entra com e-mail e senha em qualquer aparelho, sem cadastro novo. Tem "Esqueci minha senha". Cada WhatsApp só pode ter uma conta. Quem entrou antes pelo cadastro sem senha só cria o e-mail e a senha e mantém tudo.
+2. **Escolha**: logo depois de entrar, escolhe **Aula em 3D** ou **Material em PDF**. As abas (embaixo no celular, em cima no computador) trocam a qualquer momento.
+3. **PDF**: abre dentro do site, com índice, zoom e página salva. O arquivo fica cifrado no GitHub; a chave só é entregue a quem tem conta e não foi bloqueado.
+4. **Treino**: as 39 questões das provas antigas e do repaso, mais as 12 tarjetas, uma por vez. Treino do dia (10 perguntas: primeiro o que precisa revisar, depois o que ainda não viu), simulado de cada prova antiga (gabarito só no fim), por tema, revisão dos erros e tarjetas. Nas abertas a pessoa compara com o gabarito e marca Errei, Quase ou Acertei. Repetição espaçada: o que erra volta antes; o que acerta volta em 1, 3, 7 e 16 dias. Cada pergunta tem link para o tema na aula 3D e para a página do PDF.
 
-## Configuração (uma vez, uns 10 minutos)
+## Painel do dono
 
-Já feita em 20/10/2026 no projeto Firebase `sinus-b1bfb`, com o texto da aula de Necrose publicado. Os passos abaixo ficam como referência para refazer em outro projeto.
+Pessoas juntadas pelo WhatsApp (mesmo quem entrou antes por vários aparelhos), com aviso quando dois cadastros têm o mesmo nome e turma; turma, e-mail, acessos, temas vistos, treinos e % de acertos; como estudam (3D, PDF, treino); perguntas que a turma mais erra; filtro por turma; CSV; bloquear e liberar. Só `felpsguimaraes@gmail.com` abre, entrando com Google.
 
-1. Entre em https://console.firebase.google.com com `felpsguimaraes@gmail.com` e crie um projeto (pode chamar de `sinusal`; o Google Analytics não é necessário).
-2. **Authentication** → Começar → Método de login: ative **Anônimo** (é o que libera os alunos depois do cadastro) e **Google** (é o seu login no painel; escolha o e-mail de suporte) → Salvar.
-3. Ainda em Authentication → **Configurações** → Domínios autorizados → Adicionar domínio: `felpsguimaraes.github.io`.
-4. **Firestore Database** → Criar banco de dados → modo de produção → local `southamerica-east1 (São Paulo)`.
-5. Firestore → **Regras** → apague o que estiver lá, cole o conteúdo de `aulas/firestore.rules` → Publicar.
-6. Engrenagem (Configurações do projeto) → Seus apps → ícone **Web `</>`** → dê um apelido → Registrar app. Copie os valores `apiKey`, `authDomain`, `projectId` e `appId` para `aulas/config.js` (dá para editar direto no GitHub, no lápis do arquivo) e salve.
-7. Abra o painel, entre com Google e use **Enviar arquivo da aula** com o arquivo `necrose-conteudo.html`. Esse arquivo não fica no GitHub de propósito, para o texto da aula não ficar público.
+## Onde fica cada coisa
 
-Pronto: o link da aula pode ir para a turma.
+- `aulas/app.js`: telas de entrada, escolha, PDF e treino (servem para todas as aulas).
+- `aulas/<aula>/index.html`: a página de cada aula; define `window.SINUSAL_AULA` (id, título, imagem de capa, nº de temas).
+- Firestore `aulas/<aula>`: texto da aula 3D. `aulas/<aula>-treino`: perguntas do treino. `aulas/<aula>-pdf`: chave e índice dos PDFs.
+- `aulas/<aula>/pdf/*.bin`: PDFs cifrados (AES-GCM).
+- `aulas/firestore.rules`: regras do banco (Firestore → Regras → Publicar quando mudar).
 
-## Custos
-
-O plano gratuito do Firebase (Spark) cobre o uso de uma turma com folga: cada visita gasta poucas leituras e duas ou três gravações no banco. As imagens são servidas pelo GitHub Pages, sem custo.
+Projeto Firebase `sinus-b1bfb`: Authentication com E-mail/senha, Google e Anônimo (só para quem já tinha entrado antes criar a senha), domínio `felpsguimaraes.github.io` autorizado, Firestore com as regras deste arquivo. O plano gratuito cobre o uso das turmas com folga.
