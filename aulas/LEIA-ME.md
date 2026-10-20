@@ -3,14 +3,14 @@
 - Aula de Necrose: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/necrose/
 - Painel do dono: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/painel.html
 
-Quem abre o link entra com a conta Google. O painel mostra quantas pessoas entraram, quantas vezes, quando e quais temas abriram, e permite bloquear alguém. Só o e-mail `felpsguimaraes@gmail.com` abre o painel.
+Quem abre o link preenche nome, turma (A a G do 5º período) e WhatsApp, todos obrigatórios, e a aula abre. No mesmo aparelho, da próxima vez entra direto. O painel mostra cada pessoa com turma e WhatsApp, quantas vezes entrou, quando e quais temas abriu; filtra por turma, baixa a lista em CSV e permite bloquear alguém. Só o e-mail `felpsguimaraes@gmail.com` abre o painel, entrando com Google.
 
-O texto da aula (conteúdo, questões, mapa) fica guardado no Firestore e só é entregue a quem entrou com Google e não foi bloqueado. As imagens das lâminas ficam nesta pasta do GitHub, que é pública.
+O texto da aula (conteúdo, questões, mapa) fica guardado no Firestore e só é entregue a quem preencheu o cadastro e não foi bloqueado. As imagens das lâminas ficam nesta pasta do GitHub, que é pública.
 
 ## Configuração (uma vez, uns 10 minutos)
 
 1. Entre em https://console.firebase.google.com com `felpsguimaraes@gmail.com` e crie um projeto (pode chamar de `sinusal`; o Google Analytics não é necessário).
-2. **Authentication** → Começar → Método de login → **Google** → Ativar → escolha o e-mail de suporte → Salvar.
+2. **Authentication** → Começar → Método de login: ative **Anônimo** (é o que libera os alunos depois do cadastro) e **Google** (é o seu login no painel; escolha o e-mail de suporte) → Salvar.
 3. Ainda em Authentication → **Configurações** → Domínios autorizados → Adicionar domínio: `felpsguimaraes.github.io`.
 4. **Firestore Database** → Criar banco de dados → modo de produção → local `southamerica-east1 (São Paulo)`.
 5. Firestore → **Regras** → apague o que estiver lá, cole o conteúdo de `aulas/firestore.rules` → Publicar.

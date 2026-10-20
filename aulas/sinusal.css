@@ -38,3 +38,19 @@
 .sx-spin{width:18px;height:18px;border-radius:50%;border:2.5px solid #cfe5da;border-top-color:var(--sx-green);animation:sx-rot .8s linear infinite}
 @keyframes sx-rot{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.sx-spin{animation:none}}
+
+/* formulário de entrada: nome, turma e WhatsApp */
+.sx-form{display:flex;flex-direction:column;gap:14px}
+.sx-field{display:flex;flex-direction:column;gap:6px}
+.sx-field label,.sx-label{font-size:14px;font-weight:600;color:var(--sx-ink)}
+.sx-field input[type=text],.sx-field input[type=tel]{height:48px;border-radius:14px;border:1px solid #d3e8de;background:#fff;padding:0 14px;font:16px var(--sx-sans);color:var(--sx-ink)}
+.sx-field input:focus{outline:2px solid var(--sx-green-b);outline-offset:0;border-color:transparent}
+.sx-field input[aria-invalid=true]{border-color:var(--sx-red);background:#fdf3f5}
+.sx-hint{font-size:12.5px;color:var(--sx-ink3)}
+.sx-turmas{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.sx-turmas label{position:relative;cursor:pointer}
+.sx-turmas input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.sx-turmas span{display:grid;place-items:center;height:44px;border-radius:12px;border:1px solid #d3e8de;background:#fff;font-weight:650;font-size:16px;color:var(--sx-ink2);transition:background .15s,border-color .15s,color .15s}
+.sx-turmas input:checked+span{background:var(--sx-green);border-color:var(--sx-green);color:#fff}
+.sx-turmas input:focus-visible+span{outline:2px solid var(--sx-green);outline-offset:2px}
+.sx-form .sx-btn{margin-top:4px}

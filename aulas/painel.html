@@ -45,6 +45,11 @@ td.num{font-variant-numeric:tabular-nums}
 .pp small{display:block;color:var(--sx-ink3);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .st-b{display:inline-block;font-size:12px;font-weight:650;border-radius:7px;padding:1px 8px;background:#fbe4ea;color:#6d1530}
 .empty{color:var(--sx-ink2);font-size:14.5px;padding:10px 0}
+.tfil{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.tfil button{font:600 13px var(--sx-sans);border:1px solid var(--sx-line);background:#fff;color:var(--sx-ink2);border-radius:999px;padding:5px 12px;cursor:pointer}
+.tfil button[aria-pressed=true]{background:var(--sx-green);border-color:var(--sx-green);color:#fff}
+.wa{color:var(--sx-green-d);text-decoration:none;font-variant-numeric:tabular-nums}
+.wa:hover{text-decoration:underline}
 .pub{margin-top:12px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
 .pub p{margin:0;font-size:14.5px;color:var(--sx-ink2)}
 .pub input[type=file]{display:none}
@@ -61,7 +66,7 @@ td.num{font-variant-numeric:tabular-nums}
   <section class="sx-card sx-glass">
     <span class="sx-logo"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></span>
     <h1>Painel das <em>aulas.</em></h1>
-    <p class="sx-sub">Quem entrou, quantas vezes e em quais temas. Só o dono do site abre este painel.</p>
+    <p class="sx-sub">Quem entrou, de qual turma, quantas vezes e em quais temas. Só o dono do site abre este painel.</p>
     <button class="sx-btn" type="button" id="google" hidden>Entrar com Google</button>
     <p class="sx-msg" id="gmsg" role="status" aria-live="polite">Carregando…</p>
   </section>
@@ -89,8 +94,9 @@ td.num{font-variant-numeric:tabular-nums}
 
   <section class="panel sx-glass people">
     <h2>Pessoas</h2>
-    <div class="ptools"><label for="busca" style="position:absolute;left:-9999px">Buscar pessoa</label><input id="busca" type="search" placeholder="Buscar por nome ou e-mail"><button class="sx-btn sx-small" type="button" id="recarregar">Atualizar</button></div>
-    <div class="tablewrap"><table><thead><tr><th>Pessoa</th><th>Acessos</th><th>Primeiro acesso</th><th>Último acesso</th><th>Temas vistos</th><th></th></tr></thead><tbody id="lista"></tbody></table></div>
+    <div class="ptools"><label for="busca" style="position:absolute;left:-9999px">Buscar pessoa</label><input id="busca" type="search" placeholder="Buscar por nome ou WhatsApp"><button class="sx-btn sx-small" type="button" id="recarregar">Atualizar</button><button class="sx-btn sx-small" type="button" id="csv">Baixar lista (CSV)</button></div>
+    <div class="tfil" id="tfil" role="group" aria-label="Filtrar por turma"></div>
+    <div class="tablewrap"><table><thead><tr><th>Pessoa</th><th>Turma</th><th>Acessos</th><th>Primeiro acesso</th><th>Último acesso</th><th>Temas vistos</th><th></th></tr></thead><tbody id="lista"></tbody></table></div>
     <p class="empty" id="vazio" hidden>Ninguém entrou ainda. Envie o link da aula para a turma.</p>
   </section>
 
@@ -141,7 +147,7 @@ td.num{font-variant-numeric:tabular-nums}
     carregar()
   })
 
-  var pessoas = [], acessos = [], bloq = {}
+  var pessoas = [], acessos = [], bloq = {}, turmaSel = ''
   var fmt = function (ts) { if (!ts || !ts.toDate) return '—'; var d = ts.toDate(); return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) }
   var dia = function (d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() }
 
@@ -159,7 +165,7 @@ td.num{font-variant-numeric:tabular-nums}
       bloq = {}; r[2].docs.forEach(function (d) { bloq[d.id] = true })
       var aula = r[3]
       $('#pubinfo').textContent = aula.exists ? 'Publicada em ' + fmt(aula.data().atualizado_em) + ' (' + Math.round((aula.data().html || '').length / 1024) + ' KB).' : 'A aula ainda não foi publicada. Envie o arquivo necrose-conteudo.html.'
-      render()
+      filtros(); render()
       $('#upd').textContent = 'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
     }).catch(function (e) {
       $('#upd').textContent = 'Não foi possível ler os dados (' + (e && e.code || 'erro') + '). Confira se as regras do Firestore foram publicadas.'
@@ -219,20 +225,20 @@ td.num{font-variant-numeric:tabular-nums}
   }
 
   function lista(porUid) {
-    var q = $('#busca').value.trim().toLowerCase()
+    var q = $('#busca').value.trim().toLowerCase(), qd = q.replace(/\D/g, '')
     var tb = $('#lista'); tb.innerHTML = ''
     var rows = pessoas.slice().sort(function (a, b) { return ((b.ultimo_acesso && b.ultimo_acesso.toMillis()) || 0) - ((a.ultimo_acesso && a.ultimo_acesso.toMillis()) || 0) })
-      .filter(function (p) { return !q || (p.nome || '').toLowerCase().indexOf(q) >= 0 || (p.email || '').toLowerCase().indexOf(q) >= 0 })
+      .filter(function (p) { return (!turmaSel || p.turma === turmaSel) && (!q || (p.nome || '').toLowerCase().indexOf(q) >= 0 || (qd && (p.whatsapp || '').indexOf(qd) >= 0)) })
     $('#vazio').hidden = pessoas.length > 0
     rows.forEach(function (p) {
       var tr = document.createElement('tr')
       var nTemas = Object.keys(p.temas || {}).filter(function (k) { return p.temas[k] && k in TEMAS }).length
       var total = porUid[p.uid] != null ? porUid[p.uid] : (p.acessos || 0)
-      tr.innerHTML = '<td><div class="pp"></div></td><td class="num">' + total + '</td><td>' + fmt(p.primeiro_acesso) + '</td><td>' + fmt(p.ultimo_acesso) + '</td><td class="num">' + nTemas + ' / 16</td><td></td>'
+      tr.innerHTML = '<td><div class="pp"></div></td><td>' + (p.turma || '—') + '</td><td class="num">' + total + '</td><td>' + fmt(p.primeiro_acesso) + '</td><td>' + fmt(p.ultimo_acesso) + '</td><td class="num">' + nTemas + ' / 16</td><td></td>'
       var pp = tr.querySelector('.pp')
-      if (p.foto) { var im = document.createElement('img'); im.src = p.foto; im.alt = ''; im.referrerPolicy = 'no-referrer'; pp.appendChild(im) }
-      else { var ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = (p.nome || p.email || '?').charAt(0).toUpperCase(); pp.appendChild(ph) }
-      var tx = document.createElement('div'); var b = document.createElement('b'); b.textContent = p.nome || 'Sem nome'; var s = document.createElement('small'); s.textContent = p.email || ''
+      var ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = (p.nome || '?').charAt(0).toUpperCase(); pp.appendChild(ph)
+      var tx = document.createElement('div'); var b = document.createElement('b'); b.textContent = p.nome || 'Sem nome'; var s = document.createElement('small')
+      if (p.whatsapp) { var wa = document.createElement('a'); wa.className = 'wa'; wa.href = 'https://wa.me/' + p.whatsapp; wa.target = '_blank'; wa.rel = 'noopener'; wa.textContent = '+' + p.whatsapp; s.appendChild(wa) }
       tx.appendChild(b); tx.appendChild(s); pp.appendChild(tx)
       var cell = tr.lastChild
       if (bloq[p.uid]) { var tag = document.createElement('span'); tag.className = 'st-b'; tag.textContent = 'Bloqueado'; cell.appendChild(tag) }
@@ -241,7 +247,7 @@ td.num{font-variant-numeric:tabular-nums}
       bt.addEventListener('click', function () {
         bt.disabled = true
         var ref = db.doc('bloqueados/' + p.uid)
-        ;(bloq[p.uid] ? ref.delete() : ref.set({ em: FV.serverTimestamp(), email: p.email || '' }))
+        ;(bloq[p.uid] ? ref.delete() : ref.set({ em: FV.serverTimestamp(), nome: p.nome || '' }))
           .then(function () { bloq[p.uid] = !bloq[p.uid]; render() })
           .catch(function () { bt.disabled = false; bt.textContent = 'Erro, tente de novo' })
       })
@@ -250,6 +256,27 @@ td.num{font-variant-numeric:tabular-nums}
     })
   }
   $('#busca').addEventListener('input', function () { render() })
+  function filtros() {
+    var box = $('#tfil'); box.innerHTML = ''
+    ;[''].concat(['A', 'B', 'C', 'D', 'E', 'F', 'G']).forEach(function (t) {
+      var n = pessoas.filter(function (p) { return !t || p.turma === t }).length
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(turmaSel === t))
+      b.textContent = (t ? 'Turma ' + t : 'Todas') + ' (' + n + ')'
+      b.addEventListener('click', function () { turmaSel = t; filtros(); render() })
+      box.appendChild(b)
+    })
+  }
+  $('#csv').addEventListener('click', function () {
+    var porUid = {}; acessos.forEach(function (a) { porUid[a.uid] = (porUid[a.uid] || 0) + 1 })
+    var linhas = [['nome', 'turma', 'whatsapp', 'acessos', 'primeiro_acesso', 'ultimo_acesso', 'temas_vistos', 'bloqueado']]
+    pessoas.filter(function (p) { return !turmaSel || p.turma === turmaSel }).forEach(function (p) {
+      linhas.push([p.nome || '', p.turma || '', p.whatsapp ? '+' + p.whatsapp : '', porUid[p.uid] != null ? porUid[p.uid] : (p.acessos || 0), fmt(p.primeiro_acesso), fmt(p.ultimo_acesso), Object.keys(p.temas || {}).length, bloq[p.uid] ? 'sim' : 'não'])
+    })
+    var csv = '\ufeff' + linhas.map(function (l) { return l.map(function (v) { v = String(v); return /[;"\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v }).join(';') }).join('\n')
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }))
+    a.download = 'sinusal-necrose-' + (turmaSel ? 'turma-' + turmaSel + '-' : '') + new Date().toISOString().slice(0, 10) + '.csv'
+    document.body.appendChild(a); a.click(); a.remove()
+  })
   $('#recarregar').addEventListener('click', carregar)
 
   $('#arquivo').addEventListener('change', function (ev) {

@@ -12,25 +12,33 @@ service cloud.firestore {
     function bloqueado() {
       return exists(/databases/$(database)/documents/bloqueados/$(request.auth.uid));
     }
+    function preencheu() {
+      return exists(/databases/$(database)/documents/perfis/$(request.auth.uid));
+    }
+    function perfilValido(d) {
+      return d.keys().hasOnly(['nome', 'turma', 'whatsapp', 'primeiro_acesso', 'ultimo_acesso', 'acessos', 'temas'])
+        && d.nome is string && d.nome.size() >= 3 && d.nome.size() <= 80
+        && d.turma in ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+        && d.whatsapp is string && d.whatsapp.matches('^[0-9]{8,15}$');
+    }
 
-    // conteúdo da aula: só quem entrou com Google e não foi bloqueado
+    // conteúdo da aula: só quem preencheu nome, turma e WhatsApp e não foi bloqueado
     match /aulas/{aula} {
-      allow read: if logado() && !bloqueado();
+      allow read: if dono() || (logado() && preencheu() && !bloqueado());
       allow write: if dono();
     }
 
-    // um perfil por pessoa: ela escreve o próprio, o dono lê todos
+    // um cadastro por aparelho: a pessoa escreve o próprio, o dono lê todos
     match /perfis/{uid} {
       allow read: if dono() || (logado() && request.auth.uid == uid);
       allow create, update: if logado() && request.auth.uid == uid && !bloqueado()
-        && request.resource.data.keys().hasOnly(['nome', 'email', 'foto', 'primeiro_acesso', 'ultimo_acesso', 'acessos', 'temas'])
-        && request.resource.data.email == request.auth.token.email;
+        && perfilValido(request.resource.data);
       allow delete: if dono();
     }
 
     // cada entrada na aula vira um registro; só o dono lê
     match /acessos/{id} {
-      allow create: if logado() && !bloqueado()
+      allow create: if logado() && preencheu() && !bloqueado()
         && request.resource.data.keys().hasOnly(['uid', 'aula', 'em', 'aparelho'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.em == request.time;
