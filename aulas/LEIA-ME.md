@@ -1,4 +1,4 @@
-# Aulas do sinusal. com login Google
+# Aulas do sinusal. com cadastro de entrada
 
 - Aula de Necrose: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/necrose/
 - Painel do dono: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/painel.html
