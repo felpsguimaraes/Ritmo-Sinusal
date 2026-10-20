@@ -1,9 +1,9 @@
-# Pede ao GitHub Pages para publicar o site a cada envio para a main
+# Pede ao GitHub Pages para publicar o site a cada envio (o site sai da branch gh-pages)
 # (necessário porque envios feitos por apps não disparam a publicação sozinhos).
 name: Publicar site
 on:
   push:
-    branches: [main]
+    branches: [main, gh-pages]
   workflow_dispatch:
 permissions:
   pages: write
