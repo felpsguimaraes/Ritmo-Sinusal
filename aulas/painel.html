@@ -303,6 +303,8 @@ td.num{font-variant-numeric:tabular-nums}
       .filter(function (p) { return (!turmaSel || p.turma === turmaSel) && (!q || (p.nome || '').toLowerCase().indexOf(q) >= 0 || (p.email || '').toLowerCase().indexOf(q) >= 0 || (qd && (p.whatsapp || '').indexOf(qd) >= 0)) })
     $('#vazio').hidden = grupos.length > 0
     var tPor = {}; treinos.forEach(function (t) { var x = tPor[t.uid] = tPor[t.uid] || { n: 0, a: 0, t: 0 }; x.n++; x.a += t.acertos; x.t += t.total })
+    var chaveNome = function (g) { return (g.nome || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim() + '|' + (g.turma || '') }
+    var nomes = {}; grupos.forEach(function (g) { var k = chaveNome(g); nomes[k] = (nomes[k] || 0) + 1 })
     rows.forEach(function (p) {
       var tr = document.createElement('tr')
       var nTemas = Object.keys(p.temas).filter(function (k) { return k in TEMAS }).length
@@ -314,6 +316,7 @@ td.num{font-variant-numeric:tabular-nums}
       var ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = (p.nome || '?').charAt(0).toUpperCase(); pp.appendChild(ph)
       var tx = document.createElement('div'); var b = document.createElement('b'); b.textContent = p.nome || 'Sem nome'
       if (p.uids.length > 1) { var du = document.createElement('span'); du.className = 'dup'; du.textContent = p.uids.length + ' cadastros juntados'; b.appendChild(du) }
+      else if (nomes[chaveNome(p)] > 1) { var dn = document.createElement('span'); dn.className = 'dup'; dn.textContent = 'mesmo nome e turma de outro cadastro'; b.appendChild(dn) }
       var s = document.createElement('small')
       if (p.whatsapp) { var wa = document.createElement('a'); wa.className = 'wa'; wa.href = 'https://wa.me/' + p.whatsapp; wa.target = '_blank'; wa.rel = 'noopener'; wa.textContent = '+' + p.whatsapp; s.appendChild(wa) }
       var em = document.createElement('span'); em.className = p.email ? '' : 'semconta'; em.textContent = p.email ? ' · ' + p.email : ' · ainda sem conta'; s.appendChild(em)
