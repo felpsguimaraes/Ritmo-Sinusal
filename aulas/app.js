@@ -40,27 +40,24 @@
   function ehDono(u) { return !!(u && u.email && u.email.toLowerCase() === DONO && u.emailVerified) }
 
   // ---------------- telas da entrada: entrar, criar conta, completar dados, esqueci a senha ----------------
-  var abas = $('#sx-abas'), fEntrar = $('#f-entrar'), fDados = $('#f-dados'), fEsqueci = $('#f-esqueci'), gBtn = $('#sx-google'), ou = $('#sx-ou'), info = $('#dados-info')
+  var fDados = $('#f-dados'), gBtn = $('#sx-google'), ou = $('#sx-ou'), info = $('#dados-info')
   var modo = ''
   function tela(m, aviso, erro) {
-    modo = m
+    modo = m === 'migrar' || m === 'completar' ? m : 'entrar'
     gate.hidden = false; app.hidden = true
-    abas.hidden = !(m === 'entrar' || m === 'criar')
-    $$('button', abas).forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.aba === m)) })
-    fEntrar.hidden = m !== 'entrar'
-    fDados.hidden = !(m === 'criar' || m === 'migrar' || m === 'completar')
-    fEsqueci.hidden = m !== 'esqueci'
-    $('#grp-conta').hidden = m === 'completar'
-    info.hidden = !(m === 'migrar' || m === 'completar')
-    if (m === 'migrar') info.textContent = 'Agora o sinusal. tem conta: crie seu e-mail e senha para entrar de qualquer aparelho sem fazer outro cadastro. Seus dados e seu progresso continuam.'
-    if (m === 'completar') {
+    fDados.hidden = modo === 'entrar'
+    info.hidden = !(modo === 'migrar' || modo === 'completar')
+    if (modo === 'migrar') info.textContent = 'Seus dados e seu progresso continuam. Entre com a sua conta Google para salvar tudo nela.'
+    if (modo === 'completar') {
       info.innerHTML = 'Falta pouco: complete seus dados para liberar a aula. Você entrou como <b></b>. <button type="button" class="sx-link" id="sx-trocar">Usar outra conta</button>'
       $('b', info).textContent = (auth.currentUser && auth.currentUser.email) || 'sua conta'
       $('#sx-trocar').addEventListener('click', sair)
     }
-    $('#dados-ok').textContent = m === 'criar' ? 'Criar conta' : m === 'migrar' ? 'Criar senha e entrar' : 'Salvar e entrar'
-    gBtn.hidden = ou.hidden = !(m === 'entrar' || m === 'criar' || m === 'migrar')
-    gBtn.textContent = m === 'migrar' ? 'Usar minha conta Google' : m === 'criar' ? 'Criar com Google' : 'Entrar com Google'
+    $('#dados-ok').textContent = 'Salvar e entrar'
+    $('#dados-ok').hidden = modo === 'migrar'
+    gBtn.hidden = modo === 'completar'
+    ou.hidden = true
+    gBtn.textContent = modo === 'migrar' ? 'Usar minha conta Google' : 'Entrar com Google'
     $$('[aria-invalid]', gate).forEach(function (n) { n.removeAttribute('aria-invalid') })
     $$('button[type=submit]', gate).forEach(function (b) { b.disabled = false })
     gBtn.disabled = false
@@ -73,10 +70,9 @@
     if (p.nome != null) $('#sx-nome').value = p.nome
     $$('input[name="turma"]', fDados).forEach(function (r) { r.checked = r.value === p.turma })
     if (p.whatsapp) $('#sx-whats').value = '+' + p.whatsapp
-    if (p.email) { $('#sx-email2').value = p.email }
   }
   function sair() { auth.signOut().then(function () { sess.del('modo'); location.hash = ''; location.reload() }) }
-  function bloqueado() { app.hidden = true; gate.hidden = false; abas.hidden = fEntrar.hidden = fDados.hidden = fEsqueci.hidden = gBtn.hidden = ou.hidden = true; say('O seu acesso foi bloqueado. Fale com quem te enviou o link.', true) }
+  function bloqueado() { app.hidden = true; gate.hidden = false; fDados.hidden = gBtn.hidden = ou.hidden = true; say('O seu acesso foi bloqueado. Fale com quem te enviou o link.', true) }
   function erroCampo(id, texto) { var el = document.getElementById(id); if (el) { el.setAttribute('aria-invalid', 'true'); el.focus() } say(texto, true) }
   var ERROS = {
     'auth/invalid-email': 'Confira o e-mail: parece incompleto.',
@@ -100,14 +96,11 @@
     liberar()
     var c = e && e.code
     if (c === 'auth/popup-closed-by-user' || c === 'auth/cancelled-popup-request') { say(''); return }
-    if (c === 'auth/email-already-in-use' || c === 'auth/credential-already-in-use') { var em = $('#sx-email2').value.trim(); tela('entrar', ERROS[c]); if (em) $('#sx-email').value = em; $('#sx-senha').focus(); return }
+    if (c === 'auth/email-already-in-use' || c === 'auth/credential-already-in-use') { tela('entrar', ERROS[c], true); return }
     if (c === 'whats-ocupado' && modo !== 'completar') { tela('entrar', ERROS[c], true); return }
     say(ERROS[c] || 'Não foi possível concluir agora. Tente de novo.', true)
   }
 
-  abas.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b && !ocupado) tela(b.dataset.aba) })
-  $('#sx-esqueci').addEventListener('click', function () { tela('esqueci'); $('#sx-email3').value = $('#sx-email').value; $('#sx-email3').focus() })
-  $('#sx-voltar').addEventListener('click', function () { tela('entrar') })
   $$('.sx-olho').forEach(function (b) {
     b.addEventListener('click', function () {
       var i = document.getElementById(b.getAttribute('aria-controls')), ver = i.type === 'password'
@@ -118,7 +111,7 @@
   // quem já tem conta neste aparelho entra direto
   auth.onAuthStateChanged(function (user) {
     if (montada || entrou || ocupado) return
-    if (!user) { tela(modo === 'criar' ? 'criar' : 'entrar'); return }
+    if (!user) { tela('entrar'); return }
     verificar(user)
   })
   auth.getRedirectResult().catch(function (e) { if (e && e.code === 'auth/credential-already-in-use' && e.credential) auth.signInWithCredential(e.credential); else if (e && e.code) erroAuth(e) })
@@ -172,37 +165,22 @@
 
   function lerDados(semConta) {
     $$('[aria-invalid]', fDados).forEach(function (n) { n.removeAttribute('aria-invalid') })
-    var d = { nome: $('#sx-nome').value.replace(/\s+/g, ' ').trim(), whatsapp: soDigitos($('#sx-whats').value), email: $('#sx-email2').value.trim(), senha: $('#sx-senha2').value }
+    var d = { nome: $('#sx-nome').value.replace(/\s+/g, ' ').trim(), whatsapp: soDigitos($('#sx-whats').value) }
     var marcada = fDados.querySelector('input[name="turma"]:checked')
     if (d.nome.length < 3 || d.nome.indexOf(' ') < 0) { erroCampo('sx-nome', 'Escreva o seu nome e sobrenome.'); return null }
     if (!marcada) { say('Escolha a sua turma (A a G).', true); fDados.querySelector('input[name="turma"]').focus(); return null }
     d.turma = marcada.value
     if (d.whatsapp.length < 8 || d.whatsapp.length > 15) { erroCampo('sx-whats', 'Confira o WhatsApp: use o código do país e o número completo.'); return null }
-    if (modo !== 'completar' && !semConta) {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { erroCampo('sx-email2', 'Confira o e-mail.'); return null }
-      if (d.senha.length < 6) { erroCampo('sx-senha2', 'A senha precisa ter pelo menos 6 caracteres.'); return null }
-    }
     return d
   }
-
-  fEntrar.addEventListener('submit', function (ev) {
-    ev.preventDefault()
-    var email = $('#sx-email').value.trim(), senha = $('#sx-senha').value
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return erroCampo('sx-email', 'Confira o e-mail.')
-    if (!senha) return erroCampo('sx-senha', 'Escreva a sua senha.')
-    ocupar('Entrando…')
-    auth.signInWithEmailAndPassword(email, senha).then(function (r) { liberar(); verificar(r.user) }).catch(erroAuth)
-  })
 
   fDados.addEventListener('submit', function (ev) {
     ev.preventDefault()
     var d = lerDados(); if (!d) return
-    var m = modo
-    ocupar(m === 'criar' ? 'Criando a sua conta…' : 'Salvando…')
-    var passo
-    if (m === 'criar') passo = auth.createUserWithEmailAndPassword(d.email, d.senha).then(function (r) { return { user: r.user, novo: true } })
-    else if (m === 'migrar') passo = auth.currentUser.linkWithCredential(firebase.auth.EmailAuthProvider.credential(d.email, d.senha)).then(function (r) { return r.user.getIdToken(true).then(function () { return { user: r.user, junta: true } }) })
-    else { var u0 = auth.currentUser; d.email = d.email || (u0 && u0.email) || ''; passo = Promise.resolve({ user: u0, junta: !!perfil }) }
+    ocupar('Salvando…')
+    var u0 = auth.currentUser
+    d.email = (u0 && u0.email) || ''
+    var passo = Promise.resolve({ user: u0, junta: !!perfil })
     passo.then(function (x) {
       return salvarPerfil(x.user, d, x.junta).then(function () { return x }, function (err) {
         if (x.novo) return x.user.delete().catch(function () {}).then(function () { throw err })
@@ -212,16 +190,6 @@
       liberar()
       perfil = Object.assign({}, perfilAntigo || perfil || {}, { nome: d.nome, turma: d.turma, whatsapp: d.whatsapp })
       entrar(x.user)
-    }).catch(erroAuth)
-  })
-
-  fEsqueci.addEventListener('submit', function (ev) {
-    ev.preventDefault()
-    var email = $('#sx-email3').value.trim()
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return erroCampo('sx-email3', 'Confira o e-mail.')
-    ocupar('Enviando…')
-    auth.sendPasswordResetEmail(email).then(function () {
-      liberar(); sayOk('Se existir uma conta com esse e-mail, enviamos um link para criar uma senha nova. Confira também a caixa de spam.')
     }).catch(erroAuth)
   })
 
@@ -346,7 +314,7 @@
   // ---------------- aula 3D ----------------
   function abrir3d(alvo) {
     marcarModo('3d')
-    app.hidden = true; gate.hidden = false; abas.hidden = fEntrar.hidden = fDados.hidden = fEsqueci.hidden = gBtn.hidden = ou.hidden = true
+    app.hidden = true; gate.hidden = false; fDados.hidden = gBtn.hidden = ou.hidden = true
     sayLoading('Abrindo a aula…')
     db.doc('aulas/' + AULA).get().then(function (snap) {
       if (!snap.exists) { say('A aula ainda não foi publicada. Volte em instantes.', true); return }

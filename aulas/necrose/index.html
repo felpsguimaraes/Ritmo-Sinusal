@@ -26,24 +26,6 @@
     </div>
     <p class="sx-sub">A aula em 3D ou em PDF, com as lâminas, o texto da professora e o treino com as questões das provas antigas.</p>
 
-    <div class="sx-abas" id="sx-abas" role="tablist" aria-label="Entrar ou criar conta" hidden>
-      <button type="button" role="tab" data-aba="entrar" aria-selected="true">Entrar</button>
-      <button type="button" role="tab" data-aba="criar" aria-selected="false">Criar conta</button>
-    </div>
-
-    <form class="sx-form" id="f-entrar" novalidate hidden>
-      <div class="sx-field">
-        <label for="sx-email">E-mail</label>
-        <input id="sx-email" type="email" inputmode="email" autocomplete="username" required placeholder="seu@email.com">
-      </div>
-      <div class="sx-field">
-        <label for="sx-senha">Senha</label>
-        <div class="sx-pass"><input id="sx-senha" type="password" autocomplete="current-password" required><button type="button" class="sx-olho" aria-controls="sx-senha" aria-pressed="false">Mostrar</button></div>
-      </div>
-      <button class="sx-btn sx-primary" type="submit">Entrar</button>
-      <button class="sx-link" type="button" id="sx-esqueci">Esqueci minha senha</button>
-    </form>
-
     <form class="sx-form" id="f-dados" novalidate hidden>
       <p class="sx-info" id="dados-info" hidden></p>
       <div class="sx-field">
@@ -67,27 +49,7 @@
         <input id="sx-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+595 981 123 456">
         <span class="sx-hint">Com o código do país: +595 para Paraguai, +55 para Brasil. Cada número tem uma conta só.</span>
       </div>
-      <div class="sx-form" id="grp-conta">
-        <div class="sx-field">
-          <label for="sx-email2">E-mail</label>
-          <input id="sx-email2" type="email" inputmode="email" autocomplete="username" required placeholder="seu@email.com">
-        </div>
-        <div class="sx-field">
-          <label for="sx-senha2">Crie uma senha</label>
-          <div class="sx-pass"><input id="sx-senha2" type="password" autocomplete="new-password" minlength="6" required placeholder="Pelo menos 6 caracteres"><button type="button" class="sx-olho" aria-controls="sx-senha2" aria-pressed="false">Mostrar</button></div>
-        </div>
-      </div>
-      <button class="sx-btn sx-primary" type="submit" id="dados-ok">Criar conta</button>
-    </form>
-
-    <form class="sx-form" id="f-esqueci" novalidate hidden>
-      <p class="sx-info">Escreva o e-mail da sua conta e enviamos um link para criar uma senha nova.</p>
-      <div class="sx-field">
-        <label for="sx-email3">E-mail</label>
-        <input id="sx-email3" type="email" inputmode="email" autocomplete="username" required placeholder="seu@email.com">
-      </div>
-      <button class="sx-btn sx-primary" type="submit">Enviar o link</button>
-      <button class="sx-link" type="button" id="sx-voltar">Voltar para entrar</button>
+      <button class="sx-btn sx-primary" type="submit" id="dados-ok">Salvar e entrar</button>
     </form>
 
     <div class="sx-ou" id="sx-ou" hidden><span>ou</span></div>
