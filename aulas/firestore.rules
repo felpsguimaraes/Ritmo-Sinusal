@@ -1,0 +1,46 @@
+rules_version = '2';
+// sinusal. · regras do banco das aulas (cole em Firestore → Regras → Publicar)
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function logado() { return request.auth != null; }
+    function dono() {
+      return logado()
+        && request.auth.token.email == 'felpsguimaraes@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function bloqueado() {
+      return exists(/databases/$(database)/documents/bloqueados/$(request.auth.uid));
+    }
+
+    // conteúdo da aula: só quem entrou com Google e não foi bloqueado
+    match /aulas/{aula} {
+      allow read: if logado() && !bloqueado();
+      allow write: if dono();
+    }
+
+    // um perfil por pessoa: ela escreve o próprio, o dono lê todos
+    match /perfis/{uid} {
+      allow read: if dono() || (logado() && request.auth.uid == uid);
+      allow create, update: if logado() && request.auth.uid == uid && !bloqueado()
+        && request.resource.data.keys().hasOnly(['nome', 'email', 'foto', 'primeiro_acesso', 'ultimo_acesso', 'acessos', 'temas'])
+        && request.resource.data.email == request.auth.token.email;
+      allow delete: if dono();
+    }
+
+    // cada entrada na aula vira um registro; só o dono lê
+    match /acessos/{id} {
+      allow create: if logado() && !bloqueado()
+        && request.resource.data.keys().hasOnly(['uid', 'aula', 'em', 'aparelho'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.em == request.time;
+      allow read, delete: if dono();
+    }
+
+    // quem o dono bloqueou
+    match /bloqueados/{uid} {
+      allow read: if dono() || (logado() && request.auth.uid == uid);
+      allow write: if dono();
+    }
+  }
+}

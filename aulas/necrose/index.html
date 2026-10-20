@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Muerte celular y necrosis · sinusal.</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../sinusal.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../config.js"></script>
+</head>
+<body class="sx-body">
+<main class="sx-gate" id="sx-gate">
+  <section class="sx-card sx-glass" aria-labelledby="sx-title">
+    <a class="sx-logo" href="../../"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+    <div>
+      <span class="sx-tag">Anatomía Patológica I</span>
+      <h1 id="sx-title">Muerte celular y <em>necrosis.</em></h1>
+    </div>
+    <p class="sx-sub">A aula em 3D, com as lâminas, o texto da professora e as questões das provas antigas. Entre com a sua conta Google para estudar.</p>
+    <button class="sx-btn" type="button" id="sx-google" hidden>
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
+      Entrar com Google
+    </button>
+    <p class="sx-msg" id="sx-msg" role="status" aria-live="polite"><span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>Carregando…</p>
+    <p class="sx-note">Usamos só o seu nome e e-mail do Google para liberar o acesso e saber quantas pessoas estudam por aqui.</p>
+    <div class="sx-foot"><span>sinusal.</span><span>© FELPS</span></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var AULA = 'necrose'
+  var TEMAS = 16
+  var gate = document.getElementById('sx-gate'), btn = document.getElementById('sx-google'), msg = document.getElementById('sx-msg')
+  function say(t, erro) { msg.textContent = t; msg.classList.toggle('sx-erro', !!erro) }
+  function sayLoading(t) { msg.innerHTML = '<span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>'; msg.appendChild(document.createTextNode(t)); msg.classList.remove('sx-erro') }
+
+  var cfg = window.SINUSAL_FIREBASE || {}
+  if (!window.firebase || !cfg.apiKey) {
+    say('A aula ainda está sendo configurada. Volte em instantes.', true)
+    return
+  }
+  firebase.initializeApp(cfg)
+  var auth = firebase.auth(), db = firebase.firestore(), FV = firebase.firestore.FieldValue
+  var provider = new firebase.auth.GoogleAuthProvider()
+  provider.setCustomParameters({ prompt: 'select_account' })
+  var montada = false
+
+  btn.addEventListener('click', function () {
+    btn.disabled = true
+    sayLoading('Abrindo o Google…')
+    auth.signInWithPopup(provider).catch(function (e) {
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return auth.signInWithRedirect(provider)
+      btn.disabled = false
+      if (e && e.code === 'auth/popup-closed-by-user') { say('Login cancelado. Toque em "Entrar com Google" para tentar de novo.'); return }
+      if (e && e.code === 'auth/unauthorized-domain') { say('Este endereço ainda não foi autorizado no Firebase.', true); return }
+      say('Não foi possível entrar agora. Verifique a conexão e tente de novo.', true)
+    })
+  })
+
+  auth.onAuthStateChanged(function (user) {
+    if (!user) { if (!montada) { btn.hidden = false; btn.disabled = false; say('') } ; return }
+    if (montada) return
+    entrar(user)
+  })
+
+  function aparelho() { return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'celular' : 'computador' }
+
+  function entrar(user) {
+    btn.hidden = true
+    sayLoading('Abrindo a aula…')
+    db.doc('aulas/' + AULA).get().then(function (snap) {
+      if (!snap.exists) {
+        say(ehDono(user) ? 'A aula ainda não foi publicada. Abra o painel para enviar o arquivo.' : 'A aula ainda não foi publicada. Volte em instantes.', true)
+        if (ehDono(user)) botaoPainel()
+        return
+      }
+      registrar(user)
+      montar(snap.data().html || '', user)
+    }).catch(function (e) {
+      if (e && e.code === 'permission-denied') {
+        say('O seu acesso a esta aula foi bloqueado. Fale com quem te enviou o link.', true)
+        botaoSair()
+        return
+      }
+      say('Não foi possível abrir a aula agora. Tente recarregar a página.', true)
+    })
+  }
+
+  function ehDono(user) { return user && user.email && user.email.toLowerCase() === String(window.SINUSAL_DONO || '').toLowerCase() }
+
+  function botaoSair() {
+    var b = document.createElement('button'); b.className = 'sx-btn sx-small'; b.type = 'button'; b.textContent = 'Entrar com outra conta'
+    b.addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) })
+    msg.after(b)
+  }
+  function botaoPainel() {
+    var a = document.createElement('a'); a.className = 'sx-btn sx-small sx-primary'; a.href = '../painel.html'; a.textContent = 'Abrir o painel'
+    msg.after(a)
+  }
+
+  // um perfil por pessoa + um registro por entrada
+  var perfilRef = null
+  function registrar(user) {
+    perfilRef = db.doc('perfis/' + user.uid)
+    perfilRef.get().then(function (s) {
+      var dados = { nome: user.displayName || '', email: user.email || '', foto: user.photoURL || '', ultimo_acesso: FV.serverTimestamp(), acessos: FV.increment(1) }
+      if (!s.exists) { dados.primeiro_acesso = FV.serverTimestamp(); dados.temas = {} }
+      return perfilRef.set(dados, { merge: true })
+    }).catch(function () {})
+    db.collection('acessos').add({ uid: user.uid, aula: AULA, em: FV.serverTimestamp(), aparelho: aparelho() }).catch(function () {})
+  }
+
+  // marca os temas que a pessoa realmente abriu (uma vez por visita)
+  function seguirTemas() {
+    if (!('IntersectionObserver' in window) || !perfilRef) return
+    var vistos = {}
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var id = e.target.id
+        if (!e.isIntersecting || vistos[id]) return
+        vistos[id] = true
+        var t = {}; t[id] = true
+        perfilRef.set({ temas: t }, { merge: true }).catch(function () {})
+        io.unobserve(e.target)
+      })
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 })
+    document.querySelectorAll('section.scene[id]').forEach(function (s) { io.observe(s) })
+  }
+
+  // coloca a aula na página: estilos, conteúdo e o script dela
+  function montar(html, user) {
+    montada = true
+    var doc = new DOMParser().parseFromString(html, 'text/html')
+    if (doc.title) document.title = doc.title + ' · sinusal.'
+    var scripts = Array.prototype.slice.call(doc.querySelectorAll('script'))
+    scripts.forEach(function (s) { s.parentNode.removeChild(s) })
+    doc.querySelectorAll('link[rel="stylesheet"], style').forEach(function (n) { document.head.appendChild(document.importNode(n, true)) })
+    doc.querySelectorAll('title, link[rel="preconnect"], link[rel="stylesheet"], style, meta').forEach(function (n) { n.parentNode && n.parentNode.removeChild(n) })
+    document.body.className = ''
+    document.body.innerHTML = doc.body.innerHTML
+    scripts.forEach(function (s) {
+      var n = document.createElement('script')
+      if (s.src) n.src = s.src; else n.textContent = s.textContent
+      document.body.appendChild(n)
+    })
+    var foot = document.querySelector('footer')
+    if (foot) {
+      var span = document.createElement('span'); span.className = 'mono'
+      var sair = document.createElement('a'); sair.href = '#'; sair.textContent = 'Sair (' + (user.email || '') + ')'
+      sair.style.color = 'inherit'
+      sair.addEventListener('click', function (ev) { ev.preventDefault(); auth.signOut().then(function () { location.reload() }) })
+      span.appendChild(sair)
+      if (ehDono(user)) { var p = document.createElement('a'); p.href = '../painel.html'; p.textContent = ' · Painel'; p.style.color = 'inherit'; span.appendChild(p) }
+      foot.appendChild(span)
+    }
+    setTimeout(seguirTemas, 800)
+  }
+})()
+</script>
+</body>
+</html>
