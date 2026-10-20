@@ -6,3 +6,9 @@ window.SINUSAL_FIREBASE = {
   appId: "1:181891011103:web:384c0d6a30c5e6026cfb2a"
 };
 window.SINUSAL_DONO = "felpsguimaraes@gmail.com";
+
+// aulas publicadas (aparecem em "Outras aulas" no início de cada uma)
+window.SINUSAL_AULAS = [
+  { id: "necrose", titulo: "Muerte celular y necrosis", capa: "secuencia" },
+  { id: "apoptosis", titulo: "Apoptosis y necroptosis", capa: "cuerpos-fagocitosis" }
+];

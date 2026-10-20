@@ -69,7 +69,7 @@ td.num{font-variant-numeric:tabular-nums}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="config.js"></script>
+<script src="config.js?v=3"></script>
 </head>
 <body class="sx-body">
 <main class="sx-gate" id="gate">
@@ -87,11 +87,12 @@ td.num{font-variant-numeric:tabular-nums}
     <span class="sx-logo"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></span>
     <div class="pn-who"><span id="me"></span><button class="sx-btn sx-small" type="button" id="sair">Sair</button></div>
   </header>
-  <h1>Muerte celular y <em>necrosis.</em></h1>
+  <div class="tfil" id="aulas-sel" role="group" aria-label="Escolher a aula" style="margin-top:18px"></div>
+  <h1 id="titulo-aula">Muerte celular y <em>necrosis.</em></h1>
   <p class="pn-sub" id="upd">Atualizando…</p>
 
   <section class="kpis">
-    <div class="kpi sx-glass"><b id="k-pessoas">0</b><span>pessoas já entraram</span></div>
+    <div class="kpi sx-glass"><b id="k-pessoas">0</b><span>pessoas cadastradas</span></div>
     <div class="kpi sx-glass"><b id="k-acessos">0</b><span>acessos nos últimos 60 dias</span></div>
     <div class="kpi sx-glass"><b id="k-semana">0</b><span>pessoas nos últimos 7 dias</span></div>
     <div class="kpi sx-glass"><b id="k-hoje">0</b><span>acessos hoje</span></div>
@@ -130,9 +131,20 @@ td.num{font-variant-numeric:tabular-nums}
 
 <script>
 (function () {
-  var AULA = 'necrose'
-  var TEMAS = { c1: 'Muerte celular', c2: 'Irreversibilidad', c3: 'Necrosis: la secuencia', c4: 'Apoptosis', c5: 'Morfología de la necrosis', c6: 'Cambios nucleares', c7: 'Necrosis coagulativa', c8: 'Infartos pálidos', c9: 'Infarto rojo', c10: 'Necrosis licuefactiva', c11: 'Infarto cerebral', c12: 'Necrosis gangrenosa', c13: 'Necrosis caseosa', c14: 'Necrosis grasa', c15: 'Necrosis fibrinoide', c16: 'Eliminación del tejido necrótico' }
+  var AULAS = window.SINUSAL_AULAS || [{ id: 'necrose', titulo: 'Muerte celular y necrosis' }]
+  var AULA = (location.hash.replace('#', '') && AULAS.some(function (a) { return a.id === location.hash.replace('#', '') })) ? location.hash.replace('#', '') : AULAS[0].id
+  var TEMAS0 = { c1: 'Muerte celular', c2: 'Irreversibilidad', c3: 'Necrosis: la secuencia', c4: 'Apoptosis', c5: 'Morfología de la necrosis', c6: 'Cambios nucleares', c7: 'Necrosis coagulativa', c8: 'Infartos pálidos', c9: 'Infarto rojo', c10: 'Necrosis licuefactiva', c11: 'Infarto cerebral', c12: 'Necrosis gangrenosa', c13: 'Necrosis caseosa', c14: 'Necrosis grasa', c15: 'Necrosis fibrinoide', c16: 'Eliminación del tejido necrótico' }
+  var TEMAS = TEMAS0
   var $ = function (s) { return document.querySelector(s) }
+  function titulo() { var a = AULAS.filter(function (x) { return x.id === AULA })[0] || {}; var t = a.titulo || AULA, i = t.lastIndexOf(' '); $('#titulo-aula').innerHTML = ''; $('#titulo-aula').appendChild(document.createTextNode(i > 0 ? t.slice(0, i + 1) : '')); var em = document.createElement('em'); em.textContent = (i > 0 ? t.slice(i + 1) : t) + '.'; $('#titulo-aula').appendChild(em) }
+  function seletor() {
+    var box = $('#aulas-sel'); box.innerHTML = ''; box.hidden = AULAS.length < 2
+    AULAS.forEach(function (a) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = a.titulo; b.setAttribute('aria-pressed', String(a.id === AULA))
+      b.addEventListener('click', function () { if (a.id === AULA) return; AULA = a.id; location.hash = a.id; seletor(); titulo(); $('#link').textContent = new URL(AULA + '/', location.href).href; carregar() })
+      box.appendChild(b)
+    })
+  }
   var gmsg = $('#gmsg'), btn = $('#google')
   var cfg = window.SINUSAL_FIREBASE || {}
   if (!window.firebase || !cfg.apiKey) { gmsg.textContent = 'Falta colar a configuração do Firebase em aulas/config.js.'; gmsg.classList.add('sx-erro'); return }
@@ -141,6 +153,7 @@ td.num{font-variant-numeric:tabular-nums}
   var provider = new firebase.auth.GoogleAuthProvider(); provider.setCustomParameters({ prompt: 'select_account' })
   var dono = String(window.SINUSAL_DONO || '').toLowerCase()
   $('#link').textContent = new URL(AULA + '/', location.href).href
+  seletor(); titulo()
 
   btn.addEventListener('click', function () {
     btn.disabled = true
@@ -179,6 +192,7 @@ td.num{font-variant-numeric:tabular-nums}
     ]).then(function (r) {
       treinos = r[4].docs.map(function (d) { return d.data() }).filter(function (t) { return t.aula === AULA })
       banco = r[5].exists ? r[5].data() : null
+      TEMAS = (banco && banco.caps) || (AULA === 'necrose' ? TEMAS0 : {})
       pessoas = r[0].docs.map(function (d) { var x = d.data(); x.uid = d.id; return x })
       acessos = r[1].docs.map(function (d) { return d.data() }).filter(function (a) { return a.aula === AULA && a.em && a.em.toDate })
       bloq = {}; r[2].docs.forEach(function (d) { bloq[d.id] = true })
@@ -260,14 +274,14 @@ td.num{font-variant-numeric:tabular-nums}
     Object.keys(TEMAS).sort(function (a, b) { return c[b] - c[a] }).forEach(function (k) {
       var r = document.createElement('div'); r.className = 'tm'
       r.innerHTML = '<span class="t"></span><span class="bt"><i style="width:' + Math.round(c[k] / max * 100) + '%"></i></span><b>' + c[k] + '</b>'
-      r.querySelector('.t').textContent = k.slice(1) + '. ' + TEMAS[k]
+      r.querySelector('.t').textContent = k.replace(/^\D+/, '') + '. ' + TEMAS[k]
       box.appendChild(r)
     })
   }
 
   function modos() {
     var nomes = [['m3d-' + AULA, 'Aula em 3D'], ['mpdf-' + AULA, 'PDF'], ['mtreino-' + AULA, 'Treino']]
-    var c = nomes.map(function (n) { return grupos.filter(function (g) { return g.temas[n[0]] || (n[0].indexOf('m3d') === 0 && Object.keys(g.temas).some(function (k) { return /^c\d+$/.test(k) })) }).length })
+    var c = nomes.map(function (n) { return grupos.filter(function (g) { return g.temas[n[0]] || (n[0].indexOf('m3d') === 0 && Object.keys(g.temas).some(function (k) { return k in TEMAS })) }).length })
     var max = Math.max(1, Math.max.apply(null, c)), box = $('#modos'); box.innerHTML = ''
     nomes.forEach(function (n, i) {
       var r = document.createElement('div'); r.className = 'tm'
@@ -311,7 +325,7 @@ td.num{font-variant-numeric:tabular-nums}
       var total = p.uids.reduce(function (a, u) { return a + (porUid[u] || 0) }, 0) || p.acessosPerfil
       var tt = { n: 0, a: 0, t: 0 }; p.uids.forEach(function (u) { var x = tPor[u]; if (x) { tt.n += x.n; tt.a += x.a; tt.t += x.t } })
       var blq = p.uids.some(function (u) { return bloq[u] })
-      tr.innerHTML = '<td><div class="pp"></div></td><td>' + (p.turma || '—') + '</td><td class="num">' + total + '</td><td>' + fmt(p.primeiro) + '</td><td>' + fmt(p.ultimo) + '</td><td class="num">' + nTemas + ' / 16</td><td class="num">' + (tt.n ? tt.n + ' · ' + Math.round(tt.a / tt.t * 100) + '%' : '—') + '</td><td></td>'
+      tr.innerHTML = '<td><div class="pp"></div></td><td>' + (p.turma || '—') + '</td><td class="num">' + total + '</td><td>' + fmt(p.primeiro) + '</td><td>' + fmt(p.ultimo) + '</td><td class="num">' + nTemas + ' / ' + Object.keys(TEMAS).length + '</td><td class="num">' + (tt.n ? tt.n + ' · ' + Math.round(tt.a / tt.t * 100) + '%' : '—') + '</td><td></td>'
       var pp = tr.querySelector('.pp')
       var ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = (p.nome || '?').charAt(0).toUpperCase(); pp.appendChild(ph)
       var tx = document.createElement('div'); var b = document.createElement('b'); b.textContent = p.nome || 'Sem nome'
@@ -357,7 +371,7 @@ td.num{font-variant-numeric:tabular-nums}
     })
     var csv = '\ufeff' + linhas.map(function (l) { return l.map(function (v) { v = String(v); return /[;"\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v }).join(';') }).join('\n')
     var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }))
-    a.download = 'sinusal-necrose-' + (turmaSel ? 'turma-' + turmaSel + '-' : '') + new Date().toISOString().slice(0, 10) + '.csv'
+    a.download = 'sinusal-' + AULA + '-' + (turmaSel ? 'turma-' + turmaSel + '-' : '') + new Date().toISOString().slice(0, 10) + '.csv'
     document.body.appendChild(a); a.click(); a.remove()
   })
   $('#recarregar').addEventListener('click', carregar)
@@ -367,7 +381,7 @@ td.num{font-variant-numeric:tabular-nums}
     if (!f) return
     m.classList.remove('sx-erro', 'sx-ok'); m.textContent = 'Enviando…'
     f.text().then(function (html) {
-      if (html.indexOf('Muerte celular') < 0) throw { msg: 'Este arquivo não parece ser a aula de necrose.' }
+      if (html.indexOf('const CH') < 0) throw { msg: 'Este arquivo não parece ser uma aula do sinusal.' }
       if (new Blob([html]).size > 950000) throw { msg: 'O arquivo passou de 950 KB, o limite de um documento do Firestore.' }
       return db.doc('aulas/' + AULA).set({ html: html, atualizado_em: FV.serverTimestamp() })
     }).then(function () {

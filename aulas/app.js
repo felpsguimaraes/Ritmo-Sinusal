@@ -323,6 +323,7 @@
       '</div>' +
       '<a class="hub-tr sx-glass" href="#/treino"><span><b class="t">Treino</b><span class="d" id="hub-tr-d">As perguntas das provas antigas e do repaso, uma por vez, com gabarito comentado.</span></span>' +
         '<span class="nums" id="hub-nums"><span><b>·</b>dominadas</span><span><b>·</b>para revisar</span><span><b>·</b>novas</span></span><span class="go">Treinar</span></a>' +
+      outrasAulas() +
       '</div>'
     dadosTreino().then(function (d) {
       var c = contagem(d)
@@ -330,6 +331,16 @@
       $('#hub-tr-d').textContent = c.tot + ' perguntas das provas antigas e do repaso, uma por vez, com gabarito comentado.'
       box.innerHTML = '<span><b>' + c.dom + '</b>dominadas</span><span><b>' + c.rev + '</b>para revisar</span><span><b>' + c.nov + '</b>novas</span>'
     }).catch(function (e) { if (e && e.code === 'permission-denied') bloqueado() })
+  }
+
+  // outras aulas da mesma conta (lista pública em config.js)
+  function outrasAulas() {
+    var lista = (window.SINUSAL_AULAS || []).filter(function (x) { return x.id !== AULA })
+    if (!lista.length) return ''
+    return '<section class="tr-sec"><h2 class="sx-h2">Outras aulas</h2><p class="sx-lead" style="font-size:15px;margin-top:6px">A mesma conta abre todas.</p><div class="hub-outras">' +
+      lista.map(function (x) {
+        return '<a class="outra sx-glass" href="../' + esc(x.id) + '/"><img src="https://raw.githubusercontent.com/felpsguimaraes/Ritmo-Sinusal/main/aulas/' + esc(x.id) + '/img/' + esc(x.capa) + '.png" alt="" loading="lazy"><span><small>' + esc(x.materia || 'Anatomía Patológica I') + '</small><b>' + esc(x.titulo) + '</b></span></a>'
+      }).join('') + '</div></section>'
   }
 
   // ---------------- aula 3D ----------------
@@ -717,7 +728,7 @@
   }
 
   function fmtNum(n) { return String(Math.round(n * 2) / 2).replace('.', ',') }
-  var LET = 'abcdef'
+  var LET = 'abcdefghij'
   function respostaCerta(it) { return it.tipo === 'mc' ? LET[it.ans] + ') ' + it.opts[it.ans] : it.ans }
   function linksRever(d, it) {
     var out = []
@@ -775,10 +786,10 @@
       act.innerHTML = (S.i > 0 ? '<button class="sx-btn" type="button" id="ts-prev">Anterior</button>' : '') + '<button class="sx-btn sx-primary" type="button" id="ts-next">' + (ultima ? 'Terminar e corrigir' : 'Próxima') + '</button>'
       $('#ts-next').addEventListener('click', avancar)
       if (S.i > 0) $('#ts-prev').addEventListener('click', function () { S.i--; salvarS(); pergunta(d) })
-      kb.textContent = aberta ? 'Ctrl + Enter: próxima' : 'Teclas a, b, c, d escolhem · Enter: próxima'
+      kb.textContent = aberta ? 'Ctrl + Enter: próxima' : 'Teclas a, b, c… escolhem · Enter: próxima'
       tick()
     } else if (!aberta) {
-      kb.textContent = 'Teclas a, b, c, d respondem · Enter: próxima'
+      kb.textContent = 'Teclas a, b, c… respondem · Enter: próxima'
       var resp = function (k) {
         if (S.resp[id] && S.resp[id].g != null) return
         var g = k === it.ans ? 1 : 0
