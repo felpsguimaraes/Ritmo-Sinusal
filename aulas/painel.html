@@ -176,7 +176,7 @@ td.num{font-variant-numeric:tabular-nums}
   })
 
   var pessoas = [], grupos = [], acessos = [], treinos = [], banco = null, bloq = {}, turmaSel = ''
-  var fmt = function (ts) { if (!ts || !ts.toDate) return '—'; var d = ts.toDate(); return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) }
+  var fmt = function (ts) { if (!ts || !ts.toDate) return '-'; var d = ts.toDate(); return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) }
   var dia = function (d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() }
 
   function carregar() {
@@ -325,7 +325,7 @@ td.num{font-variant-numeric:tabular-nums}
       var total = p.uids.reduce(function (a, u) { return a + (porUid[u] || 0) }, 0) || p.acessosPerfil
       var tt = { n: 0, a: 0, t: 0 }; p.uids.forEach(function (u) { var x = tPor[u]; if (x) { tt.n += x.n; tt.a += x.a; tt.t += x.t } })
       var blq = p.uids.some(function (u) { return bloq[u] })
-      tr.innerHTML = '<td><div class="pp"></div></td><td>' + (p.turma || '—') + '</td><td class="num">' + total + '</td><td>' + fmt(p.primeiro) + '</td><td>' + fmt(p.ultimo) + '</td><td class="num">' + nTemas + ' / ' + Object.keys(TEMAS).length + '</td><td class="num">' + (tt.n ? tt.n + ' · ' + Math.round(tt.a / tt.t * 100) + '%' : '—') + '</td><td></td>'
+      tr.innerHTML = '<td><div class="pp"></div></td><td>' + (p.turma || '-') + '</td><td class="num">' + total + '</td><td>' + fmt(p.primeiro) + '</td><td>' + fmt(p.ultimo) + '</td><td class="num">' + nTemas + ' / ' + Object.keys(TEMAS).length + '</td><td class="num">' + (tt.n ? tt.n + ' · ' + Math.round(tt.a / tt.t * 100) + '%' : '—') + '</td><td></td>'
       var pp = tr.querySelector('.pp')
       var ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = (p.nome || '?').charAt(0).toUpperCase(); pp.appendChild(ph)
       var tx = document.createElement('div'); var b = document.createElement('b'); b.textContent = p.nome || 'Sem nome'

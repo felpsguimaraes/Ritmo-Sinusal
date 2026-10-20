@@ -567,6 +567,7 @@
   }
   function embaralhar(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t } return a }
   var ORDEM_PROVAS = ['1º Parcial', '1º Parcial · Turma C', '1º Parcial · Recuperación', '2º Parcial · Turma C', '2º Parcial · Turma D', 'Examen final', 'Banco de preguntas', 'Repaso de la profesora']
+  function isProva(it) { return it.tipo !== 'tarjeta' && !!it.src && !/Repaso|Banco|Pregunta de la clase/.test(it.src) }
   function provas(d) {
     var m = {}
     d.itens.forEach(function (it) { if (it.tipo !== 'tarjeta') (m[it.src] = m[it.src] || []).push(it.id) })
@@ -723,6 +724,7 @@
       '<div class="ts-top"><button class="sx-btn sx-small" type="button" id="ts-sair">Sair</button><div class="ts-prog" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + S.i + '"><i style="width:' + Math.round(S.i / n * 100) + '%"></i></div><span class="ts-n">' + (S.i + 1) + ' de ' + n + (S.sim ? ' · <span id="ts-rel">' + relogio() + '</span>' : '') + '</span></div>' +
       '<article class="ts-card sx-glass">' +
         '<p class="ts-meta">' + esc(S.titulo) + ' · ' + meta + '</p>' +
+        (isProva(it) ? '<p class="prova-tag">Questão de prova anterior · ' + esc(it.src) + '</p>' : '') +
         '<h2 class="ts-q" id="ts-q" tabindex="-1" lang="es">' + it.q + '</h2>' +
         (aberta
           ? '<label class="ts-lab" for="ts-txt">' + (S.sim ? 'Sua resposta' : 'Sua resposta (escrever ajuda a fixar, mas pode só pensar)') + '</label><textarea class="ts-txt" id="ts-txt" lang="es" rows="3" placeholder="Escreva aqui…">' + esc(r.txt || '') + '</textarea>'
@@ -832,6 +834,7 @@
         tua = r.k == null ? '<p class="yours bad">Em branco.</p>' : '<p class="yours ' + (r.g ? 'ok' : 'bad') + '">Você marcou ' + LET[r.k] + ') <span lang="es">' + it.opts[r.k] + '</span></p>'
       } else tua = '<p class="yours">' + (r.txt ? 'Você escreveu: <span lang="es">' + esc(r.txt) + '</span>' : 'Em branco.') + '</p>'
       h += '<article class="sx-glass" data-id="' + esc(id) + '"><p class="ts-meta">' + (n + 1) + ' · ' + esc(d.temas[it.th] || '') + '</p><p class="q" lang="es">' + it.q + '</p>' + tua + explicacao(d, it) +
+        (isProva(it) ? '<p class="prova-nota">Esta questão caiu em <b>' + esc(it.src) + '</b>. Vale memorizar o raciocínio, porque a professora já cobrou isso em prova.</p>' : '') +
         (it.tipo !== 'mc' ? '<div class="grade" role="group" aria-label="Como foi"><button type="button" class="g0" data-g="0" aria-pressed="' + (r.g === 0) + '">Errei</button><button type="button" class="g1" data-g="0.5" aria-pressed="' + (r.g === 0.5) + '">Quase</button><button type="button" class="g2" data-g="1" aria-pressed="' + (r.g === 1) + '">Acertei</button></div>' : '') + '</article>'
     })
     h += '</div><div class="ts-act"><button class="sx-btn sx-primary" type="button" id="corr-ok">Ver a nota</button></div><p class="sx-msg" id="corr-msg" role="status"></p></div>'
