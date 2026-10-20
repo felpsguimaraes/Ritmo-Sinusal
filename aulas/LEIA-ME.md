@@ -9,6 +9,8 @@ O texto da aula (conteúdo, questões, mapa) fica guardado no Firestore e só é
 
 ## Configuração (uma vez, uns 10 minutos)
 
+Já feita em 20/10/2026 no projeto Firebase `sinus-b1bfb`, com o texto da aula de Necrose publicado. Os passos abaixo ficam como referência para refazer em outro projeto.
+
 1. Entre em https://console.firebase.google.com com `felpsguimaraes@gmail.com` e crie um projeto (pode chamar de `sinusal`; o Google Analytics não é necessário).
 2. **Authentication** → Começar → Método de login: ative **Anônimo** (é o que libera os alunos depois do cadastro) e **Google** (é o seu login no painel; escolha o e-mail de suporte) → Salvar.
 3. Ainda em Authentication → **Configurações** → Domínios autorizados → Adicionar domínio: `felpsguimaraes.github.io`.
