@@ -10,5 +10,6 @@ window.SINUSAL_DONO = "felpsguimaraes@gmail.com";
 // aulas publicadas (aparecem em "Outras aulas" no início de cada uma)
 window.SINUSAL_AULAS = [
   { id: "necrose", titulo: "Muerte celular y necrosis", capa: "secuencia" },
-  { id: "apoptosis", titulo: "Apoptosis y necroptosis", capa: "cuerpos-fagocitosis" }
+  { id: "apoptosis", titulo: "Apoptosis y necroptosis", capa: "cuerpos-fagocitosis" },
+  { id: "acumulaciones", titulo: "Acumulaciones intracelulares", capa: "visao-geral" }
 ];
