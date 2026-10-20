@@ -456,7 +456,7 @@
       $('#pdf-seg').innerHTML = docs.map(function (x) { return '<button type="button" data-doc="' + esc(x.id) + '" aria-pressed="' + (x.id === d.id) + '">' + esc(x.nome) + '</button>' }).join('')
       $('#pdf-seg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b && b.dataset.doc !== d.id) ir('#/pdf/' + b.dataset.doc) })
       var toc = $('#pdf-toc')
-      toc.innerHTML = '<option value="">Ir para…</option>' + (d.toc || []).map(function (t) { return '<option value="' + t[1] + '">' + esc(t[0]) + '  ·  p. ' + t[1] + '</option>' }).join('')
+      toc.innerHTML = '<option value="">Ir para…</option>' + (d.toc || []).map(function (t) { var tt = t.t || t[0], pp = t.p || t[1]; return '<option value="' + pp + '">' + esc(tt) + '  ·  p. ' + pp + '</option>' }).join('')
       toc.addEventListener('change', function () { if (toc.value) irPagina(+toc.value); toc.value = '' })
       var st = $('#pdf-st'), bi = $('#pdf-bar-i')
       var pronto = pdfDocs[d.id] ? Promise.resolve(pdfDocs[d.id]) : Promise.all([pdfLib(), chave(info.chave), baixar(d, function (f) { st.textContent = 'Baixando o material… ' + Math.round(f * 100) + '%'; bi.style.width = (f * 100) + '%' })]).then(function (r) {
