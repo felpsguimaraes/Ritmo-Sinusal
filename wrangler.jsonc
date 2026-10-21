@@ -1,0 +1,10 @@
+{
+  // Sinus · site estático servido pelo Cloudflare (Workers com static assets).
+  // Sem código de Worker: os arquivos do repositório são servidos direto.
+  "name": "sinus",
+  "compatibility_date": "2026-10-21",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page"
+  }
+}
