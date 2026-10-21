@@ -679,6 +679,10 @@
 
   function inicioTreino(d, foco) {
     var c = contagem(d), seq = sequencia()
+    var cT = contagem(d, function (x) { return x.tipo === 'tarjeta' })
+    var cQ = contagem(d, function (x) { return x.tipo !== 'tarjeta' })
+    var nMc = d.itens.filter(function (x) { return x.tipo === 'mc' }).length
+    var nAb = d.itens.filter(function (x) { return x.tipo !== 'mc' && x.tipo !== 'tarjeta' }).length
     var nErros = d.itens.filter(function (x) { var s = prog.it[x.id]; return s && s.g < 1 }).length
     var andamento = S && S.fase !== 'fim' ? S : null
     var h = '<div class="tr-wrap">' +
@@ -689,10 +693,14 @@
         '<p>Dominada é a pergunta que você acertou em dois dias diferentes. Seu progresso fica salvo neste aparelho.</p></div></div>' +
       (andamento ? '<div class="tr-cont"><span>Você tem um treino em andamento: <b>' + esc(andamento.titulo) + '</b>, ' + (Object.keys(andamento.resp).length) + ' de ' + andamento.ids.length + '.</span><button class="sx-btn sx-small sx-primary" type="button" id="tr-cont">Continuar</button><button class="sx-btn sx-small" type="button" id="tr-desc">Descartar</button></div>' : '') +
       '<button class="tr-main" type="button" id="tr-dia"><span><b>Treino do dia</b><span>10 perguntas misturadas: primeiro o que você precisa revisar, depois o que ainda não viu.</span></span><span class="go" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>' +
+      '<div class="tr-seg" role="tablist" aria-label="Parte do treino">' +
+        '<button role="tab" type="button" data-parte="questoes" aria-selected="true"><b>Questões</b><small>' + cQ.tot + ' no total · ' + nMc + ' de múltipla escolha e ' + nAb + ' abertas</small></button>' +
+        '<button role="tab" type="button" data-parte="flash" aria-selected="false"><b>Flashcards</b><small>' + cT.tot + ' cartões para responder em voz alta</small></button>' +
+      '</div>' +
+      '<div id="tr-parte-questoes">' +
       '<div class="tr-modes">' +
         '<button class="tr-mode sx-glass" type="button" id="tr-sim"><b>Simulado de prova</b><span>A prova antiga inteira, sem gabarito até o fim.</span></button>' +
         '<button class="tr-mode sx-glass" type="button" id="tr-err"' + (nErros ? '' : ' disabled') + '><b>Revisar erros</b><span>' + (nErros ? nErros + (nErros === 1 ? ' pergunta que você errou ou quase acertou.' : ' perguntas que você errou ou quase acertou.') : 'Nenhum erro guardado ainda.') + '</span></button>' +
-        '<button class="tr-mode sx-glass" type="button" id="tr-tar"><b>Tarjetas</b><span>As 12 perguntas-chave da aula, para responder em voz alta.</span></button>' +
       '</div>' +
       '<section class="tr-sec" id="tr-temas"><h2 class="sx-h2">Por tema</h2><p>Toque num tema para treinar só ele. A barra mostra quanto já está dominado.</p><div class="tr-list sx-glass">' +
         temasOrdem(d).map(function (k) {
@@ -706,6 +714,14 @@
         }).join('') +
         '<button class="tr-row" type="button" data-prova="misto"><span class="t">Simulado misto<small>15 questões sorteadas de todas as provas, cobrindo todos os temas</small></span><span class="mbar"><i style="width:' + (prog.sim.misto != null ? Math.round(prog.sim.misto * 100) : 0) + '%"></i></span><span class="n">' + (prog.sim.misto != null ? 'melhor ' + Math.round(prog.sim.misto * 100) + '%' : 'não feito') + '</span></button>' +
       '</div></section>' +
+      '</div>' +
+      '<div id="tr-parte-flash" hidden>' +
+        '<section class="tr-sec"><h2 class="sx-h2">Flashcards</h2>' +
+        '<p>' + cT.tot + ' cartões com as perguntas-chave da aula. Você lê a frente, responde em voz alta, vira o cartão e diz como foi. O que você errou volta antes.</p>' +
+        '<div class="tr-flash-sum sx-glass"><span><b>' + cT.dom + '</b>dominados</span><span><b>' + cT.rev + '</b>para revisar</span><span><b>' + cT.nov + '</b>novos</span></div>' +
+        '<button class="tr-main" type="button" id="tr-tar"><span><b>' + (cT.rev ? 'Revisar os cartões' : 'Começar os flashcards') + '</b><span>' + (cT.rev ? cT.rev + (cT.rev === 1 ? ' cartão pedindo revisão, e os demais em seguida.' : ' cartões pedindo revisão, e os demais em seguida.') : 'Os cartões embaralhados, um por vez.') + '</span></span><span class="go" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button>' +
+        '</section>' +
+      '</div>' +
       (prog.hist.length ? '<section class="tr-sec"><h2 class="sx-h2">Seus últimos treinos</h2><div class="tr-hist">' + prog.hist.slice(0, 6).map(function (x) {
         var dt = new Date(x.em)
         return '<div><span>' + dt.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' · ' + esc(x.titulo) + '</span><span>' + fmtNum(x.acertos) + ' de ' + x.total + '</span></div>'
@@ -717,6 +733,14 @@
     $('#tr-sim').addEventListener('click', function () { $('#tr-provas').scrollIntoView({ behavior: 'smooth' }) })
     if (nErros) $('#tr-err').addEventListener('click', function () { comecar(d, 'erros') })
     $('#tr-tar').addEventListener('click', function () { comecar(d, 'tarjetas') })
+    $$('[data-parte]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var pt = b.dataset.parte
+        $$('[data-parte]').forEach(function (o) { o.setAttribute('aria-selected', String(o.dataset.parte === pt)) })
+        $('#tr-parte-questoes').hidden = pt !== 'questoes'
+        $('#tr-parte-flash').hidden = pt !== 'flash'
+      })
+    })
     $$('[data-tema]').forEach(function (b) { b.addEventListener('click', function () { comecar(d, 'tema', b.dataset.tema) }) })
     $$('[data-prova]').forEach(function (b) { b.addEventListener('click', function () { comecar(d, 'simulado', b.dataset.prova) }) })
     if (andamento) {
@@ -755,6 +779,7 @@
     if (!it) { S.i++; salvarS(); pergunta(d); return }
     var r = S.resp[id] || {}
     var aberta = it.tipo !== 'mc'
+    var tarjeta = it.tipo === 'tarjeta'
     var n = S.ids.length
     var meta = esc(it.tipo === 'tarjeta' ? 'Tarjeta · ' + (it.tag || '') : it.src) + ' · ' + esc(d.temas[it.th] || '') + (it.fl ? ' · <span class="fl">' + esc(it.fl === 'Complemento' ? 'Complemento (fora da aula)' : it.fl) + '</span>' : '')
     view.innerHTML = '<div class="tr-wrap">' +
@@ -763,7 +788,9 @@
         '<p class="ts-meta">' + esc(S.titulo) + ' · ' + meta + '</p>' +
         (isProva(it) ? '<p class="prova-tag">Questão de prova anterior · ' + esc(it.src) + '</p>' : '') +
         '<h2 class="ts-q" id="ts-q" tabindex="-1" lang="es">' + it.q + '</h2>' +
-        (aberta
+        (tarjeta
+          ? '<p class="ts-lab ts-flash">Responda em voz alta e depois vire o cartão.</p>'
+          : aberta
           ? '<label class="ts-lab" for="ts-txt">' + (S.sim ? 'Sua resposta' : 'Sua resposta (escrever ajuda a fixar, mas pode só pensar)') + '</label><textarea class="ts-txt" id="ts-txt" lang="es" rows="3" placeholder="Escreva aqui…">' + esc(r.txt || '') + '</textarea>'
           : '<div class="ts-opts" role="group" aria-label="Alternativas">' + it.opts.map(function (o, k) { return '<button type="button" class="ts-opt" data-k="' + k + '" aria-pressed="' + (r.k === k) + '"><span class="L">' + LET[k] + '</span><span lang="es">' + o + '</span></button>' }).join('') + '</div>') +
         '<div class="ts-fb" id="ts-fb" hidden aria-live="polite"></div>' +
@@ -816,13 +843,13 @@
       if (r.g != null) mostrarMc(r.k)
     } else {
       // aberta ou tarjeta: pensa, compara com o gabarito e se autoavalia
-      kb.textContent = 'Ctrl + Enter: mostrar resposta · depois 1, 2 ou 3 para avaliar'
+      kb.textContent = (tarjeta ? 'Enter: virar o cartão' : 'Ctrl + Enter: mostrar resposta') + ' · depois 1, 2 ou 3 para avaliar'
       var tx2 = $('#ts-txt')
-      tx2.addEventListener('input', function () { S.resp[id] = { txt: tx2.value }; salvarS() })
+      if (tx2) tx2.addEventListener('input', function () { S.resp[id] = { txt: tx2.value }; salvarS() })
       var revelar = function () {
-        tx2.readOnly = true
+        if (tx2) tx2.readOnly = true
         fb.hidden = false
-        fb.innerHTML = explicacao(d, it) + '<p class="ts-lab" style="margin-top:4px">Como foi? Compare com o gabarito e seja honesto: é isso que decide quando a pergunta volta.</p>' +
+        fb.innerHTML = explicacao(d, it) + '<p class="ts-lab" style="margin-top:4px">Como foi? ' + (tarjeta ? 'Diga com honestidade: é isso que decide quando o cartão volta.' : 'Compare com o gabarito e seja honesto: é isso que decide quando a pergunta volta.') + '</p>' +
           '<div class="grade" role="group" aria-label="Como foi"><button type="button" class="g0" data-g="0">Errei</button><button type="button" class="g1" data-g="0.5">Quase</button><button type="button" class="g2" data-g="1">Acertei</button></div>'
         act.innerHTML = ''
         $$('.grade button', fb).forEach(function (b) { b.addEventListener('click', function () { avaliar(+b.dataset.g) }) })
@@ -833,7 +860,7 @@
         var prev = S.resp[id] || {}
         S.resp[id] = { txt: prev.txt || '', g: g }; anotar(id, g); salvarS(); avancar()
       }
-      act.innerHTML = '<button class="sx-btn sx-primary" type="button" id="ts-show">Mostrar resposta</button>'
+      act.innerHTML = '<button class="sx-btn sx-primary" type="button" id="ts-show">' + (tarjeta ? 'Virar o cartão' : 'Mostrar resposta') + '</button>'
       $('#ts-show').addEventListener('click', revelar)
       if (r.g != null) { revelar() }
     }
