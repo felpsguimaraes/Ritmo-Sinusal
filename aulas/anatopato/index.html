@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Anatomía Patológica I · sinusal.</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#176e5b">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="../sinusal.css?v=10">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icone-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sinus">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -77,6 +82,22 @@
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .chips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:500 14px 'Inter',sans-serif;cursor:pointer;color:var(--ink2);min-height:38px}
   .chips button[aria-selected="true"]{background:var(--soft);border-color:var(--green);color:var(--green)}
+  .conv{position:fixed;inset:0;z-index:60;background:rgba(17,28,24,.55);display:grid;place-items:center;padding:20px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+  .conv-cx{width:min(420px,100%);background:#fff;border-radius:26px;padding:28px 24px 22px;box-shadow:0 30px 70px -30px rgba(16,40,32,.5);text-align:center;max-height:90vh;overflow:auto}
+  .conv-ico{width:72px;height:72px;border-radius:20px;margin:0 auto 14px;display:block}
+  .conv h2{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:28px;line-height:1.15;margin:0 0 6px}
+  .conv h2 em{color:var(--green);font-style:italic}
+  .conv p{margin:0 0 14px;color:var(--ink2);font-size:15.5px}
+  .conv ul{list-style:none;margin:0 0 18px;padding:0;text-align:left;display:grid;gap:10px}
+  .conv ul li{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink2)}
+  .conv ul b{color:var(--ink);font-weight:600}
+  .conv ul .mk{flex:none;width:24px;height:24px;border-radius:50%;background:var(--soft);color:var(--green);display:grid;place-items:center;font-size:13px;font-weight:700;margin-top:1px}
+  .conv .btn{width:100%;justify-content:center;margin-bottom:8px}
+  .conv .depois{background:none;border:none;color:var(--ink3);font:500 14px 'Inter',sans-serif;cursor:pointer;padding:8px;min-height:36px}
+  .passos{counter-reset:p;display:grid;gap:10px;text-align:left;margin:0 0 16px}
+  .passos li{display:flex;gap:10px;align-items:center;font-size:15px;color:var(--ink2)}
+  .passos .n{flex:none;width:24px;height:24px;border-radius:50%;background:#16241f;color:#fff;display:grid;place-items:center;font:600 12.5px 'Inter',sans-serif}
+  .share-ic{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:var(--soft);vertical-align:-5px}
   .profsw{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
   .profsw span{font-size:13px;color:var(--ink3)}
   .profsw button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:500 13.5px 'Inter',sans-serif;cursor:pointer;color:var(--ink2);min-height:36px}
@@ -103,7 +124,7 @@
     <div class="in">
       <a class="mat-logo" href="../../"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
       <span class="mat-crumb">Meu espaço · <b>Anatomía Patológica I</b></span>
-      <span class="mat-quem"><span id="quem"></span><button class="mat-link" type="button" id="sair">Sair</button></span>
+      <span class="mat-quem"><button class="mat-link" type="button" id="instalar" hidden>Instalar o app</button><span id="quem"></span><button class="mat-link" type="button" id="sair">Sair</button></span>
     </div>
   </header>
 
@@ -125,6 +146,17 @@
 
     <nav class="abas" id="abas" role="tablist" aria-label="Materiais"></nav>
     <div class="painel" id="painel"></div>
+  </div>
+</div>
+
+<div class="conv" id="conv" hidden role="dialog" aria-modal="true" aria-labelledby="conv-t">
+  <div class="conv-cx">
+    <img class="conv-ico" src="/icons/icone-192.png" alt="" width="72" height="72">
+    <h2 id="conv-t">Deixe o Sinus na <em>tela do seu celular.</em></h2>
+    <p id="conv-sub">Um toque e ele abre como aplicativo, sem procurar o link.</p>
+    <div id="conv-corpo"></div>
+    <button class="btn prim" type="button" id="conv-add">Adicionar à tela de início</button>
+    <button class="depois" type="button" id="conv-depois">Agora não</button>
   </div>
 </div>
 
@@ -341,9 +373,9 @@
     if (aba === 'visao') h = painelVisao();
     else if (aba === 'apostila') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p>' +
       '<div class="grid2">' +
-        '<div class="card"><span class="mat-tag">Apostila · em PDF</span><h2>Ler em páginas</h2>' +
-          '<p class="sub">O conteúdo inteiro em páginas, com índice, zoom e a página salva de onde você parou. Inclui o resumo com as questões das provas.</p>' +
-          '<div class="btns"><a class="btn prim" href="../lesion/#/pdf">Abrir em PDF</a></div></div>' +
+        '<div class="card"><span class="mat-tag">Apostila · para ler</span><h2>Ler na tela</h2>' +
+          '<p class="sub">A teoria toda em português com os termos em espanhol, o que caiu em cada prova, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
+          '<div class="btns"><a class="btn prim" href="../lesion/apostila/">Abrir a apostila</a><a class="btn" href="../lesion/#/pdf">Versão em PDF</a></div></div>' +
         '<div class="card"><span class="mat-tag">Apostila · em 3D</span><h2>Ver em 3D</h2>' +
           '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
           '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>' +
@@ -383,6 +415,70 @@
     }
   });
 
+  // ---- aplicativo: atalho na tela do celular ----
+  var promptInstalar = null;
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
+  addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); promptInstalar = e; $('#instalar').hidden = false;
+  });
+  addEventListener('appinstalled', function () {
+    marcaAtalho('instalado'); $('#instalar').hidden = true; fecharConvite();
+  });
+  function ehIOS() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+  function jaInstalado() {
+    try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true } catch (e) { return false }
+  }
+  function marcaAtalho(v) { try { localStorage.setItem('sinus-atalho', v) } catch (e) {} }
+  function atalhoPendente() { try { return !localStorage.getItem('sinus-atalho') } catch (e) { return false } }
+  function fecharConvite() { $('#conv').hidden = true }
+
+  var ICONE_SHARE = '<span class="share-ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#176e5b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4"/><path d="M4 14v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></svg></span>';
+
+  function abrirConvite() {
+    if (jaInstalado()) return;
+    var corpo = $('#conv-corpo'), add = $('#conv-add'), sub = $('#conv-sub');
+    var vantagens = '<ul>' +
+      '<li><span class="mk">✓</span><span><b>Tudo da sua turma</b> já aberto: as provas, os áudios e os slides da sua professora.</span></li>' +
+      '<li><span class="mk">✓</span><span><b>Abre como aplicativo</b>, em tela cheia, sem barra de navegador.</span></li>' +
+      '<li><span class="mk">✓</span><span><b>Seu progresso continua</b> onde parou, porque fica salvo na sua conta.</span></li>' +
+      '</ul>';
+    if (promptInstalar) {
+      sub.textContent = 'Um toque e ele abre como aplicativo, sem procurar o link.';
+      corpo.innerHTML = vantagens;
+      add.hidden = false; add.textContent = 'Adicionar à tela de início';
+    } else if (ehIOS()) {
+      sub.textContent = 'No iPhone são três toques, pelo botão de compartilhar:';
+      corpo.innerHTML = '<ul class="passos">' +
+        '<li><span class="n">1</span><span>Toque em ' + ICONE_SHARE + ' <b>Compartilhar</b>, na barra de baixo do Safari.</span></li>' +
+        '<li><span class="n">2</span><span>Role e escolha <b>Adicionar à Tela de Início</b>.</span></li>' +
+        '<li><span class="n">3</span><span>Toque em <b>Adicionar</b>. O Sinus fica junto dos seus apps.</span></li>' +
+        '</ul>' + vantagens;
+      add.hidden = true;
+    } else {
+      sub.textContent = 'No celular, o Sinus vira um aplicativo na sua tela inicial.';
+      corpo.innerHTML = vantagens +
+        '<p style="font-size:14px;color:var(--ink3)">Neste computador, dá para instalar pelo ícone de instalar na barra de endereço do navegador.</p>';
+      add.hidden = true;
+    }
+    $('#conv').hidden = false;
+  }
+
+  $('#conv-add').addEventListener('click', function () {
+    if (!promptInstalar) { fecharConvite(); return }
+    promptInstalar.prompt();
+    promptInstalar.userChoice.then(function (r) {
+      marcaAtalho(r && r.outcome === 'accepted' ? 'instalado' : 'adiado');
+      promptInstalar = null; fecharConvite();
+    }).catch(function () { fecharConvite() });
+  });
+  $('#conv-depois').addEventListener('click', function () { marcaAtalho('adiado'); fecharConvite() });
+  $('#conv').addEventListener('click', function (e) { if (e.target === $('#conv')) { marcaAtalho('adiado'); fecharConvite() } });
+  $('#instalar').addEventListener('click', abrirConvite);
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('#conv').hidden) { marcaAtalho('adiado'); fecharConvite() } });
+
   // ---- entrada ----
   firebase.initializeApp(window.SINUSAL_FIREBASE);
   var auth = firebase.auth(), db = firebase.firestore();
@@ -405,6 +501,10 @@
     $('#gate').hidden = true; $('#app').hidden = false;
     $('#quem').textContent = (u.displayName || u.email || '').split(' ')[0];
     render();
+    if (!jaInstalado()) {
+      if (promptInstalar || ehIOS()) $('#instalar').hidden = false;
+      if (atalhoPendente()) setTimeout(abrirConvite, 900);
+    }
     db.doc('perfis/' + u.uid).get().then(function (snap) {
       var t = snap.exists ? (snap.data().turma || '') : '';
       if (!t) return;
