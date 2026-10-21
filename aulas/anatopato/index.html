@@ -8,11 +8,11 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../sinusal.css?v=8">
+<link rel="stylesheet" href="../sinusal.css?v=9">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="../config.js?v=8"></script>
+<script src="../config.js?v=9"></script>
 <style>
   :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--green-d:#0f5544;--soft:#f3f7f5;--bg:#f6f8f7}
   *{box-sizing:border-box}
@@ -136,12 +136,11 @@
   var pasta = function (id) { return 'https://drive.google.com/embeddedfolderview?id=' + id + '#grid' };
 
   // ---- materiais (ids do Drive da turma) ----
-  // ---- material por professora; a turma do aluno escolhe qual aparece ----
+  // ---- material por professora · mapa das turmas vindo dos horários oficiais da UCP (2026/2) ----
+  var PRINCIPAL = 'chamorro';
   var PROFS = {
     chamorro: {
-      nome: 'Dra. Eliana Chamorro',
-      curto: 'Chamorro',
-      turmas: ['D', 'F', 'G'],
+      nome: 'Dra. Eliana Chamorro', curto: 'Chamorro', turmas: ['F', 'G'],
       audios: [
         { t: 'Clase 1 · Introducción a la AP — parte 1', d: '14 MB', id: '1UFgKd1s8Ba4iX9b9sphIYo2FJQkRqsKb' },
         { t: 'Clase 1 · Introducción a la Anatopato — parte 2', d: '45 MB', id: '1MvstWWIahHEyJ3sawCV1GHBy6hSmBq2_' },
@@ -150,18 +149,17 @@
         { t: 'Clase 4 · Necrosis', d: '44 MB', id: '1F9Z1EPQ0j12mePczhbnf8n3evFFxqBPo' }
       ],
       videos: [
-        { t: 'Clase repaso · Dra. Eliana Chamorro', d: 'Aula de revisão · 12/05/2026 · 5º D, F, G, I e J', id: '1uc-T8s5K9vcqf5WpZBaEqr9AlJduSCtF' }
+        { t: 'Clase repaso · Dra. Eliana Chamorro', d: 'Aula de revisão · 12/05/2026', id: '1uc-T8s5K9vcqf5WpZBaEqr9AlJduSCtF' }
       ],
       provas: [
-        { t: 'Provas antigas · Dra. Chamorro', d: 'P1 · P2 · Final · recuperações', id: '1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z' }
-      ]
+        { t: 'Provas antigas · Dra. Chamorro', d: 'P1 · P2 · Final · recuperações', id: '1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z' },
+        { t: 'Banco de questões transcritas', d: 'Provas antigas organizadas por P1, P2 e Final, por assunto', id: '13wYruA_lMcRev1Jqcc5sQxrfLclS0dsc3p2eHYwX7uI' }
+      ],
+      slides: []
     },
     coba: {
-      nome: 'Dra. Coba',
-      curto: 'Coba',
-      turmas: ['A', 'B', 'C', 'E'],
-      audios: [],
-      videos: [],
+      nome: 'Dra. Carmen Coba', curto: 'Coba', turmas: ['A', 'B'],
+      audios: [], videos: [], slides: [],
       provas: [
         { t: 'Prova P1 · 5º A', d: 'Múltipla escolha, V ou F e classificação de neoplasias, comentada', id: '133eivdWq44G1e3JTxwvGKbkvJ4RnRykO' },
         { t: 'Prova comentada · recuperatória da 2ª parcial', d: 'Pulmão, coração e tumores, questão a questão', id: '1yxljcHcFFHVkJrWXFm5KFpUOJX2Z3myh' },
@@ -174,34 +172,66 @@
       complementares: [
         { t: 'Apunte de Anatopato', d: 'Caderno de anotações da matéria', id: '1Mg2vlYckwVhvpA7csjzHcvP9zrb2VX_G' }
       ]
+    },
+    cielo: {
+      nome: 'Dra. Cielo Brizueña', curto: 'Cielo', turmas: ['C', 'E'],
+      audios: [
+        { t: 'Áudios das aulas · Dra. Cielo', d: 'Pasta com as gravações', id: '14poRNX45D4I0RZg-6K1Jxn33qzm_rD_m', tipo: 'pasta' }
+      ],
+      videos: [], provas: [],
+      slides: [
+        { t: 'Clase 1 · Introducción a la Anatomía Patológica', d: 'Unidad I · Sección C', id: '1HS68N7gFIrWccrkjrZ3CA9YkiHvivB1G' },
+        { t: 'Clase 2 · Adaptación celular', d: 'Unidad I · Secciones C e E', id: '1PDG-4HSxlmAmqcmgY3jZoYKU6ueOBuh6' },
+        { t: 'Lesión celular reversible e irreversible', d: 'Slides da aula', id: '1l_PV16kCT5b-JGnDISq_kq63NpFTcure' }
+      ]
+    },
+    alicia: {
+      nome: 'Dra. Alicia Gonzalez', curto: 'Alicia', turmas: ['D'],
+      audios: [], videos: [], provas: [], slides: []
     }
   };
 
   // material que vale para todas as turmas
   var COMUM = {
     slides: [
-      { t: 'Slides P1', d: 'Clases do primeiro parcial', id: '1AW0MLBnOFkCE7LcrVtLMHCOtOENT9gHh' },
-      { t: 'Slides P2', d: 'Clases do segundo parcial', id: '1Bgm22QEF0u3BaiotVOXSuJoKZ3D8KzuP' }
+      { t: 'Slides P1 · cátedra', d: 'Clases do primeiro parcial', id: '1AW0MLBnOFkCE7LcrVtLMHCOtOENT9gHh', tipo: 'pasta' },
+      { t: 'Slides P2 · cátedra', d: 'Clases do segundo parcial', id: '1Bgm22QEF0u3BaiotVOXSuJoKZ3D8KzuP', tipo: 'pasta' }
     ],
-    fotos: [{ t: 'Fotos da aula', d: 'Pasta da turma', id: '1H_dxWR7orN_amxocBrUyflzHPdkz1HKG' }],
-    livros: [{ t: 'Livros', d: 'Robbins e material complementar', id: '1wlME1fpYxjdecAp-guNMC8DUASz57qRt' }],
+    fotos: [{ t: 'Fotos da aula', d: 'Pasta da turma', id: '1H_dxWR7orN_amxocBrUyflzHPdkz1HKG', tipo: 'pasta' }],
+    livros: [{ t: 'Livros', d: 'Robbins e material complementar', id: '1wlME1fpYxjdecAp-guNMC8DUASz57qRt', tipo: 'pasta' }],
     praticaPasta: '1Lu4PuHqqoM2iRAJUV8yl16Gjyz9WaOXR'
   };
 
-  var profAtual = 'chamorro', turmaAluno = '';
+  var profAtual = PRINCIPAL, turmaAluno = '';
   function profDaTurma(t) {
     var achado = null;
     Object.keys(PROFS).forEach(function (k) { if (PROFS[k].turmas.indexOf(t) >= 0) achado = k });
     return achado;
   }
+  // devolve a lista da professora atual; se ela não tiver nada, a da principal
+  function doProf(campo) {
+    var P = PROFS[profAtual], lista = P[campo] || [];
+    if (lista.length) return { itens: lista, de: profAtual, proprio: true };
+    var pr = PROFS[PRINCIPAL][campo] || [];
+    if (profAtual !== PRINCIPAL && pr.length) return { itens: pr, de: PRINCIPAL, proprio: false };
+    return { itens: [], de: profAtual, proprio: true };
+  }
+  function outrasProfs(campo) {
+    var atualTem = (PROFS[profAtual][campo] || []).length;
+    return Object.keys(PROFS).filter(function (k) {
+      if (k === profAtual) return false;
+      if (!atualTem && k === PRINCIPAL) return false;
+      return (PROFS[k][campo] || []).length;
+    });
+  }
   var MAT = {};
   function montarMAT() {
     var P = PROFS[profAtual];
     MAT = {
-      audios: P.audios || [],
-      videos: P.videos || [],
-      provas: P.provas || [],
-      slides: COMUM.slides,
+      audios: doProf('audios'),
+      videos: doProf('videos'),
+      provas: doProf('provas'),
+      slides: (P.slides || []).concat(COMUM.slides),
       fotos: COMUM.fotos,
       livros: (P.complementares || []).concat(COMUM.livros),
       praticaPasta: COMUM.praticaPasta
@@ -222,7 +252,7 @@
 
   function linhas(itens, tipo) {
     return '<div class="linhas">' + itens.map(function (x, i) {
-      return '<button class="linha" data-abrir="' + esc(tipo) + '" data-id="' + esc(x.id) + '" data-t="' + esc(x.t) + '">' +
+      return '<button class="linha" data-abrir="' + esc(x.tipo || tipo) + '" data-id="' + esc(x.id) + '" data-t="' + esc(x.t) + '">' +
         '<span class="n">' + (i + 1) + '</span>' +
         '<span class="tx"><b>' + esc(x.t) + '</b><span>' + esc(x.d || '') + '</span></span>' +
         '<span class="go">' + setaSvg() + '</span></button>';
@@ -253,10 +283,10 @@
         '<button class="btn" data-aba="provas">Ver as provas</button></div>' +
         '<p class="aviso">Tudo abre aqui dentro: áudios, provas, slides e fotos.</p></div>' +
       '<div class="linhas">' +
-        contagem(MAT.slides.length, 'Slides', 'P1 e P2 · pastas da turma', 'slides') +
-        contagem(MAT.provas.length, 'Provas', 'Da ' + PROFS[profAtual].curto, 'provas') +
-        contagem(MAT.audios.length, 'Áudios', MAT.audios.length ? 'Aulas gravadas da ' + PROFS[profAtual].curto : 'Nenhum desta professora', 'audios') +
-        contagem(MAT.videos.length, 'Vídeos', MAT.videos.length ? 'Aulas em vídeo' : 'Ainda não enviados', 'videos') +
+        contagem(MAT.slides.length, 'Slides', 'Da professora e da cátedra', 'slides') +
+        contagem(MAT.provas.itens.length, 'Provas', MAT.provas.proprio ? 'Da ' + PROFS[profAtual].curto : 'Da ' + PROFS[PRINCIPAL].curto + ' (a sua não tem)', 'provas') +
+        contagem(MAT.audios.itens.length, 'Áudios', MAT.audios.proprio ? 'Aulas gravadas da ' + PROFS[profAtual].curto : 'Da ' + PROFS[PRINCIPAL].curto + ' (a sua não tem)', 'audios') +
+        contagem(MAT.videos.itens.length, 'Vídeos', MAT.videos.itens.length ? (MAT.videos.proprio ? 'Aulas em vídeo' : 'Da ' + PROFS[PRINCIPAL].curto) : 'Ainda não enviados', 'videos') +
       '</div></div>';
   }
 
@@ -269,6 +299,25 @@
       return '<button type="button" data-prof="' + k + '" aria-selected="' + (k === profAtual) + '">' + esc(PROFS[k].curto) +
         (daTurma === k ? ' · sua turma' : '') + '</button>';
     }).join('');
+  }
+
+  function nota(txt) { return '<p class="sub" style="color:var(--ink3);margin:0 0 12px">' + txt + '</p>' }
+  function listaBloco(campo, tipo, titulo, vazioTxt) {
+    var r = MAT[campo], h = '';
+    if (!r.itens.length) return vazio('Nada de ' + PROFS[profAtual].curto + ' ainda', vazioTxt);
+    h += r.proprio
+      ? nota(titulo + ' da ' + esc(PROFS[profAtual].nome) + ', a professora da sua turma.')
+      : nota('A ' + esc(PROFS[profAtual].nome) + ' ainda não tem ' + titulo.toLowerCase() + ' aqui. Mostrando o material da ' + esc(PROFS[PRINCIPAL].nome) + '.');
+    h += linhas(r.itens, tipo);
+    var outras = outrasProfs(campo);
+    if (outras.length) {
+      h += '<h2 style="font-family:Fraunces,Georgia,serif;font-weight:300;font-size:26px;margin:26px 0 4px">De outras professoras</h2>' +
+        nota('Serve de treino, mas a cobrança da sua turma é a da ' + esc(PROFS[profAtual].nome) + '.');
+      outras.forEach(function (k) {
+        h += '<p class="mat-tag" style="margin:14px 0 6px">' + esc(PROFS[k].nome) + '</p>' + linhas(PROFS[k][campo], tipo);
+      });
+    }
+    return h;
   }
 
   function render() {
@@ -289,15 +338,10 @@
           '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
           '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>' +
       '</div>';
-    else if (aba === 'slides') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pastas de slides da turma. Clique para abrir dentro da página.</p>' + linhas(MAT.slides, 'pasta');
-    else if (aba === 'provas') h = MAT.provas.length
-      ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Provas da ' + esc(PROFS[profAtual].nome) + '. Clique para abrir aqui mesmo.</p>' + linhas(MAT.provas, 'arquivo')
-      : vazio('Nenhuma prova desta professora', 'Ainda não há provas dela no Drive da turma.');
-    else if (aba === 'audios') h = MAT.audios.length
-      ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas gravadas da professora. Clique para ouvir aqui mesmo.</p>' + linhas(MAT.audios, 'audio')
-      : vazio('Nenhum áudio da ' + PROFS[profAtual].curto, 'As gravações desta professora ainda não foram enviadas.');
-    else if (aba === 'videos') h = MAT.videos.length ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas em vídeo da professora. Clique para assistir aqui mesmo.</p>' + linhas(MAT.videos, 'arquivo')
-      : vazio('Nenhum vídeo da ' + PROFS[profAtual].curto, 'Assim que o vídeo desta professora entrar no Drive da turma, ele aparece aqui.');
+    else if (aba === 'slides') h = nota('Slides da ' + esc(PROFS[profAtual].nome) + ' e as pastas da cátedra.') + linhas(MAT.slides, 'pasta');
+    else if (aba === 'provas') h = listaBloco('provas', 'arquivo', 'Provas', 'Assim que entrarem provas dela no Drive, aparecem aqui.');
+    else if (aba === 'audios') h = listaBloco('audios', 'audio', 'Áudios', 'As gravações dela ainda não foram enviadas.');
+    else if (aba === 'videos') h = listaBloco('videos', 'arquivo', 'Vídeos', 'Assim que entrar um vídeo dela no Drive, aparece aqui.');
     else if (aba === 'fotos') h = linhas(MAT.fotos, 'pasta');
     else if (aba === 'livros') h = linhas(MAT.livros, 'pasta');
     else if (aba === 'laminas') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pasta de prática da turma.</p>' +
