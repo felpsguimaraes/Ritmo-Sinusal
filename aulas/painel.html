@@ -126,6 +126,20 @@ td.num{font-variant-numeric:tabular-nums}
     <p class="sx-msg" id="pubmsg" role="status" aria-live="polite"></p>
     <p class="sx-note">Link para a turma: <span id="link"></span></p>
   </section>
+
+  <section class="panel sx-glass">
+    <h2>Apostila</h2>
+    <div class="pub">
+      <p id="aposinfo">Verificando…</p>
+    </div>
+    <div class="sx-field" style="margin-top:10px">
+      <label for="aposchave">Chave da apostila</label>
+      <input id="aposchave" type="password" autocomplete="off" spellcheck="false" placeholder="Cole aqui a chave e clique em Liberar">
+    </div>
+    <p><button class="sx-btn sx-small sx-primary" type="button" id="aposliberar">Liberar apostila</button></p>
+    <p class="sx-msg" id="aposmsg" role="status" aria-live="polite"></p>
+    <p class="sx-note">A chave fica guardada no banco e só é entregue a quem entrou com conta. Sem ela, a apostila não abre.</p>
+  </section>
   <p class="sx-note" style="margin-top:18px;text-align:right">© FELPS</p>
 </div>
 
@@ -197,6 +211,7 @@ td.num{font-variant-numeric:tabular-nums}
       acessos = r[1].docs.map(function (d) { return d.data() }).filter(function (a) { return a.aula === AULA && a.em && a.em.toDate })
       bloq = {}; r[2].docs.forEach(function (d) { bloq[d.id] = true })
       var aula = r[3]
+      aposEstado()
       $('#pubinfo').textContent = aula.exists ? 'Publicada em ' + fmt(aula.data().atualizado_em) + ' (' + Math.round((aula.data().html || '').length / 1024) + ' KB).' : 'A aula ainda não foi publicada. Envie o arquivo necrose-conteudo.html.'
       agrupar(); filtros(); render()
       $('#upd').textContent = 'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
@@ -375,6 +390,26 @@ td.num{font-variant-numeric:tabular-nums}
     document.body.appendChild(a); a.click(); a.remove()
   })
   $('#recarregar').addEventListener('click', carregar)
+
+  // ---- apostila: guarda a chave de decifragem (só o dono escreve) ----
+  function aposDoc() { return 'aulas/apostila-' + (AULA === 'lesion' ? 'lesao-celular' : AULA) + '-pdf' }
+  function aposEstado() {
+    var i = $('#aposinfo'); if (!i) return
+    db.doc(aposDoc()).get().then(function (s) {
+      i.textContent = s.exists && s.data().chave ? 'Liberada. Quem entra com conta já abre a apostila.' : 'Ainda não liberada: cole a chave abaixo.'
+    }).catch(function () { i.textContent = 'Não foi possível verificar agora.' })
+  }
+  $('#aposliberar').addEventListener('click', function () {
+    var campo = $('#aposchave'), m = $('#aposmsg'), ch = (campo.value || '').trim()
+    m.classList.remove('sx-erro', 'sx-ok')
+    if (!/^[A-Za-z0-9+/=]{40,}$/.test(ch)) { m.textContent = 'Cole a chave inteira, como está no arquivo.'; m.classList.add('sx-erro'); return }
+    m.textContent = 'Guardando…'
+    db.doc(aposDoc()).set({ chave: ch, atualizado_em: FV.serverTimestamp() }, { merge: true }).then(function () {
+      m.textContent = 'Apostila liberada.'; m.classList.add('sx-ok'); campo.value = ''; aposEstado()
+    }).catch(function (e) {
+      m.textContent = 'Não foi possível guardar (' + (e && e.code || 'erro') + ').'; m.classList.add('sx-erro')
+    })
+  })
 
   $('#arquivo').addEventListener('change', function (ev) {
     var f = ev.target.files && ev.target.files[0], m = $('#pubmsg')
