@@ -64,7 +64,7 @@
   .visor-h{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
   .visor-h b{font-size:15.5px;font-weight:600}
   .visor-h .btn{min-height:36px;padding:0 14px;font-size:14px}
-  .visor-h .btn:first-of-type{margin-left:auto}
+  .visor-h .btn{margin-left:auto}
   .visor iframe{display:block;width:100%;border:0;background:#fff}
   .alto{height:min(78vh,820px)}
   .medio{height:min(62vh,560px)}
@@ -172,9 +172,8 @@
     }).join('') + '</div>';
   }
 
-  function visor(titulo, src, altura, link) {
+  function visor(titulo, src, altura) {
     return '<div class="visor"><div class="visor-h"><b>' + esc(titulo) + '</b>' +
-      '<a class="btn" href="' + esc(link) + '" target="_blank" rel="noopener">Abrir no Drive</a>' +
       '<button class="btn" type="button" id="fechar-visor">Fechar</button></div>' +
       '<iframe class="' + altura + '" src="' + esc(src) + '" allow="autoplay" allowfullscreen loading="lazy" title="' + esc(titulo) + '"></iframe></div>';
   }
@@ -195,7 +194,7 @@
         '<div class="btns"><button class="btn prim" data-aba="apostila">Abrir a apostila</button>' +
         '<button class="btn" data-aba="audios">Ouvir a aula</button>' +
         '<button class="btn" data-aba="provas">Ver as provas</button></div>' +
-        '<p class="aviso">Os arquivos ficam no Drive da turma. Se algum não abrir, é porque ainda não foi compartilhado com a sua conta.</p></div>' +
+        '<p class="aviso">Tudo abre aqui dentro: áudios, provas, slides e fotos.</p></div>' +
       '<div class="linhas">' +
         contagem(MAT.slides.length, 'Slides', 'P1 e P2 · pastas da turma', 'slides') +
         contagem(MAT.provas.length, 'Provas', 'P1 · P2 · Final', 'provas') +
@@ -246,9 +245,8 @@
       var tipo = ar.dataset.abrir, id = ar.dataset.id, t = ar.dataset.t;
       var src = tipo === 'pasta' ? pasta(id) : prev(id);
       var alt = tipo === 'audio' ? 'audio' : (tipo === 'pasta' ? 'medio' : 'alto');
-      var link = tipo === 'pasta' ? 'https://drive.google.com/drive/folders/' + id : 'https://drive.google.com/file/d/' + id + '/view';
       var antes = $('#painel').innerHTML;
-      $('#painel').innerHTML = visor(t, src, alt, link) + antes.replace(/<div class="visor">[\s\S]*?<\/div><\/div>/, '');
+      $('#painel').innerHTML = visor(t, src, alt) + antes.replace(/<div class="visor">[\s\S]*?<\/div><\/div>/, '');
       $('#painel').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
