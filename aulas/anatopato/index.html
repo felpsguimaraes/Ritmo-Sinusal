@@ -136,7 +136,10 @@
   var pasta = function (id) { return 'https://drive.google.com/embeddedfolderview?id=' + id + '#grid' };
 
   // ---- materiais (ids do Drive da turma) ----
-  // ---- material por professora · mapa das turmas vindo dos horários oficiais da UCP (2026/2) ----
+  // ---- material por professora ----
+  // As turmas de cada professora vêm SÓ dos horários oficiais da UCP (2026/2, pasta da planificação).
+  // Turma citada em slide, vídeo ou prova é lixo histórico: professores reaproveitam o arquivo de um ano para o outro.
+  // Para atualizar a cada semestre, troque as listas 'turmas' abaixo conforme o horário novo.
   var PRINCIPAL = 'chamorro';
   var PROFS = {
     chamorro: {
@@ -161,7 +164,7 @@
       nome: 'Dra. Carmen Coba', curto: 'Coba', turmas: ['A', 'B'],
       audios: [], videos: [], slides: [],
       provas: [
-        { t: 'Prova P1 · 5º A', d: 'Múltipla escolha, V ou F e classificação de neoplasias, comentada', id: '133eivdWq44G1e3JTxwvGKbkvJ4RnRykO' },
+        { t: 'Prova P1 · comentada', d: 'Múltipla escolha, V ou F e classificação de neoplasias', id: '133eivdWq44G1e3JTxwvGKbkvJ4RnRykO' },
         { t: 'Prova comentada · recuperatória da 2ª parcial', d: 'Pulmão, coração e tumores, questão a questão', id: '1yxljcHcFFHVkJrWXFm5KFpUOJX2Z3myh' },
         { t: 'Prova de Anatopato I · idêntica 2024', d: 'Múltipla escolha, discursivas, tuberculose e necrose', id: '17_sMXlX-HbRkHkVNXfdBRUi-BjieSP3i' },
         { t: 'Provas P1 · banco da turma', d: 'Coletânea de questões com gabarito', id: '1LJPonnCCPW3pag-NywBr_eX-aZhJsj3O' },
@@ -180,8 +183,8 @@
       ],
       videos: [], provas: [],
       slides: [
-        { t: 'Clase 1 · Introducción a la Anatomía Patológica', d: 'Unidad I · Sección C', id: '1HS68N7gFIrWccrkjrZ3CA9YkiHvivB1G' },
-        { t: 'Clase 2 · Adaptación celular', d: 'Unidad I · Secciones C e E', id: '1PDG-4HSxlmAmqcmgY3jZoYKU6ueOBuh6' },
+        { t: 'Clase 1 · Introducción a la Anatomía Patológica', d: 'Unidad I · ramas, biopsias e tinciones', id: '1HS68N7gFIrWccrkjrZ3CA9YkiHvivB1G' },
+        { t: 'Clase 2 · Adaptación celular', d: 'Unidad I · hipertrofia, hiperplasia, atrofia e metaplasia', id: '1PDG-4HSxlmAmqcmgY3jZoYKU6ueOBuh6' },
         { t: 'Lesión celular reversible e irreversible', d: 'Slides da aula', id: '1l_PV16kCT5b-JGnDISq_kq63NpFTcure' }
       ]
     },
