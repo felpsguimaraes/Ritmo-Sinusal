@@ -8,11 +8,11 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../sinusal.css?v=4">
+<link rel="stylesheet" href="../sinusal.css?v=8">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="../config.js?v=4"></script>
+<script src="../config.js?v=8"></script>
 <style>
   :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--green-d:#0f5544;--soft:#f3f7f5;--bg:#f6f8f7}
   *{box-sizing:border-box}
@@ -77,6 +77,10 @@
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .chips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:500 14px 'Inter',sans-serif;cursor:pointer;color:var(--ink2);min-height:38px}
   .chips button[aria-selected="true"]{background:var(--soft);border-color:var(--green);color:var(--green)}
+  .profsw{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .profsw span{font-size:13px;color:var(--ink3)}
+  .profsw button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:500 13.5px 'Inter',sans-serif;cursor:pointer;color:var(--ink2);min-height:36px}
+  .profsw button[aria-selected="true"]{background:#16241f;border-color:#16241f;color:#fff}
 </style>
 </head>
 <body class="mat">
@@ -107,9 +111,10 @@
     <div class="mat-head">
       <div class="mat-ico" aria-hidden="true">🔬</div>
       <div>
-        <span class="mat-tag">5º período · Turma G</span>
+        <span class="mat-tag" id="tagTurma">5º período</span>
         <h1>Anatomía Patológica I</h1>
-        <p class="mat-prof">Dra. Eliana Chamorro · biblioteca organizada por material</p>
+        <p class="mat-prof" id="linhaProf">biblioteca organizada por material</p>
+        <div class="profsw" id="profSw"></div>
       </div>
     </div>
 
@@ -131,20 +136,49 @@
   var pasta = function (id) { return 'https://drive.google.com/embeddedfolderview?id=' + id + '#grid' };
 
   // ---- materiais (ids do Drive da turma) ----
-  var MAT = {
-    audios: [
-      { t: 'Clase 1 · Introducción a la AP — parte 1', d: '14 MB', id: '1UFgKd1s8Ba4iX9b9sphIYo2FJQkRqsKb' },
-      { t: 'Clase 1 · Introducción a la Anatopato — parte 2', d: '45 MB', id: '1MvstWWIahHEyJ3sawCV1GHBy6hSmBq2_' },
-      { t: 'Clase 2 · Adaptación celular — parte 1', d: '40 MB', id: '1OknJfi_x9wUSutm8XQVuH-xpGlNZ6ubt' },
-      { t: 'Clase 2 · Adaptación celular — parte 2', d: '33 MB', id: '1W9KH2qlGzQHLadEq3ga-Lmac-KtEfRKv' },
-      { t: 'Clase 4 · Necrosis', d: '44 MB', id: '1F9Z1EPQ0j12mePczhbnf8n3evFFxqBPo' }
-    ],
-    videos: [
-      { t: 'Clase repaso · Dra. Eliana Chamorro', d: 'Gravação da aula de revisão · 12/05/2026 · 5º D, F, G, I e J', id: '1uc-T8s5K9vcqf5WpZBaEqr9AlJduSCtF' }
-    ],
-    provas: [
-      { t: 'Provas antigas · Dra. Chamorro', d: 'P1 · P2 · Final · recuperações', id: '1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z' }
-    ],
+  // ---- material por professora; a turma do aluno escolhe qual aparece ----
+  var PROFS = {
+    chamorro: {
+      nome: 'Dra. Eliana Chamorro',
+      curto: 'Chamorro',
+      turmas: ['D', 'F', 'G'],
+      audios: [
+        { t: 'Clase 1 · Introducción a la AP — parte 1', d: '14 MB', id: '1UFgKd1s8Ba4iX9b9sphIYo2FJQkRqsKb' },
+        { t: 'Clase 1 · Introducción a la Anatopato — parte 2', d: '45 MB', id: '1MvstWWIahHEyJ3sawCV1GHBy6hSmBq2_' },
+        { t: 'Clase 2 · Adaptación celular — parte 1', d: '40 MB', id: '1OknJfi_x9wUSutm8XQVuH-xpGlNZ6ubt' },
+        { t: 'Clase 2 · Adaptación celular — parte 2', d: '33 MB', id: '1W9KH2qlGzQHLadEq3ga-Lmac-KtEfRKv' },
+        { t: 'Clase 4 · Necrosis', d: '44 MB', id: '1F9Z1EPQ0j12mePczhbnf8n3evFFxqBPo' }
+      ],
+      videos: [
+        { t: 'Clase repaso · Dra. Eliana Chamorro', d: 'Aula de revisão · 12/05/2026 · 5º D, F, G, I e J', id: '1uc-T8s5K9vcqf5WpZBaEqr9AlJduSCtF' }
+      ],
+      provas: [
+        { t: 'Provas antigas · Dra. Chamorro', d: 'P1 · P2 · Final · recuperações', id: '1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z' }
+      ]
+    },
+    coba: {
+      nome: 'Dra. Coba',
+      curto: 'Coba',
+      turmas: ['A', 'B', 'C', 'E'],
+      audios: [],
+      videos: [],
+      provas: [
+        { t: 'Prova P1 · 5º A', d: 'Múltipla escolha, V ou F e classificação de neoplasias, comentada', id: '133eivdWq44G1e3JTxwvGKbkvJ4RnRykO' },
+        { t: 'Prova comentada · recuperatória da 2ª parcial', d: 'Pulmão, coração e tumores, questão a questão', id: '1yxljcHcFFHVkJrWXFm5KFpUOJX2Z3myh' },
+        { t: 'Prova de Anatopato I · idêntica 2024', d: 'Múltipla escolha, discursivas, tuberculose e necrose', id: '17_sMXlX-HbRkHkVNXfdBRUi-BjieSP3i' },
+        { t: 'Provas P1 · banco da turma', d: 'Coletânea de questões com gabarito', id: '1LJPonnCCPW3pag-NywBr_eX-aZhJsj3O' },
+        { t: 'Prova AnatoPato I · P1', d: 'Adaptação celular, com comentários', id: '1J6m4Q3Sjr3Q1ryt0l-8nwaSbu_RWuTaT' },
+        { t: 'Simulado P2 · AnatoPato I', d: 'EPOC, asma, bronquiectasia e tumores de pulmão', id: '17e_6eHjTgcVugJuyLMvLtMwKSrJ8x3up' },
+        { t: 'Quizz de AnatoPato I', d: 'Adaptação celular e lesão celular', id: '1s5MYt4cnurplQLQifYdN6H6FYUUymovB' }
+      ],
+      complementares: [
+        { t: 'Apunte de Anatopato', d: 'Caderno de anotações da matéria', id: '1Mg2vlYckwVhvpA7csjzHcvP9zrb2VX_G' }
+      ]
+    }
+  };
+
+  // material que vale para todas as turmas
+  var COMUM = {
     slides: [
       { t: 'Slides P1', d: 'Clases do primeiro parcial', id: '1AW0MLBnOFkCE7LcrVtLMHCOtOENT9gHh' },
       { t: 'Slides P2', d: 'Clases do segundo parcial', id: '1Bgm22QEF0u3BaiotVOXSuJoKZ3D8KzuP' }
@@ -153,6 +187,27 @@
     livros: [{ t: 'Livros', d: 'Robbins e material complementar', id: '1wlME1fpYxjdecAp-guNMC8DUASz57qRt' }],
     praticaPasta: '1Lu4PuHqqoM2iRAJUV8yl16Gjyz9WaOXR'
   };
+
+  var profAtual = 'chamorro', turmaAluno = '';
+  function profDaTurma(t) {
+    var achado = null;
+    Object.keys(PROFS).forEach(function (k) { if (PROFS[k].turmas.indexOf(t) >= 0) achado = k });
+    return achado;
+  }
+  var MAT = {};
+  function montarMAT() {
+    var P = PROFS[profAtual];
+    MAT = {
+      audios: P.audios || [],
+      videos: P.videos || [],
+      provas: P.provas || [],
+      slides: COMUM.slides,
+      fotos: COMUM.fotos,
+      livros: (P.complementares || []).concat(COMUM.livros),
+      praticaPasta: COMUM.praticaPasta
+    };
+  }
+  montarMAT();
 
   var ABAS = {
     teoria: [
@@ -199,13 +254,25 @@
         '<p class="aviso">Tudo abre aqui dentro: áudios, provas, slides e fotos.</p></div>' +
       '<div class="linhas">' +
         contagem(MAT.slides.length, 'Slides', 'P1 e P2 · pastas da turma', 'slides') +
-        contagem(MAT.provas.length, 'Provas', 'P1 · P2 · Final', 'provas') +
-        contagem(MAT.audios.length, 'Áudios', 'Aulas gravadas da professora', 'audios') +
+        contagem(MAT.provas.length, 'Provas', 'Da ' + PROFS[profAtual].curto, 'provas') +
+        contagem(MAT.audios.length, 'Áudios', MAT.audios.length ? 'Aulas gravadas da ' + PROFS[profAtual].curto : 'Nenhum desta professora', 'audios') +
         contagem(MAT.videos.length, 'Vídeos', MAT.videos.length ? 'Aulas em vídeo' : 'Ainda não enviados', 'videos') +
       '</div></div>';
   }
 
+  function renderProf() {
+    var P = PROFS[profAtual];
+    $('#tagTurma').textContent = '5º período' + (turmaAluno ? ' · Turma ' + turmaAluno : '');
+    $('#linhaProf').textContent = P.nome + ' · biblioteca organizada por material';
+    var daTurma = turmaAluno ? profDaTurma(turmaAluno) : null;
+    $('#profSw').innerHTML = '<span>Material de:</span>' + Object.keys(PROFS).map(function (k) {
+      return '<button type="button" data-prof="' + k + '" aria-selected="' + (k === profAtual) + '">' + esc(PROFS[k].curto) +
+        (daTurma === k ? ' · sua turma' : '') + '</button>';
+    }).join('');
+  }
+
   function render() {
+    renderProf();
     var lista = ABAS[bloco];
     if (!lista.some(function (a) { return a[0] === aba })) aba = lista[0][0];
     $('#abas').innerHTML = lista.map(function (a) {
@@ -223,10 +290,14 @@
           '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>' +
       '</div>';
     else if (aba === 'slides') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pastas de slides da turma. Clique para abrir dentro da página.</p>' + linhas(MAT.slides, 'pasta');
-    else if (aba === 'provas') h = linhas(MAT.provas, 'arquivo');
-    else if (aba === 'audios') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas gravadas da professora. Clique para ouvir aqui mesmo.</p>' + linhas(MAT.audios, 'audio');
+    else if (aba === 'provas') h = MAT.provas.length
+      ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Provas da ' + esc(PROFS[profAtual].nome) + '. Clique para abrir aqui mesmo.</p>' + linhas(MAT.provas, 'arquivo')
+      : vazio('Nenhuma prova desta professora', 'Ainda não há provas dela no Drive da turma.');
+    else if (aba === 'audios') h = MAT.audios.length
+      ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas gravadas da professora. Clique para ouvir aqui mesmo.</p>' + linhas(MAT.audios, 'audio')
+      : vazio('Nenhum áudio da ' + PROFS[profAtual].curto, 'As gravações desta professora ainda não foram enviadas.');
     else if (aba === 'videos') h = MAT.videos.length ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas em vídeo da professora. Clique para assistir aqui mesmo.</p>' + linhas(MAT.videos, 'arquivo')
-      : vazio('Nenhum vídeo ainda', 'Assim que o vídeo da professora entrar no Drive da turma, ele aparece aqui.');
+      : vazio('Nenhum vídeo da ' + PROFS[profAtual].curto, 'Assim que o vídeo desta professora entrar no Drive da turma, ele aparece aqui.');
     else if (aba === 'fotos') h = linhas(MAT.fotos, 'pasta');
     else if (aba === 'livros') h = linhas(MAT.livros, 'pasta');
     else if (aba === 'laminas') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pasta de prática da turma.</p>' +
@@ -243,6 +314,8 @@
       aba = ABAS[bloco][0][0]; render(); return;
     }
     if (e.target.closest('#fechar-visor')) { render(); return; }
+    var pf = e.target.closest('[data-prof]');
+    if (pf) { profAtual = pf.dataset.prof; montarMAT(); aba = ABAS[bloco][0][0]; render(); return; }
     var ab = e.target.closest('[data-aba]');
     if (ab) { aba = ab.dataset.aba; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     var ar = e.target.closest('[data-abrir]');
@@ -278,6 +351,14 @@
     $('#gate').hidden = true; $('#app').hidden = false;
     $('#quem').textContent = (u.displayName || u.email || '').split(' ')[0];
     render();
+    db.doc('perfis/' + u.uid).get().then(function (snap) {
+      var t = snap.exists ? (snap.data().turma || '') : '';
+      if (!t) return;
+      turmaAluno = t;
+      var k = profDaTurma(t);
+      if (k) profAtual = k;
+      montarMAT(); render();
+    }).catch(function () {});
     db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
   });
 })();
