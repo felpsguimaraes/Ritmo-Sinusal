@@ -236,7 +236,7 @@
   // rotas: #/inicio, #/3d[/c7], #/pdf[/material/14], #/treino[/dia|simulado|temas|erros|tarjetas]; #c7 = aula 3D naquele tema
   function lerRota() {
     var h = decodeURIComponent(location.hash.replace(/^#/, ''))
-    if (!h || h === '/') return { v: sess.get('modo') === '3d' ? '3d' : 'inicio', p: [] }
+    if (!h || h === '/') return { v: sess.get('modo') === '3d' ? '3d' : (A.apostila ? 'apostila' : 'inicio'), p: [] }
     if (h.charAt(0) !== '/') return { v: '3d', p: [h] }
     var p = h.slice(1).split('/')
     var v = ['inicio', '3d', 'pdf', 'treino', 'apostila'].indexOf(p[0]) >= 0 ? p[0] : 'inicio'
@@ -257,7 +257,7 @@
     if (r.v === 'inicio') { hub(); document.title = TITULO + ' · sinusal.' }
     if (r.v === 'pdf') { marcarModo('pdf'); pdfAbrir(r.p[0], +r.p[1] || 0); document.title = 'PDF · ' + TITULO + ' · sinusal.' }
     if (r.v === 'treino') { marcarModo('treino'); treino(r.p[0] || ''); document.title = 'Treino · ' + TITULO + ' · sinusal.' }
-    if (r.v === 'apostila') { apostilaAbrir(); document.title = 'Apostila · ' + TITULO + ' · sinusal.' }
+    if (r.v === 'apostila') { marcarModo('apostila'); apostilaAbrir(); document.title = 'Apostila · ' + TITULO + ' · sinusal.' }
     if (mudou && !(r.v === 'pdf' && r.p[1])) scrollTo(0, 0)
   }
   function ir(h) { if (location.hash === h) rota(); else location.hash = h }
