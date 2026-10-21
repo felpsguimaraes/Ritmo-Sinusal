@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Anatomía Patológica I · sinusal.</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../sinusal.css?v=4">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../config.js?v=4"></script>
+<style>
+  :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--green-d:#0f5544;--soft:#f3f7f5;--bg:#f6f8f7}
+  *{box-sizing:border-box}
+  body.mat{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif}
+  [hidden]{display:none!important}
+  .mat-top{position:sticky;top:0;z-index:20;background:rgba(246,248,247,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .mat-top .in{max-width:1140px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .mat-logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+  .mat-logo .mk{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#38ae8b,#165d4c)}
+  .mat-logo .mk svg{width:16px;height:16px}
+  .mat-logo b{color:var(--green)}
+  .mat-crumb{font-size:14px;color:var(--ink3)}
+  .mat-crumb b{color:var(--ink);font-weight:600}
+  .mat-quem{margin-left:auto;font-size:13.5px;color:var(--ink3);display:flex;align-items:center;gap:10px}
+  .mat-link{background:none;border:none;color:var(--green);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+  .wrap{max-width:1140px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-left,0px)) 60px}
+  .mat-head{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .mat-ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--soft);border:1px solid var(--line);font-size:26px;flex:none}
+  .mat-tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(30px,5vw,42px);line-height:1.05;letter-spacing:-.02em;margin:4px 0 0}
+  .mat-prof{color:var(--ink3);font-size:14.5px;margin:6px 0 0}
+  .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:520px;margin:22px auto 0;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:6px}
+  .seg button{border:none;background:none;border-radius:12px;padding:10px 8px;cursor:pointer;font:600 14px 'Inter',sans-serif;color:var(--ink3);display:flex;flex-direction:column;gap:2px;align-items:center}
+  .seg button small{font-weight:400;font-size:12px;color:var(--ink3)}
+  .seg button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(16,40,32,.08)}
+  .abas{display:flex;gap:8px;overflow-x:auto;padding:22px 0 6px;scrollbar-width:thin}
+  .abas button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:9px 16px;font:500 14.5px 'Inter',sans-serif;cursor:pointer;min-height:40px}
+  .abas button[aria-selected="true"]{background:#16241f;border-color:#16241f;color:#fff}
+  .painel{margin-top:14px}
+  .grid2{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px}
+  @media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}
+  .card h2{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:30px;margin:6px 0 4px;letter-spacing:-.02em}
+  .card p.sub{color:var(--ink3);margin:0 0 16px}
+  .linhas{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  .linha{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line);background:none;border-left:none;border-right:none;border-top:none;width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit}
+  .linha:last-child{border-bottom:none}
+  .linha:hover{background:var(--soft)}
+  .linha .n{width:44px;height:44px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-weight:600;font-size:17px;color:var(--ink);flex:none}
+  .linha .tx{display:flex;flex-direction:column;min-width:0}
+  .linha .tx b{font-weight:600;font-size:15.5px}
+  .linha .tx span{font-size:13px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .linha .go{margin-left:auto;color:var(--ink3);flex:none}
+  .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 15px 'Inter',sans-serif;cursor:pointer;padding:0 20px;text-decoration:none}
+  .btn:hover{background:var(--soft)}
+  .btn.prim{background:#16241f;border-color:#16241f;color:#fff}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .visor{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:14px}
+  .visor-h{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .visor-h b{font-size:15.5px;font-weight:600}
+  .visor-h .btn{min-height:36px;padding:0 14px;font-size:14px}
+  .visor-h .btn:first-of-type{margin-left:auto}
+  .visor iframe{display:block;width:100%;border:0;background:#fff}
+  .alto{height:min(78vh,820px)}
+  .medio{height:min(62vh,560px)}
+  .audio{height:72px}
+  .vazio{padding:34px 20px;text-align:center;color:var(--ink3)}
+  .vazio b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+  .aviso{font-size:13px;color:var(--ink3);margin-top:10px}
+  .gate-msg{font-size:15px;color:var(--ink2);min-height:1.4em;margin:0}
+  .gate-msg.erro{color:#9b2c47}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .chips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:500 14px 'Inter',sans-serif;cursor:pointer;color:var(--ink2);min-height:38px}
+  .chips button[aria-selected="true"]{background:var(--soft);border-color:var(--green);color:var(--green)}
+</style>
+</head>
+<body class="mat">
+
+<main class="sx-gate" id="gate">
+  <section class="sx-card sx-glass" aria-labelledby="t">
+    <a class="sx-logo" href="../../"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+    <div>
+      <span class="sx-tag">5º período · UCP</span>
+      <h1 id="t">Anatomía <em>Patológica I.</em></h1>
+    </div>
+    <p class="sx-sub">Slides, provas, áudios e vídeos da professora, a apostila e a aula em 3D. Entre com a sua conta para abrir.</p>
+    <button class="sx-btn sx-primary" id="entrar" type="button">Entrar com Google</button>
+    <p class="gate-msg" id="msg" role="status"></p>
+  </section>
+</main>
+
+<div id="app" hidden>
+  <header class="mat-top">
+    <div class="in">
+      <a class="mat-logo" href="../../"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+      <span class="mat-crumb">Meu espaço · <b>Anatomía Patológica I</b></span>
+      <span class="mat-quem"><span id="quem"></span><button class="mat-link" type="button" id="sair">Sair</button></span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="mat-head">
+      <div class="mat-ico" aria-hidden="true">🔬</div>
+      <div>
+        <span class="mat-tag">5º período · Turma G</span>
+        <h1>Anatomía Patológica I</h1>
+        <p class="mat-prof">Dra. Eliana Chamorro · biblioteca organizada por material</p>
+      </div>
+    </div>
+
+    <div class="seg" role="tablist" aria-label="Bloco">
+      <button role="tab" data-bloco="teoria" aria-selected="true">Teoria<small>slides · provas · áudios · vídeos</small></button>
+      <button role="tab" data-bloco="pratica" aria-selected="false">Prática<small>lâminas · macroscopia</small></button>
+    </div>
+
+    <nav class="abas" id="abas" role="tablist" aria-label="Materiais"></nav>
+    <div class="painel" id="painel"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s) };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
+  var prev = function (id) { return 'https://drive.google.com/file/d/' + id + '/preview' };
+  var pasta = function (id) { return 'https://drive.google.com/embeddedfolderview?id=' + id + '#grid' };
+
+  // ---- materiais (ids do Drive da turma) ----
+  var MAT = {
+    audios: [
+      { t: 'Clase 1 · Introducción a la AP — parte 1', d: '14 MB', id: '1UFgKd1s8Ba4iX9b9sphIYo2FJQkRqsKb' },
+      { t: 'Clase 1 · Introducción a la Anatopato — parte 2', d: '45 MB', id: '1MvstWWIahHEyJ3sawCV1GHBy6hSmBq2_' },
+      { t: 'Clase 2 · Adaptación celular — parte 1', d: '40 MB', id: '1OknJfi_x9wUSutm8XQVuH-xpGlNZ6ubt' },
+      { t: 'Clase 2 · Adaptación celular — parte 2', d: '33 MB', id: '1W9KH2qlGzQHLadEq3ga-Lmac-KtEfRKv' },
+      { t: 'Clase 4 · Necrosis', d: '44 MB', id: '1F9Z1EPQ0j12mePczhbnf8n3evFFxqBPo' }
+    ],
+    videos: [],
+    provas: [
+      { t: 'Provas antigas · Dra. Chamorro', d: 'P1 · P2 · Final · recuperações', id: '1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z' }
+    ],
+    slides: [
+      { t: 'Slides P1', d: 'Clases do primeiro parcial', id: '1AW0MLBnOFkCE7LcrVtLMHCOtOENT9gHh' },
+      { t: 'Slides P2', d: 'Clases do segundo parcial', id: '1Bgm22QEF0u3BaiotVOXSuJoKZ3D8KzuP' }
+    ],
+    fotos: [{ t: 'Fotos da aula', d: 'Pasta da turma', id: '1H_dxWR7orN_amxocBrUyflzHPdkz1HKG' }],
+    livros: [{ t: 'Livros', d: 'Robbins e material complementar', id: '1wlME1fpYxjdecAp-guNMC8DUASz57qRt' }],
+    praticaPasta: '1Lu4PuHqqoM2iRAJUV8yl16Gjyz9WaOXR'
+  };
+
+  var ABAS = {
+    teoria: [
+      ['visao', 'Visão geral'], ['apostila', 'Apostila'], ['slides', 'Slides'], ['provas', 'Provas'],
+      ['audios', 'Áudios'], ['videos', 'Vídeos'], ['fotos', 'Fotos'], ['livros', 'Complementares'], ['aula3d', 'Aula 3D']
+    ],
+    pratica: [['laminas', 'Lâminas'], ['macro', 'Macroscopia']]
+  };
+  var bloco = 'teoria', aba = 'visao';
+
+  function setaSvg() { return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' }
+
+  function linhas(itens, tipo) {
+    return '<div class="linhas">' + itens.map(function (x, i) {
+      return '<button class="linha" data-abrir="' + esc(tipo) + '" data-id="' + esc(x.id) + '" data-t="' + esc(x.t) + '">' +
+        '<span class="n">' + (i + 1) + '</span>' +
+        '<span class="tx"><b>' + esc(x.t) + '</b><span>' + esc(x.d || '') + '</span></span>' +
+        '<span class="go">' + setaSvg() + '</span></button>';
+    }).join('') + '</div>';
+  }
+
+  function visor(titulo, src, altura, link) {
+    return '<div class="visor"><div class="visor-h"><b>' + esc(titulo) + '</b>' +
+      '<a class="btn" href="' + esc(link) + '" target="_blank" rel="noopener">Abrir no Drive</a>' +
+      '<button class="btn" type="button" id="fechar-visor">Fechar</button></div>' +
+      '<iframe class="' + altura + '" src="' + esc(src) + '" allow="autoplay" allowfullscreen loading="lazy" title="' + esc(titulo) + '"></iframe></div>';
+  }
+
+  function vazio(titulo, texto) {
+    return '<div class="card"><div class="vazio"><b>' + esc(titulo) + '</b>' + esc(texto) + '</div></div>';
+  }
+
+  function contagem(n, t, d, aba_) {
+    return '<button class="linha" data-aba="' + esc(aba_) + '"><span class="n">' + n + '</span>' +
+      '<span class="tx"><b>' + esc(t) + '</b><span>' + esc(d) + '</span></span><span class="go">' + setaSvg() + '</span></button>';
+  }
+
+  function painelVisao() {
+    return '<div class="grid2">' +
+      '<div class="card"><span class="mat-tag">Teoria · sua biblioteca da matéria</span>' +
+        '<h2>Materiais de teoria</h2><p class="sub">Slides, provas, áudios da professora e a apostila com os exercícios.</p>' +
+        '<div class="btns"><button class="btn prim" data-aba="apostila">Abrir a apostila</button>' +
+        '<button class="btn" data-aba="audios">Ouvir a aula</button>' +
+        '<button class="btn" data-aba="provas">Ver as provas</button></div>' +
+        '<p class="aviso">Os arquivos ficam no Drive da turma. Se algum não abrir, é porque ainda não foi compartilhado com a sua conta.</p></div>' +
+      '<div class="linhas">' +
+        contagem(MAT.slides.length, 'Slides', 'P1 e P2 · pastas da turma', 'slides') +
+        contagem(MAT.provas.length, 'Provas', 'P1 · P2 · Final', 'provas') +
+        contagem(MAT.audios.length, 'Áudios', 'Aulas gravadas da professora', 'audios') +
+        contagem(MAT.videos.length, 'Vídeos', MAT.videos.length ? 'Aulas em vídeo' : 'Ainda não enviados', 'videos') +
+      '</div></div>';
+  }
+
+  function render() {
+    var lista = ABAS[bloco];
+    if (!lista.some(function (a) { return a[0] === aba })) aba = lista[0][0];
+    $('#abas').innerHTML = lista.map(function (a) {
+      return '<button role="tab" data-aba="' + a[0] + '" aria-selected="' + (a[0] === aba) + '">' + esc(a[1]) + '</button>';
+    }).join('');
+    var p = $('#painel'), h = '';
+    if (aba === 'visao') h = painelVisao();
+    else if (aba === 'apostila') h = '<div class="card"><span class="mat-tag">Apostila</span><h2>Lesión celular</h2>' +
+      '<p class="sub">Teoria em português com os termos em espanhol, o que caiu em cada prova, exercícios um por vez e flashcards.</p>' +
+      '<div class="btns"><a class="btn prim" href="../lesion/">Abrir a apostila</a><a class="btn" href="../lesion/#/pdf">Material em PDF</a></div></div>';
+    else if (aba === 'slides') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pastas de slides da turma. Clique para abrir dentro da página.</p>' + linhas(MAT.slides, 'pasta');
+    else if (aba === 'provas') h = linhas(MAT.provas, 'arquivo');
+    else if (aba === 'audios') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas gravadas da professora. Clique para ouvir aqui mesmo.</p>' + linhas(MAT.audios, 'audio');
+    else if (aba === 'videos') h = MAT.videos.length ? linhas(MAT.videos, 'arquivo')
+      : vazio('Nenhum vídeo ainda', 'Assim que o vídeo da professora entrar no Drive da turma, ele aparece aqui.');
+    else if (aba === 'fotos') h = linhas(MAT.fotos, 'pasta');
+    else if (aba === 'livros') h = linhas(MAT.livros, 'pasta');
+    else if (aba === 'aula3d') h = '<div class="card"><span class="mat-tag">Aula em 3D</span><h2>Lesión celular em 3D</h2>' +
+      '<p class="sub">As lâminas em 3D, com a câmera aproximando cada achado e o texto da professora por cima.</p>' +
+      '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir a aula em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>';
+    else if (aba === 'laminas') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pasta de prática da turma.</p>' +
+      linhas([{ t: 'Prática · lâminas e macroscopia', d: 'Pasta da turma', id: MAT.praticaPasta }], 'pasta');
+    else if (aba === 'macro') h = vazio('Macroscopia', 'As peças macroscópicas entram aqui quando forem separadas da pasta de prática.');
+    p.innerHTML = h;
+  }
+
+  document.addEventListener('click', function (e) {
+    var seg = e.target.closest('[data-bloco]');
+    if (seg) {
+      bloco = seg.dataset.bloco;
+      document.querySelectorAll('[data-bloco]').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.bloco === bloco)) });
+      aba = ABAS[bloco][0][0]; render(); return;
+    }
+    if (e.target.closest('#fechar-visor')) { render(); return; }
+    var ab = e.target.closest('[data-aba]');
+    if (ab) { aba = ab.dataset.aba; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    var ar = e.target.closest('[data-abrir]');
+    if (ar) {
+      var tipo = ar.dataset.abrir, id = ar.dataset.id, t = ar.dataset.t;
+      var src = tipo === 'pasta' ? pasta(id) : prev(id);
+      var alt = tipo === 'audio' ? 'audio' : (tipo === 'pasta' ? 'medio' : 'alto');
+      var link = tipo === 'pasta' ? 'https://drive.google.com/drive/folders/' + id : 'https://drive.google.com/file/d/' + id + '/view';
+      var antes = $('#painel').innerHTML;
+      $('#painel').innerHTML = visor(t, src, alt, link) + antes.replace(/<div class="visor">[\s\S]*?<\/div><\/div>/, '');
+      $('#painel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  // ---- entrada ----
+  firebase.initializeApp(window.SINUSAL_FIREBASE);
+  var auth = firebase.auth(), db = firebase.firestore();
+  var msg = $('#msg'), btn = $('#entrar');
+  function say(t, erro) { msg.textContent = t; msg.className = 'gate-msg' + (erro ? ' erro' : '') }
+
+  btn.addEventListener('click', function () {
+    var g = new firebase.auth.GoogleAuthProvider(); g.setCustomParameters({ prompt: 'select_account' });
+    btn.disabled = true; say('Abrindo a entrada do Google…');
+    auth.signInWithPopup(g).catch(function (e) {
+      btn.disabled = false;
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return auth.signInWithRedirect(g);
+      say('Não foi possível entrar. Tente de novo.', true);
+    });
+  });
+  $('#sair').addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) });
+  auth.getRedirectResult().catch(function () {});
+  auth.onAuthStateChanged(function (u) {
+    if (!u) return;
+    $('#gate').hidden = true; $('#app').hidden = false;
+    $('#quem').textContent = (u.displayName || u.email || '').split(' ')[0];
+    render();
+    db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
+  });
+})();
+</script>
+</body>
+</html>
