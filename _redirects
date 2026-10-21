@@ -1,2 +1,3 @@
-# Porta de entrada do Sinus: a raiz abre o painel da matéria.
-/    /aulas/anatopato/    302
+# A raiz agora é a home da Sinus, com todas as matérias.
+# O painel de Anatopato continua em /aulas/anatopato/.
+/painel    /aulas/anatopato/    302

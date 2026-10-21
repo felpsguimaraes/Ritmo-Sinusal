@@ -1,0 +1,894 @@
+// Catálogo da Sinus, período 5. Gerado pela varredura do Drive. Não editar à mão.
+window.SINUS_CATALOGO = {
+ "atualizado": "2026-10-21",
+ "periodo": 5,
+ "materias": [
+  {
+   "slug": "anatopato",
+   "nome": "Anatomía Patológica I",
+   "icone": "🔬",
+   "href": "/aulas/anatopato/",
+   "pronta": true,
+   "itens": 31,
+   "itensLista": [
+    {
+     "id": "1N6_IEPPqSFKWg_odhPnCJ7cLUTUhbF5s",
+     "t": "ADAPTACIONES.pptx",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z",
+     "t": "Provas antigas Chamorro",
+     "k": "prova",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1NHYHwv2ctKdapZ2jKCg8br-w6JjAjgTG",
+     "t": "10ªED - Robbins y Cotran Patologia Estructural y Funcional.pdf",
+     "k": "livro",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "11sul5prd7aQext3WO6cO8mGKSo_saEsM",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1vYD3WDOzw7gHO8JDEnzybs6TU31nV6gs",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1E4XHJockCiHiuyt9vDUKKvmxSpEmWvui",
+     "t": "EXPLICAÇÃO COLESTEROLOSIS E ATEROSCLEROSE",
+     "k": "video",
+     "o": "Turma G",
+     "mime": "video/quicktime"
+    },
+    {
+     "id": "1zqo3FkeiglNwm3Ue2EvU9R47xowP5T_6",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "video",
+     "o": "Turma G",
+     "mime": "video/quicktime"
+    },
+    {
+     "id": "1pxLnN5jRWvKxv3x-sssKffEjKXCbkU3v",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1uOmVx6D7tirkiqJ5-bbI2pF1yjJyvNBK",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1A2tKMdNFXf0S27qKi64m5HTHkOSOoNSp",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1TTWnTG0jjPeRfp7xyJxjsUAolaU7fArF",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1K4LqG_eAzY4v5OyvTh3b-2bRVMw3lFXv",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1He3EmD-4XNHfe_g7KN7Eyp5-lHJw8tcb",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE)",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "11XihIRp7vFJIDficx92UG0OSM4vRi2aI",
+     "t": "HÍGADO - CIRROSIS(ESTEATOSE).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1AwwXQRH-pSbJfEue1Kq6li8ZIv1TFk0M",
+     "t": "CORAZÓN - IAM - NECROSIS - DESCRIÇÃO DA LÁMINA",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1ungSnk028EupDaP15nVaxXCMjucWf8g0",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1QrXE-DgNg71LEWDJrU3XaItozew0w-0h",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "14I5RPbo5uY4HdeQRT1lDWR2v4tldkyKs",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "13sJUu_efGDfbFNlah2AeIRqe1pPAlWV6",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1Y8FT-iEtjJoMauy2UJ3dK26KRcWXaUMe",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "16M6-48bj9xbL9cl8ly33u96oJESx_yo4",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1ZOu8Ii0RXUWF-NFC_-jYyFVPJELMl_5m",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1XvREENEKrHUCyo8IULQo5VoGFAelP6yJ",
+     "t": "CORAZÓN - IAM - NECROSIS",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1NzOQTTaqOmEU_IH4vncWDm0urQoPkgYj",
+     "t": "Clase 6 - Acumulación intracelular.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1iWVZwYwbClFyNFYf2OPr2uDOIigqBe62",
+     "t": "Clase 7 - Acumulación intracelular.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1U875LvyU5-v6zuS3RoqxHIzdEczGoZSl",
+     "t": "Clase 5 - Apoptosis anatopato teórico.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1FWDmkbzAQ3QDmx1bswqUHMH1kGyg3yE3",
+     "t": "Clase 4 - Necrosis anatopato teórico.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "19LUlIjLFV_x8-cWcBuh28jehua7snbI_",
+     "t": "Clase 3 - Lesión celular anatopato teórico.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1MgH1bpLrB_Rsu_dxXdxJ5ufQ9uoK74LP",
+     "t": "Bienvenida 5TO - Teórico.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1NJi77IuX3MnqYkfKFmwSxjCJT3rjRkzT",
+     "t": "Clase 2 - Adaptación celular anatopato teórico.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "15qqofsENXZTVeXSveMQI383m6mqSmQCZ",
+     "t": "Clase 1 - Introducción a la Anatopato teórico.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    }
+   ],
+   "professores": [
+    {
+     "chave": "chamorro",
+     "nome": "Dra. Eliana Chamorro",
+     "curto": "Chamorro",
+     "turmas": [
+      "F",
+      "G"
+     ]
+    },
+    {
+     "chave": "coba",
+     "nome": "Dra. Carmen Coba",
+     "curto": "Coba",
+     "turmas": [
+      "A",
+      "B"
+     ]
+    },
+    {
+     "chave": "cielo",
+     "nome": "Dra. Cielo Brizueña",
+     "curto": "Cielo",
+     "turmas": [
+      "C",
+      "E"
+     ]
+    },
+    {
+     "chave": "alicia",
+     "nome": "Dra. Alicia Gonzalez",
+     "curto": "Alicia",
+     "turmas": [
+      "D"
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "farmacologia",
+   "nome": "Farmacologia I",
+   "icone": "💊",
+   "href": "/aulas/materia/?m=farmacologia",
+   "pronta": false,
+   "itens": 29,
+   "itensLista": [
+    {
+     "id": "1KkexdZrmfG6T3qE_MfL9CtPLxJP1cBRr",
+     "t": "Farmacologia Humana Jesus Florez 5a Edicion_booksmedicos.org.pdf",
+     "k": "livro",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1NzX1vvSbmNWX92UU9DH2j5jK0KHHouEP",
+     "t": "Goodman_&_Gilman_Las_Bases_Farmacologicas_de_la_Terapeutica_13a.pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1rde8JioZgFCmZelvxDmLwy4Q92HGDAaZ",
+     "t": "CLASE 6 alumno.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "16sylU8Oi1Xh_sdAH9Qzem8-2_SBWlfe-",
+     "t": "CLASE 3 alumno.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1MDlDUpq9YMWvt4rLrVW-o5OIeWBbzIwP",
+     "t": "CLASE 1 - alumno.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1JQSKh8T-cMCWNdmNGW1s77lSoJZqsnQD",
+     "t": "CLASE 5 alumno.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1XXSO7Rn-Ud4nzS4dnQBxu34xhwt9y5lr",
+     "t": "CLASE 2 alumno.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1xUDC9Ml2VHNjxG2VLBW3nS0bfzbaEdim",
+     "t": "Documento de Mateus Fortunato.pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "19hr1ql1Fy8Qtev07kB0urLHHBAL2XomW",
+     "t": "CLASE 4 alumno.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1BLn4tQ2X8SDaub5l8Dyfl8JuEXhRqGDI",
+     "t": "CLASE 1.2 FORMA FARMACEUTICA.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1BdczEEwD1sryvOwcYQTF_WboCGw0WBHf",
+     "t": "PHOTO-2026-09-08-15-26-08.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1cQuhnTw2i4Nsbw-hz43tGclaI5bWtYwH",
+     "t": "IMG_9448 (2).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1mE4yta6_2RlSXMj4X-Ea7dab425tCjZj",
+     "t": "IMG_9448.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1MCIEffYuHnrsCd82FQfghlrGAN6ZQnpt",
+     "t": "IMG_9607.HEIC",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "18aUFUmFjy-fWJocQK7S7fo9q1ZTLdHHU",
+     "t": "IMG_9604.HEIC",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1Csrz_AZ-oXdwmXrUqHLxWFAlCasWES4i",
+     "t": "LIVRO Farmacologia Humana Jesus Florez 5a Edicion_booksmedicos.org.pdf",
+     "k": "livro",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1NcoLAm_l3lucmG79qReK9smY43dgkvoY",
+     "t": "IMG_9602.HEIC",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1qT0xfXyXDpuTTgRerZenV5smRPtQdBhJ",
+     "t": "IMG_9605.HEIC",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1Nc0dSaY1cFOZK2vf2n3Su31WmkpsVWO4",
+     "t": "IMG_9603.HEIC",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "13Z6Tw3_NlzRVkfiq8FIc8QOQqQVYUsb1",
+     "t": "IMG_9606.HEIC",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1YeMrtY0ljWMeG40XpnYWAtpl7JcxmtnW",
+     "t": "PHOTO-2026-09-08-16-38-11.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1UQINCtrJUXFX2-Hic9U978uR_Q1VSyle",
+     "t": "PHOTO-2026-09-08-15-29-39.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "14qly9Rvi_yVuQRm-pU0aYhztKPiOaxns",
+     "t": "IMG_9449.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1PbTWZWPwbVZuxQQ9ssKRXKxMsAlnR2SI",
+     "t": "IMG_9448 (1).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1VQ8Ey48zOyd_CrsmZMeFO4fjghM9C1AX",
+     "t": "CLASE 8 ALUMNO",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1DogE8HdDwKbLfyKqbUKtFVyH_J8VNgYH",
+     "t": "CLASE 7  alumno.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1zqGViPyfj4sQ8jKQ_79khheyTj9ggyQb",
+     "t": "CLASE 9.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1MnCNlKBxg9OpNR4hPtZNRBwlLwi0UTO-",
+     "t": "CLASE 6 alumno farmaco.pdf",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1oAS8kHHzeNz2kA9YLW8hGkU0hZKuOSpD",
+     "t": "CLASE 3 alumno.pptx",
+     "k": "slide",
+     "o": "5º Semestre",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    }
+   ],
+   "professores": []
+  },
+  {
+   "slug": "semiologia",
+   "nome": "Semiología Médica I",
+   "icone": "🩺",
+   "href": "/aulas/materia/?m=semiologia",
+   "pronta": false,
+   "itens": 12,
+   "itensLista": [
+    {
+     "id": "1gM6otX1VfhScJTkSV5P7iDx7FpdhtgEH",
+     "t": "Programa de Contenidos y Calendario de Evaluaciones - Semiología Médica I.pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1GTuFhbTfUTiIdoavEfzZjH9Ur6-dIWci",
+     "t": "semiotecniabarecalifano-100801191310-phpapp01 (2).pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "11lf0G1qlzUi4Dy0ClX89UnKYznaA3AVV",
+     "t": "Semiología_Médica_Fisiopatología,_Semiotecnia_y_Pr_251006_231425.pdf",
+     "k": "livro",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1r8jVsMy_smmlONXkeRHi-e3HpYO0De4I",
+     "t": "PHOTO-2026-10-16-10-29-27.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "11K2vpiz673alS9xsTVkc-_sQRK2XC1P-",
+     "t": "Conteúdos P1 (base)",
+     "k": "prova",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1F_DA7kIiHJowZYASKjT9bJgUHw2LMcJL",
+     "t": "Fascies clínicas escolhidas pela professora P1",
+     "k": "prova",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1vpWAa2PSmz3sG-Pf_tpYZAdLsjnBo1wy",
+     "t": "conteúdos p1 anotações 2",
+     "k": "prova",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1Zys-LpVHbqCYG8WZGll_Tb9vU81GVBpN",
+     "t": "conteúdos p1 anotações 1",
+     "k": "prova",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1Tcl5YLc_3UuIDW3Z4iPrL3knBPrCUAAi",
+     "t": "Conteúdo da P1 semiologia teórica",
+     "k": "prova",
+     "o": "Turma G",
+     "mime": "image/heif"
+    },
+    {
+     "id": "1iO_UCmsVt1GC2UzcZnMLYDOsAIKI1hkU",
+     "t": "PHOTO-2026-09-03-17-39-26.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "15sDfL3Pz1DS7pKSwwC9bO3ixSlleeevi",
+     "t": "PHOTO-2026-08-04-14-15-33.jpg.jpeg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1c9PKyB1UG3wWa4wy-1cReUDQswN0Abwn",
+     "t": "PHOTO-2026-08-12-08-03-22.jpg.jpeg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    }
+   ],
+   "professores": []
+  },
+  {
+   "slug": "fisiopatologia",
+   "nome": "Fisiopatologia I",
+   "icone": "🫀",
+   "href": "/aulas/materia/?m=fisiopatologia",
+   "pronta": false,
+   "itens": 26,
+   "itensLista": [
+    {
+     "id": "1LGrij9L-Op6Zoa4JejWKGPrRuOw4Yn16",
+     "t": "Cronograma Semanal de Temas Fisiopatologia I.docx",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    },
+    {
+     "id": "1JmyuLDfLCocBwdHjb4a_h4DrhUAnFXlQ",
+     "t": "Fisiopatologia 10ed. Porth.pdf",
+     "k": "livro",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1069xgSwtRvvQPHjZfxpJ-iSC6uZ-xqW2",
+     "t": "Fisiopatologia revisão p1.pdf",
+     "k": "prova",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1gwf8sopmDTJaHeoAkQ8YPuM-qV7tpDvJ",
+     "t": "clase 2.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1nQswmRghZleEmhl3F5un2ExT3xTzwZsZ",
+     "t": "clase 3.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1HB2gxvxMJzd8j7WDaJnnA55zXLreQpFg",
+     "t": "clase  1.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1ZzzyNZXNzum0GVchyWsKxtfvcm73SOUW",
+     "t": "Clase 8",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1tUUMPcl86-pLCPz-Fq1Gd4WkN8LviUkU",
+     "t": "clase 9.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "157EFerWBq6HtohpzMwF9Y5GEkTWHyzaN",
+     "t": "clase 7.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1nJxriUgbg7LhuYLncO9yPQB9O57yhsvQ",
+     "t": "clase 6.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "10hYAVJnlrgrp-mezLpCjTS0XjRgaXWy1",
+     "t": "CLASE 4 Y 5.pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1v6yK9n2kfV9TfvE3ErbxAfD0qcFO_RXi",
+     "t": "CLASE 4 Y 5(1).pdf",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "15bFy3fZp71J3chiDfBkGHJVhU18YX6Pf",
+     "t": "IMG_9457.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1WjgjlReLkOQ_hVcDIP9qMUeBYNfhH6uI",
+     "t": "IMG_9456 (1).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1FeS4AemmbusZ5aRK0fKuqF5BKtEff9AP",
+     "t": "IMG_9456.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1ndjw8F-5BFyl6vww9MO8vB5RVl_4aZAO",
+     "t": "IMG_9454 (1).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1VXa_vknn-eEuuh1rc0YLXuTy5BhJy1ML",
+     "t": "IMG_9454.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1O1I07uah38kElJ8Bmi2NprH_KV0c3W1v",
+     "t": "IMG_9461.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1Luxb5kfMZmfp-e7OmzZJWc_kqTU7Unxj",
+     "t": "IMG_9459.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1rw3g_Y-xA63Yb7shbsAYVpu3TSxNXP2S",
+     "t": "IMG_9460.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1PD6tmBxSFuqKl0FKwe2uWszd2oo4uJZm",
+     "t": "IMG_9455.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1-XRMKYtpHMFW4usZdqSGN2TfaaAh8pJ6",
+     "t": "IMG_9454 (3).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1xzgyuhQnMu9y8SW-DYFR6hKU_fFRbmlD",
+     "t": "IMG_9454 (2).jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1C-pNhymdMtQUfYDbcHuI-xvWyHkOIDmq",
+     "t": "IMG_9458.jpg",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "12TgJKWLwwBMx-cSgoDKIdaCiFY5iaXQa",
+     "t": "UNIDADE 7 Anemias - Dr. K.F..pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "12HlXWgUvaB_USsz8vxw4hntrcyP46Etp",
+     "t": "Caso Clínico Anemia Ferropénica - Dr. K.F..pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    }
+   ],
+   "professores": []
+  },
+  {
+   "slug": "familia",
+   "nome": "Medicina de la Familia",
+   "icone": "🏠",
+   "href": "/aulas/materia/?m=familia",
+   "pronta": false,
+   "itens": 9,
+   "itensLista": [
+    {
+     "id": "11Zn3UGSoZ6MTqZVO89E4XWh2HrINRxqW",
+     "t": "Trabajo N1 - Entrevista Clínica.pptx",
+     "k": "slide",
+     "o": "Turma E",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "1RasgL_cJRV4z4zWaBDyv50hLWApArxCJ",
+     "t": "APS y Medicina Familiar - UNIDAD 1.pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1cRdhhh1Eilp2GuBo9cDTeHFpvitusBOE",
+     "t": "entrevista clinica .pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1ncBnlmYsipOD1a-mr7BGZVLr3GbpIo4K",
+     "t": "Familiograma_Medicina_Familiar_UCP.pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1hujSWiiXkZlQWTMDuBqIPWWyUb9a8cGO",
+     "t": "4. FAMILIOGRAMA MF.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1WUhe4Gsb0b4fxHD0aCdsx_JSTQkEL3vA",
+     "t": "2. Principios Medicina familiar.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "17cJ8Q9oSt0Be3I4rcgPWj8T3hE2gwlha",
+     "t": "1. Introduccion medicina familiar.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1zqMfE3V2JHxrjfNe8WREA1mIR-dc2E_J",
+     "t": "6. Ciclo vital individual y familiar MF.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1I0Xgp7WqRqBke495-0HsGaFLDl3NjVLN",
+     "t": "5. CLASIFICACION FAMILIAR MF.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    }
+   ],
+   "professores": []
+  },
+  {
+   "slug": "imagenologia",
+   "nome": "Imagenología",
+   "icone": "🖼️",
+   "href": "/aulas/materia/?m=imagenologia",
+   "pronta": false,
+   "itens": 5,
+   "itensLista": [
+    {
+     "id": "1v765kBwvky7osp74-SXAldmu8lUeqhZF",
+     "t": "IMAGENOLOGIA UCP UNIDAD I, II, III,IV,V,VI, VII.pdf",
+     "k": "material",
+     "o": "Turma E",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1A9UHrAVsvuuACf9WriK9qaH4cC33TZ-k",
+     "t": "Imagens Actividad.pptx",
+     "k": "slide",
+     "o": "Turma G",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "10cVjqBFNZKUUQZeU8mSn7odNi6wDuPRk",
+     "t": "Actividad Imagenologia.docx",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    },
+    {
+     "id": "1x942he3wEOoVLIlNvKK64GHQF8DpZAom",
+     "t": "Resumo_RX_Abdomen_Patologico.pdf",
+     "k": "material",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1WTyXJW4SW4rYH_JVWqKxypWYJ4QNYQGx",
+     "t": "Radiologia basica. Aspectos fundamentales 3a Edicion.pdf",
+     "k": "livro",
+     "o": "Turma G",
+     "mime": "application/pdf"
+    }
+   ],
+   "professores": []
+  }
+ ],
+ "agenda": []
+};

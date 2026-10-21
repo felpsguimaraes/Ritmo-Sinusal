@@ -1,2 +1,198 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sinusal · Abrir aplicativo</title><meta name="description" content="Entre no Sinusal e acesse seu painel de estudos, matérias e Revalida."><link rel="canonical" href="https://sinusal.chatmedicinacolegas.chatgpt.site"><noscript><meta http-equiv="refresh" content="0;url=https://sinusal.chatmedicinacolegas.chatgpt.site"></noscript><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f3f7f3;color:#153e32;font:16px system-ui,sans-serif}main{max-width:460px;padding:40px}h1{font-size:42px;letter-spacing:-2px}a{color:#236e56}a.primary{display:inline-block;padding:14px 22px;background:#236e56;color:white;border-radius:12px;text-decoration:none;font-weight:600}p{line-height:1.6}small{display:block;margin-top:28px}</style><script>window.location.replace("https://sinusal.chatmedicinacolegas.chatgpt.site"+window.location.hash);</script></head><body><main><h1>sinusal.</h1><p>Abrindo seu espaço de estudo.</p><p><a class="primary" href="https://sinusal.chatmedicinacolegas.chatgpt.site">Entrar no aplicativo</a></p><p><a href="https://sinusal.chatmedicinacolegas.chatgpt.site/#turma/5G">Preparar meu painel do 5º G</a></p><small><a href="index-legacy.html">Consultar a versão anterior</a></small></main></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sinus · seu semestre inteiro num lugar só</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#176e5b">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/aulas/sinusal.css?v=11">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icone-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sinus">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="/aulas/config.js?v=11"></script>
+<script src="/aulas/catalogo.js?v=1"></script>
+<style>
+  :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--soft:#f3f7f5;--bg:#f6f8f7}
+  *{box-sizing:border-box}
+  body.home{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif}
+  [hidden]{display:none!important}
+  .top{position:sticky;top:0;z-index:20;background:rgba(246,248,247,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .top .in{max-width:1140px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+  .logo .mk{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#38ae8b,#165d4c)}
+  .logo .mk svg{width:16px;height:16px}
+  .logo b{color:var(--green)}
+  .quem{margin-left:auto;font-size:13.5px;color:var(--ink3);display:flex;align-items:center;gap:10px}
+  .link{background:none;border:none;color:var(--green);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+  .wrap{max-width:1140px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-left,0px)) 64px}
+  .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(30px,5vw,42px);line-height:1.05;letter-spacing:-.02em;margin:4px 0 0}
+  h1 em{color:var(--green);font-style:italic}
+  .sub{color:var(--ink3);font-size:15px;margin:8px 0 0;max-width:62ch}
+  .abas{display:flex;gap:8px;overflow-x:auto;padding:24px 0 6px;scrollbar-width:thin}
+  .abas button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:9px 16px;font:500 14.5px 'Inter',sans-serif;cursor:pointer;min-height:40px}
+  .abas button[aria-selected="true"]{background:#16241f;border-color:#16241f;color:#fff}
+  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px;margin-top:16px}
+  .mat{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;text-align:left;font:inherit;color:inherit;cursor:pointer;min-height:168px}
+  .mat:hover{border-color:#cfdcd7;box-shadow:0 10px 30px -22px rgba(16,40,32,.5)}
+  .mat .ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--soft);border:1px solid var(--line);font-size:22px}
+  .mat b{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+  .mat .prof{font-size:13.5px;color:var(--ink3)}
+  .mat .pe{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink3);flex-wrap:wrap}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--soft)}
+  .pill.ok{color:var(--green);border-color:#bfded4;background:#eef7f3;font-weight:600}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:16px}
+  .card h2{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:28px;margin:0 0 4px;letter-spacing:-.02em}
+  .card p{color:var(--ink3);margin:0}
+  .vazio{padding:34px 20px;text-align:center;color:var(--ink3)}
+  .vazio b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+  .gate-msg{font-size:15px;color:var(--ink2);min-height:1.4em;margin:0}
+  .gate-msg.erro{color:#9b2c47}
+  .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 15px 'Inter',sans-serif;cursor:pointer;padding:0 20px;text-decoration:none}
+  .btn.prim{background:#16241f;border-color:#16241f;color:#fff}
+</style>
+</head>
+<body class="home">
+
+<main class="sx-gate" id="gate">
+  <section class="sx-card sx-glass" aria-labelledby="t">
+    <a class="sx-logo" href="/"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+    <div>
+      <span class="sx-tag">5º período · UCP</span>
+      <h1 id="t">Seu semestre <em>inteiro.</em></h1>
+    </div>
+    <p class="sx-sub">Slides, provas, áudios e vídeos de todas as matérias, apostilas e treino — reunidos, organizados pelo professor da sua turma. Entre com a sua conta.</p>
+    <button class="sx-btn sx-primary" id="entrar" type="button">Entrar com Google</button>
+    <p class="gate-msg" id="msg" role="status"></p>
+  </section>
+</main>
+
+<div id="app" hidden>
+  <header class="top">
+    <div class="in">
+      <a class="logo" href="/"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+      <span class="quem"><span id="quem"></span><button class="link" id="sair" type="button">Sair</button></span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="tag" id="cab-tag">5º período · UCP</span>
+    <h1>Bom estudo, <em id="nome">aluno</em>.</h1>
+    <p class="sub" id="cab-sub">Tudo que a sua turma usa está aqui dentro. Escolha a matéria.</p>
+
+    <nav class="abas" id="abas" role="tablist"></nav>
+    <section id="painel"></section>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s) };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
+  var CAT = window.SINUS_CATALOGO || { materias: [], agenda: [], atualizado: '' };
+  var turmaAluno = '', aba = 'materias';
+
+  var ABAS = [
+    ['materias', 'Matérias'],
+    ['agenda', 'Agenda'],
+    ['trilhas', 'Trilhas de estudo'],
+    ['biblioteca', 'Biblioteca']
+  ];
+
+  function profDaMateria(m) {
+    if (!m.professores || !m.professores.length) return null;
+    var achado = null;
+    m.professores.forEach(function (p) {
+      if (p.turmas && p.turmas.indexOf(turmaAluno) >= 0) achado = p;
+    });
+    return achado || m.professores[0];
+  }
+
+  function cardMateria(m) {
+    var p = profDaMateria(m);
+    var daTurma = p && p.turmas && p.turmas.indexOf(turmaAluno) >= 0;
+    var pes = [];
+    if (m.pronta) pes.push('<span class="pill ok">Painel completo</span>');
+    if (m.itens) pes.push('<span class="pill">' + m.itens + ' materiais</span>');
+    if (p) pes.push('<span class="pill">' + esc(p.curto || p.nome) + (daTurma ? ' · sua turma' : '') + '</span>');
+    return '<button class="mat" data-ir="' + esc(m.href || '') + '" type="button">' +
+      '<span class="ico">' + (m.icone || '📘') + '</span>' +
+      '<b>' + esc(m.nome) + '</b>' +
+      (p ? '<span class="prof">' + esc(p.nome) + '</span>' : '<span class="prof">Acervo da cátedra</span>') +
+      '<span class="pe">' + pes.join('') + '</span>' +
+      '</button>';
+  }
+
+  function render() {
+    $('#abas').innerHTML = ABAS.map(function (a) {
+      return '<button role="tab" data-aba="' + a[0] + '" aria-selected="' + (a[0] === aba) + '" type="button">' + a[1] + '</button>';
+    }).join('');
+
+    var h = '';
+    if (aba === 'materias') {
+      h = CAT.materias.length
+        ? '<div class="grade">' + CAT.materias.map(cardMateria).join('') + '</div>'
+        : '<div class="card"><div class="vazio"><b>O acervo está sendo montado</b>As matérias aparecem aqui assim que a varredura do Drive terminar.</div></div>';
+    } else if (aba === 'agenda') {
+      h = '<div class="card"><h2>Agenda</h2><p>O horário da sua turma, aula por aula, com sala e grupo.</p></div>';
+    } else if (aba === 'trilhas') {
+      h = '<div class="card"><h2>Trilhas de estudo</h2><p>Roteiros por matéria, com apostila, treino e flashcards na ordem.</p></div>';
+    } else {
+      h = '<div class="card"><h2>Biblioteca</h2><p>Robbins, Guyton e o material complementar do semestre.</p></div>';
+    }
+    $('#painel').innerHTML = h;
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-aba]');
+    if (a) { aba = a.dataset.aba; render(); return }
+    var ir = e.target.closest && e.target.closest('[data-ir]');
+    if (ir && ir.dataset.ir) location.href = ir.dataset.ir;
+  });
+
+  // ---- entrada ----
+  firebase.initializeApp(window.SINUSAL_FIREBASE);
+  var auth = firebase.auth(), db = firebase.firestore();
+  var msg = $('#msg'), btn = $('#entrar');
+  function say(t, erro) { msg.textContent = t; msg.className = 'gate-msg' + (erro ? ' erro' : '') }
+
+  btn.addEventListener('click', function () {
+    var g = new firebase.auth.GoogleAuthProvider(); g.setCustomParameters({ prompt: 'select_account' });
+    btn.disabled = true; say('Abrindo a entrada do Google…');
+    auth.signInWithPopup(g).catch(function (e) {
+      btn.disabled = false;
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return auth.signInWithRedirect(g);
+      say('Não foi possível entrar. Tente de novo.', true);
+    });
+  });
+  $('#sair').addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) });
+  auth.getRedirectResult().catch(function () {});
+  auth.onAuthStateChanged(function (u) {
+    if (!u) return;
+    var prim = (u.displayName || u.email || '').split(' ')[0];
+    $('#gate').hidden = true; $('#app').hidden = false;
+    $('#quem').textContent = prim; $('#nome').textContent = prim;
+    render();
+    db.doc('perfis/' + u.uid).get().then(function (snap) {
+      var d = snap.exists ? snap.data() : {};
+      if (!d.turma) return;
+      turmaAluno = d.turma;
+      $('#cab-tag').textContent = '5º período · turma ' + d.turma + ' · UCP';
+      render();
+    }).catch(function () {});
+    db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
+  });
+
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
+})();
+</script>
+</body>
+</html>

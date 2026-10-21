@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Matéria · sinusal.</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#176e5b">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400&family=Inter:wght@400;500;600;700&display=swap">
+<script src="/aulas/catalogo.js?v=2"></script>
+<style>
+  :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--soft:#f3f7f5;--bg:#f6f8f7}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif}
+  [hidden]{display:none!important}
+  .top{position:sticky;top:0;z-index:20;background:rgba(246,248,247,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .top .in{max-width:1140px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .top a{color:var(--green);text-decoration:none;font-weight:600}
+  .wrap{max-width:1140px;margin:0 auto;padding:24px 16px 64px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(28px,4.6vw,40px);letter-spacing:-.02em;margin:4px 0 0}
+  .sub{color:var(--ink3);margin:6px 0 0;font-size:14.5px}
+  .abas{display:flex;gap:8px;overflow-x:auto;padding:20px 0 8px}
+  .abas button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:9px 16px;font:500 14px 'Inter',sans-serif;cursor:pointer;min-height:40px}
+  .abas button[aria-selected="true"]{background:#16241f;border-color:#16241f;color:#fff}
+  .lista{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .it{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);width:100%;background:none;border-left:none;border-right:none;border-top:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+  .it:last-child{border-bottom:none}
+  .it:hover{background:var(--soft)}
+  .it b{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .it small{display:block;color:var(--ink3);font-size:12.5px}
+  .it .ch{margin-left:auto;color:var(--ink3);font-size:12px;flex:none;border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+  .viewer{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:14px}
+  .viewer-h{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .viewer-h b{font-size:15px;font-weight:600}
+  .viewer-h a{margin-left:auto;color:var(--green);font-size:14px;font-weight:600}
+  .viewer iframe{display:block;width:100%;height:min(78vh,820px);border:0}
+  .vazio{padding:30px 16px;text-align:center;color:var(--ink3)}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><a href="/">← Sinus</a></div></header>
+<main class="wrap">
+  <span id="tag" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600">5º período · UCP</span>
+  <h1 id="nome">Matéria</h1>
+  <p class="sub" id="sub"></p>
+  <nav class="abas" id="abas" role="tablist"></nav>
+  <section id="lista"></section>
+  <section class="viewer" id="viewer" hidden>
+    <div class="viewer-h"><b id="vt"></b><a id="vl" target="_blank" rel="noopener">Abrir no Drive</a></div>
+    <iframe id="vf" allow="autoplay" title="Visor"></iframe>
+  </section>
+</main>
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s) };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
+  var m = new URLSearchParams(location.search).get('m');
+  var mat = ((window.SINUS_CATALOGO || {}).materias || []).filter(function (x) { return x.slug === m })[0];
+  if (!mat) { $('#nome').textContent = 'Matéria não encontrada'; $('#lista').innerHTML = '<div class="vazio">Volte à home e escolha uma matéria.</div>'; return }
+  document.title = mat.nome + ' · sinusal.';
+  $('#nome').textContent = mat.nome;
+  $('#sub').textContent = (mat.itens || 0) + ' materiais reunidos do acervo, por tipo.';
+
+  var TIPOS = [['slide', 'Slides e aulas'], ['prova', 'Provas'], ['audio', 'Áudios'], ['video', 'Vídeos'], ['pratica', 'Práticas'], ['livro', 'Livros'], ['material', 'Materiais']];
+  var itens = mat.itensLista || [];
+  var aba = (TIPOS.filter(function (t) { return itens.some(function (i) { return i.k === t[0] }) })[0] || ['material'])[0];
+
+  function viewer(i) {
+    var emb = 'https://drive.google.com/file/d/' + i.id + '/preview';
+    $('#vt').textContent = i.t;
+    $('#vl').href = 'https://drive.google.com/file/d/' + i.id + '/view';
+    $('#vf').src = emb;
+    $('#viewer').hidden = false;
+    $('#viewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function render() {
+    var disp = TIPOS.filter(function (t) { return itens.some(function (i) { return i.k === t[0] }) });
+    $('#abas').innerHTML = disp.map(function (t) {
+      var n = itens.filter(function (i) { return i.k === t[0] }).length;
+      return '<button role="tab" data-t="' + t[0] + '" aria-selected="' + (t[0] === aba) + '" type="button">' + t[1] + ' · ' + n + '</button>';
+    }).join('');
+    var lista = itens.filter(function (i) { return i.k === aba });
+    $('#lista').innerHTML = lista.length
+      ? '<div class="lista">' + lista.map(function (i, n) {
+          return '<button class="it" data-id="' + esc(i.id) + '" type="button"><span><b>' + esc(i.t) + '</b><small>' + esc(i.o) + '</small></span><span class="ch">Abrir</span></button>';
+        }).join('') + '</div>'
+      : '<div class="vazio">Nada aqui ainda.</div>';
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-t]'); if (t) { aba = t.dataset.t; render(); return }
+    var it = e.target.closest('[data-id]');
+    if (it) { var f = itens.filter(function (x) { return x.id === it.dataset.id })[0]; if (f) viewer(f) }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

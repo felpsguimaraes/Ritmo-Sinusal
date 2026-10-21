@@ -5,10 +5,9 @@
   publish = "."
   command = ""
 
-# A porta de entrada do Sinus é o painel da matéria.
-# Para mudar o destino, troque o "to" abaixo.
+# A raiz é a home da Sinus, com todas as matérias.
 [[redirects]]
-  from = "/"
+  from = "/painel"
   to = "/aulas/anatopato/"
   status = 302
   force = true
