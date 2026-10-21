@@ -139,7 +139,9 @@
       { t: 'Clase 2 · Adaptación celular — parte 2', d: '33 MB', id: '1W9KH2qlGzQHLadEq3ga-Lmac-KtEfRKv' },
       { t: 'Clase 4 · Necrosis', d: '44 MB', id: '1F9Z1EPQ0j12mePczhbnf8n3evFFxqBPo' }
     ],
-    videos: [],
+    videos: [
+      { t: 'Clase repaso · Dra. Eliana Chamorro', d: 'Gravação da aula de revisão · 12/05/2026 · 5º D, F, G, I e J', id: '19FqmuZrIucxmY-0QrC5GTx-S5jJeAjy7' }
+    ],
     provas: [
       { t: 'Provas antigas · Dra. Chamorro', d: 'P1 · P2 · Final · recuperações', id: '1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z' }
     ],
@@ -217,7 +219,7 @@
     else if (aba === 'slides') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pastas de slides da turma. Clique para abrir dentro da página.</p>' + linhas(MAT.slides, 'pasta');
     else if (aba === 'provas') h = linhas(MAT.provas, 'arquivo');
     else if (aba === 'audios') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas gravadas da professora. Clique para ouvir aqui mesmo.</p>' + linhas(MAT.audios, 'audio');
-    else if (aba === 'videos') h = MAT.videos.length ? linhas(MAT.videos, 'arquivo')
+    else if (aba === 'videos') h = MAT.videos.length ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas em vídeo da professora. Clique para assistir aqui mesmo.</p>' + linhas(MAT.videos, 'arquivo')
       : vazio('Nenhum vídeo ainda', 'Assim que o vídeo da professora entrar no Drive da turma, ele aparece aqui.');
     else if (aba === 'fotos') h = linhas(MAT.fotos, 'pasta');
     else if (aba === 'livros') h = linhas(MAT.livros, 'pasta');
