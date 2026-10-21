@@ -8,11 +8,11 @@
 <meta name="theme-color" content="#ffffff">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../sinusal.css?v=9">
+<link rel="stylesheet" href="../sinusal.css?v=10">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="../config.js?v=9"></script>
+<script src="../config.js?v=10"></script>
 <style>
   :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--green-d:#0f5544;--soft:#f3f7f5;--bg:#f6f8f7}
   *{box-sizing:border-box}
@@ -234,9 +234,9 @@
       audios: doProf('audios'),
       videos: doProf('videos'),
       provas: doProf('provas'),
-      slides: (P.slides || []).concat(COMUM.slides),
+      slides: doProf('slides'),
       fotos: COMUM.fotos,
-      livros: (P.complementares || []).concat(COMUM.livros),
+      complementares: doProf('complementares'),
       praticaPasta: COMUM.praticaPasta
     };
   }
@@ -286,7 +286,7 @@
         '<button class="btn" data-aba="provas">Ver as provas</button></div>' +
         '<p class="aviso">Tudo abre aqui dentro: áudios, provas, slides e fotos.</p></div>' +
       '<div class="linhas">' +
-        contagem(MAT.slides.length, 'Slides', 'Da professora e da cátedra', 'slides') +
+        contagem(MAT.slides.itens.length + COMUM.slides.length, 'Slides', 'Da professora e da cátedra', 'slides') +
         contagem(MAT.provas.itens.length, 'Provas', MAT.provas.proprio ? 'Da ' + PROFS[profAtual].curto : 'Da ' + PROFS[PRINCIPAL].curto + ' (a sua não tem)', 'provas') +
         contagem(MAT.audios.itens.length, 'Áudios', MAT.audios.proprio ? 'Aulas gravadas da ' + PROFS[profAtual].curto : 'Da ' + PROFS[PRINCIPAL].curto + ' (a sua não tem)', 'audios') +
         contagem(MAT.videos.itens.length, 'Vídeos', MAT.videos.itens.length ? (MAT.videos.proprio ? 'Aulas em vídeo' : 'Da ' + PROFS[PRINCIPAL].curto) : 'Ainda não enviados', 'videos') +
@@ -305,22 +305,29 @@
   }
 
   function nota(txt) { return '<p class="sub" style="color:var(--ink3);margin:0 0 12px">' + txt + '</p>' }
-  function listaBloco(campo, tipo, titulo, vazioTxt) {
-    var r = MAT[campo], h = '';
-    if (!r.itens.length) return vazio('Nada de ' + PROFS[profAtual].curto + ' ainda', vazioTxt);
-    h += r.proprio
-      ? nota(titulo + ' da ' + esc(PROFS[profAtual].nome) + ', a professora da sua turma.')
-      : nota('A ' + esc(PROFS[profAtual].nome) + ' ainda não tem ' + titulo.toLowerCase() + ' aqui. Mostrando o material da ' + esc(PROFS[PRINCIPAL].nome) + '.');
-    h += linhas(r.itens, tipo);
+  function listaBloco(campo, tipo, titulo, vazioTxt, comuns, rotuloComum) {
+    var r = MAT[campo], h = '', nada = true;
+    if (r.itens.length) {
+      nada = false;
+      h += r.proprio
+        ? nota(titulo + ' da ' + esc(PROFS[profAtual].nome) + ', a professora da sua turma.')
+        : nota('A ' + esc(PROFS[profAtual].nome) + ' ainda não tem ' + titulo.toLowerCase() + ' aqui. Começando pelo material da ' + esc(PROFS[PRINCIPAL].nome) + '.');
+      h += linhas(r.itens, tipo);
+    }
+    if (comuns && comuns.length) {
+      nada = false;
+      h += '<p class="mat-tag" style="margin:' + (h ? '22px' : '0') + ' 0 6px">' + esc(rotuloComum || 'Da cátedra · vale para todas as turmas') + '</p>' + linhas(comuns, tipo);
+    }
     var outras = outrasProfs(campo);
     if (outras.length) {
-      h += '<h2 style="font-family:Fraunces,Georgia,serif;font-weight:300;font-size:26px;margin:26px 0 4px">De outras professoras</h2>' +
-        nota('Serve de treino, mas a cobrança da sua turma é a da ' + esc(PROFS[profAtual].nome) + '.');
+      nada = false;
+      h += '<h2 style="font-family:Fraunces,Georgia,serif;font-weight:300;font-size:26px;margin:28px 0 4px">De outras professoras</h2>' +
+        nota('Tudo aberto, para treinar à vontade. O que a sua turma cobra é o da ' + esc(PROFS[profAtual].nome) + '.');
       outras.forEach(function (k) {
-        h += '<p class="mat-tag" style="margin:14px 0 6px">' + esc(PROFS[k].nome) + '</p>' + linhas(PROFS[k][campo], tipo);
+        h += '<p class="mat-tag" style="margin:16px 0 6px">' + esc(PROFS[k].nome) + '</p>' + linhas(PROFS[k][campo], tipo);
       });
     }
-    return h;
+    return nada ? vazio('Nada aqui ainda', vazioTxt) : h;
   }
 
   function render() {
@@ -341,12 +348,12 @@
           '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
           '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>' +
       '</div>';
-    else if (aba === 'slides') h = nota('Slides da ' + esc(PROFS[profAtual].nome) + ' e as pastas da cátedra.') + linhas(MAT.slides, 'pasta');
+    else if (aba === 'slides') h = listaBloco('slides', 'pasta', 'Slides', 'Assim que entrarem slides no Drive, aparecem aqui.', COMUM.slides, 'Da cátedra · pastas P1 e P2');
     else if (aba === 'provas') h = listaBloco('provas', 'arquivo', 'Provas', 'Assim que entrarem provas dela no Drive, aparecem aqui.');
     else if (aba === 'audios') h = listaBloco('audios', 'audio', 'Áudios', 'As gravações dela ainda não foram enviadas.');
     else if (aba === 'videos') h = listaBloco('videos', 'arquivo', 'Vídeos', 'Assim que entrar um vídeo dela no Drive, aparece aqui.');
     else if (aba === 'fotos') h = linhas(MAT.fotos, 'pasta');
-    else if (aba === 'livros') h = linhas(MAT.livros, 'pasta');
+    else if (aba === 'livros') h = listaBloco('complementares', 'pasta', 'Complementares', 'Nada de complementar no Drive ainda.', COMUM.livros, 'Da cátedra · livros e material de apoio');
     else if (aba === 'laminas') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pasta de prática da turma.</p>' +
       linhas([{ t: 'Prática · lâminas e macroscopia', d: 'Pasta da turma', id: MAT.praticaPasta }], 'pasta');
     else if (aba === 'macro') h = vazio('Macroscopia', 'As peças macroscópicas entram aqui quando forem separadas da pasta de prática.');
