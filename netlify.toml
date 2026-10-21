@@ -1,0 +1,26 @@
+# Publicação do site no Netlify.
+# O site é estático: não há build, o Netlify só serve os arquivos do repositório.
+
+[build]
+  publish = "."
+  command = ""
+
+# A porta de entrada do Sinus é o painel da matéria.
+# Para mudar o destino, troque o "to" abaixo.
+[[redirects]]
+  from = "/"
+  to = "/aulas/anatopato/"
+  status = 302
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Os arquivos cifrados e os PDFs não precisam ser reprocessados
+[[headers]]
+  for = "/aulas/*/pdf/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
