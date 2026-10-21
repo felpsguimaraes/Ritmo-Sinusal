@@ -278,8 +278,11 @@
       })
     }).then(function (raw) {
       var payload = JSON.parse(new TextDecoder().decode(raw)), urls = {}
-      Object.keys(payload.imgs).forEach(function (nome) { urls[nome] = URL.createObjectURL(new Blob([b64bytes(payload.imgs[nome])], { type: 'image/jpeg' })) })
-      var html = payload.html.replace(/img\/([\w.-]+\.jpg)/g, function (m, n) { return urls[n] || m })
+      Object.keys(payload.imgs).forEach(function (nome) {
+        urls[nome.replace(/\.jpg$/, '')] = URL.createObjectURL(new Blob([b64bytes(payload.imgs[nome])], { type: 'image/jpeg' }))
+      })
+      var inj = '<script>window.__SINUSAL_IMGS__=' + JSON.stringify(urls).replace(/</g, '\\u003c') + ';<\/script>'
+      var html = payload.html.replace(/<head>/i, '<head>' + inj)
       view.innerHTML = ''
       var fr = document.createElement('iframe')
       fr.className = 'apos-frame'; fr.title = 'Apostila de ' + TITULO
