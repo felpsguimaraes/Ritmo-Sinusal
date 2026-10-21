@@ -239,7 +239,7 @@
     if (!h || h === '/') return { v: sess.get('modo') === '3d' ? '3d' : 'inicio', p: [] }
     if (h.charAt(0) !== '/') return { v: '3d', p: [h] }
     var p = h.slice(1).split('/')
-    var v = ['inicio', '3d', 'pdf', 'treino'].indexOf(p[0]) >= 0 ? p[0] : 'inicio'
+    var v = ['inicio', '3d', 'pdf', 'treino', 'apostila'].indexOf(p[0]) >= 0 ? p[0] : 'inicio'
     return { v: v, p: p.slice(1) }
   }
   var vistaAtual = ''
@@ -257,9 +257,41 @@
     if (r.v === 'inicio') { hub(); document.title = TITULO + ' · sinusal.' }
     if (r.v === 'pdf') { marcarModo('pdf'); pdfAbrir(r.p[0], +r.p[1] || 0); document.title = 'PDF · ' + TITULO + ' · sinusal.' }
     if (r.v === 'treino') { marcarModo('treino'); treino(r.p[0] || ''); document.title = 'Treino · ' + TITULO + ' · sinusal.' }
+    if (r.v === 'apostila') { apostilaAbrir(); document.title = 'Apostila · ' + TITULO + ' · sinusal.' }
     if (mudou && !(r.v === 'pdf' && r.p[1])) scrollTo(0, 0)
   }
   function ir(h) { if (location.hash === h) rota(); else location.hash = h }
+
+  // ---------------- apostila: HTML cifrado (AES-GCM) no GitHub; chave só para quem entrou ----------------
+  function apostilaAbrir() {
+    var cfg = A.apostila
+    view.innerHTML = '<div class="sx-wrap"><p class="sx-lead" id="apos-msg">Abrindo a apostila…</p></div>'
+    if (!cfg) { $('#apos-msg').textContent = 'A apostila ainda não está disponível.'; return }
+    function b64bytes(b64) { var bin = atob(b64), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u }
+    Promise.all([
+      db.doc('aulas/' + cfg.doc).get().then(function (snap) { if (!snap.exists) throw { code: 'sem-chave' }; return snap.data().chave }),
+      fetch(cfg.arq, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw { code: 'sem-arquivo' }; return r.arrayBuffer() })
+    ]).then(function (r) {
+      return crypto.subtle.importKey('raw', b64bytes(r[0]), 'AES-GCM', false, ['decrypt']).then(function (k) {
+        var buf = new Uint8Array(r[1])
+        return crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.subarray(0, 12) }, k, buf.subarray(12))
+      })
+    }).then(function (raw) {
+      var payload = JSON.parse(new TextDecoder().decode(raw)), urls = {}
+      Object.keys(payload.imgs).forEach(function (nome) { urls[nome] = URL.createObjectURL(new Blob([b64bytes(payload.imgs[nome])], { type: 'image/jpeg' })) })
+      var html = payload.html.replace(/img\/([\w.-]+\.jpg)/g, function (m, n) { return urls[n] || m })
+      view.innerHTML = ''
+      var fr = document.createElement('iframe')
+      fr.className = 'apos-frame'; fr.title = 'Apostila de ' + TITULO
+      fr.srcdoc = html
+      view.appendChild(fr)
+    }).catch(function (e) {
+      var m = $('#apos-msg'); if (!m) return
+      if (e && e.code === 'permission-denied') m.textContent = 'Sua conta ainda não tem acesso à apostila. Fale com a professora ou com o dono do site.'
+      else if (e && e.code === 'sem-chave') m.textContent = 'A apostila ainda não foi liberada.'
+      else m.textContent = 'Não foi possível abrir a apostila agora. Tente de novo.'
+    })
+  }
 
   // ---------------- dados do treino (perguntas) ----------------
   var dadosP = null
@@ -282,12 +314,14 @@
     view.innerHTML = '<div class="sx-wrap">' +
       '<span class="sx-tag">' + esc((A.materia || 'Anatomía Patológica I') + ' · ' + TITULO) + '</span>' +
       '<h1 class="sx-h1">' + (nome ? 'Olá, <em>' + esc(nome) + '.</em>' : 'Bons <em>estudos.</em>') + '</h1>' +
-      '<p class="sx-lead">Como você quer estudar hoje? O conteúdo é o mesmo nos dois: escolha o jeito que funciona melhor para você agora.</p>' +
+      '<p class="sx-lead">Como você quer estudar hoje? Escolha o jeito que funciona melhor para você agora.</p>' +
       '<div class="hub-modes">' +
         '<a class="mode sx-glass" href="#/3d"><span class="mode-art"><img src="' + IMG(A.capa || 'secuencia') + '" alt="" width="1920" height="1080"></span>' +
           '<span class="mode-txt"><b>Aula em 3D</b><span>' + (A.temas || 16) + ' temas com as lâminas em 3D. A câmera aproxima cada achado e o texto da professora aparece por cima.</span><span class="go">Abrir a aula</span></span></a>' +
         '<a class="mode sx-glass" href="#/pdf"><span class="mode-art mode-pdf" aria-hidden="true"><i></i><i></i><i></i></span>' +
           '<span class="mode-txt"><b>Material em PDF</b><span>O conteúdo inteiro em páginas para ler e revisar, e o resumo com as questões das provas.</span><span class="go">Abrir o PDF</span></span></a>' +
+        (A.apostila ? '<a class="mode sx-glass" href="#/apostila"><span class="mode-art mode-apos" aria-hidden="true"><i></i><i></i></span>' +
+          '<span class="mode-txt"><b>Apostila</b><span>Teoria em português com os termos em espanhol, o que caiu em cada prova, imagens e cartões de revisão.</span><span class="go">Abrir a apostila</span></span></a>' : '') +
       '</div>' +
       '<a class="hub-tr sx-glass" href="#/treino"><span><b class="t">Treino</b><span class="d" id="hub-tr-d">As perguntas das provas antigas e do repaso, uma por vez, com gabarito comentado.</span></span>' +
         '<span class="nums" id="hub-nums"><span><b>·</b>dominadas</span><span><b>·</b>para revisar</span><span><b>·</b>novas</span></span><span class="go">Treinar</span></a>' +
