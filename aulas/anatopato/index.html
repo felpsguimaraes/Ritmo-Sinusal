@@ -157,7 +157,7 @@
   var ABAS = {
     teoria: [
       ['visao', 'Visão geral'], ['apostila', 'Apostila'], ['slides', 'Slides'], ['provas', 'Provas'],
-      ['audios', 'Áudios'], ['videos', 'Vídeos'], ['fotos', 'Fotos'], ['livros', 'Complementares'], ['aula3d', 'Aula 3D']
+      ['audios', 'Áudios'], ['videos', 'Vídeos'], ['fotos', 'Fotos'], ['livros', 'Complementares']
     ],
     pratica: [['laminas', 'Lâminas'], ['macro', 'Macroscopia']]
   };
@@ -192,7 +192,7 @@
   function painelVisao() {
     return '<div class="grid2">' +
       '<div class="card"><span class="mat-tag">Teoria · sua biblioteca da matéria</span>' +
-        '<h2>Materiais de teoria</h2><p class="sub">Slides, provas, áudios da professora e a apostila com os exercícios.</p>' +
+        '<h2>Materiais de teoria</h2><p class="sub">Slides, provas, áudios da professora e a apostila, em PDF ou em 3D.</p>' +
         '<div class="btns"><button class="btn prim" data-aba="apostila">Abrir a apostila</button>' +
         '<button class="btn" data-aba="audios">Ouvir a aula</button>' +
         '<button class="btn" data-aba="provas">Ver as provas</button></div>' +
@@ -213,9 +213,15 @@
     }).join('');
     var p = $('#painel'), h = '';
     if (aba === 'visao') h = painelVisao();
-    else if (aba === 'apostila') h = '<div class="card"><span class="mat-tag">Apostila</span><h2>Lesión celular</h2>' +
-      '<p class="sub">Teoria em português com os termos em espanhol, o que caiu em cada prova, exercícios um por vez e flashcards.</p>' +
-      '<div class="btns"><a class="btn prim" href="../lesion/">Abrir a apostila</a><a class="btn" href="../lesion/#/pdf">Material em PDF</a></div></div>';
+    else if (aba === 'apostila') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p>' +
+      '<div class="grid2">' +
+        '<div class="card"><span class="mat-tag">Apostila · em PDF</span><h2>Ler em páginas</h2>' +
+          '<p class="sub">O conteúdo inteiro em páginas, com índice, zoom e a página salva de onde você parou. Inclui o resumo com as questões das provas.</p>' +
+          '<div class="btns"><a class="btn prim" href="../lesion/#/pdf">Abrir em PDF</a></div></div>' +
+        '<div class="card"><span class="mat-tag">Apostila · em 3D</span><h2>Ver em 3D</h2>' +
+          '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
+          '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>' +
+      '</div>';
     else if (aba === 'slides') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pastas de slides da turma. Clique para abrir dentro da página.</p>' + linhas(MAT.slides, 'pasta');
     else if (aba === 'provas') h = linhas(MAT.provas, 'arquivo');
     else if (aba === 'audios') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Aulas gravadas da professora. Clique para ouvir aqui mesmo.</p>' + linhas(MAT.audios, 'audio');
@@ -223,9 +229,6 @@
       : vazio('Nenhum vídeo ainda', 'Assim que o vídeo da professora entrar no Drive da turma, ele aparece aqui.');
     else if (aba === 'fotos') h = linhas(MAT.fotos, 'pasta');
     else if (aba === 'livros') h = linhas(MAT.livros, 'pasta');
-    else if (aba === 'aula3d') h = '<div class="card"><span class="mat-tag">Aula em 3D</span><h2>Lesión celular em 3D</h2>' +
-      '<p class="sub">As lâminas em 3D, com a câmera aproximando cada achado e o texto da professora por cima.</p>' +
-      '<div class="btns"><a class="btn prim" href="../lesion/#/3d">Abrir a aula em 3D</a><a class="btn" href="../lesion/#/treino">Treino para prova</a></div></div>';
     else if (aba === 'laminas') h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">Pasta de prática da turma.</p>' +
       linhas([{ t: 'Prática · lâminas e macroscopia', d: 'Pasta da turma', id: MAT.praticaPasta }], 'pasta');
     else if (aba === 'macro') h = vazio('Macroscopia', 'As peças macroscópicas entram aqui quando forem separadas da pasta de prática.');
