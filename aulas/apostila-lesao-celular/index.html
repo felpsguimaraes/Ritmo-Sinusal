@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Apostila de lesão celular · sinusal.</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../sinusal.css?v=3">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../config.js?v=3"></script>
+<style>
+  body{margin:0}
+  .gate-msg{font-size:15px;color:#46524d;margin:0;min-height:1.4em}
+  .gate-msg.erro{color:#9b2c47}
+</style>
+</head>
+<body class="sx-body">
+<main class="sx-gate" id="gate">
+  <section class="sx-card sx-glass" aria-labelledby="t">
+    <a class="sx-logo" href="../../"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+    <div>
+      <span class="sx-tag">Anatomía Patológica I</span>
+      <h1 id="t">Apostila de <em>lesión celular.</em></h1>
+    </div>
+    <p class="sx-sub">Entre com a sua conta para abrir a apostila.</p>
+    <button class="sx-btn sx-primary" id="entrar" type="button">Entrar com Google</button>
+    <p class="gate-msg" id="msg" role="status"></p>
+  </section>
+</main>
+<script>
+(function () {
+  var msg = document.getElementById('msg'), btn = document.getElementById('entrar');
+  function say(t, erro) { msg.textContent = t; msg.className = 'gate-msg' + (erro ? ' erro' : ''); }
+  function b64bytes(b64) { var bin = atob(b64), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; }
+
+  var app = firebase.initializeApp(window.SINUSAL_FIREBASE);
+  var auth = firebase.auth(), db = firebase.firestore();
+
+  function abrirApostila(user) {
+    say('Abrindo a apostila…');
+    btn.disabled = true;
+    db.doc('aulas/apostila-lesao-celular-pdf').get().then(function (snap) {
+      if (!snap.exists) throw { code: 'sem-chave' };
+      return Promise.all([
+        crypto.subtle.importKey('raw', b64bytes(snap.data().chave), 'AES-GCM', false, ['decrypt']),
+        fetch('conteudo.bin', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw { code: 'sem-arquivo' }; return r.arrayBuffer(); })
+      ]);
+    }).then(function (r) {
+      var buf = new Uint8Array(r[1]);
+      return crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.subarray(0, 12) }, r[0], buf.subarray(12));
+    }).then(function (raw) {
+      var payload = JSON.parse(new TextDecoder().decode(raw)), urls = {};
+      Object.keys(payload.imgs).forEach(function (nome) {
+        urls[nome] = URL.createObjectURL(new Blob([b64bytes(payload.imgs[nome])], { type: 'image/jpeg' }));
+      });
+      var html = payload.html.replace(/img\/([\w.-]+\.jpg)/g, function (m, n) { return urls[n] || m; });
+      document.open(); document.write(html); document.close();
+    }).catch(function (e) {
+      btn.disabled = false;
+      if (e && e.code === 'permission-denied') say('Sua conta ainda não tem acesso. Fale com a professora ou com o dono do site.', true);
+      else if (e && e.code === 'sem-chave') say('A apostila ainda não foi liberada.', true);
+      else say('Não foi possível abrir a apostila agora. Tente de novo.', true);
+    });
+  }
+
+  btn.addEventListener('click', function () {
+    var google = new firebase.auth.GoogleAuthProvider();
+    google.setCustomParameters({ prompt: 'select_account' });
+    auth.signInWithPopup(google).catch(function (e) {
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return auth.signInWithRedirect(google);
+      say('Não foi possível entrar. Tente de novo.', true);
+    });
+  });
+
+  auth.getRedirectResult().catch(function () {});
+  auth.onAuthStateChanged(function (user) { if (user) abrirApostila(user); });
+})();
+</script>
+</body>
+</html>
