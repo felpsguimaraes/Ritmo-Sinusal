@@ -54,6 +54,17 @@ service cloud.firestore {
         && request.resource.data.em == request.time;
     }
 
+    // progresso do treino de cada aluno: segue a conta, não o aparelho
+    match /progresso/{id} {
+      allow read: if dono() || (conta() && id.matches('^' + request.auth.uid + '_.*'));
+      allow create, update: if conta() && preencheu() && !bloqueado()
+        && request.resource.data.keys().hasOnly(['uid', 'aula', 'prog', 'em'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.aula is string
+        && id == request.auth.uid + '_' + request.resource.data.aula;
+      allow delete: if dono();
+    }
+
     // cada entrada na aula vira um registro; só o dono lê
     match /acessos/{id} {
       allow create: if conta() && preencheu() && !bloqueado()

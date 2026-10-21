@@ -215,6 +215,7 @@
     entrou = true; usuario = user
     if (!perfil || !perfil.dono) registrar(user)
     $('#sx-quem').textContent = perfil && perfil.nome ? perfil.nome + (perfil.turma ? ' · turma ' + perfil.turma : '') : ''
+    nuvemProg()
     addEventListener('hashchange', rota)
     rota()
   }
@@ -565,6 +566,52 @@
   // ---------------- treino: progresso e repetição espaçada ----------------
   var INTERVALO = [0, 1, 3, 7, 16]
   var prog = store.get('treino', null) || { v: 1, it: {}, dias: [], hist: [], sim: {} }
+
+  // ---- progresso do treino na conta (segue o aluno entre aparelhos e endereços) ----
+  var progRef = null, progT = null
+  function salvarProg() { store.set('treino', prog); nuvemSalvar() }
+  function nuvemSalvar() {
+    if (!progRef) return
+    clearTimeout(progT)
+    progT = setTimeout(function () {
+      progRef.set({ uid: usuario.uid, aula: AULA, prog: prog, em: FV.serverTimestamp() }, { merge: true }).catch(function () {})
+    }, 1200)
+  }
+  function mesclarProg(a, b) {
+    if (!b || typeof b !== 'object') return a
+    var out = { v: 1, it: {}, dias: [], hist: [], sim: {} }
+    var ids = {}
+    Object.keys(a.it || {}).forEach(function (k) { ids[k] = 1 })
+    Object.keys(b.it || {}).forEach(function (k) { ids[k] = 1 })
+    Object.keys(ids).forEach(function (k) {
+      var x = (a.it || {})[k], y = (b.it || {})[k]
+      if (!x || !y) { out.it[k] = x || y; return }
+      // fica com o que tem mais respostas; empatando, com o agendamento mais à frente
+      out.it[k] = (y.n || 0) > (x.n || 0) ? y : ((x.n || 0) > (y.n || 0) ? x : ((y.d || 0) > (x.d || 0) ? y : x))
+    })
+    var dias = {}
+    ;(a.dias || []).concat(b.dias || []).forEach(function (d) { if (d != null) dias[d] = 1 })
+    out.dias = Object.keys(dias).map(Number).sort(function (m, n) { return m - n }).slice(-60)
+    var vistos = {}
+    out.hist = (a.hist || []).concat(b.hist || []).filter(function (h) {
+      var k = h.em + '|' + h.titulo; if (vistos[k]) return false; vistos[k] = 1; return true
+    }).sort(function (m, n) { return n.em - m.em }).slice(0, 20)
+    Object.keys(a.sim || {}).forEach(function (k) { out.sim[k] = a.sim[k] })
+    Object.keys(b.sim || {}).forEach(function (k) { out.sim[k] = out.sim[k] == null ? b.sim[k] : Math.max(out.sim[k], b.sim[k]) })
+    return out
+  }
+  function nuvemProg() {
+    if (!usuario || (perfil && perfil.dono)) return
+    progRef = db.doc('progresso/' + usuario.uid + '_' + AULA)
+    progRef.get().then(function (s) {
+      if (s.exists && s.data().prog) {
+        prog = mesclarProg(prog, s.data().prog)
+        store.set('treino', prog)
+        if (vistaAtual === 'treino' && !S) { dadosTreino().then(function (d) { if (vistaAtual === 'treino') inicioTreino(d) }).catch(function () {}) }
+      }
+      nuvemSalvar()
+    }).catch(function () { progRef = null })
+  }
   prog.sim = prog.sim || {}
   function hoje() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 6e4) / 864e5) }
   function situ(id) {
@@ -593,7 +640,7 @@
     s.g = g; s.d = hoje() + INTERVALO[s.b]
     prog.it[id] = s
     var h = hoje(); if (prog.dias[prog.dias.length - 1] !== h) { prog.dias.push(h); prog.dias = prog.dias.slice(-60) }
-    store.set('treino', prog)
+    salvarProg()
   }
   function sequencia() {
     var dias = prog.dias, h = hoje(), n = 0, k = dias.length - 1
@@ -750,7 +797,7 @@
     var z = $('#tr-zerar'), armado = 0
     z.addEventListener('click', function () {
       if (!armado) { z.textContent = 'Toque de novo para zerar tudo'; armado = setTimeout(function () { armado = 0; z.textContent = 'Zerar meu progresso neste aparelho' }, 3500); return }
-      clearTimeout(armado); prog = { v: 1, it: {}, dias: [], hist: [], sim: {} }; store.set('treino', prog); S = null; salvarS(); inicioTreino(d)
+      clearTimeout(armado); prog = { v: 1, it: {}, dias: [], hist: [], sim: {} }; salvarProg(); S = null; salvarS(); inicioTreino(d)
     })
     if (foco === 'temas') $('#tr-temas').scrollIntoView()
     if (foco === 'simulado') $('#tr-provas').scrollIntoView()
@@ -928,7 +975,7 @@
       var resp = {}; ids.forEach(function (id) { resp[id] = S.resp[id].g })
       prog.hist.unshift({ em: Date.now(), titulo: S.titulo, modo: S.modo, acertos: acertos, total: total }); prog.hist = prog.hist.slice(0, 20)
       if (S.modo === 'simulado') { var pct0 = acertos / total; if (prog.sim[S.arg] == null || pct0 > prog.sim[S.arg]) prog.sim[S.arg] = pct0 }
-      store.set('treino', prog)
+      salvarProg()
       if (usuario) db.collection('treinos').add({ uid: usuario.uid, aula: AULA, modo: S.modo, total: total, acertos: acertos, resp: resp, em: FV.serverTimestamp() }).catch(function () {})
     }
     S.fase = 'fim'; salvarS()
