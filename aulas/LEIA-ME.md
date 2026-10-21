@@ -1,7 +1,16 @@
 # Aulas do sinusal.
 
-- Aula de Necrose: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/necrose/
+- Aula de Lesión celular (necrose, apoptose e acumulações): https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/lesion/
+- Apostila direto (mesma conta): https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/apostila-lesao-celular/
 - Painel do dono: https://felpsguimaraes.github.io/Ritmo-Sinusal/aulas/painel.html
+
+As aulas antigas (`necrose`, `apoptosis`, `acumulaciones`) agora levam para a aula nova.
+
+**Importante:** o site é publicado da branch `gh-pages`. Depois de enviar para a `main`, atualize também a `gh-pages`, senão nada muda no ar.
+
+## Apostila
+
+A apostila fica cifrada em `aulas/apostila-lesao-celular/conteudo.bin` (AES-GCM, HTML + imagens). A chave vai no documento `aulas/apostila-lesao-celular-pdf` do Firestore, pelo campo "Apostila" do painel do dono. Sem a chave, a apostila não abre.
 
 ## Como funciona para o aluno
 

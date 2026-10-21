@@ -2,79 +2,15 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Muerte celular y necrosis · sinusal.</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#ffffff">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../sinusal.css?v=3">
-<link rel="stylesheet" href="../estudo.css?v=2">
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="../config.js?v=3"></script>
-<script>window.SINUSAL_AULA = { id: 'necrose', titulo: 'Muerte celular y necrosis', materia: 'Anatomía Patológica I', capa: 'secuencia', temas: 16 }</script>
+<link rel="canonical" href="../lesion/">
+<script>location.replace('../lesion/' + (location.hash || ''))</script>
+<meta http-equiv="refresh" content="0; url=../lesion/">
+<style>body{margin:0;display:grid;place-items:center;min-height:100vh;font:16px/1.5 system-ui,sans-serif;color:#202c28;background:#fff;text-align:center;padding:24px}a{color:#176e5b}</style>
 </head>
-<body class="sx-body">
-<main class="sx-gate" id="sx-gate">
-  <section class="sx-card sx-glass" aria-labelledby="sx-title">
-    <a class="sx-logo" href="../../"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
-    <div>
-      <span class="sx-tag">Anatomía Patológica I</span>
-      <h1 id="sx-title">Muerte celular y <em>necrosis.</em></h1>
-    </div>
-    <p class="sx-sub">A aula em 3D ou em PDF, com as lâminas, o texto da professora e o treino com as questões das provas antigas.</p>
-
-    <form class="sx-form" id="f-dados" novalidate hidden>
-      <p class="sx-info" id="dados-info" hidden></p>
-      <div class="sx-field">
-        <label for="sx-nome">Nome completo</label>
-        <input id="sx-nome" name="nome" type="text" autocomplete="name" required minlength="3" maxlength="80" placeholder="Seu nome e sobrenome">
-      </div>
-      <div class="sx-field">
-        <span class="sx-label" id="sx-turma-l">Turma do 5º período</span>
-        <div class="sx-turmas" role="radiogroup" aria-labelledby="sx-turma-l">
-          <label><input type="radio" name="turma" value="A" required><span>A</span></label>
-          <label><input type="radio" name="turma" value="B"><span>B</span></label>
-          <label><input type="radio" name="turma" value="C"><span>C</span></label>
-          <label><input type="radio" name="turma" value="D"><span>D</span></label>
-          <label><input type="radio" name="turma" value="E"><span>E</span></label>
-          <label><input type="radio" name="turma" value="F"><span>F</span></label>
-          <label><input type="radio" name="turma" value="G"><span>G</span></label>
-        </div>
-      </div>
-      <div class="sx-field">
-        <label for="sx-whats">WhatsApp</label>
-        <input id="sx-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+595 981 123 456">
-        <span class="sx-hint">Com o código do país: +595 para Paraguai, +55 para Brasil. Cada número tem uma conta só.</span>
-      </div>
-      <button class="sx-btn sx-primary" type="submit" id="dados-ok">Salvar e entrar</button>
-    </form>
-
-    <div class="sx-ou" id="sx-ou" hidden><span>ou</span></div>
-    <button class="sx-btn" type="button" id="sx-google" hidden>Entrar com Google</button>
-
-    <p class="sx-msg" id="sx-msg" role="status" aria-live="polite"><span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>Carregando…</p>
-    <p class="sx-note">Seus dados ficam com o sinusal. e servem para liberar as aulas e avisar você pelo WhatsApp quando sair aula nova. Não passamos para ninguém.</p>
-    <div class="sx-foot"><span>sinusal.</span><span>© FELPS</span></div>
-  </section>
-</main>
-
-<div class="sx-app" id="sx-app" hidden>
-  <header class="sx-bar" id="sx-bar">
-    <a class="sx-logo" href="#/inicio" aria-label="sinusal. Início"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
-    <nav class="sx-tabs" aria-label="Modos de estudo">
-      <a href="#/inicio" data-v="inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Início</a>
-      <a href="#/3d" data-v="3d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>Aula 3D</a>
-      <a href="#/pdf" data-v="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>PDF</a>
-      <a href="#/treino" data-v="treino"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Treino</a>
-    </nav>
-  </header>
-  <main class="sx-view" id="sx-view"></main>
-  <footer class="sx-appfoot"><span>sinusal. · Anatomía Patológica I</span><span><span id="sx-quem"></span> · <button class="sx-link" type="button" id="sx-sair">Sair da conta</button></span><span>© FELPS</span></footer>
-</div>
-
-<script src="../app.js?v=3"></script>
+<body>
+<p>Esta aula agora faz parte de <b>Lesión celular</b>, com a aula em 3D, o PDF, a apostila e o treino.<br><a href="../lesion/">Abrir a aula nova</a></p>
 </body>
 </html>
