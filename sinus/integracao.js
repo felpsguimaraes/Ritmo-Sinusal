@@ -388,6 +388,7 @@
     DB.users = [SESSAO];
     DB.sales = [];
     DB.subjects = montarMaterias();
+    if (W.SinusDrive) W.SinusDrive.apply(DB, S.prefs.periodo || 5, S.turma || "G");
     DB.schedules = montarHorarios();
     DB.training = DB.training || { types: [], questions: [] };
     DB.training.questions = montarQuestoes();
