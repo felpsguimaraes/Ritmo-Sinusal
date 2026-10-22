@@ -10,7 +10,7 @@ var CATALOGS=[
 '/biblioteca/dados/efg-sec-3.json',
 '/biblioteca/dados/turma-c-periodos-1-8.json'
 ];
-var state={items:[],loaded:false,loading:true,errors:[],counts:{},applied:'',added:0};
+var state={items:[],loaded:false,loading:true,errors:[],counts:{},applied:'',added:0,context:null};
 var alias={
 'semiologia':'Semiología Médica I','semiologia practica':'Semiología Médica I','semiologia prática':'Semiología Médica I',
 'semiologia i':'Semiología Médica I','semiologia medica i':'Semiología Médica I',
@@ -48,7 +48,9 @@ function category(x){
  return ['complementares','theory','complementares'];
 }
 function apply(DB,period,cohort){
- if(!DB||!DB.subjects||!state.loaded)return 0;
+ if(!DB||!DB.subjects)return 0;
+ state.context={DB:DB,period:period,cohort:cohort};
+ if(!state.loaded)return 0;
  var num=Number(String(period||5).match(/\d+/)?.[0]||5);
  var c=String(cohort||'G').toUpperCase();
  var selected=state.items.filter(x=>Number(x.p)===num&&(x.c===c||(x.cohorts||[]).includes(c)));
@@ -82,12 +84,12 @@ function apply(DB,period,cohort){
 }
 function lateApply(){
  try{
- const app=W.SinusApp,S=app?.S;
- if(!S||!S.dentro||!W.DB||!W.DB.subjects)return;
- const count=apply(W.DB,S.prefs?.periodo||5,S.turma||'G');
+ const ctx=state.context,app=W.SinusApp,S=app?.S;
+ if(!ctx||!S||!S.dentro)return;
+ const count=apply(ctx.DB,ctx.period,ctx.cohort);
  if(count){
-  if(W.UI?.page==='subjects'&&typeof W.renderSubjects==='function')W.renderSubjects();
-  if(W.UI?.page==='library'&&typeof W.renderLibrary==='function')W.renderLibrary();
+  if(typeof W.renderSubjects==='function')W.renderSubjects();
+  if(typeof W.renderLibrary==='function')W.renderLibrary();
  }
  }catch(e){/* sem impedir o uso de matérias existentes */}
 }
