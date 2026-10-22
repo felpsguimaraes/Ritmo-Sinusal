@@ -18,7 +18,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="/aulas/config.js?v=11"></script>
-<script src="/aulas/catalogo.js?v=1"></script>
+<script src="/aulas/catalogo.js?v=3"></script>
 <style>
   :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--soft:#f3f7f5;--bg:#f6f8f7}
   *{box-sizing:border-box}
@@ -108,12 +108,12 @@
   ];
 
   function profDaMateria(m) {
-    if (!m.professores || !m.professores.length) return null;
+    if (!m.teoria || !m.teoria.length) return null;
     var achado = null;
-    m.professores.forEach(function (p) {
+    m.teoria.forEach(function (p) {
       if (p.turmas && p.turmas.indexOf(turmaAluno) >= 0) achado = p;
     });
-    return achado || m.professores[0];
+    return achado || m.teoria[0];
   }
 
   function cardMateria(m) {

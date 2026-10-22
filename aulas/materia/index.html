@@ -8,93 +8,206 @@
 <meta name="theme-color" content="#176e5b">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400&family=Inter:wght@400;500;600;700&display=swap">
-<script src="/aulas/catalogo.js?v=2"></script>
+<link rel="stylesheet" href="/aulas/sinusal.css?v=11">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="/aulas/config.js?v=11"></script>
+<script src="/aulas/catalogo.js?v=3"></script>
 <style>
   :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--soft:#f3f7f5;--bg:#f6f8f7}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif}
   [hidden]{display:none!important}
   .top{position:sticky;top:0;z-index:20;background:rgba(246,248,247,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .top .in{max-width:1140px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .top .in{max-width:1140px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .top a{color:var(--green);text-decoration:none;font-weight:600}
+  .quem{margin-left:auto;font-size:13.5px;color:var(--ink3)}
+  .link{background:none;border:none;color:var(--green);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
   .wrap{max-width:1140px;margin:0 auto;padding:24px 16px 64px}
+  .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600}
   h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(28px,4.6vw,40px);letter-spacing:-.02em;margin:4px 0 0}
   .sub{color:var(--ink3);margin:6px 0 0;font-size:14.5px}
-  .abas{display:flex;gap:8px;overflow-x:auto;padding:20px 0 8px}
+  .sec-t{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin:22px 0 8px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chips button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:500 14px 'Inter',sans-serif;cursor:pointer;color:var(--ink2);min-height:40px}
+  .chips button[aria-pressed="true"]{background:#16241f;border-color:#16241f;color:#fff}
+  .abas{display:flex;gap:8px;overflow-x:auto;padding:14px 0 8px}
   .abas button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:9px 16px;font:500 14px 'Inter',sans-serif;cursor:pointer;min-height:40px}
   .abas button[aria-selected="true"]{background:#16241f;border-color:#16241f;color:#fff}
   .lista{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
   .it{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);width:100%;background:none;border-left:none;border-right:none;border-top:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
   .it:last-child{border-bottom:none}
   .it:hover{background:var(--soft)}
-  .it b{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .it .tx{min-width:0;flex:1}
+  .it b{font-weight:600;font-size:15px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .it small{display:block;color:var(--ink3);font-size:12.5px}
-  .it .ch{margin-left:auto;color:var(--ink3);font-size:12px;flex:none;border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+  .it .ch{font-size:12px;flex:none;border:1px solid var(--line);border-radius:999px;padding:2px 9px;color:var(--ink3)}
+  .it .ch.pri{border-color:#bfded4;background:#eef7f3;color:var(--green);font-weight:600}
   .viewer{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:14px}
   .viewer-h{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
   .viewer-h b{font-size:15px;font-weight:600}
   .viewer-h a{margin-left:auto;color:var(--green);font-size:14px;font-weight:600}
   .viewer iframe{display:block;width:100%;height:min(78vh,820px);border:0}
   .vazio{padding:30px 16px;text-align:center;color:var(--ink3)}
+  .aviso{font-size:13px;color:var(--ink3);margin-top:12px}
+  .gate-msg{font-size:15px;color:var(--ink2);min-height:1.4em;margin:0}
+  .gate-msg.erro{color:#9b2c47}
 </style>
 </head>
 <body>
-<header class="top"><div class="in"><a href="/">← Sinus</a></div></header>
-<main class="wrap">
-  <span id="tag" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600">5º período · UCP</span>
-  <h1 id="nome">Matéria</h1>
-  <p class="sub" id="sub"></p>
-  <nav class="abas" id="abas" role="tablist"></nav>
-  <section id="lista"></section>
-  <section class="viewer" id="viewer" hidden>
-    <div class="viewer-h"><b id="vt"></b><a id="vl" target="_blank" rel="noopener">Abrir no Drive</a></div>
-    <iframe id="vf" allow="autoplay" title="Visor"></iframe>
+
+<main class="sx-gate" id="gate">
+  <section class="sx-card sx-glass" aria-labelledby="t">
+    <a class="sx-logo" href="/"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
+    <div><span class="sx-tag">5º período · UCP</span><h1 id="t">Entre para <em>abrir.</em></h1></div>
+    <p class="sx-sub">Slides, provas, áudios e vídeos da sua matéria, organizados pelo professor da sua turma. Entre com a sua conta.</p>
+    <button class="sx-btn sx-primary" id="entrar" type="button">Entrar com Google</button>
+    <p class="gate-msg" id="msg" role="status"></p>
   </section>
 </main>
+
+<div id="app" hidden>
+  <header class="top"><div class="in">
+    <a href="/">← Sinus</a>
+    <span class="quem"><span id="quem"></span> · <button class="link" id="sair" type="button">Sair</button></span>
+  </div></header>
+  <main class="wrap">
+    <span class="tag" id="tag">5º período</span>
+    <h1 id="nome">Matéria</h1>
+    <p class="sub" id="sub"></p>
+
+    <div class="sec-t">Professor</div>
+    <div class="chips" id="profs" role="group" aria-label="Professor"></div>
+    <p class="aviso" id="profAviso"></p>
+
+    <nav class="abas" id="abas" role="tablist"></nav>
+    <section id="lista"></section>
+
+    <section class="viewer" id="viewer" hidden>
+      <div class="viewer-h"><b id="vt"></b><a id="vl" target="_blank" rel="noopener">Abrir no Drive</a></div>
+      <iframe id="vf" allow="autoplay" title="Visor"></iframe>
+    </section>
+    <p class="aviso">Todo o material aparece aqui. O do seu professor vem primeiro e o das outras turmas e professores vem depois, sem esconder nada.</p>
+  </main>
+</div>
+
 <script>
 (function () {
   var $ = function (s) { return document.querySelector(s) };
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
-  var m = new URLSearchParams(location.search).get('m');
-  var mat = ((window.SINUS_CATALOGO || {}).materias || []).filter(function (x) { return x.slug === m })[0];
-  if (!mat) { $('#nome').textContent = 'Matéria não encontrada'; $('#lista').innerHTML = '<div class="vazio">Volte à home e escolha uma matéria.</div>'; return }
-  document.title = mat.nome + ' · sinusal.';
-  $('#nome').textContent = mat.nome;
-  $('#sub').textContent = (mat.itens || 0) + ' materiais reunidos do acervo, por tipo.';
+  var norm = function (s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase() };
 
+  var m = new URLSearchParams(location.search).get('m');
+  var MAT = ((window.SINUS_CATALOGO || {}).materias || []).filter(function (x) { return x.slug === m })[0];
   var TIPOS = [['slide', 'Slides e aulas'], ['prova', 'Provas'], ['audio', 'Áudios'], ['video', 'Vídeos'], ['pratica', 'Práticas'], ['livro', 'Livros'], ['material', 'Materiais']];
-  var itens = mat.itensLista || [];
-  var aba = (TIPOS.filter(function (t) { return itens.some(function (i) { return i.k === t[0] }) })[0] || ['material'])[0];
+  var turma = '', profSel = null, aba = null, itensView = [];
+
+  if (!MAT) { $('#nome').textContent = 'Matéria não encontrada'; $('#app').hidden = false; $('#gate').hidden = true; $('#lista').innerHTML = '<div class="vazio">Volte à home e escolha uma matéria.</div>'; return }
+
+  document.title = MAT.nome + ' · sinusal.';
+  $('#nome').textContent = MAT.nome;
+  $('#sub').textContent = (MAT.itens || 0) + ' materiais reunidos.';
+
+  // professor da turma do aluno (teoria), ou o primeiro da lista
+  function profDaTurma() {
+    var p = (MAT.teoria || []).filter(function (x) { return turma && x.turmas.indexOf(turma) >= 0 })[0];
+    return p || (MAT.teoria || [])[0] || null;
+  }
+  // sobrenome para casar material com o professor
+  function sobrenome(p) { return norm(p.curto || p.nome).split(' ').pop() }
+
+  // ordem: material do professor escolhido (título ou turma de origem) primeiro; o resto depois
+  function ordenar(lista, p) {
+    var sn = p ? sobrenome(p) : '';
+    var tu = p && p.turmas ? p.turmas : [];
+    return lista.map(function (i) {
+      var score = 0;
+      if (sn && norm(i.t).indexOf(sn) >= 0) score += 2;
+      if (i.o && tu.some(function (t) { return norm(i.o).indexOf('turma ' + norm(t)) >= 0 || norm(i.o) === norm(t) })) score += 1;
+      return { i: i, s: score };
+    }).sort(function (a, b) { return b.s - a.s }).map(function (x) { return x.i });
+  }
 
   function viewer(i) {
-    var emb = 'https://drive.google.com/file/d/' + i.id + '/preview';
     $('#vt').textContent = i.t;
     $('#vl').href = 'https://drive.google.com/file/d/' + i.id + '/view';
-    $('#vf').src = emb;
+    $('#vf').src = 'https://drive.google.com/file/d/' + i.id + '/preview';
     $('#viewer').hidden = false;
     $('#viewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function render() {
-    var disp = TIPOS.filter(function (t) { return itens.some(function (i) { return i.k === t[0] }) });
-    $('#abas').innerHTML = disp.map(function (t) {
-      var n = itens.filter(function (i) { return i.k === t[0] }).length;
-      return '<button role="tab" data-t="' + t[0] + '" aria-selected="' + (t[0] === aba) + '" type="button">' + t[1] + ' · ' + n + '</button>';
+  function renderProfs() {
+    var all = (MAT.teoria || []).concat(MAT.pratica || []);
+    var uniq = [];
+    all.forEach(function (p) { if (!uniq.some(function (u) { return u.nome === p.nome })) uniq.push(p) });
+    var atual = profSel || profDaTurma();
+    $('#profs').innerHTML = uniq.map(function (p) {
+      var sua = p.turmas && p.turmas.indexOf(turma) >= 0;
+      return '<button type="button" data-p="' + esc(p.nome) + '" aria-pressed="' + (atual && atual.nome === p.nome) + '">' + esc(p.curto || p.nome) + (sua ? ' · sua turma' : '') + '</button>';
     }).join('');
-    var lista = itens.filter(function (i) { return i.k === aba });
+    var pr = profSel || profDaTurma();
+    $('#profAviso').textContent = pr ? (pr.nome + ' · turma' + (pr.turmas.length > 1 ? 's ' : ' ') + pr.turmas.join(', ')) : '';
+  }
+
+  function render() {
+    var p = profSel || profDaTurma();
+    itensView = ordenar(MAT.itensLista || [], p);
+    var tipos = TIPOS.filter(function (t) { return itensView.some(function (i) { return i.k === t[0] }) });
+    if (!aba || !tipos.some(function (t) { return t[0] === aba })) aba = tipos.length ? tipos[0][0] : 'material';
+    $('#abas').innerHTML = tipos.map(function (t) {
+      var n = itensView.filter(function (i) { return i.k === t[0] }).length;
+      return '<button role="tab" data-t="' + t[0] + '" aria-selected="' + (t[0] === aba) + '" type="button">' + t[1] + ' · ' + n + '</button>';
+    }).join('') || '';
+    var lista = itensView.filter(function (i) { return i.k === aba });
     $('#lista').innerHTML = lista.length
-      ? '<div class="lista">' + lista.map(function (i, n) {
-          return '<button class="it" data-id="' + esc(i.id) + '" type="button"><span><b>' + esc(i.t) + '</b><small>' + esc(i.o) + '</small></span><span class="ch">Abrir</span></button>';
+      ? '<div class="lista">' + lista.map(function (i) {
+          var pri = p && norm(i.t).indexOf(sobrenome(p)) >= 0;
+          return '<button class="it" data-id="' + esc(i.id) + '" type="button"><span class="tx"><b>' + esc(i.t) + '</b><small>' + esc(i.o) + '</small></span><span class="ch' + (pri ? ' pri' : '') + '">' + (pri ? 'Do seu professor' : 'Abrir') + '</span></button>';
         }).join('') + '</div>'
       : '<div class="vazio">Nada aqui ainda.</div>';
+    renderProfs();
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-t]'); if (t) { aba = t.dataset.t; render(); return }
-    var it = e.target.closest('[data-id]');
-    if (it) { var f = itens.filter(function (x) { return x.id === it.dataset.id })[0]; if (f) viewer(f) }
+    var pr = e.target.closest && e.target.closest('[data-p]');
+    if (pr) { var f = (MAT.teoria || []).concat(MAT.pratica || []).filter(function (x) { return x.nome === pr.dataset.p })[0]; profSel = f || null; render(); return }
+    var t = e.target.closest && e.target.closest('[data-t]');
+    if (t) { aba = t.dataset.t; render(); return }
+    var it = e.target.closest && e.target.closest('[data-id]');
+    if (it) { var x = itensView.filter(function (y) { return y.id === it.dataset.id })[0]; if (x) viewer(x) }
   });
-  render();
+
+  // ---- entrada (mesmo padrão do painel de Anatomía) ----
+  firebase.initializeApp(window.SINUSAL_FIREBASE);
+  var auth = firebase.auth(), db = firebase.firestore();
+  var msg = $('#msg'), btn = $('#entrar');
+  function say(t, erro) { msg.textContent = t; msg.className = 'gate-msg' + (erro ? ' erro' : '') }
+
+  btn.addEventListener('click', function () {
+    var g = new firebase.auth.GoogleAuthProvider(); g.setCustomParameters({ prompt: 'select_account' });
+    btn.disabled = true; say('Abrindo a entrada do Google…');
+    auth.signInWithPopup(g).catch(function (e) {
+      btn.disabled = false;
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return auth.signInWithRedirect(g);
+      say('Não foi possível entrar. Tente de novo.', true);
+    });
+  });
+  $('#sair').addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) });
+  auth.getRedirectResult().catch(function () {});
+  auth.onAuthStateChanged(function (u) {
+    if (!u) return;
+    var prim = (u.displayName || u.email || '').split(' ')[0];
+    $('#gate').hidden = true; $('#app').hidden = false;
+    $('#quem').textContent = prim;
+    render();
+    db.doc('perfis/' + u.uid).get().then(function (snap) {
+      var t = snap.exists ? (snap.data().turma || '') : '';
+      if (!t) return;
+      turma = t; profSel = null; render();
+    }).catch(function () {});
+    db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
+  });
 })();
 </script>
 </body>
