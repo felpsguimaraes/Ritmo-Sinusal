@@ -62,6 +62,37 @@
   .cad label{display:grid;gap:6px;font-size:14px;color:var(--ink2)}
   .cad input,.cad select{font:16px 'Inter',sans-serif;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:46px}
   .gate-msg.erro{color:#9b2c47}
+  .ag-leg{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+  .ag-leg span{font-size:12px;border-radius:999px;padding:4px 10px;font-weight:600}
+  .c-prova-pratica{color:#b42318;background:#fde8e6}
+  .c-prova-teorica{color:#6941c6;background:#f4f0ff}
+  .c-teoria{color:#175cd3;background:#eff6ff}
+  .c-pratica{color:#067647;background:#ecfdf3}
+  .c-atividade{color:#b54708;background:#fffaeb}
+  .ag-sec{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin:16px 0 8px}
+  .ag-av{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left-width:4px;border-radius:12px;padding:10px 12px;margin-bottom:8px}
+  .ag-av b{display:block;font-size:15px}
+  .ag-av small{font-size:12.5px;color:var(--ink3)}
+  .ag-dias{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+  .ag-dias button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font:600 13px 'Inter',sans-serif;color:var(--ink2);cursor:pointer;min-height:34px}
+  .ag-dias button[aria-pressed="true"]{background:#16241f;border-color:#16241f;color:#fff}
+  .ag-lista{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .ag-it{display:grid;grid-template-columns:82px 1fr;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);border-left:4px solid #ccc}
+  .ag-it:last-child{border-bottom:0}
+  .ag-it .h{font-size:12.5px;color:var(--ink2);font-variant-numeric:tabular-nums;line-height:1.3}
+  .ag-it b{display:block;font-size:14px;line-height:1.25}
+  .ag-it small{display:block;font-size:12px;color:var(--ink3);line-height:1.3}
+  .ag-it.t{border-left-color:#175cd3}
+  .ag-it.p{border-left-color:#067647}
+  @media (max-width:640px){
+    .grade{grid-template-columns:1fr 1fr;gap:10px}
+    .mat{padding:12px;border-radius:16px;min-height:0;gap:6px}
+    .mat .ico{width:34px;height:34px;font-size:17px;border-radius:11px}
+    .mat b{font-size:14px}
+    .mat .prof{font-size:11.5px}
+    .mat .pe{font-size:10.5px;gap:4px}
+    .pill{padding:2px 7px}
+  }
 </style>
 </head>
 <body class="home">
@@ -112,6 +143,7 @@
   </main>
 </div>
 
+<script src="/aulas/agenda.js?v=1"></script>
 <script>
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s) };
@@ -150,6 +182,37 @@
       '</button>';
   }
 
+  var TIPO = { 't': ['Aula teórica', 'c-teoria', 't'], 'p': ['Prática', 'c-pratica', 'p'] };
+  var AVISO = { 'prova-pratica': ['Prova prática', 'c-prova-pratica', '#b42318'], 'prova-teorica': ['Prova teórica', 'c-prova-teorica', '#6941c6'], 'atividade': ['Atividade', 'c-atividade', '#b54708'] };
+  var DIAS = [['lun', 'Seg'], ['mar', 'Ter'], ['mie', 'Qua'], ['jue', 'Qui'], ['vie', 'Sex'], ['sab', 'Sáb']];
+  var diaSel = null;
+  function diaDeHoje() { var n = new Date().getDay(); return ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'][n] }
+  function renderAgenda() {
+    var H = window.SINUS_HORARIO || {}, AV = (window.SINUS_AVISOS || []).slice().sort(function (a, b) { return (a.ordem || 99) - (b.ordem || 99) });
+    var hor = turmaAluno && H[turmaAluno];
+    var sem = [];
+    if (!diaSel) diaSel = DIAS.some(function (d) { return d[0] === diaDeHoje() }) ? diaDeHoje() : 'lun';
+    var h = '<div class="ag-leg">' + Object.keys(AVISO).map(function (k) { return '<span class="' + AVISO[k][1] + '">' + AVISO[k][0] + '</span>' }).join('') +
+      '<span class="c-teoria">Aula teórica</span><span class="c-pratica">Prática</span></div>';
+    h += '<div class="ag-sec">Avisos, em ordem</div>';
+    h += AV.length ? AV.map(function (a) {
+      var c = AVISO[a.tipo] || AVISO['atividade'];
+      return '<div class="ag-av" style="border-left-color:' + c[2] + '"><div><b>' + esc(a.titulo) + ' · ' + esc(a.quando || '') + '</b><small>' + esc(a.detalhe || '') + '</small></div></div>';
+    }).join('') : '<p class="sub">Sem avisos por enquanto.</p>';
+    h += '<div class="ag-sec">Horário da sua turma' + (turmaAluno ? ' ' + esc(turmaAluno) + (hor && hor.sala ? ' · ' + esc(hor.sala) : '') : '') + '</div>';
+    if (!hor) return h + '<p class="sub">Escolha sua turma no cadastro para ver o horário.</p>';
+    h += '<div class="ag-dias" role="group" aria-label="Dia">' + DIAS.map(function (d) {
+      return '<button type="button" data-dia="' + d[0] + '" aria-pressed="' + (d[0] === diaSel) + '">' + d[1] + '</button>';
+    }).join('') + '</div>';
+    var lista = (hor.dias[diaSel] || []).slice().sort(function (a, b) { return a[0] < b[0] ? -1 : 1 });
+    h += lista.length ? '<div class="ag-lista">' + lista.map(function (x) {
+      var t = TIPO[x[4]] || TIPO['t'];
+      var extra = [x[3], x[4] === 'p' && x[5] ? 'Grupo ' + x[5].replace('GP', '') : '', x[6]].filter(Boolean).join(' · ');
+      return '<div class="ag-it ' + t[2] + '"><div class="h">' + esc(x[0]) + '<br>' + esc(x[1]) + '</div><div><b>' + esc(x[2]) + '</b><small>' + esc(t[0]) + (extra ? ' · ' + esc(extra) : '') + '</small></div></div>';
+    }).join('') + '</div>' : '<p class="sub">Sem aulas neste dia.</p>';
+    return h;
+  }
+
   function render() {
     $('#abas').innerHTML = ABAS.map(function (a) {
       return '<button role="tab" data-aba="' + a[0] + '" aria-selected="' + (a[0] === aba) + '" type="button">' + a[1] + '</button>';
@@ -161,7 +224,7 @@
         ? '<div class="grade">' + CAT.materias.map(cardMateria).join('') + '</div>'
         : '<div class="card"><div class="vazio"><b>O acervo está sendo montado</b>As matérias aparecem aqui assim que a varredura do Drive terminar.</div></div>';
     } else if (aba === 'agenda') {
-      h = '<div class="card"><h2>Agenda</h2><p>O horário da sua turma, aula por aula, com sala e grupo.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Agenda</a></p></div>';
+      h = renderAgenda();
     } else if (aba === 'trilhas') {
       h = '<div class="card"><h2>Trilhas de estudo</h2><p>Roteiros por matéria, com apostila, treino e flashcards na ordem.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Trilhas de estudo</a></p></div>';
     } else {
@@ -171,6 +234,8 @@
   }
 
   document.addEventListener('click', function (e) {
+    var dia = e.target.closest && e.target.closest('[data-dia]');
+    if (dia) { diaSel = dia.dataset.dia; render(); return }
     var a = e.target.closest && e.target.closest('[data-aba]');
     if (a) { aba = a.dataset.aba; render(); return }
     var ir = e.target.closest && e.target.closest('[data-ir]');
