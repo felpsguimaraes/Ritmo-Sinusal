@@ -1,0 +1,68 @@
+/* SINUS · tela de entrada editorial branca V13. Escopo restrito ao #landing. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://db.onlinewebfonts.com/c/d08bafd725a4cfc309efb5a88e0b63a5?family=basis33');
+#landing.sxEditorialLogin{position:relative;isolation:isolate;display:flex!important;flex-direction:column!important;width:100%!important;height:100vh!important;height:100dvh!important;min-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;background:#fff!important;color:#111813!important;font-family:'Inter',sans-serif!important;-webkit-font-smoothing:antialiased}
+#landing.sxEditorialLogin.hidden{display:none!important}
+#landing.sxEditorialLogin *{box-sizing:border-box}
+#landing .sxLoginShell{position:relative;display:flex;flex-direction:column;flex:1;min-height:0;width:100%;padding:0 clamp(22px,4.2vw,68px) 19px;z-index:1}
+#landing .sxPixel{font-family:'basis33',monospace!important;font-weight:400!important}
+#landing .sxLoginNav{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:27px 0 22px;border-bottom:1px solid #e4e9e5}
+#landing .sxLoginBrand{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:#121816!important;font-size:23px;font-weight:800;letter-spacing:-.09em}
+#landing .sxMark{height:32px;width:32px;display:grid;place-items:center;background:#17241e;color:white;border-radius:8px;flex:none}
+#landing .sxMark svg{height:23px;width:23px;display:block}
+#landing .sxLoginNavR{display:flex;align-items:center;gap:30px}
+#landing .sxLoginNavTxt{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#65716a}
+#landing .sxLoginNavDot{width:6px;height:6px;border-radius:50%;background:#168453;box-shadow:0 0 0 4px #e8f4ed;display:inline-block;margin-right:7px}
+#landing .sxLoginNavLink{color:#17211b!important;font-size:11px;font-weight:700;letter-spacing:.1em;text-decoration:none;transition:opacity .2s}
+#landing .sxLoginNavLink:hover{opacity:.6}
+#landing .sxLoginMeta{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:clamp(14px,2vw,35px);margin-top:31px;position:relative;z-index:1}
+#landing .sxMetaHead{font-size:18px;font-weight:400;letter-spacing:.035em;line-height:1.06;margin:0;color:#181e19!important}
+#landing .sxMetaPixel{display:block;font-family:'basis33',monospace!important;font-size:29px;letter-spacing:-.045em;font-weight:400;margin-top:1px;white-space:nowrap}
+#landing .sxStar{font-size:12px;color:#9ca8a0;display:block;margin:13px 0 5px}
+#landing .sxMetaDesc{font-family:'basis33',monospace!important;font-size:13px;line-height:1.35;color:#8a938d;margin:0}
+#landing .sxMetaLabel{font-family:'basis33',monospace!important;display:block;color:#9aa69e;font-size:18px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+#landing .sxMetaText{font-size:13px;font-weight:400;line-height:1.68;max-width:230px;color:#59655d;margin:0}
+#landing .sxMetaServices{list-style:none;margin:0;padding:0;font-size:13px;line-height:1.62;color:#59655d}
+#landing .sxLoginBetween{flex:1;min-height:26px;position:relative;z-index:0}
+#landing .sxLoginBetween:before{content:'S';font-family:'Inter',sans-serif;font-size:clamp(290px,45vw,740px);position:absolute;bottom:-148px;right:10%;line-height:.76;letter-spacing:-.12em;font-weight:900;color:rgba(23,70,50,.024);pointer-events:none;user-select:none}
+#landing .sxLoginBottom{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(330px,.7fr);gap:28px;align-items:end}
+#landing .sxHeadline{font-size:clamp(42px,5.6vw,91px)!important;font-weight:500!important;color:#151c17!important;letter-spacing:-.055em!important;line-height:.87!important;margin:0!important;text-transform:uppercase}
+#landing .sxHeadline .sxPixel{font-size:1.14em;letter-spacing:-.07em;color:#237d53!important}
+#landing .sxHeadlineSmall{display:block;margin-bottom:17px;font-family:'basis33',monospace!important;font-size:17px;letter-spacing:.13em;color:#9ca79f!important}
+#landing .sxLoginPanel{border-top:1px solid #1f3528;padding-top:17px;align-self:end;max-width:460px;margin-left:auto;width:100%}
+#landing .sxLoginPanelTop{display:flex;align-items:center;gap:9px;color:#248354;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+#landing .sxLoginPanel h2{font-size:clamp(22px,2.2vw,34px)!important;line-height:1.12!important;font-weight:500!important;letter-spacing:-.055em!important;margin:14px 0 10px!important;color:#17211a!important}
+#landing .sxLoginPanel p{font-size:13px;line-height:1.6;margin:0 0 17px;color:#758078}
+#landing .sxEntrada{display:flex!important;flex-direction:column;gap:12px!important;margin:0!important;max-width:none!important}
+#landing .sxGoogle{display:flex!important;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:17px 19px;min-height:56px!important;font-family:'Inter',sans-serif;background:#182d21!important;border:1px solid #182d21!important;color:white!important;border-radius:2px!important;font-size:12px!important;font-weight:600!important;letter-spacing:.07em;cursor:pointer;transition:background .25s,transform .25s}
+#landing .sxGoogle:hover{background:#2d5a40!important;transform:translateY(-2px)}
+#landing .sxGoogle:focus-visible{outline:3px solid #8acbab;outline-offset:3px}
+#landing .sxGoogle:disabled{opacity:.6;transform:none;cursor:progress}
+#landing .sxGoogle .sxGoogleStart{display:flex;align-items:center;gap:12px}
+#landing .sxGoogle .sxGoogleMark{display:grid;place-items:center;width:24px;height:24px;background:white;border-radius:50%;font-size:15px;font-weight:800;color:#4285f4}
+#landing .sxGoogle .sxArrow{font-size:19px;font-weight:400;line-height:1}
+#landing .sxLang{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:1px}
+#landing .sxLangLabel{color:#909a92;font-family:'basis33',monospace!important;font-size:14px;font-weight:400;letter-spacing:.1em;margin:0}
+#landing .sxSeg{display:flex!important;grid-template-columns:none!important;gap:2px;background:#f4f6f4!important;border:1px solid #e8ece8!important;border-radius:2px!important;padding:3px!important}
+#landing .sxSeg button{font-family:'Inter',sans-serif;background:transparent!important;color:#7c8980!important;padding:8px 11px!important;min-height:32px!important;border-radius:1px!important;border:0!important;font-size:11px!important;font-weight:600!important;cursor:pointer;transition:background .2s,color .2s}
+#landing .sxSeg button.on{background:#203a2a!important;color:white!important}
+#landing .sxMsg{font-size:11px!important;margin:0!important;min-height:13px;color:#7f8a82!important;line-height:1.4!important}
+#landing .sxMsg.erro{color:#b42318!important}
+#landing .sxLoginFoot{display:flex;justify-content:space-between;gap:18px;margin-top:23px;padding-top:13px;border-top:1px solid #e4e9e5;color:#8a948c;font-size:10px;line-height:1.5}
+#landing .sxLoginFoot span:last-child{text-align:right}
+#landing .sxLoginAccent{color:#218451}
+#landing .sxLoginMiniBtn{background:none;border:0;padding:7px;color:#203127;cursor:pointer;font:inherit}
+#landing .sxMobileNav{display:none}
+#landing .sxLoginMenuBtn{background:none;border:none;display:none;padding:5px;cursor:pointer;color:#182c21}
+#landing .sxLoginMenuLayer{position:fixed;inset:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);display:flex;flex-direction:column;padding:27px 24px;opacity:0;pointer-events:none;transition:opacity .5s cubic-bezier(.16,1,.3,1)}
+#landing .sxLoginMenuLayer.open{opacity:1;pointer-events:auto}
+#landing .sxLoginMenuLayer header{display:flex;justify-content:space-between;align-items:center}
+#landing .sxLoginMenuLayer nav{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:25px}
+#landing .sxLoginMenuLayer nav a{font-size:24px;color:#1d2a20;text-decoration:none;letter-spacing:.08em;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+#landing .sxLoginMenuLayer.open nav a{opacity:1;transform:translateY(0)}
+@media(max-width:1050px){#landing .sxLoginMeta{gap:14px;grid-template-columns:1fr 1fr}#landing .sxMetaText{max-width:280px}#landing .sxLoginBottom{grid-template-columns:1fr 360px}#landing .sxHeadline{font-size:clamp(39px,6vw,73px)!important}}
+@media(max-width:760px){#landing .sxLoginShell{padding:0 22px 15px}#landing .sxLoginNav{padding:18px 0 17px}#landing .sxLoginNavR{display:none}#landing .sxLoginMenuBtn{display:block}#landing .sxLoginMeta{margin-top:20px;gap:16px}#landing .sxMetaHead{font-size:15px}#landing .sxMetaPixel{font-size:25px}#landing .sxMetaDesc{font-size:12px}#landing .sxMetaLabel{font-size:15px;margin-bottom:4px}#landing .sxMetaText,#landing .sxMetaServices{font-size:11px;line-height:1.45}#landing .sxLoginBottom{grid-template-columns:1fr;gap:20px}#landing .sxHeadline{font-size:clamp(38px,9vw,65px)!important}#landing .sxLoginPanel{max-width:none;margin:0}#landing .sxLoginPanel h2{margin:8px 0 5px!important;font-size:22px!important}#landing .sxLoginPanel p{margin-bottom:10px}#landing .sxLoginFoot{margin-top:15px;font-size:9px}}
+@media(max-width:440px){#landing .sxLoginMeta{gap:11px}#landing .sxMetaDesc{font-size:11px}#landing .sxMetaServices li:nth-child(n+4){display:none}#landing .sxHeadline{font-size:clamp(36px,9.2vw,48px)!important}#landing .sxHeadlineSmall{font-size:13px;margin-bottom:9px}#landing .sxLoginPanelTop{font-size:9px}#landing .sxLoginPanel p{font-size:11px}#landing .sxGoogle{min-height:48px!important;padding:13px 15px}#landing .sxLangLabel{font-size:11px}#landing .sxSeg button{font-size:10px!important;padding:6px 8px!important}#landing .sxLoginFoot{margin-top:12px}}
+@media(max-height:760px) and (max-width:760px){#landing .sxLoginNav{padding:13px 0}#landing .sxLoginMeta{margin-top:12px}#landing .sxStar,#landing .sxMetaDesc{display:none}#landing .sxLoginBetween{min-height:8px}#landing .sxLoginBottom{gap:13px}#landing .sxLoginPanel{padding-top:10px}#landing .sxLoginPanel p{margin-bottom:7px}#landing .sxLoginFoot{padding-top:8px;margin-top:9px}}
+@media(max-height:620px) and (max-width:760px){#landing .sxLoginMeta{display:none}#landing .sxHeadline{font-size:clamp(31px,8vw,47px)!important}#landing .sxLoginPanel h2{font-size:20px!important}#landing .sxLoginFoot span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){#landing *{transition:none!important}}
