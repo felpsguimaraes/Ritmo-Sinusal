@@ -1,0 +1,169 @@
+
+<div id="landing">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <section class="glass hero">
+    <div class="logo"><span class="logoMark float">S</span><span style="font-size:28px">sinus.</span></div>
+    <span class="pill violet" style="margin-top:22px">Plataforma acadêmica premium</span>
+    <h1>Organização elegante para<br><em>alunos de Medicina.</em></h1>
+    <p>Uma interface fluida e refinada para unir horários, matérias, grupos práticos, aulas gravadas, transcrição, biblioteca, treino para prova e administração comercial em um único produto.</p>
+    <div class="heroActions">
+      <button class="btn primary" onclick="enterStudent()">Entrar como aluno</button>
+      <button class="btn violet" onclick="enterAdmin()">Abrir administrador</button>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>7+</b><span>formatos de treino que podem ser combinados</span></div>
+      <div class="metric"><b>1º–10º</b><span>estrutura acadêmica preparada por período</span></div>
+      <div class="metric"><b>Teoria + prática</b><span>grupos gerais e grupos específicos por matéria</span></div>
+      <div class="metric"><b>HTML direto</b><span>abre no navegador, sem travas de app local</span></div>
+    </div>
+  </section>
+  <aside class="previewShell">
+    <div class="preview">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="pill green">Liquid interface</span>
+        <span class="pill violet">Painel completo</span>
+      </div>
+      <div class="previewGrid">
+        <div class="previewCard big">
+          <span class="eyebrow">Sua rotina, sem ruído</span>
+          <h3 style="font-size:30px;letter-spacing:-.05em;margin:10px 0 8px">Tudo se move sem parecer amador.</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.7">Hero com profundidade, cartões leves, indicadores claros e navegação consistente entre aluno e administrador.</p>
+          <div class="previewSurface pulse"></div>
+        </div>
+        <div class="stack">
+          <div class="previewCard float"><span class="eyebrow">Aulas</span><h3 style="margin:6px 0 0">Áudio · vídeo · transcrição</h3><div class="previewBar"></div><div class="previewBar"></div><div class="previewBar"></div></div>
+          <div class="previewCard float2"><span class="eyebrow">Treino</span><h3 style="margin:6px 0 0">Tipos mescláveis</h3><div class="previewBar"></div><div class="previewBar"></div><div class="previewBar"></div></div>
+          <div class="previewStat">
+            <div class="previewCard"><span class="eyebrow">Admin</span><h3 style="font-size:26px;margin-top:10px">Vendas</h3></div>
+            <div class="previewCard"><span class="eyebrow">Acadêmico</span><h3 style="font-size:26px;margin-top:10px">Horários</h3></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div id="app" class="hidden">
+  <aside class="sidebar" aria-label="Menu principal">
+<button class="sidebarToggle" onclick="toggleSidebar()" title="Recolher ou expandir menu">‹</button>
+<div class="sideBrand logo"><span class="logoMark">S</span><span>sinus.</span></div>
+<div class="sidePanel"><div style="display:flex;gap:9px;align-items:center;justify-content:space-between"><div><span class="eyebrow">Meu espaço · Medicina</span><div id="sideUser" style="font-size:12px;font-weight:800;margin-top:6px">Aluno Sinus</div><small id="sideMeta">5º período · Turma F</small></div><span class="avatar" id="sideAvatar" style="width:31px;height:31px">AS</span></div></div>
+<div class="sideBody">
+  <div class="sideLabel">SEU ESPAÇO</div>
+  <button class="navBtn active" data-page="home" onclick="nav('home',this)"><span class="navIcon">⌂</span><span class="navText">Início</span></button>
+  <button class="navBtn" data-page="schedule" onclick="nav('schedule',this)"><span class="navIcon">▦</span><span class="navText">Horários e rotações</span></button>
+  <button class="navBtn" data-page="subjects" onclick="nav('subjects',this)"><span class="navIcon">▤</span><span class="navText">Matérias</span></button>
+  <button class="navBtn" data-page="library" onclick="nav('library',this)"><span class="navIcon">▥</span><span class="navText">Biblioteca</span></button>
+  <div class="sideLabel">ESTUDO E REVISÃO</div>
+  <button class="navBtn" data-page="study" onclick="nav('study',this)"><span class="navIcon">◎</span><span class="navText">Central de estudos</span></button>
+  <div class="sideLabel">ORGANIZAÇÃO</div>
+  <button class="navBtn" data-page="agenda" onclick="nav('agenda',this)"><span class="navIcon">▦</span><span class="navText">Agenda pessoal</span></button>
+  <button class="navBtn" data-page="immigration" onclick="nav('immigration',this)"><span class="navIcon">▤</span><span class="navText">Imigração / MEC</span></button>
+  <button class="navBtn" data-page="profile" onclick="nav('profile',this)"><span class="navIcon">○</span><span class="navText">Perfil</span></button>
+  <details class="sideMore" id="moreResources"><summary><span class="navIcon">⋯</span><span class="navText">Mais recursos</span><span class="moreChevron">⌄</span></summary><div class="moreInner">
+    <div class="sideLabel">ACERVO E COMUNIDADE</div>
+    <button class="navBtn" data-page="apostilas" onclick="nav('apostilas',this)"><span class="navIcon">▣</span><span class="navText">Apostilas</span></button>
+    <button class="navBtn" data-page="pockets" onclick="nav('pockets',this)"><span class="navIcon">▤</span><span class="navText">Pockets (A6)</span></button>
+    <button class="navBtn" data-page="study-together" onclick="nav('study-together',this)"><span class="navIcon">♙</span><span class="navText">Estudar junto</span></button>
+    <button class="navBtn" data-page="ranking" onclick="nav('ranking',this)"><span class="navIcon">♜</span><span class="navText">Comunidade e ranking</span></button>
+    <div class="sideLabel">CONTA</div>
+    <button class="navBtn" data-page="plans" onclick="nav('plans',this)"><span class="navIcon">▣</span><span class="navText">Assinatura</span></button>
+  </div></details>
+</div><div class="sideAccount"><button class="navBtn" onclick="enterAdmin()"><span class="navIcon">⚙</span><span class="navText">Administrador</span></button><button class="navBtn" onclick="enterLanding()"><span class="navIcon">⇠</span><span class="navText">Sair da demonstração</span></button></div>
+<div class="sideFoot">Sinus · seu estudo, no seu ritmo. <span class="footHint">Todas as funções continuam disponíveis.</span></div>
+</aside>
+<div class="main">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">Sinus</span>
+        <div style="font-size:16px;font-weight:900;margin-top:4px" id="pageTitle">Início</div>
+      </div>
+      <input class="search" id="globalSearch" placeholder="Buscar matéria, aula, prova..." oninput="filterGlobal(this.value)">
+      <div class="topbarRight">
+        <button class="btn sm" onclick="resetDemo()">Restaurar demo</button>
+        <button class="btn sm secondary" onclick="enterAdmin()">Admin</button>
+        <div class="avatar" id="topAvatar">AS</div>
+      </div>
+    </header>
+    <main class="content">
+      <section id="page-home" class="page active"></section>
+      <section id="page-schedule" class="page"></section>
+      <section id="page-subjects" class="page"></section>
+      <section id="page-library" class="page"></section>
+      <section id="page-agenda" class="page"></section>
+      <section id="page-immigration" class="page"></section>
+      <section id="page-plans" class="page"></section>
+      <section id="page-profile" class="page"></section>
+      <section id="page-hub" class="page"></section>
+    </main>
+  </div>
+</div>
+
+<div id="subjectView" class="hidden">
+  <div class="subjectTop">
+    <button class="btn sm" onclick="closeSubject()">← Voltar</button>
+    <div class="logo"><span class="logoMark">S</span><span style="font-size:24px">sinus.</span></div>
+    <span id="subjectPlanPill" class="pill violet">Plano</span>
+  </div>
+  <div class="subjectShell">
+    <div id="subjectHeader"></div>
+    <div id="subjectTabs" class="subTabs"></div>
+    <div id="subjectContent" class="subjectContent"></div>
+  </div>
+</div>
+
+<div id="admin" class="hidden">
+  <aside class="adminSide">
+    <div class="logo" style="padding:8px 8px 16px"><span class="logoMark">S</span><span style="font-size:24px">admin.</span></div>
+    <div class="sideLabel">Comercial</div>
+    <button class="adminNav active" data-admin="dashboard" onclick="adminNav('dashboard',this)">Visão geral</button>
+    <button class="adminNav" data-admin="users" onclick="adminNav('users',this)">Clientes</button>
+    <button class="adminNav" data-admin="sales" onclick="adminNav('sales',this)">Vendas</button>
+    <button class="adminNav" data-admin="plans" onclick="adminNav('plans',this)">Planos</button>
+    <div class="sideLabel">Acadêmico</div>
+    <button class="adminNav" data-admin="content" onclick="adminNav('content',this)">Conteúdo</button>
+    <button class="adminNav" data-admin="training" onclick="adminNav('training',this)">Treinos e questões</button>
+    <button class="adminNav" data-admin="schedules" onclick="adminNav('schedules',this)">Horários e fontes Drive</button>
+    <button class="adminNav" data-admin="structure" onclick="adminNav('structure',this)">Estrutura acadêmica</button>
+    <button class="adminNav" data-admin="settings" onclick="adminNav('settings',this)">Painel do aluno</button>
+    <div class="sideLabel">Voltar</div>
+    <button class="adminNav" onclick="enterStudent()">← Painel do aluno</button>
+  </aside>
+  <div class="adminMain">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">Sinus admin</span>
+        <div style="font-size:16px;font-weight:900;margin-top:4px" id="adminTitle">Visão geral</div>
+      </div>
+      <div class="topbarRight">
+        <span class="pill amber">Persistência local</span>
+        <button class="btn sm primary" onclick="saveDB()">Salvar alterações</button>
+      </div>
+    </header>
+    <main class="adminContent">
+      <section id="admin-dashboard" class="adminPage active"></section>
+      <section id="admin-users" class="adminPage"></section>
+      <section id="admin-sales" class="adminPage"></section>
+      <section id="admin-plans" class="adminPage"></section>
+      <section id="admin-content" class="adminPage"></section>
+      <section id="admin-training" class="adminPage"></section>
+      <section id="admin-schedules" class="adminPage"></section>
+      <section id="admin-structure" class="adminPage"></section>
+      <section id="admin-settings" class="adminPage"></section>
+    </main>
+  </div>
+</div>
+
+<div id="modal">
+  <div class="glass modalCard">
+    <span class="eyebrow">Sinus</span>
+    <h2 id="modalTitle">Modal</h2>
+    <div id="modalBody"></div>
+    <div class="modalActions">
+      <button class="btn sm" onclick="closeModal()">Cancelar</button>
+      <button class="btn primary sm" id="modalSave">Salvar</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+

@@ -3,315 +3,248 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Sinus · seu semestre inteiro num lugar só</title>
+<title>Sinus · seu estudo de Medicina</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#176e5b">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/aulas/sinusal.css?v=11">
+<meta name="theme-color" content="#1f7a5d">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/icone-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Sinus">
+<script>
+  // tema e idioma antes de pintar a tela (evita piscar)
+  (function () {
+    try {
+      var t = localStorage.getItem('sinus_tema');
+      if (t !== 'claro' && t !== 'escuro') t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'escuro' : 'claro';
+      document.documentElement.setAttribute('data-theme', t === 'escuro' ? 'dark' : 'light');
+      var l = localStorage.getItem('sinus_idioma');
+      if (l) document.documentElement.lang = ({ pt: 'pt-BR', es: 'es', en: 'en' })[l] || 'pt-BR';
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'light') }
+  })();
+</script>
+<link rel="stylesheet" href="/sinus/painel.css?v=1">
+<link rel="stylesheet" href="/sinus/integracao.css?v=1">
+</head>
+<body>
+
+<!-- ============ ENTRADA: idioma + login Google ============ -->
+<div id="landing">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <section class="glass hero">
+    <div class="sxLandTop">
+      <div class="logo"><span class="logoMark float">S</span><span style="font-size:28px">sinus.</span></div>
+      <button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button>
+    </div>
+    <span class="pill violet" style="margin-top:22px">Plataforma acadêmica premium</span>
+    <h1>Organização elegante para<br><em>alunos de Medicina.</em></h1>
+    <div class="sxEntrada">
+      <div class="sxLang" role="group" aria-label="Idioma do painel">
+        <span class="sxLangLabel">Idioma do painel</span>
+        <div class="sxSeg">
+          <button type="button" data-sx-lang="pt">Português</button>
+          <button type="button" data-sx-lang="es">Español</button>
+          <button type="button" data-sx-lang="en">English</button>
+        </div>
+      </div>
+      <button class="btn primary sxGoogle" id="sxEntrar" type="button">
+        <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#fff" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.5 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.2l7.8 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#fff" opacity=".85" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.1 5.3-4.6 7l7.1 5.5c4.2-3.9 6.6-9.6 6.6-16.9z"/><path fill="#fff" opacity=".7" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#fff" opacity=".9" d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-7.1-5.5c-2 1.4-4.6 2.2-8.7 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+        <span>Entrar com Google</span>
+      </button>
+      <p class="sxMsg" id="sxMsg" role="status" aria-live="polite"></p>
+    </div>
+
+    <p>Uma interface fluida e refinada para unir horários, matérias, grupos práticos, aulas gravadas, transcrição, biblioteca, treino para prova e administração comercial em um único produto.</p>
+
+    <div class="metrics">
+      <div class="metric"><b>7+</b><span>formatos de treino que podem ser combinados</span></div>
+      <div class="metric"><b>1º–10º</b><span>estrutura acadêmica preparada por período</span></div>
+      <div class="metric"><b>Teoria + prática</b><span>grupos gerais e grupos específicos por matéria</span></div>
+      <div class="metric"><b>HTML direto</b><span>abre no navegador, sem travas de app local</span></div>
+    </div>
+  </section>
+  <aside class="previewShell">
+    <div class="preview">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="pill green">Liquid interface</span>
+        <span class="pill violet">Painel completo</span>
+      </div>
+      <div class="previewGrid">
+        <div class="previewCard big">
+          <span class="eyebrow">Sua rotina, sem ruído</span>
+          <h3 style="font-size:30px;letter-spacing:-.05em;margin:10px 0 8px">Tudo se move sem parecer amador.</h3>
+          <p style="font-size:11px;color:var(--muted);line-height:1.7">Hero com profundidade, cartões leves, indicadores claros e navegação consistente entre aluno e administrador.</p>
+          <div class="previewSurface pulse"></div>
+        </div>
+        <div class="stack">
+          <div class="previewCard float"><span class="eyebrow">Aulas</span><h3 style="margin:6px 0 0">Áudio · vídeo · transcrição</h3><div class="previewBar"></div><div class="previewBar"></div><div class="previewBar"></div></div>
+          <div class="previewCard float2"><span class="eyebrow">Treino</span><h3 style="margin:6px 0 0">Tipos mescláveis</h3><div class="previewBar"></div><div class="previewBar"></div><div class="previewBar"></div></div>
+          <div class="previewStat">
+            <div class="previewCard"><span class="eyebrow">Admin</span><h3 style="font-size:26px;margin-top:10px">Vendas</h3></div>
+            <div class="previewCard"><span class="eyebrow">Acadêmico</span><h3 style="font-size:26px;margin-top:10px">Horários</h3></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ============ PERSONALIZAÇÃO (preenchida por sinus/integracao.js) ============ -->
+<div id="sxOnboarding" class="hidden" aria-live="polite"></div>
+
+<!-- ============ PAINEL DO ALUNO ============ -->
+<div id="app" class="hidden">
+  <aside class="sidebar" aria-label="Menu principal" id="sxSidebar">
+<button class="sidebarToggle" onclick="toggleSidebar()" title="Recolher ou expandir menu">‹</button>
+<div class="sideBrand logo"><span class="logoMark">S</span><span>sinus.</span></div>
+<div class="sidePanel"><div style="display:flex;gap:9px;align-items:center;justify-content:space-between"><div><span class="eyebrow">Meu espaço · Medicina</span><div id="sideUser" style="font-size:12px;font-weight:800;margin-top:6px">Aluno Sinus</div><small id="sideMeta">5º período · Turma F</small></div><span class="avatar" id="sideAvatar" style="width:31px;height:31px">AS</span></div></div>
+<div class="sideBody">
+  <div class="sideLabel">SEU ESPAÇO</div>
+  <button class="navBtn active" data-page="home" onclick="nav('home',this)"><span class="navIcon">⌂</span><span class="navText">Início</span></button>
+  <button class="navBtn" data-page="schedule" onclick="nav('schedule',this)"><span class="navIcon">▦</span><span class="navText">Horários e rotações</span></button>
+  <button class="navBtn" data-page="subjects" onclick="nav('subjects',this)"><span class="navIcon">▤</span><span class="navText">Matérias</span></button>
+  <button class="navBtn" data-page="library" onclick="nav('library',this)"><span class="navIcon">▥</span><span class="navText">Biblioteca</span></button>
+  <div class="sideLabel">ESTUDO E REVISÃO</div>
+  <button class="navBtn" data-page="study" onclick="nav('study',this)"><span class="navIcon">◎</span><span class="navText">Central de estudos</span></button>
+  <button class="navBtn" data-page="apostilas" onclick="nav('apostilas',this)"><span class="navIcon">▣</span><span class="navText">Apostilas</span></button>
+  <div class="sideLabel">ORGANIZAÇÃO</div>
+  <button class="navBtn" data-page="agenda" onclick="nav('agenda',this)"><span class="navIcon">▦</span><span class="navText">Agenda pessoal</span></button>
+  <button class="navBtn" data-page="immigration" onclick="nav('immigration',this)"><span class="navIcon">▤</span><span class="navText">Imigração / MEC</span></button>
+  <button class="navBtn" data-page="profile" onclick="nav('profile',this)"><span class="navIcon">○</span><span class="navText">Perfil</span></button>
+  <details class="sideMore" id="moreResources"><summary><span class="navIcon">⋯</span><span class="navText">Mais recursos</span><span class="moreChevron">⌄</span></summary><div class="moreInner">
+    <div class="sideLabel">ACERVO E COMUNIDADE</div>
+    <button class="navBtn" data-page="pockets" onclick="nav('pockets',this)"><span class="navIcon">▤</span><span class="navText">Pockets (A6)</span></button>
+    <a class="navBtn" href="/aulas/painel/"><span class="navIcon">◈</span><span class="navText">Atlas 3D e Revalida</span></a>
+    <button class="navBtn" data-page="study-together" onclick="nav('study-together',this)"><span class="navIcon">♙</span><span class="navText">Estudar junto</span></button>
+    <button class="navBtn" data-page="ranking" onclick="nav('ranking',this)"><span class="navIcon">♜</span><span class="navText">Comunidade e ranking</span></button>
+    <div class="sideLabel">CONTA</div>
+    <button class="navBtn" data-page="plans" onclick="nav('plans',this)"><span class="navIcon">▣</span><span class="navText">Assinatura</span></button>
+  </div></details>
+</div><div class="sideAccount"><button class="navBtn sxSoDono" onclick="enterAdmin()" hidden><span class="navIcon">⚙</span><span class="navText">Administrador</span></button><button class="navBtn" data-sx-sair><span class="navIcon">⇠</span><span class="navText">Sair</span></button></div>
+<div class="sideFoot">Sinus · seu estudo, no seu ritmo. <span class="footHint">Todas as funções continuam disponíveis.</span></div>
+</aside>
+<div class="sxScrim" data-sx-menu-fechar></div>
+<div class="main">
+    <header class="topbar">
+      <div class="sxTopLeft">
+        <button class="btn sm sxMenuBtn" type="button" data-sx-menu aria-label="Abrir o menu">☰</button>
+        <div>
+          <span class="eyebrow">Sinus</span>
+          <div style="font-size:16px;font-weight:900;margin-top:4px" id="pageTitle">Início</div>
+        </div>
+      </div>
+      <input class="search" id="globalSearch" placeholder="Buscar matéria, aula, prova..." oninput="filterGlobal(this.value)">
+      <div class="topbarRight">
+        <select class="sxLangMini" data-sx-lang-select aria-label="Idioma do painel"><option value="pt">PT</option><option value="es">ES</option><option value="en">EN</option></select>
+        <button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button>
+        <button class="btn sm sxSoDono" onclick="resetDemo()" hidden>Restaurar demo</button>
+        <button class="btn sm secondary sxSoDono" onclick="enterAdmin()" hidden>Admin</button>
+        <div class="avatar" id="topAvatar">AS</div>
+      </div>
+    </header>
+    <main class="content">
+      <section id="page-home" class="page active"></section>
+      <section id="page-schedule" class="page"></section>
+      <section id="page-subjects" class="page"></section>
+      <section id="page-library" class="page"></section>
+      <section id="page-agenda" class="page"></section>
+      <section id="page-immigration" class="page"></section>
+      <section id="page-plans" class="page"></section>
+      <section id="page-profile" class="page"></section>
+      <section id="page-hub" class="page"></section>
+    </main>
+  </div>
+  <nav class="sxBottomNav" aria-label="Navegação rápida">
+    <button type="button" data-sx-go="home"><span>⌂</span><b>Início</b></button>
+    <button type="button" data-sx-go="schedule"><span>▦</span><b>Horários</b></button>
+    <button type="button" data-sx-go="subjects"><span>▤</span><b>Matérias</b></button>
+    <button type="button" data-sx-go="agenda"><span>◷</span><b>Agenda</b></button>
+    <button type="button" data-sx-menu><span>☰</span><b>Mais</b></button>
+  </nav>
+</div>
+
+<div id="subjectView" class="hidden">
+  <div class="subjectTop">
+    <button class="btn sm" onclick="closeSubject()">← Voltar</button>
+    <div class="logo"><span class="logoMark">S</span><span style="font-size:24px">sinus.</span></div>
+    <div class="sxSubjectRight">
+      <button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button>
+      <span id="subjectPlanPill" class="pill violet">Plano</span>
+    </div>
+  </div>
+  <div class="subjectShell">
+    <div id="subjectHeader"></div>
+    <div id="subjectTabs" class="subTabs"></div>
+    <div id="subjectContent" class="subjectContent"></div>
+  </div>
+</div>
+
+<div id="admin" class="hidden">
+  <aside class="adminSide">
+    <div class="logo" style="padding:8px 8px 16px"><span class="logoMark">S</span><span style="font-size:24px">admin.</span></div>
+    <div class="sideLabel">Comercial</div>
+    <button class="adminNav active" data-admin="dashboard" onclick="adminNav('dashboard',this)">Visão geral</button>
+    <button class="adminNav" data-admin="users" onclick="adminNav('users',this)">Clientes</button>
+    <button class="adminNav" data-admin="sales" onclick="adminNav('sales',this)">Vendas</button>
+    <button class="adminNav" data-admin="plans" onclick="adminNav('plans',this)">Planos</button>
+    <div class="sideLabel">Acadêmico</div>
+    <button class="adminNav" data-admin="content" onclick="adminNav('content',this)">Conteúdo</button>
+    <button class="adminNav" data-admin="training" onclick="adminNav('training',this)">Treinos e questões</button>
+    <button class="adminNav" data-admin="schedules" onclick="adminNav('schedules',this)">Horários e fontes Drive</button>
+    <button class="adminNav" data-admin="structure" onclick="adminNav('structure',this)">Estrutura acadêmica</button>
+    <button class="adminNav" data-admin="settings" onclick="adminNav('settings',this)">Painel do aluno</button>
+    <div class="sideLabel">Voltar</div>
+    <button class="adminNav" onclick="enterStudent()">← Painel do aluno</button>
+  </aside>
+  <div class="adminMain">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">Sinus admin</span>
+        <div style="font-size:16px;font-weight:900;margin-top:4px" id="adminTitle">Visão geral</div>
+      </div>
+      <div class="topbarRight">
+        <span class="pill amber">Persistência local</span>
+        <button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button>
+        <button class="btn sm primary" onclick="saveDB()">Salvar alterações</button>
+      </div>
+    </header>
+    <main class="adminContent">
+      <section id="admin-dashboard" class="adminPage active"></section>
+      <section id="admin-users" class="adminPage"></section>
+      <section id="admin-sales" class="adminPage"></section>
+      <section id="admin-plans" class="adminPage"></section>
+      <section id="admin-content" class="adminPage"></section>
+      <section id="admin-training" class="adminPage"></section>
+      <section id="admin-schedules" class="adminPage"></section>
+      <section id="admin-structure" class="adminPage"></section>
+      <section id="admin-settings" class="adminPage"></section>
+    </main>
+  </div>
+</div>
+
+<div id="modal">
+  <div class="glass modalCard">
+    <span class="eyebrow">Sinus</span>
+    <h2 id="modalTitle">Modal</h2>
+    <div id="modalBody"></div>
+    <div class="modalActions">
+      <button class="btn sm" onclick="closeModal()">Cancelar</button>
+      <button class="btn primary sm" id="modalSave">Salvar</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="/aulas/config.js?v=11"></script>
-<script src="/aulas/catalogo.js?v=3"></script>
-<style>
-  :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--soft:#f3f7f5;--bg:#f6f8f7}
-  *{box-sizing:border-box}
-  body.home{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Inter',system-ui,sans-serif}
-  [hidden]{display:none!important}
-  .top{position:sticky;top:0;z-index:20;background:rgba(246,248,247,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  .top .in{max-width:1140px;margin:0 auto;padding:12px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  .logo{display:inline-flex;align-items:center;gap:8px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
-  .logo .mk{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#38ae8b,#165d4c)}
-  .logo .mk svg{width:16px;height:16px}
-  .logo b{color:var(--green)}
-  .quem{margin-left:auto;font-size:13.5px;color:var(--ink3);display:flex;align-items:center;gap:10px}
-  .link{background:none;border:none;color:var(--green);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
-  .wrap{max-width:1140px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-left,0px)) 64px}
-  .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600}
-  h1{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:clamp(30px,5vw,42px);line-height:1.05;letter-spacing:-.02em;margin:4px 0 0}
-  h1 em{color:var(--green);font-style:italic}
-  .sub{color:var(--ink3);font-size:15px;margin:8px 0 0;max-width:62ch}
-  .abas{display:flex;gap:8px;overflow-x:auto;padding:24px 0 6px;scrollbar-width:thin}
-  .abas button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:9px 16px;font:500 14.5px 'Inter',sans-serif;cursor:pointer;min-height:40px}
-  .abas button[aria-selected="true"]{background:#16241f;border-color:#16241f;color:#fff}
-  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px;margin-top:16px}
-  .mat{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;text-align:left;font:inherit;color:inherit;cursor:pointer;min-height:168px}
-  .mat:hover{border-color:#cfdcd7;box-shadow:0 10px 30px -22px rgba(16,40,32,.5)}
-  .mat .ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--soft);border:1px solid var(--line);font-size:22px}
-  .mat b{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
-  .mat .prof{font-size:13.5px;color:var(--ink3)}
-  .mat .pe{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink3);flex-wrap:wrap}
-  .pill{border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--soft)}
-  .pill.ok{color:var(--green);border-color:#bfded4;background:#eef7f3;font-weight:600}
-  .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:16px}
-  .card h2{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:28px;margin:0 0 4px;letter-spacing:-.02em}
-  .card p{color:var(--ink3);margin:0}
-  .vazio{padding:34px 20px;text-align:center;color:var(--ink3)}
-  .vazio b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
-  .gate-msg{font-size:15px;color:var(--ink2);min-height:1.4em;margin:0}
-  .gate-msg.erro{color:#9b2c47}
-  .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 15px 'Inter',sans-serif;cursor:pointer;padding:0 20px;text-decoration:none}
-  .btn.prim{background:#16241f;border-color:#16241f;color:#fff}
-  .cad{display:grid;gap:12px;margin-top:8px}
-  .cad label{display:grid;gap:6px;font-size:14px;color:var(--ink2)}
-  .cad input,.cad select{font:16px 'Inter',sans-serif;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:46px}
-  .gate-msg.erro{color:#9b2c47}
-  .ag-leg{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
-  .ag-leg span{font-size:12px;border-radius:999px;padding:4px 10px;font-weight:600}
-  .c-prova-pratica{color:#b42318;background:#fde8e6}
-  .c-prova-teorica{color:#6941c6;background:#f4f0ff}
-  .c-teoria{color:#175cd3;background:#eff6ff}
-  .c-pratica{color:#067647;background:#ecfdf3}
-  .c-atividade{color:#b54708;background:#fffaeb}
-  .c-evento{color:#0e7490;background:#ecfeff}
-  .c-recuperacao{color:#a15c07;background:#fefbe8}
-  .c-a-confirmar{color:#475467;background:#f2f4f7}
-  .ag-sec{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin:16px 0 8px}
-  .ag-av{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left-width:4px;border-radius:12px;padding:10px 12px;margin-bottom:8px}
-  .ag-av b{display:block;font-size:15px}
-  .ag-tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;margin-bottom:4px}
-  .ag-av small{font-size:12.5px;color:var(--ink3)}
-  .ag-dias{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
-  .ag-dias button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font:600 13px 'Inter',sans-serif;color:var(--ink2);cursor:pointer;min-height:34px}
-  .ag-dias button[aria-pressed="true"]{background:#16241f;border-color:#16241f;color:#fff}
-  .ag-lista{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-  .ag-it{display:grid;grid-template-columns:82px 1fr;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);border-left:4px solid #ccc}
-  .ag-it:last-child{border-bottom:0}
-  .ag-it .h{font-size:12.5px;color:var(--ink2);font-variant-numeric:tabular-nums;line-height:1.3}
-  .ag-it b{display:block;font-size:14px;line-height:1.25}
-  .ag-it small{display:block;font-size:12px;color:var(--ink3);line-height:1.3}
-  .ag-it.t{border-left-color:#175cd3}
-  .ag-it.p{border-left-color:#067647}
-  @media (max-width:640px){
-    .grade{grid-template-columns:1fr 1fr;gap:10px}
-    .mat{padding:12px;border-radius:16px;min-height:0;gap:6px}
-    .mat .ico{width:34px;height:34px;font-size:17px;border-radius:11px}
-    .mat b{font-size:14px}
-    .mat .prof{font-size:11.5px}
-    .mat .pe{font-size:10.5px;gap:4px}
-    .pill{padding:2px 7px}
-  }
-</style>
-</head>
-<body class="home">
-
-<main class="sx-gate" id="gate">
-  <section class="sx-card sx-glass" aria-labelledby="t">
-    <a class="sx-logo" href="/"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
-    <div>
-      <span class="sx-tag">5º período · UCP</span>
-      <h1 id="t">Seu semestre <em>inteiro.</em></h1>
-    </div>
-    <p class="sx-sub">Apresentação: o Sinus reúne num só lugar o que está espalhado pelo Drive. Slides, provas, áudios, vídeos, apostilas, flashcards e a aula em 3D, organizados pelo professor da sua turma. Entre com a sua conta Google e faça seu cadastro.</p>
-    <button class="sx-btn sx-primary" id="entrar" type="button">Entrar com Google</button>
-    <p class="gate-msg" id="msg" role="status"></p>
-  </section>
-</main>
-
-<main class="sx-gate" id="cadastro" hidden>
-  <section class="sx-card sx-glass" aria-labelledby="tc">
-    <span class="sx-tag">Último passo</span>
-    <h1 id="tc">Faça seu <em>cadastro.</em></h1>
-    <p class="sx-sub">Leva um minuto e liga você à sua turma. Cada professor e cada prova aparecem de acordo com o horário da sua turma.</p>
-    <form id="formCad" class="cad">
-      <label>Nome completo<input id="cNome" required minlength="3" maxlength="80" autocomplete="name"></label>
-      <label>WhatsApp, só números, com código do país<input id="cZap" required inputmode="numeric" placeholder="595981234567"></label>
-      <label>Turma<select id="cTurma" required><option value="">Escolha a turma</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></label>
-      <button class="sx-btn sx-primary" type="submit" id="cBtn">Concluir cadastro</button>
-      <p class="gate-msg" id="cMsg" role="status"></p>
-    </form>
-  </section>
-</main>
-
-<div id="app" hidden>
-  <header class="top">
-    <div class="in">
-      <a class="logo" href="/"><span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
-      <span class="quem"><a class="link" href="/aulas/painel/" style="text-decoration:underline">Painel Sinus</a><span id="quem"></span><button class="link" id="sair" type="button">Sair</button></span>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <span class="tag" id="cab-tag">5º período · UCP</span>
-    <h1>Bom estudo, <em id="nome">aluno</em>.</h1>
-    <p class="sub" id="cab-sub">Tudo que a sua turma usa está aqui dentro. Escolha a matéria.</p>
-
-    <nav class="abas" id="abas" role="tablist"></nav>
-    <section id="painel"></section>
-  </main>
-</div>
-
-<script src="/aulas/agenda.js?v=1"></script>
-<script>
-(function () {
-  var $ = function (s, r) { return (r || document).querySelector(s) };
-  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
-  var CAT = window.SINUS_CATALOGO || { materias: [], agenda: [], atualizado: '' };
-  var turmaAluno = '', aba = 'materias';
-
-  var ABAS = [
-    ['materias', 'Matérias'],
-    ['agenda', 'Agenda'],
-    ['trilhas', 'Trilhas de estudo'],
-    ['biblioteca', 'Biblioteca']
-  ];
-
-  function profDaMateria(m) {
-    if (!m.teoria || !m.teoria.length) return null;
-    var achado = null;
-    m.teoria.forEach(function (p) {
-      if (p.turmas && p.turmas.indexOf(turmaAluno) >= 0) achado = p;
-    });
-    return achado || m.teoria[0];
-  }
-
-  function cardMateria(m) {
-    var p = profDaMateria(m);
-    var daTurma = p && p.turmas && p.turmas.indexOf(turmaAluno) >= 0;
-    var pes = [];
-    if (m.pronta) pes.push('<span class="pill ok">Painel completo</span>');
-    if (m.itens) pes.push('<span class="pill">' + m.itens + ' materiais</span>');
-    if (p) pes.push('<span class="pill">' + esc(p.curto || p.nome) + (daTurma ? ' · sua turma' : '') + '</span>');
-    return '<button class="mat" data-ir="' + esc(m.href || '') + '" type="button">' +
-      '<span class="ico">' + (m.icone || '📘') + '</span>' +
-      '<b>' + esc(m.nome) + '</b>' +
-      (p ? '<span class="prof">' + esc(p.nome) + '</span>' : '<span class="prof">Acervo da cátedra</span>') +
-      '<span class="pe">' + pes.join('') + '</span>' +
-      '</button>';
-  }
-
-  var TIPO = { 't': ['Aula teórica', 'c-teoria', 't'], 'p': ['Prática', 'c-pratica', 'p'] };
-  var AVISO = { 'prova-pratica': ['Prova prática', 'c-prova-pratica', '#b42318'], 'prova-teorica': ['Prova teórica', 'c-prova-teorica', '#6941c6'], 'evento': ['Evento', 'c-evento', '#0e7490'], 'recuperacao': ['Recuperação', 'c-recuperacao', '#a15c07'], 'a-confirmar': ['Confirmar', 'c-a-confirmar', '#475467'], 'atividade': ['Atividade', 'c-atividade', '#b54708'] };
-  var SEMANA = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
-  function dataCurta(iso, fim) {
-    var p = iso.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
-    var txt = SEMANA[d.getDay()] + ' ' + p[2] + '/' + p[1];
-    if (fim) { var q = fim.split('-'); txt += ' a ' + q[2] + '/' + q[1] }
-    return txt;
-  }
-  var DIAS = [['lun', 'Seg'], ['mar', 'Ter'], ['mie', 'Qua'], ['jue', 'Qui'], ['vie', 'Sex'], ['sab', 'Sáb']];
-  var diaSel = null;
-  function diaDeHoje() { var n = new Date().getDay(); return ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'][n] }
-  function renderAgenda() {
-    var H = window.SINUS_HORARIO || {};
-    var hoje = (function () { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) })();
-    var AV = (window.SINUS_AVISOS || []).filter(function (a) { return (a.data_fim || a.data || '') >= hoje }).sort(function (a, b) { return (a.data || '') < (b.data || '') ? -1 : 1 });
-    var hor = turmaAluno && H[turmaAluno];
-    var sem = [];
-    if (!diaSel) diaSel = DIAS.some(function (d) { return d[0] === diaDeHoje() }) ? diaDeHoje() : 'lun';
-    var h = '<div class="ag-leg">' + Object.keys(AVISO).map(function (k) { return '<span class="' + AVISO[k][1] + '">' + AVISO[k][0] + '</span>' }).join('') +
-      '<span class="c-teoria">Aula</span><span class="c-pratica">Prática</span></div>';
-    h += '<div class="ag-sec">Próximas provas e avisos, por data</div>';
-    h += AV.length ? AV.map(function (a) {
-      var c = AVISO[a.tipo] || AVISO['atividade'];
-      return '<div class="ag-av" style="border-left-color:' + c[2] + '"><div><span class="ag-tag ' + c[1] + '">' + c[0] + '</span><b>' + esc(dataCurta(a.data, a.data_fim)) + ' · ' + esc(a.titulo) + '</b><small>' + esc(a.detalhe || '') + '</small></div></div>';
-    }).join('') : '<p class="sub">Sem avisos por enquanto.</p>';
-    h += '<div class="ag-sec">Horário da sua turma' + (turmaAluno ? ' ' + esc(turmaAluno) + (hor && hor.sala ? ' · ' + esc(hor.sala) : '') : '') + '</div>';
-    if (!hor) return h + '<p class="sub">Escolha sua turma no cadastro para ver o horário.</p>';
-    h += '<div class="ag-dias" role="group" aria-label="Dia">' + DIAS.map(function (d) {
-      return '<button type="button" data-dia="' + d[0] + '" aria-pressed="' + (d[0] === diaSel) + '">' + d[1] + '</button>';
-    }).join('') + '</div>';
-    var lista = (hor.dias[diaSel] || []).slice().sort(function (a, b) { return a[0] < b[0] ? -1 : 1 });
-    h += lista.length ? '<div class="ag-lista">' + lista.map(function (x) {
-      var t = TIPO[x[4]] || TIPO['t'];
-      var extra = [x[3], x[4] === 'p' && x[5] ? 'Grupo ' + x[5].replace('GP', '') : '', x[6]].filter(Boolean).join(' · ');
-      return '<div class="ag-it ' + t[2] + '"><div class="h">' + esc(x[0]) + '<br>' + esc(x[1]) + '</div><div><b>' + esc(x[2]) + '</b><small>' + esc(t[0]) + (extra ? ' · ' + esc(extra) : '') + '</small></div></div>';
-    }).join('') + '</div>' : '<p class="sub">Sem aulas neste dia.</p>';
-    return h;
-  }
-
-  function render() {
-    $('#abas').innerHTML = ABAS.map(function (a) {
-      return '<button role="tab" data-aba="' + a[0] + '" aria-selected="' + (a[0] === aba) + '" type="button">' + a[1] + '</button>';
-    }).join('');
-
-    var h = '';
-    if (aba === 'materias') {
-      h = CAT.materias.length
-        ? '<div class="grade">' + CAT.materias.map(cardMateria).join('') + '</div>'
-        : '<div class="card"><div class="vazio"><b>O acervo está sendo montado</b>As matérias aparecem aqui assim que a varredura do Drive terminar.</div></div>';
-    } else if (aba === 'agenda') {
-      h = renderAgenda();
-    } else if (aba === 'trilhas') {
-      h = '<div class="card"><h2>Trilhas de estudo</h2><p>Roteiros por matéria, com apostila, treino e flashcards na ordem.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Trilhas de estudo</a></p></div>';
-    } else {
-      h = '<div class="card"><h2>Biblioteca</h2><p>Robbins, Guyton e o material complementar do semestre.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Biblioteca</a></p></div>';
-    }
-    $('#painel').innerHTML = h;
-  }
-
-  document.addEventListener('click', function (e) {
-    var dia = e.target.closest && e.target.closest('[data-dia]');
-    if (dia) { diaSel = dia.dataset.dia; render(); return }
-    var a = e.target.closest && e.target.closest('[data-aba]');
-    if (a) { aba = a.dataset.aba; render(); return }
-    var ir = e.target.closest && e.target.closest('[data-ir]');
-    if (ir && ir.dataset.ir) location.href = ir.dataset.ir;
-  });
-
-  // ---- entrada ----
-  firebase.initializeApp(window.SINUSAL_FIREBASE);
-  var auth = firebase.auth(), db = firebase.firestore();
-  var msg = $('#msg'), btn = $('#entrar');
-  function say(t, erro) { msg.textContent = t; msg.className = 'gate-msg' + (erro ? ' erro' : '') }
-
-  btn.addEventListener('click', function () {
-    var g = new firebase.auth.GoogleAuthProvider(); g.setCustomParameters({ prompt: 'select_account' });
-    btn.disabled = true; say('Abrindo a entrada do Google…');
-    auth.signInWithPopup(g).catch(function (e) {
-      btn.disabled = false;
-      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return auth.signInWithRedirect(g);
-      say('Não foi possível entrar. Tente de novo.', true);
-    });
-  });
-  $('#sair').addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) });
-  auth.getRedirectResult().catch(function () {});
-  function mostrar(tela) { $('#gate').hidden = tela !== 'gate'; $('#cadastro').hidden = tela !== 'cadastro'; $('#app').hidden = tela !== 'app' }
-  function voltaSeguro() { var v = new URLSearchParams(location.search).get('volta') || ''; return (v.charAt(0) === '/' && v.charAt(1) !== '/') ? v : '' }
-  auth.onAuthStateChanged(function (u) {
-    if (!u) return mostrar('gate');
-    var prim = (u.displayName || u.email || '').split(' ')[0];
-    $('#quem').textContent = prim; $('#nome').textContent = prim;
-    $('#cNome').value = u.displayName || '';
-    db.doc('perfis/' + u.uid).get().then(function (snap) {
-      var d = snap.exists ? snap.data() : {};
-      if (!(d.nome && d.turma && d.whatsapp)) return mostrar('cadastro');
-      if (voltaSeguro()) return location.replace(voltaSeguro());
-      turmaAluno = d.turma;
-      $('#cab-tag').textContent = '5º período · turma ' + d.turma + ' · UCP';
-      mostrar('app'); render();
-      db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
-    }).catch(function () { mostrar('gate'); say('Não foi possível carregar seu cadastro. Tente de novo.', true) });
-  });
-
-  $('#formCad').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var u = auth.currentUser; if (!u) return;
-    var nome = $('#cNome').value.trim(), zap = $('#cZap').value.replace(/\D/g, ''), turma = $('#cTurma').value;
-    var m = $('#cMsg');
-    if (nome.length < 3 || !/^[0-9]{8,15}$/.test(zap) || !turma) { m.textContent = 'Confira nome, WhatsApp e turma.'; m.className = 'gate-msg erro'; return }
-    $('#cBtn').disabled = true; m.textContent = 'Salvando…'; m.className = 'gate-msg';
-    var agora = firebase.firestore.FieldValue.serverTimestamp(), lote = db.batch();
-    lote.set(db.doc('whats/' + zap), { uid: u.uid, em: agora });
-    lote.set(db.doc('perfis/' + u.uid), { nome: nome, turma: turma, whatsapp: zap, email: u.email || '', primeiro_acesso: agora, ultimo_acesso: agora }, { merge: true });
-    lote.commit().then(function () {
-      if (voltaSeguro()) return location.replace(voltaSeguro());
-      location.reload();
-    }).catch(function () {
-      $('#cBtn').disabled = false;
-      m.textContent = 'Não foi possível salvar. Confira os dados. Se o WhatsApp já estiver em outra conta, use a conta dela ou fale com a coordenação.';
-      m.className = 'gate-msg erro';
-    });
-  });
-
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
-})();
-</script>
+<script src="/aulas/config.js?v=12"></script>
+<script src="/aulas/catalogo.js?v=4"></script>
+<script src="/aulas/flashcards/cartoes.js?v=2"></script>
+<script src="/aulas/agenda.js?v=3"></script>
+<script src="/sinus/i18n.js?v=1"></script>
+<script src="/sinus/painel.js?v=1"></script>
+<script src="/sinus/integracao.js?v=1"></script>
 </body>
 </html>

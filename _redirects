@@ -1,3 +1,2 @@
-# A raiz agora é a home da Sinus, com todas as matérias.
-# O painel de Anatopato continua em /aulas/anatopato/.
-/painel    /aulas/anatopato/    302
+# A raiz é o painel do Sinus. Endereços antigos levam para dentro dele.
+/painel    /    302

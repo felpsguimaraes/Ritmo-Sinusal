@@ -3,15 +3,28 @@
   "short_name": "Sinus",
   "description": "Slides, provas, áudios, vídeos e apostila da sua turma, organizados por matéria.",
   "lang": "pt-BR",
-  "start_url": "/aulas/anatopato/",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#f6f8f7",
   "theme_color": "#176e5b",
   "icons": [
-    { "src": "/icons/icone-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icons/icone-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icons/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/icons/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icone-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

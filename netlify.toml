@@ -5,10 +5,10 @@
   publish = "."
   command = ""
 
-# A raiz é a home da Sinus, com todas as matérias.
+# A raiz é o painel do Sinus.
 [[redirects]]
   from = "/painel"
-  to = "/aulas/anatopato/"
+  to = "/"
   status = 302
   force = true
 

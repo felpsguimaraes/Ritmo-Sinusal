@@ -1,0 +1,252 @@
+/* Sinus · camada própria sobre o painel (entrada, personalização, celular, tema escuro, avisos, flashcards e apostila). */
+
+/* ---------- telas escondidas sempre escondidas (o painel força #app visível no celular) ---------- */
+#app.hidden,#admin.hidden,#subjectView.hidden,#landing.hidden,#sxOnboarding.hidden{display:none!important}
+[hidden]{display:none!important}
+
+/* ---------- entrada ---------- */
+.sxLandTop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sxEntrada{margin-top:22px;display:grid;gap:12px;max-width:560px}
+.sxLangLabel{display:block;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.sxSeg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.6);border:1px solid var(--line)}
+.sxSeg button{border:0;background:transparent;border-radius:10px;padding:10px 8px;font-weight:800;font-size:12px;color:var(--muted);min-height:42px}
+.sxSeg button.on{background:#1d1e1d;color:#fff}
+.sxGoogle{min-height:52px;font-size:14px!important;border-radius:15px!important;width:100%}
+.sxGoogle[disabled]{opacity:.6;cursor:wait}
+.sxMsg{font-size:12px;color:var(--muted);min-height:1.4em;line-height:1.5}
+.sxMsg.erro{color:#b42318}
+.sxThemeBtn{min-width:40px;font-size:14px!important}
+
+/* ---------- personalização (passo a passo) ---------- */
+#sxOnboarding{min-height:100vh;display:grid;place-items:center;padding:22px 16px 40px}
+.sxOnb{width:min(760px,100%);padding:28px;position:relative}
+.sxOnbTop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.sxOnbTop .logo span:last-child{font-size:22px}
+.sxOnb h2{font-size:clamp(28px,5vw,42px);letter-spacing:-.05em;line-height:1.05;margin:10px 0 10px}
+.sxOnb h2 em{font-style:normal;color:var(--green)}
+.sxOnb .lead{font-size:14px;line-height:1.7;color:var(--muted);max-width:620px}
+.sxOnbBody{margin-top:18px;display:grid;gap:12px}
+.sxOnbBody .grid2{gap:10px}
+.sxOnbFoot{margin-top:22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.sxStep{font-size:11px;font-weight:800;color:var(--muted)}
+.sxBar{height:5px;border-radius:9px;background:rgba(31,122,93,.12);overflow:hidden;margin-bottom:6px}
+.sxBar i{display:block;height:100%;background:var(--grad-main);border-radius:9px;transition:width .3s ease}
+.sxOnbFoot .btns{display:flex;gap:8px;flex-wrap:wrap}
+.sxHint{font-size:11px;color:var(--muted);line-height:1.6}
+.sxErr{font-size:12px;color:#b42318;min-height:1.2em}
+.sxPoints{display:grid;gap:10px;margin-top:6px}
+.sxPoint{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border-radius:14px;background:rgba(255,255,255,.62);border:1px solid var(--line)}
+.sxPoint b{font-size:12px;color:var(--green);min-width:26px}
+.sxPoint span{font-size:13px;line-height:1.5}
+.sxConnect{margin-top:6px;padding:16px;border-radius:18px;background:linear-gradient(145deg,#173629,#234436);color:#e8f2ec}
+.sxConnect .eyebrow{color:#9fd9bd}
+.sxConnect h3{font-size:20px;margin:6px 0 10px;color:#fff}
+.sxConnect .row{display:flex;gap:8px;flex-wrap:wrap}
+.sxConnect .row span{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.12);font-size:11px;font-weight:700}
+.sxConnect small{display:block;margin-top:10px;font-size:11px;opacity:.8}
+.sxChoices{display:grid;gap:9px}
+.sxChoice{display:flex;justify-content:space-between;gap:12px;align-items:center;text-align:left;padding:14px 15px;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.7);color:var(--text);min-height:58px}
+.sxChoice small{display:block;color:var(--muted);font-size:11px;margin-top:3px;font-weight:500}
+.sxChoice b{font-size:14px}
+.sxChoice.on{border-color:#1f7a5d;background:rgba(223,245,234,.95);box-shadow:0 0 0 3px rgba(31,122,93,.12)}
+.sxChoice .tick{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:12px;flex:none}
+.sxChoice.on .tick{background:#1f7a5d;border-color:#1f7a5d;color:#fff}
+.sxChips{display:flex;flex-wrap:wrap;gap:8px}
+.sxChips button{padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.75);font-weight:700;font-size:12px;color:var(--text);min-height:42px}
+.sxChips button.on{background:#1d1e1d;border-color:#1d1e1d;color:#fff}
+.sxInstall{padding:16px;border-radius:16px;border:1px dashed rgba(31,122,93,.35);background:rgba(223,245,234,.45)}
+.sxInstall ol{margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.9}
+.sxInstall .ok{font-weight:800;color:var(--green)}
+.sxSummary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sxSummary div{padding:14px;border-radius:14px;background:rgba(255,255,255,.65);border:1px solid var(--line)}
+.sxSummary span{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sxSummary b{display:block;font-size:15px;margin-top:5px}
+.sxGroups{display:grid;gap:8px;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.5)}
+.sxGroups h4{margin:0;font-size:12px}
+
+/* ---------- topo e celular ---------- */
+.sxTopLeft{display:flex;align-items:center;gap:10px;min-width:0}
+.sxMenuBtn{display:none!important}
+.sxLangMini{width:auto!important;padding:7px 8px!important;border-radius:10px!important;font-size:11px!important;font-weight:800}
+.sxScrim{display:none}
+.sxBottomNav{display:none}
+.sxSubjectRight{display:flex;align-items:center;gap:8px}
+a.navBtn{text-decoration:none}
+
+@media(max-width:820px){
+  .sxMenuBtn{display:inline-flex!important}
+  #app .sidebar{position:fixed!important;top:0!important;bottom:0!important;left:0!important;width:min(300px,86vw)!important;max-height:none!important;z-index:90!important;transform:translateX(-105%);transition:transform .25s ease;box-shadow:0 20px 60px rgba(0,0,0,.25)!important}
+  body.sxMenuAberto #app .sidebar{transform:none}
+  body.sxMenuAberto .sxScrim{display:block;position:fixed;inset:0;background:rgba(10,20,15,.35);z-index:85}
+  #app .sidebar .sideBody{max-height:none!important}
+  .topbar{position:sticky!important;top:0;z-index:40!important;height:auto!important;padding:10px 14px!important;gap:8px}
+  .topbarRight{gap:6px}
+  .topbarRight .avatar{display:none}
+  #app .content{padding:14px 14px 96px!important}
+  .sxBottomNav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(250,250,248,.96);backdrop-filter:blur(14px);border-top:1px solid #e5e7e2;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .sxBottomNav button{border:0;background:transparent;display:grid;justify-items:center;gap:2px;padding:6px 2px;color:#5b615a;min-height:52px;border-radius:12px}
+  .sxBottomNav button span{font-size:17px;line-height:1}
+  .sxBottomNav button b{font-size:10.5px;font-weight:700}
+  .sxBottomNav button.on{color:#1f7a5d;background:rgba(31,122,93,.08)}
+  /* letras maiores no celular */
+  .heading h1{font-size:26px!important}
+  .heading p,.soft,.card p,.quickItem,.resourceItem small{font-size:12.5px!important}
+  .btn.sm{font-size:12px!important;padding:9px 12px!important}
+  .btn{font-size:13px}
+  .navBtn{font-size:14px!important;min-height:42px!important}
+  .eyebrow{font-size:10px}
+  .subTabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .subTabs button{white-space:nowrap;font-size:12px!important;padding:10px 12px!important}
+  .subjectShell{padding:14px!important}
+  .subjectTop{padding:10px 12px!important}
+  .subjectTop .logo{display:none}
+  .sxOnb{padding:20px}
+  .sxSummary{grid-template-columns:1fr}
+  #toast{left:12px;right:12px;bottom:84px;font-size:13px}
+  /* o painel fixa duas colunas no horário; no celular vira uma */
+  #page-schedule .grid2,#page-home .grid2,#page-profile .grid2{grid-template-columns:1fr!important}
+  /* entrada: título menor para o login aparecer logo no início */
+  #landing .hero{padding:22px!important}
+  #landing .hero h1{font-size:34px!important;line-height:1.05;margin:14px 0 10px}
+  #landing .hero>p{font-size:13.5px}
+  .sxEntrada{margin-top:16px}
+  #landing .metrics{margin-top:16px}
+  /* rodapé da personalização: botão principal em cima, largo */
+  .sxOnbFoot .btns{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .sxOnbFoot .btns .btn{width:100%}
+  .sxOnbFoot .btns .btn.primary{grid-column:1/-1;order:-1;min-height:50px}
+  .sxOnbFoot .btns .btn:only-child,.sxOnbFoot .btns .btn:nth-last-child(2):first-child{grid-column:auto}
+}
+
+/* ---------- avisos e horário do dia ---------- */
+.sxAvisos{display:grid;gap:8px}
+.sxAviso{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);border-left:5px solid #475467}
+.sxAviso b{display:block;font-size:13.5px;line-height:1.35}
+.sxAviso small{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.sxTag{display:inline-block;font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;margin-bottom:5px}
+.t-prova-pratica{color:#b42318;background:#fef3f2}
+.t-prova-teorica{color:#6941c6;background:#f4f3ff}
+.t-evento{color:#0e7490;background:#ecfeff}
+.t-recuperacao{color:#a15c07;background:#fefbe8}
+.t-a-confirmar{color:#475467;background:#f2f4f7}
+.t-atividade{color:#b54708;background:#fffaeb}
+.t-aula{color:#1f7a5d;background:#e8f5ee}
+.t-pratica{color:#7a2e0e;background:#fff4ed}
+.sxLeg{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.sxLeg span{font-size:10.5px;font-weight:800;border-radius:999px;padding:3px 9px}
+.sxHoje{display:grid;gap:8px}
+.sxAula{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);border-left:4px solid #1f7a5d}
+.sxAula.p{border-left-color:#c2410c}
+.sxAula .h{font-size:11.5px;font-weight:800;color:var(--muted);line-height:1.3}
+.sxAula b{display:block;font-size:13px}
+.sxAula small{display:block;font-size:11px;color:var(--muted)}
+.sxDias{display:flex;gap:6px;overflow-x:auto;margin:6px 0 10px}
+.sxDias button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 13px;font-weight:800;font-size:12px;color:var(--text);min-height:38px}
+.sxDias button.on{background:#1d1e1d;color:#fff;border-color:#1d1e1d}
+.sxBlock{padding:18px;margin-bottom:14px}
+.sxBlock h3{font-size:17px;margin:6px 0 10px}
+
+/* ---------- flashcards ---------- */
+.sxCard{padding:22px}
+.sxQ{font-size:clamp(17px,2.4vw,22px);line-height:1.4;margin:12px 0 16px;font-weight:650;letter-spacing:-.01em}
+.sxA{background:rgba(223,245,234,.7);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.sxA p{margin:6px 0 8px;font-size:15px;line-height:1.55}
+.sxA small{color:var(--muted);font-size:12px;line-height:1.5}
+.sxGrades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sxGrades button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 6px;font-weight:800;font-size:13px;min-height:48px;color:var(--text)}
+.sxGrades .errou{color:#b42318;border-color:#f3c3be}
+.sxGrades .dificil{color:#8a5a00;border-color:#efd9a6}
+.sxGrades .facil{color:#1f7a5d;border-color:#bfded4}
+.sxDeckRow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+@media(max-width:520px){.sxGrades{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- apostila ---------- */
+.sxApost{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sxApost .glass{padding:20px}
+.sxApost h3{font-size:24px;letter-spacing:-.04em;margin:8px 0 6px}
+.sxApost p{font-size:12.5px;line-height:1.65;color:var(--muted)}
+.sxApost .heroActions{margin-top:14px}
+@media(max-width:820px){.sxApost{grid-template-columns:1fr}}
+
+/* =========================================================
+   TEMA ESCURO (botão claro/escuro)
+   ========================================================= */
+html[data-theme="dark"]{
+  --bg:#0d1512!important;--bg2:#111c18!important;--card:#17231e!important;--card2:#1b2a23!important;--line:rgba(160,200,180,.16)!important;
+  --text:#e6efe9!important;--muted:#9db1a6!important;--green:#5fd0a2!important;--green2:#3fb488!important;--green3:#173a2d!important;--violet:#22332b!important;--violet2:#1b2c25!important;
+  --shadow:0 14px 40px rgba(0,0,0,.35)!important;--shadow-lg:0 28px 80px rgba(0,0,0,.45)!important;
+  --grad-soft:linear-gradient(135deg,#16261f,#1a2a23 48%,#18241f)!important;
+  color-scheme:dark
+}
+html[data-theme="dark"] body,html[data-theme="dark"] #app,html[data-theme="dark"] #subjectView,html[data-theme="dark"] #admin,html[data-theme="dark"] #sxOnboarding,html[data-theme="dark"] #landing,html[data-theme="dark"] .topbar,html[data-theme="dark"] #pageTitle{color:var(--text)!important}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2,html[data-theme="dark"] h3,html[data-theme="dark"] h4{color:#eef5f1!important}
+html[data-theme="dark"] .hero h1 em{color:transparent!important}
+html[data-theme="dark"] .heading p{color:var(--muted)!important}
+html[data-theme="dark"] .eyebrow{color:#86c9ab!important}
+html[data-theme="dark"],html[data-theme="dark"] body{background:radial-gradient(circle at 0% 0%,rgba(63,180,136,.10),transparent 25%),linear-gradient(180deg,#101a16,#0b1310)!important;color:var(--text)!important}
+html[data-theme="dark"] .glass,html[data-theme="dark"] .card,html[data-theme="dark"] .quickItem,html[data-theme="dark"] .resourceItem,html[data-theme="dark"] .slot,
+html[data-theme="dark"] .metric,html[data-theme="dark"] .heroMetric,html[data-theme="dark"] .trainTab,html[data-theme="dark"] .lessonStep,html[data-theme="dark"] .focusStat,
+html[data-theme="dark"] .v11Step,html[data-theme="dark"] .v11Stat,html[data-theme="dark"] .v11FlashMini,html[data-theme="dark"] .v11AdminRow,html[data-theme="dark"] .feedback,
+html[data-theme="dark"] .checkpill,html[data-theme="dark"] .summary,html[data-theme="dark"] .uploadDrop,html[data-theme="dark"] .viewerBox,html[data-theme="dark"] .answerBtn,
+html[data-theme="dark"] .resumeStrip,html[data-theme="dark"] .v11CenterHero,html[data-theme="dark"] .v11AudioStage,html[data-theme="dark"] .dayCol,html[data-theme="dark"] .callout,
+html[data-theme="dark"] .heroPrimary,html[data-theme="dark"] .subjectHero,html[data-theme="dark"] .trainHero,html[data-theme="dark"] .lessonJourney,html[data-theme="dark"] .v11Journey,
+html[data-theme="dark"] .v11ReviewShell,html[data-theme="dark"] .focusSection,html[data-theme="dark"] .modalCard,html[data-theme="dark"] .preview,html[data-theme="dark"] .previewCard,
+html[data-theme="dark"] [class^="imig"],html[data-theme="dark"] [class*=" imig"]{
+  background:#17231e!important;border-color:rgba(160,200,180,.16)!important;color:var(--text)!important;box-shadow:none!important
+}
+html[data-theme="dark"] .focusSection,html[data-theme="dark"] .heroPrimary{background:linear-gradient(145deg,#183128,#14231d)!important}
+html[data-theme="dark"] .card:hover{border-color:rgba(95,208,162,.45)!important}
+html[data-theme="dark"] .sidebar,html[data-theme="dark"] .adminSide{background:#0f1814!important;color:#d5e2db!important;border-right-color:rgba(160,200,180,.14)!important}
+html[data-theme="dark"] .sidebar .logo,html[data-theme="dark"] .adminSide .logo{color:#eef5f1!important}
+html[data-theme="dark"] .sidePanel{background:#16211c!important;border-color:rgba(160,200,180,.16)!important;color:#e6efe9!important}
+html[data-theme="dark"] .navBtn,html[data-theme="dark"] .adminNav{color:#b9c9c0!important}
+html[data-theme="dark"] .navBtn:hover,html[data-theme="dark"] .adminNav:hover{background:#1b2a23!important;color:#fff!important}
+html[data-theme="dark"] .navBtn.active,html[data-theme="dark"] .adminNav.active{background:#e9f3ee!important;color:#0f1814!important}
+html[data-theme="dark"] .navBtn.active .navIcon{color:#0f1814!important}
+html[data-theme="dark"] .navBtn:not(.active) .navIcon{color:#8fa399!important}
+html[data-theme="dark"] .sideMore>summary{color:#c2d2c9}
+html[data-theme="dark"] .sideMore>summary:hover,html[data-theme="dark"] .sideMore[open]>summary{background:#1b2a23}
+html[data-theme="dark"] .sideMore,html[data-theme="dark"] .sidebar .sideAccount{border-color:rgba(160,200,180,.14)!important}
+html[data-theme="dark"] .topbar{background:rgba(15,24,20,.94)!important;border-bottom-color:rgba(160,200,180,.14)!important}
+html[data-theme="dark"] .topbar .search{background:#16211c!important}
+html[data-theme="dark"] #subjectView{background:linear-gradient(180deg,#101a16,#0b1310)!important}
+html[data-theme="dark"] .subjectTop{background:#0f1814!important;border-bottom-color:rgba(160,200,180,.14)!important}
+html[data-theme="dark"] .btn{background:#1a2822!important;border:1px solid rgba(160,200,180,.22)!important;color:var(--text)!important}
+html[data-theme="dark"] .btn:hover{background:#22332b!important}
+html[data-theme="dark"] .btn.primary,html[data-theme="dark"] .btn.violet{background:#e9f3ee!important;border-color:#e9f3ee!important;color:#0f1814!important}
+html[data-theme="dark"] .btn.primary:hover,html[data-theme="dark"] .btn.violet:hover{background:#ffffff!important;color:#0f1814!important}
+html[data-theme="dark"] .btn.secondary{background:#173a2d!important;border-color:rgba(95,208,162,.3)!important;color:#7ee0b6!important}
+html[data-theme="dark"] .pill{background:#1c2b24!important;border-color:rgba(160,200,180,.18)!important;color:#cfe0d7!important}
+html[data-theme="dark"] .pill.green{color:#7ee0b6!important}
+html[data-theme="dark"] .pill.violet{color:#c3b8ff!important}
+html[data-theme="dark"] .pill.amber{color:#f2d58f!important}
+html[data-theme="dark"] .tag,html[data-theme="dark"] .filters .chip,html[data-theme="dark"] .chipBtn,html[data-theme="dark"] .subTabs button,html[data-theme="dark"] .modeSwitch{background:#17231e!important;border-color:rgba(160,200,180,.18)!important;color:var(--text)!important}
+html[data-theme="dark"] .filters .chip.active,html[data-theme="dark"] .chipBtn.active,html[data-theme="dark"] .subTabs button.active,html[data-theme="dark"] .trainTab.active,html[data-theme="dark"] .modeSwitch button.active{background:#e9f3ee!important;color:#0f1814!important;border-color:#e9f3ee!important}
+html[data-theme="dark"] .modeSwitch button{color:var(--text)}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background:#121c18!important;border-color:rgba(160,200,180,.22)!important;color:var(--text)!important}
+html[data-theme="dark"] .table td,html[data-theme="dark"] .table th{background:transparent!important;border-color:rgba(160,200,180,.14)!important;color:var(--text)!important}
+html[data-theme="dark"] .card .iconWrap{background:#173a2d!important;color:#7ee0b6!important}
+html[data-theme="dark"] .heading p,html[data-theme="dark"] .soft,html[data-theme="dark"] small{color:var(--muted)!important}
+html[data-theme="dark"] [style*="background:#f5f6f3"],html[data-theme="dark"] [style*="background:#ebefeb"],html[data-theme="dark"] [style*="background:#eef"]{background:#16211c!important}
+html[data-theme="dark"] [style*="background:#20221f"]{background:#0b1310!important}
+html[data-theme="dark"] .sxSeg,html[data-theme="dark"] .sxChoice,html[data-theme="dark"] .sxChips button,html[data-theme="dark"] .sxPoint,html[data-theme="dark"] .sxSummary div,html[data-theme="dark"] .sxGroups{background:#17231e;border-color:rgba(160,200,180,.18);color:var(--text)}
+html[data-theme="dark"] .sxSeg button.on,html[data-theme="dark"] .sxChips button.on,html[data-theme="dark"] .sxDias button.on{background:#e9f3ee;color:#0f1814}
+html[data-theme="dark"] .sxChoice.on{background:#173a2d;border-color:#5fd0a2}
+html[data-theme="dark"] .sxInstall{background:rgba(23,58,45,.5);border-color:rgba(95,208,162,.35)}
+html[data-theme="dark"] .sxA{background:#173a2d}
+html[data-theme="dark"] .sxBottomNav{background:rgba(15,24,20,.96)!important;border-top-color:rgba(160,200,180,.14)}
+html[data-theme="dark"] .sxBottomNav button{color:#a9bcb2}
+html[data-theme="dark"] .sxBottomNav button.on{color:#7ee0b6;background:rgba(95,208,162,.1)}
+html[data-theme="dark"] .t-prova-pratica{background:#3a1512;color:#ffb4a8}
+html[data-theme="dark"] .t-prova-teorica{background:#2a2147;color:#cbbcff}
+html[data-theme="dark"] .t-evento{background:#0f3138;color:#8ae6f2}
+html[data-theme="dark"] .t-recuperacao{background:#3a2a0c;color:#f6cf7b}
+html[data-theme="dark"] .t-a-confirmar{background:#262c33;color:#c3cad3}
+html[data-theme="dark"] .t-atividade{background:#3a2509;color:#f8c27a}
+html[data-theme="dark"] .t-aula{background:#163126;color:#8fe2bd}
+html[data-theme="dark"] .t-pratica{background:#3a1d0c;color:#ffb98a}
+html[data-theme="dark"] .sidebarToggle{background:#17231e;border-color:rgba(160,200,180,.2);color:#cfe0d7}
+html[data-theme="dark"] #toast{background:#e9f3ee;color:#0f1814}
+html[data-theme="dark"] .previewShell{background:linear-gradient(145deg,#0c1a14,#13261d)}
+html[data-theme="dark"] .hero h1 em{background:linear-gradient(135deg,#7ee0b6,#9fc7b4);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[data-theme="dark"] .avatar{background:#173a2d;color:#7ee0b6}
