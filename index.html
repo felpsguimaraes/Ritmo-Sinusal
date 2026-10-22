@@ -26,69 +26,90 @@
 </script>
 <link rel="stylesheet" href="/sinus/painel.css?v=1">
 <link rel="stylesheet" href="/sinus/integracao.css?v=1">
+<link rel="stylesheet" href="/sinus/v12-design.css?v=12">
 </head>
 <body>
 
-<!-- ============ ENTRADA: idioma + login Google ============ -->
-<div id="landing">
-  <div class="blob b1"></div><div class="blob b2"></div>
-  <section class="glass hero">
-    <div class="sxLandTop">
-      <div class="logo"><span class="logoMark float">S</span><span style="font-size:28px">sinus.</span></div>
-      <button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button>
-    </div>
-    <span class="pill violet" style="margin-top:22px">Plataforma acadêmica premium</span>
-    <h1>Organização elegante para<br><em>alunos de Medicina.</em></h1>
-    <div class="sxEntrada">
-      <div class="sxLang" role="group" aria-label="Idioma do painel">
-        <span class="sxLangLabel">Idioma do painel</span>
-        <div class="sxSeg">
-          <button type="button" data-sx-lang="pt">Português</button>
-          <button type="button" data-sx-lang="es">Español</button>
-          <button type="button" data-sx-lang="en">English</button>
+<!-- SINUSAL V12: website, apresentação 3D e login integrado ao Firebase existente -->
+<div id="landing" class="v12Site">
+  <header class="v12Header"><div class="v12Wrap v12HeaderInner">
+    <a href="#topo" class="v12Brand" aria-label="Sinusal, início"><span class="v12BrandMark" aria-hidden="true"><svg viewBox="0 0 30 30"><path d="M6 15h4l3-7 4 14 3-7h4"/></svg></span><span>sinusal.</span></a>
+    <nav class="v12NavLinks" id="v12NavLinks" aria-label="Menu da plataforma">
+      <a href="#funcionalidades">Funcionalidades</a><a href="#metodologia">Como funciona</a><a href="#acesso">Para quem é</a>
+    </nav>
+    <button class="v12TopCta" type="button" data-v12-open-login>Entrar com Google <span aria-hidden="true">↗</span></button>
+    <button class="v12Menu" id="v12Menu" type="button" aria-expanded="false" aria-controls="v12NavLinks" aria-label="Abrir menu">☰</button>
+  </div></header>
+  <main>
+    <section id="topo" class="v12Hero"><div class="v12Wrap v12HeroLayout">
+      <div class="v12HeroText">
+        <div class="v12Kicker">MEDICINA EM UM SÓ LUGAR <span>V12</span></div>
+        <h1>Seu estudo.<br>Seu tempo.<br><em>Seu Sinusal.</em></h1>
+        <p class="v12Lead">Um espaço feito para estudantes de Medicina: encontre suas matérias, organize materiais e transforme teoria em prática sem perder o ritmo.</p>
+        <div class="v12HeroActions">
+          <button class="v12Btn v12BtnMain" type="button" data-v12-open-login>Acessar a plataforma <span aria-hidden="true">→</span></button>
+          <a class="v12Btn v12BtnGhost" href="#funcionalidades">Conhecer recursos ↓</a>
         </div>
+        <div class="v12HeroNote"><span>Organização acadêmica</span><span>Teoria e prática</span><span>Celular e computador</span></div>
       </div>
-      <button class="btn primary sxGoogle" id="sxEntrar" type="button">
-        <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#fff" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.5 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.2l7.8 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#fff" opacity=".85" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.1 5.3-4.6 7l7.1 5.5c4.2-3.9 6.6-9.6 6.6-16.9z"/><path fill="#fff" opacity=".7" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#fff" opacity=".9" d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-7.1-5.5c-2 1.4-4.6 2.2-8.7 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
-        <span>Entrar com Google</span>
-      </button>
-      <p class="sxMsg" id="sxMsg" role="status" aria-live="polite"></p>
-    </div>
-
-    <p>Uma interface fluida e refinada para unir horários, matérias, grupos práticos, aulas gravadas, transcrição, biblioteca, treino para prova e administração comercial em um único produto.</p>
-
-    <div class="metrics">
-      <div class="metric"><b>7+</b><span>formatos de treino que podem ser combinados</span></div>
-      <div class="metric"><b>1º–10º</b><span>estrutura acadêmica preparada por período</span></div>
-      <div class="metric"><b>Teoria + prática</b><span>grupos gerais e grupos específicos por matéria</span></div>
-      <div class="metric"><b>HTML direto</b><span>abre no navegador, sem travas de app local</span></div>
-    </div>
-  </section>
-  <aside class="previewShell">
-    <div class="preview">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="pill green">Liquid interface</span>
-        <span class="pill violet">Painel completo</span>
+      <div class="v12HeroGraphic"><div class="v12OrbitScene" role="img" aria-label="Identidade Sinusal com anéis tridimensionais em movimento"><span class="v12Ring"></span><span class="v12Ring b"></span><span class="v12Ring c"></span><div class="v12OrbCore"><strong>sinusal.</strong><small>Seu ritmo</small></div><span class="v12Spark a"></span><span class="v12Spark b"></span><span class="v12Spark c"></span></div><div class="v12FloatCard left"><strong>Central de estudos</strong><small>Questões · Flashcards</small></div><div class="v12FloatCard right"><strong>Vida acadêmica</strong><small>Agenda · Matérias · Aulas</small></div></div>
+    </div><div class="v12ScrollHint">CONHEÇA O SINUSAL ↓</div></section>
+    <section class="v12Section" id="funcionalidades"><div class="v12Wrap">
+      <div class="v12SectionHead"><div class="v12SectionLabel">UM AMBIENTE PARA APRENDER</div><h2>Tudo o que importa para o seu estudo.</h2><p>Conteúdo, organização e ferramentas de revisão no mesmo ambiente, sem perder as funções acadêmicas já existentes.</p></div>
+      <div class="v12FeatureGrid"><article class="v12Feature"><div class="v12FeatureIcon" aria-hidden="true">▤</div><h3>Matérias organizadas</h3><p>Conteúdos de Medicina distribuídos por período, disciplina e ambientes de teoria e prática.</p></article><article class="v12Feature"><div class="v12FeatureIcon" aria-hidden="true">◷</div><h3>Agenda e horários</h3><p>Visualize aulas, rotações, compromissos e provas em uma rotina integrada.</p></article><article class="v12Feature"><div class="v12FeatureIcon" aria-hidden="true">▦</div><h3>Aulas e materiais</h3><p>Acompanhe documentos, fotos, vídeos e arquivos disponíveis para sua turma.</p></article><article class="v12Feature"><div class="v12FeatureIcon" aria-hidden="true">◎</div><h3>Central de estudos</h3><p>Revise assuntos com flashcards, treino de questões e acompanhamento da evolução.</p></article><article class="v12Feature"><div class="v12FeatureIcon" aria-hidden="true">◈</div><h3>Biblioteca acadêmica</h3><p>Tenha um ambiente próprio para consulta e organização do seu acervo.</p></article><article class="v12Feature"><div class="v12FeatureIcon" aria-hidden="true">⚕</div><h3>Imigração / MEC</h3><p>Organize processos e faça a conferência preliminar da documentação.</p></article></div>
+    </div></section>
+    <section class="v12Section alt" id="metodologia"><div class="v12Wrap">
+      <div class="v12SectionHead"><div class="v12SectionLabel">COMO FUNCIONA</div><h2>Seu ritmo. Uma jornada mais simples.</h2><p>Uma experiência planejada para reduzir cliques e colocar o estudo no centro.</p></div>
+      <div class="v12Steps">
+        <div class="v12Step"><span>01</span><strong>Acesse sua conta</strong><p>Entre com o Google e continue de onde parou, de acordo com os seus dados acadêmicos.</p></div>
+        <div class="v12Step"><span>02</span><strong>Organize a rotina</strong><p>Encontre matérias, horários, aulas e compromissos em espaços separados e objetivos.</p></div>
+        <div class="v12Step"><span>03</span><strong>Estude e acompanhe</strong><p>Revise conteúdo, responda questões e acompanhe seu desenvolvimento.</p></div>
       </div>
-      <div class="previewGrid">
-        <div class="previewCard big">
-          <span class="eyebrow">Sua rotina, sem ruído</span>
-          <h3 style="font-size:30px;letter-spacing:-.05em;margin:10px 0 8px">Tudo se move sem parecer amador.</h3>
-          <p style="font-size:11px;color:var(--muted);line-height:1.7">Hero com profundidade, cartões leves, indicadores claros e navegação consistente entre aluno e administrador.</p>
-          <div class="previewSurface pulse"></div>
-        </div>
-        <div class="stack">
-          <div class="previewCard float"><span class="eyebrow">Aulas</span><h3 style="margin:6px 0 0">Áudio · vídeo · transcrição</h3><div class="previewBar"></div><div class="previewBar"></div><div class="previewBar"></div></div>
-          <div class="previewCard float2"><span class="eyebrow">Treino</span><h3 style="margin:6px 0 0">Tipos mescláveis</h3><div class="previewBar"></div><div class="previewBar"></div><div class="previewBar"></div></div>
-          <div class="previewStat">
-            <div class="previewCard"><span class="eyebrow">Admin</span><h3 style="font-size:26px;margin-top:10px">Vendas</h3></div>
-            <div class="previewCard"><span class="eyebrow">Acadêmico</span><h3 style="font-size:26px;margin-top:10px">Horários</h3></div>
+    </div></section>
+    <section class="v12Section dark" id="acesso"><div class="v12Wrap"><div class="v12End">
+      <div><div class="v12SectionLabel">A PLATAFORMA É SUA</div><h2>O conhecimento acompanha o seu ritmo.</h2><p>Experiência acadêmica para estudantes de Medicina, com acesso à área do aluno e à gestão administrativa conforme as permissões de cada conta.</p></div>
+      <button type="button" class="v12Btn v12BtnMain" data-v12-open-login>Entrar no Sinusal ↗</button>
+    </div></div></section>
+  </main>
+  <footer class="v12Footer"><div class="v12Wrap"><span>© Sinusal · Plataforma de estudos em Medicina</span><span>Seu estudo. Seu tempo. Seu Sinusal.</span></div></footer>
+  <div id="v12Login" role="dialog" aria-modal="true" aria-labelledby="v12LoginTitle" hidden>
+    <div class="v12LoginInner">
+      <div class="v12LoginArt"><div class="v12OrbitScene" role="img" aria-label="Identidade Sinusal com anéis tridimensionais em movimento"><span class="v12Ring"></span><span class="v12Ring b"></span><span class="v12Ring c"></span><div class="v12OrbCore"><strong>sinusal.</strong><small>Seu ritmo</small></div></div><div class="v12LoginArtCaption">CONHECIMENTO EM MOVIMENTO</div><button type="button" class="v12MotionBtn" id="v12Motion" aria-pressed="false">Pausar animação</button></div>
+      <div class="v12LoginPanel">
+        <button type="button" class="v12CloseLogin" id="v12CloseLogin" aria-label="Fechar entrada">×</button>
+        <div class="v12SectionLabel">BEM-VINDO AO SINUSAL</div>
+        <h2 id="v12LoginTitle">Acesse seu espaço acadêmico.</h2>
+        <p class="v12LoginHelp">Entre com sua conta Google para acessar suas matérias, rotina de estudos e conteúdos disponíveis.</p>
+        <div class="sxEntrada"><div class="sxLang" role="group" aria-label="Idioma do painel">
+          <span class="sxLangLabel">Idioma da plataforma</span><div class="sxSeg">
+            <button type="button" data-sx-lang="pt">Português</button><button type="button" data-sx-lang="es">Español</button><button type="button" data-sx-lang="en">English</button>
           </div>
         </div>
+        <button class="btn primary sxGoogle" id="sxEntrar" type="button">
+          <svg viewBox="0 0 48 48" width="18" height="18" aria-hidden="true"><path fill="#fff" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.5 30.2 0 24 0 14.6 0 6.6 5.4 2.7 13.2l7.8 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#fff" opacity=".85" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.1 5.3-4.6 7l7.1 5.5c4.2-3.9 6.6-9.6 6.6-16.9z"/><path fill="#fff" opacity=".7" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#fff" opacity=".9" d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-7.1-5.5c-2 1.4-4.6 2.2-8.7 2.2-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+          <span>Entrar com Google</span>
+        </button><p class="sxMsg" id="sxMsg" role="status" aria-live="polite"></p></div>
+        <p class="v12LoginFine">A área administrativa é disponibilizada apenas a contas autorizadas. Não é necessária outra senha.</p>
       </div>
     </div>
-  </aside>
+  </div>
 </div>
+<script>
+(function(){
+  var dialog=document.getElementById('v12Login'),previousFocus=null;
+  function open(){previousFocus=document.activeElement;dialog.hidden=false;document.body.classList.add('v12LoginOpen');document.getElementById('v12CloseLogin').focus();}
+  function close(){dialog.hidden=true;document.body.classList.remove('v12LoginOpen');if(previousFocus&&previousFocus.focus)previousFocus.focus();}
+  document.querySelectorAll('[data-v12-open-login]').forEach(function(x){x.addEventListener('click',open)});
+  document.getElementById('v12CloseLogin').addEventListener('click',close);
+  dialog.addEventListener('click',function(e){if(e.target===dialog)close();});
+  document.addEventListener('keydown',function(e){if(!dialog.hidden&&e.key==='Escape')close();if(!dialog.hidden&&e.key==='Tab'){var list=Array.prototype.slice.call(dialog.querySelectorAll('button:not([disabled]),a[href]')).filter(function(x){return x.getClientRects().length});if(!list.length)return;var first=list[0],last=list[list.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+  var menu=document.getElementById('v12Menu'),nav=document.getElementById('v12NavLinks');
+  menu.addEventListener('click',function(){var yes=nav.classList.toggle('open');menu.setAttribute('aria-expanded',yes?'true':'false')});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false')})});
+  var motion=document.getElementById('v12Motion');motion.addEventListener('click',function(){var art=motion.closest('.v12LoginArt');var off=art.dataset.v12Motion!=='off';art.dataset.v12Motion=off?'off':'on';motion.textContent=off?'Retomar animação':'Pausar animação';motion.setAttribute('aria-pressed',off?'true':'false')});
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){motion.click();}
+})();
+</script>
 
 <!-- ============ PERSONALIZAÇÃO (preenchida por sinus/integracao.js) ============ -->
 <div id="sxOnboarding" class="hidden" aria-live="polite"></div>
@@ -183,6 +204,7 @@
 <div id="admin" class="hidden">
   <aside class="adminSide">
     <div class="logo" style="padding:8px 8px 16px"><span class="logoMark">S</span><span style="font-size:24px">admin.</span></div>
+    <div class="v12AdminBrand"><span class="v12AdminBadge">V12</span> PAINEL DE GESTÃO</div>
     <div class="sideLabel">Comercial</div>
     <button class="adminNav active" data-admin="dashboard" onclick="adminNav('dashboard',this)">Visão geral</button>
     <button class="adminNav" data-admin="users" onclick="adminNav('users',this)">Clientes</button>
@@ -210,6 +232,7 @@
       </div>
     </header>
     <main class="adminContent">
+      <div class="v12AdminIntro"><div><strong>Central de administração · Sinusal</strong><small>Gestão de clientes, planos, conteúdo, horários e desempenho acadêmico.</small></div><i>Acesso restrito</i></div>
       <section id="admin-dashboard" class="adminPage active"></section>
       <section id="admin-users" class="adminPage"></section>
       <section id="admin-sales" class="adminPage"></section>
