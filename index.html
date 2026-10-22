@@ -58,6 +58,10 @@
   .gate-msg.erro{color:#9b2c47}
   .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:600 15px 'Inter',sans-serif;cursor:pointer;padding:0 20px;text-decoration:none}
   .btn.prim{background:#16241f;border-color:#16241f;color:#fff}
+  .cad{display:grid;gap:12px;margin-top:8px}
+  .cad label{display:grid;gap:6px;font-size:14px;color:var(--ink2)}
+  .cad input,.cad select{font:16px 'Inter',sans-serif;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:46px}
+  .gate-msg.erro{color:#9b2c47}
 </style>
 </head>
 <body class="home">
@@ -69,9 +73,24 @@
       <span class="sx-tag">5º período · UCP</span>
       <h1 id="t">Seu semestre <em>inteiro.</em></h1>
     </div>
-    <p class="sx-sub">Slides, provas, áudios e vídeos de todas as matérias, apostilas e treino — reunidos, organizados pelo professor da sua turma. Entre com a sua conta.</p>
+    <p class="sx-sub">Apresentação: o Sinus reúne num só lugar o que está espalhado pelo Drive. Slides, provas, áudios, vídeos, apostilas, flashcards e a aula em 3D, organizados pelo professor da sua turma. Entre com a sua conta Google e faça seu cadastro.</p>
     <button class="sx-btn sx-primary" id="entrar" type="button">Entrar com Google</button>
     <p class="gate-msg" id="msg" role="status"></p>
+  </section>
+</main>
+
+<main class="sx-gate" id="cadastro" hidden>
+  <section class="sx-card sx-glass" aria-labelledby="tc">
+    <span class="sx-tag">Último passo</span>
+    <h1 id="tc">Faça seu <em>cadastro.</em></h1>
+    <p class="sx-sub">Leva um minuto e liga você à sua turma. Cada professor e cada prova aparecem de acordo com o horário da sua turma.</p>
+    <form id="formCad" class="cad">
+      <label>Nome completo<input id="cNome" required minlength="3" maxlength="80" autocomplete="name"></label>
+      <label>WhatsApp, só números, com código do país<input id="cZap" required inputmode="numeric" placeholder="595981234567"></label>
+      <label>Turma<select id="cTurma" required><option value="">Escolha a turma</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select></label>
+      <button class="sx-btn sx-primary" type="submit" id="cBtn">Concluir cadastro</button>
+      <p class="gate-msg" id="cMsg" role="status"></p>
+    </form>
   </section>
 </main>
 
@@ -175,20 +194,42 @@
   });
   $('#sair').addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) });
   auth.getRedirectResult().catch(function () {});
+  function mostrar(tela) { $('#gate').hidden = tela !== 'gate'; $('#cadastro').hidden = tela !== 'cadastro'; $('#app').hidden = tela !== 'app' }
+  function voltaSeguro() { var v = new URLSearchParams(location.search).get('volta') || ''; return (v.charAt(0) === '/' && v.charAt(1) !== '/') ? v : '' }
   auth.onAuthStateChanged(function (u) {
-    if (!u) return;
+    if (!u) return mostrar('gate');
     var prim = (u.displayName || u.email || '').split(' ')[0];
-    $('#gate').hidden = true; $('#app').hidden = false;
     $('#quem').textContent = prim; $('#nome').textContent = prim;
-    render();
+    $('#cNome').value = u.displayName || '';
     db.doc('perfis/' + u.uid).get().then(function (snap) {
       var d = snap.exists ? snap.data() : {};
-      if (!d.turma) return;
+      if (!(d.nome && d.turma && d.whatsapp)) return mostrar('cadastro');
+      if (voltaSeguro()) return location.replace(voltaSeguro());
       turmaAluno = d.turma;
       $('#cab-tag').textContent = '5º período · turma ' + d.turma + ' · UCP';
-      render();
-    }).catch(function () {});
-    db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
+      mostrar('app'); render();
+      db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
+    }).catch(function () { mostrar('gate'); say('Não foi possível carregar seu cadastro. Tente de novo.', true) });
+  });
+
+  $('#formCad').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = auth.currentUser; if (!u) return;
+    var nome = $('#cNome').value.trim(), zap = $('#cZap').value.replace(/\D/g, ''), turma = $('#cTurma').value;
+    var m = $('#cMsg');
+    if (nome.length < 3 || !/^[0-9]{8,15}$/.test(zap) || !turma) { m.textContent = 'Confira nome, WhatsApp e turma.'; m.className = 'gate-msg erro'; return }
+    $('#cBtn').disabled = true; m.textContent = 'Salvando…'; m.className = 'gate-msg';
+    var agora = firebase.firestore.FieldValue.serverTimestamp(), lote = db.batch();
+    lote.set(db.doc('whats/' + zap), { uid: u.uid, em: agora });
+    lote.set(db.doc('perfis/' + u.uid), { nome: nome, turma: turma, whatsapp: zap, email: u.email || '', primeiro_acesso: agora, ultimo_acesso: agora }, { merge: true });
+    lote.commit().then(function () {
+      if (voltaSeguro()) return location.replace(voltaSeguro());
+      location.reload();
+    }).catch(function () {
+      $('#cBtn').disabled = false;
+      m.textContent = 'Não foi possível salvar. Confira os dados. Se o WhatsApp já estiver em outra conta, use a conta dela ou fale com a coordenação.';
+      m.className = 'gate-msg erro';
+    });
   });
 
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});

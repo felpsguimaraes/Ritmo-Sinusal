@@ -54,6 +54,11 @@
   .aviso{font-size:13px;color:var(--ink3);margin-top:12px}
   .gate-msg{font-size:15px;color:var(--ink2);min-height:1.4em;margin:0}
   .gate-msg.erro{color:#9b2c47}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid2 .card h2{font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:26px;margin:6px 0 4px}
+  .grid2 .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .btn{display:inline-block;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:10px 18px;font:600 14px 'Inter',sans-serif;text-decoration:none;min-height:42px}
+  @media (max-width:720px){.grid2{grid-template-columns:1fr}}
   .seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#eef2f0;border:1px solid var(--line);border-radius:18px;padding:6px;margin-top:14px}
   .seg.solo{grid-template-columns:1fr}
   .seg button{background:transparent;border:0;border-radius:14px;padding:12px 10px;cursor:pointer;color:var(--ink3);font:inherit;min-height:52px;text-align:center}
@@ -79,7 +84,7 @@
 </head>
 <body>
 
-<main class="sx-gate" id="gate">
+<main class="sx-gate" id="gate" hidden>
   <section class="sx-card sx-glass" aria-labelledby="t">
     <a class="sx-logo" href="/"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></a>
     <div><span class="sx-tag">5º período · UCP</span><h1 id="t">Entre para <em>abrir.</em></h1></div>
@@ -272,9 +277,15 @@
         '<p class="sub">Professor da sua turma: <b>' + esc((profDaTurma() || {}).nome || 'a definir') + '</b>.' +
         (MAT.pratica && MAT.pratica.length ? ' Prática: <b>' + esc((praticaDaTurma() || {}).nome || '') + '</b>.' : '') + '</p></div>';
     } else if (aba === 'apostila') {
-      h = MAT.href && MAT.href.indexOf('anatopato') >= 0
-        ? '<div class="card"><b>Apostila</b><p class="sub">A apostila interativa de lesão celular, com exercícios e flashcards.</p><p><a class="btn prim" href="/aulas/lesion/apostila/">Abrir a apostila</a></p></div>'
-        : '<div class="vazio">A apostila desta matéria ainda não está pronta.</div>';
+      h = MAT.slug === 'anatopato'
+        ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p>' +
+          '<div class="grid2"><div class="card"><span class="tag">Apostila · para ler</span><h2>Ler na tela</h2>' +
+          '<p class="sub">A teoria toda em português com os termos em espanhol, o que caiu em cada prova, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
+          '<div class="btns"><a class="btn prim" href="/aulas/lesion/apostila/">Abrir a apostila</a><a class="btn" href="/aulas/lesion/#/pdf">Versão em PDF</a></div></div>' +
+          '<div class="card"><span class="tag">Apostila · em 3D</span><h2>Ver em 3D</h2>' +
+          '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
+          '<div class="btns"><a class="btn prim" href="/aulas/lesion/#/3d">Abrir em 3D</a><a class="btn" href="/aulas/lesion/#/treino">Treino para prova</a></div></div></div>'
+        : '<div class="vazio">A apostila desta matéria está sendo preparada.</div>';
     } else if (aba === 'cartoes') {
       h = renderCartoes(p);
     } else {
@@ -328,8 +339,9 @@
   });
   $('#sair').addEventListener('click', function () { auth.signOut().then(function () { location.reload() }) });
   auth.getRedirectResult().catch(function () {});
+  function irEntrada() { location.replace('/?volta=' + encodeURIComponent(location.pathname + location.search)) }
   auth.onAuthStateChanged(function (u) {
-    if (!u) return;
+    if (!u) return irEntrada();
     UID = u.uid;
     var prim = (u.displayName || u.email || '').split(' ')[0];
     $('#gate').hidden = true; $('#app').hidden = false;
@@ -337,7 +349,7 @@
     render();
     db.doc('perfis/' + u.uid).get().then(function (snap) {
       var t = snap.exists ? (snap.data().turma || '') : '';
-      if (!t) return;
+      if (!t) return irEntrada();
       turma = t; profSel = null; render();
     }).catch(function () {});
     db.doc('perfis/' + u.uid).set({ ultimo_acesso: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
