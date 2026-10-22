@@ -81,6 +81,7 @@
     <div class="chips" id="profs" role="group" aria-label="Professor"></div>
     <p class="aviso" id="profAviso"></p>
 
+    <nav class="abas" id="blocos" role="tablist" style="padding-bottom:0"></nav>
     <nav class="abas" id="abas" role="tablist"></nav>
     <section id="lista"></section>
 
@@ -96,28 +97,49 @@
 (function () {
   var $ = function (s) { return document.querySelector(s) };
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
-  var norm = function (s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase() };
+  var norm = function (s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() };
 
   var m = new URLSearchParams(location.search).get('m');
   var MAT = ((window.SINUS_CATALOGO || {}).materias || []).filter(function (x) { return x.slug === m })[0];
-  var TIPOS = [['slide', 'Slides e aulas'], ['prova', 'Provas'], ['audio', 'Áudios'], ['video', 'Vídeos'], ['pratica', 'Práticas'], ['livro', 'Livros'], ['material', 'Materiais']];
-  var turma = '', profSel = null, aba = null, itensView = [];
 
-  if (!MAT) { $('#nome').textContent = 'Matéria não encontrada'; $('#app').hidden = false; $('#gate').hidden = true; $('#lista').innerHTML = '<div class="vazio">Volte à home e escolha uma matéria.</div>'; return }
+  // mesmos menus e abas do painel de Anatomía
+  var ABAS = {
+    teoria: [['visao', 'Visão geral'], ['apostila', 'Apostila'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'], ['fotos', 'Fotos'], ['complementares', 'Complementares']],
+    pratica: [['laminas', 'Lâminas'], ['macro', 'Macroscopia']]
+  };
+  var VAZIO = { slides: 'Os slides da cátedra e da sua turma aparecem aqui.', provas: 'As provas anteriores aparecem aqui.', audios: 'Os áudios das aulas aparecem aqui.', videos: 'Os vídeos das aulas aparecem aqui.', fotos: 'As fotos da aula aparecem aqui.', complementares: 'O material complementar aparece aqui.', laminas: 'As lâminas da prática aparecem aqui.', macro: 'Ainda não há material de macroscopia para esta matéria.' };
+
+  var turma = '', profSel = null, bloco = 'teoria', aba = 'visao', itensView = [];
+
+  if (!MAT) { $('#nome').textContent = 'Matéria não encontrada'; $('#gate').hidden = true; $('#app').hidden = false; $('#lista').innerHTML = '<div class="vazio">Volte à home e escolha uma matéria.</div>'; return }
 
   document.title = MAT.nome + ' · sinusal.';
   $('#nome').textContent = MAT.nome;
-  $('#sub').textContent = (MAT.itens || 0) + ' materiais reunidos.';
+  $('#tag').textContent = '5º período · ' + (MAT.teoria && MAT.teoria.length ? 'teoria e prática' : 'teoria');
+  $('#sub').textContent = (MAT.itens || 0) + ' materiais reunidos do acervo.';
 
-  // professor da turma do aluno (teoria), ou o primeiro da lista
   function profDaTurma() {
     var p = (MAT.teoria || []).filter(function (x) { return turma && x.turmas.indexOf(turma) >= 0 })[0];
     return p || (MAT.teoria || [])[0] || null;
   }
-  // sobrenome para casar material com o professor
+  function praticaDaTurma() {
+    var p = (MAT.pratica || []).filter(function (x) { return turma && x.turmas.indexOf(turma) >= 0 })[0];
+    return p || (MAT.pratica || [])[0] || null;
+  }
   function sobrenome(p) { return norm(p.curto || p.nome).split(' ').pop() }
 
-  // ordem: material do professor escolhido (título ou turma de origem) primeiro; o resto depois
+  // aba onde cada item cai
+  function abaDe(i) {
+    if (i.k === 'pratica') return 'laminas';
+    if (i.k === 'slide') return 'slides';
+    if (i.k === 'prova') return 'provas';
+    if (i.k === 'audio') return 'audios';
+    if (i.k === 'video') return 'videos';
+    if (/^image\//.test(i.mime || '')) return 'fotos';
+    return 'complementares';
+  }
+
+  // professor primeiro, depois o resto (nada some)
   function ordenar(lista, p) {
     var sn = p ? sobrenome(p) : '';
     var tu = p && p.turmas ? p.turmas : [];
@@ -137,41 +159,64 @@
     $('#viewer').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function renderProfs() {
-    var all = (MAT.teoria || []).concat(MAT.pratica || []);
-    var uniq = [];
+  function profsUnicos() {
+    var all = (MAT.teoria || []).concat(MAT.pratica || []), uniq = [];
     all.forEach(function (p) { if (!uniq.some(function (u) { return u.nome === p.nome })) uniq.push(p) });
-    var atual = profSel || profDaTurma();
-    $('#profs').innerHTML = uniq.map(function (p) {
+    return uniq;
+  }
+
+  function renderProfs() {
+    var atual = profSel || (bloco === 'pratica' ? praticaDaTurma() : profDaTurma());
+    $('#profs').innerHTML = profsUnicos().map(function (p) {
       var sua = p.turmas && p.turmas.indexOf(turma) >= 0;
-      return '<button type="button" data-p="' + esc(p.nome) + '" aria-pressed="' + (atual && atual.nome === p.nome) + '">' + esc(p.curto || p.nome) + (sua ? ' · sua turma' : '') + '</button>';
-    }).join('');
-    var pr = profSel || profDaTurma();
-    $('#profAviso').textContent = pr ? (pr.nome + ' · turma' + (pr.turmas.length > 1 ? 's ' : ' ') + pr.turmas.join(', ')) : '';
+      return '<button type="button" data-p="' + esc(p.nome) + '" aria-pressed="' + (!!atual && atual.nome === p.nome) + '">' + esc(p.curto || p.nome) + (sua ? ' · sua turma' : '') + '</button>';
+    }).join('') || '<span class="aviso">Sem professor de prática no horário desta matéria.</span>';
+    $('#profAviso').textContent = atual ? (atual.nome + ' · turma' + (atual.turmas.length > 1 ? 's ' : ' ') + atual.turmas.join(', ')) : '';
   }
 
   function render() {
-    var p = profSel || profDaTurma();
+    var p = profSel || (bloco === 'pratica' ? praticaDaTurma() : profDaTurma());
     itensView = ordenar(MAT.itensLista || [], p);
-    var tipos = TIPOS.filter(function (t) { return itensView.some(function (i) { return i.k === t[0] }) });
-    if (!aba || !tipos.some(function (t) { return t[0] === aba })) aba = tipos.length ? tipos[0][0] : 'material';
-    $('#abas').innerHTML = tipos.map(function (t) {
-      var n = itensView.filter(function (i) { return i.k === t[0] }).length;
-      return '<button role="tab" data-t="' + t[0] + '" aria-selected="' + (t[0] === aba) + '" type="button">' + t[1] + ' · ' + n + '</button>';
-    }).join('') || '';
-    var lista = itensView.filter(function (i) { return i.k === aba });
-    $('#lista').innerHTML = lista.length
-      ? '<div class="lista">' + lista.map(function (i) {
-          var pri = p && norm(i.t).indexOf(sobrenome(p)) >= 0;
-          return '<button class="it" data-id="' + esc(i.id) + '" type="button"><span class="tx"><b>' + esc(i.t) + '</b><small>' + esc(i.o) + '</small></span><span class="ch' + (pri ? ' pri' : '') + '">' + (pri ? 'Do seu professor' : 'Abrir') + '</span></button>';
-        }).join('') + '</div>'
-      : '<div class="vazio">Nada aqui ainda.</div>';
+
+    $('#blocos').innerHTML = '<button role="tab" data-b="teoria" aria-selected="' + (bloco === 'teoria') + '" type="button">Teoria</button>' +
+      '<button role="tab" data-b="pratica" aria-selected="' + (bloco === 'pratica') + '" type="button">Prática</button>';
+
+    var abas = ABAS[bloco];
+    if (!abas.some(function (a) { return a[0] === aba })) aba = abas[0][0];
+    $('#abas').innerHTML = abas.map(function (a) {
+      var n = (a[0] === 'visao' || a[0] === 'apostila') ? '' : ' · ' + itensView.filter(function (i) { return abaDe(i) === a[0] }).length;
+      return '<button role="tab" data-t="' + a[0] + '" aria-selected="' + (a[0] === aba) + '" type="button">' + a[1] + n + '</button>';
+    }).join('');
+
+    var h = '';
+    if (aba === 'visao') {
+      var nTeo = itensView.filter(function (i) { return abaDe(i) !== 'laminas' }).length;
+      var nPra = itensView.length - nTeo;
+      h = '<div class="card"><b>' + esc(MAT.nome) + '</b><p class="sub">' + nTeo + ' materiais de teoria' + (nPra ? ' e ' + nPra + ' de prática' : '') + '.</p>' +
+        '<p class="sub">Professor da sua turma: <b>' + esc((profDaTurma() || {}).nome || 'a definir') + '</b>.' +
+        (MAT.pratica && MAT.pratica.length ? ' Prática: <b>' + esc((praticaDaTurma() || {}).nome || '') + '</b>.' : '') + '</p></div>';
+    } else if (aba === 'apostila') {
+      h = MAT.href && MAT.href.indexOf('anatopato') >= 0
+        ? '<div class="card"><b>Apostila</b><p class="sub">A apostila interativa de lesão celular, com exercícios e flashcards.</p><p><a class="btn prim" href="/aulas/lesion/apostila/">Abrir a apostila</a></p></div>'
+        : '<div class="vazio">A apostila desta matéria ainda não está pronta.</div>';
+    } else {
+      var lista = itensView.filter(function (i) { return abaDe(i) === aba; });
+      h = lista.length
+        ? '<div class="lista">' + lista.map(function (i) {
+            var pri = p && norm(i.t).indexOf(sobrenome(p)) >= 0;
+            return '<button class="it" data-id="' + esc(i.id) + '" type="button"><span class="tx"><b>' + esc(i.t) + '</b><small>' + esc(i.o) + '</small></span><span class="ch' + (pri ? ' pri' : '') + '">' + (pri ? 'Do seu professor' : 'Abrir') + '</span></button>';
+          }).join('') + '</div>'
+        : '<div class="vazio">' + esc(VAZIO[aba] || 'Nada aqui ainda.') + '</div>';
+    }
+    $('#lista').innerHTML = h;
     renderProfs();
   }
 
   document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-b]');
+    if (b) { bloco = b.dataset.b; aba = ABAS[bloco][0][0]; profSel = null; render(); return }
     var pr = e.target.closest && e.target.closest('[data-p]');
-    if (pr) { var f = (MAT.teoria || []).concat(MAT.pratica || []).filter(function (x) { return x.nome === pr.dataset.p })[0]; profSel = f || null; render(); return }
+    if (pr) { var f = profsUnicos().filter(function (x) { return x.nome === pr.dataset.p })[0]; profSel = f || null; render(); return }
     var t = e.target.closest && e.target.closest('[data-t]');
     if (t) { aba = t.dataset.t; render(); return }
     var it = e.target.closest && e.target.closest('[data-id]');
