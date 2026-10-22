@@ -18,12 +18,31 @@ function timeOf(item){
  return m?z(m[1])+':'+m[2]:'';
 }
 const list=()=>typeof window.agenda==='function'?window.agenda():[];
+function classEvents(){
+ const result=[];
+ try{
+  const u=typeof window.user==='function'?window.user():null;
+  const group=u?.class||'G';
+  const sch=typeof window.DB!=='undefined'?window.DB.schedules?.[group]:null;
+  const week=sch?.dias||{};
+  const days=['dom','lun','mar','mie','jue','vie','sab'];
+  const year=state.month.getFullYear(),month=state.month.getMonth();
+  const first=new Date(year,month,1);const offset=(first.getDay()+6)%7;
+  for(let n=1-offset;n<=42-offset;n++){
+   const d=new Date(year,month,n),k=iso(d.getFullYear(),d.getMonth(),d.getDate());
+   for(const slot of (week[days[d.getDay()]]||[])){
+    result.push({title:slot.mat||'Aula',date:k+' '+(slot.time||''),note:(slot.tipo||'')+(slot.prof?' · '+slot.prof:''),kind:'class'});
+   }
+  }
+ }catch(e){}
+ return result;
+}
 function render(){
  const box=document.getElementById('page-agenda');if(!box)return;
  const y=state.month.getFullYear(),m=state.month.getMonth();
  const first=new Date(y,m,1).getDay(),offset=(first+6)%7;
  const count=new Date(y,m+1,0).getDate();
- const data=list();const dateMap=new Map();
+ const personal=list();const data=personal.concat(classEvents());const dateMap=new Map();
  data.forEach((row,i)=>{const k=dateOf(row);if(k){if(!dateMap.has(k))dateMap.set(k,[]);dateMap.get(k).push({row,i})}});
  const currentDay=new Date().toLocaleDateString('sv-SE');
  const days=Array.from({length:Math.ceil((offset+count)/7)*7},(_,i)=>{
@@ -33,7 +52,7 @@ function render(){
  }).join('');
  const upcoming=data.map((row,i)=>({row,i,date:dateOf(row)})).filter(r=>r.date).sort((a,b)=>a.date.localeCompare(b.date)).filter(r=>r.date>=currentDay).slice(0,6);
  const chosen=data.map((row,i)=>({row,i,date:dateOf(row)})).filter(r=>r.date===state.selected);
- const oldUnstructured=data.filter(r=>!dateOf(r));
+ const oldUnstructured=personal.filter(r=>!dateOf(r));
  box.innerHTML='<div class="heading"><div><span class="eyebrow">SINUS · AGENDA</span><h1>Seu calendário.</h1><p>Compromissos e estudos no mesmo lugar, preservando tudo que você já cadastrou.</p></div><button class="btn primary" type="button" onclick="newAgenda()">+ Novo compromisso</button></div>'+
  '<section class="sinus-agenda"><div class="sinus-cal"><header class="sinus-cal-head"><div><div class="eyebrow">ROTINA ACADÊMICA</div><h2 class="sinus-month-title">'+safe(monthText(state.month))+'</h2></div><div class="sinus-cal-controls"><button type="button" data-sinus-prev aria-label="Mês anterior">‹</button><button type="button" data-sinus-today>Hoje</button><button type="button" data-sinus-next aria-label="Próximo mês">›</button></div></header><div class="sinus-days">'+['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map(s=>'<div class="sinus-dow">'+s+'</div>').join('')+days+'</div></div>'+
  '<aside class="sinus-agenda-side"><div class="sinus-side-card"><span class="eyebrow">DIA SELECIONADO</span><h3>'+safe(new Date(state.selected+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}))+'</h3>'+
