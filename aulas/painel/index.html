@@ -1,0 +1,658 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Painel Sinus</title>
+<style>
+/* Layout: cabeçalho com abas; aba Painel = coluna única de seções; aba Atlas 3D = visor em largura ampla */
+:root{--bg:#f3f7f6;--card:#ffffff;--ink:#14232a;--muted:#5b6e73;--line:#dce6e3;--acc:#1d7563;--acc-ink:#ffffff;--acc-soft:#dff0ea;--warn:#a8402c;--warn-soft:#f8e4df;--gold:#8a5a12;--gold-soft:#f7ecd5;--stage:#f3f4f4;--f-d:"Bricolage Grotesque",system-ui,sans-serif;--f-b:"Figtree",system-ui,-apple-system,sans-serif;--f-m:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1416;--card:#151f22;--ink:#e5edeb;--muted:#93a4a7;--line:#223034;--acc:#55c3a9;--acc-ink:#0d1416;--acc-soft:#163029;--warn:#ee8c78;--warn-soft:#35201c;--gold:#e6bb62;--gold-soft:#332914;--stage:#1b2427;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1416;--card:#151f22;--ink:#e5edeb;--muted:#93a4a7;--line:#223034;--acc:#55c3a9;--acc-ink:#0d1416;--acc-soft:#163029;--warn:#ee8c78;--warn-soft:#35201c;--gold:#e6bb62;--gold-soft:#332914;--stage:#1b2427;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-b);font-size:15px;line-height:1.5;margin:0;padding-inline:16px}
+.wrap{max-width:980px;margin:0 auto;padding-block:36px 56px;display:flex;flex-direction:column;gap:28px}
+.wrap.wide{max-width:1440px}
+h1,h2,h3{font-family:var(--f-d);margin:0;letter-spacing:-.015em;text-wrap:balance}
+h1{font-size:clamp(2rem,5.4vw,2.9rem);line-height:1.05}
+h2{font-size:1.3rem}
+h3{font-size:1rem}
+.lead{color:var(--muted);margin:10px 0 0;max-width:60ch}
+a{color:inherit}
+.panel{display:flex;flex-direction:column;gap:32px}
+.sec{display:flex;flex-direction:column;gap:14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.kv small{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.kv b{font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.item{display:flex;flex-direction:column;gap:2px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;text-decoration:none;min-width:0}
+.item:hover{border-color:var(--ink)}
+.item:focus-visible,.btn:focus-visible,.tab:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.item b{overflow-wrap:anywhere}
+.item small{color:var(--muted);font-variant-numeric:tabular-nums}
+.item.main{border:2px solid var(--acc)}
+ul.l{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+ul.l li{padding:10px 12px;border-radius:12px;font-size:.92rem;min-width:0;overflow-wrap:anywhere}
+li.p{background:var(--warn-soft)} li.d{background:var(--acc-soft)} li.i{background:var(--gold-soft)} li.n{background:var(--bg);border:1px solid var(--line)}
+.lbl{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.88rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.steps .box b{font-family:var(--f-m);font-weight:500;color:var(--acc)}
+.foot{color:var(--muted);font-size:.8rem;border-top:1px solid var(--line);padding-top:14px}
+
+/* Abas */
+.tabs{display:flex;gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:14px;width:max-content;max-width:100%;overflow-x:auto}
+.tab{appearance:none;border:0;background:transparent;color:var(--muted);font:600 .95rem var(--f-b);padding:9px 16px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--acc-ink)}
+.tab svg{width:18px;height:18px;flex:none}
+
+/* Ferramentas (aba Painel) */
+.tool{display:grid;grid-template-columns:auto 1fr;gap:18px;border:2px solid var(--acc);align-items:start}
+.tool-ico{width:56px;height:56px;border-radius:14px;background:var(--acc-soft);display:grid;place-items:center;color:var(--acc)}
+.tool-ico svg{width:34px;height:34px}
+.tool-body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.tool-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px}
+.tag{font-family:var(--f-m);font-size:.72rem;color:var(--acc);background:var(--acc-soft);border-radius:999px;padding:2px 9px}
+.tool p{margin:0;color:var(--muted);max-width:62ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0}
+.facts div{min-width:0}
+.facts dt{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.facts dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;font:600 .9rem var(--f-b);text-decoration:none;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.btn:hover{border-color:var(--ink)}
+.btn.pri:hover{filter:brightness(1.08);border-color:var(--acc)}
+.note{font-size:.85rem;color:var(--gold);background:var(--gold-soft);border-radius:10px;padding:8px 12px}
+@media (max-width:520px){.tool{grid-template-columns:1fr}}
+
+.app-card{border:2px solid var(--acc);background:var(--acc-soft)}
+.app-body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.app-body p{margin:0;color:var(--ink);max-width:62ch}
+/* Aba Atlas 3D */
+.atlas{display:flex;flex-direction:column;gap:12px}
+.atlas-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+.atlas-bar p{margin:2px 0 0;color:var(--muted);font-size:.9rem;max-width:70ch}
+.stage{position:relative;height:calc(100dvh - 210px);min-height:540px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--stage)}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#f3f4f4}
+.loader{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted);background:var(--stage);z-index:1}
+.loader b{display:block;font-family:var(--f-d);color:var(--ink);font-size:1.1rem;margin-bottom:6px}
+.pulse{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;border:3px solid var(--acc-soft);border-top-color:var(--acc);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none}}
+.credit{font-size:.78rem;color:var(--muted)}
+.credit a{color:var(--muted)}
+@media (max-width:600px){.wrap{padding-block:24px 40px;gap:22px}.stage{height:calc(100dvh - 190px);min-height:480px;border-radius:12px}}
+/* Aba Revalida */
+.rv{display:flex;flex-direction:column;gap:22px}
+.rv-hero{display:grid;grid-template-columns:1fr auto;gap:16px 28px;align-items:end}
+.rv-hero p{margin:6px 0 0;color:var(--muted);max-width:64ch}
+.rv-stats{display:flex;gap:10px;flex-wrap:wrap}
+.rv-stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 16px;min-width:96px}
+.rv-stat b{display:block;font:700 1.55rem/1.1 var(--f-d);font-variant-numeric:tabular-nums;color:var(--acc)}
+.rv-stat small{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.rv-how{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.rv-how .box{padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.rv-how b{font-family:var(--f-d);font-size:1rem}
+.rv-how span{color:var(--muted);font-size:.88rem}
+.rv-how .n{font-family:var(--f-m);font-size:.72rem;color:var(--acc)}
+.rv-tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+.rv-row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.seg{display:flex;gap:2px;padding:3px;background:var(--card);border:1px solid var(--line);border-radius:12px;max-width:100%;overflow-x:auto}
+.seg button{appearance:none;border:0;background:transparent;color:var(--muted);font:600 .85rem var(--f-b);padding:7px 12px;border-radius:9px;cursor:pointer;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--acc);color:var(--acc-ink)}
+.seg button:focus-visible,.chip:focus-visible,.rv-open:focus-visible,.rv-chk input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.chip{appearance:none;flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 .8rem var(--f-m);padding:5px 11px;border-radius:999px;cursor:pointer;font-variant-numeric:tabular-nums}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.rv-opts{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;font-size:.85rem;color:var(--muted)}
+.rv-opts label{display:inline-flex;gap:7px;align-items:center;cursor:pointer}
+.rv-prog{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted)}
+.rv-bar{width:120px;height:7px;border-radius:99px;background:var(--line);overflow:hidden}
+.rv-bar i{display:block;height:100%;background:var(--acc);width:0;transition:width .25s}
+.rv-list{display:flex;flex-direction:column;gap:14px}
+.rv-ed{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;scroll-margin-top:150px}
+.rv-ed>summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:14px 18px}
+.rv-ed>summary::-webkit-details-marker{display:none}
+.rv-ed>summary:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.rv-year{font:700 1.45rem/1 var(--f-d);letter-spacing:-.02em;min-width:5.2ch}
+.rv-meta{color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums;flex:1;min-width:0}
+.rv-badge{font:500 .7rem var(--f-m);padding:2px 9px;border-radius:999px;background:var(--acc-soft);color:var(--acc)}
+.rv-badge.w{background:var(--gold-soft);color:var(--gold)}
+.rv-caret{width:18px;height:18px;color:var(--muted);transition:transform .2s;flex:none}
+.rv-ed[open] .rv-caret{transform:rotate(180deg)}
+.rv-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.rv-col{background:var(--card);padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.rv-col h3{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:var(--f-b);font-weight:700}
+.rv-sub{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--acc);margin-top:4px}
+.rv-it{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:11px;min-width:0}
+.rv-it.g{grid-template-columns:1fr;background:var(--bg)}
+.rv-it.g .rv-act{justify-content:flex-start}
+.rv-it.done{border-color:var(--acc);background:var(--acc-soft)}
+.rv-chk{display:inline-flex;align-items:center;cursor:pointer}
+.rv-chk input{width:18px;height:18px;accent-color:var(--acc);margin:0;cursor:pointer}
+.rv-lb{display:flex;flex-direction:column;min-width:0}
+.rv-lb b{font-size:.9rem;font-weight:600;overflow-wrap:anywhere}
+.rv-lb small{color:var(--muted);font-size:.75rem;font-variant-numeric:tabular-nums}
+.rv-act{display:flex;gap:6px;align-items:center}
+.rv-open{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font:600 .78rem var(--f-b);text-decoration:none;background:var(--acc);color:var(--acc-ink);white-space:nowrap}
+.rv-open:hover{filter:brightness(1.1)}
+.rv-open.alt{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.rv-open.alt:hover{color:var(--ink);border-color:var(--ink)}
+.rv-empty{color:var(--muted);font-size:.85rem;padding:6px 2px}
+.rv-tag{font:500 .65rem var(--f-m);padding:1px 7px;border-radius:99px;background:var(--gold-soft);color:var(--gold);margin-left:6px;white-space:nowrap}
+.rv-none{padding:28px;text-align:center;color:var(--muted)}
+.rv-lim{font-size:.85rem;color:var(--muted)}
+.rv-lim ul{margin:8px 0 0;padding-left:18px;display:grid;gap:5px}
+@media (max-width:600px){.rv-hero{grid-template-columns:1fr}.rv-bar{width:80px}.rv-it{grid-template-columns:auto 1fr}.rv-it .rv-act{grid-column:1/-1;justify-content:flex-end}.rv-it.g .rv-act{grid-column:auto}}
+@media (prefers-reduced-motion:reduce){.rv-caret,.rv-bar i{transition:none}}
+/* Aba Aulas */
+.au{display:flex;flex-direction:column;gap:18px}
+.au-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;align-items:end}
+.au-head p{margin:6px 0 0;color:var(--muted);max-width:64ch}
+.au-form{display:grid;grid-template-columns:2fr 1.2fr 2fr auto;gap:8px;align-items:end}
+.au-form label{display:flex;flex-direction:column;gap:4px;font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);min-width:0}
+.au-form input,.au-form select{font:500 .92rem var(--f-b);padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:0;width:100%}
+.au-form input:focus-visible,.au-form select:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.au-msg{font-size:.85rem;color:var(--warn);min-height:1.2em;margin:0}
+.au-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.au-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.au-card.done{border-color:var(--acc);background:var(--acc-soft)}
+.au-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.au-src{font:500 .7rem var(--f-m);padding:2px 9px;border-radius:999px;background:var(--acc-soft);color:var(--acc)}
+.au-src.d{background:var(--gold-soft);color:var(--gold)}
+.au-card h3{font-size:1rem;overflow-wrap:anywhere}
+.au-card small{color:var(--muted)}
+.au-act{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:auto}
+.au-del{appearance:none;background:transparent;border:0;color:var(--muted);font:600 .78rem var(--f-b);cursor:pointer;padding:4px}
+.au-del:hover{color:var(--warn)}
+.au-empty{padding:30px;text-align:center;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:16px}
+@media (max-width:700px){.au-form{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+
+<div class="wrap" id="wrap">
+  <header>
+    <h1>Painel Sinus</h1>
+    <p class="lead">Só o Sinus: onde está cada versão, as ferramentas da plataforma, o que falta aplicar, o plano do produto e as decisões já tomadas.</p>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Seções do painel">
+    <button class="tab" role="tab" id="tab-painel" aria-controls="painel" aria-selected="true" data-tab="painel">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="2.5" y="2.5" width="6" height="6" rx="1.5"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.5"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.5"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.5"/></svg>
+      Painel
+    </button>
+    <button class="tab" role="tab" id="tab-atlas" aria-controls="atlas" aria-selected="false" tabindex="-1" data-tab="atlas">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="3.6" r="2.1"/><path d="M10 6v6M6 8l4 1 4-1M10 12l-3 6M10 12l3 6"/></svg>
+      Atlas 3D
+    </button>
+    <button class="tab" role="tab" id="tab-revalida" aria-controls="revalida" aria-selected="false" tabindex="-1" data-tab="revalida">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.5h7l3.5 3.5v11a1 1 0 0 1-1 1h-9.5a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M12 2.5V6h3.5M7 10h6M7 13.5h4"/></svg>
+      Revalida
+    </button>
+    <button class="tab" role="tab" id="tab-aulas" aria-controls="aulas" aria-selected="false" tabindex="-1" data-tab="aulas">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2.5"/><path d="M8.5 7.5v5l4-2.5z"/></svg>
+      Aulas
+    </button>
+  </div>
+
+  <!-- ABA PAINEL -->
+  <div class="panel" role="tabpanel" id="painel" aria-labelledby="tab-painel">
+
+    <section class="sec" aria-labelledby="app">
+      <h2 id="app">Meu app Sinus</h2>
+      <article class="box app-card">
+        <div class="app-body">
+          <div class="tool-head">
+            <h3>Sinus, versão para testar</h3>
+            <span class="tag">sempre a mais recente</span>
+          </div>
+          <p>Abre o app Sinus completo em outra aba, já com o Atlas 3D dentro (menu Mais, depois Atlas 3D). O link não muda: toda atualização que eu publicar aparece nele, é só recarregar a página.</p>
+          <div class="actions">
+            <a class="btn pri" href="https://claude.ai/artifact/Hi8AQDAuTXysJVfQdhNGUw" target="_blank" rel="noopener noreferrer">Abrir meu app Sinus</a>
+            <button class="btn" type="button" data-go="atlas">Ver só o Atlas 3D</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="sec" aria-labelledby="t">
+      <h2 id="t">Ferramentas</h2>
+      <article class="box tool">
+        <div class="tool-ico" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="20" cy="7" r="4.2"/>
+            <path d="M20 11.5v12M12 15.5l8 2 8-2M20 23.5l-6 11M20 23.5l6 11"/>
+            <ellipse cx="20" cy="22" rx="16" ry="5.5" stroke-dasharray="2 3" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-head">
+            <h3>Sinus Atlas 3D</h3>
+            <span class="tag">anatomia interativa</span>
+          </div>
+          <p>Corpo humano em 3D para girar, aproximar, buscar estruturas e ligar ou desligar sistemas (esqueleto, músculos, vasos, nervos, vísceras). Nomes e textos em português, español e English, com seletor PT · ES · EN. Roda aqui dentro, na aba Atlas 3D, e também dentro do app Sinus.</p>
+          <dl class="facts">
+            <div><dt>Estruturas</dt><dd>2.234 malhas · 3.432 nomes FMA</dd></div>
+            <div><dt>Modelo</dt><dd>Homem adulto de referência</dd></div>
+            <div><dt>Idiomas</dt><dd>Português · Español · English</dd></div>
+            <div><dt>Licença</dt><dd>MIT (código) · CC BY 4.0 (dados)</dd></div>
+            <div><dt>Repositório</dt><dd>Sem mudanças desde 06/09/2026</dd></div>
+          </dl>
+          <p class="note">Uso comercial liberado, desde que a atribuição ao BodyParts3D apareça. Os modelos somam cerca de 46 MB, então no 4G pode demorar para abrir.</p>
+          <div class="actions">
+            <button class="btn pri" type="button" data-go="atlas">Abrir o Atlas 3D</button>
+            <a class="btn" href="https://github.com/ashemag/human-atlas">Repositório no GitHub</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="sec" aria-labelledby="a">
+      <h2 id="a">Versões</h2>
+      <div class="grid">
+        <a class="item main" href="https://claude.ai/artifact/Hi8AQDAuTXysJVfQdhNGUw"><b>Sinus, cópia idêntica do ChatGPT (com Atlas 3D)</b><small>16/10/2026 · interface completa, modo local · base para continuar a edição</small></a>
+        <a class="item" href="https://claude.ai/artifact/UrTJuJNQycqLS9DvLW2ejL"><b>Sinus, reconstrução do ZIP (protótipo)</b><small>06/10/2026 · telas de exemplo, sem dados reais</small></a>
+        <a class="item" href="https://claude.ai/artifact/NBtDm6skDKrP5BoSLUiVFq"><b>Sinus, app antigo do Claude</b><small>03/10/2026 · 367 KB · ainda com "Seu dia"</small></a>
+        <a class="item" href="https://claude.ai/artifact/R9d5tqYrcXTSbszcLDdrVU"><b>Biblioteca da Comunidade, protótipo</b><small>04/10/2026 · separado do app</small></a>
+        <a class="item" href="https://claude.ai/artifact/P85wBHxqwcKmkGHw8gcZZk"><b>Plano do Produto</b><small>03/10/2026</small></a>
+        <a class="item" href="https://claude.ai/artifact/6fTkrqyFfef9vCYtRLBRSK"><b>Central Sinus</b><small>02/10/2026 · versão antiga</small></a>
+        <a class="item" href="https://claude.ai/artifact/WTi9F36vi3Y2co9RbLtzkf"><b>Sinus Atlas 3D, página avulsa</b><small>10/10/2026 · mesma ferramenta da aba Atlas 3D</small></a>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="b">
+      <h2 id="b">Estado do projeto</h2>
+      <div class="box kv">
+        <div><small>Site original (ChatGPT)</small><b>sinusal.chatmedicinacolegas.chatgpt.site</b></div>
+        <div><small>Cópia aqui</small><b>interface idêntica, sem dados do servidor</b></div>
+        <div><small>Backend (ZIP fullstack)</small><b>FastAPI corrigido, roda só fora do Claude</b></div>
+        <div><small>Turmas do 2º semestre</small><b>A B C D E F G I J K</b></div>
+      </div>
+      <h3>O que falta</h3>
+      <ul class="l">
+        <li class="p">Ligar à cópia o salvamento do perfil, a Biblioteca com upload e leitor de PDF, e os comentários por matéria. O servidor do ChatGPT não veio junto.</li>
+        <li class="p">O backend do ZIP precisa de hospedagem própria (Railway, Render ou similar). Troque a senha do admin criado pelo seed.</li>
+        <li class="p">Token da UCP citado no README do módulo de notas: invalide por logout e login no portal.</li>
+      </ul>
+      <h3>Arquivos guardados</h3>
+      <ul class="l">
+        <li class="d">Cópia completa do site do ChatGPT (ZIP, 19 arquivos) e backup do app antigo do Claude, na pasta Sinus do chat.</li>
+        <li class="d">Backend fullstack corrigido (bcrypt fixado e seed consertado), na pasta Sinus do chat.</li>
+      </ul>
+    </section>
+
+    <section class="sec" aria-labelledby="c">
+      <h2 id="c">Decisões tomadas</h2>
+      <ul class="l">
+        <li class="d">Posicionamento hiperlocal: "ser os melhores locais", sem concorrer com as grandes plataformas.</li>
+        <li class="d">Começa pelos alunos da UCP, depois expande para outras faculdades de Ciudad del Este e Pedro Juan Caballero.</li>
+        <li class="d">Não cobrar R$ 29,90 por mês no início. Primeiro consolidar o nome e a plataforma.</li>
+        <li class="d">Modelo híbrido: base da Sinus para os alunos e área exclusiva paga de cada professor-aluno que grava aulas, com comissão para a plataforma.</li>
+        <li class="d">Distribuição: grupos de Facebook e WhatsApp da UCP, com meta de 10 ou mais clientes em 3 semanas.</li>
+        <li class="d">Montar um projeto real em vez de manter só o artefato HTML.</li>
+        <li class="d">Usar o Human Atlas (atlas 3D de anatomia) nos projetos principais e paralelos da Sinus.</li>
+      </ul>
+    </section>
+
+    <section class="sec" aria-labelledby="d">
+      <h2 id="d">Roadmap do projeto real</h2>
+      <div class="steps">
+        <div class="box"><b>Fase 1 · 4 semanas</b><br>MVP com backend e frontend</div>
+        <div class="box"><b>Fase 2 · 3 semanas</b><br>Caderno com OCR</div>
+        <div class="box"><b>Fase 3 · 2 semanas</b><br>Monetização com Stripe</div>
+      </div>
+      <p class="lbl">Tecnologia definida</p>
+      <div class="box">FastAPI, PostgreSQL, Redis e Celery no backend. React 18, Vite e Tailwind no frontend. Railway e Vercel em produção.</div>
+    </section>
+
+    <section class="sec" aria-labelledby="e">
+      <h2 id="e">Ideias em avaliação</h2>
+      <ul class="l">
+        <li class="i">Trazer para a plataforma os alunos e monitores que gravam aulas hoje no Meet ou em casa e distribuem pelo Drive.</li>
+        <li class="i">Biblioteca e comunidade estilo Studocu, só da UCP. Exige conteúdo sempre atualizado.</li>
+        <li class="i">Painel acadêmico genérico para estudantes de Medicina de qualquer faculdade, com Drive da turma, horário, anotações e o que o delegado carregou.</li>
+        <li class="i">Ecossistema com YouTube, aulas dos livros-base em áudio e podcast no Spotify.</li>
+        <li class="i">Referência de concorrência local: SmartMed (Ciudad del Este), que grava aulas de matérias difíceis, sobretudo no Instagram.</li>
+      </ul>
+    </section>
+
+    <section class="sec" aria-labelledby="f">
+      <h2 id="f">Turmas do 5º semestre</h2>
+      <div class="box tbl-wrap">
+        <table>
+          <thead><tr><th>Turma</th><th>Sala</th><th>Professores</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>01</td><td>Lilian Nuñez, Victoria Barrios, Kevin Feijó, Manuel Gimenez, Carmen Coba, Rossana Gauto</td></tr>
+            <tr><td>B</td><td>02</td><td>Lilian Nuñez, Victoria Barrios, Sandrina Kassouf, Manuel Gimenez, Carmen Coba, Rossana Gauto</td></tr>
+            <tr><td>C</td><td>10</td><td>Fatima Cuenca, Rafael Estrada Acosta, Sandrina Kassouf, Manuel Gimenez, Cielo Brizuela, Rossana Gauto</td></tr>
+            <tr><td>D</td><td>07</td><td>Ivan Crespo, Cristhiam Giménez, Jorge Manuel Duarte, Kevin Feijó, Eliana Chamorro, Rossana Gauto</td></tr>
+            <tr><td>E</td><td>05</td><td>Ivan Crespo, Cristhiam Giménez, Jorge Manuel Duarte, Makarena Velázquez, Rossana Gauto</td></tr>
+            <tr><td>F</td><td>01</td><td>Fatima Cuenca, Cristhiam Giménez, Jorge Manuel Duarte, Ivan Crespo, Belén Chilavert, Rossana Gauto</td></tr>
+            <tr><td>G</td><td>02</td><td>Cielo Brizuela, Cristhiam Giménez, Kevin Feijó, Eliana Chamorro, Loren Noguera</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="g">
+      <h2 id="g">Pendências técnicas</h2>
+      <ul class="l">
+        <li class="n">Filtrar Matérias, Semana e Horários conforme a turma escolhida no Perfil.</li>
+        <li class="n">Carregar horários direto do Drive, em vez de manual.</li>
+        <li class="n">Integrar nas outras abas os dados das turmas novas.</li>
+        <li class="n">Próximo passo combinado para começar o projeto real: enviar "Fase 1 - INÍCIO".</li>
+      </ul>
+    </section>
+
+    <p class="foot">Fontes: os artefatos publicados, o repositório ashemag/human-atlas e o histórico do projeto. Atualizado em 16/10/2026.</p>
+  </div>
+
+  <!-- ABA ATLAS 3D -->
+  <div class="atlas" role="tabpanel" id="atlas" aria-labelledby="tab-atlas" hidden>
+    <div class="atlas-bar">
+      <div>
+        <h2>Atlas 3D</h2>
+        <p>Arraste para girar, use o scroll ou dois dedos para aproximar, busque uma estrutura pelo nome e ligue ou desligue sistemas no painel lateral. Troque o idioma no seletor PT · ES · EN, no topo do atlas.</p>
+      </div>
+      <a class="btn" href="atlas.html" id="atlas-full" target="_blank" rel="noopener noreferrer">Abrir em tela cheia</a>
+    </div>
+    <div class="stage" id="stage">
+      <div class="loader" id="loader">
+        <div>
+          <div class="pulse" aria-hidden="true"></div>
+          <b>Carregando o atlas</b>
+          Cerca de 46 MB de modelos. No 4G pode levar um tempo.
+        </div>
+      </div>
+    </div>
+    <p class="credit">Anatomia: BodyParts3D, © The Database Center for Life Science, CC BY 4.0. Visor: Human Atlas (ashemag), licença MIT. <a href="ATTRIBUTION.md">Atribuição completa</a> · <a href="LICENSE.txt">Licença</a>. Ferramenta educativa, não é instrumento clínico.</p>
+  </div>
+
+  <!-- ABA REVALIDA -->
+  <div class="rv" role="tabpanel" id="revalida" aria-labelledby="tab-revalida" hidden>
+    <div class="rv-hero">
+      <div>
+        <h2>Revalida</h2>
+        <p>Provas anteriores do Revalida, de 2010 a 2026/2, organizadas por edição e por etapa. Cada arquivo abre direto na fonte oficial (Inep ou Cebraspe). Marque o que já fez e acompanhe o progresso.</p>
+      </div>
+      <div class="rv-stats" id="rv-stats"></div>
+    </div>
+
+    <div class="rv-how">
+      <div class="box"><span class="n">ETAPA 1</span><b>Prova objetiva</b><span>Questões de múltipla escolha. Cada edição traz um ou mais cadernos (cor ou número) e o gabarito.</span></div>
+      <div class="box"><span class="n">ETAPA 1</span><b>Prova discursiva</b><span>Questões escritas, com o padrão de resposta oficial para você se corrigir.</span></div>
+      <div class="box"><span class="n">ETAPA 2</span><b>Habilidades clínicas</b><span>Estações práticas. O PEP é a lista oficial do que o examinador espera que você faça.</span></div>
+    </div>
+
+    <div class="rv-tools">
+      <div class="rv-row">
+        <div class="seg" id="rv-seg" role="group" aria-label="Filtrar por etapa">
+          <button type="button" data-k="all" aria-pressed="true">Tudo</button>
+          <button type="button" data-k="obj" aria-pressed="false">Objetiva</button>
+          <button type="button" data-k="disc" aria-pressed="false">Discursiva</button>
+          <button type="button" data-k="hab" aria-pressed="false">Habilidades clínicas</button>
+        </div>
+        <div class="rv-prog"><span id="rv-prog-t">0 de 0 provas feitas</span><div class="rv-bar" aria-hidden="true"><i id="rv-prog-b"></i></div></div>
+      </div>
+      <div class="chips" id="rv-chips" role="group" aria-label="Filtrar por edição"></div>
+      <div class="rv-opts">
+        <label><input type="checkbox" id="rv-acc"> Mostrar versões ampliada, superampliada e para ledor</label>
+        <label><input type="checkbox" id="rv-open"> Abrir todas as edições</label>
+      </div>
+    </div>
+
+    <div class="rv-list" id="rv-list" aria-live="polite"></div>
+
+    <div class="box rv-lim">
+      <b>Sobre o acervo</b>
+      <ul>
+        <li>O Inep não tem edições próprias em 2018 e 2019: o arquivo oficial passa de 2017 para 2020.</li>
+        <li>Cadernos públicos da etapa prática só existem a partir de 2020. Isso não quer dizer que a etapa não tenha acontecido antes.</li>
+        <li>Itens marcados como preliminares (gabaritos de 2014, cadernos e PEP de 2025/2, gabaritos de 2026/2) ainda não são a versão definitiva.</li>
+        <li>Em 2021, os links oficiais dos dois cadernos escritos não responderam na consulta de 15/10/2026; se o link oficial falhar, procure a cópia no seu Drive.</li>
+        <li>O link "Meu Drive" só abre para quem tem acesso à pasta no Drive do Felipe.</li>
+      </ul>
+    </div>
+    <p class="credit">Provas e gabaritos: Inep e Cebraspe, documentos públicos. Este painel só organiza os links.</p>
+  </div>
+
+  <!-- ABA AULAS -->
+  <div class="au" role="tabpanel" id="aulas" aria-labelledby="tab-aulas" hidden>
+    <div class="au-head">
+      <div>
+        <h2>Aulas</h2>
+        <p>Aulas em vídeo organizadas por matéria. O YouTube e o Drive não deixam o vídeo tocar dentro desta página, então cada aula abre em uma nova aba, direto no player deles.</p>
+      </div>
+      <div class="seg" id="au-seg" role="group" aria-label="Filtrar por matéria"></div>
+    </div>
+    <form class="au-form box" id="au-form" autocomplete="off">
+      <label>Título da aula<input id="au-t" required maxlength="120" placeholder="Ex.: Glicólise, parte 1"></label>
+      <label>Matéria<input id="au-m" required maxlength="40" list="au-ml" placeholder="Bioquímica"><datalist id="au-ml"></datalist></label>
+      <label>Link (YouTube ou Drive)<input id="au-u" required type="url" placeholder="https://..."></label>
+      <button class="btn pri" type="submit">Adicionar</button>
+    </form>
+    <p class="au-msg" id="au-msg" role="status"></p>
+    <div class="au-list" id="au-list"></div>
+    <p class="credit">Por enquanto as aulas adicionadas aqui ficam salvas só neste navegador. Para aparecerem para todos os alunos, elas precisam ser incluídas na página.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var wrap = document.getElementById('wrap');
+  var stage = document.getElementById('stage');
+  var loader = document.getElementById('loader');
+  var frame = null;
+
+  function loadAtlas(){
+    if (frame) return;
+    frame = document.createElement('iframe');
+    frame.title = 'Sinus Atlas 3D';
+    frame.setAttribute('allow', 'fullscreen');
+    frame.setAttribute('allowfullscreen', '');
+    frame.addEventListener('load', function(){ loader.hidden = true; });
+    frame.src = 'atlas.html';
+    stage.appendChild(frame);
+  }
+
+  function show(name, focus){
+    var found = tabs.some(function(t){ return t.dataset.tab === name; });
+    if (!found) name = 'painel';
+    tabs.forEach(function(t){
+      var on = t.dataset.tab === name;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      if (on && focus) t.focus();
+    });
+    wrap.classList.toggle('wide', name === 'atlas');
+    if (name === 'atlas') loadAtlas();
+    try { history.replaceState(null, '', '#' + name); } catch (e) {}
+  }
+
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ show(t.dataset.tab); });
+    t.addEventListener('keydown', function(e){
+      var k = e.key, n = null;
+      if (k === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
+      else if (k === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (k === 'Home') n = tabs[0];
+      else if (k === 'End') n = tabs[tabs.length - 1];
+      if (n) { e.preventDefault(); show(n.dataset.tab, true); }
+    });
+  });
+
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click', function(){
+      show(b.dataset.go);
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+    });
+  });
+
+  show((location.hash || '').slice(1) || 'painel');
+})();
+</script>
+
+<script>
+(function(){
+  var DATA = [{"id":"2010","name":"Projeto-piloto 2010","year":"2010","items":[{"l":"Caderno 1","k":"obj","r":"prova","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/DIP_MEDICO10_001_1.pdf","p":28,"s":209406,"n":"001","d":"1SJLENzmZDcI7CFKo2cGHbRIH_A4zDAuh"},{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/DIP_MEDICO10_001_ProvaDiscursiva.pdf","p":10,"s":84203,"n":"002","d":"1qN5Yc9qHGy3atQrSKR4ON37vJMAeGh4b"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/Definitivo_DIP_MEDICO10_001_1.PDF","p":1,"s":472445,"n":"003","d":"1tzerASxAskQ6LoQwF0kvu75shR6iqteH"},{"l":"Padrão de resposta, questão 1","k":"disc","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/INEP_QUESTAO1_PADRAO_REPOSTA_PROVA_DISCURSIVA.pdf","p":1,"s":10783,"n":"004","d":"1_KTCTvZhpc9p_328L8Cpa_xZm4B4eqKe"},{"l":"Padrão de resposta, questão 2","k":"disc","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/INEP_QUESTAO2_PADRAO_REPOSTA_PROVA_DISCURSIVA.pdf","p":1,"s":15713,"n":"005","d":"1zm_ZmiprL82_sFnPPAZasMkzi7T4Paqz"},{"l":"Padrão de resposta, questão 3","k":"disc","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/INEP_QUESTAO3_PADRAO_REPOSTA_PROVA_DISCURSIVA.pdf","p":1,"s":9706,"n":"006","d":"15_ZOd5aLjK5X0DewBBHsMyHLJDsg2p80"},{"l":"Padrão de resposta, questão 4","k":"disc","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/INEP_QUESTAO4_PADRAO_REPOSTA_PROVA_DISCURSIVA.pdf","p":1,"s":14733,"n":"007","d":"1yK-NSTLnOrJbHKEEmhaa8Vz5T_DBW5pM"},{"l":"Padrão de resposta, questão 5","k":"disc","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/INEP_QUESTAO5_PADRAO_REPOSTA_PROVA_DISCURSIVA.pdf","p":1,"s":9643,"n":"008","d":"1150ZIRNSLog1tYSI_-a_MjxrPT5yE0nM"},{"l":"Respostas aos recursos (alteração/anulação)","k":"obj","r":"gab","u":"https://cdn.cebraspe.org.br/concursos/REVALIDACAOINEP2010/arquivos/INEP_REV_MED_REPOSTAS_RECURSOS_PROVA_OBJETIVA.PDF","p":1,"s":41847,"n":"009","d":"1_MSpS6Z1ArKR3gxK9yNN3JKUNhS39Ktx"}]},{"id":"2011","name":"2011","year":"2011","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2011/prova_discursiva.pdf","p":8,"s":109390,"n":"010","d":"1CgxyovRzewAz6DLi3L4k9t7HMb3pArcd"},{"l":"Caderno cinza","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2011/prova_objetiva_cinza.pdf","p":36,"s":272133,"n":"011","d":"1mf09BAEcP6jiAXNU2XJNH6OogX0lHoUA"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2011/inep_gabarito_definitivo_revalida-2011.pdf","p":2,"s":170003,"n":"012","d":"1xpzDItYnAQm5g_GABNTSQ4PynQGr1Wtj"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/padrao_respostas/2011/padrao_de_respostas_definitivo.pdf","p":5,"s":335179,"n":"013","d":"1n9AjxUvPvChq78XQSmulZlZkAUkEwki9"}]},{"id":"2012","name":"2012","year":"2012","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2012/prova_discursiva_revalida_2012.pdf","p":8,"s":303667,"n":"014","d":"1B0wKHnH7dcpLNcikJQ5AYZxmCYZU32Vs"},{"l":"Caderno cinza","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2012/prova_objetiva_cinza_2012.pdf","p":32,"s":4610254,"n":"015","d":"1R_rmV-Pebg92O7IQTqrNbh8kT9nqwLIY"},{"l":"Gabarito caderno cinza","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2012/revalida_2012_gabaritoProvacinza.pdf","p":1,"s":13815,"n":"016","d":"1Lc648ZGCRI8PWLf07IroKlR9HLNYLtP4"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/padrao_respostas/2012/revalida_2012_padrao_de_respostas_definitivo.pdf","p":9,"s":372882,"n":"017","d":"1I3oS9v8eUHLHpyPO4GX0aKD2IFu8zID6"}]},{"id":"2013","name":"2013","year":"2013","items":[{"l":"Caderno cinza","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2013/po_cinza_revalida_2013.pdf","p":36,"s":1673329,"n":"018"},{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2013/po_revalida_2013.pdf","p":12,"s":146716,"n":"019","d":"1dIsVmMCUEJ-3KCG5-so27SiJ3sGpyKxL"},{"l":"Caderno vermelho","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2013/po_vermelha_revalida_2013.pdf","p":36,"s":1945400,"n":"020"},{"l":"Gabarito caderno cinza","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2013/po_cinza_gabarito_definitivo_revalida_2013.pdf","p":1,"s":930920,"n":"021","d":"1fnJVOHrKpklzD0OmFeOLn0JEQ7JUUb49"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2013/po_padrao_respostas_definitivo_revalida_2013.pdf","p":12,"s":106633,"n":"022","d":"1awrrvTmFq8IAuNR9lu9iO-kXxJKkZIrf"},{"l":"Gabarito caderno vermelho","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2013/po_vermelha_gabarito_definitivo_revalida_2013.pdf","p":1,"s":920697,"n":"023","d":"1OrlKQFJimX0lua3JvLx05ZYCJ4eBQThB"}]},{"id":"2014","name":"2014","year":"2014","items":[{"l":"Caderno cinza","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2014/po_cinza_revalida_objetiva_2014.pdf","p":36,"s":4812842,"n":"024"},{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2014/po_revalida_discursiva_2014.pdf","p":12,"s":1028014,"n":"025","d":"11xCPM-ZaX7KD1nbPgUHIRa2nNOeEhts4"},{"l":"Caderno vermelho","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2014/po_vermelha_revalida_objetiva_2014.pdf","p":36,"s":4769824,"n":"026"},{"l":"Gabarito caderno cinza · preliminar","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2014/gabarito_preliminar_prova_cinza_objetiva_20072014.pdf","p":1,"s":82145,"n":"027","d":"1L6sCmippUnrqINRucIKNK-Kpwe6Xr2wQ","pl":1},{"l":"Gabarito caderno vermelho · preliminar","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2014/gabarito_preliminar_prova_vermelha_objetiva_20072014.pdf","p":1,"s":82157,"n":"028","d":"1PlpMQ8MU0S6Nm7bA-_ePEwyoaVQ3xosN","pl":1},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2014/padrao_resposta_prova_discursiva_20072014.pdf","p":6,"s":160873,"n":"029","d":"1AwJVYOASSUou1EdB_byh0H5d11spcYUO"}]},{"id":"2015","name":"2015","year":"2015","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2015/prova_discursiva.pdf","p":12,"s":1119123,"n":"030","d":"1v6YGIddPrMGovsHJ5dvjxumwdQOnivMr"},{"l":"Caderno cinza","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2015/prova_objetiva_cinza.pdf","p":40,"s":4045760,"n":"031","d":"1HIXZI5W0VOMmI_trz66YEzywxu39x17K"},{"l":"Caderno vermelho","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2015/prova_objetiva_vermelha.pdf","p":40,"s":4037603,"n":"032","d":"12av2gbBjalCKEFbEtxkfJqtK_oYruKLA"},{"l":"Gabarito caderno cinza","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2015/gabarito_definitivo_prova_cinza.pdf","p":2,"s":208161,"n":"033","d":"1ToFH-vCp-7FASUaNeQ0zXY_IE7sTbkcM"},{"l":"Gabarito caderno vermelho","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2015/gabarito_definitivo_prova_vermelha.pdf","p":1,"s":207443,"n":"034","d":"1sQCLL8Xg4yWfxCOc9CsnoTv0H61LPimi"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/padrao_respostas/2015/padrao_de_respostas_definitivo_da_prova_discursiva_REVALIDA2015.pdf","p":8,"s":605724,"n":"035","d":"1FpryOMKEIYUbnGI8Uk8g0vE0AIqCVUqg"}]},{"id":"2016","name":"2016","year":"2016","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2016/prova_discursiva.pdf","p":16,"s":860887,"n":"036","d":"1N9QTJ0UecO_01xqisCvS0pkc-qZYPATG"},{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2016/prova_objetiva_1.pdf","p":36,"s":1101554,"n":"037"},{"l":"Caderno 2","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2016/prova_objetiva_2.pdf","p":36,"s":1111371,"n":"038"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2016/gabarito_definitivo_prova_objetiva_v1.pdf","p":1,"s":65696,"n":"039","d":"1h50Fz9o_m6bbtUpsXmkLiyPf1OpcnlgI"},{"l":"Gabarito caderno 2","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2016/gabarito_definitivo_prova_objetiva_v2.pdf","p":1,"s":65708,"n":"040","d":"1OHnKWQQBjWYK5b2DLGUv3s1pr74cA9cl"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2016/prova_discursiva_definitivo.pdf","p":10,"s":417765,"n":"041","d":"1JmBjTHRFmR8FaDiBRaiyQapQ671yZ7nr"}]},{"id":"2017","name":"2017","year":"2017","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2017/prova_discursiva-CadProva_016_1.pdf","p":16,"s":1031527,"n":"042","d":"1ZgtW6uTwRRCuiefTdxbDJFBDClVy6NLC"},{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2017/prova_objetiva_1.pdf","p":36,"s":926476,"n":"043","d":"1-8Rp_onnfb8Q3JnwOBIUVtpicc6-VjfI"},{"l":"Caderno 2","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2017/prova_objetiva_2.pdf","p":36,"s":932357,"n":"044","d":"1C2XNwiXRfCkYOQHgSJQD208Xg5eMOOhy"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2017/gabarito_prova_objetiva1.pdf","p":1,"s":170713,"n":"045","d":"1XrDhrzfGDXOKylR1-_VJexyNvMsnLWBc"},{"l":"Gabarito caderno 2","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2017/gabarito_prova_objetiva2.pdf","p":1,"s":174525,"n":"046","d":"11vKtfoa0o_iz-Zt1Cm9RKa3ZWwxSUMxU"}]},{"id":"2020","name":"2020","year":"2020","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2020/revalida_disc_001.pdf","p":14,"s":2196066,"n":"047"},{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2020/revalida_obj_001_1.pdf","p":49,"s":6472880,"n":"048"},{"l":"Caderno 2","k":"obj","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2020/revalida_obj_001_2.pdf","p":49,"s":6476057,"n":"049"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2020/gabarito_caderno_1.pdf","p":2,"s":221891,"n":"050","d":"1sJNjOKOO3VMOxLDn577pj2a5o6HQufQq"},{"l":"Gabarito caderno 2","k":"obj","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2020/gabarito_caderno_2.pdf","p":2,"s":393985,"n":"051","d":"12rVgQB6drJNmBOiRiUagB6Zn1dYgVf8W"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/padrao_respostas/2020/padrao_de_respostas_discursivas.pdf","p":11,"s":658451,"n":"052","d":"1A3C8iCS9XtGPepuGtiJ5RpcNF1YWYYfy"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2020/habilidades_clinicas.pdf","p":34,"s":879011,"n":"053","d":"1FFdLifj_r4uuPSX4M2O_e6J3bhWmE6ZO"},{"l":"Provas das estações (caderno) · reaplicação","k":"hab","r":"prova","u":"https://download.inep.gov.br/educacao_superior/revalida/provas/2020/habilidades_clinicas_reaplicacao.pdf","p":14,"s":1317997,"n":"054","re":1},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2020/padrao_esperado_procedimentos_habilidades_clinicas.pdf","p":19,"s":2443443,"n":"055"},{"l":"Padrão esperado de procedimentos (PEP) · reaplicação","k":"hab","r":"gab","u":"https://download.inep.gov.br/educacao_superior/revalida/gabaritos/2020/padrao_esperado_procedimentos_habilidades_clinicas_reaplicacao.pdf","p":6,"s":1186914,"n":"056","re":1}]},{"id":"2021","name":"2021","year":"2021","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2021_PV_discursiva.pdf","p":11,"s":522714,"n":"057","d":"1EwB40mgzm3-8offdd_UXwrgfawPpbMY3"},{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2021_PV_objetiva_1.pdf","p":28,"s":1543551,"n":"058","d":"1eqY5BdipIvh9luAGT1Vpjx3b-G7tmTzy"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2021_GB_discursiva.pdf","p":10,"s":442355,"n":"059","d":"1Ssrz7An6QGd54l7WY_D9pXSn4B--0Lb5"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2021_GB_objetiva_1.pdf","p":1,"s":311690,"n":"060","d":"1pzN4kpwM5JjXv6tsbcE9NnuaW9xu86c2"},{"l":"Provas das estações (caderno) · reaplicação","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2021_PV_reaplicacao_habilidades_clinicas.pdf","p":18,"s":1135689,"n":"061","d":"1TMDChXfy2HMqai1aBQYiZYyQh587vkXO","re":1},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/provas_revalida_2021_publicacao.pdf","p":42,"s":6536170,"n":"062","d":"1gaFFc9-eNrjS4mzmels0jRPhT_W_3mab"},{"l":"Padrão esperado de procedimentos (PEP) · reaplicação","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2021_PEP_reaplicacao.pdf","p":9,"s":775934,"n":"063","d":"1SetD7V9PrCGsbqofK5gUSwvNv6dHkBQO","re":1},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/PEP_2021_publicacao.pdf","p":22,"s":365468,"n":"064","d":"1zJfW9U8BjcTNiuZXkX1nSlwqy41KGdeu"}]},{"id":"2022_1","name":"2022/1","year":"2022","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022_PV_discursiva.pdf","p":11,"s":172163,"n":"065","d":"1llakJPKPbo2nrp0cEaoHVSILcc-bUX9p"},{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022_PV_objetiva_1.pdf","p":29,"s":600400,"n":"066","d":"1tHpngtqgTohvwJx9l24YK7ajDLVAndDk"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022_GB_discursiva.pdf","p":6,"s":274699,"n":"067","d":"183LbOb5SXgfMf8YOd4ohPT-YSfJm9p10"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022_GB_objetiva_1.pdf","p":1,"s":209718,"n":"068","d":"1n1XcHlR7ebhMEIvWMY3FG7rsQQ-BXXYB"},{"l":"Provas das estações (caderno) · reaplicação","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022.1_PV_reaplicacao_habilidades_clinicas.pdf","p":48,"s":1829750,"n":"069","re":1},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022_1_prova_habilidades_clinicas.pdf","p":52,"s":1531825,"n":"070"},{"l":"Padrão esperado de procedimentos (PEP) · reaplicação","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022.1_PEP_reaplicacao.pdf","p":23,"s":499189,"n":"071","d":"1Vt1r8LbgpV-r7pAnWZmP572FUdevX1eC","re":1},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/PEP_2022_1_publicacao.pdf","p":18,"s":334936,"n":"072","d":"1HxOQbNnpUzHH2ycJ_R1IkdSPnnJ1TnTp"}]},{"id":"2022_2","name":"2022/2","year":"2022","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022-2_PV_discursiva.pdf","p":11,"s":380636,"n":"073","d":"1DFBO1lodUEgRfV0EcPOBxp6ZBXMCJYoR"},{"l":"Caderno único","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022-2_PV_objetiva.pdf","p":24,"s":1786725,"n":"074","d":"13vmR1klwOIO6I4NYNzk_nZp_hSJwUhTR"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022-2_GB_discursiva.pdf","p":10,"s":475151,"n":"075","d":"1Q9_nvNJFlJeGke1NxKptN5v6qyVSqMH0"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022-2_GB_objetiva.pdf","p":1,"s":149383,"n":"076","d":"1PJF3aSyCj7dn43caigSYCcjTw30yTjjR"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2022_2_prova_habilidades_clinicas.pdf","p":44,"s":3474633,"n":"077","d":"1yvNSolcO0zG_yRtds2Bj_lk_VjusWT4y"},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/PEP_2022_2_.pdf","p":23,"s":407433,"n":"078","d":"1gitv-XmIi1XTRkHBBAv0Fsvb39AGQa5r"}]},{"id":"2023_1","name":"2023/1","year":"2023","items":[{"l":"Prova discursiva (ampliada)","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_PV_discursiva_ampliada.pdf","p":11,"s":452444,"n":"079","d":"13wOPHmgbncy6SiWdmcWVi1kaJTP5l6TB","a":1},{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_PV_discursiva_regular.pdf","p":11,"s":328637,"n":"080","d":"1AHY9rmhiTaj4Q7SEmSIHP3Vm3p6ldkWr"},{"l":"Caderno (ampliada)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_PV_objetiva_ampliada.pdf","p":54,"s":1244362,"n":"081","a":1},{"l":"Caderno regular","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_PV_objetiva_regular.pdf","p":27,"s":755594,"n":"082","d":"1twlWe_ncUQW2gSbZvHTBGD-hp-9Q2wEn"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_GB_objetiva_definitivo.pdf","p":1,"s":224228,"n":"083","d":"1OL1ceSAwbwXow1KbiudiAMhQASnXa-yv"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_PEP_discursiva_definitivo.pdf","p":9,"s":417987,"n":"084","d":"1Ym3ymkNDqIi9_n68soUDh8ZeBbM-vlEs"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_prova_habilidades_clinicas.pdf","p":44,"s":10089371,"n":"085"},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_1_PEP_publicacao.pdf","p":55,"s":2504151,"n":"086"}]},{"id":"2023_2","name":"2023/2","year":"2023","items":[{"l":"Prova discursiva (ampliada)","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_PV_discursiva_ampliada.pdf","p":12,"s":745136,"n":"087","d":"11SfgE_Alvc9sHaOyRmHBU6FZ636PYp5z","a":1},{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_PV_discursiva_regular.pdf","p":11,"s":693907,"n":"088","d":"1AmkXmZuTtEi8fHrKSLkwUgM5JgkxIe7A"},{"l":"Caderno (ampliada)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_PV_objetiva_ampliada.pdf","p":45,"s":2313649,"n":"089","a":1},{"l":"Caderno regular","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_PV_objetiva_regular.pdf","p":29,"s":2504115,"n":"090"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_GB_objetiva.pdf","p":1,"s":182551,"n":"091","d":"1chN9BoSG0fHfYRbVL_bOeQT9gZoBCj1u"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_PEP_discursiva.pdf","p":11,"s":417313,"n":"092","d":"1fxZdV3sOk_FHPkPIyt-t9P60d7G25owU"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2023_2_prova_habilidades_clinicas.pdf","p":28,"s":3221082,"n":"093"},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/PEP_2023_2.pdf","p":56,"s":908566,"n":"094","d":"18XPsbtBiCjct793aLYHwUI_ahDr66WUx"}]},{"id":"2024_1","name":"2024/1","year":"2024","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_1_PV_discursiva_regular.pdf","p":11,"s":425569,"n":"095","d":"1TpjzOj0ABZXqdy52vZHvIge8PEVkW7TM"},{"l":"Caderno regular","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_1_PV_objetiva_regular.pdf","p":28,"s":1588137,"n":"096","d":"1yBA5nUyYJ9zBuq-vb90U5EpYxqF_PaiN"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_1_GB_objetiva.pdf","p":1,"s":133610,"n":"097","d":"15oq2oK5tb6RPVffpsHBkUg8IOpuoDH32"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_1_PEP_discursiva.pdf","p":11,"s":1485799,"n":"098","d":"1ZXMLJDAdGG2NCP4zaOAjbWS5U-ODJOu7"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_1_prova_habilidades_clinicas.pdf","p":40,"s":5930523,"n":"099"},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_1_PEP_publicacao.pdf","p":57,"s":3111697,"n":"100"}]},{"id":"2024_2","name":"2024/2","year":"2024","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_2_PV_discursiva_regular.pdf","p":11,"s":457809,"n":"101","d":"1MnlbbOhRtwIiV-QVQdeZ9a3mQt_3mdLV"},{"l":"Caderno regular","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_2_PV_objetiva_regular.pdf","p":29,"s":1506039,"n":"102"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_2_GB_objetiva.pdf","p":1,"s":88632,"n":"103","d":"1ulh8uNq7GY7i3VQGhq3e3lbDjIMPsoPI"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_2_PEP_discursiva_versao_final.pdf","p":12,"s":970970,"n":"104","d":"1ngX1401Um5s0QqJ6VsNVkv9gpCVhoJ-i"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2024_2_prova_habilidades_clinicas.pdf","p":52,"s":4580343,"n":"105"},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/revalida_2024_2_pep_definitivo.pdf","p":59,"s":3941675,"n":"106"}]},{"id":"2025_1","name":"2025/1","year":"2025","items":[{"l":"Prova discursiva","k":"disc","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_1_PV_discursiva_regular.pdf","p":11,"s":523412,"n":"107","d":"1-CLPLiYt0GVrzYE-vR036d6rguPsF1Ru"},{"l":"Caderno regular","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_1_PV_objetiva_regular.pdf","p":26,"s":1559042,"n":"108"},{"l":"Gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_1_GB_objetiva_definitivo.pdf","p":1,"s":131538,"n":"109","d":"1TzU8FVUy9pu6em9KGExwUNOf7YMN01a6"},{"l":"Padrão de resposta","k":"disc","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_1_PEP_discursiva_definitivo.pdf","p":11,"s":602662,"n":"110","d":"1HP3gcbmpiRHSLhMXBQzhlbJAIvHOBOgX"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_1_prova_habilidades_clinicas.pdf.pdf","p":41,"s":3573998,"n":"111"},{"l":"Padrão esperado de procedimentos (PEP)","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/revalida_2025_1_pep_definitivo.pdf","p":64,"s":1826191,"n":"112"}]},{"id":"2025_2","name":"2025/2","year":"2025","items":[{"l":"Caderno 1 (ampliada) · preliminar","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_caderno_1_ampliado_preliminar.pdf","p":46,"s":3851301,"n":"113","d":"1cGykcebOo69AtHn4AgWhlGPxx4g2gJQA","a":1,"pl":1},{"l":"Caderno 1 (ledor) · preliminar","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_caderno_1_ledor_preliminar.pdf","p":28,"s":3204347,"n":"114","a":1,"pl":1},{"l":"Caderno 1 · preliminar","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_caderno_1_preliminar.pdf","p":28,"s":3631091,"n":"115","pl":1},{"l":"Caderno 1 (superampliada) · preliminar","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_caderno_1_superampliado_preliminar.pdf","p":76,"s":6062033,"n":"116","d":"1CGIIIqmH7awHVYi9wLjyuMEgZPlNMgtT","a":1,"pl":1},{"l":"Caderno 2 · preliminar","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_caderno_2_preliminar.pdf","p":28,"s":3330039,"n":"117","d":"1N6FUfanJB2TLn8x7qRszNnQBOhUq6FQy","pl":1},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_gabarito_caderno_1.pdf","p":4,"s":13699616,"n":"118","d":"1-bLjlxlIjRCTy7BROo-S0GSFAmsLHkd6"},{"l":"Gabarito caderno 2","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_gabarito_caderno_2.pdf","p":4,"s":13680988,"n":"119","d":"1vVBtQcxdZX-tyvbar1pm-aG4WNex6hOm"},{"l":"Nota sobre o gabarito","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/nota_gabarito_enamed_revalida_2025.pdf","p":1,"s":228177,"n":"120","d":"14hEgZ4Sigub9YmPSIpv-oT3o6ZiE2KlQ"},{"l":"Provas das estações (caderno)","k":"hab","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2025_2_prova_habilidades_clinicas.pdf","p":38,"s":4768131,"n":"121"},{"l":"Padrão esperado de procedimentos (PEP) · preliminar","k":"hab","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/revalida_2025_2_pep_premilminar.pdf","p":70,"s":4392949,"n":"122","pl":1}]},{"id":"2026_1","name":"2026/1","year":"2026","items":[{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_caderno_1_.pdf","p":28,"s":644886,"n":"123","d":"1TmiYjM_28V4tEEnSjrmmeDw7lumRCm6w"},{"l":"Caderno 1 (ampliada)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_caderno_1_ampliada.pdf","p":54,"s":2954035,"n":"124","a":1},{"l":"Caderno 1 (ledor)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_caderno_1_ledor.pdf","p":32,"s":3169819,"n":"125","a":1},{"l":"Caderno 1 (superampliada)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_caderno_1_superampliada.pdf","p":88,"s":4318058,"n":"126","a":1},{"l":"Caderno 2","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_caderno_2_.pdf","p":28,"s":631199,"n":"127","d":"1vm0s_Qy6EBbB9FM7blsx_vB36J5KvwMp"},{"l":"Gabarito caderno 1","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_gabarito_definitivo_caderno1.pdf","p":2,"s":1106504,"n":"128"},{"l":"Gabarito caderno 2","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_1_gabarito_definitivo_caderno2.pdf","p":2,"s":1130055,"n":"129"}]},{"id":"2026_2","name":"2026/2","year":"2026","items":[{"l":"Caderno 1","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_caderno_1.pdf","p":28,"s":7705904,"n":"130"},{"l":"Caderno 1 (ampliada)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_caderno_1_ampliada.pdf","p":52,"s":8379826,"n":"131","a":1},{"l":"Caderno 1 (ledor)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_caderno_1_ledor.pdf","p":28,"s":7746921,"n":"132","a":1},{"l":"Caderno 1 (superampliada)","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_caderno_1_superampliada.pdf","p":76,"s":8510524,"n":"133","a":1},{"l":"Caderno 2","k":"obj","r":"prova","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_caderno_2.pdf","p":28,"s":7685200,"n":"134"},{"l":"Gabarito caderno 1 · preliminar","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_gabarito_preliminar_caderno1.pdf","p":2,"s":639527,"n":"135","d":"1m1Q5VXuqMa0GOENup_xNIAfsaZ41tN5k","pl":1},{"l":"Gabarito caderno 2 · preliminar","k":"obj","r":"gab","u":"https://download.inep.gov.br/revalida/provas_e_gabaritos/2026_2_gabarito_preliminar_caderno2.pdf","p":2,"s":644675,"n":"136","d":"1sJjyJDXB0eXuiO-i_s2PJqqddD5kiIl2","pl":1}]}];
+  var KIND = {obj:'Etapa 1 · Objetiva', disc:'Etapa 1 · Discursiva', hab:'Etapa 2 · Habilidades clínicas'};
+  var st = {k:'all', ed:'all', acc:false, open:false, done:{}};
+  var $ = function(id){ return document.getElementById(id); };
+  try { st.done = JSON.parse(localStorage.getItem('rv.done') || '{}') || {}; } catch(e) {}
+  function save(){ try { localStorage.setItem('rv.done', JSON.stringify(st.done)); } catch(e) {} }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function visible(it){ return st.acc || !it.a; }
+  function isPractice(it){ return it.r === 'prova' && !it.a; }
+
+  var tot = {files:0, pages:0};
+  DATA.forEach(function(e){ e.items.forEach(function(i){ tot.files++; tot.pages += i.p; }); });
+  $('rv-stats').innerHTML =
+    '<div class="rv-stat"><b>' + DATA.length + '</b><small>edições</small></div>' +
+    '<div class="rv-stat"><b>' + tot.files + '</b><small>arquivos</small></div>' +
+    '<div class="rv-stat"><b>' + tot.pages.toLocaleString('pt-BR') + '</b><small>páginas</small></div>';
+
+  var chips = '<button type="button" class="chip" data-e="all" aria-pressed="true">Todas</button>';
+  DATA.slice().reverse().forEach(function(e){ chips += '<button type="button" class="chip" data-e="' + e.id + '" aria-pressed="false">' + e.name.replace('Projeto-piloto ','') + '</button>'; });
+  $('rv-chips').innerHTML = chips;
+
+  function item(it){
+    var tag = (it.pl ? '<span class="rv-tag">preliminar</span>' : '');
+    var lab = esc(it.l.replace(' · preliminar','')) + tag;
+    var meta = it.p + (it.p === 1 ? ' página' : ' páginas');
+    var act = '<a class="rv-open" href="' + esc(it.u) + '" target="_blank" rel="noopener noreferrer">Abrir<span aria-hidden="true">↗</span></a>' +
+      (it.d ? '<a class="rv-open alt" title="Cópia no Drive do Felipe" href="https://drive.google.com/file/d/' + it.d + '/view" target="_blank" rel="noopener noreferrer">Meu Drive</a>' : '');
+    if (it.r === 'gab') return '<div class="rv-it g"><div class="rv-lb"><b>' + lab + '</b><small>' + meta + '</small></div><div class="rv-act">' + act + '</div></div>';
+    var on = !!st.done[it.n];
+    return '<div class="rv-it' + (on ? ' done' : '') + '"><label class="rv-chk"><input type="checkbox" data-n="' + it.n + '"' + (on ? ' checked' : '') + ' aria-label="Marcar como feita: ' + esc(it.l) + '"></label>' +
+      '<div class="rv-lb"><b>' + lab + '</b><small>' + meta + '</small></div><div class="rv-act">' + act + '</div></div>';
+  }
+
+  function render(){
+    var h = '', shown = 0;
+    DATA.slice().reverse().forEach(function(e){
+      if (st.ed !== 'all' && st.ed !== e.id) return;
+      var cols = '', n = 0, pages = 0, prelim = false;
+      Object.keys(KIND).forEach(function(k){
+        if (st.k !== 'all' && st.k !== k) return;
+        var items = e.items.filter(function(i){ return i.k === k && visible(i); });
+        var pv = items.filter(function(i){ return i.r === 'prova'; }), gb = items.filter(function(i){ return i.r === 'gab'; });
+        n += items.length; items.forEach(function(i){ pages += i.p; if (i.pl) prelim = true; });
+        var body = '';
+        if (!items.length) {
+          body = '<p class="rv-empty">' + (k === 'hab' && +e.year < 2020 ? 'Sem caderno público da etapa prática nesta edição.' : 'Nada disponível nesta edição.') + '</p>';
+        } else {
+          if (pv.length) body += '<div class="rv-sub">Prova</div>' + pv.map(item).join('');
+          if (gb.length) body += '<div class="rv-sub">' + (k === 'obj' ? 'Gabarito' : k === 'disc' ? 'Padrão de resposta' : 'Padrão esperado (PEP)') + '</div>' + gb.map(item).join('');
+        }
+        cols += '<section class="rv-col"><h3>' + KIND[k] + '</h3>' + body + '</section>';
+      });
+      if (!n && st.k !== 'all') return;
+      shown++;
+      var doneN = e.items.filter(function(i){ return isPractice(i) && st.done[i.n]; }).length;
+      var allN = e.items.filter(isPractice).length;
+      h += '<details class="rv-ed" id="rv-' + e.id.replace('/','_') + '"' + (st.open || st.ed !== 'all' ? ' open' : '') + '><summary>' +
+        '<span class="rv-year">' + esc(e.name.replace('Projeto-piloto ','')) + '</span>' +
+        (e.id === '2010' ? '<span class="rv-badge">piloto</span>' : '') +
+        (prelim ? '<span class="rv-badge w">tem itens preliminares</span>' : '') +
+        '<span class="rv-meta">' + n + ' arquivos · ' + pages + ' páginas · ' + doneN + '/' + allN + ' provas feitas</span>' +
+        '<svg class="rv-caret" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>' +
+        '<div class="rv-body">' + cols + '</div></details>';
+    });
+    $('rv-list').innerHTML = shown ? h : '<div class="rv-none">Nenhuma prova com esses filtros.</div>';
+    progress();
+  }
+
+  function progress(){
+    var all = 0, done = 0;
+    DATA.forEach(function(e){ e.items.forEach(function(i){ if (isPractice(i)) { all++; if (st.done[i.n]) done++; } }); });
+    $('rv-prog-t').textContent = done + ' de ' + all + ' provas feitas';
+    $('rv-prog-b').style.width = (all ? Math.round(done / all * 100) : 0) + '%';
+  }
+
+  $('rv-seg').addEventListener('click', function(ev){
+    var b = ev.target.closest('button'); if (!b) return;
+    st.k = b.dataset.k;
+    Array.prototype.forEach.call($('rv-seg').children, function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    render();
+  });
+  $('rv-chips').addEventListener('click', function(ev){
+    var b = ev.target.closest('button'); if (!b) return;
+    st.ed = b.dataset.e;
+    Array.prototype.forEach.call($('rv-chips').children, function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    render();
+  });
+  $('rv-acc').addEventListener('change', function(){ st.acc = this.checked; render(); });
+  $('rv-open').addEventListener('change', function(){ st.open = this.checked; render(); });
+  $('rv-list').addEventListener('change', function(ev){
+    var c = ev.target; if (!c.dataset || !c.dataset.n) return;
+    if (c.checked) st.done[c.dataset.n] = 1; else delete st.done[c.dataset.n];
+    save();
+    var box = c.closest('.rv-it'); if (box) box.classList.toggle('done', c.checked);
+    progress();
+    var d = c.closest('details'); if (d) {
+      var ed = DATA.filter(function(e){ return 'rv-' + e.id.replace('/','_') === d.id; })[0];
+      if (ed) {
+        var dn = ed.items.filter(function(i){ return isPractice(i) && st.done[i.n]; }).length, an = ed.items.filter(isPractice).length;
+        var m = d.querySelector('.rv-meta'); if (m) m.textContent = m.textContent.replace(/\d+\/\d+ provas feitas/, dn + '/' + an + ' provas feitas');
+      }
+    }
+  });
+
+  // abre a edição mais recente por padrão
+  render();
+  var first = $('rv-list').querySelector('details'); if (first) first.open = true;
+})();
+
+</script>
+
+<script>
+(function(){
+  var KEY='au.lessons', DONE='au.done';
+  var L=[], done={}, mat='Todas';
+  try{L=JSON.parse(localStorage.getItem(KEY)||'[]')||[];}catch(e){}
+  try{done=JSON.parse(localStorage.getItem(DONE)||'{}')||{};}catch(e){}
+  var $=function(i){return document.getElementById(i);};
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(L));localStorage.setItem(DONE,JSON.stringify(done));}catch(e){}}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function src(u){
+    try{var h=new URL(u).hostname.replace(/^www\./,'');
+      if(/(^|\.)youtube\.com$|^youtu\.be$/.test(h))return 'YouTube';
+      if(h==='drive.google.com'||h==='docs.google.com')return 'Drive';}catch(e){}
+    return null;
+  }
+  function mats(){var m=[];L.forEach(function(x){if(m.indexOf(x.m)<0)m.push(x.m);});return m.sort();}
+  function render(){
+    var ms=mats();
+    $('au-ml').innerHTML=ms.map(function(m){return '<option value="'+esc(m)+'">';}).join('');
+    if(mat!=='Todas'&&ms.indexOf(mat)<0)mat='Todas';
+    $('au-seg').innerHTML=['Todas'].concat(ms).map(function(m){return '<button type="button" data-m="'+esc(m)+'" aria-pressed="'+(m===mat)+'">'+esc(m)+'</button>';}).join('');
+    var items=L.filter(function(x){return mat==='Todas'||x.m===mat;});
+    $('au-list').innerHTML=items.length?items.map(function(x){
+      var s=src(x.u),d=!!done[x.id];
+      return '<article class="au-card'+(d?' done':'')+'"><div class="au-top"><span class="au-src'+(s==='Drive'?' d':'')+'">'+s+'</span><small>'+esc(x.m)+'</small></div><h3>'+esc(x.t)+'</h3>'+
+        '<div class="au-act"><a class="btn pri" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">Assistir ↗</a>'+
+        '<label class="rv-chk" title="Marcar como assistida"><input type="checkbox" data-id="'+x.id+'"'+(d?' checked':'')+' aria-label="Marcar como assistida: '+esc(x.t)+'"></label>'+
+        '<button type="button" class="au-del" data-del="'+x.id+'" aria-label="Remover '+esc(x.t)+'">Remover</button></div></article>';
+    }).join(''):'<div class="au-empty">Nenhuma aula ainda. Cole o link de uma aula do YouTube ou do Drive acima para começar.</div>';
+  }
+  $('au-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var u=$('au-u').value.trim(),s=src(u);
+    if(!s){$('au-msg').textContent='Use um link do YouTube ou do Google Drive.';return;}
+    L.push({id:Date.now().toString(36),t:$('au-t').value.trim(),m:$('au-m').value.trim(),u:u});
+    save();$('au-msg').textContent='';$('au-t').value='';$('au-u').value='';render();
+  });
+  $('au-seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;mat=b.dataset.m;render();});
+  $('au-list').addEventListener('change',function(e){var c=e.target;if(!c.dataset.id)return;if(c.checked)done[c.dataset.id]=1;else delete done[c.dataset.id];save();render();});
+  $('au-list').addEventListener('click',function(e){var b=e.target.closest('[data-del]');if(!b)return;L=L.filter(function(x){return x.id!==b.dataset.del;});save();render();});
+  render();
+})();
+</script>
+
+</body></html>
