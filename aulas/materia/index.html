@@ -217,7 +217,9 @@
     if (UID) docProg(CART.key).set({ uid: UID, aula: 'cartoes-' + CART.key.replace('/', '-'), prog: PROG, em: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
   }
   function renderCartoes(p) {
-    var k = deckKey(p), deck = (window.SINUS_CARTOES || {})[k];
+    var decks = window.SINUS_CARTOES || {}, k = deckKey(p);
+    if (!decks[k] && decks[MAT.slug + '/geral']) k = MAT.slug + '/geral';
+    var deck = decks[k];
     if (!deck) return '<div class="vazio">' + esc(VAZIO.cartoes) + '</div>';
     if (CART.key !== k) {
       PROG = lerLocal(k);
