@@ -14,6 +14,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="/aulas/config.js?v=11"></script>
 <script src="/aulas/catalogo.js?v=3"></script>
+<script src="/aulas/flashcards/cartoes.js?v=1"></script>
 <style>
   :root{--ink:#111c18;--ink2:#46524d;--ink3:#6b7671;--line:#e4eae7;--green:#176e5b;--soft:#f3f7f5;--bg:#f6f8f7}
   *{box-sizing:border-box}
@@ -53,6 +54,21 @@
   .aviso{font-size:13px;color:var(--ink3);margin-top:12px}
   .gate-msg{font-size:15px;color:var(--ink2);min-height:1.4em;margin:0}
   .gate-msg.erro{color:#9b2c47}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+  .btn{display:inline-block;border:1px solid var(--line);background:#fff;color:var(--ink2);border-radius:999px;padding:10px 18px;font:600 14px 'Inter',sans-serif;cursor:pointer;min-height:42px;text-decoration:none}
+  .btn.prim{background:#16241f;border-color:#16241f;color:#fff}
+  .cq{font-family:'Fraunces',Georgia,serif;font-size:clamp(19px,2.6vw,24px);line-height:1.35;margin:10px 0 18px;color:var(--ink)}
+  .ca{background:var(--soft);border-radius:14px;padding:14px 16px;margin-bottom:14px}
+  .ca p{margin:6px 0 8px;font-size:16px;color:var(--ink)}
+  .ca small{color:var(--ink3);font-size:13px}
+  .grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .gr{border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 6px;font:600 14px 'Inter',sans-serif;cursor:pointer;min-height:46px}
+  .gr.errou{color:#9b2c47;border-color:#f0c8d1}
+  .gr.dificil{color:#8a5a00;border-color:#f1dfb5}
+  .gr.normal{color:var(--ink2)}
+  .gr.facil{color:var(--green);border-color:#bfded4}
+  .cont{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+  @media (max-width:520px){.grades{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -104,10 +120,10 @@
 
   // mesmos menus e abas do painel de Anatomía
   var ABAS = {
-    teoria: [['visao', 'Visão geral'], ['apostila', 'Apostila'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'], ['fotos', 'Fotos'], ['complementares', 'Complementares']],
+    teoria: [['visao', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'], ['fotos', 'Fotos'], ['complementares', 'Complementares']],
     pratica: [['laminas', 'Lâminas'], ['macro', 'Macroscopia']]
   };
-  var VAZIO = { slides: 'Os slides da cátedra e da sua turma aparecem aqui.', provas: 'As provas anteriores aparecem aqui.', audios: 'Os áudios das aulas aparecem aqui.', videos: 'Os vídeos das aulas aparecem aqui.', fotos: 'As fotos da aula aparecem aqui.', complementares: 'O material complementar aparece aqui.', laminas: 'As lâminas da prática aparecem aqui.', macro: 'Ainda não há material de macroscopia para esta matéria.' };
+  var VAZIO = { cartoes: 'Os flashcards deste professor ainda não foram feitos.', slides: 'Os slides da cátedra e da sua turma aparecem aqui.', provas: 'As provas anteriores aparecem aqui.', audios: 'Os áudios das aulas aparecem aqui.', videos: 'Os vídeos das aulas aparecem aqui.', fotos: 'As fotos da aula aparecem aqui.', complementares: 'O material complementar aparece aqui.', laminas: 'As lâminas da prática aparecem aqui.', macro: 'Ainda não há material de macroscopia para esta matéria.' };
 
   var turma = '', profSel = null, bloco = 'teoria', aba = 'visao', itensView = [];
 
@@ -174,6 +190,54 @@
     $('#profAviso').textContent = atual ? (atual.nome + ' · turma' + (atual.turmas.length > 1 ? 's ' : ' ') + atual.turmas.join(', ')) : '';
   }
 
+  // ---- flashcards por professor (aulas/flashcards/cartoes.js) ----
+  var UID = '', PROG = {}, CART = { key: '' };
+  var GRAUS = [['errou', 'Errei'], ['dificil', 'Difícil'], ['normal', 'Normal'], ['facil', 'Fácil']];
+  var RANK = { errou: 0, dificil: 1, normal: 3, facil: 4 };
+  function deckKey(p) { return p ? MAT.slug + '/' + norm(p.curto || p.nome).split(' ').pop() : '' }
+  function lerLocal(k) { try { return JSON.parse(localStorage.getItem('sinus_cartoes_' + k) || '{}') } catch (e) { return {} } }
+  function gravarLocal(k, o) { try { localStorage.setItem('sinus_cartoes_' + k, JSON.stringify(o)) } catch (e) {} }
+  function docProg(k) { return db.doc('progresso/' + UID + '_cartoes-' + k.replace('/', '-')) }
+  function montarFila(cards) {
+    return cards.map(function (c, n) { var g = PROG[c.id]; return { c: c, r: (g in RANK) ? RANK[g] : 2, n: n } })
+      .sort(function (a, b) { return a.r - b.r || a.n - b.n }).map(function (x) { return x.c });
+  }
+  function carregarProg(k) {
+    if (!UID) return;
+    docProg(k).get().then(function (snap) {
+      if (CART.key !== k || !snap.exists || !snap.data().prog) return;
+      PROG = Object.assign({}, PROG, snap.data().prog);
+      gravarLocal(k, PROG);
+      CART.fila = montarFila(CART.deck.cartoes); CART.i = 0; CART.mostrar = false;
+      render();
+    }).catch(function () {});
+  }
+  function gravarGrau(c, g) {
+    PROG[c.id] = g; gravarLocal(CART.key, PROG);
+    if (UID) docProg(CART.key).set({ uid: UID, aula: 'cartoes-' + CART.key.replace('/', '-'), prog: PROG, em: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(function () {});
+  }
+  function renderCartoes(p) {
+    var k = deckKey(p), deck = (window.SINUS_CARTOES || {})[k];
+    if (!deck) return '<div class="vazio">' + esc(VAZIO.cartoes) + '</div>';
+    if (CART.key !== k) {
+      PROG = lerLocal(k);
+      CART = { key: k, deck: deck, fila: montarFila(deck.cartoes), i: 0, mostrar: false };
+      carregarProg(k);
+    }
+    var total = deck.cartoes.length, dom = deck.cartoes.filter(function (c) { return PROG[c.id] === 'normal' || PROG[c.id] === 'facil' }).length;
+    var c = CART.fila[CART.i];
+    if (!c) return '<div class="vazio">Nada aqui.</div>';
+    return '<div class="card">' +
+      '<div class="cont"><span class="tag">' + esc(c.t) + '</span><span class="tag">' + (CART.i + 1) + ' de ' + CART.fila.length + '</span></div>' +
+      '<p class="cq">' + esc(c.q) + '</p>' +
+      (CART.mostrar
+        ? '<div class="ca"><b>Resposta</b><p>' + esc(c.a) + '</p><small>' + esc(c.x) + '</small></div>' +
+          '<div class="grades">' + GRAUS.map(function (g) { return '<button class="gr ' + g[0] + '" data-g="' + g[0] + '" type="button">' + g[1] + '</button>' }).join('') + '</div>'
+        : '<button class="btn prim" data-flip="1" type="button">Mostrar resposta</button>') +
+      '</div>' +
+      '<p class="aviso">' + dom + ' de ' + total + ' dominados. Nível alto, com perguntas de raciocínio e casos. Fonte: ' + esc(deck.fonte) + '. Seu progresso fica salvo na sua conta.</p>';
+  }
+
   function render() {
     var p = profSel || (bloco === 'pratica' ? praticaDaTurma() : profDaTurma());
     itensView = ordenar(MAT.itensLista || [], p);
@@ -184,7 +248,7 @@
     var abas = ABAS[bloco];
     if (!abas.some(function (a) { return a[0] === aba })) aba = abas[0][0];
     $('#abas').innerHTML = abas.map(function (a) {
-      var n = (a[0] === 'visao' || a[0] === 'apostila') ? '' : ' · ' + itensView.filter(function (i) { return abaDe(i) === a[0] }).length;
+      var n = (a[0] === 'visao' || a[0] === 'apostila' || a[0] === 'cartoes') ? '' : ' · ' + itensView.filter(function (i) { return abaDe(i) === a[0] }).length;
       return '<button role="tab" data-t="' + a[0] + '" aria-selected="' + (a[0] === aba) + '" type="button">' + a[1] + n + '</button>';
     }).join('');
 
@@ -199,6 +263,8 @@
       h = MAT.href && MAT.href.indexOf('anatopato') >= 0
         ? '<div class="card"><b>Apostila</b><p class="sub">A apostila interativa de lesão celular, com exercícios e flashcards.</p><p><a class="btn prim" href="/aulas/lesion/apostila/">Abrir a apostila</a></p></div>'
         : '<div class="vazio">A apostila desta matéria ainda não está pronta.</div>';
+    } else if (aba === 'cartoes') {
+      h = renderCartoes(p);
     } else {
       var lista = itensView.filter(function (i) { return abaDe(i) === aba; });
       h = lista.length
@@ -219,6 +285,16 @@
     if (pr) { var f = profsUnicos().filter(function (x) { return x.nome === pr.dataset.p })[0]; profSel = f || null; render(); return }
     var t = e.target.closest && e.target.closest('[data-t]');
     if (t) { aba = t.dataset.t; render(); return }
+    var fl = e.target.closest && e.target.closest('[data-flip]');
+    if (fl) { CART.mostrar = true; render(); return }
+    var gr = e.target.closest && e.target.closest('[data-g]');
+    if (gr && CART.fila) {
+      var cur = CART.fila[CART.i];
+      if (cur) gravarGrau(cur, gr.dataset.g);
+      CART.i++; CART.mostrar = false;
+      if (CART.i >= CART.fila.length) { CART.fila = montarFila(CART.deck.cartoes); CART.i = 0 }
+      render(); return
+    }
     var it = e.target.closest && e.target.closest('[data-id]');
     if (it) { var x = itensView.filter(function (y) { return y.id === it.dataset.id })[0]; if (x) viewer(x) }
   });
@@ -242,6 +318,7 @@
   auth.getRedirectResult().catch(function () {});
   auth.onAuthStateChanged(function (u) {
     if (!u) return;
+    UID = u.uid;
     var prim = (u.displayName || u.email || '').split(' ')[0];
     $('#gate').hidden = true; $('#app').hidden = false;
     $('#quem').textContent = prim;
