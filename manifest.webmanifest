@@ -1,13 +1,13 @@
 {
   "id": "./",
-  "name": "Sinus — Seu estudo. Seu tempo.",
+  "name": "Sinus — Medicina no seu ritmo",
   "short_name": "Sinus",
-  "description": "Estudos de Medicina · Sinus",
+  "description": "Sinus: biblioteca médica, matérias, PDFs, estudos e personalização",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#fafdfb",
-  "theme_color": "#fafdfb",
+  "background_color": "#f9fcfa",
+  "theme_color": "#f9fcfa",
   "icons": [
     {
       "src": "icon-192.png",
