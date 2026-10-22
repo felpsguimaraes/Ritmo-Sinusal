@@ -277,15 +277,14 @@
         '<p class="sub">Professor da sua turma: <b>' + esc((profDaTurma() || {}).nome || 'a definir') + '</b>.' +
         (MAT.pratica && MAT.pratica.length ? ' Prática: <b>' + esc((praticaDaTurma() || {}).nome || '') + '</b>.' : '') + '</p></div>';
     } else if (aba === 'apostila') {
-      h = MAT.slug === 'anatopato'
-        ? '<p class="sub" style="color:var(--ink3);margin:0 0 12px">A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p>' +
-          '<div class="grid2"><div class="card"><span class="tag">Apostila · para ler</span><h2>Ler na tela</h2>' +
-          '<p class="sub">A teoria toda em português com os termos em espanhol, o que caiu em cada prova, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
-          '<div class="btns"><a class="btn prim" href="/aulas/lesion/apostila/">Abrir a apostila</a><a class="btn" href="/aulas/lesion/#/pdf">Versão em PDF</a></div></div>' +
-          '<div class="card"><span class="tag">Apostila · em 3D</span><h2>Ver em 3D</h2>' +
-          '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
-          '<div class="btns"><a class="btn prim" href="/aulas/lesion/#/3d">Abrir em 3D</a><a class="btn" href="/aulas/lesion/#/treino">Treino para prova</a></div></div></div>'
-        : '<div class="vazio">A apostila desta matéria está sendo preparada.</div>';
+      var ap = MAT.slug === 'anatopato';
+      h = '<p class="sub" style="color:var(--ink3);margin:0 0 12px">A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p>' +
+        '<div class="grid2"><div class="card"><span class="tag">Apostila · para ler</span><h2>Ler na tela</h2>' +
+        '<p class="sub">A teoria toda em português com os termos em espanhol, o que caiu em cada prova, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
+        '<div class="btns">' + (ap ? '<a class="btn prim" href="/aulas/lesion/apostila/">Abrir a apostila</a><a class="btn" href="/aulas/lesion/#/pdf">Versão em PDF</a>' : '<span class="btn" style="opacity:.55;cursor:default">Em preparação</span>') + '</div></div>' +
+        '<div class="card"><span class="tag">Apostila · em 3D</span><h2>Ver em 3D</h2>' +
+        '<p class="sub">Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
+        '<div class="btns">' + (ap ? '<a class="btn prim" href="/aulas/lesion/#/3d">Abrir em 3D</a><a class="btn" href="/aulas/lesion/#/treino">Treino para prova</a>' : '<span class="btn" style="opacity:.55;cursor:default">Em preparação</span>') + '</div></div></div>';
     } else if (aba === 'cartoes') {
       h = renderCartoes(p);
     } else {
