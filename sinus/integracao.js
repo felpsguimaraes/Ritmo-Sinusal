@@ -388,6 +388,9 @@
     DB.users = [SESSAO];
     DB.sales = [];
     DB.subjects = montarMaterias();
+    if (W.SinusDriveSync) W.SinusDriveSync.sync(DB, {uid:S.uid,period:per,cohort:S.turma}, function (status) {
+      if (S.dentro && status.indexed > 0) { try { renderAll() } catch(e) {} }
+    });
     if (W.SinusDrive) W.SinusDrive.apply(DB, S.prefs.periodo || 5, S.turma || "G");
     DB.schedules = montarHorarios();
     DB.training = DB.training || { types: [], questions: [] };
