@@ -69,9 +69,13 @@
   .c-teoria{color:#175cd3;background:#eff6ff}
   .c-pratica{color:#067647;background:#ecfdf3}
   .c-atividade{color:#b54708;background:#fffaeb}
+  .c-evento{color:#0e7490;background:#ecfeff}
+  .c-recuperacao{color:#a15c07;background:#fefbe8}
+  .c-a-confirmar{color:#475467;background:#f2f4f7}
   .ag-sec{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin:16px 0 8px}
   .ag-av{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left-width:4px;border-radius:12px;padding:10px 12px;margin-bottom:8px}
   .ag-av b{display:block;font-size:15px}
+  .ag-tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;margin-bottom:4px}
   .ag-av small{font-size:12.5px;color:var(--ink3)}
   .ag-dias{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
   .ag-dias button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font:600 13px 'Inter',sans-serif;color:var(--ink2);cursor:pointer;min-height:34px}
@@ -183,21 +187,30 @@
   }
 
   var TIPO = { 't': ['Aula teórica', 'c-teoria', 't'], 'p': ['Prática', 'c-pratica', 'p'] };
-  var AVISO = { 'prova-pratica': ['Prova prática', 'c-prova-pratica', '#b42318'], 'prova-teorica': ['Prova teórica', 'c-prova-teorica', '#6941c6'], 'atividade': ['Atividade', 'c-atividade', '#b54708'] };
+  var AVISO = { 'prova-pratica': ['Prova prática', 'c-prova-pratica', '#b42318'], 'prova-teorica': ['Prova teórica', 'c-prova-teorica', '#6941c6'], 'evento': ['Evento', 'c-evento', '#0e7490'], 'recuperacao': ['Recuperação', 'c-recuperacao', '#a15c07'], 'a-confirmar': ['Confirmar', 'c-a-confirmar', '#475467'], 'atividade': ['Atividade', 'c-atividade', '#b54708'] };
+  var SEMANA = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  function dataCurta(iso, fim) {
+    var p = iso.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]);
+    var txt = SEMANA[d.getDay()] + ' ' + p[2] + '/' + p[1];
+    if (fim) { var q = fim.split('-'); txt += ' a ' + q[2] + '/' + q[1] }
+    return txt;
+  }
   var DIAS = [['lun', 'Seg'], ['mar', 'Ter'], ['mie', 'Qua'], ['jue', 'Qui'], ['vie', 'Sex'], ['sab', 'Sáb']];
   var diaSel = null;
   function diaDeHoje() { var n = new Date().getDay(); return ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'][n] }
   function renderAgenda() {
-    var H = window.SINUS_HORARIO || {}, AV = (window.SINUS_AVISOS || []).slice().sort(function (a, b) { return (a.ordem || 99) - (b.ordem || 99) });
+    var H = window.SINUS_HORARIO || {};
+    var hoje = (function () { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2) })();
+    var AV = (window.SINUS_AVISOS || []).filter(function (a) { return (a.data_fim || a.data || '') >= hoje }).sort(function (a, b) { return (a.data || '') < (b.data || '') ? -1 : 1 });
     var hor = turmaAluno && H[turmaAluno];
     var sem = [];
     if (!diaSel) diaSel = DIAS.some(function (d) { return d[0] === diaDeHoje() }) ? diaDeHoje() : 'lun';
     var h = '<div class="ag-leg">' + Object.keys(AVISO).map(function (k) { return '<span class="' + AVISO[k][1] + '">' + AVISO[k][0] + '</span>' }).join('') +
-      '<span class="c-teoria">Aula teórica</span><span class="c-pratica">Prática</span></div>';
-    h += '<div class="ag-sec">Avisos, em ordem</div>';
+      '<span class="c-teoria">Aula</span><span class="c-pratica">Prática</span></div>';
+    h += '<div class="ag-sec">Próximas provas e avisos, por data</div>';
     h += AV.length ? AV.map(function (a) {
       var c = AVISO[a.tipo] || AVISO['atividade'];
-      return '<div class="ag-av" style="border-left-color:' + c[2] + '"><div><b>' + esc(a.titulo) + ' · ' + esc(a.quando || '') + '</b><small>' + esc(a.detalhe || '') + '</small></div></div>';
+      return '<div class="ag-av" style="border-left-color:' + c[2] + '"><div><span class="ag-tag ' + c[1] + '">' + c[0] + '</span><b>' + esc(dataCurta(a.data, a.data_fim)) + ' · ' + esc(a.titulo) + '</b><small>' + esc(a.detalhe || '') + '</small></div></div>';
     }).join('') : '<p class="sub">Sem avisos por enquanto.</p>';
     h += '<div class="ag-sec">Horário da sua turma' + (turmaAluno ? ' ' + esc(turmaAluno) + (hor && hor.sala ? ' · ' + esc(hor.sala) : '') : '') + '</div>';
     if (!hor) return h + '<p class="sub">Escolha sua turma no cadastro para ver o horário.</p>';
