@@ -41,26 +41,26 @@ window.SINUS_AVISOS = [
  {
   "data": "2026-11-13",
   "tipo": "evento",
-  "titulo": "CIAM · Provas",
-  "detalhe": "Marcado como PROVAS no calendário; confirmar"
+  "titulo": "CIAM (congresso)",
+  "detalhe": "Dia de congresso; a prova de Medicina de la Familia foi adiada"
  },
  {
   "data": "2026-11-14",
   "tipo": "evento",
-  "titulo": "CIAM · Práticas",
-  "detalhe": "Marcado como PRÁTICAS no calendário; confirmar"
+  "titulo": "CIAM (congresso)",
+  "detalhe": "Dia de congresso"
  },
  {
   "data": "2026-11-20",
   "tipo": "prova-teorica",
-  "titulo": "Medicina de la Familia · Provas",
-  "detalhe": "Marcado como PROVAS no calendário; confirmar"
+  "titulo": "Medicina de la Familia · Prova ADIADA",
+  "detalhe": "Nova data a confirmar"
  },
  {
   "data": "2026-11-21",
   "tipo": "prova-pratica",
-  "titulo": "Medicina de la Familia · Práticas",
-  "detalhe": "Marcado como PRÁTICAS no calendário; confirmar"
+  "titulo": "Medicina de la Familia · Prática ADIADA",
+  "detalhe": "Nova data a confirmar"
  },
  {
   "data": "2026-11-23",
