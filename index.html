@@ -209,7 +209,7 @@ const SINUS_ICON_PATHS={
  arrow:'<path d="M5 12h14m-6-6 6 6-6 6"/>'
 };
 function sinusIcon(key,size){return '<svg xmlns="http://www.w3.org/2000/svg" width="'+(size||20)+'" height="'+(size||20)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SINUS_ICON_PATHS[key]||SINUS_ICON_PATHS.document)+'</svg>'}
-const sinusDataPaths=['turma-c.json','turmas-efg.json','efg-sec-1.json','efg-sec-2.json','efg-sec-3.json'];
+const sinusDataPaths=['turma-c.json','turmas-efg.json','efg-sec-1.json','efg-sec-2.json','efg-sec-3.json','turma-c-periodos-1-8.json'];
 const sinusIndex={state:'idle',rows:[],failed:[],ids:new Map()};
 let sinusFilter={period:'',cohort:'',subject:'',kind:'',query:''};
 const sinusKind=(m)=>{
@@ -277,7 +277,7 @@ function sinusLibrary(){
  const f=sinusDefaultFilters();
  const sub=Array.from(new Set(sinusIndex.rows.filter(x=>String(x.p)===f.period).map(x=>x.s))).sort();
  return '<div class="sinus-library"><div class="sinus-sectionhead"><div class="eyebrow">BIBLIOTECA SINUS</div><h1 class="dash-title">Seu acervo médico.</h1><p class="dash-sub">Materiais organizados por período e turma. Abra no visualizador integrado, respeitando as permissões originais do Google Drive.</p></div>'+
- '<div class="sinus-lib-controls"><label>Período<select data-sinus-filter="period">'+sinusOptions(['3','4','5','7','8'],f.period)+'</select></label><label>Turma<select data-sinus-filter="cohort">'+sinusOptions(['Todos','C','E','F','G'],f.cohort)+'</select></label>'+
+ '<div class="sinus-lib-controls"><label>Período<select data-sinus-filter="period">'+sinusOptions(['1','2','3','4','5','6','7','8','9','10'],f.period)+'</select></label><label>Turma<select data-sinus-filter="cohort">'+sinusOptions(['Todos','A','B','C','D','E','F','G','H','I','J'],f.cohort)+'</select></label>'+
  '<label>Matéria<select data-sinus-filter="subject">'+sinusOptions(sub,f.subject,'Todas as matérias')+'</select></label><label>Formato<select data-sinus-filter="kind">'+sinusOptions(['PDF','Imagem','Vídeo','Áudio','Slides','Documento','Arquivo'],f.kind,'Todos')+'</select></label>'+
  '<label class="sinus-search-label">Buscar material<input type="search" data-sinus-query placeholder="Ex.: exame físico, cardiologia, anatomia…" value="'+esc(f.query)+'"></label></div>'+
  '<div id="sinus-library-results">'+sinusListHTML()+'</div></div>';
