@@ -18,7 +18,8 @@ var CATALOGS=[
 '/biblioteca/dados/turmas-ab-3.json',
 '/biblioteca/dados/turma-b-praticas.json',
 '/biblioteca/dados/turma-b-modulos.json',
-'/biblioteca/dados/praticas-ab-complemento.json'
+'/biblioteca/dados/praticas-ab-complemento.json',
+'/biblioteca/dados/praticas-imagens-resumos.json'
 ];
 var state={items:[],loaded:false,loading:true,errors:[],counts:{},applied:'',added:0,context:null};
 var alias={
