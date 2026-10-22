@@ -259,3 +259,30 @@ html[data-theme="dark"] .avatar{background:#173a2d;color:#7ee0b6}
 #focusClock.pip-mode~p{display:none!important}
 .adminBlock:has(#focusClock.pip-mode){border:none!important;background:transparent!important;padding:0!important;grid-column:auto!important}
 @media(max-width:820px){#focusClock.pip-mode{bottom:calc(20px + env(safe-area-inset-bottom));right:12px;width:110px;height:110px;font-size:28px}}
+
+/* ---------- calendário visual (horários e rotações) ---------- */
+.sxCalGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:12px}
+.sxCalDia{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7);overflow:hidden;display:flex;flex-direction:column;min-height:280px}
+.sxCalDia.hoje{border:2px solid var(--green);background:rgba(223,245,234,.8)}
+.sxCalHead{background:#f5f6f3;padding:8px;text-align:center;font-weight:800;font-size:11px;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--line)}
+.sxCalDia.hoje .sxCalHead{background:rgba(31,122,93,.1);color:var(--green);border-bottom-color:var(--green)}
+.sxCalAula{padding:8px;border-bottom:1px solid rgba(0,0,0,.06);font-size:11px;flex-shrink:0}
+.sxCalAula:last-child{border-bottom:none}
+.sxCalAula.teoria{background:rgba(29,30,29,.04)}
+.sxCalAula.pratica{background:rgba(223,245,234,.5)}
+.sxHora{font-weight:800;font-size:10px;color:var(--muted);margin-bottom:3px}
+.sxInfo b{display:block;font-size:11px;color:var(--text);margin-bottom:2px;word-break:break-word}
+.sxInfo small{color:var(--muted);font-size:9px;line-height:1.4}
+.sxCalVazio{padding:12px 8px;text-align:center;color:var(--muted);font-size:11px;flex-grow:1;display:flex;align-items:center;justify-content:center}
+@media(max-width:820px){.sxCalGrid{grid-template-columns:repeat(7,1fr);gap:6px}.sxCalDia{min-height:220px;font-size:10px}.sxHora{font-size:9px}.sxInfo b{font-size:10px}.sxInfo small{font-size:8px}}
+html[data-theme="dark"] .sxCalDia{border-color:rgba(160,200,180,.18);background:#17231e}
+html[data-theme="dark"] .sxCalDia.hoje{border-color:#7ee0b6;background:rgba(23,58,45,.6)}
+html[data-theme="dark"] .sxCalHead{background:#0b1310;border-bottom-color:rgba(160,200,180,.18);color:#a9bcb2}
+html[data-theme="dark"] .sxCalDia.hoje .sxCalHead{background:rgba(126,224,182,.1);color:#7ee0b6;border-bottom-color:#7ee0b6}
+html[data-theme="dark"] .sxCalAula{border-bottom-color:rgba(160,200,180,.1)}
+html[data-theme="dark"] .sxCalAula.teoria{background:rgba(255,255,255,.03)}
+html[data-theme="dark"] .sxCalAula.pratica{background:rgba(95,208,162,.15)}
+html[data-theme="dark"] .sxHora{color:#8fa399}
+html[data-theme="dark"] .sxInfo b{color:#e6efe9}
+html[data-theme="dark"] .sxInfo small{color:#8fa399}
+html[data-theme="dark"] .sxCalVazio{color:#8fa399}

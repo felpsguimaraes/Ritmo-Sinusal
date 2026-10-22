@@ -538,16 +538,27 @@
   function htmlSemana(turma) {
     var hor = DB.schedules && DB.schedules[turma];
     if (!hor) return '<p class="soft" style="font-size:12px">Escolha sua turma no Perfil para ver o horário.</p>';
-    if (!diaSel) diaSel = DIAS.some(function (d) { return d[0] === diaDeHoje() }) ? diaDeHoje() : 'lun';
-    var lista = (hor.dias[diaSel] || []).slice().sort(function (a, b) { return a.time < b.time ? -1 : 1 });
-    var meusGrupos = gruposDoAluno(), gp = SESSAO && SESSAO.group;
-    return '<div class="sxDias">' + DIAS.map(function (d) { return '<button type="button" class="' + (d[0] === diaSel ? 'on' : '') + '" data-sx-dia="' + d[0] + '">' + d[1] + (d[0] === diaDeHoje() ? ' · hoje' : '') + '</button>' }).join('') + '</div>' +
-      (lista.length ? '<div class="sxHoje">' + lista.map(function (x) {
-        var tag = x.tipo === 'p' ? 'Prática' : 'Aula teórica', mine = x.tipo === 'p' && x.gp ? ' · ' + x.gp.replace('GP0', 'Grupo ').replace('GP', 'Grupo ') : '';
-        var hora = String(x.time).split('-');
-        return '<div class="sxAula ' + (x.tipo === 'p' ? 'p' : '') + '"><div class="h">' + H(hora[0]) + '<br>' + H(hora[1] || '') + '</div><div><b>' + H(x.mat) + '</b><small>' + tag + mine + ' · ' + H(x.prof) + (x.loc ? ' · ' + H(x.loc) : '') + '</small></div></div>';
-      }).join('') + '</div>' : '<p class="soft" style="font-size:12px">Sem aulas neste dia.</p>') +
-      '<p class="soft" style="font-size:11px;margin-top:8px">Sala ' + H(hor.sala || '') + '. As práticas mostram o grupo de cada horário; confira o seu grupo em Perfil.</p>';
+    var hoje = diaDeHoje(), hojeIdx = DIAS.findIndex(function (d) { return d[0] === hoje });
+    var html = '<div class="sxCalGrid">';
+    for (var i = 0; i < 7; i++) {
+      var d = DIAS[i], dia = d[0], diaLabel = d[1];
+      var lista = (hor.dias[dia] || []).slice().sort(function (a, b) { return a.time < b.time ? -1 : 1 });
+      var eh_hoje = dia === hoje ? ' hoje' : '';
+      html += '<div class="sxCalDia' + eh_hoje + '"><div class="sxCalHead">' + diaLabel.toUpperCase().substring(0, 3) + '</div>';
+      if (lista.length) {
+        html += lista.map(function (x) {
+          var tag = x.tipo === 'p' ? 'Prática' : 'Aula';
+          var hora = String(x.time).split('-');
+          var horario = hora[0] + (hora[1] ? '-' + hora[1] : '');
+          return '<div class="sxCalAula ' + (x.tipo === 'p' ? 'pratica' : 'teoria') + '"><div class="sxHora">' + H(horario) + '</div><div class="sxInfo"><b>' + H(x.mat) + '</b><small>' + tag + (x.gp ? ' · ' + x.gp.replace('GP0', 'Grupo ').replace('GP', 'Grupo ') : '') + '</small></div></div>';
+        }).join('');
+      } else {
+        html += '<div class="sxCalVazio">Sem aulas</div>';
+      }
+      html += '</div>';
+    }
+    html += '</div><p class="soft" style="font-size:11px;margin-top:12px">Sala ' + H(hor.sala || '') + '. As práticas mostram seu grupo; confira em Perfil.</p>';
+    return html;
   }
 
   var _home = W.renderHome;
