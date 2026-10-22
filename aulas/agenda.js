@@ -104,11 +104,5 @@ window.SINUS_AVISOS = [
   "tipo": "a-confirmar",
   "titulo": "Anatomía Patológica",
   "detalhe": "Calendário de dezembro; confirmar o tipo de prova"
- },
- {
-  "data": "2026-12-31",
-  "tipo": "a-confirmar",
-  "titulo": "Marcação \"3\" em vermelho",
-  "detalhe": "Significado a confirmar"
  }
 ];
