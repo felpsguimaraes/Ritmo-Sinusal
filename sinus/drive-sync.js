@@ -8,7 +8,17 @@ var CATALOGS=[
 '/biblioteca/dados/efg-sec-1.json',
 '/biblioteca/dados/efg-sec-2.json',
 '/biblioteca/dados/efg-sec-3.json',
-'/biblioteca/dados/turma-c-periodos-1-8.json'
+'/biblioteca/dados/turma-c-periodos-1-8.json',
+'/biblioteca/dados/c-periodos-1-3-extra.json',
+'/biblioteca/dados/c-periodos-4-6-extra.json',
+'/biblioteca/dados/c-periodos-7-8-extra.json',
+'/biblioteca/dados/c-periodos-6-8-subpastas.json',
+'/biblioteca/dados/turmas-ab-1.json',
+'/biblioteca/dados/turmas-ab-2.json',
+'/biblioteca/dados/turmas-ab-3.json',
+'/biblioteca/dados/turma-b-praticas.json',
+'/biblioteca/dados/turma-b-modulos.json',
+'/biblioteca/dados/praticas-ab-complemento.json'
 ];
 var state={items:[],loaded:false,loading:true,errors:[],counts:{},applied:'',added:0,context:null};
 var alias={
