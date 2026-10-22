@@ -1,0 +1,13 @@
+/* SINUS · identidade visual única para ferramentas de estudo e aulas */
+:root{--sx-bg:#f9fcfa;--sx-ink:#102d25;--sx-ink2:#365d49;--sx-ink3:#6d897a;--sx-line:#d9e9de;--sx-green:#0c8059;--sx-green-d:#0b6246;--sx-green-b:#08a86e;--sx-mint:#e7f6eb;--sx-soft:#f5fbf7;--sx-sans:'Manrope','DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;--sx-serif:'Manrope','DM Sans',sans-serif}
+.sx-body{background:#f9fcfa;color:#102d25;font-family:'Manrope','DM Sans',system-ui,sans-serif}
+.sx-card,.sx-glass,.pn .panel,.pn .kpi,.sx-stage{border-radius:22px!important;border-color:rgba(36,121,82,.13)!important;background:rgba(255,255,255,.78)!important;backdrop-filter:blur(18px);box-shadow:0 16px 46px rgba(11,87,54,.07)!important}
+.sx-bar,.pn-top{background:rgba(250,254,252,.88)!important;border-bottom-color:#deeee3!important;backdrop-filter:blur(20px)}
+.sx-body h1,.sx-body h2,.sx-body h3,.sx-body button,.sx-body input,.sx-body select{font-family:'Manrope','DM Sans',system-ui,sans-serif}
+.sx-body em{font-style:normal;color:#138b60}
+.sx-body button,.sx-body a{transition:background-color .15s,border-color .15s,transform .15s}
+.sx-body .sx-btn.sx-primary,.sx-body .sx-primary{background:#0c8059;color:#fff;border-color:#0c8059}
+.sx-body .sx-btn:hover{border-color:#0a865a}
+.sx-logo .sinus-brand-logo{display:block;width:140px;max-width:100%;height:auto}
+.sx-logo{display:inline-flex;align-items:center;min-height:38px;text-decoration:none}
+@media(max-width:600px){.sx-logo .sinus-brand-logo{width:123px}}
