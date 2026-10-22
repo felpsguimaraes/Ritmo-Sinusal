@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Painel das aulas · sinusal.</title>
+<title>Painel das aulas · Sinus</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
@@ -70,11 +70,12 @@ td.num{font-variant-numeric:tabular-nums}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="config.js?v=4"></script>
+<link rel="stylesheet" href="sinus-identidade.css?v=16">
 </head>
 <body class="sx-body">
 <main class="sx-gate" id="gate">
   <section class="sx-card sx-glass">
-    <span class="sx-logo"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></span>
+    <span class="sx-logo"><img class="sinus-brand-logo" src="/icons/sinus-brand.svg" alt="Sinus"></span>
     <h1>Painel das <em>aulas.</em></h1>
     <p class="sx-sub">Quem entrou, de qual turma, quantas vezes e em quais temas. Só o dono do site abre este painel.</p>
     <button class="sx-btn" type="button" id="google" hidden>Entrar com Google</button>
@@ -84,7 +85,7 @@ td.num{font-variant-numeric:tabular-nums}
 
 <div class="pn" id="app" hidden>
   <header class="pn-top">
-    <span class="sx-logo"><span class="sx-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg></span><span>sinusal<b>.</b></span></span>
+    <span class="sx-logo"><img class="sinus-brand-logo" src="/icons/sinus-brand.svg" alt="Sinus"></span>
     <div class="pn-who"><span id="me"></span><button class="sx-btn sx-small" type="button" id="sair">Sair</button></div>
   </header>
   <div class="tfil" id="aulas-sel" role="group" aria-label="Escolher a aula" style="margin-top:18px"></div>
