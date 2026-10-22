@@ -1,0 +1,217 @@
+/* Sinusal V12 | apresentação e login 3D.
+   Camada aditiva: CSS/JS acadêmico, Firebase e dados permanecem intactos. */
+:root { --v12-ink:#09251c; --v12-deep:#061c16; --v12-green:#00aa73; --v12-mint:#93f0bf; --v12-stroke:rgba(10,87,60,.13); --v12-shadow:0 24px 60px rgba(8,48,36,.10); --green:#087957; --green2:#11a776; --violet:#125f49; --grad-main:linear-gradient(120deg,#085841,#06956b); }
+html {scroll-behavior:smooth}
+:where(button,a,input,textarea,select,summary):focus-visible{outline:3px solid #55dab0!important;outline-offset:3px}
+#landing.v12Site {--v12-max:1210px;display:block!important;min-height:100vh!important;background:#f6f9f7!important;padding:0!important;color:#132f25;overflow:clip;position:relative}
+#landing.v12Site.hidden{display:none!important}
+#landing.v12Site .blob{display:none!important}
+#landing .v12Wrap {width:min(calc(100% - 56px),var(--v12-max));margin-inline:auto}
+#landing .v12Header {position:absolute;top:0;left:0;right:0;z-index:30;border-bottom:1px solid rgba(244,255,250,.15);background:rgba(6,26,20,.42);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+#landing .v12HeaderInner {height:80px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+#landing .v12Brand {display:inline-flex;align-items:center;gap:11px;color:#fff;text-decoration:none;font-size:24px;font-weight:900;letter-spacing:-.075em;white-space:nowrap}
+#landing .v12BrandMark {display:grid;place-items:center;width:38px;height:38px;border-radius:14px;color:#093b2a;background:linear-gradient(145deg,#c0ffe0,#42dca2);box-shadow:0 7px 28px rgba(56,226,154,.24)}
+#landing .v12BrandMark svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+#landing .v12NavLinks {display:flex;gap:clamp(12px,2.6vw,35px);align-items:center}
+#landing .v12NavLinks a {font-size:12px;font-weight:750;text-decoration:none;color:#dcf3e7;white-space:nowrap}
+#landing .v12NavLinks a:hover{color:#8df3c7}
+#landing .v12TopCta,#landing .v12Btn {cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:13px;text-decoration:none;font-size:12px;font-weight:850;min-height:45px;padding:12px 19px;border:1px solid transparent;transition:transform .22s ease,background .22s ease,box-shadow .22s ease}
+#landing .v12TopCta {background:#c4f9dc;color:#083e2c;border-color:#d7ffea}
+#landing .v12Btn:hover,#landing .v12TopCta:hover{transform:translateY(-2px)}
+#landing .v12Menu {display:none;font-size:22px;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:11px;color:#fff;width:42px;height:42px}
+#landing .v12Hero {min-height:760px;min-height:100svh;background:
+  radial-gradient(ellipse at 75% 45%,rgba(25,185,125,.26) 0%,transparent 39%),
+  radial-gradient(circle at 6% 90%,rgba(11,100,73,.26),transparent 34%),
+  linear-gradient(131deg,#061612 6%,#0a2920 55%,#053125 100%);
+  position:relative;display:flex;align-items:center;isolation:isolate;overflow:hidden}
+#landing .v12Hero:before {content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(198,255,227,.32) .55px,transparent 1px);background-size:34px 34px;opacity:.18;pointer-events:none}
+#landing .v12HeroLayout {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);align-items:center;gap:clamp(10px,4vw,64px);padding-top:120px;padding-bottom:82px;position:relative;z-index:1}
+#landing .v12HeroText {position:relative;z-index:4;min-width:0}
+#landing .v12Kicker {display:inline-flex;align-items:center;gap:12px;font-size:10px;font-weight:900;letter-spacing:.16em;color:#b6f9d3;text-transform:uppercase;margin-bottom:26px}
+#landing .v12Kicker:before{content:"";width:29px;height:3px;border-radius:9px;background:#7cf4b1}
+#landing .v12Kicker span {padding:5px 8px;border:1px solid rgba(143,240,183,.28);border-radius:999px;letter-spacing:.08em;font-size:9px}
+#landing .v12Hero h1{font-size:clamp(52px,6vw,87px)!important;line-height:1.015!important;letter-spacing:-.077em!important;font-weight:900;color:#f5fff9!important;margin:0 0 24px;max-width:680px}
+#landing .v12Hero h1 em{font-style:normal!important;background:linear-gradient(115deg,#8ef6b8,#31d69b 65%,#b8f5cf);background-clip:text;-webkit-background-clip:text;color:transparent!important}
+#landing .v12Lead {font-size:clamp(14px,1.3vw,17px);line-height:1.68;color:#c2dcd1;max-width:520px;margin:0}
+#landing .v12HeroActions {display:flex;gap:11px;align-items:center;flex-wrap:wrap;margin-top:32px}
+#landing .v12BtnMain {background:#c2f9d9;color:#063b2a;box-shadow:0 12px 35px rgba(63,242,157,.13)}
+#landing .v12BtnGhost {background:rgba(255,255,255,.075);border-color:rgba(219,255,235,.26);color:#e5fff2;backdrop-filter:blur(14px)}
+#landing .v12HeroNote {display:flex;flex-wrap:wrap;gap:17px;margin-top:40px;color:#b1d6c5;font-size:11px;font-weight:730}
+#landing .v12HeroNote span:before{content:"✓";color:#83f6bd;margin-right:7px}
+#landing .v12HeroGraphic {min-height:540px;display:grid;place-items:center;position:relative;perspective:1000px}
+#landing .v12OrbitScene {position:relative;width:min(100%,560px);aspect-ratio:1;transform-style:preserve-3d;display:grid;place-items:center;filter:drop-shadow(0 30px 60px rgba(27,203,139,.13))}
+#landing .v12OrbitScene:before{content:"";position:absolute;inset:19%;border-radius:50%;background:radial-gradient(circle,#31cb9963,transparent 75%);filter:blur(22px)}
+#landing .v12Ring {position:absolute;inset:7%;border-radius:50%;border:13px solid rgba(85,222,167,.6);box-shadow:0 0 30px rgba(54,231,161,.24),inset 0 0 20px rgba(100,249,193,.32);transform-style:preserve-3d;animation:v12Ring1 21s linear infinite}
+#landing .v12Ring.b {inset:14%;border:13px solid rgba(150,255,196,.7);box-shadow:0 0 35px rgba(89,246,164,.24);animation:v12Ring2 26s linear infinite}
+#landing .v12Ring.c {inset:22%;border:9px solid rgba(15,137,101,.9);box-shadow:0 0 24px rgba(99,232,171,.31);animation:v12Ring3 23s linear infinite}
+#landing .v12OrbCore {z-index:1;width:40%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle at 28% 19%,#d2ffe2,#69dab0 44%,#0f785a 80%,#053b30);box-shadow:inset -24px -18px 40px #004b3770,0 0 0 13px #c8ffe319,0 30px 55px #001f1780;border:1px solid rgba(233,255,245,.52);color:#05392b;position:relative}
+#landing .v12OrbCore strong{font-size:clamp(30px,4vw,53px);letter-spacing:-.07em;font-weight:950}
+#landing .v12OrbCore small{font-size:10px;letter-spacing:.21em;font-weight:900;text-transform:uppercase}
+#landing .v12FloatCard {position:absolute;z-index:3;padding:15px 17px;min-width:154px;border:1px solid #eaffef38;border-radius:16px;background:#ddffed17;backdrop-filter:blur(21px);-webkit-backdrop-filter:blur(21px);box-shadow:0 12px 38px #00190d3b;color:#e0fff0;animation:v12Float 7s ease-in-out infinite}
+#landing .v12FloatCard strong{display:block;font-size:13px;margin-bottom:5px}
+#landing .v12FloatCard small{font-size:11px;color:#acd6c1}
+#landing .v12FloatCard.left{left:0;top:20%}
+#landing .v12FloatCard.right{right:-3%;bottom:19%;animation-delay:-3.5s}
+#landing .v12Spark {position:absolute;width:8px;height:8px;border-radius:100%;background:#b9ffe0;box-shadow:0 0 18px #6ff3b9}
+#landing .v12Spark.a{top:10%;left:27%}#landing .v12Spark.b{right:8%;top:32%;width:5px;height:5px}#landing .v12Spark.c{bottom:7%;left:21%;width:6px;height:6px}
+#landing .v12ScrollHint {position:absolute;bottom:20px;left:0;right:0;color:#aad1bd;text-align:center;font-size:11px;letter-spacing:.07em;opacity:.78}
+@keyframes v12Ring1{from{transform:rotateX(66deg) rotateY(14deg) rotateZ(0deg)}to{transform:rotateX(66deg) rotateY(14deg) rotateZ(360deg)}}
+@keyframes v12Ring2{from{transform:rotateY(69deg) rotateX(25deg) rotateZ(0deg)}to{transform:rotateY(69deg) rotateX(25deg) rotateZ(360deg)}}
+@keyframes v12Ring3{from{transform:rotateX(76deg) rotateY(54deg) rotateZ(0deg)}to{transform:rotateX(76deg) rotateY(54deg) rotateZ(360deg)}}
+@keyframes v12Float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+#landing .v12Section {padding:110px 0;background:#f5f9f6}
+#landing .v12Section.alt{background:#eaf2ed}
+#landing .v12Section.dark{background:#092b20;color:#e9fff1}
+#landing .v12SectionHead{max-width:760px;margin-bottom:36px}
+#landing .v12SectionLabel{font-size:11px;font-weight:900;color:#067a56;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+#landing .v12Section.dark .v12SectionLabel{color:#8decc0}
+#landing .v12Section h2 {font-size:clamp(32px,4vw,54px);letter-spacing:-.06em;line-height:1.12;margin:0 0 16px;color:#123629}
+#landing .v12Section.dark h2{color:#f0fff7}
+#landing .v12SectionHead p{font-size:15px;line-height:1.67;color:#638074}
+#landing .v12Section.dark .v12SectionHead p {color:#c0decd}
+#landing .v12FeatureGrid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+#landing .v12Feature{border-radius:24px;border:1px solid #dceae2;background:#fff;box-shadow:0 10px 36px rgba(9,65,41,.045);padding:28px;min-height:206px}
+#landing .v12FeatureIcon {width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:#e1f4ea;color:#09714f;font-size:22px;margin-bottom:20px}
+#landing .v12Feature h3{color:#103c29;font-size:18px;letter-spacing:-.02em;margin:0 0 10px}
+#landing .v12Feature p {font-size:13px;color:#657b70;line-height:1.67;margin:0}
+#landing .v12Steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+#landing .v12Step{padding:28px 24px;border:1px solid #cfe5d8;border-radius:24px;background:#ffffffb8}
+#landing .v12Step span{color:#08a578;font-size:27px;font-weight:900;display:block;margin-bottom:20px}
+#landing .v12Step strong{color:#113d2c;font-size:17px}
+#landing .v12Step p{font-size:13px;line-height:1.7;color:#60776a;margin-top:10px}
+#landing .v12End {display:flex;align-items:center;justify-content:space-between;gap:30px;background:#ffffff12;border:1px solid #ffffff2c;border-radius:27px;padding:35px}
+#landing .v12End p{max-width:580px;color:#c6dece;line-height:1.65;font-size:14px}
+#landing .v12End .v12Btn{white-space:nowrap}
+#landing .v12Footer{background:#061b14;color:#adcdbb;padding:24px 0}
+#landing .v12Footer .v12Wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px}
+
+/* Tela própria de login: overlay ocupa todo o viewport, preserva o Google OAuth original. */
+#landing #v12Login{position:fixed;inset:0;z-index:200;overflow-y:auto;display:grid;place-items:center;padding:38px 20px;
+  background:radial-gradient(circle at 25% 45%,#0e62463e,transparent 47%),linear-gradient(145deg,#04130e,#0b3022)}
+#landing #v12Login[hidden]{display:none!important}
+body.v12LoginOpen {overflow:hidden}
+#landing .v12LoginInner {width:min(1080px,100%);min-height:580px;display:grid;grid-template-columns:1fr 1fr;
+  background:rgba(255,255,255,.055);border:1px solid rgba(204,255,223,.24);box-shadow:0 35px 105px rgba(0,0,0,.27);border-radius:32px;
+  overflow:hidden;position:relative;backdrop-filter:blur(27px)}
+#landing .v12LoginArt {background:radial-gradient(circle at 51% 48%,#1eb5863d,transparent 61%);display:grid;align-content:center;justify-items:center;min-height:470px;position:relative;overflow:hidden}
+#landing .v12LoginArt .v12OrbitScene{width:400px;max-width:97%}
+#landing .v12LoginArt .v12OrbCore strong{font-size:43px}
+#landing .v12LoginArt .v12OrbCore small{font-size:8px}
+#landing .v12LoginArtCaption{font-size:13px;color:#d0f6df;text-align:center;margin-top:4px;letter-spacing:.07em;position:absolute;bottom:42px;left:20px;right:20px}
+#landing .v12LoginPanel {background:rgba(251,255,252,.98);padding:clamp(28px,4.6vw,62px);display:flex;flex-direction:column;justify-content:center;color:#16382a;position:relative}
+#landing .v12CloseLogin {position:absolute;top:18px;right:18px;background:#e7f4eb;color:#174932;border:0;border-radius:12px;width:40px;height:40px;font-size:20px}
+#landing .v12LoginPanel .v12SectionLabel{margin-top:20px}
+#landing .v12LoginPanel h2{font-size:clamp(34px,4vw,52px);line-height:1.08;letter-spacing:-.065em;color:#0b3d2c;margin:10px 0 14px}
+#landing .v12LoginPanel .v12LoginHelp{color:#627d70;font-size:13px;line-height:1.7}
+#landing .v12LoginPanel .sxEntrada{margin-top:33px;max-width:none;gap:13px}
+#landing .v12LoginPanel .sxLangLabel{font-size:11px;color:#4e7260}
+#landing .v12LoginPanel .sxSeg{background:#eaf4ed;border:1px solid #d3e8dc}
+#landing .v12LoginPanel .sxSeg button.on{background:#075c42;color:#fff}
+#landing .v12LoginPanel .sxGoogle{min-height:56px;font-size:14px!important;border-radius:15px!important;
+  color:#fff!important;background:linear-gradient(115deg,#075e45,#09a270)!important;box-shadow:0 13px 26px #005c4435}
+#landing .v12LoginPanel .sxMsg{min-height:1.5em;color:#48695b}
+#landing .v12LoginPanel .sxMsg.erro{color:#b42318}
+#landing .v12LoginFine{font-size:11px;color:#7a9386;line-height:1.6;margin-top:20px}
+#landing #v12Login[data-v12-motion="off"] .v12Ring {animation-play-state:paused}
+#landing .v12MotionBtn {font-size:11px;color:#c8f6d7;border:1px solid #cbffe044;border-radius:100px;padding:8px 13px;background:#073e2b6e;position:absolute;left:24px;bottom:24px}
+
+/* Redesenho transversal do painel do aluno e do administrador */
+#app .sidebar,#admin .adminSide{background:linear-gradient(180deg,#fafdfb,#ecf3ee)!important;color:#274537!important;border-right:1px solid #dbe9df!important;box-shadow:8px 0 34px rgba(12,61,43,.04)!important}
+#app .sideBrand,#admin .adminSide .logo{color:#064a32!important}
+#app .sideLabel,#admin .sideLabel{color:#61806e!important;letter-spacing:.12em}
+#app .navBtn,#admin .adminNav{color:#3c6250!important;border-radius:13px!important}
+#app .navBtn:hover,#admin .adminNav:hover{background:#e5f1e9!important;color:#075b40!important}
+#app .navBtn.active,#admin .adminNav.active{background:#087553!important;color:#fff!important;box-shadow:0 8px 19px rgba(5,92,63,.16)!important}
+#app .navBtn.active .navIcon{color:#fff!important}
+#app .sidePanel{background:#e7f4ec!important;color:#205036!important;border-color:#d5e9da!important}
+#app .topbar,#admin .topbar{background:rgba(251,255,251,.95)!important;border-bottom:1px solid #dae9df!important;backdrop-filter:blur(22px)}
+#app .content,#admin .adminContent{max-width:1580px}
+#app .heroPrimary,#subjectView .subjectHero{background:linear-gradient(120deg,#e2f4e9,#fff 65%,#e6f5ec)!important;border:1px solid #d6e9dc!important;border-radius:27px}
+#app .card,#admin .card,#app .glass,#admin .glass{border-color:#dcece0;box-shadow:0 10px 32px rgba(13,65,39,.065)}
+#app .search{background:#eff6f0!important;border:1px solid #d3e7d8}
+#admin{background:#f5f8f5}
+#admin .adminSide{display:flex;flex-direction:column;gap:5px}
+#admin .adminSide .logo{margin-bottom:7px;align-items:center}
+#admin .adminSide .adminNav{text-align:left;min-height:43px;font-weight:800;font-size:12px;padding:12px 14px}
+#admin .adminSide .sideLabel{margin-top:17px}
+#admin .adminMain{min-width:0}
+#admin .adminContent{padding:30px}
+#admin .adminPage .heading h1{font-size:clamp(29px,3vw,42px);letter-spacing:-.05em}
+#admin .adminPage .kpis{gap:15px}
+#admin .adminPage .kpi{border-radius:21px;background:linear-gradient(145deg,#fff,#f6fbf8)}
+#admin .adminPage .kpi b{color:#076b4c}
+#admin .adminPage .card{border-radius:21px}
+#admin .v12AdminBrand{display:flex;align-items:center;gap:9px;font-size:11px;color:#3c7d61;letter-spacing:.13em;font-weight:900;padding:10px 8px}
+#admin .v12AdminBadge{padding:7px 10px;background:#dbf1e3;color:#076b49;border-radius:100px;border:1px solid #c2e2ce;font-size:9px;letter-spacing:.1em}
+#admin .v12AdminIntro{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#e7f5eb;border:1px solid #d1e9d9;border-radius:20px;margin:0 0 20px;padding:16px 20px;color:#214b35}
+#admin .v12AdminIntro strong{font-size:13px;display:block;margin-bottom:3px}
+#admin .v12AdminIntro small{font-size:11px;color:#64826d}
+#admin .v12AdminIntro i{font-style:normal;font-size:11px;background:#fff;padding:8px 12px;border-radius:100px;color:#087650;font-weight:850}
+
+/* No celular, mantém menus/handlers legados e o layout mobile existente. */
+@media(max-width:1000px){
+  #landing .v12HeroLayout{grid-template-columns:1fr 1fr;gap:12px}
+  #landing .v12Hero h1{font-size:clamp(45px,5.6vw,65px)!important}
+  #landing .v12FloatCard{display:none}
+  #landing .v12HeroGraphic{min-height:420px}
+}
+@media(max-width:820px){
+  #landing .v12Wrap{width:min(calc(100% - 34px),var(--v12-max))}
+  #landing .v12HeaderInner{height:72px}
+  #landing .v12NavLinks{display:none;position:absolute;top:72px;left:0;right:0;padding:18px 25px;background:#08271d;flex-direction:column;align-items:stretch}
+  #landing .v12NavLinks.open{display:flex}
+  #landing .v12Menu{display:inline-grid;place-items:center}
+  #landing .v12Header .v12TopCta{margin-left:auto;font-size:11px;padding:8px 12px}
+  #landing .v12HeroLayout{grid-template-columns:1fr;gap:0;padding-top:137px;padding-bottom:76px}
+  #landing .v12Hero h1{font-size:clamp(48px,9vw,72px)!important}
+  #landing .v12HeroGraphic{min-height:350px;margin-top:23px}
+  #landing .v12OrbitScene{width:min(95%,390px)}
+  #landing .v12Section{padding:70px 0}
+  #landing .v12FeatureGrid{grid-template-columns:repeat(2,1fr)}
+  #landing .v12Steps{grid-template-columns:1fr}
+  #landing .v12LoginInner{grid-template-columns:1fr;max-width:550px}
+  #landing .v12LoginArt{min-height:220px}
+  #landing .v12LoginArt .v12OrbitScene{width:190px}
+  #landing .v12LoginArt .v12OrbCore strong{font-size:22px}
+  #landing .v12LoginArt .v12OrbCore small{display:none}
+  #landing .v12LoginArtCaption{bottom:12px;font-size:10px}
+  #landing .v12LoginPanel{padding:30px 25px}
+  #admin .adminContent{padding:15px}
+  #admin .v12AdminIntro{padding:12px 14px}
+}
+@media(max-width:520px){
+  #landing .v12Header .v12TopCta{display:none}
+  #landing .v12Hero h1{font-size:clamp(45px,11.8vw,61px)!important}
+  #landing .v12HeroGraphic{min-height:285px}
+  #landing .v12OrbitScene{width:285px}
+  #landing .v12Ring{border-width:9px}#landing .v12Ring.b{border-width:8px}#landing .v12Ring.c{border-width:6px}
+  #landing .v12OrbCore strong{font-size:26px}
+  #landing .v12OrbCore small{font-size:7px}
+  #landing .v12HeroNote{gap:10px;font-size:10px}
+  #landing .v12FeatureGrid{grid-template-columns:1fr}
+  #landing .v12Feature{min-height:0}
+  #landing .v12End{flex-direction:column;align-items:flex-start;padding:24px}
+  #landing #v12Login{padding:12px;align-items:start}
+  #landing .v12LoginArt{min-height:190px}
+  #landing .v12LoginPanel h2{font-size:35px}
+  #admin .v12AdminIntro i{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  #landing .v12Ring,#landing .v12FloatCard{animation:none!important}
+  html{scroll-behavior:auto}
+}
+@supports not (backdrop-filter:blur(14px)){
+  #landing .v12Header{background:#08261c}
+  #landing .v12LoginPanel{background:#fbfffc}
+}
+html[data-theme="dark"] #admin .adminSide,html[data-theme="dark"] #app .sidebar{background:#0e2118!important;color:#dcf5e7!important;border-right-color:#284639!important}
+html[data-theme="dark"] #app .sideBrand,html[data-theme="dark"] #admin .adminSide .logo{color:#d2fbe3!important}
+html[data-theme="dark"] #app .sideLabel,html[data-theme="dark"] #admin .sideLabel{color:#a7ccba!important}
+html[data-theme="dark"] #app .navBtn,html[data-theme="dark"] #admin .adminNav{color:#c4e2d1!important}
+html[data-theme="dark"] #app .navBtn.active,html[data-theme="dark"] #admin .adminNav.active{background:#0e8961!important;color:#fff!important}
+html[data-theme="dark"] #admin .v12AdminIntro{background:#143426;border-color:#28593e;color:#e2ffec}
+html[data-theme="dark"] #admin .v12AdminIntro small{color:#bbd6c5}
+html[data-theme="dark"] #admin .v12AdminIntro i{background:#21523a;color:#bef5d4}
+html[data-theme="dark"] #admin .v12AdminBadge{background:#15452c;color:#aef5cc;border-color:#357450}
+html[data-theme="dark"] #app .topbar,html[data-theme="dark"] #admin .topbar{background:rgba(13,32,21,.94)!important;border-bottom-color:#234b35!important}
+html[data-theme="dark"] #app .heroPrimary,html[data-theme="dark"] #subjectView .subjectHero{background:linear-gradient(130deg,#15372a,#10261d)!important;border-color:#27513b!important}
