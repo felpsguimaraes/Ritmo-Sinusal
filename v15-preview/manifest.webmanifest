@@ -1,0 +1,19 @@
+{
+  "name": "Sinus — Plataforma Acadêmica · Prévia V15",
+  "short_name": "Sinus",
+  "description": "Prévia instalável da Sinus",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f9fcfa",
+  "theme_color": "#f9fcfa",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
