@@ -142,11 +142,11 @@
         ? '<div class="grade">' + CAT.materias.map(cardMateria).join('') + '</div>'
         : '<div class="card"><div class="vazio"><b>O acervo está sendo montado</b>As matérias aparecem aqui assim que a varredura do Drive terminar.</div></div>';
     } else if (aba === 'agenda') {
-      h = '<div class="card"><h2>Agenda</h2><p>O horário da sua turma, aula por aula, com sala e grupo.</p></div>';
+      h = '<div class="card"><h2>Agenda</h2><p>O horário da sua turma, aula por aula, com sala e grupo.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Agenda</a></p></div>';
     } else if (aba === 'trilhas') {
-      h = '<div class="card"><h2>Trilhas de estudo</h2><p>Roteiros por matéria, com apostila, treino e flashcards na ordem.</p></div>';
+      h = '<div class="card"><h2>Trilhas de estudo</h2><p>Roteiros por matéria, com apostila, treino e flashcards na ordem.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Trilhas de estudo</a></p></div>';
     } else {
-      h = '<div class="card"><h2>Biblioteca</h2><p>Robbins, Guyton e o material complementar do semestre.</p></div>';
+      h = '<div class="card"><h2>Biblioteca</h2><p>Robbins, Guyton e o material complementar do semestre.</p><p><a class="btn prim" href="/app/" style="margin-top:12px">Abrir Biblioteca</a></p></div>';
     }
     $('#painel').innerHTML = h;
   }
