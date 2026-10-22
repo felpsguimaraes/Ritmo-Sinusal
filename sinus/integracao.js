@@ -440,6 +440,7 @@
       else renderResourceCategory(t);
     } else _renderSubject();
     pillPlano();
+    var fc = $id('focusClock'); if (fc) { fc.classList.add('pip-mode'); fc.setAttribute('draggable', 'true'); }
   };
   var _overview = W.renderSubjectOverview;
   W.renderSubjectOverview = function () {
@@ -659,6 +660,7 @@
     D.body.classList.remove('sxMenuAberto');
     _nav(page, btn);
     qsa('.sxBottomNav [data-sx-go]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-sx-go') === UI.page || (UI.page === 'hub' && false)) });
+    var fc = $id('focusClock'); if (fc && page !== 'subject') { fc.classList.remove('pip-mode'); fc.removeAttribute('draggable'); }
   };
 
   D.addEventListener('click', function (e) {
@@ -708,6 +710,28 @@
     var t = e.target;
     if (t.matches && t.matches('[data-sx-libq]')) { LIB.q = t.value; var pos = t.selectionStart; renderLibrary(); var n = D.querySelector('[data-sx-libq]'); if (n) { n.focus(); try { n.setSelectionRange(pos, pos) } catch (_) {} } }
   });
+
+  // foco draggável em modo PiP
+  var focoDragData = { x: 0, y: 0, isDragging: false };
+  D.addEventListener('dragstart', function (e) {
+    var fc = $id('focusClock'); if (!fc || !fc.classList.contains('pip-mode')) return;
+    focoDragData.isDragging = true;
+    focoDragData.x = e.clientX - fc.getBoundingClientRect().left;
+    focoDragData.y = e.clientY - fc.getBoundingClientRect().top;
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  D.addEventListener('dragover', function (e) { if (focoDragData.isDragging) e.preventDefault() });
+  D.addEventListener('drop', function (e) {
+    if (!focoDragData.isDragging) return;
+    e.preventDefault();
+    var fc = $id('focusClock'); if (!fc) return;
+    var newX = e.clientX - focoDragData.x, newY = e.clientY - focoDragData.y;
+    fc.style.right = 'auto'; fc.style.bottom = 'auto';
+    fc.style.left = Math.max(0, Math.min(newX, W.innerWidth - 140)) + 'px';
+    fc.style.top = Math.max(0, Math.min(newY, W.innerHeight - 140)) + 'px';
+    focoDragData.isDragging = false;
+  });
+  D.addEventListener('dragend', function () { focoDragData.isDragging = false });
 
   // ---------------------------------------------------------------- entrar no painel
   function entrarNoPainel() {
