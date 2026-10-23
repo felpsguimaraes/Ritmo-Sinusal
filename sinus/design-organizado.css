@@ -1,0 +1,49 @@
+/* SINUS — apresentação apenas. Nenhuma regra oculta ações ou conteúdos. */
+:root{--bg:#f5f8f6;--bg2:#f9fbfa;--text:#20332c;--muted:#7c8983;--line:#e1e9e5;--green:#197662;--grad-main:linear-gradient(120deg,#218571,#176650)}
+body,button,input,select,textarea{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+body{background:var(--bg)!important;color:var(--text)}
+.glass,.glass.softcard,.card{border:1px solid var(--line)!important;border-radius:23px!important;background:#fff!important;box-shadow:0 3px 14px rgba(27,69,49,.025)!important}
+.card{padding:24px!important;text-align:left;min-width:0}
+.card h3{font-size:20px!important;line-height:1.3!important;letter-spacing:-.035em;margin-top:18px!important;color:var(--text)}
+.card p{line-height:1.6!important;color:var(--muted)!important}
+.cardHead{align-items:flex-start!important;gap:14px}
+.iconWrap{width:52px!important;height:52px!important;border-radius:16px!important;display:grid!important;place-items:center!important;flex-shrink:0;background:#e8f2ed!important;color:#759f89!important;box-shadow:none!important}
+.card:nth-child(3n+2) .iconWrap{background:#eeeaf5!important;color:#a291ba!important}
+.card:nth-child(3n) .iconWrap{background:#f5efdd!important;color:#b2a56f!important}
+.sinus-line-icon{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;pointer-events:none;vertical-align:middle}
+.iconWrap .sinus-line-icon{width:29px;height:29px}
+.grid3,.grid2{gap:18px!important}
+.tagRow{padding-top:16px;margin-top:20px!important;border-top:1px solid var(--line);gap:8px;flex-wrap:wrap}
+.tag,.pill{border-radius:9px!important;line-height:1.4!important}
+.btn{border-radius:14px!important;min-height:44px;box-shadow:none!important;font-weight:600!important}
+.btn.primary{background:var(--grad-main)!important;border-color:#237b65!important;color:#fff!important}
+.btn:not(.primary):not(.violet){border-color:var(--line)!important}
+.sxChips{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important}
+.sxChips button{position:relative;min-height:124px!important;padding:24px 12px!important;border-radius:19px!important;border:1px solid var(--line)!important;background:#fff!important;color:var(--text)!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;font-size:14px!important;font-weight:600!important;box-shadow:none!important}
+.sxChips button>.sinus-line-icon{width:31px;height:31px;color:#88a995}
+.sxChips button:nth-child(3n+2)>.sinus-line-icon{color:#a595ba}
+.sxChips button:nth-child(3n)>.sinus-line-icon{color:#b0a36c}
+.sxChips button.on{background:#e6f2ec!important;border-color:#a8cdbb!important;color:#20332c!important}
+.sxChips button.on::after{content:'✓';position:absolute;top:11px;right:11px;width:20px;height:20px;display:grid;place-items:center;background:#197662;color:#fff;border-radius:50%;font-size:12px}
+.sxChoice,.sxPoint,.sxSummary>div,.sxGroups{border-radius:18px!important;border-color:var(--line)!important;box-shadow:none!important}
+.sxSeg{background:#f2f6f4!important;border-color:var(--line)!important;padding:5px!important;border-radius:17px!important;gap:6px!important}
+.sxSeg button{border-radius:12px!important}
+.sxSeg button.on{background:#fff!important;color:#197662!important;box-shadow:0 1px 5px #173f2810!important}
+#subjectTabs{gap:8px!important;overflow-x:auto;flex-wrap:nowrap!important;padding:5px 0 13px;scrollbar-width:thin}
+#subjectTabs>*{flex-shrink:0;border-radius:13px!important;min-height:43px}
+.sxBottomNav{background:rgba(255,255,255,.95)!important;border-top:1px solid var(--line)!important;backdrop-filter:blur(18px)}
+.sxBottomNav button{border-radius:15px!important;gap:6px!important}
+.sxBottomNav button.on{background:#e5f2ec!important;color:#197662!important}
+.navIcon{display:inline-grid;place-items:center;min-width:24px}
+.sxBottomNav .sinus-line-icon{width:25px;height:25px}
+.sxOnb h2{line-height:1.16!important;letter-spacing:-.045em}
+.sxOnb h2 em{color:inherit!important}
+button:focus-visible,a:focus-visible{outline:3px solid #7db8a1!important;outline-offset:3px}
+@media(max-width:600px){.card{padding:22px!important}.grid3{grid-template-columns:1fr!important}.card h3{font-size:21px!important}.sxOnb{padding:22px 18px!important}.sxChips button{min-height:122px!important}.sxOnbFoot{gap:16px!important}.sxBottomNav{padding-top:8px!important}.heading h1{line-height:1.2!important}}
+html[data-theme="dark"]{--bg:#101a16;--text:#e3eee8;--muted:#9aafa3;--line:#2c4035}
+html[data-theme="dark"] .glass,html[data-theme="dark"] .card,html[data-theme="dark"] .sxChips button{background:#19271f!important;color:var(--text)!important}
+html[data-theme="dark"] .sxChips button.on{background:#234437!important;color:#edf7f1!important}
+html[data-theme="dark"] .sxBottomNav{background:rgba(20,33,26,.96)!important}
+html[data-theme="dark"] .sxSeg{background:#102119!important}
+html[data-theme="dark"] .sxSeg button.on{background:#254538!important;color:#c2efda!important}
+.btn>.sinus-line-icon{width:18px;height:18px}.sinus-line-icon{overflow:visible}.card .iconWrap{margin-bottom:0}.navBtn .sinus-line-icon{width:22px;height:22px}
