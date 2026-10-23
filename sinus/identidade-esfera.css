@@ -8,7 +8,7 @@
 --shadow:0 16px 45px rgba(12,76,45,.085);--shadow-lg:0 25px 85px rgba(13,77,45,.12);
 --radius:24px;--radius-sm:15px;
 }
-body,button,input,select,textarea,.sidebar,.main,.sxOnb{font-family:'Manrope','DM Sans',-apple-system,BlinkMacSystemFont,sans-serif!important}
+body,button,input,select,textarea,.sidebar,.main,.sxOnb{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Helvetica,Arial,sans-serif!important;-webkit-font-smoothing:antialiased}
 body{background:radial-gradient(ellipse at 80% -10%,rgba(68,185,117,.095),transparent 45%),linear-gradient(180deg,#fdfffe,#f6fbf8)!important;color:var(--text)}
 h1,h2,h3,h4,.heading h1{letter-spacing:-.04em}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #0ea574;outline-offset:3px}
@@ -57,6 +57,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 #app .sidebar .navIcon{color:#bdebd2;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.09)!important}
 .navIcon svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 #app .sidebar .sideBrand{padding-bottom:19px}
+#app .sidebar .logo{color:#f5fff9!important}
+#app .sidebar .navBtn{color:#e6f5ed!important}
+#app .sidebar .navBtn:hover,#app .sidebar .navBtn.active{color:#fff!important}
+#app .sidebar .navBtn:not(.active) .navIcon{color:#c6ead7!important}
+#app .sidebar .sideLabel,#app .sidebar .sideFoot{color:#b7d7c6!important}
+#app .sidebar .sideMore>summary{color:#e6f5ed!important;border-radius:15px}
+#app .sidebar .sideMore>summary:hover,#app .sidebar .sideMore[open]>summary{background:#ffffff18!important}
 #app .topbar{background:rgba(251,255,252,.87)!important;backdrop-filter:blur(22px);border-bottom:1px solid #deeee3}
 #app .card .iconWrap{color:#12734f;background:linear-gradient(135deg,#e2f6e9,#d7efdf)}
 #app .card .iconWrap svg{width:23px;height:23px}
@@ -111,3 +118,55 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
  #page-agenda .sinus-month-title{font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){#landing .hero:before,#landing .hero:after{animation:none}}
+
+/* Superfícies de vidro e tipografia do sistema. */
+:root{--text:#173b32;--muted:#60756c;--green:#087c60;--green2:#24a581;--green3:#e0f1e9;--line:rgba(39,92,71,.13);--radius:28px;--radius-sm:18px}
+body{background:radial-gradient(ellipse at 0% 5%,#dcece4 0,transparent 48%),radial-gradient(ellipse at 100% 70%,#e2eee9 0,transparent 52%),#f3f6f4!important}
+#app .content{background:transparent!important}
+#app .glass,#app .card,#app .quickItem,#app .resourceItem,#app .slot,#app .subjectHero,#app .subjectCard,#app .dayCol,#landing .metric{
+ background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(249,255,252,.62))!important;
+ border:1px solid rgba(255,255,255,.82)!important;border-radius:26px!important;
+ -webkit-backdrop-filter:blur(24px) saturate(140%);backdrop-filter:blur(24px) saturate(140%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 8px 30px rgba(26,66,50,.055)!important}
+#app .heading h1,#app h2,#app h3{font-weight:650;letter-spacing:-.035em}
+#app .soft{color:var(--muted)}
+#app .btn,#app .chip,#app .pill{border-radius:999px!important}
+#app .btn{font-weight:600!important;min-height:40px}
+#app input,#app select,#app textarea{border-radius:16px!important}
+#app .btn.primary,#app .btn.violet,.sxGoogle{background:linear-gradient(155deg,#199a76,#087559)!important;box-shadow:inset 0 1px 0 #ffffff40,0 6px 16px #086e5924!important;border:1px solid #ffffff30!important}
+#app .sidebar{background:linear-gradient(165deg,#153f35,#125741 65%,#133e34)!important}
+#app .sidebar .navBtn{border-radius:15px!important;min-height:42px!important;font-weight:550!important;font-size:12px!important;color:#e6f5ed!important}
+#app .sidebar .navBtn.active,#app .sidebar .navBtn:hover{background:linear-gradient(125deg,#ffffff26,#ffffff12)!important;box-shadow:inset 0 1px 0 #ffffff1f;color:#fff!important}
+#app .sidebar .navBtn:not(.active) .navIcon{color:#c6ead7!important}
+#app .sidebar .sideLabel,#app .sidebar .sideFoot{color:#b7d7c6!important}
+#app .sidebar .sidePanel{border-radius:24px!important;background:linear-gradient(145deg,#ffffffed,#f2fbf6df)!important;box-shadow:0 7px 22px #07271b16!important}
+#app .sidebar .sidePanel small{color:#526e60!important}
+#app .topbar{background:rgba(249,253,250,.77)!important;-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);border-color:#ffffffa8!important}
+#app .sxBottomNav{margin:0 10px 8px;border-radius:25px!important;border:1px solid #ffffffbb!important;background:#f9fffbdb!important;box-shadow:0 6px 28px #163e3021;-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px)}
+html[data-theme="dark"] body{background:radial-gradient(ellipse at 90% 0%,#183c30,transparent 55%),#101b17!important;color:#e8f3ed}
+html[data-theme="dark"] #app .glass,html[data-theme="dark"] #app .card,html[data-theme="dark"] #app .quickItem,html[data-theme="dark"] #app .resourceItem,html[data-theme="dark"] #app .slot,html[data-theme="dark"] #app .subjectHero,html[data-theme="dark"] #app .subjectCard,html[data-theme="dark"] #app .dayCol{background:linear-gradient(145deg,#263c32d9,#1c2e26c9)!important;border-color:#c3f4d51c!important;box-shadow:inset 0 1px 0 #ffffff0a,0 8px 30px #00000014!important}
+html[data-theme="dark"] #app .soft{color:#aec5b7!important}
+html[data-theme="dark"] #app .topbar,html[data-theme="dark"] #app .sxBottomNav{background:#172a21db!important;border-color:#ffffff1c!important}
+@media(prefers-reduced-transparency:reduce){#app .glass,#app .card,#app .topbar,#app .sxBottomNav{backdrop-filter:none;-webkit-backdrop-filter:none;background:#f5faf7!important}}
+@media(prefers-reduced-motion:reduce){.btn:hover,.card:hover{transform:none!important}}
+
+/* Semana compacta: dias legíveis, com navegação horizontal. */
+#app .sxCalGrid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:180px;gap:10px;overflow-x:auto;padding:3px 3px 12px;scroll-snap-type:x proximity;overscroll-behavior-x:contain;align-items:start;max-width:100%}
+#app .sxCalDia{min-height:0;height:340px;overflow-y:auto;border-radius:20px;scroll-snap-align:start;scrollbar-width:thin}
+#app .sxCalHead{position:sticky;top:0;z-index:1;padding:11px 12px;flex-shrink:0}
+#app .sxCalAula{padding:10px 12px}
+#app .sxHora{font-size:11px;white-space:nowrap;line-height:1.4}
+#app .sxInfo b{font-size:12px;line-height:1.35;overflow-wrap:normal;word-break:normal}
+#app .sxInfo small{font-size:10px;line-height:1.5;margin-top:3px}
+#sxSemanaHome,#sxSemanaSch{min-width:0;max-width:100%}
+.sxExerciseChoices{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.sxStudyExtras{margin-bottom:16px}.sxStudyExtras summary{cursor:pointer;font-size:12px;color:var(--muted);padding:10px 0}.sxStudyExtras .sxExerciseChoices{margin-top:10px}
+#subjectTabs{display:flex;gap:8px;overflow-x:auto}#subjectTabs button{white-space:nowrap;border-radius:999px!important}
+#landing .hero h1{font-size:clamp(32px,4vw,54px);font-weight:650;letter-spacing:-.045em}
+#landing .metrics{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+#landing .metric{padding:8px 12px;border-radius:999px!important;box-shadow:none!important;background:#edf6f0b3!important}
+#landing .metric b{font-size:11px;font-weight:600}
+@media(max-width:820px){#landing{padding:18px;min-height:100dvh}#landing .hero{min-height:0!important;padding:26px 22px!important;border-radius:30px!important}#landing .hero:before,#landing .hero:after{display:none}#landing .hero h1{font-size:34px!important;margin:24px 0 18px}#landing .sxEntrada{max-width:none}#landing .sxGoogle{width:100%;min-height:48px}#landing .hero>p{font-size:13px;line-height:1.55}#landing .sxLangLabel{display:none}#landing .sxLang{margin-bottom:16px}}
+#app .grid2:has(#sxSemanaHome),#app .grid2:has(#sxSemanaSch){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#app .grid2:has(#sxSemanaHome)>*,#app .grid2:has(#sxSemanaSch)>*{min-width:0}
+@media(max-width:820px){#app .grid2:has(#sxSemanaHome),#app .grid2:has(#sxSemanaSch){grid-template-columns:minmax(0,1fr)!important}}
+@media(max-width:820px){#app .sxCalGrid{grid-auto-columns:min(72vw,230px)}#app .sxCalDia{height:310px}}

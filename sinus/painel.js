@@ -82,8 +82,7 @@ function renderHome(){
     <div class="glass stat"><b>${Object.keys(periodCfg().subjectPracticeGroups||{}).length}</b><span>matérias com grupo próprio</span></div>
     <div class="glass stat"><b>${DB.sales.filter(s=>s.status==='approved').length}</b><span>vendas registradas</span></div>
   </div>
-  <div class="heading" style="margin-top:20px"><div><span class="eyebrow">Matérias</span><h1 style="font-size:22px">Continue por uma disciplina</h1></div></div>
-  <div class="cards">${subs.map(subjectCard).join('') || `<div class="glass emptyBox" style="grid-column:1/-1">Nenhuma matéria encontrada.</div>`}</div>`
+  `
 }
 
 const DAYMAP={lun:'Segunda',mar:'Terça',mie:'Quarta',jue:'Quinta',vie:'Sexta',sab:'Sábado'};

@@ -402,7 +402,7 @@
     ['overview', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'],
     ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
   V11_SUBJECT_TABS.practice.splice(0, V11_SUBJECT_TABS.practice.length,
-    ['overview', 'Visão geral'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
+    ['overview', 'Visão geral'], ['apostila', 'Resumo / Apostila'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
     ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
 
   function pillPlano() { var p = $id('subjectPlanPill'); if (p) p.textContent = 'Acesso completo' }
@@ -417,6 +417,17 @@
       else renderResourceCategory(t);
     } else _renderSubject();
     pillPlano();
+    var exercicios = ['training', 'cartoes', 'provas', 'review'];
+    var principal = exercicios.indexOf(t) >= 0 ? 'training' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila');
+    var tabs = $id('subjectTabs');
+    if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos'],['training','Exercícios']].map(function (item) {
+      return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
+    }).join('');
+    var content = $id('subjectContent');
+    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['provas','Provas'],['review','Revisão']].map(function (item) {
+      return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
+    }).join('') + '</div>');
+    else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
     var fc = $id('focusClock'); if (fc) { fc.classList.add('pip-mode'); fc.setAttribute('draggable', 'true'); }
   };
   var _overview = W.renderSubjectOverview;
