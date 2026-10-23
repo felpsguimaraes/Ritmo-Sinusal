@@ -2,7 +2,7 @@
    Somente alterações DOM/ícones. Não sobrescreve as funções de matérias, biblioteca ou autenticação. */
 (function(){
 'use strict';
-const orb='/icons/sinus-esfera-ecg.webp';
+const orb='/icons/sinus-esfera-transparente-v2.png';
 const icons={
 home:'<path d="m3 10 9-7 9 7v10H3z"/><path d="M9 20v-7h6v7"/>',
 schedule:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h3M14 14h3"/>',
