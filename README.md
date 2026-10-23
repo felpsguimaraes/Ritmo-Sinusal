@@ -2,9 +2,9 @@
 
 Plataforma de estudo de Medicina.
 
-**Aplicativo atual:** https://sinusal.chatmedicinacolegas.chatgpt.site
+**Aplicativo atual:** https://meusinus.pages.dev
 
-**Painel inicial do 5º G:** https://sinusal.chatmedicinacolegas.chatgpt.site/#turma/5G
+**Painel inicial do 5º G:** https://meusinus.pages.dev/
 
 O endereço https://felpsguimaraes.github.io/Ritmo-Sinusal/ encaminha para o aplicativo atual. Ele mantém seu perfil, biblioteca, matérias e Revalida no ambiente com servidor. A primeira implantação prioriza o 5º G, com seis matérias e separação entre conteúdo da turma, fotos de aula e referências históricas.
 
@@ -28,3 +28,7 @@ O aplicativo atual é publicado em um ambiente com servidor, banco e arquivos pr
 - [Acumulaciones intracelulares](aulas/acumulaciones/)
 
 As três aulas e seus PDFs/imagens permanecem nos caminhos originais.
+
+## Administração
+
+A entrada antiga `aulas/painel.html` encaminha ao painel atual em `https://meusinus.pages.dev/admin/control/`. A ativação do backend está documentada em [admin/control/README.md](admin/control/README.md).

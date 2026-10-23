@@ -7,3 +7,9 @@
 wrangler.jsonc
 netlify.toml
 README.md
+
+supabase
+supabase/**
+admin/control/schema.sql
+admin/control/README.md
+admin/control/tests/**

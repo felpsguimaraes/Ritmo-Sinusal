@@ -7,3 +7,10 @@
 
 /aulas/apostila-lesao-celular/conteudo.bin
   Cache-Control: public, max-age=604800
+
+/admin/control/*
+  Cache-Control: no-store
+  X-Frame-Options: DENY
+
+/admin/control/schema.sql
+  X-Robots-Tag: noindex
