@@ -58,39 +58,20 @@
     if (salvar && S.uid && S.dentro) salvarPrefs({ idioma: l });
   }
 
-  // ---------------------------------------------------------------- Firebase
-  firebase.initializeApp(W.SINUSAL_FIREBASE);
-  var auth = firebase.auth(), db = firebase.firestore();
-  try { auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function () {}) } catch (e) {}
-  var agora = function () { return firebase.firestore.FieldValue.serverTimestamp() };
-
+  // ---------------------------------------------------------------- Supabase
+  var backend = W.SinusBackend;
+  if (!backend) throw new Error('Não foi possível carregar o Supabase.');
+  var auth = backend.auth, db = backend.db;
+  var agora = function () { return new Date().toISOString() };
   function msg(t, erro) { var m = $id('sxMsg'); if (!m) return; m.textContent = t || ''; m.className = 'sxMsg' + (erro ? ' erro' : '') }
   function standalone() { return (W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true }
   function ehIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) }
-
   function entrar() {
-    var b = $id('sxEntrar');
-    var g = new firebase.auth.GoogleAuthProvider(); g.setCustomParameters({ prompt: 'select_account' });
-    if (b) b.disabled = true; msg('Abrindo a entrada do Google…');
-    auth.signInWithPopup(g).catch(function (e) {
-      var c = (e && e.code) || '';
-      if (c === 'auth/popup-blocked' || c === 'auth/operation-not-supported-in-this-environment' || c === 'auth/web-storage-unsupported') {
-        try { sessionStorage.setItem('sinus_redirect', '1') } catch (_) {}
-        return auth.signInWithRedirect(g);
-      }
-      if (b) b.disabled = false;
-      if (c === 'auth/popup-closed-by-user' || c === 'auth/cancelled-popup-request') return msg('');
-      if (c === 'auth/unauthorized-domain') return msg('Este endereço ainda não está autorizado no login do Google.', true);
-      if (c === 'auth/network-request-failed') return msg('Sem conexão. Confira a internet e tente de novo.', true);
-      msg('Não foi possível entrar. Tente de novo.' + (c ? ' (' + c + ')' : ''), true);
-    });
+    var b = $id('sxEntrar'); if (b) b.disabled = true;
+    msg('Abrindo a entrada do Google…');
+    backend.signIn().catch(function(e) { if (b) b.disabled = false; msg(e.message || 'Não foi possível entrar. Tente novamente.', true) });
   }
-  auth.getRedirectResult().then(function (r) {
-    var tentou = false; try { tentou = sessionStorage.getItem('sinus_redirect') === '1'; sessionStorage.removeItem('sinus_redirect') } catch (e) {}
-    if (tentou && !(r && r.user) && !auth.currentUser) msg(standalone() && ehIOS() ? 'O login não voltou para o ícone. Abra o Sinus pelo Safari, entre por lá e depois use o ícone.' : 'O Google não devolveu o login. Tente de novo.', true);
-  }).catch(function (e) { msg('Não foi possível entrar.' + (e && e.code ? ' (' + e.code + ')' : ''), true) });
-
-  function sair() { auth.signOut().then(function () { try { sessionStorage.clear() } catch (e) {} location.replace('/') }) }
+  function sair() { auth.signOut().then(function () { location.replace('/') }).catch(function(e) { msg(e.message, true) }) }
 
   // ---------------------------------------------------------------- telas
   function mostrar(qual) {
@@ -103,7 +84,7 @@
 
   auth.onAuthStateChanged(function (u) {
     if (!u) { S.uid = ''; return mostrarEntrada() }
-    S.uid = u.uid; S.email = String(u.email || '').toLowerCase(); S.dono = S.email === DONO;
+    S.uid = u.uid; S.email = String(u.email || '').toLowerCase(); S.dono = u.isAdmin === true;
     S.nomeGoogle = u.displayName || '';
     msg('Carregando seu espaço…');
     var local = {}; try { local = JSON.parse(localStorage.getItem('sinus_prefs_' + u.uid) || '{}') } catch (e) {}
@@ -122,7 +103,8 @@
       var completo = !!(S.perfil && S.perfil.nome && S.perfil.turma && S.perfil.whatsapp);
       if (!completo || !S.prefs.onboarding) return abrirPersonalizacao();
       entrarNoPainel();
-    }).catch(function () {
+    }).catch(function (error) {
+      console.error('SINUS: falha ao carregar painel', error);
       msg('Não foi possível carregar seu cadastro. Confira a internet e tente de novo.', true);
       mostrarEntrada();
     });
@@ -260,20 +242,11 @@
 
   function salvarPersonalizacao() {
     P.salvando = true; P.erro = ''; renderOnb();
-    var lote = db.batch(), zap = P.whatsapp, novoZap = !S.perfil || S.perfil.whatsapp !== zap;
+    var zap = P.whatsapp;
     var perfil = { nome: P.nome, turma: P.turma, whatsapp: zap, email: S.email, ultimo_acesso: agora() };
     if (!S.perfil) perfil.primeiro_acesso = agora();
-    if (novoZap) lote.set(db.doc('whats/' + zap), { uid: S.uid, em: agora() });
-    lote.set(db.doc('perfis/' + S.uid), perfil, { merge: true });
-    var semZap = function () { var l2 = db.batch(); l2.set(db.doc('perfis/' + S.uid), perfil, { merge: true }); return l2.commit() };
-    lote.commit().catch(function (e) {
-      if (!novoZap) throw e;
-      // o número pode já ser desta conta (reserva antiga): confere e grava só o perfil
-      return db.doc('whats/' + zap).get().then(function (w) {
-        if (w.exists && w.data().uid === S.uid) return semZap();
-        throw { code: 'whats-ocupado' };
-      });
-    }).then(function () {
+    db.doc('perfis/' + S.uid).set(perfil, { merge: true }).then(function () {
+
       S.perfil = Object.assign({}, S.perfil || {}, { nome: P.nome, turma: P.turma, whatsapp: zap, email: S.email });
       S.nome = P.nome; S.turma = P.turma; S.whatsapp = zap;
       return salvarPrefs({
@@ -405,7 +378,7 @@
       var lista = [];
       snap.forEach(function (d) {
         var p = d.data(); if (d.id === S.uid) return;
-        var ts = function (x) { return x && x.toDate ? x.toDate().toISOString() : '' };
+        var ts = function (x) { return typeof x === 'string' ? x : '' };
         lista.push({ id: d.id, name: p.nome || '—', email: p.email || '', role: 'student', status: 'active', planId: 'sinus', period: '5º período', class: p.turma || '—', group: '', devices: 1, createdAt: ts(p.primeiro_acesso), lastSeenAt: ts(p.ultimo_acesso), whatsapp: p.whatsapp || '' });
       });
       DB.users = [SESSAO].concat(lista);
@@ -544,7 +517,7 @@
     if (!hor) return '<p class="soft" style="font-size:12px">Escolha sua turma no Perfil para ver o horário.</p>';
     var hoje = diaDeHoje(), hojeIdx = DIAS.findIndex(function (d) { return d[0] === hoje });
     var html = '<div class="sxCalGrid">';
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < DIAS.length; i++) {
       var d = DIAS[i], dia = d[0], diaLabel = d[1];
       var lista = (hor.dias[dia] || []).slice().sort(function (a, b) { return a.time < b.time ? -1 : 1 });
       var eh_hoje = dia === hoje ? ' hoje' : '';
@@ -768,6 +741,6 @@
   // ---------------------------------------------------------------- início
   aplicarTema(temaAtual());
   definirIdioma(idioma(), false);
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
+  if (!W.SINUS_DEMO && 'serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
   W.SinusApp = { S: S, sair: sair, montarDados: montarDados, abrirPersonalizacao: abrirPersonalizacao, definirIdioma: definirIdioma, aplicarTema: aplicarTema };
 })();

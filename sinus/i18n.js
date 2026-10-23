@@ -591,7 +591,7 @@
     ['PDF', 'PDF', 'PDF'], ['Documento', 'Documento', 'Document'], ['Imagem', 'Imagen', 'Image'], ['Macroscopia', 'Macroscopía', 'Gross pathology'], ['Lâmina', 'Lámina', 'Microscope slide'], ['Prova', 'Examen', 'Exam'], ['Foto da aula', 'Foto de la clase', 'Class photo'], ['Livro', 'Libro', 'Book'],
     // Sinus: entrada, personalização e painel
     ['Plataforma acadêmica premium', 'Plataforma académica premium', 'Premium academic platform'],
-    ['Organização elegante para', 'Organización elegante para', 'Elegant organization for'],
+    ['Medicina no seu ritmo.', 'Medicina a tu ritmo.', 'Medicine at your pace.'],
     ['alunos de Medicina.', 'estudiantes de Medicina.', 'medical students.'],
     ['Uma interface fluida e refinada para unir horários, matérias, grupos práticos, aulas gravadas, transcrição, biblioteca, treino para prova e administração comercial em um único produto.', 'Una interfaz fluida y refinada que une horarios, materias, grupos prácticos, clases grabadas, transcripción, biblioteca, entrenamiento para el examen y administración en un solo producto.', 'A fluid, refined interface that brings together schedules, subjects, practical groups, recorded classes, transcription, library, exam training and management in one product.'],
     ['Idioma do painel', 'Idioma del panel', 'Panel language'],
