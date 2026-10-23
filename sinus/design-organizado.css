@@ -47,3 +47,33 @@ html[data-theme="dark"] .sxBottomNav{background:rgba(20,33,26,.96)!important}
 html[data-theme="dark"] .sxSeg{background:#102119!important}
 html[data-theme="dark"] .sxSeg button.on{background:#254538!important;color:#c2efda!important}
 .btn>.sinus-line-icon{width:18px;height:18px}.sinus-line-icon{overflow:visible}.card .iconWrap{margin-bottom:0}.navBtn .sinus-line-icon{width:22px;height:22px}
+/* Aplicação do modelo de cartões em toda a plataforma, inclusive Matérias. */
+#app .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+#app .cards>.card{display:flex;flex-direction:column;align-items:stretch;padding:26px!important;min-height:238px;border:1px solid var(--line)!important;border-radius:24px!important;background:var(--bg2,#fff)!important;transition:border-color .2s,transform .2s}
+#app .cards>.card:hover{border-color:#8db8a4!important;transform:translateY(-2px)}
+#app .cards .cardHead{display:flex;justify-content:space-between;align-items:center!important}
+#app .cards .iconWrap{background:transparent!important;width:55px!important;height:55px!important;color:#88a995!important}
+#app .cards .iconWrap svg{width:38px;height:38px}
+#app .cards>.card:nth-child(3n+2) .iconWrap{color:#a595ba!important}
+#app .cards>.card:nth-child(3n) .iconWrap{color:#b0a36c!important}
+#app .cards h3{font-size:22px!important;margin:20px 0 8px!important}
+#app .cards .tagRow{margin-top:auto!important;padding-top:20px}
+#app .cards .pill{max-width:70%;white-space:normal;text-align:right;background:transparent!important;color:var(--muted)!important;border:0!important;font-size:12px}
+#subjectView .subjectHero,#subjectView .v11SubjectHero{padding:28px!important;border:1px solid var(--line)!important;border-radius:24px!important;background:var(--bg2)!important}
+#subjectTabs{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px!important;margin:22px 0;padding:0!important;overflow:visible}
+#subjectTabs>button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;min-height:125px!important;padding:18px 10px!important;background:var(--bg2)!important;color:var(--text)!important;border:1px solid var(--line)!important;border-radius:20px!important;font-size:14px;font-weight:600}
+#subjectTabs>button svg{width:30px;height:30px;color:#88a995}
+#subjectTabs>button:nth-child(3n+2) svg{color:#a595ba}
+#subjectTabs>button:nth-child(3n) svg{color:#b0a36c}
+#subjectTabs>button.active{background:#e4f1eb!important;border-color:#a8cdbb!important;color:#176650!important}
+#app .quickItem,#app .v11InfoBox,#app .sxStudyExtras,#app .v11Viewer,#app .adminBlock,#app .sinus-side-card{border-radius:20px!important;border-color:var(--line)!important}
+#app .quickItem{padding:17px!important;gap:14px;line-height:1.5}
+#app .sxExerciseChoices{gap:10px;flex-wrap:wrap;margin-bottom:18px}
+#app .sinus-profile-context{font-size:13px;color:var(--muted);margin:0 0 20px}
+#app .heading p{font-size:14px!important;line-height:1.6!important}
+#app .glass h3{line-height:1.35}
+@media(max-width:850px){#app .cards{grid-template-columns:repeat(2,minmax(0,1fr))}#subjectTabs{grid-template-columns:repeat(2,minmax(0,1fr))}#subjectTabs>button:last-child{grid-column:1/-1}}
+@media(max-width:520px){#app .cards{grid-template-columns:1fr}#app .cards>.card{min-height:210px;padding:22px!important}#subjectView .subjectHero,#subjectView .v11SubjectHero{padding:22px!important}}
+html[data-theme="dark"] #app{--bg2:#19271f}html[data-theme="dark"] #subjectTabs>button.active{background:#254538!important;color:#e3eee8!important}
+
+.sxAcademicSubject{border:1px solid var(--line);border-radius:18px;padding:18px;margin:12px 0}.sxAcademicSubject h4{font-size:16px;margin-bottom:7px}.sxAcademicSubject>.soft{font-size:12px;margin-bottom:12px}.sxAcademicActivity{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}.sxAcademicActivity>strong{display:block;font-size:13px;margin-bottom:12px}.sxAcademicActivity .field{margin-top:12px}

@@ -125,7 +125,7 @@
     P = {
       passo: 0, nome: S.nome || '', whatsapp: S.whatsapp || '',
       faculdade: pr.faculdade || 'UCP', campus: pr.campus || 'Ciudad del Este', periodo: pr.periodo || 5,
-      turma: S.turma || pr.turma || '', grupo: pr.grupo || '', papel: pr.papel || 'Estudante',
+      turma: S.turma || pr.turma || '', practiceAssignments:pr.practiceAssignments||{}, grupo: pr.grupo || '', subdivision: pr.subdivision || '', hospitalSubdivision: pr.hospitalSubdivision || '', papel: pr.papel || 'Estudante',
       gruposMateria: Object.assign({}, pr.gruposMateria || {}), foco: pr.foco || 'semestre',
       estilos: (pr.estilos || []).slice(), indicacao: pr.indicacao || '', erro: '', salvando: false
     };
@@ -140,6 +140,13 @@
     }).join('') + '</select></label>';
   }
 
+  function academicFields(prefix,period,cohort,prefs){
+    var subjects=W.SinusTimetable?.academicOptions(period,cohort)||[];
+    if(!subjects.length)return '<p class="soft">Escolha o período e a turma para ver as práticas oficiais.</p>';
+    return '<div class="sxAcademic"><h3>Práticas e rotações da sua turma</h3>'+subjects.map(function(subject){return '<section class="sxAcademicSubject"><h4>'+H(subject.title)+'</h4><p class="soft">'+(subject.activities.length?(subject.theory?'Teoria · Prática':'Prática'):'Somente teoria')+'</p>'+subject.activities.map(function(a){var selected=prefs.practiceAssignments?.[a.key]||{},legacy=(prefs.gruposMateria||{})[subject.title]||prefs.grupo||'',group=String(selected.group??legacy).match(/\d+/)?.[0]?.replace(/^0+/,'')||'';if(a.groups.indexOf(group)<0)group='';var rows=a.events.filter(function(e){return !group||!e.group||e.group===group}),subs=[...new Set(rows.flatMap(function(e){return e.subdivision?[e.subdivision]:(e.cycle==='simulation'||e.cycle==='consultation')?['1','2','3']:[]}))].sort();var id=prefix+'Act'+encodeURIComponent(a.key),label=a.kind==='rotation'?'Hospital Los Ángeles · rotações':'Prática · laboratório / atendimento';var savedSub=String(selected.subdivision||(a.kind==='rotation'?prefs.hospitalSubdivision:prefs.subdivision)||'');if(subs.indexOf(savedSub)<0)savedSub='';return '<div class="sxAcademicActivity" data-academic-key="'+H(a.key)+'"><strong>'+label+'</strong>'+(a.groups.length?campoSel(id+'Group','Grupo de prática',[['','Escolha seu grupo']].concat(a.groups.map(function(g){return [g,'Grupo '+g]})),group):'<p>Prática sem divisão por grupos.</p>')+(subs.length?campoSel(id+'Sub','Subdivisão',[['','Escolha sua subdivisão']].concat(subs.map(function(x){return [x,'Subdivisão '+x]})),savedSub):'')+(a.kind==='rotation'?'<p class="sxHint">Datas, locais e rodízios seguem o calendário oficial da sua turma e grupo.</p>':'')+'</div>'}).join('')+'</section>'}).join('')+'</div>';
+  }
+  function readAcademic(prefix){var out={};D.querySelectorAll('#'+prefix+'Academic [data-academic-key]').forEach(function(el){var key=el.dataset.academicKey,id=prefix+'Act'+encodeURIComponent(key);out[key]={group:$id(id+'Group')?.value||'',subdivision:$id(id+'Sub')?.value||''}});return out}
+  function refreshAcademic(prefix){var period=$id(prefix==='p'?'pPer':'pfPeriod')?.value,cohort=$id(prefix==='p'?'pTurma':'pfClass')?.value,box=$id(prefix+'Academic');if(!box)return;var base=prefix==='p'?P:S.prefs,prefs=Object.assign({},base,{practiceAssignments:readAcademic(prefix)});box.innerHTML=academicFields(prefix,period,cohort,prefs)}
   function corpoPasso(k) {
     if (k === 'nome') return {
       eyebrow: 'Vamos começar pelo seu nome', titulo: 'Como te <em>chamamos?</em>', lead: 'Seu espaço de estudo merece a sua cara.',
@@ -162,18 +169,14 @@
         '<div class="sxConnect"><span class="eyebrow">Meu espaço · Tudo se conecta</span><h3>Seu estudo, do seu jeito.</h3><div class="row"><span>Materiais</span><span>Aulas</span><span>Caderno</span></div><small>Tudo salvo no seu espaço. Você continua de onde parou.</small></div>'
     };
     if (k === 'turma') {
-      var g = '<div class="sxGroups"><h4>Seu grupo em cada matéria</h4><p class="sxHint">O grupo pode mudar de uma matéria para outra. A agenda usa cada escolha para mostrar suas aulas práticas.</p>' +
-        GRUPOS_MATERIA.map(function (m, i) {
-          return campoSel('pGm' + i, m, [['', 'Todos os grupos'], ['Grupo 1', 'Grupo 1 · GP01'], ['Grupo 2', 'Grupo 2 · GP02'], ['Grupo 3', 'Grupo 3 · GP03']], P.gruposMateria[m] || '');
-        }).join('') + '</div>';
+      var g = '<div id="pAcademic">'+academicFields('p',P.periodo,P.turma,P)+'</div>';
       return {
         eyebrow: 'Um espaço que entende sua turma', titulo: 'Qual é o seu <em>momento na Medicina?</em>', lead: 'Vamos organizar suas matérias e seus horários a partir daqui. Você pode mudar tudo no Perfil depois.',
         corpo: '<div class="grid2">' + campoSel('pFac', 'Faculdade', ['UCP', 'Outra'], P.faculdade) +
           '<label class="field"><span>Campus</span><input id="pCampus" value="' + H(P.campus) + '" placeholder="Ciudad del Este"></label></div>' +
           '<div class="grid2">' + campoSel('pPer', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), P.periodo) +
           campoSel('pTurma', 'Turma (sección)', [['', 'Escolha']].concat(turmasDoPeriodo(P.periodo).map(function (x) { return [x, x] })), P.turma) + '</div>' +
-          '<div class="grid2">' + campoSel('pGrupo', 'Grupo padrão de prática', [['', 'Todos os grupos']].concat(['GP01', 'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08'].map(function (x) { return [x, x] })), P.grupo) +
-          campoSel('pPapel', 'Você participa como', ['Estudante', 'Monitor', 'Delegado'], P.papel) + '</div>' + g +
+          campoSel('pPapel', 'Você participa como', ['Estudante', 'Monitor', 'Delegado'], P.papel) + g +
           '<p class="sxHint">As escolhas são guardadas por faculdade, campus, período e turma. As aulas teóricas continuam na agenda.</p>'
       };
     }
@@ -226,8 +229,8 @@
     if (k === 'nome') { P.nome = v('pNome').trim(); P.whatsapp = v('pZap').replace(/\D/g, '') }
     if (k === 'turma') {
       P.faculdade = v('pFac') || 'UCP'; P.campus = v('pCampus').trim(); P.periodo = Number(v('pPer') || 5);
-      P.turma = v('pTurma'); P.grupo = v('pGrupo'); P.papel = v('pPapel') || 'Estudante';
-      GRUPOS_MATERIA.forEach(function (m, i) { var x = v('pGm' + i); if (x) P.gruposMateria[m] = x; else delete P.gruposMateria[m] });
+      P.turma = v('pTurma'); P.practiceAssignments=readAcademic('p'); P.papel = v('pPapel') || 'Estudante';
+      P.gruposMateria={}; Object.keys(P.practiceAssignments).forEach(function(k){if(k.endsWith('::practice'))P.gruposMateria[k.split('::')[0]]=P.practiceAssignments[k].group});
     }
     if (k === 'indicacao') P.indicacao = v('pInd').trim();
   }
@@ -252,7 +255,7 @@
       S.nome = P.nome; S.turma = P.turma; S.whatsapp = zap;
       return salvarPrefs({
         onboarding: true, idioma: idioma(), tema: temaAtual(), faculdade: P.faculdade, campus: P.campus, periodo: P.periodo,
-        turma: P.turma, grupo: P.grupo, papel: P.papel, gruposMateria: P.gruposMateria, foco: P.foco, estilos: P.estilos, indicacao: P.indicacao
+        turma: P.turma, grupo: P.grupo, practiceAssignments:P.practiceAssignments, papel: P.papel, gruposMateria: P.gruposMateria, foco: P.foco, estilos: P.estilos, indicacao: P.indicacao
       });
     }).then(function () { P = null; entrarNoPainel() }).catch(function (e) {
       P.salvando = false;
@@ -297,6 +300,7 @@
   function classificar(m, i) {
     var img = /^image\//.test(i.mime || ''), t = i.t || '', temPratica = !!(m.pratica && m.pratica.length);
     if (i.k === 'pratica') return { cat: 'pratica', mode: 'practice', sec: /macrosc/i.test(t) ? 'macro' : 'laminas', kind: img ? 'Imagem' : 'Prática' };
+    if (i.k === 'prova' || /prova|examen|parcial|evaluaci[oó]n/i.test(t)) return { cat: 'provas', mode: RE_PRATICA.test(t) ? 'practice' : 'theory', sec: 'provas', kind: img ? 'Imagem' : tipoArq(i) };
     if (temPratica && RE_PRATICA.test(t)) {
       if (/macrosc/i.test(t)) return { cat: 'pratica', mode: 'practice', sec: 'macro', kind: 'Macroscopia' };
       if (i.k === 'video') return { cat: 'videos', mode: 'practice', sec: 'videos', kind: 'Vídeo' };
@@ -475,9 +479,9 @@
     pillPlano();
     prepararDivisao();
     var exercicios = ['training', 'cartoes', 'provas', 'review'];
-    var principal = exercicios.indexOf(t) >= 0 ? 'training' : (t === 'audios' ? 'videos' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila'));
+    var principal = t === 'provas' ? 'provas' : exercicios.indexOf(t) >= 0 ? 'training' : (t === 'audios' ? 'videos' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila'));
     var tabs = $id('subjectTabs');
-    if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos / Áudios'],['training','Exercícios']].map(function (item) {
+    if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos / Áudios'],['provas','Provas'],['training','Exercícios']].map(function (item) {
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
@@ -684,8 +688,7 @@
       '<label class="field"><span>WhatsApp</span><input value="' + H(S.whatsapp) + '" readonly></label>' +
       '<div class="grid3">' + campoSel('pfPeriod', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), per) +
       campoSel('pfClass', 'Turma (sección)', turmasDoPeriodo(per), S.turma) +
-      campoSel('pfGroup', 'Grupo de prática', [['', 'Todos']].concat(['GP01', 'GP02', 'GP03', 'GP04', 'GP05', 'GP06', 'GP07', 'GP08'].map(function (x) { return [x, x] })), pr.grupo || '') + '</div>' +
-      GRUPOS_MATERIA.map(function (m, i) { return campoSel('pfGm' + i, 'Grupo em ' + m, [['', 'Todos os grupos'], ['Grupo 1', 'Grupo 1 · GP01'], ['Grupo 2', 'Grupo 2 · GP02'], ['Grupo 3', 'Grupo 3 · GP03']], (pr.gruposMateria || {})[m] || '') }).join('') +
+      '</div><div id="pfAcademic">'+academicFields('pf',per,S.turma,pr)+'</div>' +
       '<p class="sxErr" id="pfErr"></p><button class="btn primary" onclick="saveProfile()">Salvar perfil</button></div>' +
       '<div class="stack"><div class="glass adminBlock"><span class="eyebrow">Aparência e idioma</span><h3 style="font-size:16px;margin:8px 0 10px">Do seu jeito</h3>' +
       '<label class="field"><span>Idioma do painel</span><div class="sxSeg"><button type="button" data-sx-lang="pt">Português</button><button type="button" data-sx-lang="es">Español</button><button type="button" data-sx-lang="en">English</button></div></label>' +
@@ -694,12 +697,12 @@
     definirIdioma(idioma(), false);
   };
   W.saveProfile = function () {
-    var nome = ($id('pfName').value || '').trim(), turma = $id('pfClass').value, per = Number($id('pfPeriod').value || 5), grupo = $id('pfGroup').value;
-    var gm = {}; GRUPOS_MATERIA.forEach(function (m, i) { var v = $id('pfGm' + i).value; if (v) gm[m] = v });
+    var nome = ($id('pfName').value || '').trim(), turma = $id('pfClass').value, per = Number($id('pfPeriod').value || 5);
+    var assignments=readAcademic('pf'),gm={};Object.keys(assignments).forEach(function(k){if(k.endsWith('::practice'))gm[k.split('::')[0]]=assignments[k].group});
     if (nome.length < 3) { $id('pfErr').textContent = 'Escreva seu nome (pelo menos 3 letras).'; return }
     db.doc('perfis/' + S.uid).set({ nome: nome, turma: turma, whatsapp: S.whatsapp, email: S.email, ultimo_acesso: agora() }, { merge: true }).then(function () {
       S.nome = nome; S.turma = turma;
-      return salvarPrefs({ periodo: per, turma: turma, grupo: grupo, gruposMateria: gm });
+      return salvarPrefs({ periodo: per, turma: turma, grupo:'', gruposMateria:gm, practiceAssignments:assignments });
     }).then(function () { montarDados(); renderAll(); toast('Perfil salvo') }).catch(function () { $id('pfErr').textContent = 'Não foi possível salvar. Tente de novo.' });
   };
 
@@ -762,6 +765,7 @@
   D.addEventListener('change', function (e) {
     var t = e.target;
     if (t.id === 'pPer' || t.id === 'pfPeriod') { var cohort = $id(t.id === 'pPer' ? 'pTurma' : 'pfClass'); if (cohort) { var previous = cohort.value, choices = turmasDoPeriodo(t.value); cohort.innerHTML = choices.map(function(c) { return '<option value="'+c+'">'+c+'</option>' }).join(''); cohort.value = choices.indexOf(previous)>=0 ? previous : choices[0] } }
+    if (['pPer','pTurma','pfPeriod','pfClass'].indexOf(t.id)>=0 || t.closest?.('[data-academic-key]')) refreshAcademic(t.id.startsWith('pf')?'pf':t.closest?.('#pfAcademic')?'pf':'p');
     if (t.matches && t.matches('[data-sx-lang-select]')) definirIdioma(t.value, true);
   });
   D.addEventListener('input', function (e) {
