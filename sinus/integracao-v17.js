@@ -472,7 +472,7 @@
     var t = UI.tab;
     if (t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
       v11SubjectHeader();
-      if (t === 'apostila') renderApostilaMateria();
+      if (t === 'apostila') { if(v11List('apostila').length) renderResourceCategory('apostila'); else renderApostilaMateria(); }
       else if (t === 'cartoes') renderCartoes();
       else renderResourceCategory(t);
     } else _renderSubject();
