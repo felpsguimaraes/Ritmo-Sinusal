@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Sinus · seu estudo de Medicina</title>
+<title>SINUS · seu estudo de Medicina</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#1f7a5d">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -40,7 +40,7 @@
       <button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button>
     </div>
     <span class="pill violet" style="margin-top:22px">Plataforma acadêmica premium</span>
-    <h1>Organização elegante para<br><em>alunos de Medicina.</em></h1>
+    <h1>Medicina no<br><em>seu ritmo.</em></h1>
     <div class="sxEntrada">
       <div class="sxLang" role="group" aria-label="Idioma do painel">
         <span class="sxLangLabel">Idioma do painel</span>
@@ -57,13 +57,13 @@
       <p class="sxMsg" id="sxMsg" role="status" aria-live="polite"></p>
     </div>
 
-    <p>Uma interface fluida e refinada para unir horários, matérias, grupos práticos, aulas gravadas, transcrição, biblioteca, treino para prova e administração comercial em um único produto.</p>
+    <p>Suas aulas, materiais e revisões em um só lugar.</p>
 
     <div class="metrics">
       <div class="metric"><b>7+</b><span>formatos de treino que podem ser combinados</span></div>
-      <div class="metric"><b>1º–10º</b><span>estrutura acadêmica preparada por período</span></div>
+      <div class="metric"><b>Todos os períodos</b><span>Do ciclo básico ao internato</span></div>
       <div class="metric"><b>Teoria + prática</b><span>grupos gerais e grupos específicos por matéria</span></div>
-      <div class="metric"><b>HTML direto</b><span>abre no navegador, sem travas de app local</span></div>
+      <div class="metric"><b>Revalida + Enamed</b><span>Painéis de treino e revisão</span></div>
     </div>
   </section>
   <aside class="previewShell">
@@ -238,10 +238,8 @@
 </div>
 <div id="toast"></div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="/aulas/config.js?v=12"></script>
+<script src="/sinus/vendor/supabase.min.js"></script>
+<script src="/sinus/supabase.js?v=13"></script>
 <script src="/aulas/catalogo.js?v=4"></script>
 <script src="/aulas/flashcards/cartoes.js?v=2"></script>
 <script src="/aulas/agenda.js?v=3"></script>
@@ -250,6 +248,7 @@
 <script src="/sinus/drive-sync.js?v=1"></script>
 <script src="/sinus/acervo-materias.js?v=1"></script>
 <script src="/sinus/integracao.js?v=1"></script>
+
 <script src="/sinus/agenda-liquid.js?v=1"></script>
 <script src="/sinus/agenda-liquid.js?v=1"></script>
 <script src="/sinus/identidade-esfera.js?v=1"></script>
