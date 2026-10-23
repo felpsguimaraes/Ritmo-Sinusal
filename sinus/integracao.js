@@ -406,6 +406,61 @@
     ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
 
   function pillPlano() { var p = $id('subjectPlanPill'); if (p) p.textContent = 'Acesso completo' }
+  var renderVideoOriginal = W.renderVideos, renderAudioOriginal = W.renderAudios;
+  function renderMidias() {
+    var content = $id('subjectContent');
+    renderVideoOriginal();
+    var videos = D.createElement('section'); videos.className='sxMediaSection'; videos.setAttribute('aria-label','Vídeos');
+    while (content.firstChild) videos.appendChild(content.firstChild);
+    renderAudioOriginal();
+    var audios = D.createElement('section'); audios.className='sxMediaSection'; audios.setAttribute('aria-label','Áudios');
+    while (content.firstChild) audios.appendChild(content.firstChild);
+    content.append(videos,audios);
+  }
+  W.renderVideos = renderMidias; W.renderAudios = renderMidias;
+  var renderTrainingOriginal = W.renderTrainingBuilder;
+  W.renderTrainingBuilder = function () {
+    renderTrainingOriginal();
+    var duplicate = D.querySelector('#subjectContent .trainTabs'); if (duplicate) duplicate.remove();
+    var intro = D.querySelector('#subjectContent .trainHero p'); if (intro) intro.textContent = 'Selecione um formato ou combine vários na lista abaixo.';
+  };
+  var studyQuery = new URLSearchParams(location.search);
+  var studyEmbedded = W.parent !== W && studyQuery.has('sxStudySubject');
+  var splitSubject = '';
+  function fecharDivisao() {
+    var layout = $id('sxSplitLayout'), content = $id('subjectContent');
+    if (layout && content) { layout.before(content); layout.remove() }
+    var toggle = $id('sxSplitToggle'); if (toggle) { toggle.textContent = 'Dividir tela'; toggle.setAttribute('aria-expanded', 'false') }
+    var ratio = D.querySelector('.sxSplitRatio'); if (ratio) ratio.remove();
+    splitSubject = '';
+  }
+  function prepararDivisao() {
+    if (studyEmbedded) return;
+    if (splitSubject && splitSubject !== UI.subject + ':' + UI.mode) fecharDivisao();
+    if ($id('sxSplitTools')) return;
+    var tools = D.createElement('div'); tools.id = 'sxSplitTools'; tools.className = 'sxSplitTools';
+    tools.innerHTML = '<button class="btn sm" id="sxSplitToggle" type="button" aria-expanded="false">Dividir tela</button>';
+    $id('subjectTabs').after(tools);
+    tools.firstElementChild.addEventListener('click', function () {
+      if ($id('sxSplitLayout')) { fecharDivisao(); return }
+      splitSubject = UI.subject + ':' + UI.mode;
+      var content = $id('subjectContent'), layout = D.createElement('div'); layout.id = 'sxSplitLayout';
+      content.before(layout); layout.appendChild(content);
+      var right = D.createElement('section'); right.className = 'sxSplitRight';
+      right.innerHTML = '<label class="sxSplitPicker">À direita <select aria-label="Conteúdo do painel direito"><option value="videos">Vídeos / Áudios</option><option value="apostila">Resumo / Apostila</option><option value="slides">Slides</option><option value="training">Exercícios</option><option value="cartoes">Flashcards</option><option value="provas">Provas</option><option value="notebook">Caderno</option></select></label><iframe title="Segundo conteúdo de estudo" allow="fullscreen; picture-in-picture" loading="eager"></iframe>';
+      layout.appendChild(right);
+      var frame = right.querySelector('iframe');
+      function abrirDireita() {
+        var url = new URL(location.pathname, location.origin);
+        url.searchParams.set('sxStudySubject', UI.subject); url.searchParams.set('sxStudyMode', UI.mode); url.searchParams.set('sxStudyTab', right.querySelector('select').value);
+        frame.src = url.href;
+      }
+      right.querySelector('select').addEventListener('change', abrirDireita); abrirDireita();
+      var ratio = D.createElement('label'); ratio.className = 'sxSplitRatio'; ratio.innerHTML = 'Largura dos painéis <input type="range" min="30" max="70" value="50" aria-label="Largura do painel esquerdo">';
+      tools.appendChild(ratio); ratio.querySelector('input').addEventListener('input', function(e){layout.style.gridTemplateColumns=e.target.value+'fr '+(100-Number(e.target.value))+'fr'});
+      tools.firstElementChild.textContent = 'Fechar divisão'; tools.firstElementChild.setAttribute('aria-expanded','true');
+    });
+  }
   var _renderSubject = W.renderSubject;
   W.renderSubject = function () {
     if (!UI.subject) return;
@@ -417,10 +472,11 @@
       else renderResourceCategory(t);
     } else _renderSubject();
     pillPlano();
+    prepararDivisao();
     var exercicios = ['training', 'cartoes', 'provas', 'review'];
-    var principal = exercicios.indexOf(t) >= 0 ? 'training' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila');
+    var principal = exercicios.indexOf(t) >= 0 ? 'training' : (t === 'audios' ? 'videos' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila'));
     var tabs = $id('subjectTabs');
-    if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos'],['training','Exercícios']].map(function (item) {
+    if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos / Áudios'],['training','Exercícios']].map(function (item) {
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
@@ -487,11 +543,14 @@
     var deck = CART.deck, c = CART.fila[CART.i], total = deck.cartoes.length;
     var dom = deck.cartoes.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
     var chips = ks.length > 1 ? '<div class="filters" style="margin-bottom:12px">' + ks.map(function (x) { return '<button class="chip ' + (x === CART.key ? 'active' : '') + '" data-sx-deck="' + H(x) + '">' + H(DECKS[x].nome || x.split('/')[1]) + '</button>' }).join('') + '</div>' : '';
-    box.innerHTML = chips + '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="pill">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></div>' +
+    box.innerHTML = '<section class="sxFlashStudy">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">FLASHCARDS</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
+      '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
+      '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
       '<p class="sxQ">' + H(c ? c.q : '') + '</p>' +
       (CART.mostrar ? '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div><div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>'
         : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>') + '</div>' +
-      '<p class="soft" style="font-size:12px;margin-top:12px;line-height:1.6">' + dom + ' de ' + total + ' dominados. Nível alto, com perguntas de raciocínio e casos. Fonte: ' + H(deck.fonte || '') + '. Seu progresso fica salvo na sua conta.</p>';
+      '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">Pular →</button></nav>' +
+      '<footer class="sxFlashFooter"><b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span><details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';
   }
   function gravarGrau(g) {
     var c = CART.fila[CART.i]; if (!c) return;
@@ -549,17 +608,14 @@
     return html;
   }
 
-  var _home = W.renderHome;
   W.renderHome = function () {
-    _home();
-    var el = $id('page-home'); if (!el) return;
-    var head = el.querySelector('.heading');
-    var pill = head && head.querySelector('.pill'); if (pill) pill.textContent = 'Turma ' + (S.turma || '—') + ' · UCP';
-    var bloco = '<div class="grid2" style="margin-bottom:14px;align-items:start">' +
-      '<div class="glass sxBlock" style="margin:0"><span class="eyebrow">Próximas provas e avisos</span><h3>Por data</h3>' + htmlAvisos(proximosAvisos(5)) +
-      '<button class="btn sm" style="margin-top:12px" onclick="nav(\'agenda\')">Ver agenda completa</button></div>' +
-      '<div class="glass sxBlock" style="margin:0"><span class="eyebrow">Sua semana · turma ' + H(S.turma) + '</span><h3>Aulas do dia</h3><div id="sxSemanaHome">' + htmlSemana(S.turma) + '</div></div></div>';
-    if (head) head.insertAdjacentHTML('afterend', bloco); else el.insertAdjacentHTML('afterbegin', bloco);
+    var el=$id('page-home');if(!el)return;
+    var first=(S.nome||S.nomeGoogle||'estudante').split(' ')[0];
+    el.innerHTML='<div class="sxHomeWelcome"><span class="eyebrow">Seu espaço no SINUS</span><h1>Olá, '+H(first)+'.</h1><p>O que vamos fazer hoje?</p></div><div class="sxHomeActions">'+
+      '<button class="glass" onclick="nav(\'subjects\')"><span>▤</span><h2>Estudar</h2><p>Apostilas, slides e aulas</p></button>'+
+      '<button class="glass" onclick="nav(\'questions\')"><span>◎</span><h2>Treinar</h2><p>Questões e exercícios</p></button>'+
+      '<button class="glass" onclick="nav(\'schedule\')"><span>▦</span><h2>Horários</h2><p>Aulas e compromissos</p></button>'+
+      '<button class="glass" onclick="nav(\'errors\')"><span>↻</span><h2>Revisar</h2><p>Retome suas dificuldades</p></button></div>';
   };
 
   var _schedule = W.renderSchedule;
@@ -663,7 +719,7 @@
   };
 
   D.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-virar],[data-sx-grau],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
+    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-virar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
     if (!t) return;
     if (t.id === 'sxEntrar') return entrar();
     if (t.hasAttribute('data-sx-tema')) return alternarTema();
@@ -685,6 +741,7 @@
     }
     if (t.hasAttribute('data-sx-deck')) { var s = subjectData(); ESCOLHA[s.slug] = t.getAttribute('data-sx-deck'); CART.key = ''; return renderCartoes() }
     if (t.hasAttribute('data-sx-virar')) { CART.mostrar = true; return renderCartoes() }
+    if (t.hasAttribute('data-sx-card-move')) { CART.i = (CART.i + Number(t.getAttribute('data-sx-card-move')) + CART.fila.length) % CART.fila.length; CART.mostrar = false; return renderCartoes() }
     if (t.hasAttribute('data-sx-grau')) return gravarGrau(t.getAttribute('data-sx-grau'));
     if (t.hasAttribute('data-sx-instalar')) { if (deferredInstall) { deferredInstall.prompt(); deferredInstall.userChoice.then(function (r) { if (r && r.outcome === 'accepted') P.instalou = true; deferredInstall = null; renderOnb() }) } return }
     if (t.hasAttribute('data-sx-foco')) { P.foco = t.getAttribute('data-sx-foco'); return renderOnb() }
@@ -745,6 +802,14 @@
     if (volta && volta.charAt(0) === '/' && volta.charAt(1) !== '/' && volta !== '/' && volta.indexOf('/aulas/materia') !== 0 && volta.indexOf('/aulas/anatopato') !== 0) return location.replace(volta);
     if (!m && volta) { var mm = volta.match(/[?&]m=([a-z]+)/); if (mm) m = mm[1]; else if (volta.indexOf('/aulas/anatopato') === 0) m = 'anatopato' }
     if (m && NOMES[m] && DB.subjects[NOMES[m]]) openSubject(NOMES[m]);
+    if (studyEmbedded) {
+      var studyName = studyQuery.get('sxStudySubject');
+      if (DB.subjects[studyName]) {
+        D.body.classList.add('sxStudyEmbedded'); openSubject(studyName);
+        if (studyQuery.get('sxStudyMode') === 'practice') setSubjectMode('practice');
+        setTab(studyQuery.get('sxStudyTab') || 'videos');
+      }
+    }
     if (q.toString()) try { history.replaceState(null, '', location.pathname) } catch (e) {}
   }
   function salvarAcesso() { db.doc('perfis/' + S.uid).set({ ultimo_acesso: agora() }, { merge: true }).catch(function () {}) }
@@ -754,4 +819,5 @@
   definirIdioma(idioma(), false);
   if (!W.SINUS_DEMO && 'serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
   W.SinusApp = { S: S, sair: sair, montarDados: montarDados, abrirPersonalizacao: abrirPersonalizacao, definirIdioma: definirIdioma, aplicarTema: aplicarTema };
+  if (studyEmbedded && W.SINUS_DEMO) backend.signIn();
 })();

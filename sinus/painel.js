@@ -365,13 +365,14 @@ function toggleTrainType(id,on){const set=new Set(UI.training.types); on?set.add
 function setTrainFilter(k,v){UI.training[k]=v; renderTrainingBuilder()}
 function startTraining(){let qs=filteredQs(); if(!qs.length) return openModal('Sem questões',`<p class="soft" style="font-size:11px">Não há questões para essa combinação de filtros.</p>`,closeModal); qs=[...qs].sort(()=>Math.random()-.5); if(UI.training.count!==999) qs=qs.slice(0,UI.training.count); UI.training.questions=qs; UI.training.index=0; UI.training.correct=0; UI.training.answered=false; renderQuestion()}
 function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) return renderTrainingResult(); const type=trainingTypes().find(x=>x.id===q.type)||{label:q.type}; $('subjectContent').innerHTML=`
-  <div class="glass trainRun">
+  <div class="glass trainRun sxQuestionRun">
     <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
       <button class="btn sm" onclick="renderTrainingBuilder()">← Configurar</button>
       <span class="pill">${T.index+1} / ${T.questions.length}</span>
       <span class="pill green">${T.correct} acertos</span>
       <span class="pill violet">${esc(type.label)}</span>
     </div>
+    <progress class="sxQuestionProgress" aria-label="Progresso do treino" max="${T.questions.length}" value="${T.index}"></progress>
     <div class="questionCard">
       <span class="eyebrow">${esc(q.period||'Geral')} · ${q.mode==='practice'?'Prática':'Teoria'}</span>
       <h2>${esc(q.prompt)}</h2>
@@ -381,7 +382,7 @@ function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) ret
     </div>
   </div>`}
 function questionUI(q){
-  if(q.type==='multiple') return (q.options||[]).map(o=>`<button class="answerBtn" onclick="answerTraining(${esc(JSON.stringify(o))})">${esc(o)}</button>`).join('');
+  if(q.type==='multiple') return (q.options||[]).map((o,i)=>`<button class="answerBtn" data-answer="${esc(o)}" onclick="answerTraining(${esc(JSON.stringify(o))})"><span class="sxAnswerLetter">${String.fromCharCode(65+i)}</span><span>${esc(o)}</span><span class="sxAnswerMark" aria-hidden="true"></span></button>`).join('');
   if(q.type==='truefalse') return ['Verdadeiro','Falso'].map(o=>`<button class="answerBtn" onclick="answerTraining('${o}')">${o}</button>`).join('');
   if(['cita','complete','image'].includes(q.type)) return `<textarea id="answerText" rows="4" placeholder="Digite sua resposta..."></textarea><button class="btn primary sm" style="margin-top:10px" onclick="answerTraining($('answerText').value)">Responder</button>`;
   if(q.type==='match') return `<div class="grid2">${(q.pairs||[]).map(p=>`<div class="quickItem"><span><b>${esc(p[0])}</b></span><span>${esc(p[1])}</span></div>`).join('')}</div><button class="btn primary sm" style="margin-top:10px" onclick="answerTraining(${esc(JSON.stringify(q.answer))})">Confirmar</button>`;
@@ -389,7 +390,22 @@ function questionUI(q){
   return `<button class="btn primary sm" onclick="answerTraining(${esc(JSON.stringify(q.answer))})">Revelar</button>`
 }
 function revealFlash(){const q=UI.training.questions[UI.training.index]; $('flashBox').innerHTML=`<div><span class="eyebrow">Resposta</span><h2>${esc(q.answer)}</h2><p class="soft" style="font-size:10px;line-height:1.7;margin-top:8px">${esc(q.explanation||'')}</p></div>`; $('flashRate').classList.remove('hidden')}
-function answerTraining(ans){const T=UI.training,q=T.questions[T.index];if(T.answered)return;let ok=false;if(q.type==='flashcard')ok=ans!=='__hard__';else if(q.type==='match')ok=true;else ok=String(ans||'').trim().toLowerCase()===String(q.answer||'').trim().toLowerCase();if(ok)T.correct++;T.answered=true;$('qFeedback').innerHTML=`<div class=\"feedback\"><b>${ok?'✓ Resposta correta':'Resposta esperada'}</b><p class=\"soft\" style=\"font-size:10px;line-height:1.7\"><strong>${esc(q.answer||'')}</strong><br>${esc(q.explanation||'')}</p></div><div style=\"text-align:right;margin-top:10px\"><button class=\"btn primary sm\" onclick=\"nextQuestion()\">${T.index+1<T.questions.length?'Próxima questão':'Ver resultado'}</button></div>`}
+function answerTraining(ans){
+ const T=UI.training,q=T.questions[T.index];if(T.answered)return;
+ const norm=x=>String(x||'').trim().toLowerCase();
+ const ok=q.type==='flashcard'?ans!=='__hard__':q.type==='match'||norm(ans)===norm(q.answer);
+ if(ok)T.correct++;T.answered=true;
+ document.querySelectorAll('#subjectContent .answerBtn').forEach(btn=>{
+  const value=btn.dataset.answer||btn.textContent.trim(),correct=norm(value)===norm(q.answer),chosen=norm(value)===norm(ans);
+  btn.disabled=true;btn.classList.toggle('sxAnswerCorrect',correct);btn.classList.toggle('sxAnswerWrong',chosen&&!correct);
+  if(correct||chosen){let mark=btn.querySelector('.sxAnswerMark');if(mark)mark.textContent=correct?'✓':'×';btn.setAttribute('aria-label',value+(correct?' — resposta correta':' — sua resposta, incorreta'));}
+ });
+ $('qFeedback').innerHTML=`<div class="sxAnswerStatus" role="status">${ok?'✓ Resposta correta':'Vamos revisar esta resposta'}</div>
+ <div class="sxQuestionActions"><button class="btn ${ok?'':'primary'}" onclick="showTrainingExplanation()">${ok?'Ver explicação':'Entender meu erro'}</button><button class="btn ${ok?'primary':''}" onclick="nextQuestion()">${T.index+1<T.questions.length?'Próxima questão':'Ver resultado'}</button></div>
+ <section id="sxQuestionExplanation" class="sxQuestionExplanation" hidden><span class="eyebrow">Resposta esperada</span><h3>${esc(q.answer||'')}</h3><p>${esc(q.explanation||'Esta questão ainda não tem uma explicação cadastrada.')}</p></section>`;
+}
+function showTrainingExplanation(){const el=$('sxQuestionExplanation');if(el){el.hidden=!el.hidden;if(!el.hidden)el.scrollIntoView({behavior:'smooth',block:'nearest'});}}
+
 function nextQuestion(){UI.training.index++; UI.training.answered=false; renderQuestion()}
 function renderTrainingResult(){const T=UI.training,total=T.questions.length,score=total?Math.round(T.correct/total*100):0; $('subjectContent').innerHTML=`
   <div class="glass trainHero" style="text-align:center">
