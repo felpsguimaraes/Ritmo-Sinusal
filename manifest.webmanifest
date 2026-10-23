@@ -1,25 +1,31 @@
 {
   "id": "./",
-  "name": "Sinus — Medicina no seu ritmo",
-  "short_name": "Sinus",
+  "name": "SINUS",
+  "short_name": "SINUS",
   "description": "Sinus: biblioteca médica, matérias, PDFs, estudos e personalização",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f9fcfa",
+  "background_color": "#124d3b",
   "theme_color": "#f9fcfa",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/icons/sinus-app-192-v2.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icons/sinus-app-512-v2.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/sinus-app-maskable-512-v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
