@@ -97,6 +97,20 @@ function close(){
  D.body.classList.remove('sxYTViewerOpen');
  S.opened='';
 }
+function openPlaylist(playlistId,title){
+ if(!/^(?:PL|OLAK|UU|FL|LL)[A-Za-z0-9_-]{10,}$/.test(String(playlistId||'')))return;
+ close();
+ const shell=D.createElement('div');shell.id='sxYTViewer';shell.className='sxYTViewer';
+ shell.setAttribute('role','dialog');shell.setAttribute('aria-modal','true');shell.setAttribute('aria-label','Reproduzir playlist '+String(title||'Videoaulas'));
+ shell.innerHTML='<div class="sxYTOverlay" data-sxyt-close></div>'+
+ '<div class="sxYTDialog"><div class="sxYTDialogHead"><div><small>Matérias · Videoaulas</small><h2>'+H(title||'Playlist de videoaulas')+'</h2></div>'+
+ '<button type="button" class="sxYTClose" data-sxyt-close aria-label="Fechar player">✕</button></div>'+
+ '<div class="sxYTFrame"><iframe title="'+H(title||'Playlist de videoaulas')+'" src="https://www.youtube-nocookie.com/embed/videoseries?list='+encodeURIComponent(playlistId)+'&autoplay=1&rel=0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture; clipboard-write; accelerometer; gyroscope; web-share" allowfullscreen></iframe></div>'+
+ '<div class="sxYTDialogFoot"><span>Player integrado · YouTube</span><a href="https://www.youtube.com/playlist?list='+encodeURIComponent(playlistId)+'" target="_blank" rel="noopener noreferrer">Abrir playlist original ↗</a></div></div>';
+ D.body.appendChild(shell);D.body.classList.add('sxYTViewerOpen');S.opened=playlistId;
+ shell.querySelector('.sxYTClose')?.focus();
+}
+
 function open(id){
  if(!idOK(id)||!all().some(x=>x.id===id))return;
  close();
@@ -130,5 +144,5 @@ D.addEventListener('change',e=>{
  if(e.target.matches('[data-sxyt-sort]')){S.sort=e.target.value;S.limit=40;render()}
 });
 D.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.opened){close();return}if(e.key==='Tab'&&S.opened){const closeButton=D.querySelector('#sxYTViewer .sxYTClose');const link=D.querySelector('#sxYTViewer .sxYTDialogFoot a');if(e.shiftKey&&D.activeElement===closeButton){e.preventDefault();link?.focus()}else if(!e.shiftKey&&D.activeElement===link){e.preventDefault();closeButton?.focus()}}});
-W.SinusYoutube={mount,load,close,get state(){return S},get catalog(){return S.catalog}};
+W.SinusYoutube={mount,load,close,openPlaylist,get state(){return S},get catalog(){return S.catalog}};
 })(window,document);
