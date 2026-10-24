@@ -404,7 +404,7 @@
 
   // abas da matéria: as do painel + Apostila, Flashcards, Fotos e Macroscopia
   V11_SUBJECT_TABS.theory.splice(0, V11_SUBJECT_TABS.theory.length,
-    ['overview', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'],
+    ['overview', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['mapas', 'Mapas guiados'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'],
     ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
   V11_SUBJECT_TABS.practice.splice(0, V11_SUBJECT_TABS.practice.length,
     ['overview', 'Visão geral'], ['apostila', 'Resumo / Apostila'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
@@ -470,22 +470,27 @@
   W.renderSubject = function () {
     if (!UI.subject) return;
     var t = UI.tab;
-    if (t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
+    if (t === 'mapas' || t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
       v11SubjectHeader();
       if (t === 'apostila') { if(v11List('apostila').length) renderResourceCategory('apostila'); else renderApostilaMateria(); }
+      else if (t === 'mapas') {
+        var subject = subjectData(), slug = subject && subject.slug;
+        var mapSubject = slug === 'anatopato' ? 'anatopato' : slug && slug.indexOf('farmaco') === 0 ? 'farmacologia' : '';
+        $id('subjectContent').innerHTML = mapSubject ? '<iframe title="Mapas guiados da matéria" src="/aulas/mapas/?s=' + mapSubject + '" style="width:100%;height:80vh;min-height:620px;border:0;border-radius:16px;background:transparent"></iframe>' : emptyBox('Mapas ainda não disponíveis para esta matéria.', 'Disponíveis no 5º semestre para Anatomia Patológica I e Farmacologia I.');
+      }
       else if (t === 'cartoes') renderCartoes();
       else renderResourceCategory(t);
     } else _renderSubject();
     pillPlano();
     prepararDivisao();
-    var exercicios = ['training', 'cartoes', 'provas', 'review'];
+    var exercicios = ['training', 'cartoes', 'mapas', 'provas', 'review'];
     var principal = t === 'provas' ? 'provas' : exercicios.indexOf(t) >= 0 ? 'training' : (t === 'audios' ? 'videos' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila'));
     var tabs = $id('subjectTabs');
     if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos / Áudios'],['provas','Provas'],['training','Exercícios']].map(function (item) {
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
-    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['provas','Provas'],['review','Revisão']].map(function (item) {
+    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || (UI.mode === 'theory' && subjectData() && /^(anatopato|farmaco)/.test(subjectData().slug || '')); }).map(function (item) {
       return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('') + '</div>');
     else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
