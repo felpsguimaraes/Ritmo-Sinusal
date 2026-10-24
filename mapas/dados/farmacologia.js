@@ -10,7 +10,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 1 ───────────── */
     {
-      id: 'conceptos', clase: 'Clase 1', titulo: 'Conceptos básicos de farmacología', tipo: 'mapa',
+      id: 'conceptos', clase: 'Clase 1', titulo: 'Conceptos básicos de farmacología', tipo: 'mapa', sl: [[1,3,22]],
       centro: 'Farmacología', sub: 'ciencia que estudia las acciones y propiedades de los fármacos',
       fuente: 'Clase 1 · Introducción, conceptos básicos, clasificación de fármacos',
       ramas: [
@@ -50,7 +50,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'clasificacion', clase: 'Clase 1', titulo: 'Clasificación de fármacos según su función', tipo: 'tabla',
+      id: 'clasificacion', clase: 'Clase 1', titulo: 'Clasificación de fármacos según su función', tipo: 'tabla', sl: [[1,23,36]],
       resumen: 'Para qué sirve cada grupo y un fármaco de ejemplo (sirve cualquiera de los vistos en clase).',
       fuente: 'Clase 1 · Fármacos según su función',
       columnas: ['Grupo', 'Para qué sirve', 'Ejemplo (cite uno)'],
@@ -73,7 +73,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 2 ───────────── */
     {
-      id: 'ladme', clase: 'Clase 2', titulo: 'LADME: el viaje del fármaco', tipo: 'fluxo',
+      id: 'ladme', clase: 'Clase 2', titulo: 'LADME: el viaje del fármaco', tipo: 'fluxo', sl: [[2,4,8]],
       resumen: 'Liberación, absorción, distribución, metabolismo y excreción, en orden.',
       fuente: 'Clase 2 · Farmacocinética, LADME, vías de administración',
       pasos: [
@@ -89,7 +89,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'absorcion', clase: 'Clase 2', titulo: 'Absorción y biodisponibilidad', tipo: 'mapa',
+      id: 'absorcion', clase: 'Clase 2', titulo: 'Absorción y biodisponibilidad', tipo: 'mapa', sl: [[2,12,15],[2,37,45]],
       centro: 'Absorción', sub: 'del sitio de administración al plasma',
       fuente: 'Clase 2 · Absorción, mecanismos de transporte, biodisponibilidad',
       ramas: [
@@ -115,7 +115,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'vias', clase: 'Clase 2', titulo: 'Vías de administración', tipo: 'tabla',
+      id: 'vias', clase: 'Clase 2', titulo: 'Vías de administración', tipo: 'tabla', sl: [[2,16,36]],
       resumen: 'Inicio de acción, ventaja principal y un ejemplo de cada vía.',
       fuente: 'Clase 2 · Vías de administración (enteral, parenteral, tópica y otras)',
       columnas: ['Vía', 'Inicio de acción', 'Ventaja principal', 'Ejemplo'],
@@ -132,7 +132,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'inyecciones', clase: 'Clase 2', titulo: 'Inyecciones: ángulo, sitio y volumen', tipo: 'tabla',
+      id: 'inyecciones', clase: 'Clase 2', titulo: 'Inyecciones: ángulo, sitio y volumen', tipo: 'tabla', sl: [[2,24,28]],
       fuente: 'Clase 2 · Vía parenteral',
       columnas: ['Vía', 'Ángulo de inserción', 'Sitio y volumen máximo'],
       filas: [
@@ -143,7 +143,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'cinetica', clase: 'Clase 2', titulo: 'Metabolismo y eliminación', tipo: 'mapa',
+      id: 'cinetica', clase: 'Clase 2', titulo: 'Metabolismo y eliminación', tipo: 'mapa', sl: [[2,50,57]],
       centro: 'Metabolismo y eliminación', sub: 'cinética de los fármacos',
       fuente: 'Clase 2 · Metabolismo, cinética de eliminación y excreción renal',
       ramas: [
@@ -173,7 +173,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'curva', clase: 'Clase 2', titulo: 'Curva de niveles plasmáticos', tipo: 'mapa',
+      id: 'curva', clase: 'Clase 2', titulo: 'Curva de niveles plasmáticos', tipo: 'mapa', sl: [[2,9,11]],
       centro: 'Curva de niveles plasmáticos', sub: 'después de una dosis oral',
       fuente: 'Clase 2 · Variaciones de la concentración del fármaco en el plasma',
       ramas: [
@@ -200,7 +200,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 3 ───────────── */
     {
-      id: 'receptores', clase: 'Clase 3', titulo: 'Receptores farmacológicos', tipo: 'mapa',
+      id: 'receptores', clase: 'Clase 3', titulo: 'Receptores farmacológicos', tipo: 'mapa', sl: [[3,4,22]],
       centro: 'Receptores farmacológicos', sub: 'cuatro familias',
       fuente: 'Clase 3 · Farmacodinámica: receptores y transducción de señal',
       ramas: [
@@ -228,7 +228,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'agonistas', clase: 'Clase 3', titulo: 'Agonistas y antagonistas', tipo: 'tabla',
+      id: 'agonistas', clase: 'Clase 3', titulo: 'Agonistas y antagonistas', tipo: 'tabla', sl: [[3,23,33]],
       fuente: 'Clase 3 · Actividad intrínseca, agonistas y antagonistas',
       columnas: ['Tipo', '¿Qué hace en el receptor?', 'Ejemplo'],
       filas: [
@@ -242,7 +242,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'dosis', clase: 'Clase 3', titulo: 'Dosis-respuesta: afinidad, potencia y eficacia', tipo: 'mapa',
+      id: 'dosis', clase: 'Clase 3', titulo: 'Dosis-respuesta: afinidad, potencia y eficacia', tipo: 'mapa', sl: [[3,36,41]],
       centro: 'Dosis-respuesta', sub: 'afinidad, potencia y eficacia',
       fuente: 'Clase 3 · Relaciones dosis-respuesta y conceptos clave',
       ramas: [
@@ -272,7 +272,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 4 ───────────── */
     {
-      id: 'farmacogenetica', clase: 'Clase 4', titulo: 'Farmacogenética', tipo: 'mapa',
+      id: 'farmacogenetica', clase: 'Clase 4', titulo: 'Farmacogenética', tipo: 'mapa', sl: [[4,4,34]],
       centro: 'Farmacogenética', sub: 'genes y respuesta a los fármacos',
       fuente: 'Clase 4 · Farmacogenética: concepto y clasificación',
       ramas: [
@@ -310,7 +310,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 5 ───────────── */
     {
-      id: 'ram_tipos', clase: 'Clase 5', titulo: 'Reacciones adversas: tipos A a E', tipo: 'tabla',
+      id: 'ram_tipos', clase: 'Clase 5', titulo: 'Reacciones adversas: tipos A a E', tipo: 'tabla', sl: [[5,8,10]],
       fuente: 'Clase 5 · Clasificación de las reacciones adversas a medicamentos (RAM)',
       columnas: ['Tipo', 'Nombre y características', 'Ejemplo'],
       filas: [
@@ -322,7 +322,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'ram_terminos', clase: 'Clase 5', titulo: 'Reacciones adversas: términos y mecanismos', tipo: 'mapa',
+      id: 'ram_terminos', clase: 'Clase 5', titulo: 'Reacciones adversas: términos y mecanismos', tipo: 'mapa', sl: [[5,4,7],[5,11,21]],
       centro: 'Reacciones adversas', sub: 'términos y mecanismos',
       fuente: 'Clase 5 · Reacciones adversas y farmacovigilancia',
       ramas: [
@@ -355,7 +355,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'hipersensibilidad', clase: 'Clase 5', titulo: 'Hipersensibilidad a fármacos', tipo: 'tabla',
+      id: 'hipersensibilidad', clase: 'Clase 5', titulo: 'Hipersensibilidad a fármacos', tipo: 'tabla', sl: [[5,22,30]],
       fuente: 'Clase 5 · Reacciones adversas no relacionadas con la dosis: mecanismos inmunológicos',
       columnas: ['Tipo', 'Mecanismo', 'Tiempo', 'Ejemplos'],
       filas: [
@@ -366,7 +366,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'farmacovigilancia', clase: 'Clase 5', titulo: 'Farmacovigilancia', tipo: 'fluxo',
+      id: 'farmacovigilancia', clase: 'Clase 5', titulo: 'Farmacovigilancia', tipo: 'fluxo', sl: [[5,58,62]],
       resumen: 'Cómo se vigila la seguridad de un medicamento después de salir al mercado.',
       fuente: 'Clase 5 · Farmacovigilancia: proceso y objetivos',
       pasos: [
@@ -381,7 +381,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 6 ───────────── */
     {
-      id: 'sna', clase: 'Clase 6', titulo: 'Sistema nervioso autónomo: simpático y parasimpático', tipo: 'tabla',
+      id: 'sna', clase: 'Clase 6', titulo: 'Sistema nervioso autónomo: simpático y parasimpático', tipo: 'tabla', sl: [[6,4,15],[7,4,7]],
       fuente: 'Clases 6 y 7 · Sistema nervioso autónomo y neurotransmisores clásicos',
       columnas: ['Característica', 'Simpático', 'Parasimpático'],
       filas: [
@@ -398,7 +398,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'nic_mus', clase: 'Clase 6', titulo: 'Receptores nicotínicos y muscarínicos', tipo: 'tabla',
+      id: 'nic_mus', clase: 'Clase 6', titulo: 'Receptores nicotínicos y muscarínicos', tipo: 'tabla', sl: [[6,29,40]],
       fuente: 'Clase 6 · Receptores colinérgicos',
       columnas: ['Característica', 'Nicotínicos', 'Muscarínicos'],
       filas: [
@@ -414,7 +414,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'colinergicos', clase: 'Clase 6', titulo: 'Agonistas colinérgicos y anticolinesterásicos', tipo: 'mapa',
+      id: 'colinergicos', clase: 'Clase 6', titulo: 'Agonistas colinérgicos y anticolinesterásicos', tipo: 'mapa', sl: [[6,41,67]],
       centro: 'Agonistas colinérgicos', sub: 'directos y anticolinesterásicos',
       fuente: 'Clase 6 · Fármacos colinérgicos de acción directa e indirecta',
       ramas: [
@@ -450,7 +450,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'antimuscarinicos', clase: 'Clase 6', titulo: 'Antimuscarínicos', tipo: 'mapa',
+      id: 'antimuscarinicos', clase: 'Clase 6', titulo: 'Antimuscarínicos', tipo: 'mapa', sl: [[6,68,97]],
       centro: 'Antimuscarínicos', sub: 'atropina y derivados',
       fuente: 'Clase 6 · Fármacos antagonistas colinérgicos muscarínicos',
       ramas: [
@@ -486,7 +486,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 7 ───────────── */
     {
-      id: 'noradrenalina', clase: 'Clase 7', titulo: 'Neurona adrenérgica: de la tirosina a la respuesta', tipo: 'fluxo',
+      id: 'noradrenalina', clase: 'Clase 7', titulo: 'Neurona adrenérgica: de la tirosina a la respuesta', tipo: 'fluxo', sl: [[7,8,12]],
       resumen: 'Síntesis, almacenamiento, liberación y terminación de la noradrenalina.',
       fuente: 'Clase 7 · Fármacos adrenérgicos: neurotransmisión',
       pasos: [
@@ -501,7 +501,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'adrenoceptores', clase: 'Clase 7', titulo: 'Receptores adrenérgicos', tipo: 'tabla',
+      id: 'adrenoceptores', clase: 'Clase 7', titulo: 'Receptores adrenérgicos', tipo: 'tabla', sl: [[7,13,16],[7,20,20]],
       fuente: 'Clase 7 · Receptores adrenérgicos y respuestas características',
       columnas: ['Receptor', 'Ubicación típica', 'Efecto de su estimulación'],
       filas: [
@@ -513,7 +513,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'adrenergicos', clase: 'Clase 7', titulo: 'Agonistas adrenérgicos', tipo: 'mapa',
+      id: 'adrenergicos', clase: 'Clase 7', titulo: 'Agonistas adrenérgicos', tipo: 'mapa', sl: [[7,17,38]],
       centro: 'Agonistas adrenérgicos', sub: 'directos, indirectos y mixtos',
       fuente: 'Clase 7 · Características y fármacos agonistas adrenérgicos',
       ramas: [
@@ -552,7 +552,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'bloqueadores', clase: 'Clase 7', titulo: 'Antagonistas adrenérgicos', tipo: 'mapa',
+      id: 'bloqueadores', clase: 'Clase 7', titulo: 'Antagonistas adrenérgicos', tipo: 'mapa', sl: [[7,39,65]],
       centro: 'Antagonistas adrenérgicos', sub: 'bloqueadores α y β',
       fuente: 'Clase 7 · Bloqueadores α y β-adrenérgicos',
       ramas: [
@@ -588,7 +588,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 8 ───────────── */
     {
-      id: 'aines_via', clase: 'Clase 8', titulo: 'Ácido araquidónico y AINES', tipo: 'fluxo',
+      id: 'aines_via', clase: 'Clase 8', titulo: 'Ácido araquidónico y AINES', tipo: 'fluxo', sl: [[8]],
       fuente: 'Clase 8 · Biosíntesis de eicosanoides y mecanismo de acción de los AINES',
       pasos: [
         'Estímulos físicos, químicos o inflamatorios activan la [[fosfolipasa A2::fosfolipasa]]',
@@ -607,7 +607,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'aines', clase: 'Clase 8', titulo: 'AINES: eicosanoides, efectos y fármacos', tipo: 'mapa',
+      id: 'aines', clase: 'Clase 8', titulo: 'AINES: eicosanoides, efectos y fármacos', tipo: 'mapa', sl: [[8]],
       centro: 'AINES', sub: 'inhibidores de la ciclooxigenasa',
       fuente: 'Clase 8 · AINES: funciones de los eicosanoides, efectos adversos y clasificación',
       ramas: [
@@ -645,7 +645,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'intoxicaciones', clase: 'Clase 8', titulo: 'Intoxicación por AAS y por paracetamol', tipo: 'tabla',
+      id: 'intoxicaciones', clase: 'Clase 8', titulo: 'Intoxicación por AAS y por paracetamol', tipo: 'tabla', sl: [[8]],
       fuente: 'Clase 8 · Intoxicación con aspirina y con paracetamol',
       columnas: ['', 'Ácido acetilsalicílico (AAS)', 'Paracetamol'],
       filas: [
@@ -657,7 +657,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'opioides', clase: 'Clase 8', titulo: 'Opioides y escalera analgésica', tipo: 'mapa',
+      id: 'opioides', clase: 'Clase 8', titulo: 'Opioides y escalera analgésica', tipo: 'mapa', sl: [[8]],
       centro: 'Opioides', sub: 'analgésicos mayores',
       fuente: 'Clase 8 · Fármacos del dolor: opioides',
       ramas: [
@@ -696,7 +696,7 @@ window.SINUS_MAPAS.farmacologia = {
 
     /* ───────────── CLASE 9 ───────────── */
     {
-      id: 'corticoides', clase: 'Clase 9', titulo: 'Corticoides', tipo: 'mapa',
+      id: 'corticoides', clase: 'Clase 9', titulo: 'Corticoides', tipo: 'mapa', sl: [[9,5,41]],
       centro: 'Corticoides', sub: 'hormonas esteroideas de la corteza suprarrenal',
       fuente: 'Clase 9 · Antiinflamatorios esteroideos (Unidad III)',
       ramas: [
@@ -736,7 +736,7 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
     {
-      id: 'potencia_cortico', clase: 'Clase 9', titulo: 'Corticoides: duración de acción', tipo: 'tabla',
+      id: 'potencia_cortico', clase: 'Clase 9', titulo: 'Corticoides: duración de acción', tipo: 'tabla', sl: [[9,25,31]],
       fuente: 'Clase 9 · Potencia glucocorticoide y mineralocorticoide, vida media',
       columnas: ['Grupo', 'Ejemplos (cite uno)', 'Rasgo'],
       filas: [
@@ -745,7 +745,306 @@ window.SINUS_MAPAS.farmacologia = {
         ['Acción prolongada', '[[Dexametasona::dexametasona|betametasona]]', 'Mayor potencia [[glucocorticoide::glucocorticoid]]; acción mineralocorticoide casi nula'],
         ['Profármacos inactivos', 'Cortisona y [[prednisona::prednisona]]', 'Se activan en el hígado a cortisol y [[prednisolona::prednisolona]]']
       ]
+    },
+
+    /* ───────────── CASOS CLÍNICOS (nível de prova) ───────────── */
+    {
+      id: 'casos_farma_1', clase: 'Clases 1 a 5', titulo: 'Casos clínicos: vías, cinética, farmacogenética y reacciones adversas', tipo: 'casos',
+      resumen: 'Elegir la vía, razonar la cinética y reconocer la reacción adversa a partir del cuadro clínico.',
+      fuente: 'Actividades de las clases 1 y 2 (Dr. Giménez) y casos construidos con el contenido de las clases 4 y 5',
+      casos: [
+        ['Paciente inconsciente y con convulsiones.',
+         '¿Qué vía de administración es adecuada?',
+         'Intravenosa (o rectal si no hay acceso venoso)', 'intraven|endoven|rectal',
+         'La vía IV da efecto inmediato y no depende de la absorción. La rectal es útil si el paciente está inconsciente o vomita.'],
+        ['Paciente con crisis asmática aguda.',
+         '¿Qué vía conviene y por qué?',
+         'Inhalatoria: efecto local rápido con menos efectos sistémicos', 'inhal',
+         'El fármaco llega directo al sitio de acción (ej.: salbutamol) y se usan dosis menores.'],
+        ['Paciente que inicia un tratamiento antihipertensivo crónico.',
+         '¿Qué vía de administración es la más adecuada?',
+         'Oral', 'oral',
+         'Es la vía más segura, conveniente y económica, y el paciente la maneja solo.'],
+        ['Paciente con meningitis bacteriana grave.',
+         '¿Qué vía necesita y qué obstáculo hay para llegar al sistema nervioso central?',
+         'Intravenosa; la barrera hematoencefálica retrasa el paso (la vía intratecal se reserva para efectos locales y rápidos)', 'intraven|endoven|intratecal;barrera|bhe|hematoencefal',
+         'Se necesita inicio rápido y control de la dosis. Cuando hace falta efecto local en el SNC se puede inyectar en el líquido cefalorraquídeo.'],
+        ['Niño con vómitos persistentes que necesita un antipirético.',
+         '¿Qué vía es una buena opción?',
+         'Rectal (supositorio)', 'rectal|supositorio',
+         'Es útil cuando el fármaco induce vómito por vía oral. Evita parcialmente el primer paso, pero la absorción es errática.'],
+        ['Se administran 100 mg de un fármaco por vía oral y llegan sin cambios a la circulación sistémica 70 mg.',
+         '¿Cuál es la biodisponibilidad? ¿Qué proceso explica la pérdida?',
+         '70% (0,7); metabolismo de primer paso (y otras pérdidas en la absorción)', '70|0,7|0.7;primer paso|hepatic|higado',
+         'La vía IV tiene biodisponibilidad de 100% porque no requiere absorción.'],
+        ['Afirmación: "La vía intravenosa evita el metabolismo de primer paso."',
+         '¿Verdadero o falso?',
+         'a) Verdadero', 'a',
+         'El fármaco entra directo a la circulación sistémica, sin pasar por la circulación portal.',
+         ['a) Verdadero', 'b) Falso']],
+        ['Afirmación: "Los fármacos liposolubles se eliminan fácilmente por el riñón sin metabolizarse."',
+         '¿Verdadero o falso?',
+         'b) Falso', 'b',
+         'Los liposolubles poco ionizados se reabsorben por difusión en el túbulo; necesitan transformarse en metabolitos polares para eliminarse.',
+         ['a) Verdadero', 'b) Falso']],
+        ['Afirmación: "La cinética de orden cero elimina un porcentaje fijo por unidad de tiempo."',
+         '¿Verdadero o falso?',
+         'b) Falso', 'b',
+         'Eso es la cinética de primer orden. La de orden cero elimina una cantidad fija porque las enzimas están saturadas.',
+         ['a) Verdadero', 'b) Falso']],
+        ['Paciente con sobredosis de fenobarbital, un ácido débil.',
+         '¿Qué maniobra aumenta su eliminación renal y por qué?',
+         'Alcalinizar la orina con bicarbonato: mantiene el fármaco ionizado y disminuye su reabsorción (atrapamiento iónico)', 'alcalin|bicarbonato;ioniz|atrapamiento|reabsorc',
+         'La fracción ionizada es hidrosoluble y no se reabsorbe. Los ácidos débiles se eliminan alcalinizando la orina; las bases débiles, acidificándola.'],
+        ['Paciente en tratamiento con fenitoína. Un pequeño aumento de la dosis produjo nistagmo, ataxia y confusión.',
+         '¿Qué tipo de cinética explica la toxicidad?',
+         'Cinética de orden cero: las enzimas están saturadas y la concentración sube de forma desproporcionada', 'cero;satur|desproporc|fija|constante',
+         'La vida media no es constante y pequeños aumentos de dosis producen grandes aumentos de concentración. Pasa también con el etanol.'],
+        ['Paciente con tuberculosis tratado con isoniazida. A las pocas semanas tiene hormigueo en las manos y debilidad.',
+         '¿Qué característica genética explica la neuropatía?',
+         'Acetilador lento (N-acetiltransferasa): acumula isoniazida', 'acetilador|acetiltransferasa;lent',
+         'La acetilación lenta es recesiva. Los acetiladores lentos también tienen más riesgo de lupus inducido por hidralazina.'],
+        ['Paciente anestesiado que recibió succinilcolina permanece paralizado y sin respirar durante horas.',
+         '¿Qué deficiencia enzimática explica la reacción?',
+         'Pseudocolinesterasa defectuosa (reacción idiosincrásica, autosómica recesiva)', 'colinesterasa',
+         'Normalmente el efecto dura 3 a 4 minutos porque la pseudocolinesterasa degrada el fármaco.'],
+        ['Paciente con déficit de G6PD que recibe primaquina presenta anemia, ictericia y orina oscura.',
+         '¿Qué reacción ocurre y por qué?',
+         'Hemólisis: los eritrocitos sin G6PD no soportan el estrés oxidativo', 'hemolisis;oxidativ|g6pd|glucosa',
+         'Las sulfamidas y la nitrofurantoína también la desencadenan. Es una reacción de tipo B, no dependiente de la dosis.'],
+        ['Adolescente con mononucleosis infecciosa (virus de Epstein-Barr) recibe ampicilina y a los 7-12 días presenta un exantema maculopapular pruriginoso.',
+         '¿Se trata de una alergia verdadera a la penicilina?',
+         'No: es una interacción fármaco-infección viral (el rash aparece hasta en el 95%)', 'interaccion|no es alergia|no es una alergia|no es alergica|no alergia|no es verdadera|falsa alergia|pseudoalerg',
+         'No es una reacción inmunológica por sensibilización previa, por lo que no se contraindica la penicilina de por vida.'],
+        ['Niño con varicela recibe ácido acetilsalicílico como antitérmico y desarrolla vómitos, encefalopatía y daño hepático.',
+         '¿Qué síndrome es y qué se aprende?',
+         'Síndrome de Reye; la aspirina no se usa como antitérmico en niños', 'reye;aspirina|acido acetilsalicilico|aas',
+         'Es una interacción con una infección viral (varicela o influenza).'],
+        ['Niño asmático con una infección viral respiratoria que usa teofilina presenta náuseas, taquicardia y convulsiones.',
+         '¿Cómo se explica la toxicidad?',
+         'El interferón de la infección viral inhibe el citocromo P450: baja el aclaramiento y sube la vida media de la teofilina', 'p450|citocromo|aclaramiento|vida media;interferon|viral|infeccion',
+         'El resultado es acumulación del fármaco. Es una interacción farmacocinética entre fármaco e infección.']
+      ]
     }
+,
+    /* ───────────── CASOS CLÍNICOS (nível de prova) ───────────── */
+    {
+      id: 'casos_farma_2', clase: 'Clases 6 a 9', titulo: 'Casos clínicos: colinérgicos, adrenérgicos, AINES, opioides y corticoides', tipo: 'casos',
+      resumen: 'Diagnóstico farmacológico: reconocer el cuadro y elegir el fármaco, el antídoto o el riesgo.',
+      fuente: 'Contenido de las clases 6 a 9 (Dr. Giménez), aplicado a cuadros clínicos',
+      casos: [
+        ['Agricultor que fumigó con un insecticida y presenta salivación, sudoración, miosis, broncoespasmo y diarrea.',
+         '¿Qué intoxicación es y cuáles son los tres pilares del tratamiento?',
+         'Organofosforados: medidas de soporte, atropina y oximas (pralidoxima) tempranas', 'organofosforad;atropina;oxima|pralidoxima|obidoxima',
+         'Inhiben la colinesterasa de forma irreversible. La atropina controla los síntomas muscarínicos; las oximas reactivan la enzima solo si se dan temprano.'],
+        ['Paciente que a los 45 minutos de comer setas del género Inocybe presenta sudoración, salivación, vómitos y diarrea.',
+         '¿Qué sustancia causa el cuadro y cuál es el antídoto?',
+         'Muscarina; atropina', 'muscarin;atropina',
+         'Es una estimulación muscarínica excesiva. La atropina bloquea los receptores muscarínicos.'],
+        ['Paciente en tratamiento con antidepresivos tricíclicos que llega con boca seca, piel seca, midriasis, taquicardia y confusión.',
+         '¿Qué síndrome es y qué fármaco lo revierte?',
+         'Síndrome atropínico (anticolinérgico); fisostigmina', 'atropin|anticolinerg;fisostigmin',
+         'La fisostigmina es un anticolinesterásico terciario que atraviesa la barrera hematoencefálica y actúa también en el SNC.'],
+        ['Mujer con debilidad muscular y fatiga intensa. Tiene anticuerpos que bloquean los receptores nicotínicos de la placa motora.',
+         '¿Qué enfermedad es, qué fármaco de acción corta sirve para el diagnóstico y cuál se usa de forma crónica?',
+         'Miastenia gravis; edrofonio; piridostigmina', 'miastenia;edrofonio;piridostigmina',
+         'Los anticolinesterásicos aumentan la acetilcolina en la placa. El edrofonio también ayuda a distinguir crisis miasténica de crisis colinérgica.'],
+        ['Mujer en el posparto que no logra orinar. La vejiga no se contrae y no hay obstrucción mecánica.',
+         '¿Qué fármaco colinérgico puede estimular la micción?',
+         'Betanecol (o neostigmina)', 'betanecol|neostigmina',
+         'Estimulan la contracción del detrusor. Solo se usan si no hay obstrucción mecánica.'],
+        ['Paciente con glaucoma de ángulo cerrado al que se desea dilatar la pupila para un examen.',
+         '¿Qué familia de fármacos está contraindicada y por qué?',
+         'Antimuscarínicos (atropina): la midriasis dificulta el drenaje del humor acuoso y sube la presión intraocular', 'antimuscarin|atropin|anticolinerg;drenaje|presion intraocular|humor',
+         'Pueden desencadenar un ataque agudo de glaucoma. En cambio, la pilocarpina provoca miosis y favorece el drenaje.'],
+        ['Mujer picada por una abeja entra en shock anafiláctico.',
+         '¿Qué fármaco, por qué vía en el ámbito ambulatorio y por qué receptores actúa (broncodilatación e inotropismo)?',
+         'Epinefrina por vía intramuscular (muslo); receptores β2 y β1', 'epinefrina|adrenalina;intramuscular|muslo;beta 2|β2|beta2|b2 y',
+         'La vía IM tiene absorción rápida. La epinefrina también inhibe la liberación de mediadores de los mastocitos.'],
+        ['Durante una infusión de norepinefrina aparecen palidez y esfacelación de la piel a lo largo de la vena.',
+         '¿Qué ocurrió y qué fármaco se usa como antídoto local?',
+         'Extravasación con necrosis por vasoconstricción; fentolamina', 'extravasac;fentolamina',
+         'La fentolamina bloquea los receptores α1 y α2 y evita la necrosis dérmica.'],
+        ['Paciente con sudoración e hipertensión paroxística por un tumor secretor de catecolaminas de la médula suprarrenal.',
+         '¿Qué tumor es y qué bloqueador α no competitivo se usa?',
+         'Feocromocitoma; fenoxibenzamina', 'feocromocitoma;fenoxibenzamina',
+         'La fentolamina se usa para el diagnóstico y el manejo a corto plazo.'],
+        ['Hombre asmático al que se le indica propranolol para la hipertensión y presenta broncoespasmo.',
+         '¿Qué ocurrió y qué grupo sería más seguro?',
+         'Bloqueo β2 no selectivo; un β-bloqueador cardioselectivo (β1) como metoprolol o atenolol, con vigilancia', 'beta 2|β2|beta2|no selectivo;cardioselectiv|beta 1|β1|atenolol|metoprolol|bisoprolol',
+         'La cardioselectividad se pierde a dosis altas, por eso hay que vigilar la función respiratoria.'],
+        ['Gestante con hipertensión arterial.',
+         '¿Qué fármaco de acción central es de elección y cuál es una alternativa que bloquea α y β?',
+         'Alfametildopa; labetalol', 'metildopa;labetalol',
+         'La metildopa actúa como falso neurotransmisor sobre receptores α2 centrales. El labetalol también se usa en las emergencias hipertensivas.'],
+        ['Paciente diabético que usa insulina y recibe propranolol.',
+         '¿Qué riesgo metabólico aumenta?',
+         'Hipoglucemia prolongada, porque el bloqueo β atenúa la respuesta normal a la hipoglucemia', 'hipoglucemia|hipoglicemia',
+         'El bloqueo β reduce la glucogenólisis y la secreción de glucagón. Hay que vigilar la glucosa.'],
+        ['Paciente que ingirió una dosis tóxica de paracetamol (150 a 250 mg/kg). A las 24 h tiene náuseas y dolor abdominal.',
+         '¿Qué metabolito causa la lesión, qué lesión produce y cuál es el antídoto?',
+         'NAPQI; necrosis hepática centrolobulillar; N-acetilcisteína', 'napqi;centrolobul|hepatica|hepatocel;acetilcisteina|nac',
+         'La NAC previene la toxicidad del NAPQI y aumenta la capacidad de detoxificación. Se miden niveles seriados de paracetamol.'],
+        ['Paciente con intoxicación por aspirina: hiperventilación, tinnitus e hipertermia.',
+         'Nombre medidas para aumentar la eliminación.',
+         'Alcalinizar la orina; carbón activado; hemodiálisis', 'alcaliniz|carbon|hemodialisis',
+         'Además se dan medidas de sostén, lavado gástrico y se mide el nivel de salicilato en sangre.'],
+        ['Paciente con insuficiencia cardíaca, insuficiencia renal o ascitis que toma AINES.',
+         '¿Qué riesgo renal corre y por qué?',
+         'Insuficiencia renal: disminuyen las prostaglandinas vasodilatadoras y cae el flujo sanguíneo renal', 'renal|rinon|filtrac|flujo;prostaglandina|pg|vasodilat',
+         'En estos pacientes el flujo renal depende de las prostaglandinas. La inhibición de la COX produce vasoconstricción renal.'],
+        ['Paciente con un opioide que llega con miosis puntiforme y una frecuencia respiratoria de 6 por minuto.',
+         '¿Qué receptor explica la depresión respiratoria y cuál es el antídoto?',
+         'Receptor μ (subtipo mu-2); naloxona', 'receptor mu|mu-2|mu2|μ|mu 2;naloxona',
+         'La naloxona es un antagonista que revierte los efectos indeseables. El subtipo mu-1 produce la analgesia.'],
+        ['Paciente que tomaba prednisona de forma crónica la suspende bruscamente y presenta hipotensión, debilidad y vómitos.',
+         '¿Qué ocurre?',
+         'Insuficiencia suprarrenal aguda por supresión del eje hipotálamo-hipófisis-suprarrenal', 'suprarrenal;aguda|supresion|eje',
+         'Por eso los corticoides no se suspenden bruscamente: se reduce la dosis de forma gradual.'],
+        ['Paciente con cirrosis hepática que necesita un glucocorticoide.',
+         '¿Cuáles debe evitar y cuáles usar?',
+         'Evitar cortisona y prednisona (profármacos que necesitan activación hepática); usar prednisolona o hidrocortisona', 'prednisona|cortisona;hepatic|higado|activac|profarmaco|inactiv',
+         'La cortisona y la prednisona son inactivas: el hígado las convierte en cortisol y prednisolona.'],
+        ['Niño que necesita un corticoide durante mucho tiempo y preocupa la supresión del crecimiento.',
+         '¿Qué corticoide es la primera elección?',
+         'Deflazacort', 'deflazacort',
+         'Es un corticoide de acción intermedia con menor repercusión sobre el crecimiento.'],
+        ['Paciente con enfermedad de Addison tratado con hidrocortisona (20 a 30 mg por día).',
+         '¿Cómo se reparte la dosis durante el día?',
+         '2/3 por la mañana y 1/3 por la tarde', '2/3;1/3|manana;tarde',
+         'Imita el ritmo normal del cortisol.']
+      ]
+    },
+
+    /* ───────────── NIVEL 3: SIMULADO ───────────── */
+    {
+      id: 'simulado_farma', clase: 'Clases 1 a 9', titulo: 'Simulado de prueba: Farmacología I', tipo: 'casos', cronometro: true,
+      resumen: 'Preguntas de opción múltiple como en la prueba. Use el cronómetro y corrija al final.',
+      fuente: 'Contenido de las clases 2 a 9 (Dr. Giménez): farmacocinética, farmacodinámica, farmacogenética, RAM, SNA, adrenérgicos, AINES, opioides y corticoides',
+      casos: [
+        ['',
+         'Un fármaco se administra por vía oral: se ingieren 100 mg y llegan 70 mg sin cambios a la circulación sistémica. ¿Cuál es la biodisponibilidad?',
+         'b) 70% (0,7)', 'b',
+         'La biodisponibilidad es la fracción de la forma inalterada del fármaco que llega a la circulación sistémica (Clase 2).',
+         ['a) 30% (0,3)', 'b) 70% (0,7)', 'c) 100% (1,0)', 'd) 170%']],
+        ['',
+         '¿Qué mecanismo de absorción usa la gran mayoría de los fármacos?',
+         'a) Difusión pasiva', 'a',
+         'La difusión pasiva sigue el gradiente de concentración, no necesita transportador, no se satura y no gasta energía.',
+         ['a) Difusión pasiva', 'b) Transporte activo primario', 'c) Endocitosis', 'd) Difusión facilitada']],
+        ['Un fármaco ácido débil se administra por vía oral.',
+         '¿Dónde se absorbe mejor?',
+         'c) En el estómago, porque en pH ácido está más no ionizado', 'c',
+         'Los fármacos se absorben mejor no ionizados: ácidos débiles en el estómago (pH ácido) y bases débiles en el intestino (pH alcalino).',
+         ['a) En el intestino, porque el pH alcalino lo deja no ionizado', 'b) Igual en todo el tubo digestivo', 'c) En el estómago, porque en pH ácido está más no ionizado', 'd) No se absorbe por vía oral']],
+        ['Paciente en urgencias que requiere efecto inmediato de un fármaco.',
+         '¿Qué vía parenteral es la más usada y de acción inmediata?',
+         'd) Intravenosa', 'd',
+         'La vía IV es la vía parenteral más común y tiene efecto inmediato; evita el metabolismo de primer paso.',
+         ['a) Subcutánea', 'b) Rectal', 'c) Oral', 'd) Intravenosa']],
+        ['',
+         'Un agonista parcial como la buprenorfina se une al receptor μ. ¿Qué lo caracteriza?',
+         'a) Alta afinidad pero menor eficacia: nunca alcanza el efecto máximo', 'a',
+         'Produce efecto pero nunca alcanza el máximo aunque ocupe todos los receptores; con morfina puede disminuir su efecto.',
+         ['a) Alta afinidad pero menor eficacia: nunca alcanza el efecto máximo', 'b) Baja afinidad y eficacia máxima', 'c) Reduce la actividad basal del receptor', 'd) Se une a otro sitio y bloquea el receptor']],
+        ['Un antagonista se une al mismo sitio que el agonista de forma reversible.',
+         '¿Cómo se supera el bloqueo?',
+         'b) Aumentando la concentración del agonista', 'b',
+         'En el antagonismo competitivo, más agonista puede superar la inhibición.',
+         ['a) No se puede superar', 'b) Aumentando la concentración del agonista', 'c) Aumentando la dosis del antagonista', 'd) Con un antagonista alostérico']],
+        ['Tras pocas dosis de un fármaco, su efecto disminuye de forma súbita.',
+         '¿Cómo se llama este fenómeno?',
+         'c) Taquifilaxia', 'c',
+         'La taquifilaxia es la disminución súbita del efecto tras pocas dosis (tolerancia rápida). La tolerancia es gradual, de días o semanas.',
+         ['a) Tolerancia', 'b) Acumulación', 'c) Taquifilaxia', 'd) Intolerancia']],
+        ['Paciente en tratamiento con warfarina que presenta hemorragias con dosis habituales. Se identifica un polimorfismo.',
+         '¿Qué enzima metaboliza la warfarina a un metabolito inactivo y qué riesgo tienen los metabolizadores lentos?',
+         'a) CYP2C9; riesgo de hemorragia', 'a',
+         'La CYP2C9 inactiva la warfarina; los alelos *2 y *3 producen metabolizadores lentos con riesgo de hemorragia.',
+         ['a) CYP2C9; riesgo de hemorragia', 'b) CYP2D6; riesgo de trombosis', 'c) CYP2C19; riesgo de infección', 'd) CYP3A4; sin riesgo']],
+        ['Un paciente presenta una reacción adversa proporcional a la dosis y relacionada con el mecanismo de acción del fármaco.',
+         '¿Qué tipo de RAM es?',
+         'd) Tipo A (aumentada)', 'd',
+         'Las RAM tipo A son predecibles y dependientes de la dosis; las tipo B son impredecibles, alérgicas o idiosincráticas.',
+         ['a) Tipo B (bizarra)', 'b) Tipo C (crónica)', 'c) Tipo E (fin de uso)', 'd) Tipo A (aumentada)']],
+        ['Paciente hipertenso que suspende bruscamente su medicamento y presenta una reacción de rebote.',
+         '¿Qué tipo de RAM es?',
+         'a) Tipo E (end of use)', 'a',
+         'Las RAM tipo E se asocian a la suspensión brusca del medicamento.',
+         ['a) Tipo E (end of use)', 'b) Tipo A', 'c) Tipo D (diferida)', 'd) Tipo C (crónica)']],
+        ['Paciente con urticaria y anafilaxia minutos después de recibir un antibiótico.',
+         '¿Qué tipo de hipersensibilidad es y qué la media?',
+         'b) Tipo I; IgE y mastocitos que liberan histamina', 'b',
+         'La hipersensibilidad tipo I es inmediata (minutos): IgE y mastocitos liberan histamina. La tipo IV es tardía (48-72 h) y mediada por linfocitos T.',
+         ['a) Tipo II; IgG contra células', 'b) Tipo I; IgE y mastocitos que liberan histamina', 'c) Tipo III; inmunocomplejos', 'd) Tipo IV; linfocitos T']],
+        ['En el sistema nervioso autónomo comparamos simpático y parasimpático.',
+         '¿Cuál es la combinación correcta de neurotransmisor principal posganglionar?',
+         'c) Simpático: noradrenalina; parasimpático: acetilcolina', 'c',
+         'El simpático (adrenérgico) libera noradrenalina y el parasimpático (colinérgico) acetilcolina; en ambos, las fibras preganglionares liberan acetilcolina.',
+         ['a) Simpático: acetilcolina; parasimpático: noradrenalina', 'b) Ambos usan noradrenalina', 'c) Simpático: noradrenalina; parasimpático: acetilcolina', 'd) Ambos usan acetilcolina']],
+        ['',
+         '¿Qué tipo de receptor es el nicotínico y cuál el muscarínico?',
+         'a) Nicotínico: canal iónico; muscarínico: acoplado a proteína G', 'a',
+         'Los nicotínicos son receptores iónicos (ionotrópicos) y los muscarínicos están acoplados a proteína G.',
+         ['a) Nicotínico: canal iónico; muscarínico: acoplado a proteína G', 'b) Nicotínico: acoplado a proteína G; muscarínico: canal iónico', 'c) Ambos son canales iónicos', 'd) Ambos están acoplados a proteína G']],
+        ['Agricultor con sialorrea, broncoespasmo, miosis y bradicardia tras fumigar sin protección.',
+         '¿Qué tratamiento antagoniza las acciones muscarínicas y cuál reactiva la colinesterasa?',
+         'b) Atropina; oximas (pralidoxima)', 'b',
+         'En la intoxicación por organofosforados: soporte, atropina para los efectos muscarínicos y oximas (pralidoxima, obidoxima) para reactivar la enzima, si se dan temprano.',
+         ['a) Fisostigmina; atropina', 'b) Atropina; oximas (pralidoxima)', 'c) Neostigmina; pralidoxima', 'd) Atropina; fisostigmina']],
+        ['Paciente con intoxicación atropínica: boca seca, piel caliente, midriasis, taquicardia, delirium.',
+         '¿Qué anticolinesterásico se usa para el tratamiento?',
+         'c) Fisostigmina', 'c',
+         'La fisostigmina IV lenta revierte el síndrome anticolinérgico; si hay agitación intensa se agrega diazepam.',
+         ['a) Pralidoxima', 'b) Edrofonio', 'c) Fisostigmina', 'd) Bethanecol']],
+        ['',
+         'En la síntesis de catecolaminas, ¿cuál es el paso limitante de velocidad?',
+         'd) Tirosina → L-DOPA por la tirosina hidroxilasa', 'd',
+         'La hidroxilación de la tirosina por la tirosina hidroxilasa es el paso limitante.',
+         ['a) Dopamina → noradrenalina por la DBH', 'b) L-DOPA → dopamina por la LAAD', 'c) Noradrenalina → adrenalina por la FNMT', 'd) Tirosina → L-DOPA por la tirosina hidroxilasa']],
+        ['',
+         '¿Qué fármaco bloquea el transporte de dopamina a las vesículas de almacenamiento?',
+         'a) Reserpina', 'a',
+         'La reserpina bloquea el transportador de aminas hacia las vesículas; la guanetidina bloquea la liberación; cocaína e imipramina inhiben la recaptación.',
+         ['a) Reserpina', 'b) Guanetidina', 'c) Cocaína', 'd) Imipramina']],
+        ['Paciente asmático con hipertensión y taquicardia al que se le indica propranolol.',
+         '¿Qué riesgo tiene?',
+         'b) Broncoconstricción por bloqueo de receptores β2', 'b',
+         'El propranolol es un antagonista β no selectivo: bloquea los β2 y provoca broncoconstricción.',
+         ['a) Hipotensión por vasodilatación α', 'b) Broncoconstricción por bloqueo de receptores β2', 'c) Midriasis por bloqueo muscarínico', 'd) Taquicardia refleja']],
+        ['Paciente con hiperplasia prostática benigna que recibe un bloqueante α1.',
+         '¿Cuál es el fármaco?',
+         'c) Tamsulosina', 'c',
+         'Prazosina, terazosina, tamsulosina y doxazosina son bloqueadores α1.',
+         ['a) Propranolol', 'b) Salbutamol', 'c) Tamsulosina', 'd) Mirabegron']],
+        ['Paciente con dolor articular crónico tratado con un AINE no selectivo. Presenta epigastralgia y melenas.',
+         '¿Por qué se produce la úlcera gastroduodenal?',
+         'a) Inhibición de las prostaglandinas gastroprotectoras por bloqueo de la COX-1', 'a',
+         'La PGE2 y la PGI2 favorecen la secreción de moco y bicarbonato; al inhibir la COX-1 se pierde la protección gástrica.',
+         ['a) Inhibición de las prostaglandinas gastroprotectoras por bloqueo de la COX-1', 'b) Aumento de la síntesis de prostaciclina', 'c) Inhibición de la COX-2 solamente', 'd) Estimulación de la lipoxigenasa']],
+        ['Adulto con ingestión de más de 150 mg/kg de paracetamol, náuseas y elevación de las transaminasas.',
+         '¿Cuál es el antídoto?',
+         'd) N-acetilcisteína (NAC)', 'd',
+         'La NAC previene la toxicidad del NAPQI y aumenta la capacidad de detoxificación; es más eficaz cuanto antes se inicia.',
+         ['a) Naloxona', 'b) Bicarbonato de sodio', 'c) Atropina', 'd) N-acetilcisteína (NAC)']],
+        ['Paciente con depresión respiratoria y miosis tras una sobredosis de morfina.',
+         '¿Qué fármaco revierte los efectos?',
+         'b) Naloxona', 'b',
+         'La naloxona es antagonista de los receptores opioides (μ, δ y κ); revierte los efectos indeseables.',
+         ['a) Buprenorfina', 'b) Naloxona', 'c) Fentanilo', 'd) Ketorolac']],
+        ['Paciente en tratamiento prolongado con prednisona.',
+         '¿Cómo actúan los corticoides?',
+         'c) Se unen a receptores citoplasmáticos, migran al núcleo y modulan la expresión génica', 'c',
+         'El mecanismo principal es genómico (lento); también hay mecanismos no genómicos (rápidos). Inhiben la síntesis de mediadores inflamatorios y citoquinas.',
+         ['a) Bloquean la COX-1 y la COX-2', 'b) Bloquean los receptores H1', 'c) Se unen a receptores citoplasmáticos, migran al núcleo y modulan la expresión génica', 'd) Inhiben la acetilcolinesterasa']],
+        ['Paciente con hiperpigmentación, hipotensión y debilidad muscular por insuficiencia suprarrenal autoinmune.',
+         '¿Qué enfermedad es?',
+         'a) Enfermedad de Addison', 'a',
+         'La ausencia de las hormonas suprarrenales produce Addison; el exceso, Cushing (cara de luna llena, estrías, obesidad central).',
+         ['a) Enfermedad de Addison', 'b) Síndrome de Cushing', 'c) Feocromocitoma', 'd) Hiperaldosteronismo primario']]
+      ]
+    }
+
 
   ]
 };

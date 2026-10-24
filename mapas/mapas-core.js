@@ -44,11 +44,20 @@
     return { keys: groups, not: not };
   }
 
-  /* devolve: empty | ok | part | miss */
-  function evaluate(item, value) {
+  function esc(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  /* devolve: empty | ok | part | miss.
+     free = texto livre com várias respostas juntas (modo de memória): as palavras proibidas
+     são removidas do texto em vez de invalidar tudo (ex.: "semisintético" ao procurar "sintético"). */
+  function evaluate(item, value, free) {
     var n = norm(value).trim();
     if (!n) return 'empty';
-    if (item.not && item.not.some(function (k) { return n.indexOf(k) > -1; })) return 'miss';
+    if (item.not && item.not.length) {
+      if (free) {
+        item.not.forEach(function (k) { n = n.replace(new RegExp('[a-z0-9]*' + esc(k) + '[a-z0-9]*', 'g'), ' '); });
+        n = n.trim();
+        if (!n) return 'miss';
+      } else if (item.not.some(function (k) { return n.indexOf(k) > -1; })) return 'miss';
+    }
     var hit = item.keys.filter(function (g) { return g.some(function (k) { return has(n, k); }); }).length;
     return hit === item.keys.length ? 'ok' : hit > 0 ? 'part' : 'miss';
   }
@@ -86,6 +95,19 @@
     throw new Error('passo desconhecido em ' + mod.id);
   }
 
+  function plain(parts) { return parts.map(function (p) { return p.s != null ? p.s : p.b.ans; }).join(''); }
+
+  /* modelo Desafío das tabelas: a célula inteira fica escondida e vale as chaves de todas as suas lacunas */
+  function cellItem(mod, parts, label) {
+    var blanks = parts.filter(function (p) { return p.b; }).map(function (p) { return p.b; });
+    if (!blanks.length) return null;
+    var keys = [], not = [];
+    blanks.forEach(function (b) { b.keys.forEach(function (g) { keys.push(g); }); b.not.forEach(function (n) { not.push(n); }); });
+    var it = { id: mod.id + '.d' + (mod._ditems.length + 1), ans: plain(parts), keys: keys, not: not, label: label, hint: label };
+    mod._ditems.push(it);
+    return it;
+  }
+
   /* prepara um módulo: lista de lacunas (mod._items) e estrutura pronta para desenhar (mod._tree) */
   function compile(mod) {
     if (mod._tree) return mod;
@@ -104,6 +126,8 @@
       });
     } else if (mod.tipo === 'fluxo') {
       mod._tree = mod.pasos.map(function (s, i) { return compileStep(s, mod, 'Etapa ' + (i + 1)); });
+      mod._linear = mod._tree.every(function (st) { return st.k !== 'split'; });
+      mod._ord = mod._linear ? mod._tree.filter(function (st) { return st.k !== 'note'; }).map(function (st) { return plain(st.p).trim(); }) : null;
     } else if (mod.tipo === 'tabla') {
       mod._tree = {
         cols: mod.columnas,
@@ -111,11 +135,27 @@
           return f.map(function (cell, ci) { return tokenize(String(cell), mod, f[0].replace(/\[\[|::.*?\]\]/g, '').slice(0, 40)); });
         })
       };
+      mod._ditems = [];
+      mod._tree.rows.forEach(function (row, ri) {
+        var rowLabel = plain(row[0]);
+        row.forEach(function (cell, ci) {
+          if (ci > 0) cell._d = cellItem(mod, cell, rowLabel + ' · ' + (mod.columnas[ci] || ''));
+        });
+      });
+    } else if (mod.tipo === 'casos') {
+      mod._tree = mod.casos.map(function (c, i) {
+        // c = [caso, pergunta, resposta, chaves, explicação, opções?]
+        var pk = parseKeys(c[3]);
+        var item = { id: mod.id + '.' + (mod._items.length + 1), hint: c[1], caso: c[0], ans: c[2], keys: pk.keys, not: pk.not, exp: c[4] || '', opts: c[5] || null, label: 'Caso ' + (i + 1) };
+        if (item.opts) { item.keys = [[norm(c[2]).charAt(0)]]; item.not = []; item.mc = true; }
+        mod._items.push(item);
+        return item;
+      });
     } else {
       throw new Error('tipo desconhecido: ' + mod.tipo);
     }
     return mod;
   }
 
-  return { norm: norm, parseKeys: parseKeys, evaluate: evaluate, compile: compile, tokenize: tokenize };
+  return { norm: norm, parseKeys: parseKeys, evaluate: evaluate, compile: compile, tokenize: tokenize, plain: plain };
 });

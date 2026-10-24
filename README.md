@@ -35,10 +35,19 @@ A entrada antiga `aulas/painel.html` encaminha ao painel atual em `https://meusi
 
 ## Mapas guiados
 
-Aba **Mapas guiados** (menu "Estudo e revisão"): mapas mentais, fluxogramas e tabelas com a estrutura pronta, em que o aluno só completa os campos e compara com o gabarito. Conteúdo do 5º semestre em duas matérias, montado a partir das aulas do Drive:
+Os mapas mentais, fluxogramas e tabelas com a estrutura pronta (o aluno só completa os campos e compara com o gabarito) aparecem em dois lugares do Sinus:
 
-- Anatomía Patológica I (Dra. Eliana Chamorro Krauer): 15 mapas, aulas 1 a 7.
-- Farmacología I (Dr. Cristhiam Giménez): 30 mapas, aulas 1 a 9.
+- **Dentro de cada matéria**, na barra de exercícios ao lado de Flashcards (Treino · Flashcards · **Mapas guiados** · Provas · Revisão). Cada matéria mostra só os mapas dela (`/mapas/?s=anatopato` e `/mapas/?s=farmacologia`).
+- No menu "Estudo e revisão", com as duas matérias juntas.
 
-Arquivos: `mapas/` (tela, estilos e núcleo de correção), `mapas/dados/*.js` (um arquivo por matéria) e `sinus/mapas-guiados.js` (a aba dentro do painel). O formato para criar mapas novos está no cabeçalho de `mapas/dados/anatopato.js`. Depois de editar os dados, rode `node tools/testar-mapas.js`: cada resposta-modelo precisa ser aceita pelas próprias palavras-chave. O progresso do aluno fica salvo no navegador dele.
+Conteúdo do 5º semestre, montado a partir dos slides das aulas no Drive:
+
+- Anatomía Patológica I (Dra. Eliana Chamorro Krauer): 15 mapas das aulas 1 a 7, casos clínicos e um simulado.
+- Farmacología I (Dr. Cristhiam Giménez): 30 mapas das aulas 1 a 9, casos clínicos e um simulado.
+
+**Três níveis** (abas no topo): 1 Guiado (estrutura pronta e pistas); 2 Desafío (mapas em texto livre sem estrutura, tabelas com células ocultas, fluxogramas lineares para colocar na ordem); 3 Prova (casos clínicos e simulados de múltipla escolha com cronômetro e nota). Em cada mapa dá para alternar entre Guiado e Desafío.
+
+**Guia por slides**: cada mapa informa em quais slides da aula está (campo `sl` nos dados) e a lista segue a ordem dos slides. A Clase 8 de Farmacología (PDF de 11 MB) não pôde ser baixada, então ela só segue a ordem da aula, sem número de slide.
+
+Arquivos: `mapas/` (tela, estilos e núcleo de correção), `mapas/dados/*.js` (um arquivo por matéria), `sinus/mapas-guiados.js` (o item de menu) e a aba da matéria em `sinus/integracao-v17.js`. O formato para criar mapas novos está no cabeçalho de `mapas/dados/anatopato.js`. Depois de editar os dados, rode `node tools/testar-mapas.js`: cada resposta-modelo precisa ser aceita pelas próprias palavras-chave e todo mapa precisa ter seus slides. O progresso do aluno fica salvo no navegador dele.
 

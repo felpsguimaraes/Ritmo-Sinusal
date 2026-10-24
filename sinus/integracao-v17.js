@@ -404,11 +404,11 @@
 
   // abas da matéria: as do painel + Apostila, Flashcards, Fotos e Macroscopia
   V11_SUBJECT_TABS.theory.splice(0, V11_SUBJECT_TABS.theory.length,
-    ['overview', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'],
+    ['overview', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['mapas', 'Mapas guiados'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'],
     ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
   V11_SUBJECT_TABS.practice.splice(0, V11_SUBJECT_TABS.practice.length,
     ['overview', 'Visão geral'], ['apostila', 'Resumo / Apostila'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
-    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
+    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['mapas', 'Mapas guiados'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
 
   function pillPlano() { var p = $id('subjectPlanPill'); if (p) p.textContent = 'Acesso completo' }
   var renderVideoOriginal = W.renderVideos, renderAudioOriginal = W.renderAudios;
@@ -470,22 +470,23 @@
   W.renderSubject = function () {
     if (!UI.subject) return;
     var t = UI.tab;
-    if (t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
+    if (t === 'apostila' || t === 'cartoes' || t === 'mapas' || t === 'fotos' || t === 'macro') {
       v11SubjectHeader();
       if (t === 'apostila') { if(v11List('apostila').length) renderResourceCategory('apostila'); else renderApostilaMateria(); }
       else if (t === 'cartoes') renderCartoes();
+      else if (t === 'mapas') renderMapasMateria();
       else renderResourceCategory(t);
     } else _renderSubject();
     pillPlano();
     prepararDivisao();
-    var exercicios = ['training', 'cartoes', 'provas', 'review'];
+    var exercicios = ['training', 'cartoes', 'mapas', 'provas', 'review'];
     var principal = t === 'provas' ? 'provas' : exercicios.indexOf(t) >= 0 ? 'training' : (t === 'audios' ? 'videos' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila'));
     var tabs = $id('subjectTabs');
     if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides'],['videos','Vídeos / Áudios'],['provas','Provas'],['training','Exercícios']].map(function (item) {
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
-    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['provas','Provas'],['review','Revisão']].map(function (item) {
+    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].map(function (item) {
       return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('') + '</div>');
     else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
@@ -538,6 +539,13 @@
       CART.fila = montarFila(CART.deck.cartoes); CART.i = 0; CART.mostrar = false;
       if (UI.tab === 'cartoes') renderCartoes();
     }).catch(function () {});
+  }
+  // ---------------- mapas guiados da matéria (mapas, fluxogramas e tabelas que o aluno completa)
+  var MAPAS_MATERIAS = { anatopato: 1, farmacologia: 1 };
+  function renderMapasMateria() {
+    var s = subjectData(), slug = s && s.slug, box = $id('subjectContent');
+    if (!slug || !MAPAS_MATERIAS[slug]) { box.innerHTML = emptyBox('Os mapas guiados desta matéria ainda não foram feitos.', 'Enquanto isso, use o Treino, os Flashcards e a Revisão e progresso.'); return }
+    box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });

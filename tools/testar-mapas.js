@@ -26,8 +26,20 @@ for (const sid of Object.keys(DATA)) {
       const r = Core.evaluate(it, it.ans);
       if (r !== 'ok') err(tag + ' → resposta-modelo "' + it.ans + '" deu ' + r);
       if (Core.evaluate(it, '') !== 'empty') err(tag + ' → vazio não é vazio');
+      if (it.mc) {
+        const letras = it.opts.map(o => Core.norm(o).charAt(0));
+        if (letras.indexOf(it.keys[0][0]) < 0) err(tag + ' → a resposta "' + it.ans + '" não corresponde a nenhuma opção');
+        if (new Set(letras).size !== letras.length) err(tag + ' → letras de opção repetidas');
+        continue;
+      }
       for (const g of it.keys) for (const k of g) {
         if (k.length <= 2 && !/^\d+$/.test(k)) warn(tag + ' → chave curta "' + k + '"');
+      }
+      // caso clínico: a resposta não pode já estar escrita no enunciado
+      if (it.caso) {
+        const h2 = Core.norm(it.caso + ' ' + it.hint);
+        const vaza2 = it.keys.length && it.keys.every(g => g.some(k => k.length >= 5 && h2.indexOf(k) > -1));
+        if (vaza2) warn(tag + ' → o enunciado parece entregar a resposta');
       }
       // pista que já traz a resposta: todas as chaves de algum grupo aparecem na pista
       if (it.hint) {
@@ -37,6 +49,20 @@ for (const sid of Object.keys(DATA)) {
       }
       // uma resposta qualquer não pode valer ponto cheio
       for (const lixo of ['nao sei', 'xxxxx', 'a']) { if (Core.evaluate(it, lixo) === 'ok') warn(tag + ' → "' + lixo + '" foi aceito'); }
+    }
+    // slides: todo módulo (exceto casos) precisa dizer em que slides da aula está
+    if (m.tipo !== 'casos') {
+      if (!m.sl || !m.sl.length) err(m.id + ': sem slides (sl)');
+      else for (const e of m.sl) if (e[1] && (e[2] < e[1])) err(m.id + ': intervalo de slides inválido ' + e);
+    }
+    // nível 2: células ocultas das tabelas, ordenar dos fluxos lineares e texto livre dos mapas
+    if (m.tipo === 'tabla') for (const it of m._ditems || []) {
+      if (Core.evaluate(it, it.ans) !== 'ok') err(m.id + ' célula oculta [' + it.label + '] → resposta-modelo não aceita');
+    }
+    if (m.tipo === 'fluxo' && m._linear && (!m._ord || m._ord.length < 2)) err(m.id + ': fluxo linear sem ordem');
+    if (m.tipo === 'mapa') for (const b of m._tree) {
+      const texto = b.leaves.map(it => it.ans).join('. ');
+      for (const it of b.leaves) if (Core.evaluate(it, texto, true) !== 'ok') err(m.id + ' memoria [' + b.t + '] "' + it.ans + '" não foi reconhecida no texto livre');
     }
     // hints de mapa: tamanho para caber no cartão (2 linhas)
     if (m.tipo === 'mapa') for (const b of m._tree) for (const it of b.leaves) {

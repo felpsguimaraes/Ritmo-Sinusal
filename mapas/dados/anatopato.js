@@ -18,7 +18,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 1 ───────────── */
     {
-      id: 'proceso', clase: 'Clase 1', titulo: 'El proceso patológico y sus métodos', tipo: 'mapa',
+      id: 'proceso', clase: 'Clase 1', titulo: 'El proceso patológico y sus métodos', tipo: 'mapa', sl: [[1,3,26]],
       centro: 'Proceso patológico', sub: 'Introducción a la Anatomía Patológica',
       fuente: 'Clase 1 · Introducción a la Anatomía Patológica (Robbins cap. 2; Harsh Mohan cap. 1)',
       ramas: [
@@ -51,7 +51,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'tinciones', clase: 'Clase 1', titulo: 'Tinciones especiales', tipo: 'tabla',
+      id: 'tinciones', clase: 'Clase 1', titulo: 'Tinciones especiales', tipo: 'tabla', sl: [[1,27,42]],
       resumen: 'Qué identifica cada tinción y de qué color se ve en la lámina.',
       fuente: 'Clase 1 · Tinciones especiales (histoquímica)',
       columnas: ['Tinción', '¿Qué identifica?', 'Color'],
@@ -72,7 +72,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 2 ───────────── */
     {
-      id: 'adaptacion', clase: 'Clase 2', titulo: 'Adaptación celular', tipo: 'mapa',
+      id: 'adaptacion', clase: 'Clase 2', titulo: 'Adaptación celular', tipo: 'mapa', sl: [[2,3,29]],
       centro: 'Adaptación celular', sub: 'respuestas REVERSIBLES al estrés',
       fuente: 'Clase 2 · Adaptación celular (Robbins cap. 2; Harsh Mohan cap. 3)',
       ramas: [
@@ -110,7 +110,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 3 ───────────── */
     {
-      id: 'causas', clase: 'Clase 3', titulo: 'Causas de lesión celular', tipo: 'mapa',
+      id: 'causas', clase: 'Clase 3', titulo: 'Causas de lesión celular', tipo: 'mapa', sl: [[3,4,9]],
       centro: 'Causas de lesión celular', sub: '7 grandes grupos',
       fuente: 'Clase 3 · Lesión celular (Robbins cap. 2; Harsh Mohan cap. 1)',
       ramas: [
@@ -144,7 +144,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'mecanismos', clase: 'Clase 3', titulo: 'Mecanismos de lesión celular', tipo: 'mapa',
+      id: 'mecanismos', clase: 'Clase 3', titulo: 'Mecanismos de lesión celular', tipo: 'mapa', sl: [[3,10,20]],
       centro: 'Mecanismos de lesión', sub: 'sobre mitocondrias, membranas, proteínas y ADN',
       fuente: 'Clase 3 · Lesión celular, mecanismos 1 a 6',
       ramas: [
@@ -179,7 +179,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'flujo_lesion', clase: 'Clases 3 y 4', titulo: 'De la lesión reversible a la muerte celular', tipo: 'fluxo',
+      id: 'flujo_lesion', clase: 'Clases 3 y 4', titulo: 'De la lesión reversible a la muerte celular', tipo: 'fluxo', sl: [[3,21,26],[4,3,5]],
       resumen: 'Sigue la secuencia de eventos de una lesión por hipoxia hasta el punto de no retorno.',
       fuente: 'Clase 3 · Lesión celular reversible; Clase 4 · Muerte celular',
       pasos: [
@@ -206,7 +206,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 4 ───────────── */
     {
-      id: 'patrones_necrosis', clase: 'Clase 4', titulo: 'Patrones de necrosis', tipo: 'mapa',
+      id: 'patrones_necrosis', clase: 'Clase 4', titulo: 'Patrones de necrosis', tipo: 'mapa', sl: [[4,14,31]],
       centro: 'Necrosis', sub: 'seis patrones morfológicos',
       fuente: 'Clase 4 · Necrosis (Robbins cap. 2, pág. 34 en la 10ª ed.)',
       ramas: [
@@ -246,7 +246,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'infarto', clase: 'Clase 4', titulo: 'Infarto de miocardio: secuencia histológica', tipo: 'fluxo',
+      id: 'infarto', clase: 'Clase 4', titulo: 'Infarto de miocardio: secuencia histológica', tipo: 'fluxo', sl: [[4,15,19]],
       resumen: 'Pregunta clásica de prova: el orden de lo que se ve al microscopio.',
       fuente: 'Clase 4 · Necrosis coagulativa; banco de preguntas de pruebas anteriores',
       pasos: [
@@ -261,7 +261,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASES 4 y 5 ───────────── */
     {
-      id: 'necro_vs_apopto', clase: 'Clases 4 y 5', titulo: 'Necrosis frente a apoptosis', tipo: 'tabla',
+      id: 'necro_vs_apopto', clase: 'Clases 4 y 5', titulo: 'Necrosis frente a apoptosis', tipo: 'tabla', sl: [[4,6,8],[5,3,7]],
       resumen: 'El cuadro comparativo que más se pregunta.',
       fuente: 'Clase 4 · Muerte celular; Clase 5 · Apoptosis',
       columnas: ['Característica', 'Necrosis', 'Apoptosis'],
@@ -281,7 +281,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 5 ───────────── */
     {
-      id: 'apoptosis_vias', clase: 'Clase 5', titulo: 'Apoptosis: las dos vías', tipo: 'fluxo',
+      id: 'apoptosis_vias', clase: 'Clase 5', titulo: 'Apoptosis: las dos vías', tipo: 'fluxo', sl: [[5,8,12]],
       resumen: 'Dos vías distintas convergen en la activación de caspasas.',
       fuente: 'Clase 5 · Apoptosis, mecanismos',
       pasos: [
@@ -305,7 +305,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'apoptosis_mapa', clase: 'Clase 5', titulo: 'Apoptosis: dónde ocurre y cómo se ve', tipo: 'mapa',
+      id: 'apoptosis_mapa', clase: 'Clase 5', titulo: 'Apoptosis: dónde ocurre y cómo se ve', tipo: 'mapa', sl: [[5,3,7],[5,13,15]],
       centro: 'Apoptosis', sub: 'muerte celular programada',
       fuente: 'Clase 5 · Apoptosis y necroptosis',
       ramas: [
@@ -341,7 +341,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 6 ───────────── */
     {
-      id: 'acumulaciones', clase: 'Clase 6', titulo: 'Acumulaciones intracelulares: mecanismos y lípidos', tipo: 'mapa',
+      id: 'acumulaciones', clase: 'Clase 6', titulo: 'Acumulaciones intracelulares: mecanismos y lípidos', tipo: 'mapa', sl: [[6,3,6],[6,20,21]],
       centro: 'Acumulaciones intracelulares', sub: 'manifestación de alteraciones metabólicas',
       fuente: 'Clase 6 · Acumulaciones celulares (Robbins cap. 2, pág. 61)',
       ramas: [
@@ -369,7 +369,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'ateroesclerosis', clase: 'Clase 6', titulo: 'Ateroesclerosis', tipo: 'mapa',
+      id: 'ateroesclerosis', clase: 'Clase 6', titulo: 'Ateroesclerosis', tipo: 'mapa', sl: [[6,7,19]],
       centro: 'Ateroesclerosis', sub: 'lesión de la íntima arterial',
       fuente: 'Clase 6 · Ateroesclerosis (Robbins cap. 11)',
       ramas: [
@@ -404,7 +404,7 @@ window.SINUS_MAPAS.anatopato = {
 
     /* ───────────── CLASE 7 ───────────── */
     {
-      id: 'proteinas', clase: 'Clase 7', titulo: 'Acumulación de proteínas y amiloidosis', tipo: 'mapa',
+      id: 'proteinas', clase: 'Clase 7', titulo: 'Acumulación de proteínas y amiloidosis', tipo: 'mapa', sl: [[7,3,16]],
       centro: 'Acumulación de proteínas', sub: 'gotículas, inclusiones y agregados',
       fuente: 'Clase 7 · Acumulaciones celulares: proteínas (Robbins cap. 2 y 6)',
       ramas: [
@@ -433,7 +433,7 @@ window.SINUS_MAPAS.anatopato = {
       ]
     },
     {
-      id: 'calcificacion', clase: 'Clase 7', titulo: 'Calcificación patológica', tipo: 'tabla',
+      id: 'calcificacion', clase: 'Clase 7', titulo: 'Calcificación patológica', tipo: 'tabla', sl: [[7,17,24]],
       resumen: 'Distrófica y metastásica, lado a lado.',
       fuente: 'Clase 7 · Calcificación patológica',
       columnas: ['', 'Calcificación distrófica', 'Calcificación metastásica'],
@@ -446,7 +446,213 @@ window.SINUS_MAPAS.anatopato = {
         ['Aspecto en H&E', '[[Basófilo::basofil]], granular y amorfo', 'Depósitos amorfos o cristales de [[hidroxiapatita::hidroxiapatit]]'],
         ['Cuerpos de psamoma', 'Capas concéntricas como granos de arena: cuerpos de [[psamoma::psamom]] (carcinoma papilar de tiroides)', '—']
       ]
+    },
+
+    /* ───────────── CASOS CLÍNICOS (nível de prova) ───────────── */
+    {
+      id: 'casos_lesion', clase: 'Clases 2 a 7', titulo: 'Casos clínicos: adaptación, lesión, muerte y acumulaciones', tipo: 'casos',
+      resumen: 'Preguntas de repaso de las clases y casos de aplicación. Hay que razonar, no solo recordar.',
+      fuente: 'Preguntas de repaso de las clases 2 a 5 (Dra. Chamorro) y casos construidos con el contenido de las clases 6 y 7',
+      casos: [
+        ['Autopsia de un hombre de 84 años: el corazón es pequeño (250 g) y de color marrón oscuro al corte. En la microscopía hay pigmento marrón claro perinuclear (H&E) en las fibras musculares cardíacas.',
+         '¿Qué es el pigmento y qué proceso adaptativo representa?',
+         'Lipofuscina (lipocromo): atrofia parda', 'lipofusc|lipocrom;atrofia|parda',
+         'La lipofuscina son restos de autofagia que dan color marrón al tejido. La atrofia reduce el tamaño de la célula y del órgano.'],
+        ['Hombre de 43 años con dolor urente subesternal después de las comidas desde hace 3 años. La endoscopia no muestra masas ni úlceras. Las biopsias del esófago inferior (3 cm por encima de la unión gastroesofágica) muestran epitelio columnar con células caliciformes.',
+         '¿Qué alteración de la mucosa representan estos hallazgos?',
+         'd) Metaplasia intestinal', 'd',
+         'El reflujo ácido crónico reemplaza el epitelio escamoso por epitelio cilíndrico de tipo intestinal (esófago de Barrett). Es reversible, pero si el estímulo persiste puede haber transformación maligna.',
+         ['a) Displasia escamosa', 'b) Hiperplasia patológica', 'c) Isquemia transitoria', 'd) Metaplasia intestinal']],
+        ['Mujer gestante de 28 semanas: el útero aumentó mucho de tamaño por la estimulación estrogénica.',
+         '¿Qué adaptación predomina y es fisiológica o patológica?',
+         'Hipertrofia de las fibras musculares lisas (con hiperplasia asociada); fisiológica', 'hipertrofia;fisiolog',
+         'Aumenta el tamaño de las células por más proteínas y miofilamentos. La hipertrofia suele acompañarse de hiperplasia, y aquí es una respuesta fisiológica hormonal.'],
+        ['Paciente con neumonía grave y saturación de O₂ de 86%.',
+         'Explique cómo la hipoxia llega a producir edema celular.',
+         '↓ O₂ → ↓ fosforilación oxidativa → ↓ ATP → falla la bomba Na⁺/K⁺ → entran Na⁺ y agua → edema celular', 'atp;bomba|sodio|na+|na⁺;edema|tumefac|hinchaz|agua',
+         'Además, la glucólisis anaeróbica acumula ácido láctico y baja el pH. El edema es la primera manifestación de casi todas las formas de lesión.'],
+        ['En una célula con lesión grave aumenta el calcio citosólico.',
+         'Nombre tres enzimas que se activan y el daño que produce cada una.',
+         'Fosfolipasas (membrana), proteasas (citoesqueleto) y endonucleasas (núcleo)', 'fosfolipas;proteas;endonucleas',
+         'También se activan ATPasas, y el calcio induce apoptosis al activar caspasas y aumentar la permeabilidad mitocondrial.'],
+        ['Algunas bacterias producen toxinas que dañan las mitocondrias de las células del huésped.',
+         '¿Qué consecuencia tiene para la célula?',
+         'Falla la fosforilación oxidativa y cae el ATP; si el daño es irreversible, muerte celular (necrosis, o apoptosis)', 'atp|fosforilac;necros|apopto|muerte',
+         'Las mitocondrias son fundamentales en todas las vías de lesión y muerte celular: su disfunción es uno de los tres fenómenos de irreversibilidad.'],
+        ['Hombre de 79 años con un gran infarto de miocardio de la pared libre del ventrículo izquierdo. Desarrolla insuficiencia cardíaca congestiva y, un año después, la ecocardiografía muestra un aneurisma del ventrículo izquierdo.',
+         '¿Qué prueba sérica indicaría mejor mala perfusión tisular periférica?',
+         'c) Ácido láctico elevado', 'c',
+         'Con mala perfusión hay hipoxia y la glucólisis anaeróbica produce ácido láctico. La troponina I indica necrosis miocárdica, no perfusión periférica.',
+         ['a) Troponina I elevada', 'b) Aumento de sodio', 'c) Ácido láctico elevado', 'd) Aumento de la glucosa']],
+        ['Paciente de 65 años con diabetes de larga data y tratamiento irregular con insulina. Consulta porque la planta del pie empezó a oscurecerse y perdió la sensibilidad.',
+         '¿Qué tipo de necrosis tiene? ¿Cómo cambia si se sobreinfecta con bacterias?',
+         'Gangrena seca (necrosis coagulativa); con sobreinfección pasa a gangrena húmeda (necrosis licuefactiva)', 'gangrena;seca|coagul;humeda|licuef|licue|liquef',
+         'La gangrena no es un patrón específico: es necrosis de una extremidad que perdió la irrigación. Las enzimas de bacterias y leucocitos la vuelven licuefactiva.'],
+        ['Varón de 58 años que ingresa con dolor torácico en reposo y elevación del segmento ST en el ECG: infarto agudo de miocardio.',
+         '¿Qué patrón de necrosis hay y cómo se llama el área localizada?',
+         'Necrosis coagulativa; infarto', 'coagul;infart',
+         'La isquemia por obstrucción de un vaso produce necrosis coagulativa en todos los órganos salvo el encéfalo. Se conserva la arquitectura por desnaturalización de proteínas.'],
+        ['En una lesión, el centro es un área necrótica rosada y acelular rodeada por células gigantes de Langhans, células epitelioides y linfocitos.',
+         '¿Qué tipo de necrosis hay en el centro y qué infección es típica?',
+         'Necrosis caseosa; tuberculosis', 'caseos;tubercul',
+         'Es un granuloma: la arquitectura del tejido se borra por completo y el aspecto es de queso, friable y blanquecino-amarillento.'],
+        ['Paciente que sufrió una "apoplejía": pérdida focal del suministro de sangre en una parte del cerebro.',
+         '¿Qué patrón de necrosis esperaría y por qué es la excepción a la regla de la isquemia?',
+         'Necrosis licuefactiva: en el encéfalo la isquemia no produce necrosis coagulativa', 'licuef|licue|liquef;encefal|cerebr|nervioso|snc',
+         'El infarto cerebral se resuelve con espacios quísticos a medida que se elimina el tejido necrótico.'],
+        ['En la artritis reumatoidea, la lesión granulomatosa presenta en el centro...',
+         '¿Qué patrón de necrosis es?',
+         'Necrosis fibrinoide', 'fibrinoid',
+         'Aparece en reacciones inmunitarias que afectan a los vasos: depósito de complejos antígeno-anticuerpo y fibrina, de aspecto rosado y amorfo.'],
+        ['Mujer de 48 años con un linfoma maligno en ganglios paraaórticos. Recibe quimioterapia que provoca la pérdida de células neoplásicas por fragmentación de los núcleos y del citoplasma de células individuales. A los 2 meses el linfoma disminuyó de tamaño.',
+         '¿Por qué mecanismo respondió principalmente su neoplasia?',
+         'd) Apoptosis', 'd',
+         'La apoptosis se activa cuando el ADN se daña más allá de la reparación. Fragmenta la célula en cuerpos apoptósicos, sin inflamación.',
+         ['a) Necrosis coagulativa', 'b) Envenenamiento mitocondrial', 'c) Fagocitosis', 'd) Apoptosis']],
+        ['Hombre con consumo crónico de alcohol. La biopsia hepática muestra vacuolas de grasa y, en los hepatocitos, inclusiones citoplásmicas eosinófilas.',
+         '¿Qué inclusión es, de qué está hecha y qué alteración de grasa acompaña?',
+         'Hialina de Mallory (filamentos intermedios de queratina); esteatosis', 'mallory|hialina;queratina;esteatosis|graso',
+         'La esteatosis es una acumulación reversible de triglicéridos. La hialina alcohólica es propia de la hepatopatía alcohólica.'],
+        ['Paciente con mieloma múltiple. En una biopsia se ven depósitos extracelulares rosa pálido, homogéneos y amorfos.',
+         '¿Qué tinción lo confirma y qué se ve con luz polarizada?',
+         'Rojo Congo; birrefringencia verde manzana (amiloidosis AL)', 'congo;verde',
+         'La amiloidosis primaria viene de la proliferación clonal de células plasmáticas (cadena ligera). Siempre es extracelular y no provoca inflamación.'],
+        ['Paciente con insuficiencia renal crónica e hipercalcemia. Hay depósitos de calcio en el pulmón y en la mucosa gástrica, tejidos que estaban normales.',
+         '¿Qué tipo de calcificación es y se puede revertir?',
+         'Calcificación metastásica; reversible si se corrige el trastorno metabólico', 'metastas;revers!irrevers',
+         'La distrófica, en cambio, ocurre en tejido lesionado con calcemia normal y suele ser irreversible.']
+      ]
+    },
+
+    /* ───────────── NIVEL 3: SIMULADO ───────────── */
+    {
+      id: 'simulado_anato', clase: 'Clases 1 a 7', titulo: 'Simulado de prueba: Anatomía Patológica I (Unidad I)', tipo: 'casos', cronometro: true,
+      resumen: 'Preguntas de opción múltiple como en la prueba. Use el cronómetro y corrija al final.',
+      fuente: 'Contenido de las clases 1 a 7 (Dra. Chamorro): tinciones, adaptaciones, lesión y muerte celular, acumulaciones y calcificación',
+      casos: [
+        ['',
+         'Para demostrar amiloide en un corte se usa Rojo Congo. ¿Qué se observa con luz polarizada?',
+         'c) Birrefringencia verde manzana', 'c',
+         'El amiloide teñido con Rojo Congo muestra birrefringencia verde con luz polarizada (Clase 1, tinciones especiales).',
+         ['a) Fluorescencia roja intensa', 'b) Color negro por impregnación de plata', 'c) Birrefringencia verde manzana', 'd) Gránulos azules de hierro']],
+        ['Un patólogo sospecha tuberculosis en un ganglio linfático.',
+         '¿Qué tinción especial identifica los bacilos ácido-alcohol-resistentes?',
+         'a) Ziehl-Neelsen', 'a',
+         'Ziehl-Neelsen tiñe de rojo los bacilos ácido-alcohol-resistentes (Mycobacterium tuberculosis, M. avium).',
+         ['a) Ziehl-Neelsen', 'b) Gram', 'c) Azul de Prusia', 'd) Tricrómica de Masson']],
+        ['En la biopsia de un paciente inmunodeprimido se sospecha una infección por Pneumocystis jiroveci.',
+         '¿Qué tinción usaría para demostrar el hongo?',
+         'd) Metenamina de plata', 'd',
+         'La metenamina de plata tiñe hongos de negro (Cryptococcus, Pneumocystis).',
+         ['a) Giemsa', 'b) Aceite rojo O', 'c) Azul de metileno', 'd) Metenamina de plata']],
+        ['Se estudia un depósito de pigmento marrón-dorado en el hígado.',
+         '¿Qué tinción confirma que es hemosiderina (hierro)?',
+         'b) Azul de Prusia', 'b',
+         'El azul de Prusia tiñe de azul la hemosiderina y el hierro.',
+         ['a) Sudán negro B', 'b) Azul de Prusia', 'c) Orceína', 'd) Mucicarmín']],
+        ['Un culturista aumenta su masa muscular con el entrenamiento; las fibras son más gruesas pero no hay fibras nuevas.',
+         '¿Cuál es la adaptación celular?',
+         'a) Hipertrofia fisiológica', 'a',
+         'La hipertrofia aumenta el tamaño de las células por más proteínas y organelas, sin nuevas células. En el músculo esquelético por aumento de la demanda funcional es fisiológica.',
+         ['a) Hipertrofia fisiológica', 'b) Hiperplasia fisiológica', 'c) Metaplasia', 'd) Hipertrofia patológica']],
+        ['Un paciente con hipertensión arterial no controlada presenta una pared ventricular izquierda engrosada.',
+         '¿Por qué el miocardio responde con hipertrofia y no con hiperplasia?',
+         'd) Los miocitos cardíacos son células con capacidad de división limitada o nula', 'd',
+         'La hiperplasia solo ocurre en tejidos con células capaces de dividirse; las células permanentes (músculo cardíaco) aumentan su masa solo por hipertrofia.',
+         ['a) Porque el corazón no responde a factores de crecimiento', 'b) Porque la hiperplasia solo ocurre con infecciones virales', 'c) Porque las células cardíacas son células lábiles', 'd) Los miocitos cardíacos son células con capacidad de división limitada o nula']],
+        ['Mujer de 40 años con sangrado menstrual anómalo. La biopsia muestra glándulas endometriales aumentadas en número, con estroma denso.',
+         '¿Qué proceso explica el hallazgo?',
+         'b) Hiperplasia patológica por exceso de estrógenos', 'b',
+         'La hiperplasia endometrial es una respuesta patológica a aumentos absolutos o relativos de estrógenos y puede asociarse a sangrado anómalo.',
+         ['a) Atrofia por falta de estímulo hormonal', 'b) Hiperplasia patológica por exceso de estrógenos', 'c) Metaplasia escamosa', 'd) Hipertrofia fisiológica por el embarazo']],
+        ['Un paciente con reflujo gastroesofágico crónico tiene epitelio columnar con células caliciformes en el esófago distal.',
+         '¿Cómo se llama este cambio?',
+         'c) Metaplasia (esófago de Barrett)', 'c',
+         'Metaplasia es el cambio reversible de un tipo celular diferenciado por otro; aquí el escamoso es sustituido por cilíndrico por el estímulo del reflujo.',
+         ['a) Displasia escamosa', 'b) Hiperplasia', 'c) Metaplasia (esófago de Barrett)', 'd) Atrofia parda']],
+        ['En la autopsia de un hombre mayor, el corazón es pequeño y de color marrón oscuro.',
+         '¿Qué pigmento se acumula y cuál es el proceso?',
+         'a) Lipofuscina; atrofia parda', 'a',
+         'La atrofia reduce el tamaño de células y órganos por menor síntesis y mayor degradación de proteínas (vía ubicuitina-proteosoma); la lipofuscina da el color marrón.',
+         ['a) Lipofuscina; atrofia parda', 'b) Hemosiderina; infarto', 'c) Melanina; hipertrofia', 'd) Bilirrubina; metaplasia']],
+        ['Una célula hipóxica pierde la capacidad de mantener sus bombas iónicas.',
+         '¿Cuál es la primera manifestación de casi todas las formas de lesión celular?',
+         'b) Edema celular', 'b',
+         'La falla de las bombas dependientes de energía permite la entrada de agua: es la primera manifestación de la lesión reversible (cambio hidrópico).',
+         ['a) Cariólisis', 'b) Edema celular', 'c) Calcificación', 'd) Figuras de mielina']],
+        ['Un paciente con isquemia presenta pérdida de ATP.',
+         '¿Qué sucede con la bomba de sodio-potasio y con el pH intracelular?',
+         'c) Falla la bomba y baja el pH por acidosis láctica', 'c',
+         'La menor producción de ATP daña la bomba Na⁺/K⁺ y aumenta la glucólisis anaeróbica, con aumento de ácido láctico y fosfatos y pH intracelular reducido.',
+         ['a) Se activa más la bomba y sube el pH', 'b) La bomba no cambia y el pH baja', 'c) Falla la bomba y baja el pH por acidosis láctica', 'd) Falla la bomba y el pH sube']],
+        ['Hombre de 62 años con obstrucción de la arteria renal. El estudio histológico del riñón muestra preservación de la arquitectura tisular con células eosinófilas anucleadas.',
+         '¿Qué patrón de necrosis es?',
+         'a) Coagulativa', 'a',
+         'En la necrosis coagulativa la arquitectura del tejido muerto se conserva durante días; la isquemia por obstrucción vascular la produce en todos los órganos excepto el encéfalo.',
+         ['a) Coagulativa', 'b) Licuefactiva', 'c) Caseosa', 'd) Fibrinoide']],
+        ['Paciente con un infarto cerebral. A las semanas, el área necrótica es una cavidad quística.',
+         '¿Qué patrón de necrosis es característico del encéfalo?',
+         'b) Licuefactiva', 'b',
+         'En la necrosis licuefactiva se digieren las células muertas y el tejido se transforma en una masa líquida; el infarto cerebral resuelve con espacios quísticos.',
+         ['a) Coagulativa', 'b) Licuefactiva', 'c) Grasa', 'd) Caseosa']],
+        ['Mujer con pancreatitis aguda. Hay áreas blandas de color blanco calcáreo en el tejido adiposo peripancreático.',
+         '¿Qué patrón de necrosis es?',
+         'c) Grasa', 'c',
+         'Las enzimas pancreáticas salen de las células acinares y licuan las membranas de las células grasas; las lipasas rompen los triglicéridos y se forman jabones de calcio.',
+         ['a) Coagulativa', 'b) Gangrenosa', 'c) Grasa', 'd) Fibrinoide']],
+        ['En un ganglio linfático hiliar hay áreas necróticas rosadas acelulares rodeadas de células epitelioides y células gigantes de Langhans.',
+         '¿Qué patrón de necrosis es?',
+         'd) Caseosa', 'd',
+         'La necrosis caseosa, de aspecto similar al queso, se ve en focos de infección tuberculosa con reacción granulomatosa.',
+         ['a) Licuefactiva', 'b) Coagulativa', 'c) Grasa', 'd) Caseosa']],
+        ['Paciente con vasculitis por inmunocomplejos. En la pared arterial hay material rosado claro y amorfo.',
+         '¿Qué patrón de necrosis explica el hallazgo?',
+         'b) Fibrinoide', 'b',
+         'Los complejos antígeno-anticuerpo depositados en las paredes arteriales junto con fibrina extravasada dan el aspecto rosado y amorfo llamado fibrinoide.',
+         ['a) Caseosa', 'b) Fibrinoide', 'c) Licuefactiva', 'd) Grasa']],
+        ['En la apoptosis por vía intrínseca hay aumento de la permeabilidad de la membrana mitocondrial externa.',
+         '¿Qué proteínas proapoptósicas la aumentan y cuál es la caspasa iniciadora?',
+         'a) BAX y BAK; caspasa 9', 'a',
+         'BAX y BAK aumentan la permeabilidad mitocondrial y liberan citocromo C; la caspasa 9 es la iniciadora de la vía mitocondrial. BCL2, BCL-X y MCL1 son antiapoptósicas.',
+         ['a) BAX y BAK; caspasa 9', 'b) BCL2 y BCL-X; caspasa 8', 'c) BAD y BIM; caspasa 3', 'd) MCL1 y BAK; caspasa 10']],
+        ['Un fragmento de timo fetal muestra células con citoplasma intensamente eosinófilo y cromatina nuclear condensada, sin inflamación a su alrededor.',
+         '¿Qué proceso representa y cuál es su rasgo principal?',
+         'd) Apoptosis; condensación de la cromatina', 'd',
+         'La condensación de la cromatina es la principal característica de la apoptosis; no produce inflamación porque el contenido de la célula no sale.',
+         ['a) Necrosis; cariólisis', 'b) Apoptosis; rotura de la membrana lisosómica', 'c) Necroptosis; edema celular', 'd) Apoptosis; condensación de la cromatina']],
+        ['En la lesión de aterosclerosis hay macrófagos cargados de colesterol y ésteres de colesterol.',
+         '¿Cómo se llaman estas células?',
+         'b) Células espumosas', 'b',
+         'Los macrófagos y las células de músculo liso llenos de vacuolas lipídicas forman las células espumosas; los ésteres cristalizan y dejan hendiduras de colesterol.',
+         ['a) Células de Langhans', 'b) Células espumosas', 'c) Cuerpos de Russell', 'd) Células epitelioides']],
+        ['Dos pacientes tienen placas ateroescleróticas. En una, la cubierta fibrosa es delgada y el núcleo lipídico es grande con inflamación.',
+         '¿Qué placa tiene más riesgo de romperse?',
+         'a) La de cubierta delgada y gran núcleo lipídico (vulnerable)', 'a',
+         'Las placas vulnerables tienen cubierta fibrosa delgada, muchas células espumosas y células inflamatorias; la rotura puede causar trombosis.',
+         ['a) La de cubierta delgada y gran núcleo lipídico (vulnerable)', 'b) La de cubierta engrosada con colágeno denso', 'c) Las dos por igual', 'd) Ninguna, las placas no se rompen']],
+        ['Biopsia hepática de un paciente con deficiencia hereditaria de α1-antitripsina.',
+         '¿Qué hay en los hepatocitos y qué órgano sufre por falta de la enzima?',
+         'c) Glóbulos eosinófilos en el retículo endoplásmico; pulmón (enfisema)', 'c',
+         'Las proteínas mal plegadas se agregan en el RE de los hepatocitos y no se secretan; la carencia de la enzima circulante causa enfisema.',
+         ['a) Hialina de Mallory; cerebro', 'b) Cuerpos de Russell; riñón', 'c) Glóbulos eosinófilos en el retículo endoplásmico; pulmón (enfisema)', 'd) Ovillos neurofibrilares; hígado']],
+        ['Un paciente con mieloma múltiple desarrolla depósitos de amiloide en corazón y lengua.',
+         '¿Qué tipo de amiloidosis y qué proteína?',
+         'd) Primaria; proteína AL (cadena ligera)', 'd',
+         'La amiloidosis primaria viene de la proliferación clonal de células plasmáticas (proteína AL). La secundaria (AA) complica procesos inflamatorios crónicos.',
+         ['a) Secundaria reactiva; proteína AA', 'b) Hereditaria; transtiretina', 'c) Asociada a diálisis; microglobulina β2', 'd) Primaria; proteína AL (cadena ligera)']],
+        ['Paciente con insuficiencia renal crónica e hipercalcemia con depósitos de calcio en el pulmón y la mucosa gástrica.',
+         '¿Qué tipo de calcificación es?',
+         'a) Metastásica', 'a',
+         'La calcificación metastásica afecta tejidos normales siempre que haya hipercalcemia; la distrófica ocurre en tejido lesionado con calcemia normal.',
+         ['a) Metastásica', 'b) Distrófica', 'c) Fisiológica', 'd) Iatrogénica por necrosis']],
+        ['En un carcinoma papilar de tiroides se observan calcificaciones de color azul violáceo.',
+         '¿Cómo se llaman?',
+         'b) Cuerpos de Psamoma', 'b',
+         'Los cuerpos de Psamoma son calcificaciones distróficas concéntricas, típicas del carcinoma papilar de tiroides.',
+         ['a) Cuerpos de Lewy', 'b) Cuerpos de Psamoma', 'c) Hialina de Mallory', 'd) Cuerpos de Russell']]
+      ]
     }
+
 
   ]
 };
