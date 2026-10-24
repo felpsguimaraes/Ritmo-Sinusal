@@ -66,3 +66,28 @@ As 36 foram restauradas usando o texto dos cadernos PDFs de 100 questões do ace
 - `revisao_clinica_concluida`: enunciado e justificativas por alternativas e fontes foram revisados.
 
 Estas distinções são necessárias para manter a confiança dos alunos na plataforma.
+
+
+## Lote adicional de revisão — 24/10/2026
+
+Após a auditoria inicial, foram acrescentados comentários por alternativa para:
+
+| Edição | Questões deste lote | Status |
+|---|---|---|
+| 2023/1 | 10 (sífilis na gestação), 11 (trombocitopenia imune), 12 (massa testicular) | Gabarito definitivo conferido; comentários clínicos adicionados |
+| 2024/1 | 9 (BI-RADS 4), 10 (dor torácica de alto risco), 11 (doença de Graves), 12 (massa testicular) | Gabarito definitivo conferido; comentários clínicos adicionados |
+
+Fontes clínicas estão vinculadas no próprio objeto `SINUS_CLINICAL_REVIEWS` do arquivo `sinus/revalida-data/part-18.txt`. Esta etapa não substitui conferência visual integral do PDF nem valida automaticamente outras questões.
+
+**Situação em 24/10/2026:** os PDFs de 2026/2 foram anunciados pelo Inep como disponibilizados em 15/09/2026; o gabarito definitivo está previsto para **04/12/2026**. No treino SINUS, a prova 2026/2 **não está importada como questões transcritas**. Usar somente gabaritos preliminares claramente identificados, sem classificá-los como definitivos.
+
+**Lacunas estruturais críticas do banco:** 2012 objetiva (6 segmentos), 2017 objetivas 1 e 2 (4 segmentos por caderno), 2022/1 objetiva (0 segmentos). A priorização de reparos não deve remover as versões originais nem perder o vínculo de cada questão com sua edição.
+
+
+## Evolução de grifos contextuais — 24/10/2026
+
+O módulo `sinus/revalida-semiologia.js` recebeu uma atualização conservadora de regras de leitura: supressão de limiares numéricos adultos de PA e FR quando idade pediátrica ou desconhecida, combinação de contexto infeccioso e possíveis sinais de disfunção orgânica para destaque didático relacionado a sepse e identificação aproximada do foco do comando da banca (conduta versus investigação). A regra **não diagnostica sepse** e não altera gabaritos.
+
+Regressões propostas em `sinus/revalida/tests/semiologia-contexto.test.cjs`: criança e adolescente com PA 80/50, adulto com PA 80/50, idade não especificada, febre isolada, pneumonia com oligúria, oligúria negada e oligúria sem contexto infeccioso.
+
+**Importante:** testes automatizados foram adicionados ao repositório, mas sua execução no ambiente de CI e a validação visual por questão e em produção permanecem pendentes. Também faltam extrair e revisar contexto clínico individual de cada enunciado e aferir sensibilidade/especificidade de alertas sobre toda a base. A atualização de grifos não deve ser descrita como auditoria clínica concluída.

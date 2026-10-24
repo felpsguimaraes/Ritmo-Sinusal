@@ -1,0 +1,38 @@
+/* SINUS · Vídeos no mesmo catálogo de cards da Biblioteca */
+#sxYoutubeMount{margin-top:0}
+.sxYTLibrary .sxLibSectionHead{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.sxYTCount{font-size:12px;color:var(--muted,#738279)}
+.sxYTToolbar{margin-top:18px}
+.sxYTGrid .sxYTCard .sxLibCover{background:#dce7df}
+.sxYTGrid .sxLibOpenCover>img{object-position:center;object-fit:cover}
+.sxYTGrid .sxLibOpenCover .sxYTPlay{position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:rgba(18,35,27,.72);border:1px solid #ffffff9c;color:white;display:grid;place-items:center;font-size:15px;padding-left:3px;box-shadow:0 4px 14px #07180a26;transition:transform .2s}
+.sxYTGrid .sxLibOpenCover:hover .sxYTPlay{transform:translate(-50%,-50%) scale(1.1)}
+.sxYTGrid .sxYTCard .sxLibTitle{width:100%}
+.sxYTGrid .sxYTCard .sxLibMeta{margin-top:6px}
+.sxYTGrid .sxYTCard .sxLibContext{margin-bottom:2px}
+.sxYTViewer{position:fixed;inset:0;z-index:999999;display:grid;place-items:center;padding:20px}
+.sxYTOverlay{position:absolute;inset:0;background:#08140ed9;backdrop-filter:blur(9px)}
+.sxYTViewerOpen{overflow:hidden}
+.sxYTDialog{position:relative;width:min(980px,100%);max-height:calc(100dvh - 40px);display:flex;flex-direction:column;overflow:hidden;border-radius:22px;background:var(--card,#fff);border:1px solid var(--border,#dce7de);box-shadow:0 24px 90px #0006;color:inherit}
+.sxYTDialogHead{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.sxYTDialogHead small{font-size:11px;font-weight:700;letter-spacing:.08em;color:#41946c;text-transform:uppercase}
+.sxYTDialogHead h2{font-size:19px;line-height:1.35;letter-spacing:-.025em;margin:6px 0 0;max-width:800px}
+.sxYTClose{width:38px;height:38px;border:1px solid var(--border,#dce7de);border-radius:12px;flex:none;display:grid;place-items:center;background:transparent;color:inherit;cursor:pointer;font-size:18px}
+.sxYTClose:hover{background:#278d6818}
+.sxYTFrame{aspect-ratio:16/9;width:100%;background:#07130e}
+.sxYTFrame iframe{height:100%;width:100%;border:0;display:block}
+.sxYTDialogFoot{padding:14px 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted,#6e8374)}
+.sxYTDialogFoot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+html[data-theme="dark"] .sxYTDialog{background:#172b21}
+@media(max-width:640px){
+ .sxYTToolbar,.sxYTToolbar>div{flex-wrap:wrap}
+ .sxYTToolbar>div{width:100%}
+ .sxYTToolbar label{flex:1;min-width:120px}
+ .sxYTToolbar select{min-width:0;width:100%}
+ .sxYTViewer{padding:8px}
+ .sxYTDialog{max-height:calc(100dvh - 16px);border-radius:16px}
+ .sxYTDialogHead{padding:13px 14px}
+ .sxYTDialogHead h2{font-size:15px}
+ .sxYTDialogFoot{padding:12px 14px;flex-wrap:wrap}
+ .sxYTGrid .sxLibOpenCover .sxYTPlay{width:36px;height:36px}
+}

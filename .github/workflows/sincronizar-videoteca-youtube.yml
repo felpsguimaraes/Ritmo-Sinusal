@@ -1,0 +1,48 @@
+name: Sincronizar videoteca YouTube
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/sincronizar_videos_youtube.py"
+      - "sinus/youtube-catalogo.json"
+      - ".github/workflows/sincronizar-videoteca-youtube.yml"
+  schedule:
+    - cron: "25 8 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sinus-youtube-catalogo
+  cancel-in-progress: false
+
+jobs:
+  catalogo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Verificar repositório
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar indexador de vídeos públicos
+        run: python -m pip install --upgrade "yt-dlp>=2025.10.01"
+      - name: Coletar lista de vídeos do canal (sem download)
+        run: python tools/sincronizar_videos_youtube.py
+      - name: Publicar catálogo
+        run: |
+          if git diff --quiet -- sinus/youtube-catalogo.json; then
+            echo "Catálogo atualizado, sem alterações."
+            exit 0
+          fi
+          git config user.name "SINUS Videoteca"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sinus/youtube-catalogo.json
+          git commit -m "chore(videoteca): sincronizar vídeos públicos de @aislanfernandes4039"
+          git push origin HEAD:main

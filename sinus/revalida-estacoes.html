@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SINUS · Estações de Habilidades Clínicas</title>
+<meta name="theme-color" content="#0d654b">
+<style>
+:root{--bg:#f3f7f4;--panel:#fff;--ink:#183b30;--muted:#668075;--line:#d8e6dd;--green:#146c50;--soft:#e7f4eb;--red:#9e2a34;--amber:#855314;--shadow:0 18px 55px #153d2a0b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;color:var(--ink);text-rendering:optimizeLegibility}
+a{color:var(--green)}button,textarea{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid #86c4a5;outline-offset:2px}
+.top{background:#fff;border-bottom:1px solid var(--line);padding:13px clamp(16px,4vw,60px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-size:25px;font-weight:800;letter-spacing:-1px}.brand span{color:var(--green)}.top a{text-decoration:none;padding:9px 14px;border:1px solid var(--line);border-radius:9px;font-size:13px;font-weight:650}
+main{max-width:1410px;margin:auto;padding:36px clamp(16px,4vw,56px) 80px}
+.eyebrow{color:var(--green);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+h1{font-size:clamp(30px,4vw,45px);letter-spacing:-1.9px;line-height:1.14;margin:9px 0 12px}h2{font-size:22px;letter-spacing:-.5px;margin:4px 0 13px}h3{font-size:16px;margin:0 0 8px}
+.muted{color:var(--muted)}.hero{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:24px}
+.hero p{max-width:730px;color:var(--muted);margin:0}
+.count{background:#e5f2e9;border:1px solid #d1e6d7;border-radius:14px;padding:14px 20px;min-width:153px;text-align:center}.count b{display:block;font-size:32px;line-height:1.1}.count small{font-size:12px;color:var(--muted)}
+.notice{background:#fff7e8;border:1px solid #ecdbba;color:#684921;padding:12px 15px;border-radius:10px;font-size:12px;margin:16px 0 26px}
+.areas{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 25px}
+.areas button{padding:11px 16px;background:#fff;color:#2c5746;border:1px solid var(--line);font-weight:650;border-radius:10px}
+.areas button[aria-pressed=true]{background:var(--green);color:white;border-color:var(--green)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,360px);gap:20px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:25px}
+.case-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}.chip{font-size:11px;font-weight:700;background:var(--soft);color:#215c40;padding:4px 9px;border-radius:6px}.chip.warn{background:#fff0dc;color:#80511d}
+.lead{font-size:17px;line-height:1.8;white-space:pre-line;margin:9px 0 21px;max-width:79ch}
+.case-block{border-top:1px solid var(--line);padding-top:18px;margin-top:19px}
+.list{margin:0;padding:0 0 0 20px}.list li{padding:4px 0}
+.vitals{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.vitals span{border:1px solid var(--line);background:#f7fbf8;border-radius:7px;padding:5px 9px;font-size:12px;font-weight:700}
+.task{background:#eef7f0;border-left:4px solid var(--green);padding:13px 16px;border-radius:9px;margin:19px 0}
+.task strong{display:block;margin-bottom:5px}.task p{margin:0}
+.side{position:sticky;top:15px}
+.timer{display:flex;justify-content:space-between;align-items:center;gap:8px}.timer strong{font-size:36px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.btn{padding:10px 14px;border-radius:9px;background:#fff;color:var(--green);border:1px solid var(--line);font-weight:700}
+.btn.primary{background:var(--green);color:#fff;border-color:var(--green)}.btn.danger{background:#fff5f3;border-color:#f0d2d2;color:#9c2d39}.btn:disabled{opacity:.48;cursor:not-allowed}
+textarea{width:100%;height:180px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:13px;background:#fff;color:var(--ink)}
+.label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.05em}
+.progress{height:7px;background:#e8efea;border-radius:10px;overflow:hidden;margin:12px 0}.progress>span{display:block;height:100%;background:var(--green);width:0;transition:width .2s}
+.key{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.key[hidden]{display:none}.essential{background:#fff8e9;border:1px solid #f3dfb6;border-radius:10px;padding:15px 17px;color:#63451c;margin:14px 0}.essential b{display:block;margin-bottom:5px}
+.answers{display:grid;gap:15px}.answers article{border:1px solid var(--line);padding:15px;border-radius:10px}.answers article p{margin:5px 0 0}
+.checklist{display:grid;gap:9px}.checkitem{display:flex;gap:11px;align-items:start;border:1px solid var(--line);border-radius:9px;padding:11px 12px;cursor:pointer}
+.checkitem:has(input:checked){border-color:#80bea0;background:#effaf2}.checkitem input{margin-top:5px;accent-color:var(--green);width:17px;height:17px;flex-shrink:0}
+.checkitem small{display:block;color:var(--muted);font-size:11px}.checkitem b{font-size:13px}
+.score{display:flex;align-items:center;justify-content:space-between;margin-top:15px;padding-top:14px;border-top:1px solid var(--line)}
+.score strong{font-size:26px;font-variant-numeric:tabular-nums}
+.source{display:flex;flex-wrap:wrap;gap:9px}.source a{font-size:12px;font-weight:700;padding:6px 9px;border:1px solid var(--line);border-radius:7px;text-decoration:none}
+.foot{font-size:12px;color:var(--muted);margin-top:25px}
+@media(max-width:950px){.layout{grid-template-columns:minmax(0,1fr)}.side{position:static}.hero{align-items:start}}
+@media(max-width:600px){main{padding:24px 14px 90px}.panel{padding:18px}.hero{flex-direction:column}.count{min-width:0;width:100%}.areas button{padding:9px 12px;font-size:12px}.top{padding:13px 16px}}
+@media(prefers-reduced-motion:reduce){.progress>span{transition:none}}
+</style>
+<meta name="application-name" content="SINUS">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261024">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=20261024">
+<link rel="shortcut icon" href="/favicon.ico?v=20261024">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261024">
+<link rel="mask-icon" href="/icons/sinus-pinned-v3.svg?v=20261024" color="#155B48">
+<meta name="msapplication-TileColor" content="#155B48">
+<meta name="msapplication-TileImage" content="/icon-192.png?v=20261024">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="SINUS">
+<meta property="og:title" content="Habilidades Clínicas | SINUS">
+<meta property="og:description" content="Estude habilidades e estações clínicas no SINUS.">
+<meta property="og:url" content="https://meusinus.pages.dev/sinus/revalida-estacoes.html">
+<meta property="og:image" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+<meta property="og:image:secure_url" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Ícone do SINUS, fundo verde e eletrocardiograma branco">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Habilidades Clínicas | SINUS">
+<meta name="twitter:description" content="Estude habilidades e estações clínicas no SINUS.">
+<meta name="twitter:image" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+</head>
+<body>
+<header class="top"><div class="brand"><span>◉</span> sinus. <span style="font-size:12px;letter-spacing:0;color:#6a8176;font-weight:650">REVALIDA</span></div><a href="/sinus/revalida-treino.html">← Voltar às questões</a></header>
+<main>
+<div class="hero"><div><div class="eyebrow">REVALIDA · 2ª ETAPA</div><h1>Estações de habilidades clínicas</h1><p>Treino prático em formato de atendimento de 10 minutos. Faça a anamnese, verbalize os exames, tome decisões e depois compare seu desempenho com um espelho comentado.</p></div><div class="count"><b id="stationCount">05</b><small>estações simuladas iniciais</small></div></div>
+<p class="notice"><strong>Simulações autorais de treinamento.</strong> Estes casos são inspirados nas competências da matriz e no formato de habilidades clínicas do Inep, não são reprodução nem ficha de avaliação oficial. A pontuação é estimativa didática para autoavaliação; não corresponde à nota do Revalida.</p>
+<nav id="areaNav" class="areas" aria-label="Área clínica"></nav>
+<div class="layout">
+<section class="panel">
+<div class="case-meta"><span id="caseArea" class="chip"></span><span class="chip warn">10 minutos · prática</span><span id="caseIndex" class="chip"></span></div>
+<h2 id="caseTitle"></h2>
+<p id="caseScene" class="muted"></p>
+<div class="task"><strong>Seu objetivo na estação</strong><p id="caseTask"></p></div>
+<h3>Quadro inicial apresentado ao candidato</h3>
+<p id="caseIntro" class="lead"></p>
+<div class="case-block"><h3>Dados iniciais disponíveis</h3><div class="vitals" id="caseVitals"></div></div>
+<div class="case-block"><h3>O que você precisa executar</h3><ol id="caseSteps" class="list"></ol></div>
+<div class="case-block"><h3>Registro da sua resposta</h3><p class="muted" style="font-size:12px">Descreva verbalmente o que faria. O texto é salvo apenas neste navegador e não é avaliado por IA.</p><label class="label" for="answer">Raciocínio e conduta</label><textarea id="answer" placeholder="Anamnese dirigida, exame físico, hipóteses, exames complementares, conduta inicial e orientações..."></textarea><div class="actions"><button id="saveNote" class="btn">Salvar resposta</button><button id="reveal" class="btn primary">Revelar espelho e critérios</button></div><p id="savedStatus" class="muted" role="status" style="font-size:12px"></p></div>
+<section id="answerKey" class="key" hidden><div class="eyebrow">Espelho didático</div><h2>O que precisava ser feito</h2><div id="essential" class="essential"></div><div id="answerSections" class="answers"></div><h3 style="margin-top:20px">Referências para conferir</h3><div id="caseSources" class="source"></div></section>
+</section>
+<aside class="panel side"><div class="eyebrow">Simulador de estação</div><div class="timer"><div><small class="muted">Tempo disponível</small><strong id="clock">10:00</strong></div><span class="chip" id="clockStatus">Pronto</span></div><div class="progress" aria-hidden="true"><span id="clockFill"></span></div><div class="actions"><button id="startClock" class="btn primary">Iniciar</button><button id="pauseClock" class="btn">Pausar</button><button id="resetClock" class="btn">Reiniciar</button></div><p class="muted" style="font-size:12px">Treino de 10 minutos conforme o formato divulgado para a 2ª etapa. O cronômetro não determina aprovação.</p>
+<div id="evaluation" class="key" hidden><h3>Ficha de autoavaliação (0–10)</h3><p class="muted" style="font-size:12px">Marque apenas o que você efetivamente executou ou verbalizou. Critérios e pesos são didáticos.</p><div id="checklist" class="checklist"></div><div class="score"><span>Nota estimada</span><strong id="score">0,0 / 10</strong></div><button id="resetScore" class="btn">Limpar avaliação</button></div>
+<div class="key"><h3>Estratégia de prova</h3><p class="muted" style="font-size:13px">1. Segurança e sinais de gravidade. 2. História e exame dirigidos. 3. Hipótese e conduta. 4. Comunicação, consentimento e retorno.</p></div>
+</aside>
+</div><p class="foot">SINUS · Módulo experimental de treino. Atualização das fontes consultada em outubro de 2026. A avaliação clínica real depende de profissional habilitado, recursos locais e protocolos vigentes.</p>
+</main>
+<script>
+(function(){
+'use strict';
+const $=x=>document.getElementById(x), make=(tag,text)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;return el};
+const cases=[
+{id:'clinica',area:'Clínica médica',title:'Dor torácica aguda na emergência',scene:'UPA com acesso a eletrocardiograma, monitorização, laboratório e transferência regulada.',
+ task:'Reconhecer suspeita de síndrome coronariana aguda, identificar emergências e organizar a avaliação inicial segura.',
+ intro:'Homem de 58 anos procura atendimento com dor em aperto no centro do peito iniciada há 35 minutos, acompanhada de sudorese e náusea. Tem diabetes e hipertensão. Ainda não realizou eletrocardiograma.',
+ vitals:['PA 135/85 mmHg','FC 96 bpm','SpO₂ 96%','Consciente, perfundido'],
+ steps:['Apresente-se, confira identificação, peça autorização e avalie gravidade imediata.','Caracterize a dor: início, intensidade, localização, irradiação, duração, fatores de alívio/agravamento e sintomas associados.','Pesquise fatores de risco, medicações, alergias e contraindicações relevantes.','Verbalize exame cardiovascular/respiratório dirigido, sinais vitais e perfusão.','Solicite e interprete ECG imediato; indique exames, monitorização e destino assistencial.','Explique a suspeita, a necessidade de investigação e o plano ao paciente.'],
+ must:'Dor torácica com possível SCA exige ECG em até 10 minutos da triagem. Um ECG inicial sem supra não exclui SCA; reavalie e considere troponinas seriadas conforme protocolo.',
+ answers:[
+ ['Anamnese dirigida','Tipo e irradiação da dor; duração, esforços, fatores de risco, sintomas vegetativos, síncope e dispneia; tratamentos e alergias.'],
+ ['Exame físico','Avaliar ABC, sinais vitais, perfusão periférica, ausculta cardiopulmonar, sinais de congestão e assimetria de pulsos quando pertinente.'],
+ ['Hipóteses e exames','Suspeita de SCA; afastar dissecção aórtica, tromboembolismo pulmonar e pneumotórax conforme achados. ECG em até 10 min, interpretação imediata, troponina seriada e exames conforme gravidade.'],
+ ['Conduta inicial','Classificar risco; monitorizar, obter acesso venoso, acionar suporte médico e rede de urgência; decidir reperfusão/terapia antitrombótica segundo ECG, contraindicações e protocolo local. Não indicar oxigênio apenas por rotina com saturação normal.'],
+ ['Comunicação','Informar hipótese ainda não confirmada, necessidade de observação e possíveis intervenções; verificar compreensão.']],
+ checklist:[['Reconheceu sinais de risco e priorizou a avaliação',2],['Fez caracterização e anamnese cardiovasculares',2],['Verbalizou exame e monitorização',1.5],['Solicitou ECG até 10 min e exames adequados',2],['Definiu destino e conduta inicial segura',1.5],['Comunicou plano e verificou compreensão',1]],
+ sources:[['MS · Dor torácica','https://linhasdecuidado.saude.gov.br/portal/dor-toracica/unidade-de-pronto-atendimento/avaliacao-conduta/'],['Inep · estrutura','https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/revalida/provas-e-gabaritos']]},
+{id:'cirurgia',area:'Cirurgia',title:'Dor abdominal em fossa ilíaca direita',scene:'Pronto atendimento hospitalar com imagem e avaliação cirúrgica disponíveis.',
+ task:'Investigar abdome agudo e reconhecer necessidade de avaliação cirúrgica, sem ignorar diagnósticos diferenciais.',
+ intro:'Homem de 22 anos relata dor que começou na região periumbilical há 18 horas e migrou para a parte inferior direita do abdome, com anorexia e náusea. Refere piora progressiva.',
+ vitals:['PA 118/75 mmHg','FC 104 bpm','T 38 °C','Sem sinais de choque'],
+ steps:['Realize abordagem inicial de segurança e avalie peritonite/gravidade.','Pesquise início, migração, intensidade, sintomas digestivos e urinários e antecedentes.','Verbalize inspeção, ausculta e palpação abdominal delicada, sinais peritoneais e avaliação dirigida.','Indique exames laboratoriais e imagem conforme probabilidade clínica.','Apresente hipóteses e organize analgesia, hidratação e avaliação cirúrgica.','Explique à pessoa os sinais de piora e o motivo da observação hospitalar.'],
+ must:'Dor migratória periumbilical para fossa ilíaca direita, anorexia e defesa localizada sugerem apendicite, mas não dispensam exame e diferenciais. Peritonite ou instabilidade exigem avaliação imediata.',
+ answers:[
+ ['Anamnese','Cronologia/migração da dor, febre, anorexia, vômitos, alterações urinárias e do hábito intestinal, cirurgias prévias, fármacos, alergias.'],
+ ['Exame físico','Sinais vitais e hidratação; exame abdominal progressivo com localização da dor, defesa e sinais de irritação peritoneal. Solicitar exame complementar quando necessário.'],
+ ['Raciocínio clínico','Apendicite aguda provável. Diferenciais: gastroenterite, adenite mesentérica, litíase urinária; em pessoas com potencial gestacional incluir causa ginecológica e gestação ectópica.'],
+ ['Conduta','Monitorizar evolução; analgesia apropriada, hidratação se indicada, jejum conforme possibilidade de procedimento e encaminhamento cirúrgico. Hemograma, marcadores inflamatórios e ultrassom/tomografia conforme contexto; antibiótico perioperatório conforme equipe.'],
+ ['Segurança','Não dar alta com sinais de peritonite ou instabilidade; explicar necessidade de reavaliação e possível cirurgia.']],
+ checklist:[['Avaliou urgência e peritonite',2],['Realizou anamnese dirigida',2],['Verbalizou exame abdominal adequado',2],['Listou hipóteses e diferenciais',1.5],['Organizou exames e avaliação cirúrgica',1.5],['Comunicou cuidados e sinais de piora',1]],
+ sources:[['BVS-MS · Apendicite','https://bvsms.saude.gov.br/apendicite/'],['MS · Cirurgia segura','https://www.gov.br/saude/pt-br/composicao/saes/seguranca-do-paciente/publicacoes/protocolos-de-seguranca-do-paciente/protocolo-cirurgia-segura.pdf/view']]},
+{id:'pediatria',area:'Pediatria',title:'Criança com diarreia e desidratação',scene:'Unidade de saúde com solução de reidratação oral e acesso a encaminhamento de urgência.',
+ task:'Classificar clinicamente o grau de desidratação e selecionar o plano de reidratação adequado.',
+ intro:'Uma criança de 2 anos apresenta diarreia aquosa há dois dias, com 5 evacuações nas últimas 24 horas. A mãe relata sede aumentada, menos urina e olhos um pouco fundos. Não notou sangue nas fezes.',
+ vitals:['Peso 12 kg','FC 112 bpm','Alerta e sedenta','Consegue beber líquidos'],
+ steps:['Aborde acompanhante com empatia e investigue sinais imediatos de choque.','Pergunte sobre diarreia, vômitos, febre, sangue, diurese, ingestão e peso.','Verbalize exame de hidratação: estado geral, olhos, mucosas, lágrimas, sede, perfusão e turgor.','Classifique a desidratação e a capacidade de aceitar SRO.','Defina Plano A, B ou C segundo a classificação e reavalie.','Oriente alimentação, SRO, higiene, sinais de retorno e supervisão familiar.'],
+ must:'Desidratação sem sinais de gravidade, com capacidade de beber, favorece Plano B com SRO na unidade e reavaliação. Choque, letargia importante ou incapacidade de beber exigem reconhecimento de gravidade e abordagem urgente (Plano C quando indicado).',
+ answers:[
+ ['Anamnese','Contar episódios de diarreia/vômito, sangue nas fezes, febre, ingestão, diurese, alimentação e contatos sintomáticos.'],
+ ['Exame dirigido','Avaliar estado geral, sinais vitais, peso, olhos, lágrimas, mucosas, sede, prega cutânea e perfusão; reconhecer sinais de choque.'],
+ ['Interpretação','Há indícios de desidratação em criança alerta que consegue beber. A classificação deve ser confirmada pelo conjunto dos sinais e exame físico.'],
+ ['Conduta','Se classificada com desidratação sem gravidade: Plano B, solução de reidratação oral administrada progressivamente e reavaliação frequente na unidade. Continuar alimentação/aleitamento e considerar zinco conforme orientação do MS. Escalonar para Plano C se sinais de gravidade.'],
+ ['Orientação','Ensinar preparo da SRO, sinais de alarme (letargia, recusa de líquidos, redução importante da diurese, sangue nas fezes, vômitos persistentes) e retorno.']],
+ checklist:[['Investigou choque e estado geral',2],['Fez anamnese de perdas e ingestão',1.5],['Avaliou sinais físicos de hidratação',2],['Classificou corretamente e escolheu Plano B quando confirmado',2],['Propôs SRO e reavaliação contínua',1.5],['Orientou família e retorno',1]],
+ sources:[['MS · Doenças diarreicas','https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/dda/']]},
+{id:'gineco',area:'Ginecologia e obstetrícia',title:'Sangramento no primeiro trimestre',scene:'Emergência obstétrica com ultrassonografia, exames laboratoriais e atendimento hospitalar.',
+ task:'Identificar instabilidade e investigar sangramento vaginal na gestação, considerando gestação ectópica e abortamento.',
+ intro:'Mulher de 28 anos, com aproximadamente 10 semanas pela última menstruação, procura emergência por sangramento vaginal e dor pélvica há 3 horas. Não realizou ultrassonografia nesta gestação.',
+ vitals:['PA 106/68 mmHg','FC 102 bpm','Consciente','Sangramento em evolução'],
+ steps:['Acolha com privacidade, consentimento e avaliação imediata de estabilidade.','Quantifique sangramento e caracterize dor, última menstruação, antecedentes obstétricos e sintomas associados.','Verbalize exame geral, abdominal, ginecológico apropriado e sinais de choque.','Solicite ultrassonografia transvaginal, beta-hCG quantitativo e exames pertinentes; avalie Rh.','Apresente diferenciais, particularmente gestação ectópica e abortamento.','Defina monitorização, suporte e encaminhamento conforme estabilidade e resultados.'],
+ must:'NÃO pressupor abortamento sem excluir gravidez ectópica. Sangramento com dor e sinais de instabilidade exige intervenção imediata. Avalie estado hemodinâmico antes da investigação complementar.',
+ answers:[
+ ['Anamnese','Idade gestacional, volume de sangramento, coágulos/tecidos, unilateralidade da dor, síncope, gravidez ectópica prévia, cirurgias tubárias, contracepção, Rh e pré-natal.'],
+ ['Exame dirigido','Sinais vitais repetidos, perfusão, palidez, exame abdominal; exame especular quando apropriado, com explicação e consentimento.'],
+ ['Investigação','Ultrassonografia transvaginal, beta-hCG quantitativo conforme necessidade, hemograma e tipagem/Rh; avaliar necessidade de medidas relacionadas a Rh segundo protocolo.'],
+ ['Conduta','Priorizar ABC/estabilização se sangramento intenso ou sinais de choque e avaliação obstétrica imediata. Se estável, avaliar localização e viabilidade gestacional e definir tratamento individualizado após investigação.'],
+ ['Orientação','Explicar hipóteses sem antecipar diagnóstico; informar sinais de retorno imediato e assegurar cuidado respeitoso.']],
+ checklist:[['Avaliou estabilidade e volume do sangramento',2],['Fez anamnese obstétrica dirigida',2],['Solicitou exame geral e ginecológico apropriado',1.5],['Lembrou da ectópica e dos diagnósticos diferenciais',1.5],['Solicitou USG, beta-hCG e avaliação de Rh',2],['Definiu encaminhamento e comunicou com respeito',1]],
+ sources:[['MS · Urgência no pré-natal','https://linhasdecuidado.saude.gov.br/portal/pre-natal-baixo-risco/unidade-de-atencao-primaria/situacoes-urgencia/'],['MS · Emergência obstétrica','https://linhasdecuidado.saude.gov.br/portal/pre-natal-baixo-risco/unidade-de-pronto-atendimento/situacoes-urgencia/']]},
+{id:'preventiva',area:'Medicina preventiva e MFC',title:'Tosse prolongada na atenção primária',scene:'Unidade Básica de Saúde do SUS, com coleta de escarro, TRM-TB via rede e acompanhamento longitudinal.',
+ task:'Suspeitar de tuberculose pulmonar, indicar investigação apropriada, medidas de proteção e seguimento.',
+ intro:'Homem de 37 anos procura a UBS com tosse há 4 semanas, perda de peso, febre no fim da tarde e sudorese noturna. Trabalha em ambiente fechado e mora com duas crianças.',
+ vitals:['PA 120/80 mmHg','FC 88 bpm','SpO₂ 97%','Sem dificuldade respiratória'],
+ steps:['Acolha sem estigmatizar e verifique sintomas e gravidade.','Investigue duração da tosse, escarro, hemoptise, perda ponderal, febre, contato e comorbidades.','Verbalize exame físico geral e respiratório dirigido.','Indique investigação de tuberculose conforme fluxos do SUS: TRM-TB ou baciloscopia, entre outros.','Oriente medidas de proteção respiratória e organização de seguimento.','Discuta vínculo, avaliação de contatos e notificação quando doença confirmada.'],
+ must:'Tosse por 3 semanas ou mais em adulto exige investigação para tuberculose no cenário habitual, e grupos vulneráveis podem requerer busca mais precoce. O TRM-TB é prioritário onde disponível. Não se deve estigmatizar o paciente.',
+ answers:[
+ ['Anamnese','Tosse e expectoração, hemoptise, febre vespertina, suor noturno, emagrecimento, exposições, TB prévia, HIV, diabetes e uso de imunossupressores.'],
+ ['Exame','Sinais vitais, estado nutricional, ausculta respiratória, busca de sinais de gravidade e sintomas extrapulmonares.'],
+ ['Exames','Investigar com TRM-TB de escarro conforme disponibilidade e protocolo; baciloscopia/cultura e radiografia de tórax como complementares quando indicadas; oferecer avaliação de HIV conforme recomendações.'],
+ ['Conduta e SUS','Orientar proteção respiratória e coleta adequada, programar retorno com resultado e conduzir tratamento/notificação segundo confirmação e protocolos do SUS. Identificar e avaliar contatos.'],
+ ['Comunicação','Explicar o motivo do teste, acolher dúvidas, respeitar confidencialidade e planejar acompanhamento longitudinal.']],
+ checklist:[['Suspeitou de TB no sintomático respiratório',2],['Anamnese epidemiológica e clínica apropriada',1.5],['Exame dirigido e gravidade',1.5],['TRM-TB e exames conforme protocolo',2],['Proteção respiratória, seguimento e contatos',2],['Comunicação não estigmatizante',1]],
+ sources:[['MS · Tuberculose','https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/t/tuberculose'],['MS · Manual TB','https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/svsa/tuberculose/manual-de-recomendacoes-e-controle-da-tuberculose-no-brasil-2a-ed.pdf/view']]}
+];
+let current=cases[0],remaining=600,running=false,timer=null,revealed=false;
+function persistKey(){return 'sinus_estacao_v1_'+current.id}
+function getSaved(){try{return JSON.parse(localStorage.getItem(persistKey())||'{}')}catch(e){return{}}}
+function save(){try{const old=getSaved();localStorage.setItem(persistKey(),JSON.stringify({...old,note:$('answer').value,checked:getChecks(),updatedAt:new Date().toISOString()}));$('savedStatus').textContent='Salvo neste navegador.'}catch(e){$('savedStatus').textContent='Salvamento bloqueado neste navegador. Copie sua resposta antes de sair.'}}
+function getChecks(){return [...document.querySelectorAll('#checklist input')].map(x=>x.checked)}
+function renderList(where,arr){const el=$(where);el.replaceChildren();for(const str of arr){const li=make('li',str);el.append(li)}}
+function renderCase(){
+ document.querySelectorAll('#areaNav button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===current.id)));
+ $('caseTitle').textContent=current.title;$('caseArea').textContent=current.area;$('caseScene').textContent=current.scene;$('caseTask').textContent=current.task;
+ $('caseIntro').textContent=current.intro;$('caseIndex').textContent='Estação '+(cases.indexOf(current)+1)+' / '+cases.length;
+ $('caseVitals').replaceChildren();for(const x of current.vitals){const v=make('span',x);$('caseVitals').append(v)}
+ renderList('caseSteps',current.steps);const saved=getSaved();$('answer').value=saved.note||'';$('savedStatus').textContent='';
+ const essential=$('essential');essential.replaceChildren();essential.append(make('b','VOCÊ PRECISA SABER · ESSENCIAL'),make('span',current.must));
+ const a=$('answerSections');a.replaceChildren();for(const [title,body] of current.answers){const art=make('article');art.append(make('h3',title),make('p',body));a.append(art)}
+ const links=$('caseSources');links.replaceChildren();for(const [label,url] of current.sources){const l=make('a',label+' ↗');l.href=url;l.target='_blank';l.rel='noopener noreferrer';links.append(l)}
+ const box=$('checklist');box.replaceChildren();current.checklist.forEach(([label,weight],i)=>{const row=make('label');row.className='checkitem';const ch=make('input');ch.type='checkbox';ch.checked=!!saved.checked?.[i];ch.onchange=()=>{score();save()};const body=make('span');body.append(make('b',label),make('small',String(weight).replace('.',',')+' ponto(s)'));row.append(ch,body);box.append(row)});
+ revealed=false;$('answerKey').hidden=true;$('evaluation').hidden=true;$('reveal').disabled=false;$('reveal').textContent='Revelar espelho e critérios';
+ score();resetTimer();
+}
+function score(){let sum=0;document.querySelectorAll('#checklist input').forEach((x,i)=>{if(x.checked)sum+=current.checklist[i][1]});$('score').textContent=sum.toFixed(1).replace('.',',')+' / 10'}
+function clockUI(){let m=String(Math.floor(remaining/60)).padStart(2,'0'),s=String(remaining%60).padStart(2,'0');$('clock').textContent=m+':'+s;$('clockFill').style.width=(100*(600-remaining)/600)+'%';$('clockStatus').textContent=remaining===0?'Tempo encerrado':running?'Em andamento':'Pausado / pronto'}
+function stopTimer(){running=false;if(timer!==null)clearInterval(timer);timer=null;clockUI()}
+function resetTimer(){stopTimer();remaining=600;clockUI()}
+$('startClock').onclick=()=>{if(running)return;if(remaining===0)remaining=600;running=true;clockUI();timer=setInterval(()=>{remaining=Math.max(0,remaining-1);if(!remaining)stopTimer();else clockUI()},1000)};
+$('pauseClock').onclick=stopTimer;$('resetClock').onclick=resetTimer;
+$('saveNote').onclick=save;
+$('reveal').onclick=()=>{save();revealed=true;$('answerKey').hidden=false;$('evaluation').hidden=false;$('reveal').textContent='Espelho exibido';$('reveal').disabled=true;$('answerKey').scrollIntoView({behavior:'smooth',block:'start'})};
+$('resetScore').onclick=()=>{document.querySelectorAll('#checklist input').forEach(x=>x.checked=false);score();save()};
+const nav=$('areaNav');for(const c of cases){const b=make('button',c.area);b.type='button';b.dataset.id=c.id;b.setAttribute('aria-pressed','false');b.onclick=()=>{save();current=c;renderCase();window.scrollTo({top:0,behavior:'smooth'})};nav.append(b)}
+renderCase();
+})();
+</script>
+</body></html>
