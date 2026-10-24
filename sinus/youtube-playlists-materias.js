@@ -27,7 +27,9 @@ function playlistsFor(subject){return (S.list||[]).filter(p=>valid(p.id)&&match(
 function render(subject,mode,hasNative){
  if(mode!=='theory'||W.UI?.tab==='practice')return;
  const box=D.getElementById('subjectContent');
- if(!box||W.UI?.subject&&W.UI.subject!==subject)return;
+ if(!box||D.querySelector('#subjectHeader h1')?.textContent.trim()!==subject)return;
+ const activeTab=D.querySelector('#subjectTabs button.active')?.textContent||'';
+ if(!/v[ií]deos?/i.test(activeTab))return;
  if(box.querySelector('[data-sx-playlists]'))return;
  const matches=playlistsFor(subject);
  if(!matches.length)return;
