@@ -69,12 +69,12 @@ body.rv-question-mode .rv-feedback[hidden]{display:none}
 }
 @media(prefers-reduced-motion:reduce){body.rv-question-mode .choice,body.rv-question-mode .rv-focus-meter span{transition:none}}
 </style>
-<header><div class="top-title"><div class="brand"><span>◉</span> sinus.</div><small>REVALIDA · TREINO</small></div><div class="top-actions"><a class="rvStationLink" href="/sinus/revalida-estacoes.html" style="text-decoration:none;border-color:#15785c;background:#e9f7ee;color:#125c43;font-weight:700">Estações clínicas ↗</a><button id="export">Exportar treino</button><button id="theme" class="round" aria-label="Alternar tema">◐</button></div></header>
+<header><div class="top-title"><a class="brand rv-brand" href="/sinus/" aria-label="SINUS — início"><img src="/icons/sinus-brand.svg" alt="SINUS" onerror="this.hidden=true;this.parentNode.append('SINUS')"></a><small>REVALIDA · TREINO</small></div><div class="top-actions"><a class="rvStationLink" href="/sinus/revalida-estacoes.html" style="text-decoration:none;border-color:#15785c;background:#e9f7ee;color:#125c43;font-weight:700">Estações clínicas ↗</a><button id="export">Exportar treino</button><button id="theme" class="round" aria-label="Alternar tema">◐</button></div></header>
 <section class="rv-app"><h2>SINUS Revalida · Meu painel</h2><nav class="rv-nav" id="rvNav" aria-label="Navegação do Revalida"></nav><div class="rv-train-picker" id="rvTrainPicker" aria-label="Modalidades de treino" hidden><button type="button" data-train-mode="questions">Questões</button><button type="button" data-train-mode="sim">Simulados</button><button type="button" data-train-mode="weekly">Exercícios da semana</button></div><p class="rv-selected-label" id="rvSelectedLabel" role="status" aria-live="polite">Selecionado: Início</p></section><section id="rvDashboard" class="rv-dashboard"><div class="rv-stats"><div><small>Questões respondidas</small><strong id="rvAnswered">0</strong></div><div><small>Para revisar</small><strong id="rvFlags">0</strong></div><div><small>Atividades</small><strong id="rvPlanned">0</strong></div></div><section class="rv-schedule" id="rvSchedule"><header><h2>Meu cronograma de estudos</h2><button id="rvPrev">←</button><strong id="rvRange"></strong><button id="rvNext">→</button><button id="rvToday">Hoje</button><button id="rvAdd" class="primary">+ Atividade</button></header><div class="rv-week" id="rvWeek"></div><p class="subtle">Agenda armazenada no navegador. As questões ainda não revisadas continuam identificadas.</p></section></section><div class="layout" id="layout"><main class="workspace"><div class="rv-focus-head" id="rvFocusHead" aria-label="Navegação do treino"><button id="rvExitFocus" type="button" class="rv-focus-exit" aria-label="Voltar ao painel">×</button><div class="rv-focus-middle"><div class="rv-focus-meter" role="progressbar" aria-label="Posição na prova" aria-valuemin="0" aria-valuemax="100" id="rvFocusMeter"><span id="rvFocusFill"></span></div><small id="rvFocusCount">Carregando questão…</small></div><button type="button" id="rvToggleFilters" aria-expanded="false" aria-controls="rvFilterBar">Trocar prova</button></div><div class="filterbar" id="rvFilterBar"><select id="area" aria-label="Área da medicina — habilidades clínicas"><option value="all">Área · habilidades clínicas</option></select><select id="edition" aria-label="Edição"></select><select id="type" aria-label="Tipo de prova"><option value="all">Todas as provas</option><option value="objective">Objetivas</option><option value="discursive">Discursivas</option><option value="clinical">Habilidades clínicas</option></select><select id="exam" aria-label="Selecionar caderno"></select><select id="reviewFilter" aria-label="Filtrar questões por situação"><option value="all">Todas as questões</option><option value="unanswered">Não respondidas</option><option value="errors">Caderno de erros</option><option value="flagged">Marcadas para revisar</option><option value="ungraded">Sem correção validada</option></select></div><div id="sinusVersionControls" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:9px 0 13px;padding:10px 13px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:12px;color:var(--muted)"><label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input id="sinusShowVersions" type="checkbox" style="accent-color:var(--green)"> Exibir versões alternativas e questões repetidas</label><a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/revalida/provas-e-gabaritos" target="_blank" rel="noopener noreferrer" style="padding:0;border:0;background:none;color:var(--green);font-weight:650">Consultar acervo oficial do Inep ↗</a><span style="flex-basis:100%;line-height:1.6">Versões equivalentes foram ocultadas do treino principal, mas os cadernos originais continuam disponíveis. Em 2026/2, o Inep publicou gabaritos preliminares; os cadernos ainda precisam ser incorporados ao SINUS. O gabarito definitivo está previsto pelo Inep para 04/12/2026.</span></div><div id="sxStudyDashboard" role="status" aria-live="polite">Preparando seu progresso…</div>
 <div class="intro"><span class="kicker">Treino com a prova original</span><span class="subtle" id="count"></span></div><div class="progress" role="progressbar" aria-label="Questões respondidas" aria-valuemin="0" aria-valuemax="100" id="progress"><span id="progressFill"></span></div>
-<article class="card"><div class="question-top"><span class="badge" id="badge"></span><button id="historyOpen">Histórico ↗</button></div><p class="subtle" id="provenance"></p><div class="question" id="question"></div><form id="choices"></form><div id="rvAnswerFeedback" class="rv-feedback" role="status" aria-live="polite" hidden></div><div id="writtenBox"><label class="subtle" for="answer">SUA RESPOSTA / RACIOCÍNIO</label><textarea class="write" id="answer" placeholder="Desenvolva sua resposta aqui…"></textarea></div><div class="source-line"><button id="sourceOpen">▧ Ver página da fonte</button><span id="page" class="subtle"></span><button id="flag">Marcar para revisar</button></div><p class="status" id="status" role="status" aria-live="polite"></p></article>
+<article class="card"><div class="question-top"><span class="badge" id="badge"></span><button id="historyOpen">Histórico ↗</button></div><p class="subtle" id="provenance"></p><div class="rv-study-tools" role="toolbar" aria-label="Ferramentas de leitura"><span class="rv-tool-label">Leitura da questão</span><div class="rv-zoom-group"><button type="button" id="rvZoomOut" aria-label="Reduzir tamanho do texto">A−</button><output id="rvZoomValue" aria-live="polite">100%</output><button type="button" id="rvZoomIn" aria-label="Ampliar tamanho do texto">A+</button><button type="button" id="rvZoomReset" aria-label="Restaurar tamanho do texto">↺</button></div><button type="button" id="rvMarkMode" aria-label="Alternar grifos">Grifos: essenciais</button><button type="button" id="rvToggleSide" aria-expanded="true" aria-controls="rvSidebar">Recolher apoio</button></div><div class="question" id="question"></div><form id="choices"></form><div id="rvAnswerFeedback" class="rv-feedback" role="status" aria-live="polite" hidden></div><div id="writtenBox"><label class="subtle" for="answer">SUA RESPOSTA / RACIOCÍNIO</label><textarea class="write" id="answer" placeholder="Desenvolva sua resposta aqui…"></textarea></div><div class="source-line"><button id="sourceOpen">▧ Ver página da fonte</button><span id="page" class="subtle"></span><button id="flag">Marcar para revisar</button></div><p class="status" id="status" role="status" aria-live="polite"></p></article>
 <div class="bottom"><button id="prev">← Anterior</button><div class="bottom-right"><button id="save" class="primary">Registrar resposta</button><button id="next">Próxima →</button></div></div><p class="notice">Acervo parcial: 94 de 136 PDFs localizados. Gabaritos definitivos 2023/1 e 2024/1 vinculados aos exercícios. Transcrições e justificativas clínicas podem estar pendentes; a correção é bloqueada nos itens incompletos. O progresso fica neste navegador.</p>
-</main><aside class="sidebar" aria-label="Painel de apoio ao treino"><div class="tabs" role="tablist"><button role="tab" data-tab="comments" aria-selected="true">Comentários</button><button role="tab" data-tab="source" aria-selected="false">Fonte</button><button role="tab" data-tab="notes" aria-selected="false">Anotações</button><button role="tab" data-tab="history" aria-selected="false">Histórico</button></div><div class="side-content" id="side"></div><div class="side-footer">A fonte acompanha a questão.<br>Justificativas sem comprovação ficam pendentes.</div></aside></div>
+</main><aside class="sidebar" id="rvSidebar" aria-label="Painel de apoio ao treino"><div class="tabs" role="tablist"><button role="tab" data-tab="comments" aria-selected="true">Comentários</button><button role="tab" data-tab="source" aria-selected="false">Fonte</button><button role="tab" data-tab="notes" aria-selected="false">Anotações</button><button role="tab" data-tab="history" aria-selected="false">Histórico</button></div><div class="side-content" id="side"></div><div class="side-footer">A fonte acompanha a questão.<br>Justificativas sem comprovação ficam pendentes.</div></aside></div>
 <nav class="mobile-nav" aria-label="Navegar pelo treino"><button id="mobileQuestion">Questão</button><button id="mobileComments">Comentários</button><button id="mobileSource">Fonte</button></nav>
 <style id="rv-navigation-fix">
 /* Barra de navegação integrada à página, sem flutuação sobre os cartões. */
@@ -175,4 +175,75 @@ document.addEventListener('click',e=>{if(e.target.closest('#save,#flag,#next,#pr
  document.getElementById('rvExitFocus').onclick=()=>{const home=nav.querySelector('[data-section="home"]');if(home)home.click();else document.body.classList.remove('rv-question-mode')};
  document.getElementById('rvToggleFilters').onclick=()=>{const open=document.body.classList.toggle('rv-open-filters');document.getElementById('rvToggleFilters').setAttribute('aria-expanded',String(open))};
  updateMode();updateCount();
-})();</script><script src="/sinus/revalida-semiologia.js?v=3"></script><script>(async()=>{const a=[];for(let i=1;i<=18;i++){const r=await fetch('/sinus/revalida-data/part-'+String(i).padStart(2,'0')+'.txt');if(!r.ok)throw Error('Falha ao carregar questões: '+i);a.push(await r.text())}const s=document.createElement('script');s.textContent=a.join('');document.body.appendChild(s)})().catch(e=>{document.body.insertAdjacentHTML('beforeend','<p role="alert" style="padding:20px">Não foi possível abrir o banco de questões. Recarregue a página.</p>');console.error(e)})</script></html>
+})();</script><script src="/sinus/revalida-semiologia.js?v=3"></script><script>(async()=>{const a=[];for(let i=1;i<=18;i++){const r=await fetch('/sinus/revalida-data/part-'+String(i).padStart(2,'0')+'.txt');if(!r.ok)throw Error('Falha ao carregar questões: '+i);a.push(await r.text())}const s=document.createElement('script');s.textContent=a.join('');document.body.appendChild(s)})().catch(e=>{document.body.insertAdjacentHTML('beforeend','<p role="alert" style="padding:20px">Não foi possível abrir o banco de questões. Recarregue a página.</p>');console.error(e)})</script><style id="rv-polish-2026">
+.rv-brand{display:inline-flex;align-items:center;min-width:115px;text-decoration:none;border:0;background:none;padding:0}
+.rv-brand img{width:132px;max-height:46px;object-fit:contain;object-position:left center}
+.rv-app{position:relative!important;top:auto!important;z-index:3!important;box-shadow:none!important;border-color:var(--line)!important}
+.layout{grid-template-columns:minmax(0,1fr) minmax(295px,365px);align-items:start;transition:grid-template-columns .2s ease}
+.layout.rv-side-collapsed{grid-template-columns:minmax(0,1fr)}
+.layout.rv-side-collapsed .sidebar{display:none!important}
+.sidebar{position:relative!important;top:auto!important;height:auto!important;min-height:500px;max-height:none!important;align-self:stretch;backdrop-filter:none}
+.side-content{overflow:visible!important;flex:initial!important}
+.tabs{position:relative;flex-wrap:wrap}
+.rv-study-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px 12px;margin:18px 0 10px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.rv-study-tools button{font-size:12px;font-weight:650;padding:7px 10px;min-height:35px}
+.rv-tool-label{font-size:12px;font-weight:700;color:var(--muted);margin-right:auto}
+.rv-zoom-group{display:flex;align-items:center;gap:4px}
+#rvZoomValue{min-width:44px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums}
+#rvMarkMode{background:var(--soft);border-color:var(--line);color:var(--ink)}
+#rvToggleSide{background:var(--green);border-color:var(--green);color:#fff}
+body.rv-question-mode .card #question{font-size:calc(21px * var(--rv-reading-scale, 1))!important;line-height:1.7}
+body.rv-question-mode #choices .choice{font-size:calc(17px * var(--rv-reading-scale, 1))!important}
+#sxSemioLegend{border-radius:13px!important;overflow:visible!important;flex-wrap:wrap!important}
+#sxSemioLegend .sxModes{order:0}
+#sxSemioLegend .sxLegend{order:1}
+#sxSemioGuide{font-size:12px}
+@media(max-width:1000px){.layout{grid-template-columns:minmax(0,1fr) 300px}.rv-study-tools{gap:7px}}
+@media(max-width:760px){
+ .rv-brand img{width:105px}
+ .layout,.layout.rv-side-collapsed{display:block}
+ .sidebar{min-height:0}
+ body.rv-question-mode .rv-focus-head{position:relative!important;top:auto!important}
+ .rv-study-tools{margin:12px 0;gap:7px}
+ .rv-tool-label{flex-basis:100%}
+ body.rv-question-mode .card #question{font-size:calc(19px * var(--rv-reading-scale, 1))!important}
+ .layout.side-open .sidebar{display:flex}
+ .layout.rv-side-collapsed.side-open .sidebar{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){.layout{transition:none}}
+</style><script id="rv-study-polish">
+(function(){
+'use strict';
+const layout=document.getElementById('layout'),btn=document.getElementById('rvToggleSide'),out=document.getElementById('rvZoomValue'),mark=document.getElementById('rvMarkMode');
+if(!layout||!btn||!out||!mark)return;
+const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+let scale=1;
+try{scale=clamp(Number(localStorage.getItem('sinus-rv-zoom'))||1,.8,1.5)}catch(e){}
+function setZoom(n){scale=clamp(Math.round(n*10)/10,.8,1.5);document.documentElement.style.setProperty('--rv-reading-scale',scale);out.textContent=Math.round(scale*100)+'%';try{localStorage.setItem('sinus-rv-zoom',String(scale))}catch(e){}}
+document.getElementById('rvZoomOut').onclick=()=>setZoom(scale-.1);
+document.getElementById('rvZoomIn').onclick=()=>setZoom(scale+.1);
+document.getElementById('rvZoomReset').onclick=()=>setZoom(1);
+setZoom(scale);
+let collapsed=false;
+function setSide(v){collapsed=v;layout.classList.toggle('rv-side-collapsed',v);btn.setAttribute('aria-expanded',String(!v));btn.textContent=v?'Mostrar apoio':'Recolher apoio';}
+btn.onclick=()=>setSide(!collapsed);
+const modes=[['essencial','Grifos: essenciais'],['completo','Grifos: completos'],['nenhum','Grifos: desligados']];
+let idx=0;
+mark.onclick=()=>{
+ idx=(idx+1)%modes.length;
+ const label=modes[idx][1];mark.textContent=label;
+ const semi=document.getElementById('sxSemioLegend');
+ const button=semi&&semi.querySelector('[data-sx-mode="'+modes[idx][0]+'"]');
+ if(button)button.click();
+ else if(window.SinusSemiologia&&window.SinusSemiologia.render){
+  const target=document.getElementById('question');
+  if(target)window.SinusSemiologia.render(target,target.textContent);
+ }
+};
+const observer=new MutationObserver(()=>{
+ const current=document.querySelector('#sxSemioLegend [data-sx-mode][aria-pressed="true"]');
+ if(current){const found=modes.findIndex(m=>m[0]===current.dataset.sxMode);if(found>=0){idx=found;mark.textContent=modes[idx][1]}}
+});
+observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['aria-pressed']});
+})();
+</script></html>
