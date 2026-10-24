@@ -1,11 +1,11 @@
-/* Mapas guiados integrados ao painel SINUS: aba "Mapas guiados" (Anatomía Patológica I e Farmacología I).
+/* Mapas guiados integrados ao painel SINUS: aba "Mapas guiados" (as seis matérias do 5º semestre).
    O conteúdo fica em /mapas/ (tela e dados); aqui só entram a aba e o quadro que o mostra. */
 (function (W, D) {
   'use strict';
   var TXT = {
-    pt: ['Mapas guiados', 'A estrutura já está pronta: você só completa os campos e liga os assuntos. Anatomía Patológica I e Farmacología I, 5º semestre.', 'Abrir em página inteira'],
-    es: ['Mapas guiados', 'La estructura ya está lista: solo completás los campos y conectás los temas. Anatomía Patológica I y Farmacología I, 5º semestre.', 'Abrir en página completa'],
-    en: ['Guided maps', 'The structure is ready: you only fill in the blanks and connect the topics. Pathology I and Pharmacology I, 5th semester.', 'Open full page']
+    pt: ['Mapas guiados', 'A estrutura já está pronta: você só completa os campos e liga os assuntos. Anatomía Patológica, Farmacología, Fisiopatología, Imagenología, Medicina de la Familia e Semiología, 5º semestre.', 'Abrir em página inteira'],
+    es: ['Mapas guiados', 'La estructura ya está lista: solo completás los campos y conectás los temas. Anatomía Patológica, Farmacología, Fisiopatología, Imagenología, Medicina de la Familia y Semiología, 5º semestre.', 'Abrir en página completa'],
+    en: ['Guided maps', 'The structure is ready: you only fill in the blanks and connect the topics. Pathology, Pharmacology, Pathophysiology, Imaging, Family Medicine and Semiology, 5th semester.', 'Open full page']
   };
   function lang() { try { var l = localStorage.getItem('sinus_idioma'); return TXT[l] ? l : 'pt'; } catch (e) { return 'pt'; } }
   function box() { return D.getElementById('page-hub'); }

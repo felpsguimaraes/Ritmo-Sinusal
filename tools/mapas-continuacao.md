@@ -1,46 +1,32 @@
-# Mapas guiados: o que falta (pausado em 24/10/2026)
+# Mapas guiados: o que ficou de fora (24/10/2026)
 
-Entregue no `main` em 24/10 (PR #3). O que segue é o que falta.
+As seis matérias do 5º semestre têm mapas, casos e simulado (veja a seção "Mapas guiados" do README).
+O que segue não entrou, e o motivo.
 
-## Já feito na entrega de 24/10
+## Arquivos que não puderam ser usados
 
-O `main` tinha outra cópia dos mapas (PR #4, em `/aulas/mapas/`). As duas foram unificadas em `/mapas/`:
-correção da teoria com resposta completa e listas (`evaluate`), `gabaritos-revisados.js`, resposta no
-próprio campo depois de Verificar, textos e o filtro de `message` do PR #4; as láminas continuam com
-correção por conceitos (`evaluateKeys`). `/aulas/mapas/` redireciona para `/mapas/`. A aba da matéria
-abre `/mapas/?s=<slug>&modo=teoria|pratica`.
-
-## 1. Prática
-
-- Anatomía Patológica I: láminas prontas (P1, P2, laminário de 25, simulacro). Falta transformar as
-  aulas práticas em mapas direcionados: "clase 1-Adaptación Celular parte 1 e 2", "clase 2-Lesión celular",
-  "clase 3-Acumulos intracelulares", "clase 4-Inflamación aguda y crónica PARTE 1", "clase 4-Inflamación
-  crónica", CUADERNILLO DE PRACTICAS (`1rwM99lp4EWfyVs1b9NYmyUoTw0Rcr1lD`) e "ANATOPATOLOGIA aula 1 a 6".
-- Quadro da Dra. Alicia Gonzalez, 30/09 (`1JgJiMrB_cOJCP7VI4SMa3km-vZZxLi1c`), apendicitis aguda:
-  - estruturas: criptas de Lieberkühn na mucosa (glândulas tubulares com enterócitos, que absorvem
-    eletrólitos e água, e células caliciformes, que liberam muco); erosão da mucosa; ulceração; nódulos
-    linfoides da submucosa; neutrófilos na muscular; vasos hiperemiados e edema na serosa; hemorragia; necrose;
-  - patogenia: obstrução por fecalito → ↑ muco → ↑ pressão na luz → vênulas e capilares comprimidos
-    (parede fina) → vênulas congestionadas (sangue parado) e edema → arteríolas também comprimidas →
-    não chega sangue nem O2 → isquemia → necrose → perfuração.
+- Farmacología, aula 8 ("CLASE 8 ALUMNO", `1VQ8Ey48zOyd_CrsmZMeFO4fjghM9C1AX`): 11,2 MB, acima do limite de
+  10 MB do download do Drive; a leitura em texto vem sem páginas. Os módulos da aula 8 seguem a ordem da aula,
+  sem número de slide. Com uma cópia menor (PPTX ou PDF comprimido) dá para numerar.
+- Anatomía Patológica, "CUADERNILLO DE PRACTICAS (anatopato prática)" (`1rwM99lp4EWfyVs1b9NYmyUoTw0Rcr1lD`):
+  o download estoura o limite da conexão.
+- Anatomía Patológica, "clase 4-Inflamación aguda y crónica PARTE 1" (`17p3cPQ4s4HCLgLDgUnKtuXMNyX-D0BZs`):
+  não existe mais no Drive da turma. A parte de inflamação aguda da prática ficou só com o quadro de 30/09
+  (apendicite).
+- Medicina de la Familia: a pasta não traz a aula 3.
 - Fotos sem rótulo da pasta LAMINARIO P2 (IMG_0026…IMG_3348, FullSizeRender 3 e 5, IMG_5070, IMG_5078,
-  IMG_7881, IMG_1283, IMG_1634, IMG_1640, IMG_1642, IMG_1643, IMG_3140) não entraram: não se sabe de qual lâmina são.
-- Semiología: mapas do exame físico e da ausculta a partir dos slides (Semio 7 Tórax só por
-  `read_file_content`; HC práctica `1B-2TKgADIlgucxGCcDrHxb2F4cSl87S2`).
+  IMG_7881, IMG_1283, IMG_1634, IMG_1640, IMG_1642, IMG_1643, IMG_3140): não se sabe de qual lâmina são.
 
-## 2. Mapas das outras matérias
+## Sem número de slide ("ordem da aula")
 
-Semiología, Fisiopatología, Imagenología, Medicina de la Familia e Farma clase 1.2
-(`1h3sXGwZMpPBks_W4r4Ko3Y54S86dS8wV`), cada módulo com `sl`. Depois, ampliar `MAPAS_MATERIAS` e o texto
-de `sinus/mapas-guiados.js`. Decks grandes demais para baixar (Semio 7 Tórax; Fisio U0, U1, U2, U3, U5,
-U6, U7 Anemias): ler com `read_file_content` (vem sem número de página). Os dois arquivos de casos da
-Fisio P2 foram baixados, mas não decodificados.
+Decks lidos só como texto, por passarem de 10 MB: Fisiopatología U0, U1, U2, U3, U5, U6 e U7 (anemias),
+Imagenología (todas as aulas menos "03 RX abdominal"), Semiología aula 7 (tórax) e Farmacología aula 8.
 
-## 3. Farmacología, clase 8
+## Para publicar no app
 
-73 páginas sem método que funcionou para numerar os slides; hoje os módulos usam `sl: [[8]]` (ordem da aula).
+O branch `mapas-guiados` (PR #3) tem tudo; o Cloudflare publica a partir do `main`. Falta o merge do PR #3.
 
-## 4. Fechamento
+## Ao editar os dados
 
-Validador e navegador nas duas larguras, README, republicar o artefato de demonstração
-(`23a91748-05cd-4832-a159-2137f29f5c6e`) e relatório.
+Rode `node tools/testar-mapas.js` e `node tools/testar-mapas.cjs`. O teste estrito recusa uma resposta que
+continue aceita sem a última letra: com singular e plural, ponha o singular primeiro ("Pasta || Pastas").
