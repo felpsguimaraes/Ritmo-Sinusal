@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapas guiados · Sinus</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#197662">
+<script>
+  // tema e idioma antes de pintar (o painel guarda os dois em localStorage)
+  (function () {
+    try {
+      var t = localStorage.getItem('sinus_tema');
+      if (t !== 'claro' && t !== 'escuro') t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'escuro' : 'claro';
+      document.documentElement.setAttribute('data-theme', t === 'escuro' ? 'dark' : 'light');
+      var l = localStorage.getItem('sinus_idioma');
+      if (l) document.documentElement.lang = ({ pt: 'pt-BR', es: 'es', en: 'en' })[l] || 'pt-BR';
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+  })();
+</script>
+<link rel="stylesheet" href="mapas.css?v=4">
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:24px">Ative o JavaScript para usar os mapas guiados.</p></noscript>
+<script src="dados/anatopato.js?v=2"></script>
+<script src="dados/anatopato-pratica.js?v=1"></script>
+<script src="dados/farmacologia.js?v=2"></script>
+<script src="dados/fisiopatologia.js?v=1"></script>
+<script src="dados/imagenologia.js?v=1"></script>
+<script src="dados/semiologia.js?v=1"></script>
+<script src="mapas-core.js?v=4"></script>
+<script src="gabaritos-revisados.js?v=2"></script>
+<script src="mapas.js?v=5"></script>
+</body>
+</html>

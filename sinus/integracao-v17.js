@@ -299,6 +299,11 @@
   var RE_PRATICA = /l[aá]mina|macrosc|h[ií]gado|coraz[oó]n|pulm[oó]n|ri[ñn][oó]n|est[oó]mago|bazo|cerebro|intestino|ves[ií]cula|pr[aá]ctic/i;
   function classificar(m, i) {
     var img = /^image\//.test(i.mime || ''), t = i.t || '', temPratica = !!(m.pratica && m.pratica.length);
+    /* tipos vindos da pasta da turma no Drive: a pasta já diz o que é cada arquivo */
+    if (i.k === 'pratica-aula') return { cat: 'pratica', mode: 'practice', sec: 'pratica', kind: tipoArq(i) };
+    if (i.k === 'lamina') return { cat: 'pratica', mode: 'practice', sec: 'laminas', kind: img ? 'Imagem da prática' : 'Prática' };
+    if (i.k === 'foto') return { cat: 'complementares', mode: 'theory', sec: 'fotos', kind: 'Foto da aula' };
+    if (i.k === 'slide' && /\bP[12]\b/.test(i.o || '')) return { cat: 'slides', mode: 'theory', sec: 'slides', kind: tipoArq(i) };
     if (i.k === 'pratica') return { cat: 'pratica', mode: 'practice', sec: /macrosc/i.test(t) ? 'macro' : 'laminas', kind: img ? 'Imagem' : 'Prática' };
     if (i.k === 'prova' || /prova|examen|parcial|evaluaci[oó]n/i.test(t)) return { cat: 'provas', mode: RE_PRATICA.test(t) ? 'practice' : 'theory', sec: 'provas', kind: img ? 'Imagem' : tipoArq(i) };
     if (temPratica && RE_PRATICA.test(t)) {
@@ -408,7 +413,7 @@
     ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
   V11_SUBJECT_TABS.practice.splice(0, V11_SUBJECT_TABS.practice.length,
     ['overview', 'Visão geral'], ['apostila', 'Resumo / Apostila'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
-    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
+    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['mapas', 'Mapas guiados'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
 
   function pillPlano() { var p = $id('subjectPlanPill'); if (p) p.textContent = 'Acesso completo' }
   var renderVideoOriginal = W.renderVideos, renderAudioOriginal = W.renderAudios;
@@ -470,15 +475,11 @@
   W.renderSubject = function () {
     if (!UI.subject) return;
     var t = UI.tab;
-    if (t === 'mapas' || t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
+    if (t === 'apostila' || t === 'cartoes' || t === 'mapas' || t === 'fotos' || t === 'macro') {
       v11SubjectHeader();
       if (t === 'apostila') { if(v11List('apostila').length) renderResourceCategory('apostila'); else renderApostilaMateria(); }
-      else if (t === 'mapas') {
-        var subject = subjectData(), slug = subject && subject.slug;
-        var mapSubject = slug === 'anatopato' ? 'anatopato' : slug && slug.indexOf('farmaco') === 0 ? 'farmacologia' : '';
-        $id('subjectContent').innerHTML = mapSubject ? '<iframe title="Mapas guiados da matéria" src="/aulas/mapas/?s=' + mapSubject + '" style="width:100%;height:80vh;min-height:620px;border:0;border-radius:16px;background:transparent"></iframe>' : emptyBox('Mapas ainda não disponíveis para esta matéria.', 'Disponíveis no 5º semestre para Anatomia Patológica I e Farmacologia I.');
-      }
       else if (t === 'cartoes') renderCartoes();
+      else if (t === 'mapas') renderMapasMateria();
       else renderResourceCategory(t);
     } else _renderSubject();
     pillPlano();
@@ -490,7 +491,7 @@
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
-    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || (UI.mode === 'theory' && subjectData() && /^(anatopato|farmaco)/.test(subjectData().slug || '')); }).map(function (item) {
+    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || temMapas(); }).map(function (item) {
       return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('') + '</div>');
     else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
@@ -543,6 +544,20 @@
       CART.fila = montarFila(CART.deck.cartoes); CART.i = 0; CART.mostrar = false;
       if (UI.tab === 'cartoes') renderCartoes();
     }).catch(function () {});
+  }
+  // ---------------- mapas guiados da matéria (mapas, fluxogramas e tabelas que o aluno completa)
+  /* matérias com mapas guiados e em que parte (teoria/prática) eles existem */
+  var MAPAS_MATERIAS = { anatopato: { teoria: 1, pratica: 1 }, farmacologia: { teoria: 1 }, fisiopatologia: { teoria: 1 }, imagenologia: { teoria: 1 }, semiologia: { teoria: 1, pratica: 1 } };
+  function temMapas() {
+    var s = subjectData(), m = s && MAPAS_MATERIAS[s.slug];
+    return !!(m && m[UI.mode === 'practice' ? 'pratica' : 'teoria']);
+  }
+  function renderMapasMateria() {
+    var s = subjectData(), slug = s && s.slug, box = $id('subjectContent');
+    if (!slug || !MAPAS_MATERIAS[slug]) { box.innerHTML = emptyBox('Os mapas guiados desta matéria ainda não foram feitos.', 'Enquanto isso, use o Treino, os Flashcards e a Revisão e progresso.'); return }
+    /* a chave Teoria/Prática da matéria decide o que o quadro mostra (na prática: láminas e exame físico) */
+    var modo = UI.mode === 'practice' ? 'pratica' : 'teoria';
+    box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });

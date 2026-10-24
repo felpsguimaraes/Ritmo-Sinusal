@@ -46,6 +46,7 @@
     ['Abrir', 'Abrir', 'Open'],
     ['Local', 'Local', 'Local'],
     ['Biblioteca', 'Biblioteca', 'Library'],
+    ['Mapas guiados', 'Mapas guiados', 'Guided maps'],
     ['Todos os materiais', 'Todos los materiales', 'All materials'],
     ['Subir arquivo local', 'Subir archivo local', 'Upload local file'],
     ['Arquivo local adicionado', 'Archivo local agregado', 'Local file added'],
