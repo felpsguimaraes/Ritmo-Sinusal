@@ -32,3 +32,13 @@ As três aulas e seus PDFs/imagens permanecem nos caminhos originais.
 ## Administração
 
 A entrada antiga `aulas/painel.html` encaminha ao painel atual em `https://meusinus.pages.dev/admin/control/`. A ativação do backend está documentada em [admin/control/README.md](admin/control/README.md).
+
+## Mapas guiados
+
+Aba **Mapas guiados** (menu "Estudo e revisão"): mapas mentais, fluxogramas e tabelas com a estrutura pronta, em que o aluno só completa os campos e compara com o gabarito. Conteúdo do 5º semestre em duas matérias, montado a partir das aulas do Drive:
+
+- Anatomía Patológica I (Dra. Eliana Chamorro Krauer): 15 mapas, aulas 1 a 7.
+- Farmacología I (Dr. Cristhiam Giménez): 30 mapas, aulas 1 a 9.
+
+Arquivos: `mapas/` (tela, estilos e núcleo de correção), `mapas/dados/*.js` (um arquivo por matéria) e `sinus/mapas-guiados.js` (a aba dentro do painel). O formato para criar mapas novos está no cabeçalho de `mapas/dados/anatopato.js`. Depois de editar os dados, rode `node tools/testar-mapas.js`: cada resposta-modelo precisa ser aceita pelas próprias palavras-chave. O progresso do aluno fica salvo no navegador dele.
+
