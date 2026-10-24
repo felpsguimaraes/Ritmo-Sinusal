@@ -24,7 +24,7 @@ window.SINUS_MAPAS.anatopato = {
       ramas: [
         { t: 'Etiología', hojas: [
           ['Dos grandes categorías de causas', 'Genéticas y adquiridas', 'genetic;adquirid'],
-          ['Causa desconocida: se llama...', 'Idiopática', 'idiopat'],
+          ['Factores de causa desconocida: se denominan...', 'Idiopática', 'idiopat'],
           ['La mayoría de las enfermedades son...', 'Multifactoriales', 'multifactor|varias causas|multiples']
         ] },
         { t: 'Patogenia', hojas: [
@@ -414,7 +414,7 @@ window.SINUS_MAPAS.anatopato = {
         ] },
         { t: 'Defecto de transporte', hojas: [
           ['Deficiencia de...: agregados en el RE de los hepatocitos', 'α1-antitripsina', 'antitripsina'],
-          ['Consecuencia pulmonar de la carencia de la enzima', 'Enfisema', 'enfisema']
+          ['Consecuencia pulmonar de la carencia de la proteína', 'Enfisema', 'enfisema']
         ] },
         { t: 'Citoesqueleto', hojas: [
           ['Filamentos de queratina en la hepatopatía alcohólica', 'Hialina de Mallory', 'mallory|hialina'],
@@ -631,9 +631,9 @@ window.SINUS_MAPAS.anatopato = {
          'Las placas vulnerables tienen cubierta fibrosa delgada, muchas células espumosas y células inflamatorias; la rotura puede causar trombosis.',
          ['a) La de cubierta delgada y gran núcleo lipídico (vulnerable)', 'b) La de cubierta engrosada con colágeno denso', 'c) Las dos por igual', 'd) Ninguna, las placas no se rompen']],
         ['Biopsia hepática de un paciente con deficiencia hereditaria de α1-antitripsina.',
-         '¿Qué hay en los hepatocitos y qué órgano sufre por falta de la enzima?',
+         '¿Qué hay en los hepatocitos y qué órgano sufre por falta de la proteína?',
          'c) Glóbulos eosinófilos en el retículo endoplásmico; pulmón (enfisema)', 'c',
-         'Las proteínas mal plegadas se agregan en el RE de los hepatocitos y no se secretan; la carencia de la enzima circulante causa enfisema.',
+         'Las proteínas mal plegadas se agregan en el RE de los hepatocitos y no se secretan; la carencia de la proteína circulante causa enfisema.',
          ['a) Hialina de Mallory; cerebro', 'b) Cuerpos de Russell; riñón', 'c) Glóbulos eosinófilos en el retículo endoplásmico; pulmón (enfisema)', 'd) Ovillos neurofibrilares; hígado']],
         ['Un paciente con mieloma múltiple desarrolla depósitos de amiloide en corazón y lengua.',
          '¿Qué tipo de amiloidosis y qué proteína?',

@@ -254,7 +254,7 @@ window.SINUS_MAPAS.farmacologia = {
         ] },
         { t: 'Potencia', hojas: [
           ['Mide la cantidad de fármaco necesaria para producir un efecto', 'Potencia', 'potencia'],
-          ['Concentración que produce el 50% del efecto máximo', 'CE50 (EC50 o DE50)', 'ec50|ce50|de50']
+          ['Concentración que produce el 50% del efecto máximo', 'Concentración eficaz media (CE50)', 'ec50|ce50|de50']
         ] },
         { t: 'Eficacia', hojas: [
           ['Capacidad de activar el receptor y generar una respuesta', 'Eficacia', 'eficacia'],
@@ -528,7 +528,7 @@ window.SINUS_MAPAS.farmacologia = {
           ['Receptor del efecto inotrópico y cronotrópico positivo', 'β1', 'beta 1|β1|beta1'],
           ['Receptor de la broncodilatación', 'β2', 'beta 2|β2|beta2'],
           ['Se agrega al anestésico local para...', 'Prolongar la anestesia (vasoconstricción)', 'prolong|duracion|vasoconstric'],
-          ['Vía preferida en anafilaxia ambulatoria', 'Intramuscular (cara anterior del muslo)', 'intramuscular|muslo']
+          ['Vía preferida en anafilaxia ambulatoria', 'Intramuscular (cara anterolateral del muslo)', 'intramuscular|muslo']
         ] },
         { t: 'Otras catecolaminas', hojas: [
           ['Choque séptico: ↑ resistencia vascular', 'Norepinefrina', 'norepinefrina|noradrenalina'],
@@ -649,7 +649,7 @@ window.SINUS_MAPAS.farmacologia = {
       fuente: 'Clase 8 · Intoxicación con aspirina y con paracetamol',
       columnas: ['', 'Ácido acetilsalicílico (AAS)', 'Paracetamol'],
       filas: [
-        ['Mecanismo o lesión', 'Hiperventilación, [[acidosis mixta::acidosis]] y desacople de la fosforilación oxidativa', 'Metabolito tóxico [[NAPQI::napqi]]: necrosis hepática [[centrolobulillar::centrolobul]]'],
+        ['Mecanismo o lesión', 'Hiperventilación, [[alcalosis respiratoria y acidosis metabólica::alcalosis;acidosis]] y desacople de la fosforilación oxidativa', 'Metabolito tóxico [[NAPQI::napqi]]: necrosis hepática [[centrolobulillar::centrolobul]]'],
         ['Primeros síntomas', 'Tinnitus, hipoacusia, [[hipertermia::hipertermia]] y vómitos', 'Etapa I (24 h): náuseas, dolor abdominal y [[anorexia::anorexia]]'],
         ['Evolución', 'Excitación del SNC → depresión → [[coma::coma]]', 'Etapa II: ↑ [[transaminasas::transaminasa]]; etapa III: encefalopatía, ictericia y coagulopatía'],
         ['Dosis', '—', 'Máximo diario: no exceder [[4 g::4]]; dosis tóxica de [[150 a 250 mg/kg::150|250]]'],
@@ -708,7 +708,7 @@ window.SINUS_MAPAS.farmacologia = {
           ['Exceso de cortisol: cara de luna llena y estrías', 'Síndrome de Cushing', 'cushing']
         ] },
         { t: 'Mecanismo', hojas: [
-          ['Se unen a receptores...', 'Intracelulares (citoplasmáticos)', 'citoplasm|intracelular'],
+          ['Tipo de receptores a los que se unen', 'Intracelulares (citoplasmáticos)', 'citoplasm|intracelular'],
           ['Efecto principal (lento)', 'Genómico: modifican la expresión génica', 'genomic|expresion|gen'],
           ['Factor de transcripción proinflamatorio con el que interfieren', 'NF-κB', 'nf-κ|nf-k|nfk|nfκ|factor nuclear'],
           ['Mediadores cuya síntesis frenan (cite uno)', 'Prostaglandinas, leucotrienos o citocinas', 'prostaglandina|leucotrieno|citocina']
