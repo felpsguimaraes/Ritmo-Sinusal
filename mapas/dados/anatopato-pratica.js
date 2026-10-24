@@ -319,12 +319,266 @@
     .concat([byId(TOTAL, 't15'), byId(TOTAL, 't13')]);
   function uniq(arr) { var out = []; arr.forEach(function (x) { if (out.indexOf(x) < 0) out.push(x); }); return out; }
 
+  /* ───────── Teoria das aulas práticas da Dra. Alicia Gonzalez (pasta da turma G) ─────────
+     p1 = "clase 1-Adaptación Celular parte 1", p1b = "parte 2", p2 = "clase 2-Lesión celular",
+     p3 = "clase 3-Acumulos intracelulares", p4 = "clase 4-Inflamación crónica" (a "PARTE 1" de inflamación
+     aguda já não está no Drive). Pizarrón de 30/09: foto "Quadro Dra alicia anatopato pratica 30/09". */
+  A.clases = Object.assign(A.clases || {}, {
+    p1: ['Práctica 1 · Adaptación celular (parte 1)', 'Práct. 1'],
+    p1b: ['Práctica 1 · Adaptación celular (parte 2)', 'Práct. 1 (2)'],
+    p2: ['Práctica 2 · Lesión celular', 'Práct. 2'],
+    p3: ['Práctica 3 · Acúmulos intracelulares', 'Práct. 3'],
+    p4: ['Práctica 4 · Inflamación crónica', 'Práct. 4']
+  });
+  var PR = 'pratica';
+  var TEO_P1 = [
+    {
+      id: 'ap_pr_adaptacion', area: PR, clase: 'Práctica 1', titulo: 'Adaptación celular en la práctica', tipo: 'mapa', sl: [['p1', 5, 18], ['p1b', 2, 14]],
+      centro: 'Adaptación celular', sub: 'Lo que la Dra. González explica antes de las láminas',
+      fuente: 'Práctica 1 · Hiperplasia, hipertrofia, atrofia y metaplasia (partes 1 y 2)',
+      ramas: [
+        { t: 'Hiperplasia', hojas: [
+          ['Aumento del… de células en un órgano o tejido', 'Número', 'numero'],
+          ['Ejemplo de la clase, junto con hipertrofia: el crecimiento hormonal del…', 'Útero en el embarazo || Útero', 'utero'],
+          ['La HPB es inducida por…', 'Andrógenos', 'androgen'],
+          ['Es un terreno fértil para que surja después una proliferación…', 'Cancerosa', 'cancer'],
+          ['Principal causa de la hiperplasia folicular en el bocio por déficit de yodo', 'Aumento de la secreción de TSH || Aumento de TSH', 'tsh']
+        ] },
+        { t: 'Hipertrofia', hojas: [
+          ['Aumento del… de las células', 'Tamaño', 'tamano'],
+          ['No se debe a la hinchazón sino a la síntesis de más componentes…', 'Estructurales', 'estructural'],
+          ['Células que no se dividen y solo pueden hipertrofiarse', 'Miocárdicas || Cardiomiocitos', 'miocard|cardiomioc']
+        ] },
+        { t: 'Atrofia', hojas: [
+          ['Disminución del tamaño de la célula por pérdida de sustancia…', 'Celular', 'celular'],
+          ['La de la notocorda y el conducto tirogloso en el desarrollo fetal', 'Fisiológica', 'fisiolog'],
+          ['Depende de la causa; puede ser localizada o generalizada', 'Patológica', 'patolog']
+        ] },
+        { t: 'Metaplasia', hojas: [
+          ['Cambio reversible: una célula adulta se sustituye por otro tipo celular…', 'Adulto', 'adulto'],
+          ['La más frecuente: de columnar a…', 'Escamosa', 'escamos'],
+          ['En el esófago de Barrett, el epitelio escamoso se reemplaza por epitelio…', 'Cilíndrico simple || Cilíndrico || Columnar', 'cilindric|columnar'],
+          ['Barrett resulta de la enfermedad crónica por…', 'Reflujo gastroesofágico || ERGE', 'reflujo|erge']
+        ] }
+      ]
+    },
+    {
+      id: 'ap_pr_rep_p1', area: PR, clase: 'Práctica 1', titulo: 'Láminas de la práctica 1: cuadro de repaso', tipo: 'tabla', sl: [['p1', 19, 32], ['p1b', 15, 21]],
+      resumen: 'Las cinco láminas de adaptación con el formato de la prueba: del órgano al diagnóstico.',
+      fuente: 'Práctica 1 · Descripciones de las láminas "a trabajar hoy" (partes 1 y 2)',
+      columnas: ['Órgano', 'Proceso', 'Alteraciones', 'Dx'],
+      filas: [
+        ['Próstata', '[[Adaptativo::adaptativ]] / inflamatorio crónico', 'Proliferación de glándulas benignas; dilataciones glandulares, invaginaciones papilares y áreas quísticas con [[cuerpos amiláceos::amilace]]; infiltrado inflamatorio crónico sobreagregado', '[[Hiperplasia prostática benigna || HPB::hiperplasia|hpb]] y prostatitis crónica'],
+        ['Glándula tiroides', 'Adaptativo', 'Folículos [[dilatados::dilatad]] de tamaño variable, aplanados en sectores e hiperplásicos en otros; áreas de hemorragia', '[[Bocio coloide multinodular::bocio]]'],
+        ['Corazón', 'Adaptativo', 'Cardiomiocitos hipertróficos, ramificados, con núcleos hipercromáticos y agrandados; fibrosis cicatricial y pigmentos de [[lipofucsina::lipofuc]]', '[[Hipertrofia cardíaca::hipertrofia]]'],
+        ['Testículo', 'Adaptativo', 'Desaparición del epitelio tubular, túbulos pequeños y escleróticos, fibrosis intersticial y aumento de células de [[Leydig::leydig]]', '[[Atrofia testicular::atrofia]]'],
+        ['Esófago', 'Adaptación celular ([[metaplasia::metaplasia]])', 'Epitelio escamoso reemplazado por epitelio cilíndrico simple con microvellosidades y células [[caliciformes::calicifor]]', '[[Esófago de Barret || Esófago de Barrett::barret]]']
+      ]
+    }
+  ];
+  var TEO_P2 = [
+    {
+      id: 'ap_pr_lesion', area: PR, clase: 'Práctica 2', titulo: 'Lesión celular y formas de necrosis', tipo: 'mapa', sl: [['p2', 2, 25]],
+      centro: 'Lesión celular', sub: 'Necrosis: cómo se ve y qué formas tiene',
+      fuente: 'Práctica 2 · Lesión celular, morfología de la necrosis, formas de necrosis, caseosa y grasa',
+      ramas: [
+        { t: 'Concepto', hojas: [
+          ['Estrés tan intenso que la célula ya no es capaz de…', 'Adaptarse', 'adapt'],
+          ['La otra forma de muerte celular, además de la necrosis', 'Apoptosis', 'apoptosis']
+        ] },
+        { t: 'Morfología', hojas: [
+          ['Cambio de color del citoplasma', 'Eosinofilia aumentada', 'eosinofil'],
+          ['Estructuras que aparecen en la célula necrótica', 'Figuras de mielina', 'mielina'],
+          ['La basofilia de la cromatina se desvanece', 'Cariólisis', 'cariolisis'],
+          ['Encogimiento nuclear', 'Picnosis', 'picnosis'],
+          ['Fragmentación del núcleo', 'Cariorrexis', 'cariorrexis']
+        ] },
+        { t: 'Formas', hojas: [
+          ['Hemorrágica o isquémica', 'Coagulativa', 'coagul'],
+          ['O de licuefacción', 'Colicuativa', 'colicuativ'],
+          ['Enzimática o traumática', 'Grasa', 'grasa'],
+          ['Seca o húmeda', 'Gangrenosa', 'gangren']
+        ] },
+        { t: 'Infartos', hojas: [
+          ['Necrosis coagulativa hemorrágica', 'Infarto rojo', 'rojo'],
+          ['Necrosis coagulativa isquémica', 'Infarto blanco', 'blanco']
+        ] },
+        { t: 'Caseosa y grasa', hojas: [
+          ['Infección donde aparece la caseosa', 'Tuberculosis', 'tuberculo'],
+          ['Reborde inflamatorio que rodea el foco caseoso', 'Reacción granulomatosa', 'granulomat'],
+          ['A diferencia de la coagulativa, la arquitectura queda…', 'Completamente alterada || Alterada', 'alterad'],
+          ['La grasa la causan enzimas…', 'Pancreáticas', 'pancrea']
+        ] }
+      ]
+    },
+    {
+      id: 'ap_pr_rep_p2', area: PR, clase: 'Práctica 2', titulo: 'Láminas de la práctica 2: cuadro de repaso', tipo: 'tabla', sl: [['p2', 26, 30]],
+      resumen: 'Necrosis coagulativa isquémica y necrosis caseosa, con el formato de la prueba.',
+      fuente: 'Práctica 2 · Descripciones de las láminas "para hoy"',
+      columnas: ['Órgano', 'Proceso', 'Alteraciones', 'Dx'],
+      filas: [
+        ['Corazón', 'Necrosis [[coagulativa isquémica || coagulativa::coagul]]', 'Cardiomiocitos [[anucleados::anuclead]] por cariólisis, infiltrado de neutrófilos y áreas de hemorragia', '[[Infarto agudo de miocardio || IAM::infarto|iam]]'],
+        ['Ovario', 'Inflamatorio crónico [[granulomatoso::granulomat]] / necrosis caseosa', 'Linfocitos, células epitelioides, plasmáticas, fibroblastos, células gigantes multinucleadas de tipo [[Langhans::langhans]] y necrosis caseosa', '[[Tuberculosis::tuberculo]]']
+      ]
+    }
+  ];
+  var TEO_P3 = [
+    {
+      id: 'ap_pr_acumulos', area: PR, clase: 'Práctica 3', titulo: 'Acúmulos intracelulares y melanoma', tipo: 'mapa', sl: [['p3', 3, 14], ['p3', 19, 25]],
+      centro: 'Acúmulos intracelulares', sub: 'Qué se acumula, dónde y el melanoma',
+      fuente: 'Práctica 3 · Categorías de acúmulos, lípidos, aterosclerosis, colesterolosis y melanoma',
+      ramas: [
+        { t: 'Categorías', hojas: [
+          ['Agua, lípidos, proteínas o hidratos de carbono en exceso', 'Constituyente celular normal || Un constituyente celular normal', 'constituyente|normal'],
+          ['Sustancia anormal, producto de síntesis o metabolismo anormal', 'Endógena', 'endogen'],
+          ['Sustancia anormal: minerales o productos de agentes infecciosos', 'Exógena', 'exogen'],
+          ['La tercera categoría', 'Pigmento || Un pigmento', 'pigment']
+        ] },
+        { t: 'Lípidos', hojas: [
+          ['Cambio graso del hígado: acúmulo de…', 'Triglicéridos', 'triglicer'],
+          ['En la placa, se cargan de colesterol las células musculares lisas y los…', 'Macrófagos', 'macrofag'],
+          ['Apariencia de esas células cargadas de lípidos', 'Espumosa', 'espumos'],
+          ['Macrófagos con colesterol en la lámina propia de la vesícula biliar', 'Colesterolosis', 'colesterolosis']
+        ] },
+        { t: 'Melanoma', hojas: [
+          ['Tumor maligno del…', 'Melanocito', 'melanocit'],
+          ['Proporción que surge de novo, sobre piel sana', '80% || 80 %', '80'],
+          ['Primero crece en superficie (horizontal) y luego…', 'En profundidad || Vertical', 'vertical|profundidad'],
+          ['Topografía más habitual en el varón', 'Espalda || La espalda', 'espalda']
+        ] },
+        { t: 'Signos de aviso', hojas: [
+          ['Del lunar preexistente: aumento de…', 'Tamaño', 'tamano'],
+          ['Del lunar preexistente: prurito o…', 'Dolor', 'dolor'],
+          ['Bordes de la lesión pigmentada', 'Irregulares', 'irregular'],
+          ['Colores en el interior de la lesión', 'Abigarrados', 'abigarrad|abirragad']
+        ] }
+      ]
+    },
+    {
+      id: 'ap_pr_rep_p3', area: PR, clase: 'Práctica 3', titulo: 'Láminas de la práctica 3: cuadro de repaso', tipo: 'tabla', sl: [['p3', 15, 18]],
+      resumen: 'Las cuatro láminas de acúmulos intracelulares con el formato de la prueba.',
+      fuente: 'Práctica 3 · Descripciones de las láminas de aterosclerosis, colesterolosis, esteatosis y melanoma',
+      columnas: ['Órgano', 'Proceso', 'Alteraciones', 'Dx'],
+      filas: [
+        ['Vaso sanguíneo', 'Acúmulos intracelulares', 'Hendiduras de [[colesterol::colesterol]], macrófagos espumosos cargados de lípidos y calcificación [[distrófica::distrof]]', '[[Aterosclerosis::ateroscl]]'],
+        ['Vesícula biliar', 'Acúmulos intracelulares', 'Macrófagos [[espumosos::espumos]] cargados de colesterol en la lámina propia', '[[Colesterolosis::colesterolosis]]'],
+        ['Hígado', 'Acúmulos intracelulares', 'Histoarquitectura alterada por hepatocitos con vacuolas lipídicas ([[triglicéridos::triglicer]])', '[[Esteatosis hepática::esteatosis]]'],
+        ['Piel', 'Acúmulos intracelulares', 'Epidermis con acantosis y papilomatosis; en la dermis, células atípicas y pigmento de [[melanina::melanina]]', '[[Melanoma::melanoma]]']
+      ]
+    }
+  ];
+  var TEO_P4 = [
+    {
+      id: 'ap_pr_inflamacion', area: PR, clase: 'Práctica 4', titulo: 'Inflamación aguda y crónica', tipo: 'tabla', sl: [['p4', 3, 4]],
+      resumen: 'La tabla de características que muestra la clase, más lo que define a la crónica.',
+      fuente: 'Práctica 4 · Inflamación crónica y tabla "Características de la inflamación aguda y crónica"',
+      columnas: ['', 'Aguda', 'Crónica'],
+      filas: [
+        ['Aparición', 'Rápida: [[minutos a horas::minuto;hora]]', 'Lenta: [[días::dia]]; de duración prolongada (semanas y meses)'],
+        ['Infiltrado celular', 'Principalmente [[neutrófilos::neutrof]]', '[[Monocitos/macrófagos y linfocitos || Macrófagos y linfocitos::macrof;linfoc]]'],
+        ['Lesión tisular y fibrosis', 'Suele ser [[leve y autolimitada || leve::leve]]', 'Suele ser [[grave y progresiva || grave::grave]]'],
+        ['Signos locales y sistémicos', '[[Prominentes::prominent]]', 'Menos prominentes; pueden ser [[sutiles::sutil]]'],
+        ['Qué ocurre a la vez', 'No figura en la tabla', 'Inflamación activa, destrucción tisular e intentos de [[reparación::reparaci]]']
+      ]
+    },
+    {
+      id: 'ap_pr_apendice_capas', area: PR, clase: 'Pizarrón 30/09', titulo: 'Apendicitis aguda: qué buscar en cada capa', tipo: 'mapa',
+      centro: 'Apendicitis aguda', sub: 'Lo que la profesora marcó en el corte del apéndice',
+      fuente: 'Pizarrón de la Dra. Alicia Gonzalez, práctica del 30/09 (foto de la pasta LAMINÁRIO)',
+      ramas: [
+        { t: 'Mucosa', hojas: [
+          ['Glándulas tubulares de la mucosa: criptas de…', 'Lieberkühn', 'lieberk'],
+          ['Células de las criptas que absorben electrolitos y agua', 'Enterocitos', 'enterocit'],
+          ['Células de las criptas que liberan moco', 'Caliciformes || Células caliciformes', 'calicifor'],
+          ['Lesiones de la mucosa: erosión y…', 'Ulceración', 'ulceraci']
+        ] },
+        { t: 'Submucosa', hojas: [
+          ['Lo que se ve en la submucosa', 'Nódulos linfoides', 'nodulo|linfoide']
+        ] },
+        { t: 'Muscular', hojas: [
+          ['Células inflamatorias en la muscular', 'Neutrófilos', 'neutrof']
+        ] },
+        { t: 'Serosa', hojas: [
+          ['Vasos… y edema en la serosa', 'Hiperemiados', 'hiperemi']
+        ] },
+        { t: 'Además', hojas: [
+          ['Sangre fuera de los vasos', 'Hemorragia', 'hemorragi'],
+          ['Muerte del tejido', 'Necrosis', 'necrosis']
+        ] }
+      ]
+    },
+    {
+      id: 'ap_pr_apendice_pato', area: PR, clase: 'Pizarrón 30/09', titulo: 'Apendicitis aguda: patogenia', tipo: 'fluxo',
+      resumen: 'La cadena que la profesora dibujó: de la obstrucción a la perforación.',
+      fuente: 'Pizarrón de la Dra. Alicia Gonzalez, práctica del 30/09 (foto de la pasta LAMINÁRIO)',
+      pasos: [
+        'Principal etiología: obstrucción por [[fecalito::fecalit]]',
+        'Por la obstrucción aumenta el [[moco::moco|muco]]',
+        'Aumenta la [[presión en la luz || presión::presion]]',
+        'Se comprimen las [[vénulas y capilares || vénulas::venula|capilar]], que tienen la pared más fina',
+        'Las vénulas se congestionan (sangre parada) y hay [[edema::edema]]',
+        'Llega un punto en que también se comprimen las [[arteriolas::arteriol]]',
+        'No llega sangre ni oxígeno: [[isquemia::isquemia]]',
+        'La isquemia lleva a la [[necrosis::necrosis]]',
+        { end: 'La necrosis termina en [[perforación::perforaci]]' }
+      ]
+    },
+    {
+      id: 'ap_pr_rep_p4', area: PR, clase: 'Práctica 4', titulo: 'Láminas de la práctica 4: cuadro de repaso', tipo: 'tabla', sl: [['p4', 5, 25]],
+      resumen: 'Las cuatro láminas de inflamación crónica con el formato de la prueba.',
+      fuente: 'Práctica 4 · Tiroiditis de Hashimoto, pielonefritis crónica, colecistitis crónica y cirrosis',
+      columnas: ['Órgano', 'Proceso', 'Alteraciones', 'Dx'],
+      filas: [
+        ['Glándula tiroides', 'Inflamatorio crónico', 'Formación de centros [[germinales::germinal]], folículos tiroideos atróficos y residuales, áreas de fibrosis', '[[Tiroiditis de Hashimoto::hashimoto]]'],
+        ['Riñón', 'Inflamatorio crónico', 'Inflamación tubulointersticial con atrofia tubular, llamada [[tiroidización::tiroidiz]], y áreas de fibrosis', '[[Pielonefritis crónica::pielonefritis]]'],
+        ['Vesícula biliar', 'Inflamación crónica y acúmulos intracelulares', 'Linfocitos aislados y en nidos, hipertrofia de la muscular con senos de [[Rokitansky-Aschoff::rokitansky|aschoff]] y macrófagos espumosos en la lámina propia', '[[Colecistitis crónica / colesterolosis || Colecistitis crónica::colecistitis]]'],
+        ['Hígado', 'Inflamatorio crónico y acúmulos intracelulares', 'Nódulos [[regenerativos::regenerativ]] separados por tabiques de tejido conectivo, hepatocitos con vacuolas lipídicas e infiltrado crónico', '[[Cirrosis hepática / esteatosis hepática || Cirrosis hepática::cirrosis]]']
+      ]
+    }
+  ];
+  var TEO_CASOS = [
+    {
+      id: 'ap_pr_que_lamina', area: PR, clase: 'Prácticas 1 a 4', titulo: '¿Qué lámina es? Alteración clave', tipo: 'casos',
+      sl: [['p1', 19, 32], ['p1b', 15, 21], ['p2', 26, 30], ['p3', 15, 18], ['p4', 5, 25]],
+      resumen: 'Leé la alteración que describe la profesora y elegí el diagnóstico.',
+      fuente: 'Descripciones de las láminas de las prácticas 1 a 4 (Dra. Alicia Gonzalez)',
+      casos: [
+        ['Próstata: glándulas benignas proliferadas, áreas quísticas con cuerpos amiláceos.', '¿Diagnóstico?', 'a) Hiperplasia prostática benigna', 'a', 'Proceso adaptativo; la clase agrega prostatitis crónica por el infiltrado sobreagregado.',
+         ['a) Hiperplasia prostática benigna', 'b) Atrofia testicular', 'c) Tuberculosis', 'd) Melanoma']],
+        ['Testículo: túbulos pequeños y escleróticos, fibrosis intersticial y aumento de células de Leydig.', '¿Diagnóstico?', 'c) Atrofia testicular', 'c', 'Desaparece el epitelio tubular.',
+         ['a) Hipertrofia cardíaca', 'b) Bocio coloide multinodular', 'c) Atrofia testicular', 'd) Pielonefritis crónica']],
+        ['Esófago: epitelio escamoso reemplazado por epitelio cilíndrico simple con células caliciformes.', '¿Diagnóstico y proceso?', 'b) Esófago de Barrett, metaplasia', 'b', 'Es la metaplasia que resulta del reflujo gastroesofágico crónico.',
+         ['a) Esófago de Barrett, hiperplasia', 'b) Esófago de Barrett, metaplasia', 'c) Apendicitis aguda', 'd) Colesterolosis']],
+        ['Corazón: cardiomiocitos agrandados y ramificados, con núcleos hipercromáticos y lipofucsina.', '¿Diagnóstico?', 'd) Hipertrofia cardíaca', 'd', 'Los cardiomiocitos no se dividen: responden con hipertrofia.',
+         ['a) Infarto agudo de miocardio', 'b) Aterosclerosis', 'c) Hiperplasia', 'd) Hipertrofia cardíaca']],
+        ['Corazón: cardiomiocitos anucleados por cariólisis, neutrófilos y hemorragia.', '¿Diagnóstico?', 'a) Infarto agudo de miocardio', 'a', 'Necrosis coagulativa isquémica.',
+         ['a) Infarto agudo de miocardio', 'b) Hipertrofia cardíaca', 'c) Melanoma', 'd) Tiroiditis de Hashimoto']],
+        ['Ovario: células gigantes multinucleadas de tipo Langhans, células epitelioides y necrosis caseosa.', '¿Diagnóstico?', 'b) Tuberculosis', 'b', 'Proceso inflamatorio crónico granulomatoso con necrosis caseosa.',
+         ['a) Melanoma', 'b) Tuberculosis', 'c) Esteatosis', 'd) Colesterolosis']],
+        ['Vaso sanguíneo: hendiduras de colesterol, macrófagos espumosos y calcificación distrófica.', '¿Diagnóstico?', 'c) Aterosclerosis', 'c', 'Acúmulos intracelulares en la íntima de la arteria.',
+         ['a) Colesterolosis', 'b) Infarto blanco', 'c) Aterosclerosis', 'd) Esteatosis hepática']],
+        ['Hígado: nódulos regenerativos separados por tabiques de tejido conectivo.', '¿Diagnóstico?', 'd) Cirrosis hepática', 'd', 'La clase la describe con esteatosis e infiltrado crónico sobreagregado.',
+         ['a) Esteatosis hepática pura', 'b) Necrosis grasa', 'c) Tiroiditis de Hashimoto', 'd) Cirrosis hepática']],
+        ['Riñón: inflamación tubulointersticial con atrofia tubular de aspecto tiroideo.', '¿Diagnóstico?', 'a) Pielonefritis crónica', 'a', 'Esa atrofia tubular se llama "tiroidización".',
+         ['a) Pielonefritis crónica', 'b) Tiroiditis de Hashimoto', 'c) Bocio coloide', 'd) Infarto renal']],
+        ['Tiroides: centros germinales, folículos atróficos y residuales, fibrosis.', '¿Diagnóstico?', 'c) Tiroiditis de Hashimoto', 'c', 'Proceso inflamatorio crónico; el bocio coloide, en cambio, tiene folículos dilatados.',
+         ['a) Bocio coloide multinodular', 'b) Hiperplasia folicular', 'c) Tiroiditis de Hashimoto', 'd) Pielonefritis crónica']],
+        ['Vesícula biliar: senos de Rokitansky-Aschoff, linfocitos en nidos y macrófagos espumosos en la lámina propia.', '¿Diagnóstico?', 'b) Colecistitis crónica con colesterolosis', 'b', 'Inflamación crónica y acúmulos intracelulares en la misma lámina.',
+         ['a) Apendicitis aguda', 'b) Colecistitis crónica con colesterolosis', 'c) Aterosclerosis', 'd) Esteatosis']],
+        ['Piel: acantosis y papilomatosis; en la dermis, células atípicas y pigmento de melanina.', '¿Diagnóstico?', 'd) Melanoma', 'd', 'Tumor maligno del melanocito.',
+         ['a) Tuberculosis', 'b) Colesterolosis', 'c) Hiperplasia', 'd) Melanoma']]
+      ]
+    }
+  ];
+
   A.docentePratica = 'Dra. Alicia Gonzalez';
-  A.fontePratica = 'Láminas de la P1 y de la P2, laminario completo y pizarrones de las clases prácticas';
+  A.fontePratica = 'Clases prácticas 1 a 4, láminas de la P1 y de la P2, laminario completo y pizarrones';
   [].push.apply(A.modulos, [].concat(
+    TEO_P1,
     par('lam_p1', 'Práctica · P1', 'Láminas de la P1',
       'Las 5 láminas que la profesora indicó para la prueba. Mirá las fotos y completá ÓRGANO, PROCESO, DESCRIPCIÓN y DX, con banco de palabras.',
       'Las mismas 5 láminas en orden aleatorio, sin banco de palabras y sin decir cuántas alteraciones hay.', SRC_P + '; lista «Láminas p/ prova» del pizarrón', P1),
+    TEO_P2, TEO_P3, TEO_P4,
     par('lam_p2', 'Práctica · P2', 'Láminas de la P2',
       'Los 10 temas del pizarrón de la P2 (necrosis, inflamación, acúmulos y cirrosis), con la descripción de la profesora como respuesta.',
       'Las 10 láminas de la P2 en orden aleatorio, sin banco de palabras.', SRC_P + '; pizarrón «Temas P2 Práctica»; Hashimoto y cirrosis: tabla del laminario', P2Q),
@@ -333,6 +587,7 @@
       'Las 25 láminas del laminario en orden aleatorio, sin banco de palabras.', SRC_T, TOTAL),
     [{ id: 'lam_simulacro', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 8, cronometro: true, clase: 'Simulacro', titulo: 'Simulacro de la prueba práctica',
       resumen: 'Ocho láminas sorteadas entre la P1, la P2 y el laminario. Sin banco de palabras y con cronómetro; la planilla sale al final.',
-      fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }]
+      fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }],
+    TEO_CASOS
   ));
 })();
