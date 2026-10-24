@@ -71,6 +71,142 @@ window.SINUS_MAPAS.farmacologia = {
       ]
     },
 
+    /* ───────────── CLASE 1.2 · Formas farmacéuticas ─────────────
+       "CLASE 1.2 FORMA FARMACEUTICA" (PDF de la turma, 43 slides numerados; páginas del PPTX del mismo archivo) */
+    {
+      id: 'ff_concepto', clase: 'Clase 1.2', titulo: 'Formas farmacéuticas: concepto y objetivos', tipo: 'mapa', sl: [[1.2,3,7]],
+      centro: 'Formas farmacéuticas', sub: 'Concepto, objetivos y clasificación',
+      fuente: 'Clase 1.2 · Concepto, objetivos de las formas farmacéuticas, forma farmacéutica determinada y clasificación',
+      ramas: [
+        { t: 'Concepto', hojas: [
+          ['Conformación final que se le da al fármaco mediante un proceso…', 'Fármaco-técnico || Farmacotécnico', 'tecnic'],
+          ['…para lograr su estabilidad (conservación) durante el período de…', 'Vida útil', 'util']
+        ] },
+        { t: 'Cómo se obtiene', hojas: [
+          ['Fármaco + auxiliares, excipientes o vehículo + …', 'Proceso', 'proceso'],
+          ['El resultado de esa suma', 'Forma farmacéutica determinada', 'determinada']
+        ] },
+        { t: 'Objetivos', hojas: [
+          ['Dosificar con…', 'Exactitud', 'exactitud'],
+          ['Garantizar limpieza y…', 'Esterilidad', 'esterilidad'],
+          ['Hacer agradable la…', 'Administración', 'administraci'],
+          ['Favorecer la… del medicamento', 'Absorción', 'absorci']
+        ] },
+        { t: 'Clasificación', hojas: [
+          ['Tabletas, cápsulas, grageas, polvos, supositorios', 'Sólidas', 'solida'],
+          ['Cremas, ungüentos, pastas', 'Semisólidas', 'semisolida'],
+          ['Jarabes, suspensiones, emulsiones, inyectables', 'Líquidas', 'liquida']
+        ] }
+      ]
+    },
+    {
+      id: 'ff_solidas', clase: 'Clase 1.2', titulo: 'Formas farmacéuticas sólidas', tipo: 'tabla', sl: [[1.2,7,20]],
+      resumen: 'Cada forma sólida de la clase: cómo es y el dato que la distingue.',
+      fuente: 'Clase 1.2 · Formas farmacéuticas sólidas: tabletas, cápsulas, grageas, polvos, granulados, tabletas masticables, supositorios, óvulos y formas retard',
+      columnas: ['Forma sólida', 'Cómo es', 'Dato clave'],
+      filas: [
+        ['Tableta', 'Compresión de fármacos y excipientes en pequeños [[discos::disco]] que se desintegran en el [[estómago::estomag]]', 'Hay tabletas [[vaginales::vaginal]]: cambian los excipientes según la vía'],
+        ['Cápsula', 'Fármaco y excipientes cubiertos por una capa de [[gelatina::gelatin]] que se reblandece en el TGI', 'Objetivo: ocultar o evitar olores y [[sabores::sabor]] desagradables'],
+        ['Cápsula de gelatina dura', 'Contiene material sólido en [[polvo::polvo]]', 'Generalmente de dos [[colores::color]]'],
+        ['Cápsula de gelatina blanda (perla)', 'Contiene material [[líquido::liquid]], generalmente aceitoso', 'Ejemplo: [[vitamina E::vitamina e]] en cápsulas'],
+        ['Gragea simple', 'Núcleo recubierto por capas de [[azúcar::azucar]] y edulcorantes', 'Su capa la atacan los ácidos del [[estómago::estomag]]'],
+        ['Gragea entérica', 'Núcleo recubierto por una capa especial, generalmente un [[polímero::polimer]]', 'No se libera en el estómago sino en el [[duodeno || intestino delgado::duodeno|intestino]]'],
+        ['Polvos', 'Uno o varios principios activos finamente [[molidos::molid]] para dar homogeneidad', 'Externos (Canestén polvo) o internos (Dristan, Pax)'],
+        ['Granulados', 'Principios activos con azúcar u otro material que los une', 'Pequeños gránulos [[irregulares::irregular]]'],
+        ['Tabletas masticables', 'Circulares, con azúcar y saborizantes; disolución lenta en la [[boca::boca]]', 'Generalmente de acción [[local::local]]'],
+        ['Supositorios', 'Preparado cónico o de bala, de administración [[rectal::rectal]]', 'Se funde a la temperatura corporal; base de manteca de cacao o [[glicerina::glicerin]]'],
+        ['Óvulos', 'Como supositorios [[vaginales::vaginal]]', 'Ejemplo: Metrozín óvulos vaginales'],
+        ['Liberación especial (retard)', 'Cápsulas y grageas que liberan el principio activo [[lentamente::lent]] en el tracto digestivo', 'Acción sostenida de [[8 a 12 horas || 8-12 horas::8;12]]; ejemplo: nifedipino 30 mg']
+      ]
+    },
+    {
+      id: 'ff_semisolidas', clase: 'Clase 1.2', titulo: 'Formas farmacéuticas semisólidas', tipo: 'mapa', sl: [[1.2,21,26]],
+      centro: 'Formas semisólidas', sub: 'Según su penetración y según su presentación',
+      fuente: 'Clase 1.2 · Formas semisólidas: superficiales, penetrantes y absorbibles; crema, ungüento o pomada y pasta',
+      ramas: [
+        { t: 'Según la penetración', hojas: [
+          ['Acción sobre la piel: antisépticos, protectores, lubricantes, refrescantes', 'Superficiales', 'superficial'],
+          ['Llegan a un nivel más profundo de la piel: geles antiinflamatorios y analgésicos', 'Penetrantes', 'penetrante'],
+          ['El principio activo pasa a la circulación general: parches hormonales y de nicotina', 'Absorbibles', 'absorbible|absorvible']
+        ] },
+        { t: 'Según la presentación', hojas: [
+          ['Como emulsiones sólidas o semisólidas, sobre piel y mucosas: ketoconazol, clotrimazol', 'Crema', 'crema'],
+          ['Uso externo, blanda, untosa y adherente, a base de aceites y grasas: Vick Vaporub', 'Ungüento o pomada || Ungüento o pomadas || Ungüento || Pomada', 'unguento|pomada'],
+          ['Pomada con gran porción de polvos insolubles; absorbe la secreción del tejido', 'Pasta || Pastas', 'pasta'],
+          ['En la pasta, la porción de su peso que son polvos insolubles', 'La mitad || Generalmente la mitad', 'mitad']
+        ] }
+      ]
+    },
+    {
+      id: 'ff_liquidas', clase: 'Clase 1.2', titulo: 'Formas farmacéuticas líquidas', tipo: 'tabla', sl: [[1.2,27,41]],
+      resumen: 'Cada forma líquida de la clase, con el dato que la diferencia de las otras.',
+      fuente: 'Clase 1.2 · Formas farmacéuticas líquidas: jarabes, suspensiones, emulsión, elixir, solución, tinturas, lociones, colirios, enemas, inhalaciones, inyectables, linimentos y gel',
+      columnas: ['Forma líquida', 'Cómo es', 'Dato clave'],
+      filas: [
+        ['Jarabe', 'Principio activo disuelto en una solución [[azucarada::azucar]]', 'Cerca del [[70% || 70 %::70]] de azúcar; vía oral'],
+        ['Suspensión', 'Aspecto [[turbio::turbio]]: un sólido generalmente insoluble disperso en un vehículo acuoso u oleoso', '[[Agitar antes de usar || Agitar siempre antes de usar::agitar]]'],
+        ['Emulsión', 'Aspecto lechoso o cremoso: dos líquidos que no se [[mezclan::mezcla]] (agua y aceite)', 'Ejemplo: emulsión de Scott'],
+        ['Elixir', 'Vehículo [[hidroalcohólico::hidroalcohol]], azucarado y aromático', 'Cerca del [[8% || 8 %::8]] de alcohol; vía oral'],
+        ['Solución', 'Dos o más principios activos homogéneos disueltos en [[agua::agua]]', 'Vía oral o uso externo'],
+        ['Tintura', 'Disolución en un vehículo [[alcohólico o hidroalcohólico || alcohólico::alcohol]]', 'Tópica u oral; ejemplo: tintura de [[valeriana::valerian]]'],
+        ['Loción', 'Aplicación externa [[sin fricción::sin friccion]]', 'Vehículo: soluciones acuosas o alcohólicas'],
+        ['Linimento', 'Emulsión o solución para aplicación externa [[con fricción::con friccion]]', 'Vehículo acuoso, alcohólico u oleoso'],
+        ['Colirio', 'Soluciones para el globo ocular y los párpados', 'Debe ser [[estéril::esteril]]: está en contacto con mucosas'],
+        ['Enema', 'Para la [[evacuación del intestino || evacuación::evacuaci]]', 'También para tratar lesiones locales'],
+        ['Inhalación', 'Vapores que se respiran ([[nebulización::nebuliz]])', 'Garganta y pulmones; ejemplo: [[salbutamol::salbutamol]]'],
+        ['Inyectable', 'Solución o suspensión, [[estéril::esteril]] en la fabricación y en el envase', 'Administración [[parenteral::parenteral]]'],
+        ['Gel', 'Preparado con base [[acuosa::acuosa]]', 'De fácil absorción por la piel']
+      ]
+    },
+    {
+      id: 'ff_vias', clase: 'Clase 1.2', titulo: 'Formas farmacéuticas según la vía', tipo: 'tabla', sl: [[1.2,42,42]],
+      resumen: 'Qué forma se usa en cada vía, agrupadas como en la lámina 42 (enterales, parenterales y tópica).',
+      fuente: 'Clase 1.2 · Formas farmacéuticas según vía de administración',
+      columnas: ['Vía', 'Grupo', 'Formas farmacéuticas'],
+      filas: [
+        ['Oral', '[[Enteral || Enterales::enteral]]', 'Soluciones, suspensiones, cápsulas, comprimidos (grageas), polvos y granulados'],
+        ['Sublingual o bucal', 'Enteral', 'Comprimidos [[sublinguales::sublingual]]'],
+        ['Rectal', 'Enteral', 'Enemas y [[supositorios::supositorio]]'],
+        ['Endovenosa', '[[Parenteral || Parenterales::parenteral]]', 'Soluciones acuosas: [[bolus || bolo::bolus|bolo]] i.v. o infusión continua'],
+        ['Intramuscular', 'Parenteral', 'Soluciones acuosas, soluciones [[oleosas::oleos]] y suspensiones'],
+        ['Subcutánea', 'Parenteral', 'Soluciones acuosas y [[cilindros aglutinados::cilindro|aglutinad]] (pellets)'],
+        ['Inhalatoria', 'Tópica', '[[Aerosoles o inhaladores || Aerosoles::aerosol|inhalador]]'],
+        ['Intranasal', 'Tópica', 'Soluciones [[intranasales::intranasal]]'],
+        ['Tópica', 'Tópica', 'Soluciones, pomadas, ungüentos, cremas, geles y parches [[transdérmicos::transdermic]]']
+      ]
+    },
+    {
+      id: 'ff_casos', clase: 'Clase 1.2', titulo: '¿Qué forma farmacéutica es?', tipo: 'casos', sl: [[1.2,9,41]],
+      resumen: 'Reconocé la forma farmacéutica por la descripción de la clase.',
+      fuente: 'Clase 1.2 · Definiciones de cada forma farmacéutica (láminas 9 a 41)',
+      casos: [
+        ['Sólido generalmente insoluble disperso en un vehículo acuoso u oleoso, de aspecto turbio; hay que agitarlo siempre antes de usar.', '¿Qué forma es?', 'b) Suspensión', 'b', 'La emulsión, en cambio, es lechosa: dos líquidos que no se mezclan.',
+         ['a) Emulsión', 'b) Suspensión', 'c) Jarabe', 'd) Elixir']],
+        ['Comprimido recubierto con una capa de polímero para que el principio activo no se libere en el estómago.', '¿Qué forma es?', 'c) Gragea entérica', 'c', 'Se libera en el duodeno; la capa de azúcar de la gragea simple la atacan los ácidos del estómago.',
+         ['a) Gragea simple', 'b) Cápsula de gelatina dura', 'c) Gragea entérica', 'd) Tableta masticable']],
+        ['Preparado para aplicación externa que se usa con fricción.', '¿Qué forma es?', 'a) Linimento', 'a', 'La loción se aplica sin fricción.',
+         ['a) Linimento', 'b) Loción', 'c) Colirio', 'd) Tintura']],
+        ['Nifedipino 30 mg que libera el principio activo lentamente y mantiene la concentración durante 8 a 12 horas.', '¿Qué forma es?', 'd) Forma de liberación especial (retard)', 'd', 'Acción sostenida de 8 a 12 horas.',
+         ['a) Granulado', 'b) Tableta', 'c) Cápsula de gelatina blanda', 'd) Forma de liberación especial (retard)']],
+        ['Solución para el globo ocular y los párpados.', '¿Qué condición debe cumplir?', 'b) Ser estéril', 'b', 'Está en contacto con mucosas.',
+         ['a) Tener 70% de azúcar', 'b) Ser estéril', 'c) Agitarse antes de usar', 'd) Tener 8% de alcohol']],
+        ['Vehículo hidroalcohólico con cerca de 8% de alcohol, azucarado y aromático, por vía oral.', '¿Qué forma es?', 'c) Elixir', 'c', 'El jarabe tiene cerca de 70% de azúcar; la tintura usa vehículo alcohólico o hidroalcohólico.',
+         ['a) Jarabe', 'b) Tintura', 'c) Elixir', 'd) Solución']],
+        ['Ketoconazol de uso tópico: emulsión de consistencia sólida o semisólida para piel y mucosas.', '¿Qué forma es?', 'a) Crema', 'a', 'El ungüento o pomada es untoso y adherente, a base de aceites y grasas.',
+         ['a) Crema', 'b) Pasta', 'c) Gel', 'd) Loción']],
+        ['Parche de nicotina: el principio activo aplicado en la piel pasa a la circulación general.', '¿Qué tipo de semisólido es, según su penetración?', 'c) Absorbible', 'c', 'Superficiales: acción sobre la piel; penetrantes: más profundos (geles).',
+         ['a) Superficial', 'b) Penetrante', 'c) Absorbible']],
+        ['Cápsula blanda con material líquido aceitoso, como la vitamina E.', '¿Qué forma es?', 'b) Cápsula de gelatina blanda (perla)', 'b', 'La de gelatina dura contiene polvo y suele ser de dos colores.',
+         ['a) Cápsula de gelatina dura', 'b) Cápsula de gelatina blanda (perla)', 'c) Gragea simple', 'd) Óvulo']],
+        ['Preparado cónico de administración rectal que se funde a la temperatura corporal.', '¿Qué forma es?', 'a) Supositorio', 'a', 'Su base o excipiente puede ser manteca de cacao o glicerina; el óvulo es como un supositorio vaginal.',
+         ['a) Supositorio', 'b) Óvulo', 'c) Enema', 'd) Tableta vaginal']],
+        ['Pomada con cerca de la mitad de su peso en polvos insolubles, para absorber la secreción del tejido.', '¿Qué forma es?', 'd) Pasta', 'd', 'Es de aplicación externa.',
+         ['a) Crema', 'b) Gel', 'c) Ungüento', 'd) Pasta']],
+        ['Salbutamol que el paciente respira como vapor (nebulización).', '¿Qué forma es?', 'b) Inhalación', 'b', 'Para mejorar en menos tiempo las afecciones de garganta y pulmones.',
+         ['a) Inyectable', 'b) Inhalación', 'c) Jarabe', 'd) Colirio']]
+      ]
+    },
+
     /* ───────────── CLASE 2 ───────────── */
     {
       id: 'ladme', clase: 'Clase 2', titulo: 'LADME: el viaje del fármaco', tipo: 'fluxo', sl: [[2,4,8]],
@@ -920,8 +1056,14 @@ window.SINUS_MAPAS.farmacologia = {
     {
       id: 'simulado_farma', clase: 'Clases 1 a 9', titulo: 'Simulado de prueba: Farmacología I', tipo: 'casos', cronometro: true,
       resumen: 'Preguntas de opción múltiple como en la prueba. Use el cronómetro y corrija al final.',
-      fuente: 'Contenido de las clases 2 a 9 (Dr. Giménez): farmacocinética, farmacodinámica, farmacogenética, RAM, SNA, adrenérgicos, AINES, opioides y corticoides',
+      fuente: 'Contenido de las clases 1.2 a 9 (Dr. Giménez): formas farmacéuticas, farmacocinética, farmacodinámica, farmacogenética, RAM, SNA, adrenérgicos, AINES, opioides y corticoides',
       casos: [
+        ['', 'Fármaco + auxiliares, excipientes o vehículo + proceso dan como resultado:', 'c) Una forma farmacéutica determinada', 'c', 'La forma farmacéutica es la conformación final del fármaco para lograr su estabilidad durante la vida útil (Clase 1.2).',
+         ['a) Un principio activo', 'b) Un excipiente', 'c) Una forma farmacéutica determinada', 'd) Un placebo']],
+        ['', 'La gragea entérica libera el principio activo en:', 'b) El duodeno', 'b', 'Su capa especial, generalmente un polímero, evita la liberación en el estómago (Clase 1.2).',
+         ['a) La boca', 'b) El duodeno', 'c) El estómago', 'd) El colon']],
+        ['', 'La forma líquida de aplicación externa que se usa sin fricción es:', 'a) La loción', 'a', 'El linimento se aplica con fricción (Clase 1.2).',
+         ['a) La loción', 'b) El linimento', 'c) El elixir', 'd) El jarabe']],
         ['',
          'Un fármaco se administra por vía oral: se ingieren 100 mg y llegan 70 mg sin cambios a la circulación sistémica. ¿Cuál es la biodisponibilidad?',
          'b) 70% (0,7)', 'b',
