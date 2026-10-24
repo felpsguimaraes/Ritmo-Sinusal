@@ -33,7 +33,7 @@
 
 **Anuladas — 2024/1:** 7, 17, 43, 50 e 83.
 
-**Divergência adicional — 2024/1:** questões 60 e 97 possuem 4 alternativas cadastradas, mas a auditoria lexical das alternativas encontrou 0% de sobreposição no texto extraído do trecho correspondente do PDF. A correção automática foi bloqueada nesses dois itens. Assim, das 162 com quatro letras A–D recuperadas, **160** passam também pelo teste textual conservador das alternativas. Ainda é necessária a revisão visual e clínica das 160.
+**Revisão complementar — 2024/1, questões 60 e 97:** a auditoria lexical inicial não reconheceu alternativas de poucos caracteres (como 31%, 97%, L2 e T10). A inspeção do texto integral do PDF corrigiu esse falso alerta: ambas as questões exibem no PDF as mesmas quatro alternativas A–D presentes no banco. Portanto, permanecem **162** questões com quatro alternativas recuperadas, das quais 2 receberam conferência textual manual complementar. Essa etapa não equivale à verificação visual das imagens ou à revisão clínica de todos os itens.
 
 ## Comportamento do treino
 
