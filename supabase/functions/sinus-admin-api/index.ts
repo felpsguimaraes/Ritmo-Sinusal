@@ -2,7 +2,7 @@
 const base = Deno.env.get('SUPABASE_URL');
 const secret = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 const origins = new Set(['https://meusinus.pages.dev']);
-const permissions = {owner:['users','roles','plans','settings','audit','metrics','limits','messages'],support:['users','metrics','messages'],content:['settings','metrics','messages'],finance:['plans','metrics','limits']};
+const permissions = {owner:['users','roles','plans','settings','audit','metrics','limits','messages','finance'],support:['users','metrics','messages'],content:['settings','metrics','messages'],finance:['plans','metrics','limits','finance']};
 class ApiError extends Error { constructor(status,message){super(message);this.status=status;} }
 async function rest(path,opts={}) {
  const r=await fetch(base+path,{...opts,headers:{apikey:secret,Authorization:'Bearer '+secret,'Content-Type':'application/json',...opts.headers}});
@@ -139,6 +139,13 @@ Deno.serve(async req=>{
    await audit(actor.id,'message_withdrawn',b.message_id);await write('sinus_messages',{withdrawn_at:new Date().toISOString()},'PATCH','id=eq.'+b.message_id);return reply({ok:true});
   }
 
+  if(b.action==='finance'||b.action==='user_summary'){
+   if(b.action==='finance')allow('finance');else allow('users');
+   const year=b.year===undefined?Number(new Intl.DateTimeFormat('en',{year:'numeric',timeZone:'America/Sao_Paulo'}).format(new Date())):b.year;
+   if(!Number.isInteger(year)||year<2020||year>2100)throw new ApiError(400,'Ano inválido.');
+   const d=await rpc('sinus_finance_summary',{p_year:year});
+   return reply(permissions[role]?.includes('finance')?d:{subscribers:d.subscribers,trials:d.trials,manual_access:d.manual_access});
+  }
   if(b.action==='users'){
    allow('users'); const page=Math.max(1,Math.min(10000,Number(b.page)||1));
    const users=await rest('/auth/v1/admin/users?page='+page+'&per_page=50');
