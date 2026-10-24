@@ -299,6 +299,11 @@
   var RE_PRATICA = /l[aá]mina|macrosc|h[ií]gado|coraz[oó]n|pulm[oó]n|ri[ñn][oó]n|est[oó]mago|bazo|cerebro|intestino|ves[ií]cula|pr[aá]ctic/i;
   function classificar(m, i) {
     var img = /^image\//.test(i.mime || ''), t = i.t || '', temPratica = !!(m.pratica && m.pratica.length);
+    /* tipos vindos da pasta da turma no Drive: a pasta já diz o que é cada arquivo */
+    if (i.k === 'pratica-aula') return { cat: 'pratica', mode: 'practice', sec: 'pratica', kind: tipoArq(i) };
+    if (i.k === 'lamina') return { cat: 'pratica', mode: 'practice', sec: 'laminas', kind: img ? 'Imagem da prática' : 'Prática' };
+    if (i.k === 'foto') return { cat: 'complementares', mode: 'theory', sec: 'fotos', kind: 'Foto da aula' };
+    if (i.k === 'slide' && /\bP[12]\b/.test(i.o || '')) return { cat: 'slides', mode: 'theory', sec: 'slides', kind: tipoArq(i) };
     if (i.k === 'pratica') return { cat: 'pratica', mode: 'practice', sec: /macrosc/i.test(t) ? 'macro' : 'laminas', kind: img ? 'Imagem' : 'Prática' };
     if (i.k === 'prova' || /prova|examen|parcial|evaluaci[oó]n/i.test(t)) return { cat: 'provas', mode: RE_PRATICA.test(t) ? 'practice' : 'theory', sec: 'provas', kind: img ? 'Imagem' : tipoArq(i) };
     if (temPratica && RE_PRATICA.test(t)) {

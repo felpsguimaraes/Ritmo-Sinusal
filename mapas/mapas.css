@@ -294,3 +294,10 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .board-celdas td[data-st="ok"] textarea.cell{border-color:var(--ok);background:var(--ok-soft)}
 .board-celdas td[data-st="part"] textarea.cell{border-color:var(--warn);background:var(--warn-soft)}
 .board-celdas td[data-st="miss"] textarea.cell{border-color:var(--bad);background:var(--bad-soft)}
+
+/* ---------- botão de som ---------- */
+.btn.sfx{display:inline-flex;align-items:center;gap:6px}
+.btn.sfx .x{display:none}
+.btn.sfx[aria-pressed="false"] .w1,.btn.sfx[aria-pressed="false"] .w2{display:none}
+.btn.sfx[aria-pressed="false"] .x{display:inline}
+.btn.sfx[aria-pressed="false"]{color:var(--muted)}

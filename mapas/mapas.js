@@ -10,9 +10,9 @@
   var LANG = 'pt';
   try { var l = localStorage.getItem('sinus_idioma'); if (l === 'es' || l === 'en' || l === 'pt') LANG = l; } catch (e) {}
   var TT = {
-    pt: { app: 'Mapas guiados', sub: 'A estrutura já está montada. Complete os campos e ligue os assuntos; use Verificar para comparar com o gabarito.', all: 'Todos os mapas', check: 'Verificar', reveal: 'Mostrar gabarito', hide: 'Ocultar gabarito', clear: 'Limpar', clear2: 'Confirmar limpeza', empty: 'Vazio', filled: 'Preenchido', ok: 'Correto', part: 'Parcial', miss: 'Revisar', blank: 'Em branco', toReview: 'Para revisar', gab: 'Gabarito', you: 'Você: ', waiting: 'O gabarito deste mapa aparece aqui depois de Verificar.', nothing: 'Nada para revisar por enquanto.', fields: 'campos', filledN: 'preenchidos', okN: 'corretos', partN: 'parciais', missN: 'para revisar', blankN: 'em branco', map: 'Mapa mental', flow: 'Fluxograma', table: 'Tabela', source: 'Fonte', prev: '← Anterior', next: 'Próximo →', drag: 'No celular, arraste o mapa para os lados.', ph: 'Sua resposta', phCell: 'Complete', semester: 'º semestre', subjects: 'Matérias', open: 'Abrir', of: 'de', cases: 'Casos clínicos', exam: 'Nível prova', guided: 'Guiado', memory: 'De memória', memIntro: 'Sem pistas e sem estrutura: escreva o que lembra de cada ramo. A correção procura os conceitos-chave no seu texto.', memPh: 'Escreva de memória…', memWait: 'Escreva de memória e use Verificar para ver quais conceitos você lembrou.', concepts: 'conceitos', recalled: 'lembrados', missed: 'Faltou', yourText: 'Seu texto', why: 'Por quê', caseW: 'Caso', typeAns: 'Escreva sua resposta', clsWord: 'Aula', slWord: 'slides', slSeq: 'ordem da aula', guide: 'Guia por slides', guideSub: 'Qual mapa fazer em cada slide da aula', hiddenName: 'Células ocultas', orderName: 'Ordenar passos', level: 'Nível', l1: 'Guiado', l1d: 'Estrutura pronta e pistas', l2: 'Desafío', l2d: 'Sem pistas: de memória, células ocultas e ordenar', l3: 'Prova', l3d: 'Casos clínicos e simulados com cronômetro', ordHint: 'Coloque os passos na ordem certa com as setas e use Verificar.', ordOk: 'passos na posição certa', ordRight: 'Ordem correta', timerStart: 'Iniciar cronômetro', timerStop: 'Parar cronômetro', hiddenCell: 'Escreva o que vai nesta célula', noDes: 'Sem versão Desafío', soon: 'Passos', score: 'Nota' },
-    es: { app: 'Mapas guiados', sub: 'La estructura ya está armada. Completá los campos y conectá los temas; usá Verificar para comparar con la respuesta.', all: 'Todos los mapas', check: 'Verificar', reveal: 'Mostrar respuestas', hide: 'Ocultar respuestas', clear: 'Limpiar', clear2: 'Confirmar limpieza', empty: 'Vacío', filled: 'Completado', ok: 'Correcto', part: 'Parcial', miss: 'Revisar', blank: 'En blanco', toReview: 'Para revisar', gab: 'Respuesta', you: 'Vos: ', waiting: 'Las respuestas de este mapa aparecen acá después de Verificar.', nothing: 'Nada para revisar por ahora.', fields: 'campos', filledN: 'completados', okN: 'correctos', partN: 'parciales', missN: 'para revisar', blankN: 'en blanco', map: 'Mapa mental', flow: 'Flujograma', table: 'Tabla', source: 'Fuente', prev: '← Anterior', next: 'Siguiente →', drag: 'En el celular, arrastrá el mapa hacia los costados.', ph: 'Tu respuesta', phCell: 'Completá', semester: 'º semestre', subjects: 'Materias', open: 'Abrir', of: 'de', cases: 'Casos clínicos', exam: 'Nivel examen', guided: 'Guiado', memory: 'De memoria', memIntro: 'Sin pistas y sin estructura: escribí lo que recordás de cada rama. La corrección busca los conceptos clave en tu texto.', memPh: 'Escribí de memoria…', memWait: 'Escribí de memoria y usá Verificar para ver qué conceptos recordaste.', concepts: 'conceptos', recalled: 'recordados', missed: 'Faltó', yourText: 'Tu texto', why: 'Por qué', caseW: 'Caso', typeAns: 'Escribí tu respuesta', clsWord: 'Clase', slWord: 'slides', slSeq: 'orden de la clase', guide: 'Guía por slides', guideSub: 'Qué mapa hacer con cada slide de la clase', hiddenName: 'Celdas ocultas', orderName: 'Ordenar pasos', level: 'Nivel', l1: 'Guiado', l1d: 'Estructura lista y pistas', l2: 'Desafío', l2d: 'Sin pistas: de memoria, celdas ocultas y ordenar', l3: 'Prueba', l3d: 'Casos clínicos y simulacros con cronómetro', ordHint: 'Poné los pasos en el orden correcto con las flechas y usá Verificar.', ordOk: 'pasos en la posición correcta', ordRight: 'Orden correcto', timerStart: 'Iniciar cronómetro', timerStop: 'Parar cronómetro', hiddenCell: 'Escribí lo que va en esta celda', noDes: 'Sin versión Desafío', soon: 'Pasos', score: 'Nota' },
-    en: { app: 'Guided maps', sub: 'The structure is already built. Fill in the blanks and connect the topics; use Check to compare with the answers.', all: 'All maps', check: 'Check', reveal: 'Show answers', hide: 'Hide answers', clear: 'Clear', clear2: 'Confirm clear', empty: 'Empty', filled: 'Filled', ok: 'Correct', part: 'Partial', miss: 'Review', blank: 'Blank', toReview: 'To review', gab: 'Answer', you: 'You: ', waiting: 'The answers for this map appear here after Check.', nothing: 'Nothing to review for now.', fields: 'fields', filledN: 'filled', okN: 'correct', partN: 'partial', missN: 'to review', blankN: 'blank', map: 'Mind map', flow: 'Flowchart', table: 'Table', source: 'Source', prev: '← Previous', next: 'Next →', drag: 'On a phone, drag the map sideways.', ph: 'Your answer', phCell: 'Fill in', semester: 'th semester', subjects: 'Subjects', open: 'Open', of: 'of', cases: 'Clinical cases', exam: 'Exam level', guided: 'Guided', memory: 'From memory', memIntro: 'No hints and no structure: write what you remember for each branch. Checking looks for the key concepts in your text.', memPh: 'Write from memory…', memWait: 'Write from memory and press Check to see which concepts you recalled.', concepts: 'concepts', recalled: 'recalled', missed: 'Missed', yourText: 'Your text', why: 'Why', caseW: 'Case', typeAns: 'Type your answer', clsWord: 'Class', slWord: 'slides', slSeq: 'class order', guide: 'Slide guide', guideSub: 'Which map to build for each slide', hiddenName: 'Hidden cells', orderName: 'Order the steps', level: 'Level', l1: 'Guided', l1d: 'Structure ready, with hints', l2: 'Challenge', l2d: 'No hints: from memory, hidden cells and ordering', l3: 'Exam', l3d: 'Clinical cases and timed mock exams', ordHint: 'Put the steps in the right order with the arrows, then press Check.', ordOk: 'steps in the right position', ordRight: 'Correct order', timerStart: 'Start timer', timerStop: 'Stop timer', hiddenCell: 'Write what goes in this cell', noDes: 'No Challenge version', soon: 'Steps', score: 'Score' }
+    pt: { app: 'Mapas guiados', sub: 'A estrutura já está montada. Complete os campos e ligue os assuntos; use Verificar para comparar com o gabarito.', all: 'Todos os mapas', check: 'Verificar', reveal: 'Mostrar gabarito', hide: 'Ocultar gabarito', clear: 'Limpar', clear2: 'Confirmar limpeza', empty: 'Vazio', filled: 'Preenchido', ok: 'Correto', part: 'Parcial', miss: 'Revisar', blank: 'Em branco', toReview: 'Para revisar', gab: 'Gabarito', you: 'Você: ', waiting: 'O gabarito deste mapa aparece aqui depois de Verificar.', nothing: 'Nada para revisar por enquanto.', fields: 'campos', filledN: 'preenchidos', okN: 'corretos', partN: 'parciais', missN: 'para revisar', blankN: 'em branco', map: 'Mapa mental', flow: 'Fluxograma', table: 'Tabela', source: 'Fonte', prev: '← Anterior', next: 'Próximo →', drag: 'No celular, arraste o mapa para os lados.', ph: 'Sua resposta', phCell: 'Complete', semester: 'º semestre', subjects: 'Matérias', open: 'Abrir', of: 'de', cases: 'Casos clínicos', exam: 'Nível prova', guided: 'Guiado', memory: 'De memória', memIntro: 'Sem pistas e sem estrutura: escreva o que lembra de cada ramo. A correção procura os conceitos-chave no seu texto.', memPh: 'Escreva de memória…', memWait: 'Escreva de memória e use Verificar para ver quais conceitos você lembrou.', concepts: 'conceitos', recalled: 'lembrados', missed: 'Faltou', yourText: 'Seu texto', why: 'Por quê', caseW: 'Caso', typeAns: 'Escreva sua resposta', sound: 'Som', soundOn: 'Som ligado: acerto, quase e erro tocam um aviso', soundOff: 'Som desligado', clsWord: 'Aula', slWord: 'slides', slSeq: 'ordem da aula', guide: 'Guia por slides', guideSub: 'Qual mapa fazer em cada slide da aula', hiddenName: 'Células ocultas', orderName: 'Ordenar passos', level: 'Nível', l1: 'Guiado', l1d: 'Estrutura pronta e pistas', l2: 'Desafío', l2d: 'Sem pistas: de memória, células ocultas e ordenar', l3: 'Prova', l3d: 'Casos clínicos e simulados com cronômetro', ordHint: 'Coloque os passos na ordem certa com as setas e use Verificar.', ordOk: 'passos na posição certa', ordRight: 'Ordem correta', timerStart: 'Iniciar cronômetro', timerStop: 'Parar cronômetro', hiddenCell: 'Escreva o que vai nesta célula', noDes: 'Sem versão Desafío', soon: 'Passos', score: 'Nota' },
+    es: { app: 'Mapas guiados', sub: 'La estructura ya está armada. Completá los campos y conectá los temas; usá Verificar para comparar con la respuesta.', all: 'Todos los mapas', check: 'Verificar', reveal: 'Mostrar respuestas', hide: 'Ocultar respuestas', clear: 'Limpiar', clear2: 'Confirmar limpieza', empty: 'Vacío', filled: 'Completado', ok: 'Correcto', part: 'Parcial', miss: 'Revisar', blank: 'En blanco', toReview: 'Para revisar', gab: 'Respuesta', you: 'Vos: ', waiting: 'Las respuestas de este mapa aparecen acá después de Verificar.', nothing: 'Nada para revisar por ahora.', fields: 'campos', filledN: 'completados', okN: 'correctos', partN: 'parciales', missN: 'para revisar', blankN: 'en blanco', map: 'Mapa mental', flow: 'Flujograma', table: 'Tabla', source: 'Fuente', prev: '← Anterior', next: 'Siguiente →', drag: 'En el celular, arrastrá el mapa hacia los costados.', ph: 'Tu respuesta', phCell: 'Completá', semester: 'º semestre', subjects: 'Materias', open: 'Abrir', of: 'de', cases: 'Casos clínicos', exam: 'Nivel examen', guided: 'Guiado', memory: 'De memoria', memIntro: 'Sin pistas y sin estructura: escribí lo que recordás de cada rama. La corrección busca los conceptos clave en tu texto.', memPh: 'Escribí de memoria…', memWait: 'Escribí de memoria y usá Verificar para ver qué conceptos recordaste.', concepts: 'conceptos', recalled: 'recordados', missed: 'Faltó', yourText: 'Tu texto', why: 'Por qué', caseW: 'Caso', typeAns: 'Escribí tu respuesta', sound: 'Sonido', soundOn: 'Sonido activado: acierto, casi y error suenan', soundOff: 'Sonido desactivado', clsWord: 'Clase', slWord: 'slides', slSeq: 'orden de la clase', guide: 'Guía por slides', guideSub: 'Qué mapa hacer con cada slide de la clase', hiddenName: 'Celdas ocultas', orderName: 'Ordenar pasos', level: 'Nivel', l1: 'Guiado', l1d: 'Estructura lista y pistas', l2: 'Desafío', l2d: 'Sin pistas: de memoria, celdas ocultas y ordenar', l3: 'Prueba', l3d: 'Casos clínicos y simulacros con cronómetro', ordHint: 'Poné los pasos en el orden correcto con las flechas y usá Verificar.', ordOk: 'pasos en la posición correcta', ordRight: 'Orden correcto', timerStart: 'Iniciar cronómetro', timerStop: 'Parar cronómetro', hiddenCell: 'Escribí lo que va en esta celda', noDes: 'Sin versión Desafío', soon: 'Pasos', score: 'Nota' },
+    en: { app: 'Guided maps', sub: 'The structure is already built. Fill in the blanks and connect the topics; use Check to compare with the answers.', all: 'All maps', check: 'Check', reveal: 'Show answers', hide: 'Hide answers', clear: 'Clear', clear2: 'Confirm clear', empty: 'Empty', filled: 'Filled', ok: 'Correct', part: 'Partial', miss: 'Review', blank: 'Blank', toReview: 'To review', gab: 'Answer', you: 'You: ', waiting: 'The answers for this map appear here after Check.', nothing: 'Nothing to review for now.', fields: 'fields', filledN: 'filled', okN: 'correct', partN: 'partial', missN: 'to review', blankN: 'blank', map: 'Mind map', flow: 'Flowchart', table: 'Table', source: 'Source', prev: '← Previous', next: 'Next →', drag: 'On a phone, drag the map sideways.', ph: 'Your answer', phCell: 'Fill in', semester: 'th semester', subjects: 'Subjects', open: 'Open', of: 'of', cases: 'Clinical cases', exam: 'Exam level', guided: 'Guided', memory: 'From memory', memIntro: 'No hints and no structure: write what you remember for each branch. Checking looks for the key concepts in your text.', memPh: 'Write from memory…', memWait: 'Write from memory and press Check to see which concepts you recalled.', concepts: 'concepts', recalled: 'recalled', missed: 'Missed', yourText: 'Your text', why: 'Why', caseW: 'Case', typeAns: 'Type your answer', sound: 'Sound', soundOn: 'Sound on: right, almost and wrong play a cue', soundOff: 'Sound off', clsWord: 'Class', slWord: 'slides', slSeq: 'class order', guide: 'Slide guide', guideSub: 'Which map to build for each slide', hiddenName: 'Hidden cells', orderName: 'Order the steps', level: 'Level', l1: 'Guided', l1d: 'Structure ready, with hints', l2: 'Challenge', l2d: 'No hints: from memory, hidden cells and ordering', l3: 'Exam', l3d: 'Clinical cases and timed mock exams', ordHint: 'Put the steps in the right order with the arrows, then press Check.', ordOk: 'steps in the right position', ordRight: 'Correct order', timerStart: 'Start timer', timerStop: 'Stop timer', hiddenCell: 'Write what goes in this cell', noDes: 'No Challenge version', soon: 'Steps', score: 'Score' }
   };
   var T = TT[LANG];
 
@@ -69,6 +69,56 @@
     m.sl.forEach(function (e) { if (!by[e[0]]) { by[e[0]] = []; order.push(e[0]); } if (e[1]) by[e[0]].push(e[1] === e[2] ? '' + e[1] : e[1] + '–' + e[2]); });
     return order.map(function (c) { return (short ? 'C' + c : T.clsWord + ' ' + c) + (by[c].length ? ' · ' + T.slWord + ' ' + by[c].join(', ') : ' · ' + T.slSeq); }).join('  +  ');
   }
+  /* ---------- sons: acerto, quase e erro (sintetizados, sem arquivos) ---------- */
+  var SFX = (function () {
+    var ctx = null, on = true;
+    try { on = localStorage.getItem('sinus_mapas_som') !== '0'; } catch (e) {}
+    function ac() {
+      if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (e) { return null; } }
+      if (ctx.state === 'suspended' && ctx.resume) ctx.resume();
+      return ctx;
+    }
+    function tone(c, f, t0, dur, type, vol, f2) {
+      var o = c.createOscillator(), g = c.createGain(), lp = c.createBiquadFilter();
+      o.type = type; o.frequency.setValueAtTime(f, t0);
+      if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+      lp.type = 'lowpass'; lp.frequency.value = 2600;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(lp); lp.connect(g); g.connect(c.destination);
+      o.start(t0); o.stop(t0 + dur + 0.05);
+    }
+    function play(kind) {
+      if (!on || !kind) return;
+      var c = ac(); if (!c) return;
+      var t = c.currentTime + 0.02;
+      if (kind === 'ok') {            /* duas notas subindo (mi → si) com brilho leve */
+        tone(c, 659.25, t, 0.24, 'sine', 0.15);
+        tone(c, 987.77, t + 0.12, 0.42, 'sine', 0.13);
+        tone(c, 1975.5, t + 0.12, 0.30, 'sine', 0.025);
+      } else if (kind === 'part') {   /* duas notas próximas, sem resolver: "quase" */
+        tone(c, 523.25, t, 0.22, 'triangle', 0.11);
+        tone(c, 587.33, t + 0.16, 0.32, 'triangle', 0.10);
+      } else {                        /* descendo, grave e curto, sem ser agressivo */
+        tone(c, 311.13, t, 0.22, 'triangle', 0.12);
+        tone(c, 233.08, t + 0.16, 0.36, 'triangle', 0.11, 220);
+      }
+    }
+    function verdict(list) {
+      var n = 0, ok = 0, part = 0;
+      list.forEach(function (st) { if (st === 'empty' || !st) return; n++; if (st === 'ok') ok++; else if (st === 'part') part++; });
+      if (!n) return null;
+      if (ok === n && n === list.length) return 'ok';
+      return ok + part > 0 ? 'part' : 'miss';
+    }
+    return {
+      play: play, verdict: verdict,
+      isOn: function () { return on; },
+      set: function (v) { on = !!v; try { localStorage.setItem('sinus_mapas_som', on ? '1' : '0'); } catch (e) {} if (on) play('ok'); }
+    };
+  })();
+  var SPEAKER = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="w1" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="w2" d="M18.5 5.5a9 9 0 0 1 0 13"/><path class="x" d="M16 9l5 6M21 9l-5 6"/></svg>';
   function hasDes(mod) { return mod.tipo === 'mapa' || mod.tipo === 'tabla' || (mod.tipo === 'fluxo' && mod._linear); }
   /* modelo em uso: guiado | mem | celdas | orden | casos */
   function modelOf(mod) {
@@ -206,6 +256,9 @@
     var bClr = el('button', { type: 'button', class: 'btn ghost', id: 'bClr' }, esc(T.clear));
     var act = el('div', { class: 'actions' });
     act.appendChild(bCheck); act.appendChild(bRev); act.appendChild(bClr);
+    var bSom = el('button', { type: 'button', class: 'btn ghost sfx', id: 'bSom', 'aria-pressed': SFX.isOn() ? 'true' : 'false', title: SFX.isOn() ? T.soundOn : T.soundOff }, SPEAKER + '<span>' + esc(T.sound) + '</span>');
+    bSom.addEventListener('click', function () { SFX.set(!SFX.isOn()); bSom.setAttribute('aria-pressed', SFX.isOn() ? 'true' : 'false'); bSom.title = SFX.isOn() ? T.soundOn : T.soundOff; });
+    act.appendChild(bSom);
     var legend = el('ul', { class: 'legend', 'aria-label': 'Legenda' });
     [['empty', T.empty], ['filled', T.filled], ['ok', '✓ ' + T.ok], ['part', '~ ' + T.part], ['miss', '× ' + T.miss]].forEach(function (p) {
       legend.appendChild(el('li', null, '<span class="sw ' + p[0] + '"></span>' + esc(p[1])));
@@ -263,13 +316,25 @@
     if (model === 'mem') bindMem(mod); else if (model === 'orden') { /* botões ligados em buildOrden */ } else { bindFields(mod); mod._cur.forEach(function (it) { paint(it.id); }); }
     refresh(mod);
     bCheck.addEventListener('click', function () {
-      if (memMode) { mod._tree.forEach(function (b, bi) { S.mvb[mod.id + '|' + bi] = true; }); save(); refresh(mod); return; }
-      if (model === 'orden') { S.ov[mod.id] = true; save(); if (mod._renderOrden) mod._renderOrden(); refresh(mod); return; }
+      if (memMode) {
+        var mst = [];
+        mod._tree.forEach(function (b, bi) { S.mvb[mod.id + '|' + bi] = true; memCover(mod, bi).forEach(function (c) { mst.push(c.st); }); });
+        save(); refresh(mod);
+        SFX.play(mst.every(function (x) { return x === 'empty'; }) ? null : SFX.verdict(mst.map(function (x) { return x === 'empty' ? 'miss' : x; })));
+        return;
+      }
+      if (model === 'orden') {
+        S.ov[mod.id] = true; save(); if (mod._renderOrden) mod._renderOrden(); refresh(mod);
+        var oo = S.o[mod.id] || [];
+        SFX.play(SFX.verdict(oo.map(function (v, i) { return v === i ? 'ok' : 'miss'; })));
+        return;
+      }
       mod._cur.forEach(function (it) { S.c[it.id] = Core.evaluate(it, S.a[it.id]); });
       S.v[mod.id] = true; save();
       if (mod.cronometro) stopTimer(mod);
       mod._cur.forEach(function (it) { paint(it.id); });
       refresh(mod);
+      SFX.play(SFX.verdict(mod._cur.map(function (it) { return S.c[it.id]; })));
     });
     bRev.addEventListener('click', function () { S.r[mod.id] = !S.r[mod.id]; save(); refresh(mod); });
     var clrTimer = null;
