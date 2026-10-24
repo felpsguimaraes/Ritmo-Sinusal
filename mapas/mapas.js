@@ -699,8 +699,24 @@
   }
 
   /* ---------- CASOS CLÍNICOS ---------- */
+  /* figura do módulo de casos (ex.: o familiograma do exercício): fica ao lado das perguntas e abre no zoom */
+  function caseFigure(f) {
+    var fig = el('figure', { class: 'casefig' });
+    var b = el('button', { type: 'button', class: 'casefig-btn', 'aria-label': T.zoom + (f.alt ? ': ' + f.alt : '') });
+    b.innerHTML = '<img src="' + esc(f.src) + '" alt="' + esc(f.alt || '') + '" decoding="async"' + (f.w ? ' width="' + f.w + '" height="' + f.h + '"' : '') + '>' +
+      '<span class="lamzoom" aria-hidden="true">' + ZOOM_SVG + '<span>' + esc(T.zoom) + '</span></span>';
+    b.addEventListener('click', function () { openLightbox([{ src: f.src, cap: f.pie || f.alt || '' }], 0); });
+    fig.appendChild(b);
+    if (f.pie) fig.appendChild(el('figcaption', null, esc(f.pie)));
+    return fig;
+  }
   function buildCasos(mod, board) {
-    var box = el('div', { class: 'cases' });
+    var box = el('div', { class: 'cases' + (mod.figura ? ' withfig' : '') }), list = box;
+    if (mod.figura) {
+      box.appendChild(caseFigure(mod.figura));
+      list = el('div', { class: 'caselist' });
+      box.appendChild(list);
+    }
     mod._tree.forEach(function (it, i) {
       var a = el('article', { class: 'case', 'data-hold': '1' });
       var h = '<header><b>' + esc(T.caseW) + ' ' + (i + 1) + '</b><span class="ico" aria-hidden="true"></span></header>' +
@@ -714,7 +730,7 @@
         h += '<textarea id="in-' + it.id + '" data-f="' + it.id + '" rows="3" spellcheck="false" autocomplete="off" placeholder="' + esc(T.typeAns) + '"></textarea>';
       }
       a.innerHTML = h;
-      box.appendChild(a);
+      list.appendChild(a);
     });
     board.appendChild(box);
   }
@@ -1295,7 +1311,7 @@
       img.classList.remove('z');
       img.src = imgURL(im, 'w2400');
       img.alt = T.photo + ' ' + (i + 1);
-      box.querySelector('.lbcount').textContent = T.photo + ' ' + (i + 1) + ' ' + T.of + ' ' + imgs.length;
+      box.querySelector('.lbcount').textContent = im.cap || (T.photo + ' ' + (i + 1) + ' ' + T.of + ' ' + imgs.length);
       box.querySelector('.lbkind').textContent = KIND[im.k] || '';
       if (im.drive) { dl.href = driveView(im.drive); dl.textContent = T.openDrive; dl.hidden = false; } else { dl.hidden = true; dl.removeAttribute('href'); }
       if (onChange) onChange(i);
