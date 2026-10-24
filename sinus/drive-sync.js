@@ -53,7 +53,7 @@ function category(x){
  var str=norm((x.s||'')+' '+(x.sec||'')+' '+(x.t||''));
  if(/^video\//.test(x.m||''))return ['videos',/pratica|lamina|macroscopia/.test(str)?'practice':'theory','videos'];
  if(/^audio\//.test(x.m||''))return ['audios','theory','audios'];
- if(/pratica|lamina|laminario|macroscopia|practica|histologia ii pratica/.test(norm((x.s||'')+' '+(x.sec||''))))return ['pratica','practice',/macroscopia/.test(str)?'macro':'laminas'];
+ if(/pratica|lamina|laminario|macroscopia|practica|histologia ii pratica/.test(norm((x.s||'')+' '+(x.sec||''))))return ['pratica','practice',(/macroscopia/.test(str)||/^image\//.test(x.m||''))?'laminas':'pratica'];
  if(/prova|parcial|final|simulad|examen/.test(str))return ['provas','theory','provas'];
  if(/slide|aula|teorica|teoria|clase|presentacion/.test(str))return ['slides','theory','slides'];
  if(/^image\//.test(x.m||''))return ['complementares','theory','fotos'];
