@@ -1,0 +1,284 @@
+[
+  {
+    "key": "home",
+    "name": "Início",
+    "category": "Portal",
+    "essential": true
+  },
+  {
+    "key": "subjects",
+    "name": "Matérias",
+    "category": "Portal",
+    "essential": false
+  },
+  {
+    "key": "study",
+    "name": "Central de estudos",
+    "category": "Portal",
+    "essential": false
+  },
+  {
+    "key": "schedule",
+    "name": "Horários",
+    "category": "Portal",
+    "essential": false
+  },
+  {
+    "key": "agenda",
+    "name": "Agenda e compromissos",
+    "category": "Portal",
+    "essential": false
+  },
+  {
+    "key": "focus",
+    "name": "Cronômetro de foco",
+    "category": "Portal",
+    "essential": false
+  },
+  {
+    "key": "split_screen",
+    "name": "Estudo em tela dividida",
+    "category": "Portal",
+    "essential": false
+  },
+  {
+    "key": "library",
+    "name": "Biblioteca",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "summaries",
+    "name": "Resumos e apostilas",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "slides",
+    "name": "Slides",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "books",
+    "name": "Livros",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "exams",
+    "name": "Provas e PDFs",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "works",
+    "name": "Trabalhos",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "videos",
+    "name": "Vídeos",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "audios",
+    "name": "Áudios",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "practice",
+    "name": "Materiais de prática",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "complementary",
+    "name": "Materiais complementares",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "notebook",
+    "name": "Caderno e anotações",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "transcribe",
+    "name": "Transcrição",
+    "category": "Biblioteca e materiais",
+    "essential": false
+  },
+  {
+    "key": "training",
+    "name": "Treinos",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "questions",
+    "name": "Banco de questões",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "objective",
+    "name": "Questões objetivas",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "subjective",
+    "name": "Questões subjetivas",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "true_false",
+    "name": "Verdadeiro ou falso",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "image_questions",
+    "name": "Questões com imagem",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "citation_questions",
+    "name": "Questões de citação",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "flashcards",
+    "name": "Flashcards",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "simulado",
+    "name": "Simulados",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "daily",
+    "name": "Desafio diário",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "errors",
+    "name": "Revisão de erros",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "reinforce",
+    "name": "Reforço e repetição",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "saved",
+    "name": "Questões salvas",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "atlas",
+    "name": "Atlas 3D",
+    "category": "Ferramentas acadêmicas",
+    "essential": false
+  },
+  {
+    "key": "revalida",
+    "name": "Revalida",
+    "category": "Ferramentas acadêmicas",
+    "essential": false
+  },
+  {
+    "key": "enamed",
+    "name": "Enamed",
+    "category": "Ferramentas acadêmicas",
+    "essential": false
+  },
+  {
+    "key": "clinical",
+    "name": "Habilidades clínicas",
+    "category": "Ferramentas acadêmicas",
+    "essential": false
+  },
+  {
+    "key": "immigration",
+    "name": "Imigração e documentos",
+    "category": "Ferramentas acadêmicas",
+    "essential": false
+  },
+  {
+    "key": "ai",
+    "name": "Assistente de estudo com IA",
+    "category": "Ferramentas acadêmicas",
+    "essential": false
+  },
+  {
+    "key": "stats",
+    "name": "Estatísticas",
+    "category": "Acompanhamento e comunidade",
+    "essential": false
+  },
+  {
+    "key": "weak",
+    "name": "Pontos fracos",
+    "category": "Acompanhamento e comunidade",
+    "essential": false
+  },
+  {
+    "key": "dna",
+    "name": "Perfil de aprendizagem",
+    "category": "Acompanhamento e comunidade",
+    "essential": false
+  },
+  {
+    "key": "mentoring",
+    "name": "Mentoria",
+    "category": "Acompanhamento e comunidade",
+    "essential": false
+  },
+  {
+    "key": "study-together",
+    "name": "Estudar junto",
+    "category": "Acompanhamento e comunidade",
+    "essential": false
+  },
+  {
+    "key": "ranking",
+    "name": "Comunidade e ranking",
+    "category": "Acompanhamento e comunidade",
+    "essential": false
+  },
+  {
+    "key": "messages",
+    "name": "Mensagens do SINUS",
+    "category": "Conta",
+    "essential": true
+  },
+  {
+    "key": "profile",
+    "name": "Meu perfil",
+    "category": "Conta",
+    "essential": true
+  },
+  {
+    "key": "plans",
+    "name": "Planos e assinatura",
+    "category": "Conta",
+    "essential": true
+  }
+]
