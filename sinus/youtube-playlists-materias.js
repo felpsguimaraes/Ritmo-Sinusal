@@ -45,7 +45,7 @@ function render(subject,mode,hasNative){
  box.prepend(section);
  // Mantém os recursos antigos acessíveis sem um player vazio dominando a página.
  if(!hasNative){
-  const native=box.querySelector(':scope > .resourceLayout');
+  const native=box.querySelector(':scope > .resourceLayout')||box.querySelector('.sxMediaSection[aria-label="Vídeos"] > .resourceLayout');
   if(native){
    const details=D.createElement('details');details.className='sxSPOther';
    const summary=D.createElement('summary');summary.textContent='Outros vídeos e arquivos da matéria';
