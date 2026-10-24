@@ -1,52 +1,38 @@
-/* SINUS · videoteca YouTube dentro da Biblioteca. */
-#sxYoutubeMount{margin-top:24px}
-.sxYTTop{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}
-.sxYTSource{display:flex;align-items:center;gap:16px;min-width:0}
-.sxYTBrand{height:50px;width:50px;border-radius:15px;background:#e84a4a;color:#fff;display:grid;place-items:center;font-size:22px;flex:none}
-.sxYTTop h2{font-size:24px;line-height:1.2;letter-spacing:-.04em;margin:5px 0}
-.sxYTTop p{font-size:13px;color:var(--muted,#688077);margin:0}
-.sxYTExternal{font-size:13px;color:inherit;border:1px solid var(--border,#dce7e1);border-radius:12px;padding:11px 15px;text-decoration:none;white-space:nowrap;background:var(--card,#fff)}
-.sxYTStats{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 20px}
-.sxYTStats span{font-size:11px;padding:7px 11px;border-radius:999px;background:var(--card,#fff);border:1px solid var(--border,#e0e8e2);color:var(--muted,#617467)}
-.sxYTStats b{color:var(--ink,#164432);font-size:13px}
-.sxYTLayout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(290px,.9fr);gap:20px;align-items:start}
-.sxYTStage,.sxYTBrowse{border:1px solid var(--border,#dce7df);border-radius:22px;background:var(--card,#fff);overflow:hidden}
-.sxYTPlayer{width:100%;aspect-ratio:16/9;background:#091310}
-.sxYTPlayer iframe{width:100%;height:100%;display:block;border:0}
-.sxYTPlaceholder{display:flex;align-items:center;justify-content:center;flex-direction:column;height:100%;text-align:center;color:#e6f5ec;padding:22px}
-.sxYTPlaceholder span{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:#fff2;color:#fff;font-size:23px}
-.sxYTPlaceholder h3{font-size:17px;margin:16px 0 7px}
-.sxYTPlaceholder p{max-width:350px;font-size:13px;color:#cce0d4;line-height:1.6}
-.sxYTPlaceholder a{color:#baf6d5;font-size:12px}
-.sxYTNow{padding:21px;display:flex;align-items:start;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.sxYTNow small{font-size:10px;letter-spacing:.12em;font-weight:700;color:#318664}
-.sxYTNow h3{font-size:18px;margin:7px 0;letter-spacing:-.02em;max-width:520px;line-height:1.35}
-.sxYTNow p{font-size:12px;color:var(--muted,#688077);margin:0}
-.sxYTActions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.sxYTActions .btn{text-decoration:none;white-space:nowrap}
-.sxYTNote{margin:0 21px 20px;color:var(--muted,#688077);font-size:11px;line-height:1.5}
-.sxYTBrowseTop{padding:19px 18px 10px}
-.sxYTBrowseTop h3{font-size:18px;margin:0 0 15px;letter-spacing:-.03em}
-.sxYTSearch{border:1px solid var(--border,#dfe8df);background:var(--bg,#f5f9f6);border-radius:12px;padding:0 13px;display:flex;align-items:center;gap:9px}
-.sxYTSearch span{font-size:20px;opacity:.7}
-.sxYTSearch input{width:100%;min-width:0;height:40px;border:0;outline:0;background:transparent;color:inherit;font:inherit;font-size:12px}
-.sxYTFilters{padding:0 18px 12px;display:flex;gap:6px;overflow-x:auto}
-.sxYTFilters button{background:var(--bg,#f4f7f4);border:1px solid var(--border,#e2e9e4);border-radius:999px;padding:7px 10px;font:inherit;color:inherit;font-size:11px;cursor:pointer;white-space:nowrap}
-.sxYTFilters button.active{background:#17694c;color:white;border-color:#17694c}
-.sxYTList{max-height:645px;overflow:auto;overscroll-behavior:contain;padding:0 9px 9px}
-.sxYTItem{width:100%;display:flex;gap:11px;text-align:left;padding:9px;border-radius:13px;border:1px solid transparent;background:transparent;cursor:pointer;color:inherit;font:inherit;align-items:center}
-.sxYTItem:hover{background:rgba(41,143,103,.075)}
-.sxYTItem.active{border-color:rgba(31,130,88,.22);background:rgba(41,143,103,.10)}
-.sxYTThumb{width:104px;aspect-ratio:16/9;border-radius:10px;background:#133c2a;position:relative;overflow:hidden;display:block;flex:none}
-.sxYTThumb img{width:100%;height:100%;object-fit:cover;display:block}
-.sxYTThumb span{position:absolute;left:6px;bottom:6px;color:#fff;background:#0009;padding:3px 6px;font-size:10px;border-radius:5px}
-.sxYTItemText{min-width:0}
-.sxYTItemText b{font-size:12px;line-height:1.45;font-weight:680;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
-.sxYTItemText small{display:block;margin-top:6px;color:var(--muted,#688077);font-size:10px}
-.sxYTMore{display:block;width:calc(100% - 36px);margin:8px 18px 18px;background:transparent;border:1px solid var(--border,#dfe8e0);padding:11px;border-radius:12px;color:inherit;font:inherit;font-size:12px;cursor:pointer}
-.sxYTEmpty{padding:19px;font-size:13px;line-height:1.6;color:var(--muted,#688077)}
-.sxYTEmpty button{border:0;background:transparent;text-decoration:underline;color:inherit;cursor:pointer}
-@media(max-width:1000px){.sxYTLayout{grid-template-columns:1fr}.sxYTList{max-height:440px}}
-@media(max-width:600px){.sxYTTop{flex-direction:column;align-items:stretch}.sxYTSource{align-items:start}.sxYTTop h2{font-size:21px}.sxYTExternal{text-align:center}.sxYTLayout{gap:12px}.sxYTNow{padding:15px}.sxYTNote{margin:0 15px 15px}.sxYTBrowseTop{padding:15px 14px 10px}.sxYTFilters{padding:0 14px 10px}.sxYTThumb{width:96px}.sxYTBrand{width:43px;height:43px}}
-html[data-theme="dark"] .sxYTItem.active{background:rgba(45,157,109,.16)}
-html[data-theme="dark"] .sxYTStats b{color:#b3efcb}
+/* SINUS · Vídeos no mesmo catálogo de cards da Biblioteca */
+#sxYoutubeMount{margin-top:0}
+.sxYTLibrary .sxLibSectionHead{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.sxYTCount{font-size:12px;color:var(--muted,#738279)}
+.sxYTToolbar{margin-top:18px}
+.sxYTGrid .sxYTCard .sxLibCover{background:#dce7df}
+.sxYTGrid .sxLibOpenCover>img{object-position:center;object-fit:cover}
+.sxYTGrid .sxLibOpenCover .sxYTPlay{position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:rgba(18,35,27,.72);border:1px solid #ffffff9c;color:white;display:grid;place-items:center;font-size:15px;padding-left:3px;box-shadow:0 4px 14px #07180a26;transition:transform .2s}
+.sxYTGrid .sxLibOpenCover:hover .sxYTPlay{transform:translate(-50%,-50%) scale(1.1)}
+.sxYTGrid .sxYTCard .sxLibTitle{width:100%}
+.sxYTGrid .sxYTCard .sxLibMeta{margin-top:6px}
+.sxYTGrid .sxYTCard .sxLibContext{margin-bottom:2px}
+.sxYTViewer{position:fixed;inset:0;z-index:999999;display:grid;place-items:center;padding:20px}
+.sxYTOverlay{position:absolute;inset:0;background:#08140ed9;backdrop-filter:blur(9px)}
+.sxYTViewerOpen{overflow:hidden}
+.sxYTDialog{position:relative;width:min(980px,100%);max-height:calc(100dvh - 40px);display:flex;flex-direction:column;overflow:hidden;border-radius:22px;background:var(--card,#fff);border:1px solid var(--border,#dce7de);box-shadow:0 24px 90px #0006;color:inherit}
+.sxYTDialogHead{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.sxYTDialogHead small{font-size:11px;font-weight:700;letter-spacing:.08em;color:#41946c;text-transform:uppercase}
+.sxYTDialogHead h2{font-size:19px;line-height:1.35;letter-spacing:-.025em;margin:6px 0 0;max-width:800px}
+.sxYTClose{width:38px;height:38px;border:1px solid var(--border,#dce7de);border-radius:12px;flex:none;display:grid;place-items:center;background:transparent;color:inherit;cursor:pointer;font-size:18px}
+.sxYTClose:hover{background:#278d6818}
+.sxYTFrame{aspect-ratio:16/9;width:100%;background:#07130e}
+.sxYTFrame iframe{height:100%;width:100%;border:0;display:block}
+.sxYTDialogFoot{padding:14px 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted,#6e8374)}
+.sxYTDialogFoot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+html[data-theme="dark"] .sxYTDialog{background:#172b21}
+@media(max-width:640px){
+ .sxYTToolbar,.sxYTToolbar>div{flex-wrap:wrap}
+ .sxYTToolbar>div{width:100%}
+ .sxYTToolbar label{flex:1;min-width:120px}
+ .sxYTToolbar select{min-width:0;width:100%}
+ .sxYTViewer{padding:8px}
+ .sxYTDialog{max-height:calc(100dvh - 16px);border-radius:16px}
+ .sxYTDialogHead{padding:13px 14px}
+ .sxYTDialogHead h2{font-size:15px}
+ .sxYTDialogFoot{padding:12px 14px;flex-wrap:wrap}
+ .sxYTGrid .sxLibOpenCover .sxYTPlay{width:36px;height:36px}
+}
