@@ -33,6 +33,8 @@
 
 **Anuladas — 2024/1:** 7, 17, 43, 50 e 83.
 
+**Divergência adicional — 2024/1:** questões 60 e 97 possuem 4 alternativas cadastradas, mas a auditoria lexical das alternativas encontrou 0% de sobreposição no texto extraído do trecho correspondente do PDF. A correção automática foi bloqueada nesses dois itens. Assim, das 162 com quatro letras A–D recuperadas, **160** passam também pelo teste textual conservador das alternativas. Ainda é necessária a revisão visual e clínica das 160.
+
 ## Comportamento do treino
 
 - O número oficial e a letra do gabarito aparecem após o registro da resposta, apenas para as edições correspondentes.
