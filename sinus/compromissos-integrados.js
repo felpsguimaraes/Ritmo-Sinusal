@@ -7,18 +7,74 @@ function read(){try{return JSON.parse(localStorage.getItem(K+':'+profileKey())||
 function save(a){localStorage.setItem(K+':'+profileKey(),JSON.stringify(a))}
 function current(){const view=D.getElementById('subjectView');if(!view||view.classList.contains('hidden'))return '';return view.querySelector('#subjectHeader h1')?.textContent?.trim()||''}
 function isDate(s){return /^\d{4}-\d{2}-\d{2}$/.test(s)}
-function openForm(subject,chosenDate){const d=new Date(),today=isDate(chosenDate)?chosenDate:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');const c=W.SinusCalendar?.context?.()||{};const list=W.SinusTimetable?.academicOptions?.(c.period,c.cohort)||[];const options=[...new Set([...(W.DB?.subjects?Object.keys(W.DB.subjects):[]),...list.map(x=>x.title),...(subject?[subject]:[])])];const sub=subject||current()||options[0]||'';
- const pick=options.length?'<label class="field"><span>Matéria</span><select id="sinusCompSubject">'+options.map(s=>'<option value="'+esc(s)+'"'+(s===sub?' selected':'')+'>'+esc(s)+'</option>').join('')+'</select></label>':'';
- W.openModal('Novo lembrete',pick+'<label class="field"><span>Compromisso</span><input id="sinusCompTitle" maxlength="120" placeholder="Ex.: revisar a aula prática"></label><label class="field"><span>Data</span><input id="sinusCompDate" type="date" value="'+today+'"></label><label class="field"><span>Horário</span><input id="sinusCompTime" type="time" value="18:00"></label><label class="field"><span>Detalhes</span><textarea id="sinusCompNote" maxlength="500"></textarea></label><p style="font-size:12px;color:#697b71">Lembrete privado. Avisos oficiais são publicados pela faculdade ou delegado autorizado.</p>',()=>{
- const title=D.getElementById('sinusCompTitle')?.value.trim(),date=D.getElementById('sinusCompDate')?.value,subject=D.getElementById('sinusCompSubject')?.value||sub;
- if(!title||!isDate(date))return W.toast?.('Informe título e uma data válida.');
- const arr=read();arr.push({id:Date.now()+Math.random(),title,date,subject,time:D.getElementById('sinusCompTime')?.value||'',note:D.getElementById('sinusCompNote')?.value.trim()||'',done:false});
- save(arr);W.closeModal();refresh();W.toast?.('Lembrete salvo neste navegador.');
- });}
+function ensureDrawer(){
+ let root=D.getElementById('sinus-reminder-drawer');
+ if(root)return root;
+ root=D.createElement('div');
+ root.id='sinus-reminder-drawer';
+ root.hidden=true;
+ root.innerHTML='<div class="sxrem-scrim" data-sxrem-close></div>'+
+ '<section class="sxrem-sheet" role="dialog" aria-modal="true" aria-labelledby="sxrem-title" tabindex="-1">'+
+ '<header class="sxrem-head"><div><span class="eyebrow">ORGANIZAÇÃO ACADÊMICA</span><h2 id="sxrem-title">Novo lembrete</h2><p>Vincule à sua matéria e acompanhe na agenda semanal.</p></div><button type="button" class="sxrem-x" data-sxrem-close aria-label="Fechar">×</button></header>'+
+ '<div class="sxrem-body"><form id="sxrem-form">'+
+ '<label class="field"><span>Nome do lembrete</span><input id="sinusCompTitle" maxlength="120" placeholder="Ex.: revisar semiologia" required autocomplete="off"></label>'+
+ '<div class="sxrem-dates"><label class="field"><span>Data</span><input id="sinusCompDate" type="date" required></label><label class="field"><span>Horário</span><input id="sinusCompTime" type="time" value="18:00"></label></div>'+
+ '<label class="field"><span>Vincular à matéria</span><select id="sinusCompSubject"></select></label>'+
+ '<label class="field"><span>Categoria</span><select id="sinusCompKind"><option value="materia">Compromisso da matéria</option><option value="pessoal">Lembrete pessoal</option></select></label>'+
+ '<label class="field"><span>Detalhes <small>opcional</small></span><textarea id="sinusCompNote" maxlength="500" rows="3" placeholder="Informações para lembrar..."></textarea></label>'+
+ '<p class="sxrem-private">Lembrete pessoal, salvo neste navegador. Avisos oficiais são gerenciados separadamente.</p>'+
+ '<footer class="sxrem-foot"><button type="button" class="btn" data-sxrem-close>Cancelar</button><button class="btn primary" type="submit">Salvar lembrete</button></footer>'+
+ '</form></div></section>';
+ D.body.appendChild(root);
+ root.addEventListener('click',function(e){if(e.target.closest('[data-sxrem-close]'))closeDrawer()});
+ root.querySelector('#sxrem-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const title=D.getElementById('sinusCompTitle').value.trim();
+  const date=D.getElementById('sinusCompDate').value;
+  const subject=D.getElementById('sinusCompSubject').value;
+  if(!title||!isDate(date)){W.toast?.('Informe título e uma data válida.');return}
+  const arr=read();
+  arr.push({id:Date.now()+Math.random(),title,date,subject,time:D.getElementById('sinusCompTime').value||'',note:D.getElementById('sinusCompNote').value.trim(),kind:D.getElementById('sinusCompKind').value,done:false});
+  save(arr);closeDrawer();refresh();W.toast?.('Lembrete adicionado à agenda.');
+ });
+ D.addEventListener('keydown',function(e){
+  if(root.hidden)return;
+  if(e.key==='Escape'){e.preventDefault();closeDrawer();return}
+  if(e.key==='Tab'){const focusables=[...root.querySelectorAll('button,input,select,textarea')].filter(x=>x.getClientRects().length&&!x.disabled);
+   if(!focusables.length)return;
+   if(e.shiftKey&&D.activeElement===focusables[0]){e.preventDefault();focusables[focusables.length-1].focus()}
+   else if(!e.shiftKey&&D.activeElement===focusables[focusables.length-1]){e.preventDefault();focusables[0].focus()}
+  }
+ });
+ return root;
+}
+let lastReminderFocus=null,wasReminderOverflow='';
+function closeDrawer(){
+ const root=D.getElementById('sinus-reminder-drawer');if(!root||root.hidden)return;
+ root.hidden=true;D.body.style.overflow=wasReminderOverflow;
+ if(lastReminderFocus&&typeof lastReminderFocus.focus==='function')lastReminderFocus.focus();
+}
+function openForm(subject,chosenDate){
+ const root=ensureDrawer();
+ lastReminderFocus=D.activeElement;
+ const d=new Date(),today=isDate(chosenDate)?chosenDate:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+ const ctx=W.SinusCalendar?.context?.()||{};
+ const list=W.SinusTimetable?.academicOptions?.(ctx.period,ctx.cohort)||[];
+ const subjectList=[...new Set([...(W.DB?.subjects?Object.keys(W.DB.subjects):[]),...list.map(x=>x.title),...(subject?[subject]:[]),...(current()?[current()]:[])])];
+ const preferred=subject||current()||subjectList[0]||'';
+ root.querySelector('#sxrem-form').reset();
+ root.querySelector('#sinusCompSubject').innerHTML='<option value="">Sem matéria (pessoal)</option>'+subjectList.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join('');
+ root.querySelector('#sinusCompSubject').value=preferred;
+ root.querySelector('#sinusCompDate').value=today;
+ root.querySelector('#sinusCompTime').value='18:00';
+ root.hidden=false;
+ wasReminderOverflow=D.body.style.overflow;D.body.style.overflow='hidden';
+ root.querySelector('#sinusCompTitle').focus();
+}
 function toggle(id){const a=read();const v=a.find(x=>String(x.id)===String(id));if(v){v.done=!v.done;save(a);refresh()}}
 function remove(id){if(!confirm('Excluir este lembrete?'))return;save(read().filter(x=>String(x.id)!==String(id)));refresh()}
 function subjectBox(){const subject=current();if(!subject)return '';let items=read().filter(x=>x.subject===subject).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));const markup=items.length?items.map(x=>'<div class="sinus-rem-line"><input type="checkbox" data-rem-toggle="'+esc(x.id)+'" '+(x.done?'checked':'')+' aria-label="Concluir lembrete"><div><strong style="'+(x.done?'text-decoration:line-through;opacity:.55':'')+'">'+esc(x.title)+'</strong><small>'+esc(x.date)+' · '+esc(x.time)+(x.note?' · '+esc(x.note):'')+'</small></div><button class="btn sm" data-rem-delete="'+esc(x.id)+'" title="Excluir">×</button></div>').join(''):'<p style="font-size:12px;color:#50687a">Nenhum lembrete. Adicione compromissos e organize suas revisões.</p>';
- return '<section class="sinus-rem-box" aria-label="Lembretes da matéria"><div class="sinus-rem-head"><h3>✚ &nbsp; Lembretes</h3><button class="btn sm" data-rem-add="'+esc(subject)+'">＋ Criar lembrete</button></div>'+markup+'</section>';
+ return '<section class="sinus-rem-box" aria-label="Lembretes da matéria"><div class="sinus-rem-head"><h3>✚ &nbsp; Lembretes</h3><button class="btn sm" data-rem-add="'+esc(subject)+'">＋ Adicionar</button></div>'+markup+'</section>';
 }
 function renderSubjectBox(){const dest=D.getElementById('subjectContent');if(!dest||!current())return;dest.querySelectorAll('.sinus-rem-box').forEach(x=>x.remove());dest.insertAdjacentHTML('afterbegin',subjectBox())}
 function grouping(){if(W.SinusAgendaSemanal&&typeof W.SinusAgendaSemanal.render==='function')W.SinusAgendaSemanal.render()}
