@@ -95,6 +95,12 @@
     return hit === item.keys.length ? 'ok' : hit > 0 ? 'part' : 'miss';
   }
 
+  /* "Taquicardia || Taquicardia sinusal": a primeira é o gabarito; todas valem como resposta completa */
+  function answerOf(raw) {
+    var all = String(raw).split('||').map(function (x) { return x.trim(); }).filter(Boolean);
+    return { ans: all[0] || '', accepted: all.length > 1 ? all : null };
+  }
+
   /* texto com lacunas: "entra [[sodio::sodio|na+]] e água" -> partes */
   var RX = /\[\[(.+?)::(.+?)\]\]/g;
   function tokenize(text, mod, label) {
@@ -102,8 +108,9 @@
     RX.lastIndex = 0;
     while ((m = RX.exec(text))) {
       if (m.index > last) out.push({ s: text.slice(last, m.index) });
-      var pk = parseKeys(m[2]);
-      var item = { id: mod.id + '.' + (mod._items.length + 1), ans: m[1], keys: pk.keys, not: pk.not, label: label };
+      var pk = parseKeys(m[2]), an = answerOf(m[1]);
+      var item = { id: mod.id + '.' + (mod._items.length + 1), ans: an.ans, keys: pk.keys, not: pk.not, label: label };
+      if (an.accepted) item.acceptedAnswers = an.accepted;
       mod._items.push(item);
       out.push({ b: item });
       last = m.index + m[0].length;
@@ -150,8 +157,9 @@
         return {
           t: r.t,
           leaves: r.hojas.map(function (h, j) {
-            var pk = parseKeys(h[2]);
-            var item = { id: mod.id + '.' + (mod._items.length + 1), hint: h[0], ans: h[1], keys: pk.keys, not: pk.not, label: r.t + ' · ' + (j + 1) };
+            var pk = parseKeys(h[2]), an = answerOf(h[1]);
+            var item = { id: mod.id + '.' + (mod._items.length + 1), hint: h[0], ans: an.ans, keys: pk.keys, not: pk.not, label: r.t + ' · ' + (j + 1) };
+            if (an.accepted) item.acceptedAnswers = an.accepted;
             mod._items.push(item);
             return item;
           })
@@ -178,8 +186,9 @@
     } else if (mod.tipo === 'casos') {
       mod._tree = mod.casos.map(function (c, i) {
         // c = [caso, pergunta, resposta, chaves, explicação, opções?]
-        var pk = parseKeys(c[3]);
-        var item = { id: mod.id + '.' + (mod._items.length + 1), hint: c[1], caso: c[0], ans: c[2], keys: pk.keys, not: pk.not, exp: c[4] || '', opts: c[5] || null, label: 'Caso ' + (i + 1) };
+        var pk = parseKeys(c[3]), an = answerOf(c[2]);
+        var item = { id: mod.id + '.' + (mod._items.length + 1), hint: c[1], caso: c[0], ans: an.ans, keys: pk.keys, not: pk.not, exp: c[4] || '', opts: c[5] || null, label: 'Caso ' + (i + 1) };
+        if (an.accepted && !item.opts) item.acceptedAnswers = an.accepted;
         if (item.opts) { item.keys = [[norm(c[2]).charAt(0)]]; item.not = []; item.mc = true; }
         mod._items.push(item);
         return item;

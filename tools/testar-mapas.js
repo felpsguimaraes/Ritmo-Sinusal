@@ -98,9 +98,10 @@ for (const sid of Object.keys(DATA)) {
       // uma resposta qualquer não pode valer ponto cheio
       for (const lixo of ['nao sei', 'xxxxx', 'a']) { if (Core.evaluate(it, lixo) === 'ok') warn(tag + ' → "' + lixo + '" foi aceito'); }
     }
-    // slides: todo módulo (exceto casos) precisa dizer em que slides da aula está
+    // slides: todo módulo de teoria (exceto casos) precisa dizer em que slides da aula está;
+    // na prática, a fonte pode ser uma planilha ou guia sem slides numerados
     if (m.tipo !== 'casos') {
-      if (!m.sl || !m.sl.length) err(m.id + ': sem slides (sl)');
+      if (!m.sl || !m.sl.length) { if (m.area !== 'pratica') err(m.id + ': sem slides (sl)'); }
       else for (const e of m.sl) if (e[1] && (e[2] < e[1])) err(m.id + ': intervalo de slides inválido ' + e);
     }
     // nível 2: células ocultas das tabelas, ordenar dos fluxos lineares e texto livre dos mapas

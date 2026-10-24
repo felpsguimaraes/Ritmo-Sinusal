@@ -512,8 +512,9 @@
     var given = (S.a[id] || '').trim();
     var correct = revealed || code !== 'ok';
     var answer = correct ? it.ans : (given || it.ans);
-    if (it.mc && correct && it.opts) {
-      var option = it.opts.filter(function (o) { return Core.norm(o).charAt(0) === Core.norm(it.ans).charAt(0); })[0];
+    if (it.mc && it.opts) {
+      var letter = Core.norm(correct ? it.ans : given).charAt(0);
+      var option = it.opts.filter(function (o) { return Core.norm(o).charAt(0) === letter; })[0];
       if (option) answer = option;
     }
     var display = el('button', { type: 'button', class: 'inline-answer', 'data-inline-for': id, 'data-st': code, title: LANG === 'es' ? 'Editar respuesta' : LANG === 'en' ? 'Edit answer' : 'Editar resposta' });
@@ -861,7 +862,7 @@
   function buildTable(mod, board, des) {
     var tree = mod._tree;
     var box = el('div', { class: 'tablewrap' });
-    var h = '<table class="tbl"><thead><tr>' + tree.cols.map(function (c) { return '<th scope="col">' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
+    var h = '<table class="tbl' + (tree.cols.length <= 2 ? ' tbl-2' : '') + '"><thead><tr>' + tree.cols.map(function (c) { return '<th scope="col">' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
     tree.rows.forEach(function (row) {
       h += '<tr>' + row.map(function (cell, ci) {
         if (des && ci > 0 && cell._d) {

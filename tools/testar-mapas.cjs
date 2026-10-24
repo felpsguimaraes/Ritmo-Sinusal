@@ -1,6 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root=path.join(__dirname,'../mapas'),ctx={window:{}};vm.createContext(ctx);
-for(const file of ['dados/anatopato.js','dados/anatopato-pratica.js','dados/farmacologia.js','mapas-core.js','gabaritos-revisados.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),ctx);
+const dados=fs.readdirSync(path.join(root,'dados')).filter(f=>f.endsWith('.js')).sort((a,b)=>(a.includes('-')-b.includes('-'))||a.localeCompare(b)).map(f=>'dados/'+f);
+for(const file of dados.concat(['mapas-core.js','gabaritos-revisados.js']))vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),ctx);
 const core=ctx.MapasCore;let count=0,reviewed=0;
 for(const [sid,data] of Object.entries(ctx.window.SINUS_MAPAS))for(const module of data.modulos){
  core.compile(module);
