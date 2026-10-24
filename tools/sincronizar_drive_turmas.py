@@ -17,6 +17,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -36,13 +37,21 @@ def classify(path_parts):
     return subject, "/".join(rest) or None
 
 
-def crawl(root_id, list_children, log):
+def fold(text):
+    """Minúsculas, sem acentos e espaços normalizados (para comparar nomes de pasta)."""
+    base = unicodedata.normalize("NFD", str(text or ""))
+    base = "".join(ch for ch in base if unicodedata.category(ch) != "Mn")
+    return re.sub(r"\s+", " ", base).strip().lower()
+
+
+def crawl(root_id, list_children, log, ignore=()):
     """Percorre a pasta raiz em largura. list_children(folder_id) -> lista de dicts do Drive.
 
     Retorna (itens, ok). ok=False indica que alguma pasta falhou e a turma deve
     manter os dados anteriores.
     """
     items, seen = [], set()
+    ignored = {fold(name) for name in ignore}
     queue = [(root_id, [])]
     ok = True
     while queue:
@@ -59,6 +68,9 @@ def crawl(root_id, list_children, log):
         for child in children:
             name = str(child.get("name") or "").strip()
             if child.get("mimeType") == FOLDER_MIME:
+                if not path and fold(name) in ignored:
+                    log(f"  pasta ignorada (não é matéria): {name}")
+                    continue
                 queue.append((child["id"], path + [name]))
                 continue
             items.append({
@@ -142,7 +154,7 @@ def main():
     for entry in config["turmas"]:
         periodo, turma = int(entry["periodo"]), str(entry["turma"]).upper()
         log(f"Turma {turma} ({periodo}º): raiz {entry['rootId']}")
-        entries, ok = crawl(entry["rootId"], service_list, log)
+        entries, ok = crawl(entry["rootId"], service_list, log, config.get("ignorar", []))
         fresh = to_catalog(entries, periodo, turma)
         if not ok or not fresh:
             log(f"  mantendo dados anteriores de {turma} (ok={ok}, itens={len(fresh)})")

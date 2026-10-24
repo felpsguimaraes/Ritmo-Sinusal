@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths:
       - "tools/sincronizar_drive_turmas.py"
+      - "tools/test_sincronizar_drive_turmas.py"
+      - "tests/drive-sync.test.cjs"
+      - "sinus/drive-sync.js"
       - "sinus/drive-turmas.json"
       - ".github/workflows/sincronizar-drive-turmas.yml"
   schedule:
@@ -31,6 +34,10 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependências do Google Drive
         run: python -m pip install --upgrade google-api-python-client google-auth
+      - name: Testar classificação e nomes de matéria
+        run: |
+          python tools/test_sincronizar_drive_turmas.py
+          node tests/drive-sync.test.cjs
       - name: Consultar pastas das turmas (somente metadados)
         env:
           DRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.DRIVE_SERVICE_ACCOUNT_JSON }}

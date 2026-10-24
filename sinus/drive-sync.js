@@ -38,7 +38,22 @@ var alias={
 'nutricao':'Nutrición','medicina interna i':'Medicina Interna I'
 };
 var norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,' ');
-var subjectName=s=>alias[norm(s)]||String(s||'').trim();
+/* Pastas do Drive variam por turma (ex.: "FARMACOLOGIA", "Semiologia I", "Fisio patologia I", "ANATOPATOLOGIA 1").
+   Regras por palavra-chave garantem que todas caiam na mesma matéria do app. */
+var CANON=[
+ [/anatopat|anatomia patolog/,'Anatomía Patológica I'],
+ [/farmacolog/,'Farmacología I'],
+ [/fisio ?patolog/,'Fisiopatología I'],
+ [/semiolog/,'Semiología Médica I'],
+ [/imagenolog/,'Imagenología'],
+ [/medicina.*familia/,'Medicina de la Familia']
+];
+var subjectName=s=>{
+ var n=norm(s);
+ for(var i=0;i<CANON.length;i++)if(CANON[i][0].test(n))return CANON[i][1];
+ return alias[n]||String(s||'').trim();
+};
+W.SinusDriveSubjectName=subjectName;
 function extKind(x){
  var m=x.m||'',title=(x.t||'').toLowerCase();
  if(/^image\//.test(m))return 'Imagem';
