@@ -1,5 +1,51 @@
 {
   "channelUrl": "https://www.youtube.com/@aislanfernandes4039",
-  "updatedAt": null,
-  "playlists": []
+  "updatedAt": "2026-10-24T22:25:20Z",
+  "playlists": [
+    {
+      "id": "PLD4sd3rL8294",
+      "title": "Nutrición",
+      "videoCount": null
+    },
+    {
+      "id": "PLUMN9yBc2Rz8",
+      "title": "Epidemiologia",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBNhTRzpdcIPXngiawNRIEz5",
+      "title": "Inmunología",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBNldv47cMsPT9Bilua2bQZo",
+      "title": "Microbiología",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBMzKI_GP1RJphB6q1dzDTk8",
+      "title": "Bioquímica",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBOGHmkx74Q6Cw_JiNwNW6Z0",
+      "title": "Fisiología",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBMw95JRV6tV_9luvyyk7Udv",
+      "title": "Neuro",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBOJzN6agEwjJOb___LbnUvS",
+      "title": "Histo",
+      "videoCount": null
+    },
+    {
+      "id": "PLwcgBJjVhBBNC06RkS7ElXjxfnrbjllPx",
+      "title": "Anato",
+      "videoCount": null
+    }
+  ]
 }
