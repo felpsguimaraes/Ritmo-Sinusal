@@ -1,8 +1,10 @@
-/* SINUS — grifos semiologicos contextuais 2.0 | recurso educacional, nao diagnostico. */
+/* SINUS — grifos semiologicos contextuais 3.0 | recurso educacional, nao diagnostico. */
 (function(W,D){
 'use strict';
 if(W.SinusSemiologia)return;
 const sources={
+  abcde:'https://www.resus.org.uk/library/abcde-approach',
+  sepsis:'https://www.nice.org.uk/guidance/ng253/chapter/Evaluating-risk',
   torax:'https://linhasdecuidado.saude.gov.br/portal/dor-toracica/unidade-de-pronto-atendimento/avaliacao-conduta/',
   gestacao:'https://linhasdecuidado.saude.gov.br/portal/pre-natal-baixo-risco/unidade-de-pronto-atendimento/situacoes-urgencia/',
   cefaleia:'https://www.nice.org.uk/guidance/cg150/chapter/recommendations'
@@ -42,6 +44,28 @@ function analyze(text){
  pair(/\b(?:cefaleia|dor\s+de\s+cabeça)\b/giu,/\b(?:início\s+súbito|súbita\s+e\s+intensa|pior\s+dor\s+da\s+vida)\b/giu,110,'Cefaleia de início abrupto requer investigar causas secundárias.','cefaleia');
  pair(/\b(?:sangramento\s+vaginal)\b/giu,/\b(?:gestante|gestação|gravidez|grávida)\b/giu,220,'Sangramento na gestação: investigar idade gestacional e estabilidade.','gestacao');
  pair(/\b(?:dor\s+torácica)\b/giu,/\b(?:sudorese|síncope|dispneia|hipotensão)\b/giu,140,'Sintomas associados elevam a suspeita de causa grave de dor torácica.','torax');
+
+ // Red flags contextuais: regras transparentes, conservadoras e sensíveis a negação.
+ const critical=[
+  {re:/\b(?:estridor|apneia|respiração\s+agônica|obstrução\s+de\s+vias?\s+aéreas?|cianose\s+central|incapacidade\s+de\s+falar\s+frases?\s+completas?)\b/giu,reason:'Possível comprometimento de via aérea ou respiração. Priorize o ABCDE.'},
+  {re:/\b(?:hemorragia\s+(?:maciça|incontrolável)|hematêmese\s+volumosa|sangramento\s+ativo\s+importante|choque\s+(?:séptico|cardiogênico|hipovolêmico|hemorrágico|anafilático)|pele\s+fria\s+e\s+(?:pegajosa|moteada))\b/giu,reason:'Padrão potencial de choque ou hemorragia importante. Avalie perfusão e estabilidade.'},
+  {re:/\b(?:déficit\s+neurológico\s+(?:focal|súbito)|hemiparesia\s+súbita|afasia\s+súbita|convulsão\s+prolongada|estado\s+de\s+mal\s+epiléptico|rebaixamento\s+(?:agudo\s+)?(?:do\s+nível\s+de\s+consciência|da\s+consciência))\b/giu,reason:'Alerta neurológico dependente do tempo; determine início e exame neurológico.'},
+  {re:/\b(?:dor\s+torácica\s+(?:opressiva|intensa)\s+com\s+(?:sudorese|síncope|dispneia)|dor\s+abdominal\s+com\s+rigidez|abdome\s+em\s+tábua|peritonite|sinal\s+de\s+irritação\s+peritoneal)\b/giu,reason:'Achados que podem sugerir causa tempo-dependente e exigem avaliação prioritária.'}
+ ];
+ for(const rule of critical)for(const m of text.matchAll(rule.re)){if(!isNegated(text,m.index))add(m.index,m.index+m[0].length,'alerta',138,rule.reason,'torax')}
+ // Não confundir fatores de risco isolados com instabilidade. Limiares são triagem educacional de adulto.
+ if(!ped){
+  for(const m of text.matchAll(/\b(?:FR|frequência\s+respiratória)\s*(?:[:=]|de)?\s*(\d{2})\s*(?:irpm|rpm|incursões?\s*\/\s*min(?:uto)?)?\b/giu))
+   if(Number(m[1])>=25&&Number(m[1])<=70&&!isNegated(text,m.index))add(m.index,m.index+m[0].length,'alerta',126,'Taquipneia acentuada em adulto: correlacione com a hipótese, esforço ventilatório e demais sinais vitais.','torax');
+  for(const m of text.matchAll(/\b(?:temperatura|temp\.?)\s*(?:[:=]|de)?\s*(\d{2}(?:[,.]\d)?)\s*°?\s*C\b/giu))
+   if(Number(m[1].replace(',','.'))<35&&Number(m[1])>=28)add(m.index,m.index+m[0].length,'alerta',120,'Hipotermia pode acompanhar doença grave; avalie idade e contexto.','torax');
+ }
+ // Red flag materna: a combinação importa mais que a palavra isolada.
+ pair(/\b(?:sangramento\s+vaginal|dor\s+abdominal\s+intensa)\b/giu,/\b(?:gestante|gestação|gravidez|grávida|puerpério|puérpera)\b/giu,280,'Possível alerta obstétrico: avalie estabilidade, idade gestacional e sinais associados.','gestacao');
+ // Não cobrir uma negação com o alarme que ela explicitamente exclui.
+ const negatives=[...hits].filter(h=>h.id==='negacao');
+ for(let i=hits.length-1;i>=0;i--){const h=hits[i];if(h.id==='alerta'&&negatives.some(n=>n.start<=h.start&&n.end>=h.end))hits.splice(i,1)}
+
  hits.sort((a,b)=>b.priority-a.priority||(b.end-b.start)-(a.end-a.start));
  const nonOverlap=[];for(const h of hits)if(!nonOverlap.some(x=>h.start<x.end&&h.end>x.start))nonOverlap.push(h);
  nonOverlap.sort((a,b)=>a.start-b.start);
@@ -88,7 +112,7 @@ function draw(target,text){
  root.querySelectorAll('button[data-sx-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sxMode===mode)));
  const a=analyze(prior.text),selected=mode==='nenhum'?[]:mode==='completo'?a.all:a.shown;
  const frag=D.createDocumentFragment();let pos=0;
- for(const h of selected){if(h.start<pos)continue;frag.append(D.createTextNode(prior.text.slice(pos,h.start)));const m=n('mark','sxMark sx-'+h.id,prior.text.slice(h.start,h.end));
+ for(const h of selected){if(h.start<pos)continue;frag.append(D.createTextNode(prior.text.slice(pos,h.start)));const m=n('mark','sxMark sx-'+h.id,prior.text.slice(h.start,h.end));m.setAttribute('aria-label',(h.id==='alerta'?'Alerta para avaliar: ':h.id==='negacao'?'Negação: ':'Dado clínico: ')+m.textContent);
    m.title=(h.id==='alerta'?'Possível alerta clínico':types.find(t=>t.id===h.id)?.name||'Achado')+(h.reason?' — '+h.reason:'');frag.append(m);pos=h.end}
  frag.append(D.createTextNode(prior.text.slice(pos)));target.replaceChildren(frag);
  let guide=D.getElementById('sxSemioGuide');if(!guide){guide=n('section');guide.id='sxSemioGuide';target.parentNode.insertBefore(guide,target.nextSibling)}
@@ -97,9 +121,15 @@ function draw(target,text){
  guide.append(n('p','', '1. O que a banca pede? '+(cmd?'“'+prior.text.slice(cmd.start,cmd.end)+'”':'Leia o comando final antes de escolher a conduta.')));
  guide.append(n('p','', '2. O que muda a prioridade? '+(alerts.length?alerts.map(h=>'“'+prior.text.slice(h.start,h.end)+'”').join('; '):'Nenhum padrão de alarme detectado automaticamente — isso não exclui risco.')));
  guide.append(n('p','', '3. O que está ausente? '+(neg.length?neg.map(h=>'“'+prior.text.slice(h.start,h.end)+'”').join('; '):'Revise negações e dados normais.')));
+
+ const qualifier=/(?:\b(?:súbito|subitamente|agudo|crônico|progressivo|recorrente|unilateral|bilateral|intenso|persistente|estável|instável)\b)/giu;
+ const semantic=[...prior.text.matchAll(qualifier)].slice(0,5).map(m=>m[0]);
+ guide.append(n('p','', '4. Qual dado diferencia as hipóteses? '+(semantic.length?semantic.join(' · ')+' — relacione com idade, tempo e exame.':'Procure localização, início, evolução e achados discriminativos.')));
+ guide.append(n('p','', 'Os destaques são pistas de leitura, não diagnósticos nem confirmação de gravidade. Ausência de destaque não exclui urgência.'));
+
  const details=n('details');details.append(n('summary','', 'Limites e diretrizes de apoio'));
  details.append(n('p','', 'Regras educacionais. Intensidade, idade, duração e contexto definem a relevância. Não use estas marcações para tomar decisões clínicas reais.'));
- for(const [key,label] of [['torax','MS · dor torácica'],['gestacao','MS · sangramento gestacional'],['cefaleia','NICE · cefaleia']]){const link=n('a','',label);link.href=sources[key];link.target='_blank';link.rel='noopener noreferrer';details.append(link)}
+ for(const [key,label] of [['torax','MS · dor torácica'],['gestacao','MS · sangramento gestacional'],['cefaleia','NICE · cefaleia'],['abcde','ABCDE · RCUK'],['sepsis','NICE · gravidade']]){const link=n('a','',label);link.href=sources[key];link.target='_blank';link.rel='noopener noreferrer';details.append(link)}
  guide.append(details);
 }
 W.SinusSemiologia={render:draw,analyze,getMode:()=>mode};
