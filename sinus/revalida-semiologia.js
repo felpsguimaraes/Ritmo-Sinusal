@@ -66,6 +66,38 @@ function analyze(text){
  const negatives=[...hits].filter(h=>h.id==='negacao');
  for(let i=hits.length-1;i>=0;i--){const h=hits[i];if(h.id==='alerta'&&negatives.some(n=>n.start<=h.start&&n.end>=h.end))hits.splice(i,1)}
 
+
+ // Contexto 3.1: nenhum parâmetro de adulto deve ser transferido a pacientes pediátricos.
+ // Na dúvida sobre idade, a regra numérica conservadora fica sem alerta de gravidade.
+ const ageMatches=[...lower.matchAll(/\\b(?:com|de|idade(?:\\s+de)?|tem|possui)\\s*(\\d{1,3})\\s*(anos?|meses?|dias?)\\b/g)];
+ const ages=ageMatches.map(m=>({n:Number(m[1]),unit:m[2]}));
+ const agePediatric=ped||ages.some(a=>a.unit!=='ano'&&a.unit!=='anos'||a.n<18);
+ const hasAgeAdult=ages.some(a=>(a.unit==='ano'||a.unit==='anos')&&a.n>=18&&!agePediatric);
+ const pediatricLabels=/\\b(?:pediatri[ac]|adolescente|escolar|pre.escolar|bebe|bebes|lactente|neonato|recem.nascid[oa])\\b/i.test(lower);
+ if(agePediatric||pediatricLabels||!hasAgeAdult){
+  // Reduzir falsos alarmes: limiares PA/FR adultos não devem acionar casos com faixa etária desconhecida.
+  for(let i=hits.length-1;i>=0;i--){
+   const h=hits[i];if(h.id!=='alerta')continue;
+   if(/Pressão sistólica baixa para adulto|Taquipneia acentuada em adulto/.test(h.reason))hits.splice(i,1);
+  }
+ }
+ // Sepse: infecção + disfunção, sem interpretar febre ou taquicardia isoladas como sepse.
+ const infection=/\\b(?:sepse|sepsis|pneumonia|pielonefrite|meningite|infec[cç][aã]o|foco\\s+infeccioso)\\b/i;
+ const dysfunction=/\\b(?:confus[aã]o\\s+(?:mental|aguda)|altera[cç][aã]o\\s+do\\s+estado\\s+mental|olig[uú]ria|an[uú]ria|hipoperfus[aã]o|lactato\\s*(?:de|[:=])\\s*[2-9](?:[,.]\\d+)?|disfun[cç][aã]o\\s+org[aâ]nica)\\b/giu;
+ const infectionHit=infection.exec(text);
+ if(infectionHit&&!isNegated(text,infectionHit.index)){
+  for(const m of text.matchAll(dysfunction)){
+   if(isNegated(text,m.index))continue;
+   // Exigir relação no mesmo contexto narrativo, não apenas duas palavras dispersas no texto.
+   const between=text.slice(Math.min(m.index,infectionHit.index),Math.max(m.index,infectionHit.index));
+   if(between.length>280||/[.!?]\\s*[A-ZÁÉÍÓÚ]/.test(between))continue;
+   add(m.index,m.index+m[0].length,'alerta',134,'Suspeita infecciosa associada a possível disfunção orgânica; verificar contexto, perfusão e critérios apropriados à idade. Não é diagnóstico automático de sepse.','sepsis');
+  }
+ }
+ // A identificação do comando altera a orientação didática, não o gabarito.
+ const commandFocus=/\\b(?:conduta|tratamento|manejo|terap[eê]utica|interven[cç][aã]o)\\b/i.test(lower)?'conduta':
+ /\\b(?:exame|investiga[cç][aã]o|diagn[oó]stico|hip[oó]tese)\\b/i.test(lower)?'diagnóstico/investigação':'interpretação';
+ for(const h of hits)if(h.id==='alerta'&&h.reason)h.reason+=' Foco do enunciado: '+commandFocus+'.';
  hits.sort((a,b)=>b.priority-a.priority||(b.end-b.start)-(a.end-a.start));
  const nonOverlap=[];for(const h of hits)if(!nonOverlap.some(x=>h.start<x.end&&h.end>x.start))nonOverlap.push(h);
  nonOverlap.sort((a,b)=>a.start-b.start);
