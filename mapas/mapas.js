@@ -100,11 +100,17 @@
   function findMod(sid, mid) { for (var i = 0; i < allMods.length; i++) if (allMods[i].sid === sid && allMods[i].id === mid) return allMods[i]; return null; }
 
   function slideKey(m) { return m.sl && m.sl.length ? m.sl[0][0] * 1000 + (m.sl[0][1] || 0) : 99000; }
+  /* nome da aula: a matéria pode dar nomes próprios (clases: {7: ['Unidad 7 · Shock', 'U7 Shock']}); senão "Clase N" */
+  function clsLabel(sid, c, short) {
+    var map = DATA[sid] && DATA[sid].clases, v = map && map[c];
+    if (v) return short ? (v[1] || v[0]) : v[0];
+    return short ? 'C' + c : T.clsWord + ' ' + c;
+  }
   function slideText(m, short) {
     if (!m.sl || !m.sl.length) return m.clase;
     var by = {}, order = [];
     m.sl.forEach(function (e) { if (!by[e[0]]) { by[e[0]] = []; order.push(e[0]); } if (e[1]) by[e[0]].push(e[1] === e[2] ? '' + e[1] : e[1] + '–' + e[2]); });
-    return order.map(function (c) { return (short ? 'C' + c : T.clsWord + ' ' + c) + (by[c].length ? ' · ' + T.slWord + ' ' + by[c].join(', ') : ' · ' + T.slSeq); }).join('  +  ');
+    return order.map(function (c) { return clsLabel(m.sid, c, short) + (by[c].length ? ' · ' + T.slWord + ' ' + by[c].join(', ') : ' · ' + T.slSeq); }).join('  +  ');
   }
   /* ---------- sons: acerto, quase e erro (sintetizados, sem arquivos) ---------- */
   var SFX = (function () {
@@ -280,8 +286,8 @@
       var rowsG = '', lastC = null;
       guideMods.forEach(function (m) {
         var c = m.sl[0][0];
-        if (c !== lastC) { rowsG += '<tr class="sg-h"><th colspan="3">' + esc(T.clsWord + ' ' + c) + '</th></tr>'; lastC = c; }
-        var rng = m.sl.map(function (e) { return (e[0] !== c ? 'C' + e[0] + ' ' : '') + (e[1] ? (e[1] === e[2] ? e[1] : e[1] + '–' + e[2]) : T.slSeq); }).join(', ');
+        if (c !== lastC) { rowsG += '<tr class="sg-h"><th colspan="3">' + esc(clsLabel(curSid, c)) + '</th></tr>'; lastC = c; }
+        var rng = m.sl.map(function (e) { return (e[0] !== c ? clsLabel(curSid, e[0], true) + ' ' : '') + (e[1] ? (e[1] === e[2] ? e[1] : e[1] + '–' + e[2]) : T.slSeq); }).join(', ');
         rowsG += '<tr><td class="sg-r">' + esc(rng) + '</td><td><a href="#/' + m.sid + '/' + m.id + (lvl === '2' ? '/des' : lvl === '1' ? '/g' : '') + '">' + esc(m.titulo) + '</a></td><td class="sg-t">' + esc(TYPE[m.tipo]) + '</td></tr>';
       });
       gd.innerHTML = '<summary><b>' + esc(T.guide) + '</b> <span>' + esc(T.guideSub) + '</span></summary><table class="sg-table"><tbody>' + rowsG + '</tbody></table>';

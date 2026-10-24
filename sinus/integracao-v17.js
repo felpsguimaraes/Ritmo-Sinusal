@@ -547,7 +547,7 @@
   }
   // ---------------- mapas guiados da matéria (mapas, fluxogramas e tabelas que o aluno completa)
   /* matérias com mapas guiados e em que parte (teoria/prática) eles existem */
-  var MAPAS_MATERIAS = { anatopato: { teoria: 1, pratica: 1 }, farmacologia: { teoria: 1 }, semiologia: { teoria: 1, pratica: 1 } };
+  var MAPAS_MATERIAS = { anatopato: { teoria: 1, pratica: 1 }, farmacologia: { teoria: 1 }, fisiopatologia: { teoria: 1 }, semiologia: { teoria: 1, pratica: 1 } };
   function temMapas() {
     var s = subjectData(), m = s && MAPAS_MATERIAS[s.slug];
     return !!(m && m[UI.mode === 'practice' ? 'pratica' : 'teoria']);
