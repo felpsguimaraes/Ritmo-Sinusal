@@ -8,7 +8,9 @@ const dir = path.join(__dirname, '..', 'mapas', 'dados');
 const sandbox = { window: {} }; vm.createContext(sandbox);
 /* a mesma ordem da página: primeiro a matéria (anatopato.js), depois os complementos (anatopato-pratica.js) */
 fs.readdirSync(dir).filter(f => f.endsWith('.js')).sort((a, b) => (a.includes('-') - b.includes('-')) || a.localeCompare(b)).forEach(f => vm.runInContext(fs.readFileSync(path.join(dir, f), 'utf8'), sandbox, { filename: f }));
+vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'mapas', 'gabaritos-revisados.js'), 'utf8'), sandbox, { filename: 'gabaritos-revisados.js' });
 const DATA = sandbox.window.SINUS_MAPAS || {};
+const REV = sandbox.window.SINUS_MAPAS_REVISAO || {};
 let erros = 0, avisos = 0, total = 0;
 const err = m => { erros++; console.log('  ERRO  ' + m); };
 const warn = m => { avisos++; console.log('  aviso ' + m); };
@@ -26,22 +28,22 @@ function testarLaminas(m) {
     }
     for (const it of [t.o, t.p, t.x]) {
       if (!it.keys.length) err(tag + ' ' + it.label + ' → sem chaves');
-      if (Core.evaluate(it, it.ans) !== 'ok') err(tag + ' ' + it.label + ' → resposta-modelo "' + it.ans + '" não aceita');
-      for (const lixo of ['nao sei', 'xxxxx', 'a']) if (Core.evaluate(it, lixo) === 'ok') warn(tag + ' ' + it.label + ' → "' + lixo + '" foi aceito');
+      if (Core.evaluateKeys(it, it.ans) !== 'ok') err(tag + ' ' + it.label + ' → resposta-modelo "' + it.ans + '" não aceita');
+      for (const lixo of ['nao sei', 'xxxxx', 'a']) if (Core.evaluateKeys(it, lixo) === 'ok') warn(tag + ' ' + it.label + ' → "' + lixo + '" foi aceito');
     }
     if (!t.d.length) err(tag + ' → descrição sem achados');
     const texto = t.d.map(it => it.ans).join('. ');
-    for (const it of t.d) if (Core.evaluate(it, texto, true) !== 'ok') err(tag + ' descrição → "' + it.ans + '" não reconhecido no texto-modelo');
-    if (t.d.some(it => Core.evaluate(it, 'no se ve nada', true) === 'ok')) warn(tag + ' → descrição aceita texto vazio de sentido');
+    for (const it of t.d) if (Core.evaluateKeys(it, texto, true) !== 'ok') err(tag + ' descrição → "' + it.ans + '" não reconhecido no texto-modelo');
+    if (t.d.some(it => Core.evaluateKeys(it, 'no se ve nada', true) === 'ok')) warn(tag + ' → descrição aceita texto vazio de sentido');
     for (const u of m._tree) {
       if (u === t) continue;
-      if (Core.norm(u.o.ans) !== Core.norm(t.o.ans) && Core.evaluate(t.o, u.o.ans) === 'ok') err(tag + ' órgão aceita "' + u.o.ans + '"');
+      if (Core.norm(u.o.ans) !== Core.norm(t.o.ans) && Core.evaluateKeys(t.o, u.o.ans) === 'ok') err(tag + ' órgão aceita "' + u.o.ans + '"');
       const mesmoTipo = /carcinoma/i.test(t.x.ans) && /carcinoma/i.test(u.x.ans);
-      if (u.g !== t.g && !mesmoTipo && Core.norm(u.x.ans) !== Core.norm(t.x.ans) && Core.evaluate(t.x, u.x.ans) === 'ok') err(tag + ' dx aceita "' + u.x.ans + '"');
+      if (u.g !== t.g && !mesmoTipo && Core.norm(u.x.ans) !== Core.norm(t.x.ans) && Core.evaluateKeys(t.x, u.x.ans) === 'ok') err(tag + ' dx aceita "' + u.x.ans + '"');
     }
     if (m.banco && m.procesos) {
-      const ok1 = m.procesos.some(c => Core.evaluate(t.p, c) === 'ok');
-      const ok2 = ok1 || m.procesos.some(a => m.procesos.some(b => a !== b && Core.evaluate(t.p, a + ' + ' + b) === 'ok'));
+      const ok1 = m.procesos.some(c => Core.evaluateKeys(t.p, c) === 'ok');
+      const ok2 = ok1 || m.procesos.some(a => m.procesos.some(b => a !== b && Core.evaluateKeys(t.p, a + ' + ' + b) === 'ok'));
       if (!ok2) err(tag + ' → nenhuma combinação do banco de processos dá a resposta "' + t.p.ans + '"');
     }
   }
@@ -57,6 +59,11 @@ for (const sid of Object.keys(DATA)) {
     m.sid = sid;
     if (ids.has(m.id)) err('id repetido: ' + m.id); ids.add(m.id);
     try { Core.compile(m); } catch (e) { err(m.id + ': ' + e.message); continue; }
+    /* a tela aplica as respostas revisadas; o teste confere essas mesmas respostas */
+    if (m.tipo !== 'laminas') for (const it of m._items.concat(m._ditems || [])) {
+      const r = REV[sid + '/' + it.id];
+      if (r) { it.ans = r.answer; it.acceptedAnswers = r.accepted; it.answerSet = r.answerSet; it.minimum = r.minimum; }
+    }
     const n = m._items.length; total += n;
     if (!n) err(m.id + ': sem lacunas');
     console.log('  ' + (m.clase + '').padEnd(13) + m.tipo.padEnd(6) + String(n).padStart(3) + ' campos  ' + m.titulo + (m.nivel ? '  (nível ' + m.nivel + ')' : ''));
@@ -102,7 +109,7 @@ for (const sid of Object.keys(DATA)) {
     }
     if (m.tipo === 'fluxo' && m._linear && (!m._ord || m._ord.length < 2)) err(m.id + ': fluxo linear sem ordem');
     if (m.tipo === 'mapa') for (const b of m._tree) {
-      const texto = b.leaves.map(it => it.ans).join('. ');
+      const texto = b.leaves.map(it => it.ans).join('\n');
       for (const it of b.leaves) if (Core.evaluate(it, texto, true) !== 'ok') err(m.id + ' memoria [' + b.t + '] "' + it.ans + '" não foi reconhecida no texto livre');
     }
     // hints de mapa: tamanho para caber no cartão (2 linhas)

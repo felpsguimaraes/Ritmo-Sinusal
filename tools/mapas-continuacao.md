@@ -1,51 +1,16 @@
 # Mapas guiados: o que falta (pausado em 24/10/2026)
 
-Branch `mapas-guiados` (PR #3). Nada deste branch está no `main` ainda.
+Entregue no `main` em 24/10 (PR #3). O que segue é o que falta.
 
-## Atenção: o `main` já tem outra versão dos mapas (PR #4)
+## Já feito na entrega de 24/10
 
-O PR #4 ("Adicionar Mapas guiados com termos completos e correção de listas") foi mesclado no `main` e
-publica uma cópia revisada em `/aulas/mapas/`, aberta pela aba Mapas guiados da matéria (só teoria).
-Ela traz decisões pedidas pelo Felipe que precisam continuar valendo:
+O `main` tinha outra cópia dos mapas (PR #4, em `/aulas/mapas/`). As duas foram unificadas em `/mapas/`:
+correção da teoria com resposta completa e listas (`evaluate`), `gabaritos-revisados.js`, resposta no
+próprio campo depois de Verificar, textos e o filtro de `message` do PR #4; as láminas continuam com
+correção por conceitos (`evaluateKeys`). `/aulas/mapas/` redireciona para `/mapas/`. A aba da matéria
+abre `/mapas/?s=<slug>&modo=teoria|pratica`.
 
-- correção exige a resposta completa (só maiúsculas e espaços são ignorados); palavras-chave só dão "parcial";
-- listas com quantidade pedida (`answerSet` + `minimum`), sem repetir exemplo;
-- `gabaritos-revisados.js` (`window.SINUS_MAPAS_REVISAO`): 41 respostas com fonte e respostas aceitas;
-- a resposta aparece no próprio campo depois de Verificar (botão `.inline-answer`), sem lista de gabarito embaixo;
-- modo de memória: uma resposta por linha;
-- rótulo do parcial: "Ajustar ao gabarito" / "para ajustar"; nível 2 "Desafio" (pt);
-- nota na tela inicial: escrever o termo completo, com grafia e acentos;
-- `message` do tema só aceita `origin` e `source` do próprio painel.
-
-As 8 correções de texto do PR #4 (idiopática, alfa-1-antitripsina como proteína, CE50, adrenalina IM na
-face anterolateral da coxa, salicilatos com alcalose respiratória e acidose metabólica, receptores dos
-corticoides) já estão em `mapas/dados/`.
-
-## 1. Unificar com o `main` (fazer primeiro)
-
-1. `git merge origin/main`. Conflitos esperados:
-   - `index.html`: manter `atlas-revalida.js?v=revalida-treino-20261023`, `admin-integration.js?v=2`
-     e acrescentar `/sinus/mapas-guiados.js` (aba Mapas guiados do menu).
-   - `sinus/integracao-v17.js`: ficar com `renderMapasMateria()` → `/mapas/?s=<slug>&modo=teoria|pratica`;
-     apagar o bloco do `main` que abre `/aulas/mapas/`; filtrar o botão "Mapas guiados" com
-     `temMapas()`, usando `MAPAS_MATERIAS = { anatopato: { teoria: 1, pratica: 1 }, farmacologia: { teoria: 1 } }`.
-2. Levar para `/mapas/` o que o PR #4 mudou em `/aulas/mapas/`:
-   - `mapas-core.js`: `exactNorm` + `evaluate` estrito do PR #4 (resposta inteira, `acceptedAnswers`,
-     `answerSet`/`minimum`, memória por linha); o parcial pode usar `has()` (aceita as chaves `^`).
-     Criar `evaluateKeys` (a correção por conceitos de hoje) e usar nas láminas (`lamCheck`), porque a
-     descrição da lâmina é texto livre.
-   - copiar `gabaritos-revisados.js` para `/mapas/`, carregar antes do `mapas.js` e aplicar no compile
-     (`ans`, `acceptedAnswers`, `answerSet`, `minimum`, `source`), reavaliando o `S.c` salvo.
-   - `mapas.js`: textos acima, nota inicial só na teoria, `paint()` com `.inline-answer` (não nas
-     láminas), feedback da teoria vazio (o `#fb` continua para a planilha das láminas).
-   - `mapas.css`: estilos `.inline-answer*`.
-   - `tools/testar-mapas.cjs`: apontar para `mapas/`; em `tools/testar-mapas.js`, o texto da memória
-     passa a ser unido por quebra de linha.
-   - `/aulas/mapas/index.html`: redirecionar para `/mapas/` (mesma query e hash) e apagar as cópias.
-3. Rodar `node tools/testar-mapas.js`, `node tools/testar-mapas.cjs` e o teste de navegador em duas
-   larguras (1280 e 390).
-
-## 2. Prática
+## 1. Prática
 
 - Anatomía Patológica I: láminas prontas (P1, P2, laminário de 25, simulacro). Falta transformar as
   aulas práticas em mapas direcionados: "clase 1-Adaptación Celular parte 1 e 2", "clase 2-Lesión celular",
@@ -63,7 +28,7 @@ corticoides) já estão em `mapas/dados/`.
 - Semiología: mapas do exame físico e da ausculta a partir dos slides (Semio 7 Tórax só por
   `read_file_content`; HC práctica `1B-2TKgADIlgucxGCcDrHxb2F4cSl87S2`).
 
-## 3. Mapas das outras matérias
+## 2. Mapas das outras matérias
 
 Semiología, Fisiopatología, Imagenología, Medicina de la Familia e Farma clase 1.2
 (`1h3sXGwZMpPBks_W4r4Ko3Y54S86dS8wV`), cada módulo com `sl`. Depois, ampliar `MAPAS_MATERIAS` e o texto
@@ -71,11 +36,11 @@ de `sinus/mapas-guiados.js`. Decks grandes demais para baixar (Semio 7 Tórax; F
 U6, U7 Anemias): ler com `read_file_content` (vem sem número de página). Os dois arquivos de casos da
 Fisio P2 foram baixados, mas não decodificados.
 
-## 4. Farmacología, clase 8
+## 3. Farmacología, clase 8
 
 73 páginas sem método que funcionou para numerar os slides; hoje os módulos usam `sl: [[8]]` (ordem da aula).
 
-## 5. Fechamento
+## 4. Fechamento
 
 Validador e navegador nas duas larguras, README, republicar o artefato de demonstração
 (`23a91748-05cd-4832-a159-2137f29f5c6e`) e relatório.

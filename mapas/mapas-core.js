@@ -49,10 +49,39 @@
   }
 
   function esc(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-  /* devolve: empty | ok | part | miss.
-     free = texto livre com várias respostas juntas (modo de memória): as palavras proibidas
-     são removidas do texto em vez de invalidar tudo (ex.: "semisintético" ao procurar "sintético"). */
+  /* TEORIA (revisão do PR #4): a resposta inteira é obrigatória; só maiúsculas e espaços são ignorados.
+     As palavras-chave servem apenas para sinalizar resposta parcial, nunca acerto.
+     Listas (answerSet): a quantidade pedida de itens válidos, sem repetir. Memória: uma resposta por linha. */
+  function exactNorm(s) {
+    return String(s == null ? '' : s).normalize('NFC').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
   function evaluate(item, value, free) {
+    var n = exactNorm(value);
+    if (!n) return 'empty';
+    if (item.mc) return n === exactNorm(item.ans).charAt(0) || n === exactNorm(item.ans) ? 'ok' : 'miss';
+    if (item.answerSet) {
+      var options = item.answerSet.map(exactNorm);
+      var entries = String(value).split(/[;\n]+/).map(exactNorm).filter(Boolean);
+      var unique = entries.filter(function (v, i) { return entries.indexOf(v) === i; });
+      var valid = unique.filter(function (v) { return options.indexOf(v) >= 0; });
+      if (valid.length >= item.minimum && (free || valid.length === unique.length)) return 'ok';
+      return valid.length ? 'part' : 'miss';
+    }
+    var accepted = item.acceptedAnswers && item.acceptedAnswers.length ? item.acceptedAnswers : [item.ans];
+    var candidates = [n];
+    if (free) {   /* uma resposta por linha; a linha inteira também vale (há respostas com ponto e vírgula) */
+      candidates = [];
+      String(value).split(/\n+/).forEach(function (line) { candidates.push(exactNorm(line)); line.split(';').forEach(function (p) { candidates.push(exactNorm(p)); }); });
+    }
+    if (accepted.some(function (answer) { return candidates.indexOf(exactNorm(answer)) >= 0; })) return 'ok';
+    var legacy = norm(value).trim();
+    var hit = (item.keys || []).some(function (g) { return g.some(function (k) { return has(legacy, k); }); });
+    return hit ? 'part' : 'miss';
+  }
+
+  /* PRÁTICA (láminas): a descrição é texto livre, então a correção procura os conceitos por palavras-chave.
+     free = várias respostas no mesmo texto: as palavras proibidas são removidas do texto em vez de invalidar tudo. */
+  function evaluateKeys(item, value, free) {
     var n = norm(value).trim();
     if (!n) return 'empty';
     if (item.not && item.not.length) {
@@ -176,5 +205,5 @@
     return mod;
   }
 
-  return { norm: norm, parseKeys: parseKeys, evaluate: evaluate, compile: compile, tokenize: tokenize, plain: plain };
+  return { norm: norm, exactNorm: exactNorm, parseKeys: parseKeys, evaluate: evaluate, evaluateKeys: evaluateKeys, compile: compile, tokenize: tokenize, plain: plain };
 });

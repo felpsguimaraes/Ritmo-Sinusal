@@ -1,45 +1,70 @@
-# SINUS — administração conectada
+# Administração SINUS
 
-Estado em 23/10/2026: a migração `sinus_admin_control` foi aplicada após autorização explícita. A conta proprietária foi confirmada, e a função `sinus-admin-api` está ativa na versão 1. Nenhum usuário foi bloqueado e os preços permanecem iguais. A API negou solicitações sem token e com token inválido. O helper RLS confirmou acesso permitido ao proprietário. O consultor de segurança reconhece as cinco tabelas com RLS sem políticas (intencionalmente exclusivas do serviço) e aponta proteção contra senhas vazadas desativada no projeto, anterior a esta alteração.
+Painel: https://meusinus.pages.dev/admin/control/
 
-A atualização de `sinus-study-ai` permanece pendente: a revisão automática exige autorização específica para o processamento de materiais via OpenAI. A versão de IA já existente continua intacta. A visibilidade da IA na interface não deve ser tratada como bloqueio de autorização do backend até essa atualização ser aprovada e publicada. A publicação estática e a validação autenticada estão em andamento.
+## Publicação atual
 
-## Resultado
+A migração inicial e as três migrações da expansão foram aplicadas no projeto Supabase do SINUS. A API `sinus-admin-api` está ativa na versão 2, com autenticação própria por Supabase Auth e permissões consultadas no banco a cada solicitação. A conta proprietária permanece protegida. Nenhum aluno foi bloqueado, nenhum preço foi alterado e nenhuma mensagem real foi enviada durante a implementação.
 
-- A entrada histórica `aulas/painel.html` encaminha à administração no domínio canônico, sem carregar Firebase.
-- Administração com sessão Supabase, verificação de função no servidor a cada chamada e dados sem persistência local administrativa.
-- Usuários paginados, último login, bloqueio/desbloqueio com motivo e proteção do proprietário.
-- Papéis: proprietário, suporte, conteúdo e financeiro. Contas comuns não acessam os dados administrativos.
-- Catálogo de preços em centavos, disponibilidade dos planos e proteção contra divergência de preços já vinculados ao Stripe.
-- Avisos aos alunos e visibilidade das funções. Desativação da IA também verificada pelo backend de estudo.
-- Atividade autenticada, usuários únicos por dia (UTC), presença aproximada em cinco minutos e histórico das solicitações e conclusões administrativas.
-- Leitura de metadados do Drive adaptada ao login atual, com autorização Google explícita do proprietário. Nenhum arquivo é excluído ou alterado.
+A interface está sendo atualizada no mesmo repositório e no domínio canônico. Não foi criado um segundo portal.
 
-## Ativação pendente
+## Ferramentas e planos
 
-1. Revisar e aprovar `schema.sql`. A migração cria cinco tabelas com RLS e acesso exclusivo pelo serviço. Seleciona a conta `felpsguimaraes@gmail.com` como proprietária. Não muda os preços nem bloqueia usuários existentes. Acrescenta uma política restritiva às tabelas profiles, sinus_documents, subscriptions e sinus_ai_usage: operações autenticadas passam a verificar se a conta está bloqueada. Os direitos existentes continuam dependendo das políticas já instaladas.
-2. Aplicar a migração como `sinus_admin_control` na referência Supabase `qyioizupudjrwmtasrue`. A instalação deve ser transacional; não executar trechos isolados. O arquivo falha caso as tabelas já existam, prevenindo sobrescrita acidental.
-3. Publicar `supabase/functions/sinus-admin-api/index.ts`. O corpo verifica o token via Supabase Auth e consulta permissões atuais. Configurar `verify_jwt=false` apenas para esta função: ela faz sua própria autenticação e nega todas as operações de dados sem sessão validada. Essa configuração evita incompatibilidade do gateway com chaves publicáveis/assinaturas atuais. Nenhuma chave secreta deve ir ao frontend.
-4. Atualizar `sinus-study-ai` com os dois arquivos preservados neste repositório. Manter sua configuração existente `verify_jwt=true`. O acréscimo confere bloqueio e a chave de ativação da IA antes de processar arquivos.
-5. Autenticar a escrita ao GitHub, enviar a branch e publicar os arquivos estáticos no projeto Cloudflare existente. Não criar outro site nem alterar o domínio canônico. A publicação no GitHub Pages sozinha não comprova a atualização de `meusinus.pages.dev`.
-6. Validar login do proprietário e de uma conta de teste sem privilégios; testar bloqueio/desbloqueio somente na conta de teste. Validar negacão REST usando token anterior ao bloqueio, e negacão na função de IA. Não testar bloqueio na conta do proprietário nem em alunos reais.
-7. Verificar a tela no desktop e celular e executar os consultores de segurança do Supabase após aplicar a migração. Testar negação anônima de cada nova tabela.
+O catálogo contém 49 ferramentas, incluindo biblioteca e seus tipos de material, estudo por matéria, agenda e horários, cronômetro, tela dividida, tipos de questões, treinos, flashcards, simulados, Revalida, Enamed, habilidades clínicas, Atlas, transcrição, caderno, estatísticas, comunidade e imigração.
 
-## Testes executados
+- A disponibilidade global fica em **Funções e avisos**.
+- **Acessos e limites por plano** configura, por ferramenta e operação, permissão e cotas diárias, mensais e totais. As operações são visualização, uso/execução e download pelo portal.
+- Campo vazio significa ilimitado; zero significa nenhum uso. Os períodos seguem o calendário UTC. O total conta o histórico do aluno e não é zerado pela troca de plano.
+- As cotas começaram ilimitadas, para preservar o acesso existente. Os planos pagos existentes e o grupo gratuito/sem assinatura possuem regras próprias. Não foram inventadas franquias comerciais.
+- Mensagens recebidas, início, perfil e planos são recursos essenciais de conta e não podem ser desligados.
+- O proprietário não consome franquia. Suporte, conteúdo e financeiro conservam as permissões de sua função; apenas o proprietário pode conceder manualmente acesso a um plano. Essa concessão não cria cobrança nem cancela assinatura paga.
+- Operações protegidas reservam a cota no banco com trava por conta, idempotência por UUID e reserva atômica de múltiplos contadores. Uma nova tentativa da mesma solicitação não conta de novo.
 
-`node --test admin/control/tests/api.test.cjs`: 16 testes com banco e autenticação simulados, sem usuários reais, todos aprovados. Incluem origem inválida, ausência de token, conta comum, revogação de papel, bloqueio, proteção do proprietário, divisão de permissões, preços inválidos e auditoria.
+## Cadastro acadêmico
 
-Verificação sintática com `node --check` nos scripts novos e inline HTML. Não substitui teste autenticado em produção, teste da migração nem inspeção visual do navegador.
+A lista de usuários e os detalhes do cadastro mostram turma e período, além de campus e grupo de prática quando informados. O backend consulta os documentos existentes em `perfis/{uid}` e `progresso/{uid}_sinus-perfil`. Campos ausentes permanecem nulos e aparecem como **Não informado**. Não há semestre padrão inventado para completar o cadastro administrativo. A busca da lista atual inclui nome, e-mail, turma e período.
+
+## Mensagens com imagem
+
+- Entrega somente na caixa interna do SINUS; não envia WhatsApp, e-mail ou push externo.
+- Destino: um aluno selecionado da lista, alunos atuais de um plano ou todos os alunos atuais. A lista de destinatários é resolvida no servidor e gravada no momento da publicação. Novos alunos não recebem retrospectivamente mensagens enviadas antes do cadastro.
+- A prévia mostra o conteúdo e a quantidade de destinatários antes de confirmar. Mudanças na quantidade exigem nova revisão. Contas administrativas e bloqueadas não entram em envios para alunos.
+- JPG, PNG e WebP; limite de 3 MB após redução da imagem no navegador, com remoção de metadados pela recodificação em canvas. SVG não é aceito.
+- Anexos ficam no bucket privado `sinus-messages`; o servidor gera links com validade de dois minutos somente após validar a sessão e o destinatário.
+- Cada aluno pode marcar apenas suas próprias mensagens como lidas. O painel mostra destinatários, leituras e permite retirar mensagens. Retirar não recolhe cópias já salvas.
+- O envio usa um identificador idempotente; repetir uma solicitação não duplica a mensagem.
+
+## Verificação
+
+35 testes da API passaram com serviços simulados, sem enviar mensagens ou alterar alunos reais. Cobrem papéis, contas protegidas, origem e sessão, validação das cotas, mensagens, anexos, confirmação de destinatários, recibos e dados acadêmicos.
+
+Cinco testes adicionais do portal passaram, verificando a reserva antes de abrir conteúdo, a negação de acesso, a preservação de recursos essenciais e a ordem das navegações dependentes.
+
+O banco passou em oito verificações de cotas dentro de uma transação revertida: reserva inicial, repetição idempotente, franquia diária, mensal e total, reversão do lote ao negar uma etapa, indisponibilidade global e negação de execução anônima. As alterações de teste não foram persistidas.
+
+As novas tabelas mantêm RLS habilitada e acesso somente pelo serviço. RPCs de cotas, publicação de mensagens e alterações administrativas são `SECURITY INVOKER` e têm execução revogada de `PUBLIC`, `anon` e `authenticated`. O acesso ocorre pela API que valida o usuário. Não há chave privilegiada nos arquivos do navegador.
 
 ## Limites materiais
 
-- Firebase histórico: `aulas/lesion/`, `aulas/app.js` e o leitor da apostila antiga ainda dependem do acervo e das chaves do Firebase. Não foram modificados para evitar perda de acesso a conteúdos criptografados. A migração desses dados exige exportação autenticada e mapeamento das identidades antigas para as contas Supabase. Nenhum dado do Firebase foi apagado ou copiado nesta alteração.
-- Estatísticas começam na instalação. Não há visitantes anônimos históricos, receita ou pagamentos simulados. A consulta limita a 10.000 eventos por período e sinaliza resultados parciais. O último login vem do Auth, independentemente da coleta nova.
-- Bloquear uma conta não recolhe arquivos previamente baixados nem restringe arquivos servidos publicamente. Acesso pago rigoroso a materiais exige armazenamento privado e URLs temporárias. Não considerar esses arquivos privados apenas por haver login na interface.
-- Alterar o catálogo não reajusta assinaturas existentes nem cria produtos de cobrança. Os três planos existentes têm vínculo Stripe vazio. O painel comunica essa distinção.
-- Configurações de funções, exceto IA, controlam a navegação. Não representam autorização granular por assinatura.
-- O log registra intenção antes de mutações e conclusão após sucesso. Uma intenção sem conclusão precisa ser investigada; chamadas ao Auth e banco não são uma transação única.
+A coleta e as cotas valem para os caminhos integrados ao portal. Links externos e arquivos já públicos ou baixados mantêm suas permissões originais. Não considerar um arquivo privado apenas porque a interface tem login. A revogação rigorosa de materiais exige armazenamento privado ou controle equivalente na origem.
 
-## Recuperação
+A função de IA já existente permanece intacta: a revisão automática exigiu autorização específica para atualizar o processamento de documentos via OpenAI. O portal faz a reserva de cota antes do caminho integrado de IA, mas o backend de IA antigo não deve ser considerado uma barreira completa contra chamadas diretas enquanto sua atualização não for aprovada.
 
-Antes da publicação, basta não aplicar a migração nem as funções e descartar esta branch. Depois, reverter somente o frontend não desfaz bloqueios já aplicados ou as regras do banco: revisar registros de auditoria e controles de acesso antes de qualquer remoção. Não remover tabelas de produção automaticamente.
+As aulas antigas em Firebase e suas chaves de conteúdo criptografado permanecem preservadas. Nenhum histórico do Firebase foi apagado ou migrado nesta alteração.
+
+## Arquivos de banco
+
+- `schema.sql`: instalação inicial, já aplicada.
+- `schema-v2.sql`: catálogo, regras, acessos manuais, uso e mensagens, já aplicada. O arquivo-fonte já inclui a correção que verifica a permissão de visualização antes de uso/download.
+- `schema-v2-helpers.sql`: reserva atômica de lotes e resumo de uso, já aplicada.
+- `schema-v2-types.sql`: adiciona associação de pares e completar lacunas, já aplicada.
+- `schema-v2-view-gate.sql`: correção aplicada à instalação existente, registrada separadamente no histórico de migrações.
+
+Não executar novamente os scripts completos sobre tabelas existentes. Os arquivos são referência da implementação; novas alterações devem usar migrações próprias.
+
+
+## Financeiro (v3)
+- Instalar `schema-v3-finance.sql`. RPC exclusiva service_role; a API verifica perfil proprietário/financeiro. Suporte vê apenas contagens.
+- Usuários: assinantes distintos ativos e vigentes, recebimentos totais e mês atual. Financeiro: 12 meses por ano, CSV, estornos, saldo antes de taxas, assinantes por plano e últimos 100 lançamentos. Calendário America/Sao_Paulo, apenas BRL.
+- Ledger `sinus_financial_entries`: somente pagamentos e estornos confirmados; chave única por origem/referência/tipo. Nenhum lançamento foi criado. Ainda não existe integração de cobrança: valores vazios/zero não atestam ausência de pagamentos externos. Não multiplicar preço atual por assinantes.
+- Concessões manuais e testes são separados de assinaturas ativas; nenhum deles gera receita. Conectar webhook verificado e importar histórico do provedor é necessário para preencher os recebimentos reais.

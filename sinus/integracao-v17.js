@@ -491,7 +491,7 @@
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
-    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].map(function (item) {
+    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || temMapas(); }).map(function (item) {
       return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('') + '</div>');
     else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
@@ -546,7 +546,12 @@
     }).catch(function () {});
   }
   // ---------------- mapas guiados da matéria (mapas, fluxogramas e tabelas que o aluno completa)
-  var MAPAS_MATERIAS = { anatopato: 1, farmacologia: 1 };
+  /* matérias com mapas guiados e em que parte (teoria/prática) eles existem */
+  var MAPAS_MATERIAS = { anatopato: { teoria: 1, pratica: 1 }, farmacologia: { teoria: 1 } };
+  function temMapas() {
+    var s = subjectData(), m = s && MAPAS_MATERIAS[s.slug];
+    return !!(m && m[UI.mode === 'practice' ? 'pratica' : 'teoria']);
+  }
   function renderMapasMateria() {
     var s = subjectData(), slug = s && s.slug, box = $id('subjectContent');
     if (!slug || !MAPAS_MATERIAS[slug]) { box.innerHTML = emptyBox('Os mapas guiados desta matéria ainda não foram feitos.', 'Enquanto isso, use o Treino, os Flashcards e a Revisão e progresso.'); return }
