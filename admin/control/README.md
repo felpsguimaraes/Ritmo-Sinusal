@@ -61,3 +61,10 @@ As aulas antigas em Firebase e suas chaves de conteúdo criptografado permanecem
 - `schema-v2-view-gate.sql`: correção aplicada à instalação existente, registrada separadamente no histórico de migrações.
 
 Não executar novamente os scripts completos sobre tabelas existentes. Os arquivos são referência da implementação; novas alterações devem usar migrações próprias.
+
+
+## Financeiro (v3)
+- Instalar `schema-v3-finance.sql`. RPC exclusiva service_role; a API verifica perfil proprietário/financeiro. Suporte vê apenas contagens.
+- Usuários: assinantes distintos ativos e vigentes, recebimentos totais e mês atual. Financeiro: 12 meses por ano, CSV, estornos, saldo antes de taxas, assinantes por plano e últimos 100 lançamentos. Calendário America/Sao_Paulo, apenas BRL.
+- Ledger `sinus_financial_entries`: somente pagamentos e estornos confirmados; chave única por origem/referência/tipo. Nenhum lançamento foi criado. Ainda não existe integração de cobrança: valores vazios/zero não atestam ausência de pagamentos externos. Não multiplicar preço atual por assinantes.
+- Concessões manuais e testes são separados de assinaturas ativas; nenhum deles gera receita. Conectar webhook verificado e importar histórico do provedor é necessário para preencher os recebimentos reais.
