@@ -255,8 +255,6 @@
     root.appendChild(board);
     if (model === 'guiado' && mod.tipo === 'mapa' && !mod._mobile) root.appendChild(el('p', { class: 'hintline' }, esc(T.drag)));
 
-    var fb = el('section', { class: 'fb', id: 'fb', 'aria-live': 'polite' });
-    root.appendChild(fb);
 
     if (mod.fuente) root.appendChild(el('p', { class: 'src' }, esc(T.source) + ': ' + esc(mod.fuente)));
 
@@ -323,15 +321,51 @@
     });
   }
 
+  /* Correção contextual: a resposta fica no campo original, sem gabarito duplicado abaixo. */
   function paint(id) {
     var f = root.querySelector('[data-f="' + id + '"]');
     if (!f) return;
     var holder = f.closest('[data-hold]') || f;
-    var st = statusOf(id);
+    var st = statusOf(id), checked = !!(cur && S.v[cur.id]);
+    var revealed = !!(cur && S.r[cur.id]);
+    var it = cur && cur._cur && cur._cur.find(function (item) { return item.id === id; });
+    var show = !!it && (revealed || (checked && !!S.c[id]));
     holder.setAttribute('data-st', st);
     var ico = holder === f ? f.nextElementSibling : holder.querySelector('.ico');
     if (ico && ico.classList.contains('ico')) { ico.textContent = ICON[S.c[id]] || ''; ico.title = LABEL[S.c[id]] || ''; }
     f.setAttribute('aria-description', LABEL[S.c[id]] || '');
+    var target = f.type === 'radio' ? f.closest('.opts') : f;
+    if (!target) return;
+    var old = target.parentNode.querySelector('[data-inline-for="' + id + '"]');
+    if (old) old.remove();
+    if (f.type === 'radio') {
+      target.classList.toggle('inline-answer-hidden', show);
+    } else {
+      f.classList.toggle('inline-answer-hidden', show);
+    }
+    if (!show) return;
+    var code = revealed && !checked ? 'ok' : (S.c[id] || 'empty');
+    var given = (S.a[id] || '').trim();
+    var correct = revealed || code !== 'ok';
+    var answer = correct ? it.ans : (given || it.ans);
+    if (it.mc && correct && it.opts) {
+      var option = it.opts.find(function (o) { return Core.norm(o).charAt(0) === Core.norm(it.ans).charAt(0); });
+      if (option) answer = option;
+    }
+    var display = el('button', { type: 'button', class: 'inline-answer', 'data-inline-for': id, 'data-st': code, title: LANG === 'es' ? 'Editar respuesta' : 'Editar resposta' });
+    var label = code === 'ok' ? T.ok : code === 'part' ? T.part : code === 'miss' ? T.miss : T.blank;
+    display.appendChild(el('span', { class: 'inline-answer-text' }, esc(answer)));
+    display.appendChild(el('span', { class: 'inline-answer-status' }, esc(label)));
+    display.addEventListener('click', function () {
+      if (cur && cur._model && cur._model !== 'mem' && cur._model !== 'orden') {
+        delete S.c[id]; delete S.v[cur.id]; delete S.r[cur.id]; save();
+        cur._cur.forEach(function (item) { paint(item.id); });
+        refresh(cur);
+        var field = root.querySelector('[data-f="' + id + '"]');
+        if (field) field.focus();
+      }
+    });
+    target.insertAdjacentElement('afterend', display);
   }
 
   function refresh(mod) {
@@ -345,47 +379,15 @@
     var rev = !!S.r[mod.id];
     var br = document.getElementById('bRev');
     if (br) { br.setAttribute('aria-pressed', rev ? 'true' : 'false'); br.textContent = rev ? T.hide : T.reveal; }
+    mod._cur.forEach(function (it) { paint(it.id); });
     renderFeedback(mod);
     if (mod._counts) mod._counts();
     notifyHeight();
   }
 
   function renderFeedback(mod) {
-    var box = document.getElementById('fb'); if (!box) return;
-    box.innerHTML = '';
-    var rev = !!S.r[mod.id], ver = !!S.v[mod.id];
-    var anyChecked = mod._cur.some(function (it) { return S.c[it.id]; });
-    var list = mod._cur.filter(function (it) {
-      var st = S.c[it.id];
-      return rev || st === 'part' || st === 'miss';
-    });
-    box.appendChild(el('h2', null, esc(rev ? T.gab : T.toReview)));
-    if (anyChecked || ver) {
-      var c = { ok: 0, part: 0, miss: 0, empty: 0 };
-      mod._cur.forEach(function (it) { var st = S.c[it.id]; if (st) c[st === 'empty' ? 'empty' : st]++; else if (ver) c.empty++; });
-      box.appendChild(el('p', { class: 'sum' }, c.ok + ' ' + esc(T.okN) + ' · ' + c.part + ' ' + esc(T.partN) + ' · ' + c.miss + ' ' + esc(T.missN) + ' · ' + c.empty + ' ' + esc(T.blankN)));
-    }
-    if (!list.length) {
-      box.appendChild(el('p', { class: 'sum' }, esc(anyChecked ? T.nothing : T.waiting)));
-      return;
-    }
-    var g = el('div', { class: 'fblist' });
-    list.forEach(function (it) {
-      var st = S.c[it.id] || ((S.a[it.id] || '').trim() ? 'filled' : 'empty');
-      var a = el('article', { class: 'fbi', 'data-st': st });
-      var h = el('header'); var s1 = el('span'); s1.textContent = it.label || ''; var s2 = el('span'); s2.textContent = LABEL[st] || ''; h.appendChild(s1); h.appendChild(s2); a.appendChild(h);
-      if (it.hint) { var q = el('p', { class: 'q' }); q.textContent = it.hint; a.appendChild(q); }
-      var y = (S.a[it.id] || '').trim();
-      if (y) { var p = el('p', { class: 'yours' }); p.textContent = T.you + y; a.appendChild(p); }
-      var gp = el('p', { class: 'gab' }); gp.appendChild(el('b', null, esc(T.gab) + ': ')); gp.appendChild(txt(it.ans)); a.appendChild(gp);
-      if (it.answerSet) { var setNote=el('p',{class:'exp'}); setNote.textContent='Mínimo: '+it.minimum+'. Separe com ponto e vírgula. Opções: '+it.answerSet.join('; '); a.appendChild(setNote); }
-      if (it.acceptedAnswers && it.acceptedAnswers.length > 1) {
-        var alternatives = el('p', { class: 'exp' }); alternatives.textContent = (LANG === 'es' ? 'Otras respuestas admitidas: ' : 'Outras respostas aceitas: ') + it.acceptedAnswers.filter(function(x){return x !== it.ans;}).join('; '); a.appendChild(alternatives);
-      }
-      if (it.exp) { var ex = el('p', { class: 'exp' }); ex.appendChild(el('b', null, esc(T.why) + ': ')); ex.appendChild(txt(it.exp)); a.appendChild(ex); }
-      g.appendChild(a);
-    });
-    box.appendChild(g);
+    var box = document.getElementById('fb');
+    if (box) box.replaceChildren();
   }
 
   /* ---------- MAPA MENTAL: disposição automática em colunas ---------- */
