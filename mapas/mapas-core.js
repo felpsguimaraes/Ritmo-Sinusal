@@ -31,7 +31,11 @@
     }
     return false;
   }
-  function has(n, k) { return n.indexOf(k) > -1 || fuzzyHas(n, k); }
+  /* "^rim": só no começo de uma palavra (evita achar "rim" dentro de "primer") */
+  function has(n, k) {
+    if (k.charAt(0) === '^') return new RegExp('(^|[^a-z0-9])' + esc(k.slice(1))).test(n);
+    return n.indexOf(k) > -1 || fuzzyHas(n, k);
+  }
 
   /* "a|b;c|d!x|y": grupos separados por ";" (todos precisam aparecer),
      alternativas por "|" (basta uma) e proibidas depois de "!" */
@@ -150,6 +154,21 @@
         if (item.opts) { item.keys = [[norm(c[2]).charAt(0)]]; item.not = []; item.mc = true; }
         mod._items.push(item);
         return item;
+      });
+    } else if (mod.tipo === 'laminas') {
+      /* prática: cada lâmina pede ÓRGANO, PROCESO, DESCRIPCIÓN (texto livre, um item por achado) e DX */
+      mod._tree = (mod.laminas || []).map(function (L, i) {
+        var base = mod.id + '.' + (L.id || ('l' + (i + 1)));
+        function mk(suffix, pair, label) {
+          var pk = parseKeys(pair[1]);
+          var it = { id: base + '.' + suffix, ans: pair[0], keys: pk.keys, not: pk.not, label: label, lam: i };
+          mod._items.push(it);
+          return it;
+        }
+        var o = mk('o', L.organo, 'organo'), p = mk('p', L.proceso, 'proceso');
+        var d = (L.desc || []).map(function (c, j) { var it = mk('d' + (j + 1), c, 'desc'); it.free = true; it.txt = base + '.d'; return it; });
+        var x = mk('x', L.dx, 'dx');
+        return { L: L, i: i, key: base, txt: base + '.d', o: o, p: p, d: d, x: x, g: L.g || L.id || ('l' + (i + 1)) };
       });
     } else {
       throw new Error('tipo desconhecido: ' + mod.tipo);

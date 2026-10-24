@@ -550,7 +550,9 @@
   function renderMapasMateria() {
     var s = subjectData(), slug = s && s.slug, box = $id('subjectContent');
     if (!slug || !MAPAS_MATERIAS[slug]) { box.innerHTML = emptyBox('Os mapas guiados desta matéria ainda não foram feitos.', 'Enquanto isso, use o Treino, os Flashcards e a Revisão e progresso.'); return }
-    box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
+    /* a chave Teoria/Prática da matéria decide o que o quadro mostra (na prática: láminas e exame físico) */
+    var modo = UI.mode === 'practice' ? 'pratica' : 'teoria';
+    box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });
