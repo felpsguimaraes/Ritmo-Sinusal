@@ -44,6 +44,13 @@
 - As justificativas **não** recebem selo de validação médica por terem gabarito.
 - Filtros: todas, não respondidas, caderno de erros, marcadas e sem correção validada. Progresso fica local ao navegador.
 
+## Comentários clínicos com revisão individual
+
+- **2024/1, questão 60** — alternativa oficial A (31%). Reconstituído o cálculo do valor preditivo positivo: 0,08 / (0,08 + 0,18) = 30,77%; comentadas as alternativas A–D. Referência: [Prevalence — StatPearls](https://www.ncbi.nlm.nih.gov/books/NBK430867/).
+- **2024/1, questão 97** — alternativa oficial C (T10). Comparadas as quatro alternativas com marcos dermatômicos; nível umbilical = T10. Ressalva: exame padronizado é necessário para classificar lesão neurológica com precisão. Referência: [ISNCSCI, revisão 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC8152171/).
+
+Estas são **duas revisões clínicas individuais**, não justificam declarar as demais questões como clinicamente validadas.
+
 ## Pendências para validação clínica integral
 
 1. Comparar cada enunciado e alternativa com os PDFs em inspeção visual, sobretudo imagens, tabelas, gráficos, doses e unidades.
