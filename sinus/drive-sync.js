@@ -13,6 +13,7 @@ var CATALOGS=[
 '/biblioteca/dados/c-periodos-4-6-extra.json',
 '/biblioteca/dados/c-periodos-7-8-extra.json',
 '/biblioteca/dados/c-periodos-6-8-subpastas.json',
+'/biblioteca/dados/drive-turmas-5.json',
 '/biblioteca/dados/turmas-ab-1.json',
 '/biblioteca/dados/turmas-ab-2.json',
 '/biblioteca/dados/turmas-ab-3.json',
