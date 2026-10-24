@@ -225,7 +225,7 @@ document.getElementById('rvZoomIn').onclick=()=>setZoom(scale+.1);
 document.getElementById('rvZoomReset').onclick=()=>setZoom(1);
 setZoom(scale);
 let collapsed=false;
-function setSide(v){collapsed=v;layout.classList.toggle('rv-side-collapsed',v);btn.setAttribute('aria-expanded',String(!v));btn.textContent=v?'Mostrar apoio':'Recolher apoio';}
+function setSide(v){collapsed=v;layout.classList.toggle('rv-side-collapsed',v);if(!v&&matchMedia('(max-width:760px)').matches)layout.classList.add('side-open');btn.setAttribute('aria-expanded',String(!v));btn.textContent=v?'Mostrar apoio':'Recolher apoio';}
 btn.onclick=()=>setSide(!collapsed);
 const modes=[['essencial','Grifos: essenciais'],['completo','Grifos: completos'],['nenhum','Grifos: desligados']];
 let idx=0;
