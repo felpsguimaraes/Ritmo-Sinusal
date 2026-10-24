@@ -69,7 +69,7 @@
     return (S.a[id] || '').trim() ? 'filled' : 'empty';
   }
 
-  try { if (window.parent && window.parent !== window) document.documentElement.classList.add('embed'); } catch (e) {}
+  try { if (window.parent !== window) { void window.parent.location.href; document.documentElement.classList.add('embed'); } } catch (e) {}
   var root = document.getElementById('app');
   var cur = null;          // módulo aberto
   var curSid = null;       // matéria selecionada na lista
