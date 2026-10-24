@@ -105,6 +105,7 @@ function sxLegend(){
  const questionNode=document.getElementById('question');questionNode?.parentNode?.insertBefore(legend,questionNode);
 }
 function sxRenderQuestion(target,text){
+ if(W.SinusSemiologia){W.SinusSemiologia.render(target,text);return;}
  sxLegend();target.replaceChildren();const original=String(text||'');
  if(!sxGrifoAtivo){target.textContent=original;return}
  const frag=document.createDocumentFragment();let pos=0;
