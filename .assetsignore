@@ -13,3 +13,6 @@ supabase/**
 admin/control/schema.sql
 admin/control/README.md
 admin/control/tests/**
+
+admin/control/*.sql
+admin/control/catalog.json
