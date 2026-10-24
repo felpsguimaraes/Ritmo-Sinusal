@@ -10,7 +10,7 @@ A interface está sendo atualizada no mesmo repositório e no domínio canônico
 
 ## Ferramentas e planos
 
-O catálogo contém 47 ferramentas, incluindo biblioteca e seus tipos de material, estudo por matéria, agenda e horários, cronômetro, tela dividida, tipos de questões, treinos, flashcards, simulados, Revalida, Enamed, habilidades clínicas, Atlas, transcrição, caderno, estatísticas, comunidade e imigração.
+O catálogo contém 49 ferramentas, incluindo biblioteca e seus tipos de material, estudo por matéria, agenda e horários, cronômetro, tela dividida, tipos de questões, treinos, flashcards, simulados, Revalida, Enamed, habilidades clínicas, Atlas, transcrição, caderno, estatísticas, comunidade e imigração.
 
 - A disponibilidade global fica em **Funções e avisos**.
 - **Acessos e limites por plano** configura, por ferramenta e operação, permissão e cotas diárias, mensais e totais. As operações são visualização, uso/execução e download pelo portal.
@@ -36,7 +36,9 @@ A lista de usuários e os detalhes do cadastro mostram turma e período, além d
 
 ## Verificação
 
-32 testes da API passaram com serviços simulados, sem enviar mensagens ou alterar alunos reais. Cobrem papéis, contas protegidas, origem e sessão, validação das cotas, mensagens, anexos, confirmação de destinatários, recibos e dados acadêmicos.
+35 testes da API passaram com serviços simulados, sem enviar mensagens ou alterar alunos reais. Cobrem papéis, contas protegidas, origem e sessão, validação das cotas, mensagens, anexos, confirmação de destinatários, recibos e dados acadêmicos.
+
+Cinco testes adicionais do portal passaram, verificando a reserva antes de abrir conteúdo, a negação de acesso, a preservação de recursos essenciais e a ordem das navegações dependentes.
 
 O banco passou em oito verificações de cotas dentro de uma transação revertida: reserva inicial, repetição idempotente, franquia diária, mensal e total, reversão do lote ao negar uma etapa, indisponibilidade global e negação de execução anônima. As alterações de teste não foram persistidas.
 
@@ -55,6 +57,7 @@ As aulas antigas em Firebase e suas chaves de conteúdo criptografado permanecem
 - `schema.sql`: instalação inicial, já aplicada.
 - `schema-v2.sql`: catálogo, regras, acessos manuais, uso e mensagens, já aplicada. O arquivo-fonte já inclui a correção que verifica a permissão de visualização antes de uso/download.
 - `schema-v2-helpers.sql`: reserva atômica de lotes e resumo de uso, já aplicada.
+- `schema-v2-types.sql`: adiciona associação de pares e completar lacunas, já aplicada.
 - `schema-v2-view-gate.sql`: correção aplicada à instalação existente, registrada separadamente no histórico de migrações.
 
 Não executar novamente os scripts completos sobre tabelas existentes. Os arquivos são referência da implementação; novas alterações devem usar migrações próprias.

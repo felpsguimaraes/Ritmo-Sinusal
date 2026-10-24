@@ -280,5 +280,17 @@
     "name": "Planos e assinatura",
     "category": "Conta",
     "essential": true
+  },
+  {
+    "key": "matching",
+    "name": "Associação de pares",
+    "category": "Exercícios e revisão",
+    "essential": false
+  },
+  {
+    "key": "gap_fill",
+    "name": "Completar lacunas",
+    "category": "Exercícios e revisão",
+    "essential": false
   }
 ]
