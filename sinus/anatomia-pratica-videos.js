@@ -2,6 +2,7 @@
 (function(W,D){
 'use strict';
 const URL_CATALOG='/sinus/anatomia-pratica-videos.json';
+const UPE_CATALOG='/sinus/anatomia-upe-videos.json';
 // Acervo de segurança: as aulas aparecem mesmo se a requisição JSON falhar.
 // Gerado a partir do catálogo verificado do SINUS; a busca remota atualiza quando acessível.
 const INLINE_CATALOG={"subjects":{"1":[{"id":"8clDlP0u-I0","title":"Músculos de la cabeza — Dr. Ronald Martínez","type":"catedra"},{"id":"3Bb-OG1mUEs","title":"Músculos de la cara — Dr. Víctor Benítez","type":"catedra"},{"id":"4cq1xIrCYCU","title":"Huesos del cráneo — Dr. Ronald Martínez","type":"catedra"},{"id":"5idEqlNOMOM","title":"Hueso esfenóides — Dr. Víctor Benítez","type":"catedra"},{"id":"TnXECT-HRX0","title":"Viscerocráneo — Dr. Víctor Benítez","type":"catedra"},{"id":"PMbTXCOY2W0","title":"Generalities of the skull — Dr. Víctor Benítez","type":"catedra"},{"id":"tA3gkHugBzU","title":"Viscerocráneo — Dr. Víctor Benítez (segunda aula)","type":"catedra"}],"2":[{"id":"d7yiZmmxUMQ","title":"Rins — Dr. Víctor Benítez","type":"catedra"},{"id":"m4YgiQet2Sc","title":"Ciego, Apendice y Cólon (I) — Dr. Víctor Benítez","type":"catedra"},{"id":"3z4PaeHm9OI","title":"Músculos del Muslo (II) y de la Pierna — Dr. Víctor Benítez","type":"catedra"},{"id":"lZe_kcaKogM","title":"Músculos de la Cintura Pelviana y del Muslo (I) — Dr. Víctor Benítez","type":"catedra"},{"id":"0GY0r9Yde_M","title":"Huesos del Miembro Inferior — Dr. Ronald Martínez","type":"catedra"},{"id":"3tSmr908qcA","title":"Nervios del Miembro Inferior — Dr. Ronald Martínez","type":"catedra"},{"id":"TXcxaDA1Lcs","title":"Nervios del Miembro Inferior II — Dr. Ronald Martínez","type":"catedra"},{"id":"WOa4bPwTzC4","title":"Small Intestine — Dr. Víctor Benítez","type":"catedra"},{"id":"C-EJi8B_Er0","title":"Hígado y Visícula Biliar — Dr. Víctor Benítez","type":"catedra"},{"id":"fsBYDslVPzQ","title":"Intestino Grueso I — Dr. Víctor Benítez","type":"catedra"},{"id":"vKqzflhllMo","title":"Intestino Grueso II — Dr. Víctor Benítez","type":"catedra"},{"id":"spBpM-s-WMU","title":"Bazo — Dr. Víctor Benítez","type":"catedra"},{"id":"dsfHIUdPbCM","title":"Páncreas y hígado — Dr. Víctor Benítez","type":"catedra"},{"id":"myLQ-zY73zI","title":"Estómago II y duodeno — Dr. Víctor Benítez","type":"catedra"},{"id":"hV1yUy8Tn_o","title":"Vísceras abdominales — Dr. Ronald","type":"catedra"},{"id":"E6Q80b7d6xw","title":"Estómago 1 — Dr. Víctor Benítez","type":"catedra"},{"id":"Zr5u-nHw644","title":"Peritoneo 3 — Dr. Víctor Benítez","type":"catedra"},{"id":"QMHBvi3qkRo","title":"Músculos de la Región Lombar y Conducto Inguinal — Dr. Víctor Benítez","type":"catedra"},{"id":"VCe3dFoVnPw","title":"Cintura Pélvica — Dr. Víctor Benítez","type":"catedra"},{"id":"hGqia8Idaq4","title":"Huesos del abdomen — Dr. Ronald Martínez","type":"catedra"},{"id":"WQ2OfTpidnY","title":"Vena cava inferior — Dr. Ronald Martínez","type":"catedra"},{"id":"EP89wGf8UX8","title":"Peritoneum 1 and 2 — Dr. Víctor Benítez","type":"catedra"},{"id":"4HA5dRi7u2Y","title":"Hígado — Dr. Ronald Martínez","type":"catedra"},{"id":"jBoibtElxvw","title":"Inguinal canal / anterolateral abdominal muscles — Dr. Víctor Benítez","type":"catedra"},{"id":"2PLhRx9Q-vs","title":"Vertebras Lumbares — Dr. Víctor Benítez","type":"catedra"},{"id":"qejAwhTMqfE","title":"Abdominal Overview — Dr. Víctor Benítez","type":"catedra"},{"id":"CtP5hMFLbuI","title":"Aorta abdominal — Dr. Ronald Martínez","type":"catedra"},{"id":"Pt09Y9jxS24","title":"Huesos sacro y cóccix — Dr. Víctor Benítez","type":"catedra"}]}};
@@ -79,7 +80,7 @@ function showModal(item){
 }
 function professor(it){
  const n=norm(it.title);
- return /victor benitez/.test(n)?'Dr. Víctor Benítez':/ronald martinez|dr. ronald\b/.test(n)?'Dr. Ronald Martínez':'Outras aulas';
+ return it.channelHandle==='@anatomiaupefranco'?'Anatomia UPE Franco':it.channelHandle==='@anatomiaupe2188'?'Anatomia UPE':/victor benitez/.test(n)?'Dr. Víctor Benítez':/ronald martinez|dr. ronald\b/.test(n)?'Dr. Ronald Martínez':'Outras aulas';
 }
 function statusKey(course){
  const uid=String(W.SinusApp?.S?.uid||'estudante').replace(/[^a-z0-9_-]/gi,'').slice(0,80);
@@ -128,7 +129,7 @@ function mount(){
   '<button type="button" class="sxAPVDone" data-apv-done>Marcar como assistida</button></div>'+
   '<div class="sxAPVPlayerActions"><button type="button" data-apv-prev>← Anterior</button>'+
   '<button type="button" data-apv-next>Próxima aula →</button></div>'+
-  '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Se o player não abrir, assistir no YouTube ↗</a>'+'<p class="sxAPVSource">Vídeos catalogados do canal público Clases Medicina - Py, separados por título e professor. A vinculação oficial à faculdade não foi confirmada.</p>'+
+  '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Se o player não abrir, assistir no YouTube ↗</a>'+'<p class="sxAPVSource">Videoaulas públicas dos canais Clases Medicina - Py e Anatomia UPE. Os direitos e a autoria permanecem com seus respectivos criadores.</p>'+
   '</div><aside class="sxAPVSide" aria-label="Lista de videoaulas"><div class="sxAPVListHead"><div><h3>Lista de aulas</h3><small data-apv-progress></small></div>'+
   '<input type="search" data-apv-search placeholder="Buscar aula" aria-label="Buscar aula"></div>'+
   '<div class="sxAPVControls" data-apv-filters role="group" aria-label="Filtrar por professor">'+
@@ -180,30 +181,45 @@ function mount(){
  section.querySelector('[data-apv-search]').addEventListener('input',e=>{query=e.target.value;draw()});
  select(chosen,false);
 }
+function mergeCatalog(base,extra){
+ const subjects={'1':[],'2':[]};
+ for(const level of ['1','2']){
+  const seen=new Set();
+  for(const x of base.subjects?.[level]||[]){
+   if(!x||x.type!=='catedra'||!idOK(x.id)||seen.has(x.id))continue;
+   seen.add(x.id);subjects[level].push(x);
+  }
+  for(const x of extra?.videos||[]){
+   if(!x||!idOK(x.id)||seen.has(x.id))continue;
+   if(!['1','2','geral'].includes(x.anatomyPeriod)||x.anatomyPeriod!=='geral'&&x.anatomyPeriod!==level)continue;
+   seen.add(x.id);
+   subjects[level].push({...x,type:'catedra'});
+  }
+ }
+ return {subjects};
+}
 function load(force=false){
  if(cache.loading)return cache.loading;
  if(cache.loaded&&!force)return Promise.resolve(cache.data);
- cache.loading=fetch(URL_CATALOG+'?v=20261025-catedra-pratica-only',{cache:'no-store'})
- .then(r=>{if(!r.ok)throw Error('catálogo indisponível');return r.json()})
- .then(data=>{
-  if(!data||!data.subjects||!Array.isArray(data.subjects['1'])||!Array.isArray(data.subjects['2']))
-   throw Error('formato inválido');
-  const valid={subjects:{}};
-  for(const level of ['1','2']){
-   valid.subjects[level]=data.subjects[level].filter(x=>x&&x.type==='catedra'&&idOK(x.id));
-   if(!valid.subjects[level].length)throw Error('Sem vídeos de Anatomia '+level);
-  }
-  cache.data=valid;cache.erro='';return valid;
+ const options={cache:force?'no-store':'default'},version='?v=20261025-upe-individual';
+ cache.loading=Promise.allSettled(
+  [URL_CATALOG,UPE_CATALOG].map(url=>fetch(url+version,options)
+   .then(r=>{if(!r.ok)throw Error(url+' HTTP '+r.status);return r.json()})))
+ .then(results=>{
+  const original=results[0].status==='fulfilled'&&results[0].value?.subjects?results[0].value:INLINE_CATALOG;
+  const extra=results[1].status==='fulfilled'&&Array.isArray(results[1].value?.videos)?results[1].value:null;
+  cache.data=mergeCatalog(original,extra);
+  cache.erro=results.filter(x=>x.status==='rejected').map(x=>String(x.reason)).join('; ');
+  return cache.data;
  })
- .catch(err=>{
-  // Nunca deixar a Cátedra vazia: preserva as 35 aulas já verificadas.
-  cache.erro=String(err);return cache.data;
- })
+ .catch(err=>{cache.erro=String(err);return cache.data})
  .finally(()=>{
   cache.loaded=true;cache.loading=null;
-  // Não reinicializa um vídeo que o aluno já começou a assistir.
   const root=D.querySelector('[data-apv-root]');
-  if(root&&!root.querySelector('[data-apv-player]')){root.remove();mount()}
+  // Atualiza a lista de aulas, mas não interrompe um vídeo em reprodução.
+  if(root&&!root.querySelector('iframe')){root.remove();mount()}
+  const home=D.querySelector('[data-apv-shortcut]');if(home)home.remove();
+  ensureLauncher();
  });
  return cache.loading;
 }
