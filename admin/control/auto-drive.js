@@ -5,7 +5,7 @@ const END='https://qyioizupudjrwmtasrue.supabase.co/functions/v1/sinus-subject-r
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
 let busy=false,latest=null;
-const state={root:'',found:0,folders:0,processed:0,imported:0,updated:0,skipped:0,issues:[],rows:[],savedRows:[],errors:[]};
+const state={root:'',found:0,folders:0,processed:0,imported:0,updated:0,skipped:0,issues:[],rows:[],savedRows:[],errors:[],verified:null,runId:''};
 function idOf(link){try{const u=new URL(link);if(u.protocol!=='https:'||!['drive.google.com','docs.google.com'].includes(u.hostname))return '';return u.pathname.match(/\/folders\/([A-Za-z0-9_-]{15,})/)?.[1]||u.searchParams.get('id')||'';}catch{return '';}}
 function stage(text){
  const n=norm(text);
@@ -159,9 +159,10 @@ async function scan(root,token){
 }
 function groups(rows){const map=new Map();for(const x of rows){const key=[x.period,x.cohort,x.subject,x.section].join(' | ');map.set(key,(map.get(key)||0)+1);}return [...map].sort((a,b)=>a[0].localeCompare(b[0]));}
 function report(){const r=D.getElementById('sx-auto-report');if(!r)return;
- const g=groups(state.savedRows);
+ const g=state.verified?.groups?.length?state.verified.groups.map(x=>[[x.period,x.cohort,x.subject,x.section].join(' | '),x.files]):groups(state.savedRows);
  r.innerHTML='<div class="sxAutoSummary"><b>'+state.imported+'</b><span>Novos arquivos cadastrados</span><b>'+state.updated+'</b><span>Arquivos atualizados</span><b>'+state.issues.length+'</b><span>Sem classificação</span></div>'+
  (g.length?'<h3>Abas alimentadas</h3><div class="sxAutoGroups">'+g.map(([name,n])=>'<div><span>'+esc(name.replace(/ \| /g,' · '))+'</span><b>'+n+' arquivo(s)</b></div>').join('')+'</div>':'<p>Nenhuma aba foi alimentada.</p>')+
+ (state.verified?'<p class="sxAutoConfirmed">✓ Confirmados no banco: '+state.verified.total+' arquivos nesta pasta, em '+(state.verified.groups?.length||0)+' agrupamentos.</p>':'')+
  (state.issues.length?'<details><summary>Ver '+state.issues.length+' arquivo(s) não classificados</summary><div class="sxAutoIssues">'+state.issues.slice(0,100).map(x=>'<p><b>'+esc(x.issue)+'</b> — '+esc(x.path)+'</p>').join('')+'</div></details>':'')+
  (state.errors.length?'<details open><summary>'+state.errors.length+' erro(s) de leitura</summary>'+state.errors.map(x=>'<p>'+esc(x.issue)+' — '+esc(x.path)+'</p>').join('')+'</details>':'');
 }
@@ -169,7 +170,7 @@ async function run(){
  if(busy)return;
  const url=D.getElementById('sx-auto-url')?.value.trim()||'',root=idOf(url);
  if(!root)return status('Cole um link válido de pasta do Google Drive.',true);
- busy=true;state.root=root;state.imported=0;state.updated=0;state.savedRows=[];
+ busy=true;state.root=root;state.imported=0;state.updated=0;state.savedRows=[];state.verified=null;state.runId=crypto.randomUUID();
  const btn=D.getElementById('sx-auto-run');btn.disabled=true;D.getElementById('sx-auto-report').innerHTML='';
  try{
   const ss=await session();let token=ss.provider_token;
@@ -180,24 +181,48 @@ async function run(){
   const ids=new Set();const unique=[];
   for(const f of files){const key=[f.file_id,f.period,f.cohort,f.subject,f.section,f.study_mode].join('|');if(!ids.has(key)){ids.add(key);unique.push(f);}}
   state.skipped=files.length-unique.length;
-  if(!unique.length){report();status('Leitura concluída, mas nenhum arquivo foi vinculado. Confira os avisos de classificação.',true);return;}
+  if(!unique.length){report();status('Leitura concluída, mas nenhum arquivo foi vinculado. Confira os avisos de classificação.',true);await logSync('partial');return;}
   for(let i=0;i<unique.length;i+=70){
    status('Salvando os materiais no SINUS: '+Math.min(i+70,unique.length)+' / '+unique.length+'…');
    const saved=await api('import_batch',{root_id:root,items:unique.slice(i,i+70)});
    state.imported+=Number(saved.created||0);state.updated+=Number(saved.updated||0);state.savedRows.push(...unique.slice(i,i+70));
   }
-  report();status((state.errors.length?'Importação parcial: ':'Importação concluída: ')+state.imported+' novos e '+state.updated+' atualizados.'+(state.errors.length?' Algumas pastas não puderam ser lidas — confira os erros abaixo.':' Veja as abas alimentadas abaixo.'));
+  status('Conferindo os arquivos gravados no banco de dados…');
+  state.verified=await api('import_summary',{root_id:root});
+  const persisted=new Map((state.verified.groups||[]).map(x=>[[x.period,x.cohort,x.subject,x.section].join(' | '),x.files]));
+  if(groups(unique).some(([key,count])=>(persisted.get(key)||0)<count))state.errors.push({issue:'Há arquivos do lote ainda não confirmados no banco.',path:'Verifique o importador'});
+  const partial=!!(state.errors.length||state.issues.length);
+  report();
+  status((partial?'Importação parcial: ':'Importação concluída e conferida: ')+state.imported+' novos e '+state.updated+' atualizados.'+(partial?' Veja itens pendentes abaixo.':' Confira as abas alimentadas abaixo.'),partial);
+  await logSync(partial?'partial':'completed');
  }catch(e){
   report();
   status('Não foi possível concluir: '+e.message+(state.imported||state.updated?' Arquivos anteriores a este erro já foram salvos.':''),true);
+  if(state.rows.length||state.imported||state.updated)await logSync('failed').catch(()=>{});
  }finally{busy=false;btn.disabled=false;progress();}
+}
+async function logSync(result){
+ try{
+  await api('sync_log',{run_id:state.runId,root_id:state.root,status:result,report:{read:state.found,folders:state.folders,created:state.imported,updated:state.updated,pending:state.issues.length,errors:state.errors.length,verified:state.verified?.total||0,issues:state.issues.slice(0,30).map(x=>x.issue+' — '+x.path)}});
+  await history();
+ }catch(e){status('Importação executada, porém o histórico não foi salvo: '+e.message,true);}
+}
+async function history(){
+ const host=D.getElementById('sx-auto-history');if(!host)return;
+ try{
+  const d=await api('sync_history',{});
+  host.innerHTML='<h3>Últimas sincronizações</h3>'+(!d.runs?.length?'<p>Nenhuma sincronização registrada.</p>':
+  '<div class="sxAutoGroups">'+d.runs.map(x=>'<div><span>'+esc(new Date(x.started_at).toLocaleString('pt-BR'))+' · Pasta '+esc(x.root_id)+' · '+esc(x.status==='completed'?'Concluída':x.status==='partial'?'Parcial':'Falha')+'</span><b>'+Number(x.result?.created||0)+' novos · '+Number(x.result?.updated||0)+' atualizados</b></div>').join('')+'</div>');
+ }catch{host.innerHTML='';}
 }
 function renderInto(target){
  if(!target)return;
  let remembered='';try{remembered=sessionStorage.getItem('sxAutoPendingDriveUrl')||'';sessionStorage.removeItem('sxAutoPendingDriveUrl');}catch{}
- target.innerHTML='<section class="sxAuto"><div class="sxAutoHeading"><span>SINCRONIZAÇÃO AUTOMÁTICA · GOOGLE DRIVE</span><h2>Importar pasta inteira</h2><p>Cole o link da pasta de uma turma ou período. O SINUS lê as subpastas, reconhece a matéria, classifica os materiais por aba e por P1/P2/Final, e registra um relatório do que conseguiu importar.</p></div><div class="sxAutoForm"><label>Link da pasta do Google Drive<input id="sx-auto-url" type="url" value="'+esc(remembered)+'" placeholder="https://drive.google.com/drive/folders/…"></label><label class="sxAutoFallback">Turma para arquivos sem identificação (opcional)<select id="sx-auto-fallback"><option value="review">Manter em revisão — não misturar turmas</option><option value="*">Compartilhado com todas as turmas</option>'+ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(x=>'<option value="'+x+'">Turma '+x+'</option>').join('')+'</select></label><div class="sxAutoButtons"><button id="sx-auto-run" class="primary" type="button">Analisar e alimentar todas as matérias</button><button id="sx-auto-connect" type="button" hidden>Conectar Google Drive</button></div><div id="sx-auto-count">Nenhuma pasta analisada</div><p id="sx-auto-status" role="status">A importação exige acesso aos metadados do Drive. Arquivos privados continuam protegidos pelo Google.</p></div><div id="sx-auto-report"></div><p class="sxAutoNote">Arquivos só são publicados quando há período e matéria identificáveis. Itens sem correspondência são mostrados no relatório, não enviados à turma errada. O painel não altera nem compartilha os arquivos originais.</p></section>';
+ target.innerHTML='<section class="sxAuto"><div class="sxAutoHeading"><span>SINCRONIZAÇÃO AUTOMÁTICA · GOOGLE DRIVE</span><h2>Importar pasta inteira</h2><p>Cole o link da pasta de uma turma ou período. O SINUS lê as subpastas, reconhece a matéria, classifica os materiais por aba e por P1/P2/Final, e registra um relatório do que conseguiu importar.</p></div><div class="sxAutoForm"><label>Link da pasta do Google Drive<input id="sx-auto-url" type="url" value="'+esc(remembered)+'" placeholder="https://drive.google.com/drive/folders/…"></label><label class="sxAutoFallback">Turma para arquivos sem identificação (opcional)<select id="sx-auto-fallback"><option value="review">Manter em revisão — não misturar turmas</option><option value="*">Compartilhado com todas as turmas</option>'+ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(x=>'<option value="'+x+'">Turma '+x+'</option>').join('')+'</select></label><div class="sxAutoButtons"><button id="sx-auto-run" class="primary" type="button">Analisar e alimentar todas as matérias</button><button id="sx-auto-connect" type="button" hidden>Conectar Google Drive</button></div><div id="sx-auto-count">Nenhuma pasta analisada</div><p id="sx-auto-status" role="status">A importação exige acesso aos metadados do Drive. Arquivos privados continuam protegidos pelo Google.</p></div><div id="sx-auto-report"></div><div id="sx-auto-history"></div><p class="sxAutoNote">Arquivos só são publicados quando há período e matéria identificáveis. Itens sem correspondência são mostrados no relatório, não enviados à turma errada. O painel não altera nem compartilha os arquivos originais.</p></section>';
  target.querySelector('#sx-auto-run').onclick=run;target.querySelector('#sx-auto-connect').onclick=oauth;
+ history();
+ if(remembered)W.SinusBackend.client.auth.getSession().then(({data})=>{if(data.session?.provider_token)run();else{status('A pasta foi preservada. Autorize o Google Drive para continuar.');target.querySelector('#sx-auto-connect').hidden=false;}}).catch(()=>{});
 }
 W.SinusAutoDrive={render:()=>renderInto(D.getElementById('view')),mount:renderInto,scanMetadata:classify};
-D.head.insertAdjacentHTML('beforeend','<style>.sxAuto{background:#fff;border:1px solid #dce8e0;border-radius:18px;padding:25px;margin-bottom:20px;color:#234633}.sxAutoHeading{margin-bottom:18px}.sxAutoHeading>span{letter-spacing:.1em;color:#548063;font-size:10px;font-weight:800}.sxAutoHeading h2{font-size:22px;margin:6px 0}.sxAutoHeading p{color:#6d8174;font-size:13px;line-height:1.6;max-width:800px}.sxAutoForm{border:1px solid #d8e6db;background:#f7fbf8;border-radius:12px;padding:18px}.sxAutoForm label{display:block;color:#3a5845;font-weight:700;font-size:13px}.sxAutoForm input,.sxAutoForm select{display:block;width:100%;padding:13px;border:1px solid #ccdccc;border-radius:9px;margin-top:8px;background:#fff;color:#284535}.sxAutoFallback{margin-top:12px}.sxAutoButtons{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0}.sxAutoButtons button{border-radius:9px;padding:12px 14px}.sxAutoButtons button:disabled{opacity:.45}.sxAutoButtons #sx-auto-connect{border:1px solid #ccdacc;background:#fff;color:#236444}.sxAutoForm #sx-auto-count,.sxAutoForm #sx-auto-status{font-size:12px;color:#607d67;margin:7px 0}.sxAutoForm .error{color:#b34337!important}.sxAutoSummary{display:grid;grid-template-columns:70px 1fr;gap:5px 10px;background:#f4faf6;padding:16px;margin:17px 0;border-radius:12px}.sxAutoSummary b{font-size:23px;color:#236d45}.sxAutoSummary span{font-size:12px;align-self:center;color:#526957}.sxAutoGroups{display:grid;gap:5px;margin:10px 0}.sxAutoGroups>div{display:flex;justify-content:space-between;gap:15px;background:#f6faf8;padding:10px 12px;border:1px solid #e2eae3;border-radius:8px;font-size:12px}.sxAutoGroups b{white-space:nowrap}.sxAuto details{margin:15px 0;font-size:12px;color:#6b7d70}.sxAuto details summary{cursor:pointer;font-weight:700}.sxAutoIssues{max-height:250px;overflow:auto}.sxAutoIssues p{margin:6px 0}.sxAutoNote{font-size:12px;color:#70857a;line-height:1.5;margin:15px 0 0}@media(max-width:700px){.sxAuto{padding:17px}.sxAutoGroups>div{flex-direction:column;gap:3px}}</style>');
+D.head.insertAdjacentHTML('beforeend','<style>.sxAuto{background:#fff;border:1px solid #dce8e0;border-radius:18px;padding:25px;margin-bottom:20px;color:#234633}.sxAutoHeading{margin-bottom:18px}.sxAutoHeading>span{letter-spacing:.1em;color:#548063;font-size:10px;font-weight:800}.sxAutoHeading h2{font-size:22px;margin:6px 0}.sxAutoHeading p{color:#6d8174;font-size:13px;line-height:1.6;max-width:800px}.sxAutoForm{border:1px solid #d8e6db;background:#f7fbf8;border-radius:12px;padding:18px}.sxAutoForm label{display:block;color:#3a5845;font-weight:700;font-size:13px}.sxAutoForm input,.sxAutoForm select{display:block;width:100%;padding:13px;border:1px solid #ccdccc;border-radius:9px;margin-top:8px;background:#fff;color:#284535}.sxAutoFallback{margin-top:12px}.sxAutoButtons{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0}.sxAutoButtons button{border-radius:9px;padding:12px 14px}.sxAutoButtons button:disabled{opacity:.45}.sxAutoButtons #sx-auto-connect{border:1px solid #ccdacc;background:#fff;color:#236444}.sxAutoForm #sx-auto-count,.sxAutoForm #sx-auto-status{font-size:12px;color:#607d67;margin:7px 0}.sxAutoForm .error{color:#b34337!important}.sxAutoSummary{display:grid;grid-template-columns:70px 1fr;gap:5px 10px;background:#f4faf6;padding:16px;margin:17px 0;border-radius:12px}.sxAutoSummary b{font-size:23px;color:#236d45}.sxAutoSummary span{font-size:12px;align-self:center;color:#526957}.sxAutoGroups{display:grid;gap:5px;margin:10px 0}.sxAutoGroups>div{display:flex;justify-content:space-between;gap:15px;background:#f6faf8;padding:10px 12px;border:1px solid #e2eae3;border-radius:8px;font-size:12px}.sxAutoGroups b{white-space:nowrap}.sxAuto details{margin:15px 0;font-size:12px;color:#6b7d70}.sxAuto details summary{cursor:pointer;font-weight:700}.sxAutoIssues{max-height:250px;overflow:auto}.sxAutoIssues p{margin:6px 0}.sxAutoNote{font-size:12px;color:#70857a;line-height:1.5;margin:15px 0 0}@media(max-width:700px){.sxAuto{padding:17px}.sxAutoGroups>div{flex-direction:column;gap:3px}}.sxAutoConfirmed{font-size:12px;color:#20784e;font-weight:700;padding:10px;background:#ebf8ef;border-radius:9px}.sxAuto #sx-auto-history h3{font-size:13px;margin:16px 0 9px}</style>');
 })(window,document);
