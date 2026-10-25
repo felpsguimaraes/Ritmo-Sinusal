@@ -36,7 +36,8 @@ jobs:
           node --check sinus/subject-resource-balloons.js
           test -s sinus/anatomia-upe-videos.json
           test -s sinus/anatomia-pratica-videos.json
-          grep -Fq 'drive-youtube-unified5' index.html
+          grep -Fq 'catedra-navfix3' index.html
+          grep -Fq "if(tab==='catedra'&&course())" sinus/anatomia-pratica-videos.js
 
       - name: Preparar somente os arquivos públicos do site
         shell: bash
@@ -89,20 +90,25 @@ jobs:
           command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=${{ github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verificar a Cátedra no domínio de produção mesmo via Git integration
+      - name: Verificar HTML e player no domínio de produção
         env:
           GIT_SHA: ${{ github.sha }}
         shell: bash
         run: |
-          # A integração Git do Worker pode publicar sem este workflow fazer upload.
-          # Validar o conteúdo realmente servido evita resultados verdes enganosos.
-          URL="https://meusinus.pages.dev/?cf-check=$GIT_SHA"
-          for attempt in 1 2 3 4 5; do
-            if curl -fLsS --connect-timeout 12 --max-time 25 -H 'Cache-Control: no-cache' "$URL" | grep -Fq 'anatomia-i-ii-drive-youtube-unified-published-20261025'; then
-              echo "Confirmado: Cátedra publicada em meusinus.pages.dev"
+          # Confere que o Cloudflare está servindo o HTML e o JS corrigido,
+          # não apenas que o GitHub recebeu o commit.
+          for attempt in 1 2 3 4 5 6; do
+            URL="https://meusinus.pages.dev/?cf-check=$GIT_SHA-$attempt"
+            JS_URL="https://meusinus.pages.dev/sinus/anatomia-pratica-videos.js?v=20261025-catedra-navfix3&cf-check=$GIT_SHA-$attempt"
+            if curl -fLsS --connect-timeout 15 --max-time 40 "$URL" -o /tmp/sinus-home.html &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$JS_URL" -o /tmp/sinus-catedra.js &&
+               grep -Fq 'catedra-navfix3' /tmp/sinus-home.html &&
+               grep -Fq "if(tab==='catedra'&&course())" /tmp/sinus-catedra.js &&
+               node --check /tmp/sinus-catedra.js; then
+              echo "Verificado: HTML e JS corrigidos disponíveis em meusinus.pages.dev"
               exit 0
             fi
             sleep 8
           done
-          echo "::error::A versão da Cátedra NÃO foi confirmada no endereço meusinus.pages.dev. Verifique a integração Git do Worker sinus com o domínio Pages, e a branch main."
+          echo "::error::O site ainda não serviu a versão com a navegação corrigida da Cátedra."
           exit 1
