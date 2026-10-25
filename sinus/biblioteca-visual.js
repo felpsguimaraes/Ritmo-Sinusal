@@ -15,10 +15,11 @@ async function loadUploads(){
   const {data:session,error:authErr}=await backend().auth.getUser();
   if(authErr)throw authErr;
   const uid=session?.user?.id;
-  if(!uid){uploads.items=[];uploads.user=null;return;}
+  if(!uid){uploads.items=[];uploads.user=null;uploads.ready=false;W.dispatchEvent(new CustomEvent('sinus:library-uploads-ready',{detail:{count:0}}));return;}
   const {data,error}=await backend().from('sinus_library_files').select('id,file_name,title,subject,academic_period,category,mime_type,file_size,storage_path,created_at').eq('user_id',uid).order('created_at',{ascending:false}).limit(500);
   if(error)throw error;
   uploads.items=data||[];uploads.user=uid;uploads.ready=true;
+  W.dispatchEvent(new CustomEvent('sinus:library-uploads-ready',{detail:{count:uploads.items.length}}));
   if(UI.page==='library')render();
  } catch(err){console.error('SINUS biblioteca',err);W.toast?.('Não foi possível carregar seus arquivos: '+(err.message||'erro desconhecido'));}
  finally{uploads.loading=false;}
@@ -159,5 +160,23 @@ const visualStyle=D.createElement('style');visualStyle.textContent='\n.sxLibFocu
 const uploaderStyle=D.createElement('style');uploaderStyle.textContent='.sxUploaderOverlay{position:fixed;inset:0;background:#0b231bbb;z-index:99999;display:flex;align-items:center;justify-content:center;padding:15px}.sxUploaderBox{width:min(520px,100%);max-height:92vh;overflow-y:auto;background:#fff;color:#18392c;border-radius:22px;padding:26px;box-shadow:0 24px 80px #061b1860;display:grid;gap:14px}.sxUploadTitle{display:flex;justify-content:space-between;align-items:flex-start}.sxUploadTitle small{color:#438166;letter-spacing:.1em}.sxUploadTitle h2{font-size:23px;margin:4px 0}.sxUploadTitle button{background:transparent;border:0;cursor:pointer;font-size:20px}.sxUploaderBox p{font-size:13px;color:#5b7168;margin:0}.sxUploaderBox label{font-size:13px;font-weight:600;display:grid;gap:6px}.sxUploaderBox input,.sxUploaderBox select{width:100%;border:1px solid #cbd9d0;border-radius:11px;padding:11px;background:#fff;color:#18392c;font:inherit}.sxUploadCols{display:grid;grid-template-columns:1fr 1fr;gap:12px}.sxUploadActions{display:flex;justify-content:flex-end;gap:10px}#sxUploader .sxFilePicker{display:grid;gap:9px}#sxUploader .sxFileLabel{font-size:13px;font-weight:650}#sxUploader .sxFilePickRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}#sxUploader .sxFilePickRow input[type=file]{display:block!important;position:static!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;min-width:240px;width:100%;max-width:100%;font-size:13px;background:#f5faf7;border:1px solid #c5ded0;border-radius:12px;padding:9px;cursor:pointer}#sxUploader .sxFilePickRow input[type=file]::file-selector-button{background:#dcefe5;color:#185d3d;border:1px solid #b9dcc8;border-radius:9px;padding:10px 12px;font:600 12px system-ui,sans-serif;cursor:pointer;margin-right:10px}#sxUploader .sxFilePickRow input[type=file]:focus-visible{outline:3px solid #57a67d;outline-offset:3px}#sxUploader [data-file-name]{font-size:12px;word-break:break-word;min-width:0;flex:1;color:#486e59}#sxUploader .sxFilePickRow input[type=file]{flex:1 1 280px}#sxUploader .sxFileDrop{border:1px dashed #9dbdae;border-radius:12px;text-align:center;padding:20px 12px;color:#35664c;background:#f6fbf7;cursor:pointer;font-size:12px}#sxUploader .sxFileDrop:hover,#sxUploader .sxFileDrop.isDragging{border-color:#17694c;background:#e6f5ed}#sxUploader .sxFileDrop:focus-visible{outline:3px solid #57a67d;outline-offset:3px}.sxUploaderBox [data-upload-status]{color:#24583f}.sxUploadDelete{border:0;background:transparent;color:#a44336;font-size:12px;cursor:pointer;display:block;margin:7px auto}.sxUploadActions button:disabled{opacity:.5}@media(max-width:560px){.sxUploadCols{grid-template-columns:1fr}.sxUploaderBox{padding:18px}}';D.head.appendChild(uploaderStyle);
 D.addEventListener('visibilitychange',()=>{if(!D.hidden&&UI.page==='library')loadUploads();});
 loadUploads();
-W.SinusLibrary={catalog,filtered,render,purpose,priority,isSlide,loadUploads};
+function openCollection(options={}){
+ const subject=String(options.subject||'');
+ const p=Number(options.period);
+ state.subject=subject;
+ state.period=Number.isInteger(p)&&p>=1&&p<=10?String(p):'all';
+ state.view=options.view||'documents';
+ state.purpose=options.purpose||'all';
+ state.type='all';state.audit='all';state.q='';state.limit=24;
+ if(!['subjects','videos','slides','books','audited','mine','favorites','documents','all'].includes(state.view))state.view='documents';
+ const subjectView=D.getElementById('subjectView');
+ if(subjectView&&!subjectView.classList.contains('hidden')&&typeof W.closeSubject==='function')W.closeSubject();
+ if(typeof W.nav==='function')W.nav('library');
+ render();
+}
+function privateForSubject(subject,period){
+ const p=Number(period);
+ return uploadedItems().filter(x=>x.subject===subject&&(!x.academicPeriod||Number(x.academicPeriod)===p));
+}
+W.SinusLibrary={catalog,filtered,render,purpose,priority,isSlide,loadUploads,openUploaded,privateForSubject,openCollection,get uploadsReady(){return uploads.ready}};
 })(window,document);
