@@ -26,8 +26,8 @@ jobs:
 
       - name: Conferir configuração do Cloudflare
         env:
-          CF_API_TOKEN: \${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CF_ACCOUNT_ID: \${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         shell: bash
         run: |
           if [[ -z "$CF_API_TOKEN" || -z "$CF_ACCOUNT_ID" ]]; then
@@ -75,14 +75,14 @@ jobs:
       - name: Publicar diretamente no projeto meusinus
         uses: cloudflare/wrangler-action@v4
         with:
-          apiToken: \${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: \${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=\${{ github.sha }}
-          gitHubToken: \${{ secrets.GITHUB_TOKEN }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=${{ github.sha }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verificar se o site recebeu a Cátedra atualizada
         env:
-          GIT_SHA: \${{ github.sha }}
+          GIT_SHA: ${{ github.sha }}
         shell: bash
         run: |
           URL="https://meusinus.pages.dev/?cf-check=$GIT_SHA"
