@@ -365,7 +365,31 @@
     if (!DB.plans.some(function (p) { return p.id === 'sinus' })) DB.plans.push({ id: 'sinus', name: 'Acesso completo', priceCents: 0, active: false, description: 'Lançamento do Sinus', features: ['Todo o conteúdo liberado'], limits: { previews: 9999, examFiles: 9999, transcriptionsMonth: 100 } });
     DB.users = [SESSAO];
     DB.sales = [];
-    DB.subjects = montarMaterias();
+    // A grade oficial de horários é a fonte EXCLUSIVA de disciplinas por turma e período.
+    // Catálogos acadêmicos fornecem arquivos, mas nunca criam novas matérias.
+    var suggested = montarMaterias();
+    var official = W.SinusTimetable?.academicOptions?.(per, S.turma || 'G') || [];
+    var cleaned = function(x){return String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim()};
+    if (official.length) {
+      var officialSubjects = {};
+      official.forEach(function(row){
+        if(!row?.title)return;
+        var existingName=Object.keys(suggested).find(function(name){return cleaned(name)===cleaned(row.title)});
+        var source=existingName?suggested[existingName]:null;
+        officialSubjects[row.title]=source||{
+          id:'grade_'+per+'_'+cleaned(row.title).replace(/[^a-z0-9]+/g,'_'),
+          active:true,period:per,teacher:'',practiceTeacher:'',
+          mode:row.activities?.length?'Teoria + Prática':'Teoria',
+          accent:'mint',slides:[],provas:[],audios:[],videos:[],pratica:[],complementares:[]
+        };
+        officialSubjects[row.title].period=per;
+        officialSubjects[row.title].fromTimetable=true;
+      });
+      DB.subjects=officialSubjects;
+    } else {
+      // Sem grade confirmada desta turma, não inferir matérias a partir de arquivos do Drive.
+      DB.subjects={};
+    }
     if (W.SinusDriveSync) W.SinusDriveSync.sync(DB, {uid:S.uid,period:per,cohort:S.turma}, function (status) {
       if (S.dentro && status.indexed > 0) { try { renderAll() } catch(e) {} }
     });
