@@ -253,6 +253,11 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .casefig-btn:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 .casefig figcaption{font-size:12.5px;color:var(--muted);line-height:1.45}
 @media (min-width:861px){.cases.withfig{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}.casefig{position:sticky;top:12px}}
+/* caso com a foto da lámina (quiz por foto): a mesma moldura escura do visor de láminas */
+.casephoto{position:relative;display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:2/1;padding:0;border:0;border-radius:12px;overflow:hidden;background:#0c1311;cursor:zoom-in}
+.casephoto img{display:block;width:100%;height:100%;object-fit:contain}
+.casephoto:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.case-exp{margin:2px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
 .fbi .exp{color:var(--muted);font-size:13px}
 .fbi .exp b{color:var(--green)}
 

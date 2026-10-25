@@ -185,9 +185,9 @@
       });
     } else if (mod.tipo === 'casos') {
       mod._tree = mod.casos.map(function (c, i) {
-        // c = [caso, pergunta, resposta, chaves, explicação, opções?]
+        // c = [caso, pergunta, resposta, chaves, explicação, opções?, foto?] (foto = { src, w, h, alt } do próprio caso)
         var pk = parseKeys(c[3]), an = answerOf(c[2]);
-        var item = { id: mod.id + '.' + (mod._items.length + 1), hint: c[1], caso: c[0], ans: an.ans, keys: pk.keys, not: pk.not, exp: c[4] || '', opts: c[5] || null, label: 'Caso ' + (i + 1) };
+        var item = { id: mod.id + '.' + (mod._items.length + 1), hint: c[1], caso: c[0], ans: an.ans, keys: pk.keys, not: pk.not, exp: c[4] || '', opts: c[5] || null, fig: c[6] || null, label: 'Caso ' + (i + 1) };
         if (an.accepted && !item.opts) item.acceptedAnswers = an.accepted;
         if (item.opts) { item.keys = [[norm(c[2]).charAt(0)]]; item.not = []; item.mc = true; }
         mod._items.push(item);

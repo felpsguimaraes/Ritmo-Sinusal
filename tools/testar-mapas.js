@@ -74,10 +74,17 @@ for (const sid of Object.keys(DATA)) {
       const r = Core.evaluate(it, it.ans);
       if (r !== 'ok') err(tag + ' → resposta-modelo "' + it.ans + '" deu ' + r);
       if (Core.evaluate(it, '') !== 'empty') err(tag + ' → vazio não é vazio');
+      if (it.fig) {
+        if (!it.fig.src || !fs.existsSync(path.join(__dirname, '..', 'mapas', it.fig.src))) err(tag + ' → foto do caso não existe: ' + it.fig.src);
+        const certa = it.opts ? it.opts.find(o => Core.norm(o).charAt(0) === it.keys[0][0]) : it.ans;
+        const alvo = Core.norm(String(certa || '').replace(/^[a-e]\)\s*/i, '')).split(/[^a-z0-9]+/).filter(w => w.length >= 6);
+        if (alvo.some(w => Core.norm((it.fig.alt || '') + ' ' + it.fig.src).indexOf(w) > -1)) err(tag + ' → o texto alternativo ou o nome da foto entrega a resposta');
+      }
       if (it.mc) {
         const letras = it.opts.map(o => Core.norm(o).charAt(0));
         if (letras.indexOf(it.keys[0][0]) < 0) err(tag + ' → a resposta "' + it.ans + '" não corresponde a nenhuma opção');
         if (new Set(letras).size !== letras.length) err(tag + ' → letras de opção repetidas');
+        if (it.opts.map(o => Core.norm(o.replace(/^[a-e]\)\s*/i, ''))).some((o, i, a) => a.indexOf(o) !== i)) err(tag + ' → opções repetidas');
         continue;
       }
       for (const g of it.keys) for (const k of g) {
@@ -107,6 +114,12 @@ for (const sid of Object.keys(DATA)) {
     // nível 2: células ocultas das tabelas, ordenar dos fluxos lineares e texto livre dos mapas
     if (m.tipo === 'tabla') for (const it of m._ditems || []) {
       if (Core.evaluate(it, it.ans) !== 'ok') err(m.id + ' célula oculta [' + it.label + '] → resposta-modelo não aceita');
+      /* claves: no nível 2 a célula vale pelas palavras-chave; os achados do gabarito bastam e lixo não vale */
+      if (m.claves) {
+        const so = m._tree.rows.flat().find(c => c._d === it).filter(p => p.b).map(p => p.b.ans).join(', ');
+        if (Core.evaluateKeys(it, so) !== 'ok') err(m.id + ' célula oculta [' + it.label + '] → só os termos-chave não fecham a célula: ' + so);
+        for (const lixo of ['nao sei', 'xxxxx', 'a']) if (Core.evaluateKeys(it, lixo) === 'ok') err(m.id + ' célula oculta [' + it.label + '] → "' + lixo + '" foi aceito');
+      }
     }
     if (m.tipo === 'fluxo' && m._linear && (!m._ord || m._ord.length < 2)) err(m.id + ': fluxo linear sem ordem');
     if (m.tipo === 'mapa') for (const b of m._tree) {

@@ -87,10 +87,11 @@
       m.sid = sid; m.idx = i; Core.compile(m);
       if (m.tipo === 'laminas') return;
       /* respostas revisadas (gabaritos-revisados.js): resposta completa, respostas aceitas e listas */
-      m._items.concat(m._ditems || []).forEach(function (it) {
+      var dset = m._ditems || [];
+      m._items.concat(dset).forEach(function (it) {
         var revision = (window.SINUS_MAPAS_REVISAO || {})[sid + '/' + it.id];
         if (revision) { it.ans = revision.answer; it.acceptedAnswers = revision.accepted; it.source = revision.source; it.answerSet = revision.answerSet; it.minimum = revision.minimum; }
-        if (Object.prototype.hasOwnProperty.call(S.c, it.id)) S.c[it.id] = Core.evaluate(it, S.a[it.id]);
+        if (Object.prototype.hasOwnProperty.call(S.c, it.id)) S.c[it.id] = grade(m, dset.indexOf(it) > -1 ? 'celdas' : 'guiado', it, S.a[it.id]);
       });
     });
     /* orden = orden de los slides de la clase (clase, slide inicial); los casos, al final */
@@ -110,7 +111,9 @@
     if (!m.sl || !m.sl.length) return m.clase;
     var by = {}, order = [];
     m.sl.forEach(function (e) { if (!by[e[0]]) { by[e[0]] = []; order.push(e[0]); } if (e[1]) by[e[0]].push(e[1] === e[2] ? '' + e[1] : e[1] + '–' + e[2]); });
-    return order.map(function (c) { return clsLabel(m.sid, c, short) + (by[c].length ? ' · ' + T.slWord + ' ' + by[c].join(', ') : ' · ' + T.slSeq); }).join('  +  ');
+    /* a aula pode trocar a palavra "slides" (clases: {lt: ['Laminario…', 'Laminario', 'láminas']}) */
+    function unit(c) { var v = DATA[m.sid] && DATA[m.sid].clases && DATA[m.sid].clases[c]; return (v && v[2]) || T.slWord; }
+    return order.map(function (c) { return clsLabel(m.sid, c, short) + (by[c].length ? ' · ' + unit(c) + ' ' + by[c].join(', ') : ' · ' + T.slSeq); }).join('  +  ');
   }
   /* ---------- sons: acerto, quase e erro (sintetizados, sem arquivos) ---------- */
   var SFX = (function () {
@@ -301,7 +304,7 @@
       var model = modelForLevel(m, lvl), s2 = statsModel(m, model), pct = s2.total ? Math.round(s2.filled / s2.total * 100) : 0;
       var lam = m.tipo === 'laminas';
       var sub = lam ? '' : lvl === '2' ? '/des' : lvl === '1' ? '/g' : '';
-      var kind = lam ? (m.sorteo ? Math.min(m.sorteo, m._tree.length) + ' ' + T.lamsWord + ' ' + T.drawn : m.banco ? T.bank : T.randOrder) : (lvl === '2' ? modelName(m) : TYPE[m.tipo]);
+      var kind = lam ? (m.sorteo ? Math.min(m.sorteo, m._tree.length) + ' ' + T.lamsWord + ' ' + T.drawn : m.banco ? T.bank : T.randOrder) : (lvl === '2' ? modelName(m) : (m.rotulo || TYPE[m.tipo]));
       var a = el('a', { class: 'mcard', href: '#/' + m.sid + '/' + m.id + sub });
       a.innerHTML = '<span class="mico t-' + m.tipo + '">' + TYPE_SVG[m.tipo] + '</span>' +
         '<span class="mbody"><b>' + esc(m.titulo) + (lvl === '3' ? ' <em class="badge">' + esc(T.exam) + '</em>' : '') + '</b><small>' + esc(slideText(m, true)) + ' · ' + esc(kind) + '</small>' +
@@ -348,7 +351,7 @@
     root.appendChild(top);
 
     var head = el('header', { class: 'head' });
-    head.innerHTML = '<div><p class="eyebrow">' + esc(DATA[mod.sid].nome) + ' · ' + esc(slideText(mod)) + ' · ' + esc(TYPE[mod.tipo]) + ' · ' + esc(T.level) + ' ' + levelOf(mod) + '</p><h1>' + esc(mod.titulo) + '</h1>' + (mod.resumen ? '<p class="sub">' + esc(mod.resumen) + '</p>' : '') + '</div>';
+    head.innerHTML = '<div><p class="eyebrow">' + esc(DATA[mod.sid].nome) + ' · ' + esc(slideText(mod)) + ' · ' + esc(mod.rotulo || TYPE[mod.tipo]) + ' · ' + esc(T.level) + ' ' + levelOf(mod) + '</p><h1>' + esc(mod.titulo) + '</h1>' + (mod.resumen ? '<p class="sub">' + esc(mod.resumen) + '</p>' : '') + '</div>';
     root.appendChild(head);
 
     var bar = el('div', { class: 'toolbar' });
@@ -448,7 +451,7 @@
         SFX.play(SFX.verdict(oo.map(function (v, i) { return v === i ? 'ok' : 'miss'; })));
         return;
       }
-      mod._cur.forEach(function (it) { S.c[it.id] = Core.evaluate(it, S.a[it.id]); });
+      mod._cur.forEach(function (it) { S.c[it.id] = grade(mod, model, it, S.a[it.id]); });
       S.v[mod.id] = true; save();
       if (mod.cronometro) stopTimer(mod);
       mod._cur.forEach(function (it) { paint(it.id); });
@@ -477,6 +480,13 @@
     notifyHeight();
   }
 
+  /* tabelas da prática com claves: no nível 2 a célula inteira fica oculta e vale pelas palavras-chave,
+     como a descrição das láminas na prova (a professora corrige pelos achados, não pela frase exata) */
+  function grade(mod, model, it, v) {
+    var r = Core.evaluate(it, v);
+    if (r === 'ok' || r === 'empty' || model !== 'celdas' || !mod.claves) return r;
+    return Core.evaluateKeys(it, v);
+  }
   function bindFields(mod) {
     root.querySelectorAll('[data-f]').forEach(function (f) {
       var id = f.getAttribute('data-f');
@@ -512,6 +522,8 @@
     if (!target) return;
     var old = target.parentNode.querySelector('[data-inline-for="' + id + '"]');
     if (old) old.remove();
+    var oldExp = target.parentNode.querySelector('[data-exp-for="' + id + '"]');
+    if (oldExp) oldExp.remove();
     target.classList.toggle('inline-answer-hidden', show);
     if (!show) return;
     var code = revealed && !checked ? 'ok' : (S.c[id] || 'empty');
@@ -537,6 +549,8 @@
       }
     });
     target.insertAdjacentElement('afterend', display);
+    /* casos com explicar: depois de Verificar, a ficha da lámina (número, órgão, processo) aparece embaixo da resposta */
+    if (cur.explicar && it.exp) display.insertAdjacentElement('afterend', el('p', { class: 'case-exp', 'data-exp-for': id }, esc(it.exp)));
   }
 
   function refresh(mod) {
@@ -637,6 +651,14 @@
       var s = Math.max(0.62, Math.min(1, avail / CWID));
       stage.style.transform = 'scale(' + s + ')';
       wrap.style.width = CWID * s + 'px'; wrap.style.height = H * s + 'px';
+      /* ramo com nome longo (ex.: "Inflamación crónica granulomatosa"): a caixa cresce para os dois lados e continua centrada na ligação */
+      stage.querySelectorAll('.node.branch').forEach(function (n) {
+        var h0 = parseFloat(n.style.height);
+        n.style.height = 'auto';
+        var grow = n.offsetHeight - h0;
+        n.style.height = (grow > 1 ? h0 + grow : h0) + 'px';
+        if (grow > 1) n.style.top = (parseFloat(n.style.top) - grow / 2) + 'px';
+      });
     });
     // contadores por ramo
     mod._counts = function () {
@@ -718,9 +740,12 @@
       box.appendChild(list);
     }
     mod._tree.forEach(function (it, i) {
-      var a = el('article', { class: 'case', 'data-hold': '1' });
-      var h = '<header><b>' + esc(T.caseW) + ' ' + (i + 1) + '</b><span class="ico" aria-hidden="true"></span></header>' +
-        (it.caso ? '<p class="vig">' + esc(it.caso) + '</p>' : '') + '<p class="ask">' + esc(it.hint) + '</p>';
+      var a = el('article', { class: 'case' + (it.fig ? ' hasphoto' : ''), 'data-hold': '1' });
+      var h = '<header><b>' + esc(T.caseW) + ' ' + (i + 1) + '</b><span class="ico" aria-hidden="true"></span></header>';
+      /* foto do próprio caso (ex.: a lámina do laminario): abre no zoom; o texto alternativo não entrega a resposta */
+      if (it.fig) h += '<button type="button" class="casephoto" aria-label="' + esc(T.zoom + ': ' + T.caseW + ' ' + (i + 1)) + '"><img src="' + esc(it.fig.src) + '" alt="' + esc(it.fig.alt || '') + '" loading="lazy" decoding="async"' + (it.fig.w ? ' width="' + it.fig.w + '" height="' + it.fig.h + '"' : '') + '>' +
+        '<span class="lamzoom" aria-hidden="true">' + ZOOM_SVG + '<span>' + esc(T.zoom) + '</span></span></button>';
+      h += (it.caso ? '<p class="vig">' + esc(it.caso) + '</p>' : '') + '<p class="ask">' + esc(it.hint) + '</p>';
       if (it.opts) {
         h += '<div class="opts" role="radiogroup" aria-label="' + esc(it.hint) + '">' + it.opts.map(function (o) {
           var letter = Core.norm(o).charAt(0);
@@ -730,6 +755,7 @@
         h += '<textarea id="in-' + it.id + '" data-f="' + it.id + '" rows="3" spellcheck="false" autocomplete="off" placeholder="' + esc(T.typeAns) + '"></textarea>';
       }
       a.innerHTML = h;
+      if (it.fig) a.querySelector('.casephoto').addEventListener('click', function () { openLightbox([{ src: it.fig.src, cap: T.caseW + ' ' + (i + 1) }], 0); });
       list.appendChild(a);
     });
     board.appendChild(box);
