@@ -68,6 +68,9 @@
     colesterolosis: P('1PVBqplZe0UIhCl6tDvbc5ssM73LG6pq6', '1Xw2yEbbsj6NfDFKzOwbFGrFXMyGDxORo', '1mItNKgsUqm9J0felHW6XHnvJyAkO9UmZ').concat(F('1K5IS7Kqh6T8WYQNdfcHMMz48B7a8ZxnM', '1uKoJeYztOj3L4yp8K7vrsb5byI1t2zsL', '1jxOWXfBRv80V0rYwwLn0iYQ5dFd80__c', '1b5BJ6fXE6YkY-OHOYdji4qL9Lc_j9bmf', '1kXjYaRA3dZVMZo5NhMc6u4oTcoAdlOv3', '1lqnLyCX-G55XZN01zXQP9x8TzRfC5Mxb', '1J8numuo87wxxlZg73Bxq1nYEk-f0cmL1', '1HLn5hrnWtxPhL3cQTJzjmpa0sB9orqHy'))
   };
 
+  /* fotos do Drive da turma (pasta Semana 3 · TUBERCULOSIS): granulomas com células gigantes de Langhans */
+  FT.tbc = FT.tbc.concat(['tbc-drive-1.jpg', 'tbc-drive-2.jpg', 'tbc-drive-3.jpg', 'tbc-drive-4.jpg'].map(function (f) { return { src: 'img/laminario/' + f, k: 'turma' }; }));
+
   /* ───────── P1 práctica: las 5 láminas que la profesora indicó para la prueba ───────── */
   var P1 = [
     { id: 'hipertrofia', g: 'hipertrofia', nome: 'Hipertrofia cardíaca', img: [L(2)].concat(FT.hipertrofia), gab: [G('1ZC7XQShX43kEf_RoV-DrTwUp7gkXC9jg')],
