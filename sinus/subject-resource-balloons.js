@@ -28,9 +28,10 @@ function cards(links,label){
 }
 function apply(subject,configs){
  const ctx=context();if(!ctx||ctx.subject!==subject||busy)return;
- const hidden=key=>configs[key]?.visible===false;
+ const hidden=key=>key!=='overview'&&configs[key]?.visible===false;
  if(hidden(ctx.tab)){
-  busy=true;UI.tab='overview';if(typeof W.renderSubject==='function')W.renderSubject();busy=false;return;
+  busy=true;UI.tab='overview';if(typeof W.renderSubject==='function')W.renderSubject();busy=false;
+  apply(subject,configs);return;
  }
  const tabs=D.querySelectorAll('#subjectTabs button');
  tabs.forEach(b=>{const tab=b.getAttribute('onclick')?.match(/setTab\(['"]([^'"]+)['"]\)/)?.[1];if(!tab)return;b.hidden=hidden(tab);if(configs[tab]?.label)b.textContent=configs[tab].label;});
