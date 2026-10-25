@@ -32,6 +32,8 @@ function driveVideos(level){
   const mime=String(v.mime||v.mime_type||v.mimeType||v.m||'').toLowerCase();
   const title=String(v.title||'');
   if(!(/^video\//.test(mime)||/\.(?:mp4|mov|m4v|webm)$/i.test(title)))continue;
+  // Arquivos de teoria não entram na Cátedra prática.
+  if(v.studyMode==='theory'||v.area==='theory')continue;
   const id=String(v.id||'');
   if(!/^[A-Za-z0-9_-]{20,}$/.test(id)||seen.has(id))continue;
   seen.add(id);items.push({id,title:title||'Vídeo prático de Anatomia',type:'catedra',source:'drive'});
@@ -116,7 +118,9 @@ function mount(){
  ensureLauncher();
  const ctx=context(),target=D.getElementById('subjectContent');
  if(!ctx||!target)return;
- if(target.querySelector('[data-apv-root]'))return;
+ const existing=target.querySelector('[data-apv-root]');
+ if(existing&&existing.querySelector('[data-apv-player]'))return;
+ if(existing)existing.remove();
  const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
  target.replaceChildren(section);
  if(!cache.data){
@@ -128,7 +132,7 @@ function mount(){
   return;
  }
  const seen=new Set();
- const items=[...(cache.data.subjects?.[ctx.subj]||[]),...driveVideos(ctx.subj)].filter(x=>{
+ const items=[...driveVideos(ctx.subj),...(cache.data.subjects?.[ctx.subj]||[])].filter(x=>{
   if(!x||x.type!=='catedra'||!(x.source==='drive'?/^[A-Za-z0-9_-]{20,}$/.test(x.id):idOK(x.id))||seen.has(x.id))return false;
   seen.add(x.id);return true;
  });
@@ -211,7 +215,7 @@ function mergeCatalog(base,extra){
   }
   for(const x of extra?.videos||[]){
    if(!x||!idOK(x.id)||seen.has(x.id))continue;
-   if(!['1','2','geral'].includes(x.anatomyPeriod)||x.anatomyPeriod!=='geral'&&x.anatomyPeriod!==level)continue;
+   if(x.anatomyPeriod!==level)continue; // sem misturar aulas sem matéria confirmada
    seen.add(x.id);
    subjects[level].push({...x,type:'catedra'});
   }
