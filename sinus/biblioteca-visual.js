@@ -304,5 +304,5 @@ function privateForSubject(subject,period){
  const p=Number(period);
  return uploadedItems().filter(x=>x.subject===subject&&(!x.academicPeriod||Number(x.academicPeriod)===p));
 }
-W.SinusLibrary={catalog,filtered,render,purpose,priority,isSlide,loadUploads,openUploaded,privateForSubject,openCollection,hydrateThumbnails,coverPreview,get uploadsReady(){return uploads.ready}};
+W.SinusLibrary={catalog,filtered,render,purpose,priority,isSlide,loadUploads,openUploaded,openYoutube,privateForSubject,openCollection,hydrateThumbnails,coverPreview,get uploadsReady(){return uploads.ready}};
 })(window,document);
