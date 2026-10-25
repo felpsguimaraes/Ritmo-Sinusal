@@ -366,9 +366,9 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .lamf{display:flex;flex-direction:column;gap:7px}
 .lamf>label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .lamf>label small{margin-left:6px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--green)}
-.lamin{position:relative}
+.lamin{position:relative;width:min(100%,calc(var(--n,60)*1ch + 72px))}
 .lamf input,.lamf textarea{width:100%;font:500 15px/1.4 var(--sans);color:var(--ink);background:var(--board);border:1.5px dashed var(--line-strong);border-radius:11px;padding:10px 34px 10px 12px}
-.lamf textarea{display:block;min-height:128px;resize:vertical;padding-right:12px;font-weight:400;line-height:1.5}
+.lamf textarea{display:block;min-height:96px;resize:vertical;padding-right:12px;font-weight:400;line-height:1.5}
 .lamin .ico{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
 .lamf[data-st="filled"] input,.lamdesc[data-st="filled"] textarea{border-style:solid;border-color:var(--green)}
 .lamf[data-st="ok"] input,.lamdesc[data-st="ok"] textarea{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}

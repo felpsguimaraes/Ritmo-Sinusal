@@ -1032,6 +1032,7 @@
     if (!(S.li[mod.id] >= 0) || S.li[mod.id] >= order.length) S.li[mod.id] = 0;
     var wrap = el('div', { class: 'lamwrap' });
     var strip = el('nav', { class: 'lamstrip', 'aria-label': T.lamList });
+    if (order.length === 1) strip.hidden = true;
     var view = el('div', { class: 'lamview' });
     wrap.appendChild(strip); wrap.appendChild(view);
     board.appendChild(wrap);
@@ -1121,13 +1122,13 @@
 
     /* folha de resposta, na ordem da prova */
     var sheet = el('section', { class: 'lamsheet', 'aria-label': T.lamWord + ' ' + (pos + 1) + ' ' + T.of2 + ' ' + order.length });
-    sheet.innerHTML = '<header class="lamhead"><div><small>' + esc(T.lamWord) + '</small><b>' + (pos + 1) + '</b><span>' + esc(T.of2) + ' ' + order.length + '</span></div>' +
+    sheet.innerHTML = '<header class="lamhead"><div>' + (order.length === 1 ? '<b>' + esc(mod.titulo) + '</b>' : '<small>' + esc(T.lamWord) + '</small><b>' + (pos + 1) + '</b><span>' + esc(T.of2) + ' ' + order.length + '</span>') + '</div>' +
       (ver ? '<em class="lamsc" data-st="' + lamState(t) + '">' + Math.round(lamScore(t) * 100) + '%</em>' : '') + '</header>' +
       ((rev || ver) ? '<p class="lamname">' + esc(L.nome || t.x.ans) + '</p>' : '');
     var useBank = !!mod.banco && !sim;
     function field(it, lbl, ph, bank, multi) {
       var w = el('div', { class: 'lamf', 'data-hold': '1' });
-      w.innerHTML = '<label for="in-' + it.id + '">' + esc(lbl) + '</label><div class="lamin"><input id="in-' + it.id + '" data-f="' + it.id + '" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="' + esc(ph) + '"><span class="ico" aria-hidden="true"></span></div>';
+      w.innerHTML = '<label for="in-' + it.id + '">' + esc(lbl) + '</label><div class="lamin"' + (sim ? '' : ' style="--n:' + Math.max(18, Math.min(46, String(it.ans).length)) + '"') + '><input id="in-' + it.id + '" data-f="' + it.id + '" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="' + esc(ph) + '"><span class="ico" aria-hidden="true"></span></div>';
       if (bank && bank.length) {
         var bk = el('div', { class: 'chips', role: 'group', 'aria-label': T.bank + ': ' + lbl });
         bank.forEach(function (c) {
@@ -1161,7 +1162,7 @@
     var nf = t.d.length;
     dw.innerHTML = '<label for="lt-' + t.key + '">' + esc(T.fD) + (useBank ? ' <small>' + nf + ' ' + esc(T.findN) + '</small>' : '') +
       (ver ? ' <small class="lamcount">' + lamFound(t) + '/' + nf + ' ' + esc(T.finds) + '</small>' : '') + '</label>' +
-      '<textarea id="lt-' + t.key + '" data-lt="' + t.txt + '" rows="5" spellcheck="false" autocomplete="off" placeholder="' + esc(T.phD) + '"></textarea>';
+      '<textarea id="lt-' + t.key + '" data-lt="' + t.txt + '" rows="' + (sim ? 5 : Math.min(12, Math.max(4, Math.ceil(nf * 1.7) + 1))) + '" spellcheck="false" autocomplete="off" placeholder="' + esc(T.phD) + '"></textarea>';
     if (ver || rev) {
       var res = el('ul', { class: 'memres lamres' });
       t.d.forEach(function (it) {
