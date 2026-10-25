@@ -6,8 +6,9 @@
    - Temas da P2 prática: quadro "Temas P2 Práctica" (foto "Conteúdo P2" da pasta LAMINÁRIO P2).
    - Laminario completo: tabela "LAMINARIOS TOTAL CORRIGIDO" (25 láminas), com as fotos recortadas
      sem a etiqueta e sem os rótulos que entregavam a resposta.
-   - Treinos do laminario (pasta da turma E, "LAMINARIOS TOTAL CORRIGIDO 20 NOV"): mapas por processo e de mesmo
-     órgão, quadros por bloco (claves), quiz pela foto, quiz pela descrição e simulacro só do laminario.
+   - 3 lâminas novas (duodenitis, enfermedad celíaca, adenocarcinoma gástrico tipo intestinal) e mais
+     6 fotos extra de lâminas já existentes: PDF oficial "Laminas Anatopato I - Practica P1_P2_Final"
+     (fotos de página inteira com ÓRGANO/PROCESO/DESCRIPCIÓN/DX já escritos pela cátedra).
    Fotos: { src } = arquivo do site; { drive } = foto pública da pasta LAMINÁRIO da turma.
    k: pdf (laminario), prof (imagem que a professora mandou), turma (foto tirada no microscópio da aula).
    Cada lâmina: organo/proceso/dx = [resposta, chaves]; desc = [[achado, chaves], ...] (corrigida em texto livre).
@@ -16,6 +17,9 @@
   var A = window.SINUS_MAPAS && window.SINUS_MAPAS.anatopato;
   if (!A) return;
   function L(n) { return { src: 'img/laminario/lam-' + (n < 10 ? '0' : '') + n + '.jpg', k: 'pdf' }; }
+  /* fotos oficiais de la prueba práctica (Drive: Laminas Anatopato I - Practica P1_P2_Final.pdf),
+     cada una con ÓRGANO/PROCESO/DESCRIPCIÓN/DX proyectados tal cual los dio la cátedra */
+  function L2(n) { return { src: 'img/laminario2/nuevo-' + (n < 10 ? '0' : '') + n + '.jpg', k: 'pdf' }; }
   function P() { return [].map.call(arguments, function (id) { return { drive: id, k: 'prof' }; }); }
   function F() { return [].map.call(arguments, function (id) { return { drive: id, k: 'turma' }; }); }
   function G(id, ver) { return { drive: id, ver: !!ver }; }
@@ -41,7 +45,7 @@
     trompa: ['Trompa uterina', 'trompa|^tuba|salping'],
     cervix: ['Cérvix (cuello uterino)', 'cervix|cuello uterino|cuello del utero|colo uterino|colo do utero|cervic'],
     vulva: ['Vulva', 'vulva'],
-    mama: ['Mama', 'mama|mamari']
+    duodeno: ['Duodeno', 'duoden']
   };
   var ADAPT = ['Adaptación', 'adapta|hipertrof|hiperplas|atrofi|metaplas'];
   var ACUM = ['Acúmulos intracelulares', 'acumul'];
@@ -68,9 +72,6 @@
     aterosclerosis: P('1oqALL1cCDq1BI-IP7Ps4ia9lciikBmZI', '1K0xjDjBVT9yUPRAHJZQzHLSlCRH8E_o_', '1erjrnCylABmPkOnBSsu5E-DMRRMakNyK', '1zDIqkow4her7pHKneUppvhM3PpUV_QPc', '1h6q3g7EpOqkdPgKefRLv0nwPZSSCP7Fe', '1w_Sr_xSffRisFuVktu9R6q2hvDjmQkyA', '1IU4xor21xB4XGXP_y76nNdrNX2hdgHmI', '1-u0IlsAFSUFslKmSXd86W1nCIFjJ83bx', '1_qcvJ3NJ0a_Y40xHsq0k8iHXebN4Y98J').concat(F('1VcajfSJl5EaFrR33-Jjfr-DHvD4Jo8ui', '1k9T7dKgjmi-JtXLcferXXQ9SuFeeCR-3', '12NIpNEu6NbOdTORz98fonRqoFpY_dT2n', '1H5q1P35H5eFBcY04Rifa_6xeBnnyjc64', '1VgNcQ1Y2HfIsXvkbMRch0kUFPZRvm4m0', '1fj9u1oRqndijgdqQNzcdJHT4cn3nln6i', '1kBZRUBV_gguu6wtQeisuG7i_Cvi1-Tp9', '1ZFHPLdY3zS0y2ap5SDGooC2QyiPtD0CE', '19PGyfPa3_3Jwq1gL0VHV4vDkrMzb6Gf2')),
     colesterolosis: P('1PVBqplZe0UIhCl6tDvbc5ssM73LG6pq6', '1Xw2yEbbsj6NfDFKzOwbFGrFXMyGDxORo', '1mItNKgsUqm9J0felHW6XHnvJyAkO9UmZ').concat(F('1K5IS7Kqh6T8WYQNdfcHMMz48B7a8ZxnM', '1uKoJeYztOj3L4yp8K7vrsb5byI1t2zsL', '1jxOWXfBRv80V0rYwwLn0iYQ5dFd80__c', '1b5BJ6fXE6YkY-OHOYdji4qL9Lc_j9bmf', '1kXjYaRA3dZVMZo5NhMc6u4oTcoAdlOv3', '1lqnLyCX-G55XZN01zXQP9x8TzRfC5Mxb', '1J8numuo87wxxlZg73Bxq1nYEk-f0cmL1', '1HLn5hrnWtxPhL3cQTJzjmpa0sB9orqHy'))
   };
-
-  /* fotos do Drive da turma (pasta Semana 3 · TUBERCULOSIS): granulomas com células gigantes de Langhans */
-  FT.tbc = FT.tbc.concat(['tbc-drive-1.jpg', 'tbc-drive-2.jpg', 'tbc-drive-3.jpg', 'tbc-drive-4.jpg'].map(function (f) { return { src: 'img/laminario/' + f, k: 'turma' }; }));
 
   /* ───────── P1 práctica: las 5 láminas que la profesora indicó para la prueba ───────── */
   var P1 = [
@@ -306,8 +307,33 @@
     T(25, ORG.testiculo, NEO_M, [
       ['Proliferación neoplásica de tipo germinal, en nidos', 'germinal|nidos|ninhos'],
       ['Células cúbicas a poliédricas de citoplasma claro, nucléolos grandes', 'citoplasma claro|nucleolo|poliedric|cubic'],
-      ['Tabiques de tejido conectivo con linfocitos', 'tabique|septo|linfocit']], ['Seminoma', 'seminom'])
+      ['Tabiques de tejido conectivo con linfocitos', 'tabique|septo|linfocit']], ['Seminoma', 'seminom']),
+    T(26, ORG.duodeno, CRON, [
+      ['Erosión del epitelio', 'erosi'],
+      ['Infiltrado linfoplasmocitario en la lámina propia', 'linfoplasmocit|infiltrad'],
+      ['Hiperplasia de las glándulas de Brunner', 'brunner|hiperplas']], ['Duodenitis crónica', 'duodenit']),
+    T(27, ORG.duodeno, CRON, [
+      ['Mucosa duodenal conservada', 'mucosa;conserv'],
+      ['Numerosos linfocitos intraepiteliales', 'intraepitel|linfocit'],
+      ['Proceso inflamatorio crónico en la lámina propia', 'inflama;cronic']], ['Enfermedad celíaca (Marsh tipo 2)', 'celiac|marsh']),
+    T(28, ORG.estomago, NEO_M, [
+      ['Proliferación de células neoplásicas malignas con atipia moderada', 'prolifer|atipi'],
+      ['Patrón glandular', 'glandul|patron']], ['Adenocarcinoma gástrico de tipo intestinal (Lauren)', 'adenocarcinom;intestinal'])
   ];
+  /* las 25 láminas del laminario no tenían foto propia para el 26/27/28 (son lâminas nuevas, sin
+     número en la tabla), así que reemplazamos su imagen de placeholder L(n) por la foto real;
+     a las 6 lâminas de arriba que ya existían les sumamos la foto oficial como imagen extra */
+  (function (byId2) {
+    byId2('t3').img.push(L2(9));
+    byId2('t4').img.push(L2(8));
+    byId2('t5').img.push(L2(6));
+    byId2('t6').img.push(L2(7));
+    byId2('t7').img.push(L2(4));
+    byId2('t8').img.push(L2(5));
+    byId2('t26').img = [L2(1)];
+    byId2('t27').img = [L2(2)];
+    byId2('t28').img = [L2(3)];
+  })(function (id) { for (var i = 0; i < TOTAL.length; i++) if (TOTAL[i].id === id) return TOTAL[i]; return null; });
 
   var SRC_P = 'Descripciones proyectadas por la Dra. Alicia Gonzalez en las clases prácticas (fotos «descripción de la lámina» de la pasta LAMINÁRIO)';
   var SRC_T = 'Tabla «Laminarios total corregido»: ÓRGANO, PROCESO, DESCRIPCIÓN y DX de las 25 láminas';
@@ -544,7 +570,7 @@
   ];
   var TEO_CASOS = [
     {
-      id: 'ap_pr_que_lamina', area: PR, clase: 'Prácticas 1 a 4', titulo: '¿Qué lámina es? Alteración clave', tipo: 'casos', rotulo: 'Opción múltiple', explicar: true,
+      id: 'ap_pr_que_lamina', area: PR, clase: 'Prácticas 1 a 4', titulo: '¿Qué lámina es? Alteración clave', tipo: 'casos',
       sl: [['p1', 19, 32], ['p1b', 15, 21], ['p2', 26, 30], ['p3', 15, 18], ['p4', 5, 25]],
       resumen: 'Leé la alteración que describe la profesora y elegí el diagnóstico.',
       fuente: 'Descripciones de las láminas de las prácticas 1 a 4 (Dra. Alicia Gonzalez)',
@@ -577,366 +603,8 @@
     }
   ];
 
-  /* ───────── Treinos do Laminario total corregido (20 nov), pasta da turma E ─────────
-     Tudo sai da tabela (ÓRGANO · PROCESO · DESCRIPCIÓN · DX); fotos = as mesmas recortadas do laminario.
-     lt = aula "Laminario"; o terceiro item troca "slides" por "láminas" no rótulo. */
-  A.clases.lt = ['Laminario total corregido (20 nov)', 'Laminario', 'láminas'];
-  var SRC_LT = 'Tabla «Laminarios total corregido 20 nov» (carpeta de la turma E): ÓRGANO, PROCESO, DESCRIPCIÓN y DX de las 25 láminas';
-  /* ficha de cada lámina: órgano, proceso, dx e descrição, com as palavras da tabela */
-  var FICHA = {
-    1: ['Corazón', 'Necrosis coagulativa isquémica', 'Infarto agudo del miocardio', 'Hemorragia con hematíes, infiltrado de neutrófilos (1 a 3 días de evolución) y miocardiocitos sin núcleo (cariólisis)'],
-    2: ['Corazón', 'Adaptación: hipertrofia', 'Hipertrofia cardíaca', 'Miocardiocitos aumentados, fibroblastos intersticiales, núcleo centrado y agrandado, lipofucsina cerca del núcleo'],
-    3: ['Glándula parótida', 'Neoplasia benigna', 'Adenoma pleomorfo de glándula parótida', 'Tejido mixoide, estroma y cápsulas fibrosas; células epiteliales y mioepiteliales, sin atipia; pseudoquistes'],
-    4: ['Lengua', 'Neoplasia maligna', 'Carcinoma epidermoide de lengua', 'Perlas de queratina, hiperqueratosis y acantosis; rosetas de queratina (globos córneos) y papilas filiformes; nidos de células neoplásicas malignas con atipia'],
-    5: ['Esófago', 'Adaptación: metaplasia', 'Esófago de Barret', 'Cambio del epitelio plano estratificado (esofágico) por epitelio cilíndrico simple con células caliciformes'],
-    6: ['Esófago', 'Neoplasia maligna', 'Carcinoma epidermoide de esófago', 'Proliferación neoplásica maligna agrupada; nidos sólidos con atipias y coilocitos; perlas de queratina e hiperqueratosis'],
-    7: ['Estómago', 'Neoplasia maligna', 'Carcinoma gástrico de tipo difuso', 'Células en anillo de sello, patrón difuso (pérdida de la cadherina E); desmoplasia (aumento del tejido conjuntivo, colágeno); células neoplásicas difusas con pleomorfismo e hipercromasia'],
-    8: ['Estómago', 'Inflamación crónica', 'Gastritis crónica', 'Atrofia de la mucosa, la submucosa y las glándulas gástricas; infiltrado linfocitario, angiogénesis y fibrosis; células parietales; ulceración o erosión'],
-    9: ['Intestino delgado (íleon)', 'Inflamación crónica granulomatosa', 'Enfermedad de Crohn', 'Afectación transmural de todas las capas, fibrosis; úlcera en forma de «cuchillo», infiltrado linfocitario y distorsión de las criptas; linfangiectasia e hiperplasia de células de Paneth'],
-    10: ['Apéndice vermiforme', 'Inflamación aguda', 'Apendicitis aguda', 'Ulceraciones de la mucosa; infiltrado de neutrófilos en la muscular, edema y necrosis; vasos hiperemiados y dilatados en la serosa, hemorragia'],
-    11: ['Páncreas', 'Inflamación crónica', 'Pancreatitis crónica', 'Atrofia y pérdida acinar, fibrosis; infiltrado de linfocitos en nidos; islotes de Langerhans hipertrofiados, angiogénesis'],
-    12: ['Páncreas', 'Neoplasia maligna', 'Adenocarcinoma de páncreas', 'Infiltrado inflamatorio; fibrosis y angiogénesis; glándulas malignas con proyección. Dx de la tabla: moderadamente diferenciado, grado II'],
-    13: ['Hígado', 'Inflamación crónica', 'Cirrosis hepática', 'Fibrosis en puente de una tríada a otra, infiltrado linfocitario; hepatocitos cargados de lípidos que desvían el núcleo a la periferia; angiogénesis, nódulos de regeneración y hemorragia'],
-    14: ['Hígado', 'Neoplasia maligna', 'Hepatocarcinoma', 'Hepatocitos con atipias; patrón de crecimiento en cordones; células eosinófilas'],
-    15: ['Glándula tiroides', 'Inflamación crónica', 'Tiroiditis de Hashimoto', 'Atrofia folicular, linfocitos dispersos y metaplasia; nódulos linfáticos con centro germinativo activo; células de Hürthle'],
-    16: ['Riñón', 'Neoplasia maligna', 'Tumor de Wilms (nefroblastoma)', 'Proliferación neoplásica maligna con componente blastematoso, epitelial y estromal'],
-    17: ['Trompa uterina', 'Inflamación crónica', 'Endometriosis en trompa uterina', 'Glándulas endometriales benignas y estroma denso, compatible con endometriosis'],
-    18: ['Ovario', 'Neoplasia benigna', 'Cistoadenoma mucinoso', 'Dilataciones quísticas con epitelio cilíndrico ciliado; componente homogéneo que corresponde a mucina'],
-    19: ['Cérvix', 'Inflamación crónica', 'Cervicitis crónica', 'Atipia o cambios citopáticos (coilocitos) y bastante infiltrado inflamatorio crónico'],
-    20: ['Vulva', 'Neoplasia benigna', 'Condiloma acuminado', 'Tejido epitelial de arquitectura verrugosa con acantosis, papilomatosis e hiperqueratosis; células con cambios citopáticos (coilocitos)'],
-    21: ['Cérvix (cuello uterino)', 'Neoplasia maligna', 'Carcinoma escamoso de cuello uterino', 'Proliferación celular maligna en nidos con escasos puentes intercelulares y pleomorfismo marcado; no se observa queratinización'],
-    22: ['Ovario', 'Neoplasia benigna mixta', 'Teratoma ovárico maduro', 'Proliferación neoplásica benigna con tejido epitelial, glándulas sebáceas y sudoríparas, folículos pilosos y tejido adiposo'],
-    23: ['Testículo', 'Adaptación: atrofia', 'Atrofia testicular', 'Túbulos seminíferos atrofiados con espermatogenia inactiva, pocas células de Sertoli, engrosamiento de la membrana basal y aumento de las células de Leydig en el intersticio'],
-    24: ['Próstata', 'Adaptación: hiperplasia', 'Hiperplasia prostática benigna', 'Proliferación del tejido glandular, aumento del estroma fibromuscular y cuerpos amiláceos'],
-    25: ['Testículo', 'Neoplasia maligna', 'Seminoma', 'Proliferación neoplásica maligna de tipo germinal en nidos; células cúbicas a poliédricas de citoplasma claro con nucléolos grandes basófilos; tabiques de tejido conectivo con linfocitos']
-  };
-  function ficha(n) { var f = FICHA[n]; return 'Lámina ' + n + ' · ' + f[0] + ' · ' + f[1] + '. ' + f[3] + '.'; }
-  /* múltipla escolha: a certa entra na letra pedida e as outras seguem na ordem dada */
-  function mc(letra, certa, otras) {
-    var arr = otras.slice(); arr.splice('abcd'.indexOf(letra), 0, certa);
-    return { ans: letra + ') ' + certa, opts: arr.map(function (o, k) { return 'abcd'.charAt(k) + ') ' + o; }) };
-  }
-  function foto(n) { return { src: 'img/laminario/lam-' + (n < 10 ? '0' : '') + n + '.jpg', alt: 'Foto de la lámina, sin rótulos' }; }
-
-  var LT_MAPAS = [
-    {
-      id: 'ap_lt_proceso_a', area: PR, clase: 'Laminario', titulo: 'Laminario por proceso: adaptación, necrosis e inflamación', tipo: 'mapa',
-      sl: [['lt', 1, 2], ['lt', 5, 5], ['lt', 8, 11], ['lt', 13, 13], ['lt', 15, 15], ['lt', 17, 17], ['lt', 19, 19], ['lt', 23, 24]],
-      centro: 'Laminario por proceso', sub: 'Adaptación, necrosis e inflamación',
-      resumen: 'Con el proceso de la tabla y el órgano, escribí el Dx. En el nivel 2, escribí de memoria todas las láminas de cada proceso.',
-      fuente: SRC_LT,
-      ramas: [
-        { t: 'Adaptación', hojas: [
-          ['Corazón', 'Hipertrofia cardíaca', 'hipertrof'],
-          ['Esófago', 'Esófago de Barret || Esófago de Barrett', 'barret'],
-          ['Testículo', 'Atrofia testicular', '^atrofi'],
-          ['Próstata', 'Hiperplasia prostática benigna || HPB', 'hiperplas|hpb']
-        ] },
-        { t: 'Necrosis coagulativa isquémica', hojas: [
-          ['Corazón', 'Infarto agudo del miocardio || Infarto agudo de miocardio || IAM', 'infarto|iam']
-        ] },
-        { t: 'Inflamación aguda', hojas: [
-          ['Apéndice vermiforme', 'Apendicitis aguda', 'apendicit']
-        ] },
-        { t: 'Inflamación crónica', hojas: [
-          ['Estómago', 'Gastritis crónica', 'gastrit'],
-          ['Páncreas', 'Pancreatitis crónica', 'pancreatit'],
-          ['Hígado', 'Cirrosis hepática', 'cirros'],
-          ['Glándula tiroides', 'Tiroiditis de Hashimoto', 'hashimoto'],
-          ['Trompa uterina', 'Endometriosis en trompa uterina || Endometriosis', 'endometrios'],
-          ['Cérvix', 'Cervicitis crónica', 'cervicit']
-        ] },
-        { t: 'Inflamación crónica granulomatosa', hojas: [
-          ['Intestino delgado (íleon)', 'Enfermedad de Crohn', 'crohn']
-        ] }
-      ]
-    },
-    {
-      id: 'ap_lt_proceso_b', area: PR, clase: 'Laminario', titulo: 'Laminario por proceso: neoplasias', tipo: 'mapa',
-      sl: [['lt', 3, 4], ['lt', 6, 7], ['lt', 12, 12], ['lt', 14, 14], ['lt', 16, 16], ['lt', 18, 18], ['lt', 20, 22], ['lt', 25, 25]],
-      centro: 'Laminario por proceso', sub: 'Neoplasias benignas y malignas',
-      resumen: 'Las doce neoplasias del laminario. Con el proceso y el órgano, escribí el Dx; en el nivel 2, todas de memoria.',
-      fuente: SRC_LT,
-      ramas: [
-        { t: 'Neoplasia benigna', hojas: [
-          ['Glándula parótida', 'Adenoma pleomorfo de glándula parótida || Adenoma pleomorfo', 'pleomorf'],
-          ['Ovario', 'Cistoadenoma mucinoso', 'cistoadenom;mucinos'],
-          ['Vulva', 'Condiloma acuminado', 'condilom']
-        ] },
-        { t: 'Neoplasia benigna mixta', hojas: [
-          ['Ovario', 'Teratoma ovárico maduro || Teratoma maduro', 'teratom']
-        ] },
-        { t: 'Neoplasia maligna', hojas: [
-          ['Lengua', 'Carcinoma epidermoide de lengua', 'carcinom;epidermoid|escamos'],
-          ['Esófago', 'Carcinoma epidermoide de esófago', 'carcinom;epidermoid|escamos'],
-          ['Estómago', 'Carcinoma gástrico de tipo difuso || Carcinoma gástrico difuso', 'carcinom;difus'],
-          ['Páncreas', 'Adenocarcinoma de páncreas', 'adenocarcinom'],
-          ['Hígado', 'Hepatocarcinoma', 'hepatocarcinom'],
-          ['Riñón', 'Tumor de Wilms || Nefroblastoma', 'wilms|nefroblastom'],
-          ['Cérvix (cuello uterino)', 'Carcinoma escamoso de cuello uterino || Carcinoma escamoso de cérvix', 'carcinom;escamos|epidermoid'],
-          ['Testículo', 'Seminoma', 'seminom']
-        ] }
-      ]
-    },
-    {
-      id: 'ap_lt_organo', area: PR, clase: 'Laminario', titulo: 'Mismo órgano, otra lámina', tipo: 'mapa',
-      sl: [['lt', 1, 2], ['lt', 5, 8], ['lt', 11, 14], ['lt', 18, 19], ['lt', 21, 23], ['lt', 25, 25]],
-      centro: 'Mismo órgano', sub: 'Dos láminas: lo que las separa',
-      resumen: 'Ocho órganos tienen dos láminas en el laminario. Con la alteración clave, decidí cuál de las dos es.',
-      fuente: SRC_LT,
-      ramas: [
-        { t: 'Corazón', hojas: [
-          ['Miocardiocitos sin núcleo (cariólisis), neutrófilos y hemorragia', 'Infarto agudo del miocardio || Infarto agudo de miocardio || IAM', 'infarto|iam'],
-          ['Miocardiocitos aumentados, núcleo centrado y lipofucsina cerca del núcleo', 'Hipertrofia cardíaca', 'hipertrof']
-        ] },
-        { t: 'Esófago', hojas: [
-          ['Epitelio plano estratificado cambiado por cilíndrico simple con caliciformes', 'Esófago de Barret || Esófago de Barrett', 'barret'],
-          ['Nidos sólidos con atipias, coilocitos y perlas de queratina', 'Carcinoma epidermoide de esófago', 'carcinom;epidermoid|escamos']
-        ] },
-        { t: 'Estómago', hojas: [
-          ['Células en anillo de sello, desmoplasia y pérdida de cadherina E', 'Carcinoma gástrico de tipo difuso || Carcinoma gástrico difuso', 'carcinom;difus'],
-          ['Atrofia de la mucosa y de las glándulas, linfocitos y células parietales', 'Gastritis crónica', 'gastrit']
-        ] },
-        { t: 'Páncreas', hojas: [
-          ['Pérdida acinar, nidos de linfocitos e islotes de Langerhans hipertrofiados', 'Pancreatitis crónica', 'pancreatit'],
-          ['Glándulas malignas con proyección, fibrosis y angiogénesis', 'Adenocarcinoma de páncreas', 'adenocarcinom']
-        ] },
-        { t: 'Hígado', hojas: [
-          ['Fibrosis en puente entre tríadas y nódulos de regeneración', 'Cirrosis hepática', 'cirros'],
-          ['Hepatocitos con atipias en cordones y células eosinófilas', 'Hepatocarcinoma', 'hepatocarcinom']
-        ] },
-        { t: 'Ovario', hojas: [
-          ['Dilataciones quísticas, epitelio cilíndrico ciliado y mucina', 'Cistoadenoma mucinoso', 'cistoadenom;mucinos'],
-          ['Glándulas sebáceas y sudoríparas, folículos pilosos y tejido adiposo', 'Teratoma ovárico maduro || Teratoma maduro', 'teratom']
-        ] },
-        { t: 'Cérvix', hojas: [
-          ['Coilocitos con bastante infiltrado inflamatorio crónico', 'Cervicitis crónica', 'cervicit'],
-          ['Nidos malignos, pleomorfismo marcado y sin queratinización', 'Carcinoma escamoso de cuello uterino || Carcinoma escamoso de cérvix', 'carcinom;escamos|epidermoid']
-        ] },
-        { t: 'Testículo', hojas: [
-          ['Espermatogenia inactiva, pocas células de Sertoli y más células de Leydig', 'Atrofia testicular', '^atrofi'],
-          ['Nidos de tipo germinal, citoplasma claro y nucléolos grandes', 'Seminoma', 'seminom']
-        ] }
-      ]
-    }
-  ];
-
-  /* cuadros por bloco: proceso, achados-chave e dx com as palavras da tabela; no nível 2 (claves) vale pelos achados */
-  var NB = 'neoplas|tumor;benign!malign', NM = 'neoplas|tumor|cancer|carcinom;malign!benign', IC = 'inflama;cronic!agud';
-  function cuadro(id, titulo, sl, resumen, filas) {
-    return { id: id, area: PR, clase: 'Laminario', titulo: titulo, tipo: 'tabla', claves: true, sl: sl, resumen: resumen, fuente: SRC_LT,
-      columnas: ['Lámina', 'Proceso', 'Descripción', 'Dx'], filas: filas };
-  }
-  var R_CUADRO = 'En el nivel 2 cada celda queda oculta y vale por los hallazgos, como en la prueba.';
-  var LT_CUADROS = [
-    cuadro('ap_lt_rep_1', 'Laminario: adaptación, necrosis e inflamación aguda', [['lt', 1, 2], ['lt', 5, 5], ['lt', 10, 10], ['lt', 23, 24]],
-      'Las seis láminas de adaptación, necrosis e inflamación aguda. ' + R_CUADRO, [
-      ['1 · Corazón', '[[Necrosis coagulativa isquémica || Necrosis coagulativa::necros;coagul]]', 'Hemorragia con hematíes; infiltrado de [[neutrófilos::neutrof]] (1 a 3 días de evolución); miocardiocitos sin núcleo por [[cariólisis::cariolis]]', '[[Infarto agudo del miocardio || Infarto agudo de miocardio || IAM::infarto|iam]]'],
-      ['2 · Corazón', '[[Adaptación::adapta]]: [[hipertrofia::hipertrof]]', 'Miocardiocitos aumentados; fibroblastos intersticiales, núcleo centrado y agrandado; [[lipofucsina::lipofu]] cerca del núcleo', '[[Hipertrofia cardíaca::hipertrof]]'],
-      ['5 · Esófago', '[[Adaptación::adapta]]: [[metaplasia::metaplas]]', 'Cambio del epitelio plano estratificado (esofágico) por epitelio [[cilíndrico simple::cilindric]] con células [[caliciformes::calicif]]', '[[Esófago de Barret || Esófago de Barrett::barret]]'],
-      ['10 · Apéndice vermiforme', '[[Inflamación aguda::inflama;agud!cronic]]', 'Ulceraciones de la mucosa; infiltrado de [[neutrófilos::neutrof]] en la muscular, edema y necrosis; vasos [[hiperemiados::hiperemi]] y dilatados en la serosa, hemorragia', '[[Apendicitis aguda::apendicit]]'],
-      ['23 · Testículo', '[[Adaptación::adapta]]: [[atrofia::atrofi]]', 'Túbulos seminíferos con espermatogenia inactiva, pocas células de [[Sertoli::sertoli]], engrosamiento de la [[membrana basal::membrana basal]] y aumento de las células de [[Leydig::leydig]] en el intersticio', '[[Atrofia testicular::^atrofi]]'],
-      ['24 · Próstata', '[[Adaptación::adapta]]: [[hiperplasia::hiperplas]]', 'Proliferación del tejido glandular, aumento del estroma [[fibromuscular::fibromusc]] y cuerpos [[amiláceos::amilac]]', '[[Hiperplasia prostática benigna || HPB::hiperplas|hpb]]']
-    ]),
-    cuadro('ap_lt_rep_2', 'Laminario: inflamación crónica', [['lt', 8, 9], ['lt', 11, 11], ['lt', 13, 13], ['lt', 15, 15], ['lt', 17, 17], ['lt', 19, 19]],
-      'Las siete láminas de inflamación crónica, con la granulomatosa. ' + R_CUADRO, [
-      ['8 · Estómago', '[[Inflamación crónica::' + IC + ']]', '[[Atrofia::atrofi]] de la mucosa, la submucosa y las glándulas gástricas; infiltrado linfocitario, angiogénesis y fibrosis; células [[parietales::parietal]]; ulceración o erosión', '[[Gastritis crónica::gastrit]]'],
-      ['9 · Intestino delgado (íleon)', '[[Inflamación crónica::' + IC + ']] [[granulomatosa::granulom]]', 'Afectación [[transmural::transmural]] de todas las capas, fibrosis; úlcera en forma de «[[cuchillo::cuchillo]]», infiltrado linfocitario y distorsión de las criptas; linfangiectasia e hiperplasia de células de [[Paneth::paneth]]', '[[Enfermedad de Crohn::crohn]]'],
-      ['11 · Páncreas', '[[Inflamación crónica::' + IC + ']]', 'Atrofia y pérdida [[acinar::acinar]], fibrosis; infiltrado de linfocitos en nidos; islotes de [[Langerhans::langerhans]] hipertrofiados, angiogénesis', '[[Pancreatitis crónica::pancreatit]]'],
-      ['13 · Hígado', '[[Inflamación crónica::' + IC + ']]', 'Fibrosis en [[puente::puente]] de una tríada a otra, infiltrado linfocitario; hepatocitos cargados de [[lípidos::lipid]] que desvían el núcleo a la periferia; angiogénesis, nódulos de [[regeneración::regenerac]] y hemorragia', '[[Cirrosis hepática::cirros]]'],
-      ['15 · Glándula tiroides', '[[Inflamación crónica::' + IC + ']]', 'Atrofia folicular, linfocitos dispersos y metaplasia; nódulos linfáticos con centro [[germinativo::germinativ]] activo; células de [[Hürthle || Hurthle || Hirtle::hurthle|hurtle|hirtle]]', '[[Tiroiditis de Hashimoto::hashimoto]]'],
-      ['17 · Trompa uterina', '[[Inflamación crónica::' + IC + ']]', 'Glándulas [[endometriales::endometri]] benignas y estroma [[denso::denso]]', '[[Endometriosis en trompa uterina || Endometriosis::endometrios]]'],
-      ['19 · Cérvix', '[[Inflamación crónica::' + IC + ']]', 'Atipia o cambios citopáticos ([[coilocitos::coilocit]]) y bastante infiltrado inflamatorio crónico', '[[Cervicitis crónica::cervicit]]']
-    ]),
-    cuadro('ap_lt_rep_3', 'Laminario: neoplasias benignas', [['lt', 3, 3], ['lt', 18, 18], ['lt', 20, 20], ['lt', 22, 22]],
-      'Las cuatro neoplasias benignas, con el teratoma como mixta. ' + R_CUADRO, [
-      ['3 · Glándula parótida', '[[Neoplasia benigna::' + NB + ']]', 'Tejido [[mixoide::mixoide]], estroma y cápsulas fibrosas; células epiteliales y [[mioepiteliales::mioepitel]]; sin atipia, [[pseudoquistes::pseudoquist]]', '[[Adenoma pleomorfo de glándula parótida || Adenoma pleomorfo::pleomorf]]'],
-      ['18 · Ovario', '[[Neoplasia benigna::' + NB + ']]', 'Dilataciones [[quísticas::quistic]] con epitelio cilíndrico [[ciliado::ciliad]]; componente homogéneo que corresponde a [[mucina::mucina]]', '[[Cistoadenoma mucinoso::cistoadenom;mucinos]]'],
-      ['20 · Vulva', '[[Neoplasia benigna::' + NB + ']]', 'Tejido epitelial de arquitectura [[verrugosa::verrug]] con acantosis, papilomatosis e hiperqueratosis; células con cambios citopáticos ([[coilocitos::coilocit]])', '[[Condiloma acuminado::condilom]]'],
-      ['22 · Ovario', '[[Neoplasia benigna::' + NB + ']] [[mixta::mixta]]', 'Tejido epitelial, glándulas [[sebáceas::sebace]] y sudoríparas, folículos [[pilosos::pilos]] y tejido [[adiposo::adipos]]', '[[Teratoma ovárico maduro || Teratoma maduro::teratom]]']
-    ]),
-    cuadro('ap_lt_rep_4', 'Laminario: neoplasias malignas', [['lt', 4, 4], ['lt', 6, 7], ['lt', 12, 12], ['lt', 14, 14], ['lt', 16, 16], ['lt', 21, 21], ['lt', 25, 25]],
-      'Las ocho neoplasias malignas. ' + R_CUADRO, [
-      ['4 · Lengua', '[[Neoplasia maligna::' + NM + ']]', 'Perlas de [[queratina::queratin]], hiperqueratosis y acantosis; rosetas de queratina ([[globos córneos::globos corneos|globo corneo]]) y papilas filiformes; nidos de células malignas con [[atipia::atipi]]', '[[Carcinoma epidermoide de lengua::carcinom;epidermoid|escamos]]'],
-      ['6 · Esófago', '[[Neoplasia maligna::' + NM + ']]', 'Proliferación maligna agrupada; [[nidos sólidos::nidos]] con atipias y [[coilocitos::coilocit]]; perlas de queratina e hiperqueratosis', '[[Carcinoma epidermoide de esófago::carcinom;epidermoid|escamos]]'],
-      ['7 · Estómago', '[[Neoplasia maligna::' + NM + ']]', 'Células en [[anillo de sello::anillo de sello|sello]], patrón difuso (pérdida de la [[cadherina::cadherina]] E); [[desmoplasia::desmoplas]] (aumento del tejido conjuntivo, colágeno); pleomorfismo e hipercromasia', '[[Carcinoma gástrico de tipo difuso || Carcinoma gástrico difuso::carcinom;difus]] (Lauren)'],
-      ['12 · Páncreas', '[[Neoplasia maligna::' + NM + ']]', 'Infiltrado inflamatorio; fibrosis y angiogénesis; glándulas [[malignas::malign]] con [[proyección::proyecc|projec]]', '[[Adenocarcinoma de páncreas::adenocarcinom]] moderadamente diferenciado (grado II)'],
-      ['14 · Hígado', '[[Neoplasia maligna::' + NM + ']]', 'Hepatocitos con [[atipias::atipi]]; patrón de crecimiento en [[cordones::cordon]]; células [[eosinófilas::eosinof]]', '[[Hepatocarcinoma::hepatocarcinom]]'],
-      ['16 · Riñón', '[[Neoplasia maligna::' + NM + ']]', 'Proliferación maligna con componente [[blastematoso::blastem]], [[epitelial::epitel]] y [[estromal::estrom]]', '[[Tumor de Wilms || Nefroblastoma || Tumor de Wilms o nefroblastoma::wilms|nefroblastom]]'],
-      ['21 · Cérvix (cuello uterino)', '[[Neoplasia maligna::' + NM + ']]', 'Proliferación maligna en [[nidos::nidos]] con escasos [[puentes intercelulares::puentes]] y [[pleomorfismo::pleomorf]] marcado; no se observa queratinización', '[[Carcinoma escamoso de cuello uterino || Carcinoma escamoso de cérvix::carcinom;escamos|epidermoid]]'],
-      ['25 · Testículo', '[[Neoplasia maligna::' + NM + ']]', 'Proliferación maligna de tipo [[germinal::germinal]] en nidos; células cúbicas a poliédricas de citoplasma [[claro::claro]] con nucléolos grandes; tabiques de tejido conectivo con [[linfocitos::linfocit]]', '[[Seminoma::seminom]]']
-    ])
-  ];
-
-  /* quiz por foto: as 25 láminas fora da ordem da tabela; distratores = números de outras láminas (de preferência o mesmo órgão) */
-  var FOTO_Q = [
-    [13, 'b', [14, 11, 15]], [4, 'c', [6, 20, 3]], [22, 'd', [18, 3, 17]], [1, 'a', [2, 10, 25]], [16, 'c', [25, 12, 14]],
-    [9, 'a', [10, 8, 7]], [24, 'd', [23, 25, 18]], [7, 'b', [8, 12, 9]], [19, 'b', [21, 20, 17]], [3, 'd', [22, 18, 4]],
-    [14, 'a', [13, 25, 16]], [10, 'c', [9, 8, 1]], [25, 'b', [23, 14, 16]], [5, 'd', [6, 8, 7]], [11, 'c', [12, 13, 15]],
-    [20, 'a', [4, 19, 21]], [2, 'a', [1, 23, 24]], [18, 'c', [22, 17, 3]], [8, 'd', [7, 9, 10]], [21, 'b', [19, 20, 6]],
-    [15, 'b', [11, 13, 25]], [6, 'd', [5, 4, 21]], [23, 'a', [25, 24, 18]], [12, 'c', [11, 14, 7]], [17, 'd', [18, 19, 22]]
-  ];
-  var LT_FOTO = {
-    id: 'ap_lt_foto', area: PR, clase: 'Laminario', titulo: '¿Qué lámina es? Por la foto', tipo: 'casos', rotulo: 'Opción múltiple', explicar: true,
-    resumen: 'Las 25 láminas del laminario, en otro orden que el de la tabla. Mirá la foto (tocala para ampliar) y elegí el Dx; al verificar aparece la ficha de cada lámina.',
-    fuente: SRC_LT + '; fotos del laminario sin rótulos',
-    casos: FOTO_Q.map(function (q) {
-      var r = mc(q[1], FICHA[q[0]][2], q[2].map(function (n) { return FICHA[n][2]; }));
-      return ['', '¿Cuál es el Dx de esta lámina?', r.ans, q[1], ficha(q[0]), r.opts, foto(q[0])];
-    })
-  };
-
-  /* quiz pela descrição: sem o órgão; a alternativa traz proceso e dx, como a tabela classifica (várias com o dx certo e o proceso errado) */
-  var DESC_Q = [
-    [17, 'Glándulas endometriales benignas y estroma denso.', 'b', 'Inflamación crónica · Endometriosis en trompa uterina',
-      ['Neoplasia benigna · Endometriosis en trompa uterina', 'Neoplasia benigna · Cistoadenoma mucinoso', 'Inflamación crónica · Cervicitis crónica'],
-      'Trompa uterina. En la tabla, la endometriosis figura como inflamación crónica.'],
-    [2, FICHA[2][3] + '.', 'a', 'Adaptación: hipertrofia · Hipertrofia cardíaca',
-      ['Acúmulos intracelulares · Hipertrofia cardíaca', 'Adaptación: hiperplasia · Hiperplasia cardíaca', 'Necrosis coagulativa isquémica · Infarto agudo del miocardio'],
-      'Corazón. La lipofucsina es un hallazgo más; el proceso de la tabla es adaptación por hipertrofia.'],
-    [12, 'Infiltrado inflamatorio; fibrosis y angiogénesis; glándulas malignas con proyección.', 'd', 'Neoplasia maligna · Adenocarcinoma de páncreas',
-      ['Inflamación crónica · Pancreatitis crónica', 'Neoplasia maligna · Hepatocarcinoma', 'Neoplasia maligna · Carcinoma gástrico de tipo difuso'],
-      'Páncreas. Dx completo de la tabla: adenocarcinoma moderadamente diferenciado, grado II.'],
-    [20, FICHA[20][3] + '.', 'c', 'Neoplasia benigna · Condiloma acuminado',
-      ['Inflamación crónica · Cervicitis crónica', 'Neoplasia maligna · Carcinoma epidermoide de lengua', 'Inflamación crónica · Condiloma acuminado'],
-      'Vulva. Coilocitos también hay en la cervicitis crónica (lámina 19), pero allí el proceso es inflamación crónica.'],
-    [9, FICHA[9][3] + '.', 'a', 'Inflamación crónica granulomatosa · Enfermedad de Crohn',
-      ['Inflamación aguda · Apendicitis aguda', 'Inflamación crónica · Gastritis crónica', 'Inflamación aguda · Enfermedad de Crohn'],
-      'Intestino delgado (íleon).'],
-    [23, 'Túbulos seminíferos con espermatogenia inactiva, pocas células de Sertoli, engrosamiento de la membrana basal y aumento de las células de Leydig en el intersticio.', 'd', 'Adaptación: atrofia · Atrofia testicular',
-      ['Neoplasia maligna · Seminoma', 'Adaptación: hiperplasia · Hiperplasia prostática benigna', 'Inflamación crónica · Atrofia testicular'],
-      'Testículo. El aumento de células de Leydig acompaña a la atrofia.'],
-    [14, FICHA[14][3] + '.', 'b', 'Neoplasia maligna · Hepatocarcinoma',
-      ['Inflamación crónica · Cirrosis hepática', 'Neoplasia benigna · Hepatocarcinoma', 'Neoplasia maligna · Adenocarcinoma de páncreas'],
-      'Hígado.'],
-    [5, FICHA[5][3] + '.', 'c', 'Adaptación: metaplasia · Esófago de Barret',
-      ['Neoplasia maligna · Carcinoma epidermoide de esófago', 'Adaptación: hiperplasia · Esófago de Barret', 'Inflamación crónica · Gastritis crónica'],
-      'Esófago.'],
-    [19, FICHA[19][3] + '.', 'd', 'Inflamación crónica · Cervicitis crónica',
-      ['Neoplasia benigna · Condiloma acuminado', 'Neoplasia maligna · Carcinoma escamoso de cuello uterino', 'Neoplasia benigna · Cervicitis crónica'],
-      'Cérvix.'],
-    [1, FICHA[1][3] + '.', 'c', 'Necrosis coagulativa isquémica · Infarto agudo del miocardio',
-      ['Inflamación aguda · Infarto agudo del miocardio', 'Adaptación: hipertrofia · Hipertrofia cardíaca', 'Necrosis colicuativa · Infarto agudo del miocardio'],
-      'Corazón. Los neutrófilos marcan de 1 a 3 días de evolución; el proceso es la necrosis.'],
-    [22, 'Proliferación con tejido epitelial, glándulas sebáceas y sudoríparas, folículos pilosos y tejido adiposo.', 'a', 'Neoplasia benigna mixta · Teratoma ovárico maduro',
-      ['Neoplasia benigna · Cistoadenoma mucinoso', 'Neoplasia maligna · Teratoma ovárico maduro', 'Neoplasia benigna · Adenoma pleomorfo de glándula parótida'],
-      'Ovario.'],
-    [11, FICHA[11][3] + '.', 'b', 'Inflamación crónica · Pancreatitis crónica',
-      ['Neoplasia maligna · Adenocarcinoma de páncreas', 'Adaptación: atrofia · Pancreatitis crónica', 'Inflamación crónica · Cirrosis hepática'],
-      'Páncreas. La atrofia acinar es un hallazgo; el proceso es inflamación crónica.'],
-    [7, 'Células en anillo de sello (pérdida de la cadherina E); desmoplasia, con aumento del tejido conjuntivo y colágeno; células neoplásicas con pleomorfismo e hipercromasia.', 'd', 'Neoplasia maligna · Carcinoma gástrico de tipo difuso',
-      ['Inflamación crónica · Gastritis crónica', 'Neoplasia maligna · Adenocarcinoma de páncreas', 'Neoplasia maligna · Carcinoma epidermoide de esófago'],
-      'Estómago. Tipo difuso de la clasificación de Lauren.'],
-    [25, FICHA[25][3] + '.', 'a', 'Neoplasia maligna · Seminoma',
-      ['Adaptación: atrofia · Atrofia testicular', 'Neoplasia maligna · Tumor de Wilms (nefroblastoma)', 'Neoplasia maligna · Hepatocarcinoma'],
-      'Testículo.'],
-    [15, FICHA[15][3] + '.', 'c', 'Inflamación crónica · Tiroiditis de Hashimoto',
-      ['Adaptación: atrofia · Tiroiditis de Hashimoto', 'Adaptación: hiperplasia · Bocio coloide multinodular', 'Inflamación crónica · Pancreatitis crónica'],
-      'Glándula tiroides. La atrofia folicular es un hallazgo; el proceso es inflamación crónica.'],
-    [3, FICHA[3][3] + '.', 'b', 'Neoplasia benigna · Adenoma pleomorfo de glándula parótida',
-      ['Neoplasia maligna · Adenoma pleomorfo de glándula parótida', 'Neoplasia benigna · Cistoadenoma mucinoso', 'Neoplasia benigna mixta · Teratoma ovárico maduro'],
-      'Glándula parótida. Sin atipia.'],
-    [10, FICHA[10][3] + '.', 'a', 'Inflamación aguda · Apendicitis aguda',
-      ['Inflamación crónica granulomatosa · Enfermedad de Crohn', 'Necrosis coagulativa isquémica · Infarto agudo del miocardio', 'Inflamación crónica · Gastritis crónica'],
-      'Apéndice vermiforme.'],
-    [18, FICHA[18][3] + '.', 'd', 'Neoplasia benigna · Cistoadenoma mucinoso',
-      ['Neoplasia maligna · Cistoadenoma mucinoso', 'Neoplasia benigna mixta · Teratoma ovárico maduro', 'Inflamación crónica · Endometriosis en trompa uterina'],
-      'Ovario.'],
-    [6, FICHA[6][3] + '.', 'b', 'Neoplasia maligna · Carcinoma epidermoide de esófago',
-      ['Adaptación: metaplasia · Esófago de Barret', 'Neoplasia benigna · Condiloma acuminado', 'Neoplasia maligna · Carcinoma epidermoide de lengua'],
-      'Esófago. El de lengua (lámina 4) tiene globos córneos y papilas filiformes.'],
-    [13, FICHA[13][3] + '.', 'c', 'Inflamación crónica · Cirrosis hepática',
-      ['Acúmulos intracelulares · Esteatosis hepática', 'Neoplasia maligna · Hepatocarcinoma', 'Adaptación: hiperplasia · Cirrosis hepática'],
-      'Hígado. Los lípidos son un hallazgo más; el Dx de la tabla es cirrosis.'],
-    [24, FICHA[24][3] + '.', 'a', 'Adaptación: hiperplasia · Hiperplasia prostática benigna',
-      ['Neoplasia benigna · Hiperplasia prostática benigna', 'Adaptación: hipertrofia · Hiperplasia prostática benigna', 'Adaptación: atrofia · Atrofia testicular'],
-      'Próstata. Aunque se llame «benigna», en la tabla es adaptación, no neoplasia.'],
-    [8, FICHA[8][3] + '.', 'd', 'Inflamación crónica · Gastritis crónica',
-      ['Adaptación: atrofia · Gastritis crónica', 'Neoplasia maligna · Carcinoma gástrico de tipo difuso', 'Inflamación aguda · Apendicitis aguda'],
-      'Estómago.'],
-    [21, FICHA[21][3] + '.', 'c', 'Neoplasia maligna · Carcinoma escamoso de cuello uterino',
-      ['Inflamación crónica · Cervicitis crónica', 'Neoplasia maligna · Carcinoma epidermoide de lengua', 'Neoplasia benigna · Condiloma acuminado'],
-      'Cérvix. A diferencia de las láminas de lengua y esófago, no hay queratinización.'],
-    [4, FICHA[4][3] + '.', 'b', 'Neoplasia maligna · Carcinoma epidermoide de lengua',
-      ['Neoplasia maligna · Carcinoma epidermoide de esófago', 'Neoplasia benigna · Condiloma acuminado', 'Neoplasia maligna · Carcinoma escamoso de cuello uterino'],
-      'Lengua. Las papilas filiformes ubican el órgano.'],
-    [16, FICHA[16][3] + '.', 'a', 'Neoplasia maligna · Tumor de Wilms (nefroblastoma)',
-      ['Neoplasia benigna mixta · Teratoma ovárico maduro', 'Neoplasia maligna · Seminoma', 'Neoplasia benigna · Adenoma pleomorfo de glándula parótida'],
-      'Riñón.']
-  ];
-  var LT_DESC = {
-    id: 'ap_lt_desc', area: PR, clase: 'Laminario', titulo: '¿Qué lámina es? Por la descripción', tipo: 'casos', rotulo: 'Opción múltiple', explicar: true,
-    resumen: 'La descripción de la tabla, sin el órgano. Elegí el proceso y el Dx tal como figuran en el laminario: varias opciones tienen el Dx correcto con el proceso equivocado.',
-    fuente: SRC_LT,
-    casos: DESC_Q.map(function (q) {
-      var r = mc(q[2], q[3], q[4]);
-      return [q[1], '¿Proceso y Dx, según la tabla?', r.ans, q[2], 'Lámina ' + q[0] + ' · ' + q[5], r.opts];
-    })
-  };
-  var LT_SIM = { id: 'lam_lt_simulacro', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 10, cronometro: true, clase: 'Laminario', titulo: 'Simulacro del laminario total',
-    resumen: 'Diez láminas sorteadas solo del laminario total (20 nov). Sin banco de palabras y con cronómetro; la planilla sale al final.',
-    fuente: SRC_LT, laminas: TOTAL, procesos: PROCESOS };
-
-  /* um exercício por lâmina (aba Laminario): fotos separadas do PDF, sem a etiqueta do porta-objeto */
-  var LT_IMG = {
-    1: ['img/laminario/lt-01-1.jpg', 'img/laminario/lt-01-2.jpg'],
-    2: ['img/laminario/lt-02-1.jpg', 'img/laminario/lt-02-2.jpg'],
-    3: ['img/laminario/lt-03-1.jpg', 'img/laminario/lt-03-2.jpg'],
-    4: ['img/laminario/lt-04-1.jpg', 'img/laminario/lt-04-2.jpg'],
-    5: ['img/laminario/lt-05-1.jpg'],
-    6: ['img/laminario/lt-06-1.jpg'],
-    7: ['img/laminario/lt-07-1.jpg'],
-    8: ['img/laminario/lt-08-1.jpg'],
-    9: ['img/laminario/lt-09-1.jpg'],
-    10: ['img/laminario/lt-10-1.jpg', 'img/laminario/lt-10-2.jpg'],
-    11: ['img/laminario/lt-11-1.jpg'],
-    12: ['img/laminario/lt-12-1.jpg', 'img/laminario/lt-12-2.jpg'],
-    13: ['img/laminario/lt-13-1.jpg'],
-    14: ['img/laminario/lt-14-1.jpg'],
-    15: ['img/laminario/lt-15-1.jpg'],
-    16: ['img/laminario/lt-16-1.jpg'],
-    17: ['img/laminario/lt-17-1.jpg'],
-    18: ['img/laminario/lt-18-1.jpg', 'img/laminario/lt-18-2.jpg', 'img/laminario/lt-18-3.jpg'],
-    19: ['img/laminario/lt-19-1.jpg'],
-    20: ['img/laminario/lt-20-1.jpg'],
-    21: ['img/laminario/lt-21-1.jpg'],
-    22: ['img/laminario/lt-22-1.jpg', 'img/laminario/lt-22-2.jpg', 'img/laminario/lt-22-3.jpg'],
-    23: ['img/laminario/lt-23-1.jpg', 'img/laminario/lt-23-2.jpg', 'img/laminario/lt-23-3.jpg'],
-    24: ['img/laminario/lt-24-1.jpg'],
-    25: ['img/laminario/lt-25-1.jpg']
-  };
-  var LT_EXER = TOTAL.map(function (t, i) {
-    var n = i + 1, nn = (n < 10 ? '0' : '') + n;
-    var L = Object.assign({}, t, { id: 't' + n, g: 'lt' + n, img: (LT_IMG[n] || []).map(function (src) { return { src: src, k: 'pdf' }; }) });
-    return { id: 'lt_' + nn, area: PR, clase: 'Laminario', titulo: 'Lámina ' + n, tipo: 'laminas', nivel: '4', rotulo: 'Láminas', org: t.organo[0],
-      resumen: 'Mirá las fotos y completá ÓRGANO, PROCESO, DESCRIPCIÓN y DX; cada descripción se corrige hallazgo por hallazgo.',
-      fuente: SRC_T, laminas: [L], procesos: PROCESOS };
-  });
-
-  /* láminas das semanas 7 e 8 (quadro da professora, pasta 2. P2): uma por lâmina, na aba Laminario, sem foto por enquanto */
-  var NEW_LAM = [
-    { id: 'lt_s7_cirrosis', sem: '7', nome: 'Cirrosis hepática', org: ORG.higado, proceso: ['Inflamación crónica', 'inflama;cronic!agud'],
-      desc: [['Nódulos regenerativos separados por tabiques de tejido conectivo', 'nodulo|regenerativ|tabiq'], ['Histoarquitectura alterada', 'arquitectura|histoarquit'], ['Hepatocitos con vacuolas lipídicas', 'vacuol|lipid|grasa'], ['Infiltrado inflamatorio crónico sobreagregado', 'infiltrad|inflamat']],
-      dx: ['Cirrosis hepática', 'cirros'] },
-    { id: 'lt_s7_gastritis', sem: '7', nome: 'Gastritis crónica moderada', org: ORG.estomago, proceso: ['Inflamación crónica', 'inflama;cronic!agud'],
-      desc: [['Linfocitos aislados y en nidos', 'linfocit'], ['Vasocongestión y edema', 'vasocong|congest|edema'], ['Mucosa gástrica alterada', 'mucosa']],
-      dx: ['Gastritis crónica moderada', 'gastrit'] },
-    { id: 'lt_s8_mastitis', sem: '8', nome: 'Mastitis granulomatosa', org: ORG.mama, proceso: ['Inflamatorio crónico granulomatoso', 'granulom'],
-      desc: [['Granulomas con linfocitos, fibroblastos y células epitelioides', 'granulom|epitelioid|linfocit'], ['Células gigantes multinucleadas tipo Langhans', 'langhans|gigante'], ['Proceso inflamatorio crónico lobulocéntrico', 'lobul']],
-      dx: ['Mastitis granulomatosa', 'mastitis;granulomat'] },
-    { id: 'lt_s8_crohn', sem: '8', nome: 'Enfermedad de Crohn', org: ORG.ileon, proceso: ['Inflamatorio crónico granulomatoso', 'granulom'],
-      desc: [['Afectación transmural, no necrotizante ni caseificante', 'transmural'], ['Glándulas distorsionadas e histoarquitectura alterada', 'distorsion|arquitectura|histoarquit'], ['Edema, fibrosis, erosión y fisuras', 'fisur|erosi|fibros|edema']],
-      dx: ['Enfermedad de Crohn', 'crohn'] }
-  ];
-  var NEW_EXER = NEW_LAM.map(function (n) {
-    var L = { id: n.id, g: n.id, nome: n.nome, img: [], organo: n.org, proceso: n.proceso, desc: n.desc, dx: n.dx };
-    return { id: n.id, area: PR, clase: 'Laminario', titulo: 'Lámina · Semana ' + n.sem, tipo: 'laminas', nivel: '4', rotulo: 'Láminas', org: n.org[0],
-      resumen: 'Mirá la descripción y completá ÓRGANO, PROCESO, DESCRIPCIÓN y DX; cada descripción se corrige hallazgo por hallazgo.',
-      fuente: 'Quadro de la práctica, semana ' + n.sem + ' (pasta 2. P2 de la turma)', laminas: [L], procesos: PROCESOS };
-  });
-
   A.docentePratica = 'Dra. Alicia Gonzalez';
-  A.fontePratica = 'Clases prácticas 1 a 4, láminas de la P1 y de la P2, laminario total corregido (20 nov) y pizarrones';
+  A.fontePratica = 'Clases prácticas 1 a 4, láminas de la P1 y de la P2, laminario completo y pizarrones';
   [].push.apply(A.modulos, [].concat(
     TEO_P1,
     par('lam_p1', 'Práctica · P1', 'Láminas de la P1',
@@ -946,13 +614,12 @@
     par('lam_p2', 'Práctica · P2', 'Láminas de la P2',
       'Los 10 temas del pizarrón de la P2 (necrosis, inflamación, acúmulos y cirrosis), con la descripción de la profesora como respuesta.',
       'Las 10 láminas de la P2 en orden aleatorio, sin banco de palabras.', SRC_P + '; pizarrón «Temas P2 Práctica»; Hashimoto y cirrosis: tabla del laminario', P2Q),
-    LT_EXER, NEW_EXER, LT_MAPAS, LT_CUADROS,
+    par('lam_total', 'Laminario', 'Laminario completo (28 láminas)',
+      'La tabla corregida del laminario (25 láminas) más 3 láminas nuevas de duodeno y estómago de la prueba práctica oficial, en orden, con la foto de cada lámina. Seis láminas tienen una segunda foto oficial, también tomada de la prueba.',
+      'Las 28 láminas del laminario en orden aleatorio, sin banco de palabras.', SRC_T + '; 3 láminas y 6 fotos extra: PDF oficial «Laminas Anatopato I - Practica P1_P2_Final»', TOTAL),
     [{ id: 'lam_simulacro', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 8, cronometro: true, clase: 'Simulacro', titulo: 'Simulacro de la prueba práctica',
       resumen: 'Ocho láminas sorteadas entre la P1, la P2 y el laminario. Sin banco de palabras y con cronómetro; la planilla sale al final.',
       fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }],
-    TEO_CASOS,
-    [LT_FOTO, LT_DESC, LT_SIM]
+    TEO_CASOS
   ));
-  /* a aba Laminario (nível 4): os exercícios e mapas do laminario saem dos níveis 1 a 3 */
-  A.modulos.forEach(function (m) { if (m.clase === 'Laminario') m.nivel = '4'; });
 })();

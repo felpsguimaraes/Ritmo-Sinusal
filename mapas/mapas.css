@@ -253,19 +253,11 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .casefig-btn:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 .casefig figcaption{font-size:12.5px;color:var(--muted);line-height:1.45}
 @media (min-width:861px){.cases.withfig{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}.casefig{position:sticky;top:12px}}
-/* caso com a foto da lámina (quiz por foto): a mesma moldura escura do visor de láminas */
-.casephoto{position:relative;display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:2/1;padding:0;border:0;border-radius:12px;overflow:hidden;background:#0c1311;cursor:zoom-in}
-.casephoto img{display:block;width:100%;height:100%;object-fit:contain}
-.casephoto:focus-visible{outline:3px solid var(--green);outline-offset:2px}
-.case-exp{margin:2px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
 .fbi .exp{color:var(--muted);font-size:13px}
 .fbi .exp b{color:var(--green)}
 
 /* ---------- níveis ---------- */
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
-.levels.four{grid-template-columns:repeat(4,1fr)}
-.orgfilter{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
-.orglbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
 .level{appearance:none;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:2px;font-family:var(--sans)}
 .level small{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 .level b{font-size:17px}
@@ -336,18 +328,17 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .lamdot[data-st="part"]{border-style:solid;border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
 .lamdot[data-st="miss"]{border-style:solid;border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
 .lamdot[aria-current]{box-shadow:0 0 0 2px var(--board),0 0 0 4px var(--green)}
-/* a foto em cima e a folha (órgano, proceso, descripción, dx) embaixo, em qualquer largura */
-.lamgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
-.lamgrid .lamstage{aspect-ratio:auto;height:min(62vh,520px)}
+.lamgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.lamgrid{grid-template-columns:1fr}}
 .lamfig{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
-.lamstage{position:relative;background:#0c1311;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
-.lammain{display:block;width:100%;height:100%;object-fit:contain;cursor:zoom-in}
+.lamstage{position:relative;background:#0c1311;border-radius:14px;overflow:hidden;min-height:320px;max-height:62vh;display:flex;align-items:center;justify-content:center}
+.lammain{display:block;max-width:100%;max-height:62vh;width:auto;height:auto;object-fit:contain;cursor:zoom-in}
 .lamzoom{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:6px;appearance:none;border:0;border-radius:10px;min-height:36px;padding:0 12px;background:rgba(0,0,0,.62);color:#fff;font:600 13px/1 var(--sans);cursor:pointer}
 .lamstage.fail .lammain,.lamstage.fail .lamzoom{display:none}
 .lamnoimg{margin:0;padding:18px;color:#e6efe9;font-size:14px;text-align:center}
 .lamnoimg a{color:#8fe0c2}
 .lamthumbs{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:thin}
-.lamthumb{flex:none;appearance:none;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;width:64px;height:64px;background:#0c1311;cursor:pointer}
+.lamthumb{flex:none;appearance:none;padding:0;border:2px solid transparent;border-radius:10px;overflow:hidden;width:76px;height:76px;background:#0c1311;cursor:pointer}
 .lamthumb img{display:block;width:100%;height:100%;object-fit:cover}
 .lamthumb[aria-pressed="true"]{border-color:var(--green)}
 .lamthumb.fail{display:none}
@@ -366,9 +357,9 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .lamf{display:flex;flex-direction:column;gap:7px}
 .lamf>label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .lamf>label small{margin-left:6px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--green)}
-.lamin{position:relative;width:min(100%,calc(var(--n,60)*1ch + 72px))}
+.lamin{position:relative}
 .lamf input,.lamf textarea{width:100%;font:500 15px/1.4 var(--sans);color:var(--ink);background:var(--board);border:1.5px dashed var(--line-strong);border-radius:11px;padding:10px 34px 10px 12px}
-.lamf textarea{display:block;min-height:96px;resize:vertical;padding-right:12px;font-weight:400;line-height:1.5}
+.lamf textarea{display:block;min-height:128px;resize:vertical;padding-right:12px;font-weight:400;line-height:1.5}
 .lamin .ico{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
 .lamf[data-st="filled"] input,.lamdesc[data-st="filled"] textarea{border-style:solid;border-color:var(--green)}
 .lamf[data-st="ok"] input,.lamdesc[data-st="ok"] textarea{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
@@ -418,6 +409,7 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .lbimg.z{width:auto;height:auto;min-width:200%;max-width:none;max-height:none;object-fit:initial;cursor:zoom-out}
 .lbnav{position:absolute;top:50%;transform:translateY(-50%);appearance:none;border:0;width:46px;height:66px;border-radius:12px;background:rgba(255,255,255,.14);color:#fff;font:400 32px/1 var(--sans);cursor:pointer}
 .lbprev{left:10px}.lbnext{right:10px}
+@media (min-width:861px){.lamfig{position:sticky;top:12px}}
 @media (max-width:640px){
   .lamact{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .lamact .btn.primary{grid-column:1 / -1;order:-1}
