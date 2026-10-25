@@ -90,8 +90,8 @@ function ensureLauncher(){
 }
 function context(){
  const subj=course();
- if(!subj||UI.tab!=='catedra')return null;
- return {subj,tab:'catedra'};
+ if(!subj||!['catedra','videos'].includes(UI.tab))return null;
+ return {subj,tab:UI.tab};
 }
 function showModal(item){
  if(!item||!idOK(item.id))return;
@@ -128,10 +128,11 @@ function mount(){
  const ctx=context(),target=D.getElementById('subjectContent');
  if(!ctx||!target)return;
  const existing=target.querySelector('[data-apv-root]');
- if(existing&&existing.querySelector('[data-apv-player]')&&existing.dataset.apvRoot===ctx.subj)return;
+ if(existing&&existing.querySelector('[data-apv-player]')&&existing.dataset.apvRoot===ctx.subj&&existing.dataset.apvTab===ctx.tab)return;
  if(existing)existing.remove();
- const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
- target.replaceChildren(section);
+ const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);section.setAttribute('data-apv-tab',ctx.tab);
+ if(ctx.tab==='catedra')target.replaceChildren(section);
+ else target.prepend(section);
  if(!cache.data){
   section.innerHTML='<div class="sxAPVStatus" role="status"><h2>Cátedra · Anatomia '+(ctx.subj==='1'?'I':'II')+'</h2><p>'+
    (cache.erro?'Não foi possível carregar as aulas agora. Tente novamente.':'Carregando aulas da Cátedra…')+
@@ -284,5 +285,8 @@ D.addEventListener('click',e=>{
 W.SinusAnatomiaPratica={mount,load,get catalog(){return cache.data},get error(){return cache.erro},course,anatomyId,ensureLauncher};
 W.addEventListener('sinus:drive-ready',()=>{if(context()){D.querySelector('[data-apv-root]')?.remove();mount()}});
 D.addEventListener('sinus:library-uploads-ready',()=>{if(context()){D.querySelector('[data-apv-root]')?.remove();mount()}});
+if(D.getElementById('subjectView')&&!D.getElementById('subjectView').classList.contains('hidden')){
+ try{mount()}catch(e){console.error('[SINUS Cátedra] Falha ao inicializar',e)}
+}
 load();
 })(window,document);
