@@ -70,10 +70,10 @@ function entries(name,mode){
 }
 function current(){
  const view=D.getElementById('subjectView');
- if(!view||view.classList.contains('hidden')||!W.UI?.subject||W.UI.tab!=='videos')return null;
- const name=W.UI.subject;
+ if(!view||view.classList.contains('hidden')||typeof UI==='undefined'||!UI.subject||UI.tab!=='videos')return null;
+ const name=UI.subject;
  if(D.querySelector('#subjectHeader h1')?.textContent.trim()!==name)return null;
- return {name,mode:W.UI.mode||'theory'};
+ return {name,mode:UI.mode||'theory'};
 }
 function slot(){
  const host=D.getElementById('subjectContent');
