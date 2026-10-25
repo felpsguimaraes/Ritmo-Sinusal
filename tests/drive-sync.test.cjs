@@ -50,7 +50,9 @@ const test = (name, fn) => { try { fn(); console.log('ok  ', name); } catch (e) 
     'Anatomía Patológica I': vazio(), 'Semiología Médica I': vazio(), 'Farmacología I': vazio(),
     'Fisiopatología I': vazio(), 'Imagenología': vazio(), 'Medicina de la Familia': vazio(),
   } };
-  W.SinusDrive.apply(DB, 5, 'G');
+  W.SinusDrive.apply(DB, 5, 'G'); // contexto do aluno, como em montarDados
+  // o item de prática agora vem da leitura do Drive pelo aluno (drive-aluno.js); aqui simulamos a chegada
+  W.SinusDrive.addItems([{ id: '1RfsKKB8cX2BCq202hgTqJbbVRjUlae9y', t: 'clase 2-Lesión celular (anatopato prática).pdf', m: 'application/pdf', p: 5, c: 'G', s: 'Anatomía Patológica I', sec: 'PRÁTICA/SLIDES/P2', size: 1731625, origin: 'teste' }]);
 
   test('5G: slide de prática do Drive aparece em pratica (aba Aulas práticas)', () => {
     const slide = DB.subjects['Anatomía Patológica I'].pratica.find(i => i.id === '1RfsKKB8cX2BCq202hgTqJbbVRjUlae9y');

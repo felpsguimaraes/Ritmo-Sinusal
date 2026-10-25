@@ -13,7 +13,6 @@ var CATALOGS=[
 '/biblioteca/dados/c-periodos-4-6-extra.json',
 '/biblioteca/dados/c-periodos-7-8-extra.json',
 '/biblioteca/dados/c-periodos-6-8-subpastas.json',
-'/biblioteca/dados/drive-turmas-5.json',
 '/biblioteca/dados/turmas-ab-1.json',
 '/biblioteca/dados/turmas-ab-2.json',
 '/biblioteca/dados/turmas-ab-3.json',
@@ -140,5 +139,15 @@ state.ready=Promise.allSettled(CATALOGS.map(async function(path){
  lateApply();W.dispatchEvent(new CustomEvent('sinus:drive-ready',{detail:{count:state.items.length,errors:state.errors}}));
  return state.items;
 }).catch(function(e){state.errors.push(String(e));state.loading=false;return []});
-W.SinusDrive={state:state,apply:apply,ready:state.ready,refresh:lateApply};
+function addItems(list){
+ var added=0,known=new Set(state.items.map(x=>x.id+'|'+x.p+'|'+x.c));
+ (list||[]).forEach(function(x){
+  if(!x||!/^[a-zA-Z0-9_-]{10,}$/.test(x.id||''))return;
+  var k=x.id+'|'+x.p+'|'+x.c; if(known.has(k))return;
+  known.add(k); state.items.push({...x,cohorts:[x.c]}); added++;
+ });
+ if(added&&state.context)apply(state.context.DB,state.context.period,state.context.cohort);
+ return added;
+}
+W.SinusDrive={state:state,apply:apply,ready:state.ready,refresh:lateApply,addItems:addItems};
 })(window);
