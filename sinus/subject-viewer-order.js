@@ -21,6 +21,7 @@
     var viewers = children.filter(function (el) { return !el.matches('.sinus-rem-box') && selectors.some(function (sel) { return el.matches(sel); }); });
     if (!reminders.length && !viewers.length) return;
     var preferred = reminders.concat(viewers);
+    if (preferred.every(function (el, i) { return children[i] === el; })) return;
     // Insert in reverse to retain the order within each group.
     modifying = true;
     for (var i = preferred.length - 1; i >= 0; i--) {
