@@ -58,8 +58,8 @@
   var uid = 'anon';
   try { uid = (window.parent && window.parent !== window && window.parent.SinusApp && window.parent.SinusApp.S && window.parent.SinusApp.S.uid) || 'anon'; } catch (e) {}
   var KEY = KEY_BASE + '_' + uid;
-  var S = { a: {}, c: {}, v: {}, r: {}, m: {}, t: {}, mvb: {}, o: {}, ov: {}, lvl: '1', li: {}, area: null, org: [] };
-  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && o.a) S = { a: o.a || {}, c: o.c || {}, v: o.v || {}, r: o.r || {}, m: o.m || {}, t: o.t || {}, mvb: o.mvb || {}, o: o.o || {}, ov: o.ov || {}, lvl: o.lvl || '1', li: o.li || {}, area: o.area || null, org: o.org || [] }; } } catch (e) {}
+  var S = { a: {}, c: {}, v: {}, r: {}, m: {}, t: {}, mvb: {}, o: {}, ov: {}, lvl: null, li: {}, area: null, org: [] };
+  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && o.a) S = { a: o.a || {}, c: o.c || {}, v: o.v || {}, r: o.r || {}, m: o.m || {}, t: o.t || {}, mvb: o.mvb || {}, o: o.o || {}, ov: o.ov || {}, lvl: o.lvl || null, li: o.li || {}, area: o.area || null, org: o.org || [] }; } } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
 
   /* ---------- utilidades ---------- */
@@ -258,7 +258,8 @@
     if (note) root.appendChild(el('p', { class: 'areanote' }, esc(note)));
 
     var lamArea = curArea === 'pratica' && DATA[curSid].modulos.some(function (m) { return areaOf(m) === 'pratica' && m.tipo === 'laminas'; });
-    var lvl = S.lvl || '1';
+    /* na prática, a primeira vez abre direto na aba Laminario (nível 4), se a matéria tiver */
+    var lvl = S.lvl || ((curArea === 'pratica' && DATA[curSid].modulos.some(function (m) { return m.nivel === '4' && areaOf(m) === 'pratica'; })) ? '4' : '1');
     var lv = el('div', { class: 'levels', role: 'tablist', 'aria-label': T.level });
     var levelTabs = [['1', T.l1, lamArea ? T.pl1d : T.l1d], ['2', T.l2, lamArea ? T.pl2d : T.l2d], ['3', T.l3, lamArea ? T.pl3d : T.l3d]];
     if (DATA[curSid].modulos.some(function (m) { return m.nivel === '4' && areaOf(m) === curArea; })) levelTabs.push(['4', T.l4, T.l4d]);
