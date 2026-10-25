@@ -394,6 +394,9 @@
       if (S.dentro && status.indexed > 0) { try { renderAll() } catch(e) {} }
     });
     if (W.SinusDrive) W.SinusDrive.apply(DB, S.prefs.periodo || 5, S.turma || "G");
+    if (W.SinusDriveAluno) W.SinusDriveAluno.sincronizar(DB, S.turma || "G", per).then(function (st) {
+      if (S.dentro && st && st.added > 0) { try { renderAll() } catch (e) {} }
+    }).catch(function () {});
     DB.schedules = montarHorarios();
     DB.training = DB.training || { types: [], questions: [] };
     DB.training.questions = montarQuestoes();

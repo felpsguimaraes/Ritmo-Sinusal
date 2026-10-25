@@ -1,0 +1,47 @@
+{
+  "descricao": "Raízes do Google Drive por turma (5º período). O sincronizador percorre cada raiz recursivamente. Para incluir outra turma ou período, adicione uma entrada. Turmas sem pasta confirmada ficam fora até serem conferidas. 'ignorar' lista pastas da raiz da turma que não são matérias.",
+  "turmas": [
+    {
+      "periodo": 5,
+      "turma": "G",
+      "rootId": "1ArXk0Nk6tJ1tzSBknBa5SwKIgUSjcnyU",
+      "pasta": "TURMA G / 5ºG"
+    },
+    {
+      "periodo": 5,
+      "turma": "A",
+      "rootId": "17bu7edPcJtLnkwj2Q0tswjc_UXFopfNl",
+      "pasta": "Turma A / Quinto semestre"
+    },
+    {
+      "periodo": 5,
+      "turma": "B",
+      "rootId": "191tFGBEg2v3xSDP3_tqzk4upDtqDf5aM",
+      "pasta": "Turma B 2024.2 / 5 Semestre"
+    },
+    {
+      "periodo": 5,
+      "turma": "C",
+      "rootId": "1Ziq2Wy9FPEF5D67y2B3WFIufHcXOHj4h",
+      "pasta": "DRIVE TURMA C - 2026.1 / 5° SEMESTRE 2025.1"
+    }
+  ],
+  "pendentes": [
+    {
+      "periodo": 5,
+      "turma": "E",
+      "motivo": "Pasta 'Turma E' não tem subpasta de 5º semestre; confirmar a raiz correta."
+    },
+    {
+      "periodo": 5,
+      "turma": "F",
+      "motivo": "Pasta da turma F não localizada na conta conectada."
+    }
+  ],
+  "ignorar": [
+    "Horários ônibus UCP",
+    "INFORMAÇÕES GERAIS",
+    "Biblioteca",
+    "Material das Aulas"
+  ]
+}

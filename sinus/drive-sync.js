@@ -37,7 +37,21 @@ var alias={
 'nutricao':'Nutrición','medicina interna i':'Medicina Interna I'
 };
 var norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,' ');
-var subjectName=s=>alias[norm(s)]||String(s||'').trim();
+/* Pastas variam por turma (ex.: "FARMACOLOGIA", "Semiologia I", "Fisio patologia I", "ANATOPATOLOGIA 1"): mesma matéria oficial. */
+var CANON=[
+ [/anatopat|anatomia patolog/,'Anatomía Patológica I'],
+ [/farmacolog/,'Farmacología I'],
+ [/fisio ?patolog/,'Fisiopatología I'],
+ [/semiolog/,'Semiología Médica I'],
+ [/imagenolog/,'Imagenología'],
+ [/medicina.*familia/,'Medicina de la Familia']
+];
+var subjectName=s=>{
+ var n=norm(s);
+ for(var i=0;i<CANON.length;i++)if(CANON[i][0].test(n))return CANON[i][1];
+ return alias[n]||String(s||'').trim();
+};
+W.SinusDriveSubjectName=subjectName;
 function extKind(x){
  var m=x.m||'',title=(x.t||'').toLowerCase();
  if(/^image\//.test(m))return 'Imagem';
@@ -58,7 +72,7 @@ function category(x){
  if(isExam)return ['provas',isPractice?'practice':'theory','provas'];
  if(/^video\//.test(x.m||''))return ['videos',isPractice?'practice':'theory','videos'];
  if(/^audio\//.test(x.m||''))return ['audios',isPractice?'practice':'theory','audios'];
- if(isPractice)return ['pratica','practice',/macroscopia/.test(str)?'macro':'laminas'];
+ if(isPractice){var img=/^image\//.test(x.m||'');return ['pratica','practice',(/macroscopia/.test(str)||img)?'laminas':'pratica'];}
  if(/slide|aula|teorica|teoria|clase|presentacion/.test(str))return ['slides','theory','slides'];
  if(/^image\//.test(x.m||''))return ['complementares','theory','fotos'];
  return ['complementares','theory','complementares'];
@@ -126,5 +140,15 @@ state.ready=Promise.allSettled(CATALOGS.map(async function(path){
  lateApply();W.dispatchEvent(new CustomEvent('sinus:drive-ready',{detail:{count:state.items.length,errors:state.errors}}));
  return state.items;
 }).catch(function(e){state.errors.push(String(e));state.loading=false;return []});
-W.SinusDrive={state:state,apply:apply,ready:state.ready,refresh:lateApply};
+function addItems(list){
+ var added=0,known=new Set(state.items.map(x=>x.id+'|'+x.p+'|'+x.c));
+ (list||[]).forEach(function(x){
+  if(!x||!/^[a-zA-Z0-9_-]{10,}$/.test(x.id||''))return;
+  var k=x.id+'|'+x.p+'|'+x.c; if(known.has(k))return;
+  known.add(k); state.items.push({...x,cohorts:[x.c]}); added++;
+ });
+ if(added&&state.context)apply(state.context.DB,state.context.period,state.context.cohort);
+ return added;
+}
+W.SinusDrive={state:state,apply:apply,ready:state.ready,refresh:lateApply,addItems:addItems};
 })(window);
