@@ -1,0 +1,21 @@
+/* Link do Drive da turma · onboarding e perfil */
+.sxDriveBox{display:grid;gap:14px;padding:20px;margin:12px 0 2px;border:1px solid #dfe9e4;border-radius:22px;background:#fafcfb}
+.sxDriveHeader{display:flex;align-items:center;gap:12px}
+.sxDriveHeader strong{display:block;font-size:16px;letter-spacing:-.025em;color:var(--text,#19241e)}
+.sxDriveHeader p{margin:4px 0 0;font-size:12px;line-height:1.5;color:var(--muted,#6d7973)}
+.sxDriveIcon{width:42px;height:42px;display:grid;place-items:center;flex:none;background:#e6f5ec;color:#247653;border-radius:14px;font-size:22px;font-weight:700}
+.sxDriveBox .field{margin:0}
+.sxDriveBox .field>span{font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#6d7973)}
+.sxDriveBox input{width:100%;min-height:49px;background:#fff;border:1px solid #d7e1da;border-radius:13px;padding:12px 14px;font-size:13px;outline-offset:3px}
+.sxDriveBox input:focus{outline:2px solid #28885e;border-color:#28885e}
+.sxDriveBottom{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.sxDriveAction{background:#176647!important;color:#fff!important;border:1px solid #176647!important;border-radius:12px!important;min-height:41px;padding:10px 16px;font-weight:700}
+.sxDriveAction:hover{background:#0f4e36!important}
+.sxDriveAction:disabled{opacity:.55;cursor:wait}
+.sxDriveState{flex:1;min-width:160px;font-size:11px;line-height:1.5;color:var(--muted,#62766b)}
+.sxDriveBox .sxHint{margin:0;color:var(--muted,#6d7973);line-height:1.55;font-size:11px}
+html[data-theme="dark"] .sxDriveBox{background:#12231b;border-color:#365344}
+html[data-theme="dark"] .sxDriveIcon{background:#244b38;color:#b7ead0}
+html[data-theme="dark"] .sxDriveBox input{color:#eef9f1;background:#0c1812;border-color:#45614f}
+html[data-theme="dark"] .sxDriveHeader strong{color:#edf7f0}
+@media(max-width:560px){.sxDriveBox{padding:17px;border-radius:18px}.sxDriveHeader strong{font-size:15px}.sxDriveBottom{align-items:stretch;flex-direction:column;gap:9px}.sxDriveState{min-width:0}.sxDriveAction{width:100%}}

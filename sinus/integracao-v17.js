@@ -126,11 +126,20 @@
       passo: 0, nome: S.nome || '', whatsapp: S.whatsapp || '',
       faculdade: pr.faculdade || 'UCP', campus: pr.campus || 'Ciudad del Este', periodo: pr.periodo || 5,
       turma: S.turma || pr.turma || '', practiceAssignments:pr.practiceAssignments||{}, grupo: pr.grupo || '', subdivision: pr.subdivision || '', hospitalSubdivision: pr.hospitalSubdivision || '', papel: pr.papel || 'Estudante',
+      driveFolderUrl: pr.driveFolderUrl || '', driveScope: pr.driveScope || '', driveSlides: Array.isArray(pr.driveSlides) ? pr.driveSlides.slice() : [], driveSyncAt: pr.driveSyncAt || '',
       gruposMateria: Object.assign({}, pr.gruposMateria || {}), foco: pr.foco || 'semestre',
       estilos: (pr.estilos || []).slice(), indicacao: pr.indicacao || '', erro: '', salvando: false
     };
+    try {
+      var resume=JSON.parse(sessionStorage.getItem('sinus_drive_resume')||'null');
+      if(resume&&resume.uid===S.uid&&resume.mode==='p'&&resume.draft){
+        P=Object.assign(P,resume.draft,{passo:PASSOS.indexOf('turma'),salvando:false,erro:'',autoDrive:true});
+        sessionStorage.removeItem('sinus_drive_resume');
+      }
+    }catch(_){}
     mostrar('personalizacao');
     renderOnb();
+    if(P.autoDrive){P.autoDrive=false;setTimeout(function(){sincronizarDrive('p',true)},60)}
   }
 
   function campoSel(id, rotulo, opcoes, valor) {
@@ -138,6 +147,53 @@
       var v = Array.isArray(o) ? o[0] : o, t = Array.isArray(o) ? o[1] : o;
       return '<option value="' + H(v) + '"' + (String(v) === String(valor) ? ' selected' : '') + '>' + H(t) + '</option>';
     }).join('') + '</select></label>';
+  }
+
+
+  function campoDrive(prefix, url, syncedAt) {
+    var date=syncedAt?'Última leitura: '+new Date(syncedAt).toLocaleDateString('pt-BR'):'Ainda não sincronizado';
+    return '<section class="sxDriveBox"><div class="sxDriveHeader"><div class="sxDriveIcon">↗</div><div><strong>Sincronize o Drive da sua turma</strong><p>Traga os slides para dentro das matérias certas.</p></div></div>'+
+      '<label class="field"><span>Link da pasta da turma</span><input id="'+prefix+'Drive" type="url" inputmode="url" autocomplete="off" spellcheck="false" value="'+H(url||'')+'" placeholder="https://drive.google.com/drive/folders/..." aria-describedby="'+prefix+'DriveHelp"></label>'+
+      '<div class="sxDriveBottom"><button class="btn sm sxDriveAction" type="button" data-sx-drive-sync="'+prefix+'">Sincronizar Drive</button><span class="sxDriveState" role="status" id="'+prefix+'DriveStatus">'+H(date)+'</span></div>'+
+      '<p class="sxHint" id="'+prefix+'DriveHelp">Opcional. Cole a pasta da sua turma. O SINUS organiza apenas os links e títulos dos slides; as permissões dos arquivos continuam no Google.</p></section>';
+  }
+  function disciplinasDrive(period, cohort) {
+    return (W.SinusTimetable?.academicOptions?.(period,cohort)||[]).map(function(x){return x.title}).filter(Boolean);
+  }
+  async function sincronizarDrive(prefix,resumed){
+    var onboarding=prefix==='p',input=$id(prefix+'Drive'),state=$id(prefix+'DriveStatus'),btn=D.querySelector('[data-sx-drive-sync="'+prefix+'"]');
+    if(!input||!W.SinusStudentDrive)return;
+    var url=input.value.trim(),link=W.SinusStudentDrive.folderLink(url);
+    if(!link){if(state)state.textContent='Cole um link válido de uma pasta do Google Drive.';return}
+    if(onboarding)lerPasso();
+    var period=Number(onboarding?P.periodo:($id('pfPeriod')?.value||S.prefs.periodo||5));
+    var cohort=onboarding?P.turma:($id('pfClass')?.value||S.turma);
+    if(!cohort){if(state)state.textContent='Escolha sua turma antes de sincronizar.';return}
+    if(!onboarding&&(period!==Number(S.prefs.periodo)||cohort!==S.turma)){if(state)state.textContent='Salve primeiro o período e a turma no Perfil.';return}
+    var subjects=disciplinasDrive(period,cohort);
+    if(!subjects.length){if(state)state.textContent='Não existe grade confirmada para esta turma. Salve o link e sincronize quando a grade estiver disponível.';return}
+    if(btn)btn.disabled=true;
+    if(state)state.textContent='Lendo pastas e identificando slides…';
+    try{
+      var result=await W.SinusStudentDrive.scan({uid:S.uid,url:url,period:period,cohort:cohort,subjects:subjects});
+      var data={driveFolderUrl:result.folderUrl,driveScope:result.scope,driveSlides:result.items,driveSyncAt:result.at};
+      if(onboarding)Object.assign(P,data);
+      else{await salvarPrefs(data);montarDados();if(typeof renderAll==='function')renderAll()}
+      var msg=result.items.length+' slide(s) associado(s) às matérias · '+result.folders+' pasta(s) lida(s)'+(result.unmatched?' · '+result.unmatched+' sem matéria identificada':'')+(result.partial?' · leitura parcial':'');
+      if($id(prefix+'DriveStatus'))$id(prefix+'DriveStatus').textContent=msg;
+      W.toast?.(result.items.length?'Slides organizados por matéria.':'Nenhum slide pôde ser associado às matérias.');
+    }catch(e){
+      if(e&&e.code==='drive-auth-required'&&!resumed){
+        try{
+          sessionStorage.setItem('sinus_drive_resume',JSON.stringify({uid:S.uid,mode:prefix,url:url,period:period,cohort:cohort,draft:onboarding?Object.assign({},P):null}));
+          if(state)state.textContent='Abrindo o Google para autorizar a leitura…';
+          await W.SinusStudentDrive.authorize();return;
+        }catch(authError){e=authError}
+      }
+      if($id(prefix+'DriveStatus'))$id(prefix+'DriveStatus').textContent=e&&e.code==='drive-auth-required'?
+        'Autorização de leitura não concedida. Confira as permissões do Google e tente novamente.':
+        (e&&e.message||'Falha ao sincronizar a pasta.');
+    }finally{var active=D.querySelector('[data-sx-drive-sync="'+prefix+'"]');if(active)active.disabled=false}
   }
 
   function academicFields(prefix,period,cohort,prefs){
@@ -176,7 +232,7 @@
           '<label class="field"><span>Campus</span><input id="pCampus" value="' + H(P.campus) + '" placeholder="Ciudad del Este"></label></div>' +
           '<div class="grid2">' + campoSel('pPer', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), P.periodo) +
           campoSel('pTurma', 'Turma (sección)', [['', 'Escolha']].concat(turmasDoPeriodo(P.periodo).map(function (x) { return [x, x] })), P.turma) + '</div>' +
-          campoSel('pPapel', 'Você participa como', ['Estudante', 'Monitor', 'Delegado'], P.papel) + g +
+          campoSel('pPapel', 'Você participa como', ['Estudante', 'Monitor', 'Delegado'], P.papel) + campoDrive('p',P.driveFolderUrl,P.driveSyncAt) + g +
           '<p class="sxHint">As escolhas são guardadas por faculdade, campus, período e turma. As aulas teóricas continuam na agenda.</p>'
       };
     }
@@ -230,6 +286,9 @@
     if (k === 'turma') {
       P.faculdade = v('pFac') || 'UCP'; P.campus = v('pCampus').trim(); P.periodo = Number(v('pPer') || 5);
       P.turma = v('pTurma'); P.practiceAssignments=readAcademic('p'); P.papel = v('pPapel') || 'Estudante';
+      var driveUrl=v('pDrive').trim();
+      if(driveUrl!==P.driveFolderUrl){P.driveScope='';P.driveSlides=[];P.driveSyncAt=''}
+      P.driveFolderUrl=driveUrl;
       P.gruposMateria={}; Object.keys(P.practiceAssignments).forEach(function(k){if(k.endsWith('::practice'))P.gruposMateria[k.split('::')[0]]=P.practiceAssignments[k].group});
     }
     if (k === 'indicacao') P.indicacao = v('pInd').trim();
@@ -241,6 +300,7 @@
       if (!/^[0-9]{8,15}$/.test(P.whatsapp)) return 'Confira o WhatsApp: só números, com o código do país (8 a 15 dígitos).';
     }
     if (k === 'turma' && !P.turma) return 'Escolha a sua turma (sección).';
+    if (k === 'turma' && P.driveFolderUrl && !W.SinusStudentDrive?.folderLink(P.driveFolderUrl)) return 'Cole um link válido de uma pasta do Google Drive.';
     return '';
   }
 
@@ -255,7 +315,8 @@
       S.nome = P.nome; S.turma = P.turma; S.whatsapp = zap;
       return salvarPrefs({
         onboarding: true, idioma: idioma(), tema: temaAtual(), faculdade: P.faculdade, campus: P.campus, periodo: P.periodo,
-        turma: P.turma, grupo: P.grupo, practiceAssignments:P.practiceAssignments, papel: P.papel, gruposMateria: P.gruposMateria, foco: P.foco, estilos: P.estilos, indicacao: P.indicacao
+        turma: P.turma, grupo: P.grupo, practiceAssignments:P.practiceAssignments, papel: P.papel, gruposMateria: P.gruposMateria, foco: P.foco, estilos: P.estilos, indicacao: P.indicacao,
+        driveFolderUrl:P.driveFolderUrl,driveScope:P.driveScope,driveSlides:P.driveSlides,driveSyncAt:P.driveSyncAt
       });
     }).then(function () { P = null; entrarNoPainel() }).catch(function (e) {
       P.salvando = false;
@@ -399,6 +460,7 @@
       if (S.dentro && status.indexed > 0) { try { renderAll() } catch(e) {} }
     });
     if (W.SinusDrive) W.SinusDrive.apply(DB, S.prefs.periodo || 5, S.turma || "G");
+    if (W.SinusStudentDrive) W.SinusStudentDrive.apply(DB,{uid:S.uid,period:per,cohort:S.turma},S.prefs);
     // Bioestatística: slides em PDF pertencem à Teoria da disciplina oficial.
     // Somente anexar à matéria existente na grade; nunca inventar matérias.
     Object.keys(DB.subjects||{}).filter(function(name){
@@ -766,7 +828,7 @@
       '<label class="field"><span>WhatsApp</span><input value="' + H(S.whatsapp) + '" readonly></label>' +
       '<div class="grid3">' + campoSel('pfPeriod', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), per) +
       campoSel('pfClass', 'Turma (sección)', turmasDoPeriodo(per), S.turma) +
-      '</div><div id="pfAcademic">'+academicFields('pf',per,S.turma,pr)+'</div>' +
+      '</div>'+campoDrive('pf',pr.driveFolderUrl,pr.driveSyncAt)+'<div id="pfAcademic">'+academicFields('pf',per,S.turma,pr)+'</div>' +
       '<p class="sxErr" id="pfErr"></p><button class="btn primary" onclick="saveProfile()">Salvar perfil</button></div>' +
       '<div class="stack"><div class="glass adminBlock"><span class="eyebrow">Aparência e idioma</span><h3 style="font-size:16px;margin:8px 0 10px">Do seu jeito</h3>' +
       '<label class="field"><span>Idioma do painel</span><div class="sxSeg"><button type="button" data-sx-lang="pt">Português</button><button type="button" data-sx-lang="es">Español</button><button type="button" data-sx-lang="en">English</button></div></label>' +
@@ -778,9 +840,13 @@
     var nome = ($id('pfName').value || '').trim(), turma = $id('pfClass').value, per = Number($id('pfPeriod').value || 5);
     var assignments=readAcademic('pf'),gm={};Object.keys(assignments).forEach(function(k){if(k.endsWith('::practice'))gm[k.split('::')[0]]=assignments[k].group});
     if (nome.length < 3) { $id('pfErr').textContent = 'Escreva seu nome (pelo menos 3 letras).'; return }
+    var driveUrl=($id('pfDrive')?.value||'').trim(),link=driveUrl?W.SinusStudentDrive?.folderLink(driveUrl):null;
+    if(driveUrl&&!link){$id('pfErr').textContent='Cole um link válido de uma pasta do Google Drive.';return}
+    var changed=driveUrl!==String(S.prefs.driveFolderUrl||'')||Number(S.prefs.periodo)!==per||S.turma!==turma;
     db.doc('perfis/' + S.uid).set({ nome: nome, turma: turma, whatsapp: S.whatsapp, email: S.email, ultimo_acesso: agora() }, { merge: true }).then(function () {
       S.nome = nome; S.turma = turma;
-      return salvarPrefs({ periodo: per, turma: turma, grupo:'', gruposMateria:gm, practiceAssignments:assignments });
+      return salvarPrefs({periodo:per,turma:turma,grupo:'',gruposMateria:gm,practiceAssignments:assignments,
+         driveFolderUrl:driveUrl,driveScope:changed?'':S.prefs.driveScope||'',driveSlides:changed?[]:S.prefs.driveSlides||[],driveSyncAt:changed?'':S.prefs.driveSyncAt||''});
     }).then(function () { montarDados(); renderAll(); toast('Perfil salvo') }).catch(function () { $id('pfErr').textContent = 'Não foi possível salvar. Tente de novo.' });
   };
 
@@ -801,9 +867,10 @@
   };
 
   D.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-virar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
+    var t = e.target.closest ? e.target.closest('[data-sx-drive-sync],[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-virar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
     if (!t) return;
     if (t.id === 'sxEntrar') return entrar();
+    if (t.hasAttribute('data-sx-drive-sync')) return sincronizarDrive(t.getAttribute('data-sx-drive-sync'),false);
     if (t.hasAttribute('data-sx-tema')) return alternarTema();
     if (t.hasAttribute('data-sx-tema-set')) { aplicarTema(t.getAttribute('data-sx-tema-set')); if (S.dentro) salvarPrefs({ tema: temaAtual() }); if (UI.page === 'profile') renderProfile(); return }
     if (t.hasAttribute('data-sx-lang')) return definirIdioma(t.getAttribute('data-sx-lang'), true);
@@ -882,6 +949,14 @@
     enterStudent();
     nav('home');
     salvarAcesso();
+    try{
+      var resume=JSON.parse(sessionStorage.getItem('sinus_drive_resume')||'null');
+      if(resume&&resume.uid===S.uid&&resume.mode==='pf'){
+        sessionStorage.removeItem('sinus_drive_resume');
+        nav('profile');
+        setTimeout(function(){var field=$id('pfDrive');if(field)field.value=resume.url;sincronizarDrive('pf',true)},80);
+      }
+    }catch(_){}
     var q = new URLSearchParams(location.search), m = q.get('m'), volta = q.get('volta') || '';
     if (volta && volta.charAt(0) === '/' && volta.charAt(1) !== '/' && volta !== '/' && volta.indexOf('/aulas/materia') !== 0 && volta.indexOf('/aulas/anatopato') !== 0) return location.replace(volta);
     if (!m && volta) { var mm = volta.match(/[?&]m=([a-z]+)/); if (mm) m = mm[1]; else if (volta.indexOf('/aulas/anatopato') === 0) m = 'anatopato' }
