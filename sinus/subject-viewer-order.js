@@ -15,15 +15,29 @@
     var host = D.getElementById(hostId);
     var view = D.getElementById('subjectView');
     if (!host || !view || view.classList.contains('hidden')) return;
-    // O painel acadêmico mantém os lembretes dentro de sxAcademicOrdered.
-    // Insira a Cátedra no MESMO grupo, entre Lembretes e Materiais da turma;
-    // mover a Cátedra para o topo de subjectContent a colocava acima dos lembretes.
+    // O painel acadêmico contém o slot prioritário da aba atual.
+    // Os módulos de Vídeos, Provas e Treino podem chegar assincronamente;
+    // realocamos seus nós sem recriar iframes nem perder listeners.
     var academic = host.querySelector(':scope > .sxAcademicOrdered');
     if (academic) {
       var remSlot = academic.querySelector(':scope > .sxAOReminders');
-      var catedra = host.querySelector(':scope > .sxAPV');
-      if (remSlot && catedra) academic.insertBefore(catedra, remSlot.nextElementSibling);
+      var primary = academic.querySelector('[data-sx-primary]');
+      var slideOnly = W.UI?.mode === 'theory' && W.UI?.tab === 'slides';
+      var incoming = Array.prototype.slice.call(host.children).filter(function(el) {return el !== academic;});
+      modifying = true;
+      for (var n = 0; n < incoming.length; n++) {
+        var el = incoming[n];
+        if (el.matches('.sinus-rem-box') && remSlot) {
+          remSlot.replaceChildren(el);
+        } else if (primary) {
+          primary.appendChild(el);
+        } else if (slideOnly && el.matches('.resourceLayout,.sxMG,.sxMGOriginal')) {
+          // Slides possuem um único player; descartar visualizadores paralelos.
+          el.remove();
+        }
+      }
       if (host.firstElementChild !== academic) host.prepend(academic);
+      modifying = false;
       return;
     }
     var children = Array.prototype.slice.call(host.children);
