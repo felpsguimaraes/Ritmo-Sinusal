@@ -4,8 +4,26 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-10-24T22:09:50Z",
+  "updatedAt": "2026-10-25T15:25:57Z",
   "videos": [
+    {
+      "id": "g4R5mnylaI0",
+      "title": "Cutaneous and Subcutaneous Mycoses - Dr. Noélia Scappini",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "Z470t50gSUU",
+      "title": "Glycolysis (09/18/2026) - Dr. Glória Martinez",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "YlS4_SRXNXg",
+      "title": "Vaccine Storage (10/22/2026) - Dr. Andréa Villamayor",
+      "section": "videos",
+      "description": ""
+    },
     {
       "id": "ufH0VzERifM",
       "title": "Microbiology Lab (10/21/2026) - Dr. Nilson Cubilla",
@@ -14,13 +32,13 @@
     },
     {
       "id": "gkKvMfmnIbE",
-      "title": "Part I (10/19/2026) - Dr. Federico",
+      "title": "Part I (19.10.2026) - Dr Federico",
       "section": "videos",
       "description": ""
     },
     {
       "id": "EK22uPNLZME",
-      "title": "(15.10.2026) - Dr Federico Hogë",
+      "title": "(10/15/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -32,7 +50,7 @@
     },
     {
       "id": "2RBXp99Mby4",
-      "title": "Dr. Glória Martinez",
+      "title": "Ciclo de Urea (13.10.2026) - Dra Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -68,19 +86,19 @@
     },
     {
       "id": "oSHrHrGFNtc",
-      "title": "Motor Somático - Dr Federivo Hogë",
+      "title": "Somatic Motor Control - Dr. Federivo Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "j6Jdukd5JXU",
-      "title": "Protozoários Sanguíneos y Tisulares - Dra Noelia Scappini",
+      "title": "Blood and Tissue Protozoa - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "enK_1FIk9Nw",
-      "title": "Parasitología - Dra Noelia Scappini",
+      "title": "Parasitology - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -116,7 +134,7 @@
     },
     {
       "id": "KqdjuG-YWME",
-      "title": "Lipids II (09/09/2026) - Dr. Gloria Martinez",
+      "title": "Lípidos II (09.09.2026) - Dra Gloria Martinez",
       "section": "videos",
       "description": ""
     },
@@ -128,7 +146,7 @@
     },
     {
       "id": "LrT2DUN-A-s",
-      "title": "Circulatório Final ( Parte I / 03.09.2026) - Dr Federico Hogë",
+      "title": "Circulatory Final (Part I / 09/03/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -158,25 +176,25 @@
     },
     {
       "id": "FLOZILxRbaI",
-      "title": "Fisiología Respiratória VIII ( Parte 2 / 27.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology VIII (Part 2 / 08/27/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "lkDq_Xjtfyg",
-      "title": "Fisiología Respiratória VIII (Parte 1 / 27.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology VIII (Part 1 / 08/27/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "aBCm_wNQEEs",
-      "title": "Primary Health Care (I) - Dr. Andrea Villamayor",
+      "title": "Atención Primária de la Salud (I) - Dra Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
     {
       "id": "hTGbWq_rseA",
-      "title": "Fisiología Respiratória VII (24.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology VII (08/24/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -188,13 +206,13 @@
     },
     {
       "id": "_lxoKd2OM5g",
-      "title": "Micosis Oportunistas (20.08.2026) - Dra Noelia Scappini",
+      "title": "Opportunistic Mycoses (08/20/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "dBLQ4Bpmbes",
-      "title": "Fisiología Respiratória VI (20.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology VI (08/20/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -218,7 +236,7 @@
     },
     {
       "id": "E9CISRqKuVM",
-      "title": "Via de Las Pentosas (18.08.2026) - Dra Glória Martinez",
+      "title": "Via de Las Pentosa (18.08.2026) - Dr. Gloria Martinez",
       "section": "videos",
       "description": ""
     },
@@ -236,13 +254,13 @@
     },
     {
       "id": "dXqgvh3KNWY",
-      "title": "Microbiología Práctica (12.08.2026) - Dra Nilse Cubilla",
+      "title": "Practical Microbiology (08/12/2026) - Dr. Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
     {
       "id": "CiUF33AIb0A",
-      "title": "Micología Generalidades (06.08.2026) - Dra Noelia Scappini",
+      "title": "Mycology General Overview (08/06/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -254,7 +272,7 @@
     },
     {
       "id": "oOgfkiEtxWc",
-      "title": "Metabolismo de los Carbohidratos (11.08.2026) - Dra Glória Martinez",
+      "title": "Carbohydrate Metabolism (08/11/2026) - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -266,7 +284,7 @@
     },
     {
       "id": "EK8RasWPx8s",
-      "title": "Fisiología Respiratória II (06.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology II (08/06/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -284,19 +302,19 @@
     },
     {
       "id": "KMSW2qs1rsc",
-      "title": "Introducción Metabolismo (05.08.2026) - Dra Glória Martinez",
+      "title": "Introduction to Metabolism (08/05/2026) - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "OhjMiXlfC1I",
-      "title": "Fisiologia Respiratória (03.08.2026) - Dr Federico Höge",
+      "title": "Respiratory Physiology (08/03/2026) - Dr. Federico Höge",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ugvOpycYEWY",
-      "title": "Introduction to Nutrition (08/03/26) - Dr. Milva Cardozo",
+      "title": "Introducción a la Nutrición (03.08.26) - Dr Milva Cardozo",
       "section": "videos",
       "description": ""
     },
@@ -374,19 +392,19 @@
     },
     {
       "id": "otGbXjRTnZA",
-      "title": "Biophysics of Hearing I - Dr. Josué Schmidt (02.06.2026)",
+      "title": "Biofísica de la Audición I - Dr Josué Schmidt (02.06.2026)",
       "section": "videos",
       "description": ""
     },
     {
       "id": "tflyB6s0aiI",
-      "title": "Inmunidad Antitumoral - Dra Andrea Isasi (02.06.2026)",
+      "title": "Antitumor Immunity - Dr. Andrea Isasi (06/02/2026)",
       "section": "videos",
       "description": ""
     },
     {
       "id": "XWIBWmhQBKk",
-      "title": "Vitaminas II (01.06.2026) - Dra Andrea López",
+      "title": "Vitamins II (01.06.2026) - Dr. Andrea López",
       "section": "videos",
       "description": ""
     },
@@ -398,7 +416,7 @@
     },
     {
       "id": "7j_IxIi-eZU",
-      "title": "Erythrocytes and Hemoglobin - Dr. Carlos Ariel (05/26/2026)",
+      "title": "Eritrocitos e Hemoglobina - Dr Carlos Ariel (26.05.2026)",
       "section": "videos",
       "description": ""
     },
@@ -416,13 +434,13 @@
     },
     {
       "id": "meIF5x5l4BQ",
-      "title": "Review: Biophysics of Circulation - Dr. Josué Schmidt",
+      "title": "Revisión: Biofísica de la Circulación - Dr Josué Schmidt",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ypyf1RtTZhQ",
-      "title": "Biophysics of Sound - Dr. Josué Schmidt",
+      "title": "Biofísica del Sonido - Dr Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -440,7 +458,7 @@
     },
     {
       "id": "OMPKunJMzrc",
-      "title": "P2 Biochemistry Review - Dr. Andrea López",
+      "title": "Revisión P2 Bioquímica - Dra Andrea López",
       "section": "videos",
       "description": ""
     },
@@ -476,7 +494,7 @@
     },
     {
       "id": "sm23LaJlBvo",
-      "title": "Revisión P2 - Dr Arturo Alexander",
+      "title": "Review P2 - Dr. Arturo Alexander",
       "section": "videos",
       "description": ""
     },
@@ -842,7 +860,7 @@
     },
     {
       "id": "TXcxaDA1Lcs",
-      "title": "Nervios del Miembro Inferior II - Dr Ronald Martinez",
+      "title": "Nerves of the Lower Limb II - Dr. Ronald Martinez",
       "section": "videos",
       "description": ""
     },
@@ -1028,7 +1046,7 @@
     },
     {
       "id": "jBoibtElxvw",
-      "title": "Inguinal canal / anterolateral abdominal muscles - Dr. Víctor Benitez",
+      "title": "Conducto inguinal / músculos de la región anterolateral del abdomen - Dr Víctor Benitez",
       "section": "videos",
       "description": ""
     },
