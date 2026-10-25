@@ -2,23 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mapas guiados</title>
 <meta name="robots" content="noindex">
+<title>Mapas guiados</title>
 <meta name="theme-color" content="#197662">
-<script>
-  // tema e idioma antes de pintar (o painel guarda os dois em localStorage)
-  (function () {
-    try {
-      var t = localStorage.getItem('sinus_tema');
-      if (t !== 'claro' && t !== 'escuro') t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'escuro' : 'claro';
-      document.documentElement.setAttribute('data-theme', t === 'escuro' ? 'dark' : 'light');
-      var l = localStorage.getItem('sinus_idioma');
-      if (l) document.documentElement.lang = ({ pt: 'pt-BR', es: 'es', en: 'en' })[l] || 'pt-BR';
-    } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
-  })();
-</script>
-<link rel="stylesheet" href="mapas.css?v=4">
 <meta name="application-name" content="SINUS">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261024">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=20261024">
@@ -43,15 +29,9 @@
 <meta name="twitter:title" content="Mapas Guiados | SINUS">
 <meta name="twitter:description" content="Aprenda com mapas guiados, exercícios e correções no SINUS.">
 <meta name="twitter:image" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+<!-- Os mapas guiados ficam em /mapas/ (uma versão só, com a revisão de gabaritos e a prática). -->
+<script>location.replace('/mapas/' + location.search + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=/mapas/">
 </head>
-<body>
-<div id="app"></div>
-<noscript><p style="padding:24px">Ative o JavaScript para usar os mapas guiados.</p></noscript>
-<script src="anatopato.js?v=1"></script>
-<script src="farmacologia.js?v=1"></script>
-<script src="mapas-core.js?v=3"></script>
-<script src="gabaritos-revisados.js?v=2"></script>
-
-<script src="mapas.js?v=4"></script>
-</body>
+<body><p><a href="/mapas/">Abrir os mapas guiados</a></p></body>
 </html>

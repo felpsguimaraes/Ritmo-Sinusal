@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapas guiados · Sinus</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#197662">
+<script>
+  // tema e idioma antes de pintar (o painel guarda os dois em localStorage)
+  (function () {
+    try {
+      var t = localStorage.getItem('sinus_tema');
+      if (t !== 'claro' && t !== 'escuro') t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'escuro' : 'claro';
+      document.documentElement.setAttribute('data-theme', t === 'escuro' ? 'dark' : 'light');
+      var l = localStorage.getItem('sinus_idioma');
+      if (l) document.documentElement.lang = ({ pt: 'pt-BR', es: 'es', en: 'en' })[l] || 'pt-BR';
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+  })();
+</script>
+<link rel="stylesheet" href="mapas.css?v=6">
+<meta name="application-name" content="SINUS">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261024">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=20261024">
+<link rel="shortcut icon" href="/favicon.ico?v=20261024">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261024">
+<link rel="mask-icon" href="/icons/sinus-pinned-v3.svg?v=20261024" color="#155B48">
+<meta name="msapplication-TileColor" content="#155B48">
+<meta name="msapplication-TileImage" content="/icon-192.png?v=20261024">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="SINUS">
+<meta property="og:title" content="Mapas Guiados | SINUS">
+<meta property="og:description" content="Aprenda com mapas guiados, exercícios e correções no SINUS.">
+<meta property="og:url" content="https://meusinus.pages.dev/mapas/">
+<meta property="og:image" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+<meta property="og:image:secure_url" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Ícone do SINUS, fundo verde e eletrocardiograma branco">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mapas Guiados | SINUS">
+<meta name="twitter:description" content="Aprenda com mapas guiados, exercícios e correções no SINUS.">
+<meta name="twitter:image" content="https://meusinus.pages.dev/icon-512.png?v=20261024">
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:24px">Ative o JavaScript para usar os mapas guiados.</p></noscript>
+<script src="dados/anatopato.js?v=2"></script>
+<script src="dados/anatopato-pratica.js?v=3"></script>
+<script src="dados/farmacologia.js?v=3"></script>
+<script src="dados/fisiopatologia.js?v=1"></script>
+<script src="dados/imagenologia.js?v=1"></script>
+<script src="dados/semiologia.js?v=1"></script>
+<script src="dados/familia.js?v=1"></script>
+<script src="mapas-core.js?v=4"></script>
+<script src="gabaritos-revisados.js?v=2"></script>
+<script src="mapas.js?v=7"></script>
+</body>
+</html>
