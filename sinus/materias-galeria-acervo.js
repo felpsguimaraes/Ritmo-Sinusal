@@ -27,7 +27,9 @@ function card(x){
  const type=kind(x);
  // A primeira página do PDF e a capa do PowerPoint também precisam aparecer.
  // A miniatura vem do próprio arquivo no Drive, respeitando as permissões originais.
- const thumb=x.uploaded&&isImage(x)?
+ const thumb=x.youtubeId?
+  '<img class="sxMGPreview" src="https://i.ytimg.com/vi/'+encodeURIComponent(x.youtubeId)+'/hqdefault.jpg" loading="lazy" decoding="async" alt="Miniatura da aula" onload="if(this.naturalWidth>8&&this.naturalHeight>8)this.parentElement.classList.add(&quot;sxMGHasPreview&quot;);else this.remove()" onerror="this.remove()">':
+  x.uploaded&&isImage(x)?
   '<img data-sinus-uploaded-thumbnail="'+h(x.id)+'" class="sxMGPreview" loading="lazy" decoding="async" alt="Prévia do arquivo" onload="if(this.naturalWidth>8){this.style.display=&quot;&quot;;this.parentElement.classList.add(&quot;sxMGHasPreview&quot;)}" onerror="this.remove()" style="display:none">':
   !x.uploaded&&/^[A-Za-z0-9_-]{20,}$/.test(x.id)?
   '<img class="sxMGPreview" src="https://drive.google.com/thumbnail?id='+encodeURIComponent(x.id)+'&sz=w640" loading="lazy" decoding="async" alt="Prévia do arquivo" onload="if(this.naturalWidth>8&&this.naturalHeight>8)this.parentElement.classList.add(&quot;sxMGHasPreview&quot;);else this.remove()" onerror="this.remove()">':'';
@@ -86,6 +88,7 @@ function render(){
 }
 function open(id){
  const item=items().find(x=>String(x.id)===String(id));if(!item)return;
+ if(item.youtubeId){W.SinusLibrary?.openYoutube?.(id);return}
  if(item.uploaded){W.SinusLibrary?.openUploaded?.(id);return}
  if(!/^[A-Za-z0-9_-]{20,}$/.test(id)){W.openDrive?.(id);return}
  D.querySelector('#sxMGModal')?.remove();
