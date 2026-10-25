@@ -123,7 +123,7 @@ function toCards(){
    .filter(x=>mode==='theory'||['practice','shared'].includes(videoMode(x.title)))
    .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Aula do canal · conteúdo geral da disciplina'}))
    .filter(x=>{if(seen.has('yt_'+x.id))return false;seen.add('yt_'+x.id);return true});
- const pl=(mode==='practice'?S.playlists||[]:[]).filter(p=>/^(?:PL|OLAK|UU|FL|LL)[a-zA-Z0-9_-]{10,}$/.test(p.id||''))
+ const pl=(mode==='practice'&&base!=='anatomia'?S.playlists||[]:[]).filter(p=>/^(?:PL|OLAK|UU|FL|LL)[a-zA-Z0-9_-]{10,}$/.test(p.id||''))
    .filter(p=>{
      const t=norm(p.title);
      const keys={anatomia:['anato','anatomia'],histologia:['histo','histologia'],microbiologia:['microbiologia'],
