@@ -15,8 +15,8 @@ function course(){
 }
 function context(){
  const subj=course();
- if(!subj||!['overview','pratica','videos'].includes(UI.tab))return null;
- return {subj,tab:UI.tab};
+ if(!subj||UI.tab!=='catedra')return null;
+ return {subj,tab:'catedra'};
 }
 function showModal(item){
  if(!item||!idOK(item.id))return;
@@ -34,46 +34,47 @@ function showModal(item){
  D.body.appendChild(modal);
  modal.querySelector('button')?.focus();
 }
-function cards(box,items,filter,limit){
- const selected=filter==='all'?items:items.filter(x=>x.type===filter);
- const shown=limit>0?selected.slice(0,limit):selected;
- box.innerHTML=shown.map(it=>'<button class="sxAPVCard" type="button" data-apv-video="'+esc(it.id)+'" aria-label="Assistir '+esc(it.title)+'">'+
+function cards(box,items,filter){
+ const selected=filter==='all'?items:items.filter(x=>norm(x.title).includes(filter));
+ box.innerHTML=selected.map(it=>'<button class="sxAPVCard" type="button" data-apv-video="'+esc(it.id)+'" aria-label="Assistir '+esc(it.title)+'">'+
  '<span class="sxAPVThumb"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/mqdefault.jpg"><span class="sxAPVPlay"><span>▶</span></span></span>'+
- '<span class="sxAPVText"><b>'+esc(it.title)+'</b><small>'+(it.type==='pratica'?'Revisão prática':'Aula da cátedra')+'</small></span></button>').join('')||'<div class="sxAPVEmpty">Ainda não há vídeos nessa categoria.</div>';
+ '<span class="sxAPVText"><b>'+esc(it.title)+'</b><small>Aula da cátedra · Anatomia '+(course()==='1'?'I':'II')+'</small></span></button>').join('')||
+ '<div class="sxAPVEmpty">Nenhuma aula encontrada para esse filtro.</div>';
 }
 function mount(){
  const ctx=context(),target=D.getElementById('subjectContent');
  if(!ctx||!target||target.querySelector('[data-apv-root]'))return;
  if(!cache.data){load();return}
- const items=(cache.data.subjects?.[ctx.subj]||[]).filter(x=>x&&idOK(x.id));
- if(!items.length)return;
- const compact=ctx.tab==='overview'?3:ctx.tab==='pratica'?6:0;
- const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
- section.innerHTML='<div class="sxAPVHead"><div><span class="sxAPVLabel">ANATOMIA '+(ctx.subj==='1'?'I':'II')+' · PRÁTICA · ACERVO PERMANENTE</span>'+
- '<h2>Aulas da cátedra e revisão prática</h2><p>Vídeos selecionados por disciplina, disponíveis para todas as turmas atuais e futuras.</p></div>'+
- '<span class="sxAPVCount">'+items.length+' vídeos</span></div>'+
- '<div class="sxAPVControls" role="group" aria-label="Filtrar vídeos"><button class="sxAPVFilter active" type="button" data-apv-filter="all">Todos</button>'+
- '<button class="sxAPVFilter" type="button" data-apv-filter="catedra">Cátedra</button>'+
- '<button class="sxAPVFilter" type="button" data-apv-filter="pratica">Revisão prática</button>'+
- (compact?'<button class="sxAPVAll" type="button" data-apv-all>Ver todos os vídeos →</button>':'')+'</div>'+
- '<div class="sxAPVCards"></div>';
+ const seen=new Set();
+ const items=(cache.data.subjects?.[ctx.subj]||[]).filter(x=>{
+  if(!x||x.type!=='catedra'||!idOK(x.id)||seen.has(x.id))return false;
+  seen.add(x.id);return true;
+ });
+ const section=D.createElement('section');
+ section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
+ const professors=[
+  {id:'victor benitez',name:'Dr. Víctor Benítez'},
+  {id:'ronald martinez',name:'Dr. Ronald Martínez'}
+ ].filter(p=>items.some(it=>norm(it.title).includes(p.id)));
+ section.innerHTML='<div class="sxAPVHead"><div><span class="sxAPVLabel">ANATOMIA '+(ctx.subj==='1'?'I':'II')+' · AMBIENTE PRÁTICO</span>'+
+ '<h2>Cátedra</h2><p>Aulas específicas dos docentes de Anatomia, separadas dos vídeos complementares e simulados.</p></div>'+
+ '<span class="sxAPVCount">'+items.length+' '+(items.length===1?'aula':'aulas')+'</span></div>'+
+ '<div class="sxAPVControls" role="group" aria-label="Filtrar por professor">'+
+ '<button class="sxAPVFilter active" type="button" data-apv-filter="all">Todos</button>'+
+ professors.map(p=>'<button class="sxAPVFilter" type="button" data-apv-filter="'+esc(p.id)+'">'+esc(p.name)+'</button>').join('')+
+ '</div><div class="sxAPVCards"></div>';
  const listing=section.querySelector('.sxAPVCards');
- let filter='all';
- cards(listing,items,filter,compact);
+ cards(listing,items,'all');
  section.addEventListener('click',e=>{
   const open=e.target.closest('[data-apv-video]');
   if(open){showModal(items.find(x=>x.id===open.dataset.apvVideo));return}
   const btn=e.target.closest('[data-apv-filter]');
   if(btn){
-   filter=btn.dataset.apvFilter;
    section.querySelectorAll('[data-apv-filter]').forEach(x=>x.classList.toggle('active',x===btn));
-   cards(listing,items,filter,filter==='all'?compact:0);
-   return;
+   cards(listing,items,btn.dataset.apvFilter);
   }
-  if(e.target.closest('[data-apv-all]')){if(typeof setTab==='function')setTab('videos')}
  });
- // Na aba prática, o catálogo de vídeos vem antes do visualizador de arquivos Drive.
- target.prepend(section);
+ target.replaceChildren(section);
 }
 function load(){
  if(cache.data||cache.loading)return cache.loading;
