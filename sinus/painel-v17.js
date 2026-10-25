@@ -334,40 +334,60 @@ function renderNotebook(){
 
 /* Training */
 function trainingTypes(){return (DB.training?.types||[]).filter(t=>t.active!==false)}
-function resetTraining(){UI.training={tab:'mixed',types:trainingTypes().map(t=>t.id),period:'all',mode:UI.mode==='practice'?'practice':'all',difficulty:'mixed',count:10,questions:[],index:0,correct:0,answered:false}}
-function renderTraining(){if(!UI.training) resetTraining(); renderTrainingBuilder()}
-function filteredQs(){const T=UI.training; return (DB.training?.questions||[]).filter(q=>q.active!==false && q.subject===UI.subject && T.types.includes(q.type) && (T.period==='all'||q.period===T.period) && (T.mode==='all'||q.mode===T.mode) && (T.difficulty==='mixed'||q.difficulty===T.difficulty))}
-function renderTrainingBuilder(){
-  const T=UI.training, types=trainingTypes();
-  $('subjectContent').innerHTML=`
-  <div class="glass trainHero"><span class="eyebrow">Treino para prova</span><h2>Escolha um tipo ou misture vários formatos.</h2><p>Agora com abas separadas para cada tipo de exercício e com treino misto filtrável por P1/P2/Final, teoria/prática, dificuldade e quantidade.</p></div>
-  <div class="trainTabs">${[`<button class="trainTab ${T.tab==='mixed'?'active':''}" onclick="trainTab('mixed')"><div class="ico">∞</div><b>Treino misto</b><span>combine vários formatos</span></button>`,...types.map(t=>`<button class="trainTab ${T.tab===t.id?'active':''}" onclick="trainTab('${t.id}')"><div class="ico">${esc(t.icon||'•')}</div><b>${esc(t.label)}</b><span>${t.supportsImage?'aceita imagem':'formato textual'}</span></button>`)].join('')}</div>
-  <div class="trainLayout">
-    <div class="glass trainCfg">
-      <div class="filterSec"><label>Tipos selecionados</label><div class="checks">${types.map(t=>`<label class="checkpill"><input type="checkbox" ${T.types.includes(t.id)?'checked':''} onchange="toggleTrainType('${t.id}',this.checked)"> ${esc(t.label)}</label>`).join('')}</div></div>
-      <div class="filterSec"><label>Parte</label><div class="filters">${[['all','Tudo'],['P1','P1'],['P2','P2'],['Final','Final']].map(([id,l])=>`<button class="chip ${T.period===id?'active':''}" onclick="setTrainFilter('period','${id}')">${l}</button>`).join('')}</div></div>
-      <div class="filterSec"><label>Modalidade</label><div class="filters">${[['all','Teoria + prática'],['theory','Teoria'],['practice','Prática']].map(([id,l])=>`<button class="chip ${T.mode===id?'active':''}" onclick="setTrainFilter('mode','${id}')">${l}</button>`).join('')}</div></div>
-      <div class="filterSec"><label>Dificuldade</label><div class="filters">${[['mixed','Misturada'],['easy','Fácil'],['medium','Média'],['hard','Difícil']].map(([id,l])=>`<button class="chip ${T.difficulty===id?'active':''}" onclick="setTrainFilter('difficulty','${id}')">${l}</button>`).join('')}</div></div>
-      <div class="filterSec"><label>Quantidade</label><div class="filters">${[5,10,20,30,999].map(n=>`<button class="chip ${T.count===n?'active':''}" onclick="setTrainFilter('count',${n})">${n===999?'Todas':n}</button>`).join('')}</div></div>
-      <div class="summary"><b>${filteredQs().length}</b> questão(ões) compatível(is) com o filtro atual. Tipos selecionados: ${trainingTypes().filter(x=>T.types.includes(x.id)).map(x=>x.shortLabel||x.label).join(' + ')||'nenhum'}.</div>
-      <button class="btn primary" style="margin-top:12px;width:100%" onclick="startTraining()">Começar treino</button>
-    </div>
-    <div class="glass trainPreview">
-      <span class="eyebrow">Prévia da sessão</span>
-      <h2 style="font-size:20px;margin:8px 0">Treino flexível, sem limitar o aluno.</h2>
-      <p class="soft" style="font-size:10px;line-height:1.7">Exemplo: Cita + Relaciona + Flashcards + Imagem. O motor intercala os formatos e respeita o filtro da matéria.</p>
-      <div class="grid2" style="margin-top:14px">${trainingTypes().filter(x=>T.types.includes(x.id)).map(t=>`<div class="quickItem"><span>${esc(t.label)}</span><span>${esc(t.icon||'•')}</span></div>`).join('') || `<div class="quickItem"><span>Selecione ao menos um tipo</span></div>`}</div>
-    </div>
-  </div>`
+function resetTraining(){
+  UI.training={subject:UI.subject,period:'all',mode:'all',difficulty:'mixed',count:10,questions:[],index:0,correct:0,answered:false};
 }
-function trainTab(id){UI.training.tab=id; UI.training.types=id==='mixed'?trainingTypes().map(t=>t.id):[id]; renderTrainingBuilder()}
-function toggleTrainType(id,on){const set=new Set(UI.training.types); on?set.add(id):set.delete(id); UI.training.types=[...set]; UI.training.tab=UI.training.types.length===1?UI.training.types[0]:'mixed'; renderTrainingBuilder()}
-function setTrainFilter(k,v){UI.training[k]=v; renderTrainingBuilder()}
-function startTraining(){let qs=filteredQs(); if(!qs.length) return openModal('Sem questões',`<p class="soft" style="font-size:11px">Não há questões para essa combinação de filtros.</p>`,closeModal); qs=[...qs].sort(()=>Math.random()-.5); if(UI.training.count!==999) qs=qs.slice(0,UI.training.count); UI.training.questions=qs; UI.training.index=0; UI.training.correct=0; UI.training.answered=false; renderQuestion()}
+function renderTraining(){
+  if(!UI.training||UI.training.subject!==UI.subject)resetTraining();
+  renderTrainingBuilder();
+}
+function filteredQs(){
+  const allowed=new Set(trainingTypes().filter(t=>t.id!=='flashcard').map(t=>t.id));
+  return (DB.training?.questions||[]).filter(q=>q.active!==false && q.subject===UI.subject && allowed.has(q.type) && (q.type!=='image'||!!q.image));
+}
+function renderTrainingBuilder(){
+  if(!UI.training||UI.training.subject!==UI.subject)resetTraining();
+  const pool=filteredQs(), distinct=new Set(pool.map(q=>q.type)).size;
+  $('subjectContent').innerHTML=`
+    <section class="glass sxUnifiedIntro">
+      <span class="eyebrow">Exercícios · ${esc(UI.subject)}</span>
+      <h2>Pratique sem complicações.</h2>
+      <p>Questões de múltipla escolha, citações, verdadeiro ou falso, completar, relacionar e identificação são intercaladas automaticamente quando estão disponíveis.</p>
+      <div class="sxUnifiedNumbers">
+        <span><b>${pool.length}</b> exercícios disponíveis</span>
+        <span><b>${distinct}</b> formatos no banco desta matéria</span>
+      </div>
+      ${pool.length?`<button class="btn primary sxUnifiedStart" type="button" onclick="startTraining()">Começar exercícios <span aria-hidden="true">→</span></button>
+      <p class="sxUnifiedHint">Uma sessão de até 10 questões, com correção e explicações. Sem escolher formato.</p>`:
+      `<div class="sxUnifiedEmpty"><b>Exercícios em preparação</b><p>Ainda não há questões corrigíveis cadastradas nesta matéria. Você pode estudar pelos flashcards ou pelo mapa mental.</p></div>`}
+    </section>`;
+}
+function startTraining(){
+  if(!UI.training||UI.training.subject!==UI.subject)resetTraining();
+  const pool=filteredQs();
+  if(!pool.length)return renderTrainingBuilder();
+  const groups=new Map();
+  pool.forEach(q=>{if(!groups.has(q.type))groups.set(q.type,[]);groups.get(q.type).push(q)});
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+  groups.forEach(shuffle);
+  const types=shuffle([...groups.keys()]);const ordered=[];
+  while(ordered.length<pool.length){
+    let found=false;
+    for(const type of types){
+      const list=groups.get(type);
+      if(list.length){ordered.push(list.pop());found=true}
+    }
+    if(!found)break;
+    shuffle(types);
+  }
+  UI.training.questions=ordered.slice(0,10);
+  UI.training.index=0;UI.training.correct=0;UI.training.answered=false;
+  renderQuestion();
+}
 function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) return renderTrainingResult(); const type=trainingTypes().find(x=>x.id===q.type)||{label:q.type}; $('subjectContent').innerHTML=`
   <div class="glass trainRun sxQuestionRun">
     <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
-      <button class="btn sm" onclick="renderTrainingBuilder()">← Configurar</button>
+      <button class="btn sm" onclick="renderTrainingBuilder()">← Exercícios</button>
       <span class="pill">${T.index+1} / ${T.questions.length}</span>
       <span class="pill green">${T.correct} acertos</span>
       <span class="pill violet">${esc(type.label)}</span>
@@ -407,16 +427,18 @@ function answerTraining(ans){
 function showTrainingExplanation(){const el=$('sxQuestionExplanation');if(el){el.hidden=!el.hidden;if(!el.hidden)el.scrollIntoView({behavior:'smooth',block:'nearest'});}}
 
 function nextQuestion(){UI.training.index++; UI.training.answered=false; renderQuestion()}
-function renderTrainingResult(){const T=UI.training,total=T.questions.length,score=total?Math.round(T.correct/total*100):0; $('subjectContent').innerHTML=`
-  <div class="glass trainHero" style="text-align:center">
-    <span class="pill violet">Treino concluído</span>
-    <h2 style="margin-top:14px">${score}% de aproveitamento</h2>
-    <p>${T.correct} acertos em ${total} questões. Depois podemos evoluir isso para treino baseado em erros.</p>
-    <div class="heroActions" style="justify-content:center;margin-top:16px">
-      <button class="btn primary" onclick="renderTrainingBuilder()">Montar novo treino</button>
-      <button class="btn" onclick="setTab('overview')">Voltar à matéria</button>
-    </div>
-  </div>`
+function renderTrainingResult(){
+  const T=UI.training,total=T.questions.length,score=total?Math.round(T.correct/total*100):0;
+  $('subjectContent').innerHTML=`
+    <section class="glass sxUnifiedIntro sxUnifiedResult">
+      <span class="eyebrow">Exercícios concluídos</span>
+      <h2>${score}% de aproveitamento</h2>
+      <p>${T.correct} acerto(s) em ${total} questões da matéria.</p>
+      <div class="heroActions">
+        <button type="button" class="btn primary" onclick="renderTrainingBuilder()">Nova sessão de exercícios</button>
+        <button type="button" class="btn" onclick="setTab('overview')">Voltar à matéria</button>
+      </div>
+    </section>`;
 }
 
 /* Admin */
