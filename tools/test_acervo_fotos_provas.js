@@ -12,7 +12,7 @@ assert.doesNotMatch(source, /SUGESTÕES PRIORITÁRIAS|function renderExamHighlig
 assert.match(source, /sxAOLibraryItems/);
 assert.match(gallery, /title='Provas e avaliações'/);
 assert.doesNotMatch(gallery, /Fotos de provas/);
-assert.match(html, /subject-resource-balloons\.js\?v=20261025-preview-office-fix2/);
+assert.match(html, /subject-resource-balloons\.js\?v=20261025-slides-library-sync-v2/);
 assert.match(html, /materias-galeria-acervo\.js\?v=20261025-exam-label-cleanup/);
 
 // Os materiais continuam classificados e acessíveis na aba Provas, sem vazamento entre turmas.
@@ -87,7 +87,7 @@ assert.match(source,/slideOnly\?slideHTML:primaryHTML\+libraryMarkup/);
 assert.match(source,/if\(slideOnly\)\{\s*drawSlides\(c,data,wrap,true\)/);
 assert.match(viewerOrder,/primary\.appendChild\(el\)/);
 assert.match(viewerOrder,/new MutationObserver\(schedule\)/);
-assert.match(html,/subject-resource-balloons\.js\?v=20261025-preview-office-fix2/);
+assert.match(html,/subject-resource-balloons\.js\?v=20261025-slides-library-sync-v2/);
 assert.match(html,/subject-viewer-order\.js\?v=20261025-players-by-tab-v1/);
 console.log('OK: Slides exclusivos da aba Slides; Vídeos, Provas e Treino priorizam seus componentes, após Lembretes.');
 
