@@ -1,0 +1,197 @@
+{
+  "updatedAt": "2026-10-24",
+  "purpose": "Acervo permanente, compartilhado pelas turmas presentes e futuras da disciplina. Exibido exclusivamente no modo Prática.",
+  "videoSource": "Clases Medicina - Py — vídeos públicos previamente catalogados em sinus/youtube-catalogo.json; não são uploads do Google Drive.",
+  "driveAudit": "Nas pastas Prática de Anatomia I consultadas, havia PDFs e PPTX, mas nenhum arquivo de vídeo identificado. Anatomia II possuía pastas Slides e Questionários; nenhuma pasta Prática ou gravação própria foi localizada nessas pastas.",
+  "subjects": {
+    "1": [
+      {
+        "id": "8clDlP0u-I0",
+        "title": "Músculos de la cabeza — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "3Bb-OG1mUEs",
+        "title": "Músculos de la cara — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "4cq1xIrCYCU",
+        "title": "Huesos del cráneo — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "5idEqlNOMOM",
+        "title": "Hueso esfenóides — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "TnXECT-HRX0",
+        "title": "Viscerocráneo — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "PMbTXCOY2W0",
+        "title": "Generalities of the skull — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "tA3gkHugBzU",
+        "title": "Viscerocráneo — Dr. Víctor Benítez (segunda aula)",
+        "type": "catedra"
+      },
+      {
+        "id": "g-2x7dMvcoo",
+        "title": "Simulado: huesos del cráneo — Dr. Ronald Martínez",
+        "type": "pratica"
+      }
+    ],
+    "2": [
+      {
+        "id": "d7yiZmmxUMQ",
+        "title": "Rins — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "m4YgiQet2Sc",
+        "title": "Ciego, Apendice y Cólon (I) — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "3z4PaeHm9OI",
+        "title": "Músculos del Muslo (II) y de la Pierna — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "lZe_kcaKogM",
+        "title": "Músculos de la Cintura Pelviana y del Muslo (I) — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "0GY0r9Yde_M",
+        "title": "Huesos del Miembro Inferior — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "3tSmr908qcA",
+        "title": "Nervios del Miembro Inferior — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "TXcxaDA1Lcs",
+        "title": "Nervios del Miembro Inferior II — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "WOa4bPwTzC4",
+        "title": "Small Intestine — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "C-EJi8B_Er0",
+        "title": "Hígado y Visícula Biliar — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "fsBYDslVPzQ",
+        "title": "Intestino Grueso I — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "vKqzflhllMo",
+        "title": "Intestino Grueso II — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "spBpM-s-WMU",
+        "title": "Bazo — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "dsfHIUdPbCM",
+        "title": "Páncreas y hígado — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "myLQ-zY73zI",
+        "title": "Estómago II y duodeno — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "hV1yUy8Tn_o",
+        "title": "Vísceras abdominales — Dr. Ronald",
+        "type": "catedra"
+      },
+      {
+        "id": "E6Q80b7d6xw",
+        "title": "Estómago 1 — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "Zr5u-nHw644",
+        "title": "Peritoneo 3 — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "QMHBvi3qkRo",
+        "title": "Músculos de la Región Lombar y Conducto Inguinal — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "VCe3dFoVnPw",
+        "title": "Cintura Pélvica — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "hGqia8Idaq4",
+        "title": "Huesos del abdomen — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "WQ2OfTpidnY",
+        "title": "Vena cava inferior — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "EP89wGf8UX8",
+        "title": "Peritoneum 1 and 2 — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "4HA5dRi7u2Y",
+        "title": "Hígado — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "jBoibtElxvw",
+        "title": "Inguinal canal / anterolateral abdominal muscles — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "2PLhRx9Q-vs",
+        "title": "Vertebras Lumbares — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "qejAwhTMqfE",
+        "title": "Abdominal Overview — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "CtP5hMFLbuI",
+        "title": "Aorta abdominal — Dr. Ronald Martínez",
+        "type": "catedra"
+      },
+      {
+        "id": "Pt09Y9jxS24",
+        "title": "Huesos sacro y cóccix — Dr. Víctor Benítez",
+        "type": "catedra"
+      },
+      {
+        "id": "WUvrpc8cFt0",
+        "title": "Dibujo: ramas de la aorta abdominal — Dr. Ronald Martínez",
+        "type": "pratica"
+      }
+    ]
+  }
+}
