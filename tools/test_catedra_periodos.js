@@ -42,7 +42,7 @@ vm.runInNewContext(fs.readFileSync('sinus/calendario-dados.js','utf8'),{window:o
 vm.runInNewContext(fs.readFileSync('sinus/calendario-motor.js','utf8'),{window:official});
 for(const [period,roman] of [[1,'i'],[2,'ii']]){
   const cohorts=official.SinusTimetable.cohorts(String(period));
-  assert.deepEqual(cohorts,Object.keys(drive.periods[String(period)]||{}).sort(),'Turmas oficiais diferem do cadastro da grade');
+  assert.equal([...cohorts].join(','),Object.keys(drive.periods[String(period)]||{}).sort().join(','),'Turmas oficiais diferem do cadastro da grade');
   for(const cohort of cohorts){
     const subjects=official.SinusTimetable.academicOptions(period,cohort);
     const match=subjects.filter(row=>normalize(row.title)==='anatomia '+roman);
