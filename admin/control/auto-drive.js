@@ -86,6 +86,11 @@ function classify(file,path,cat,root){
   // Uma pasta de disciplina isolada só é atribuída quando a grade indica um único período possível.
   const possibilities=[...new Set(cat.map(s=>s.period))].map(pp=>({period:pp,subject:matchSubject(path,pp,cat)})).filter(x=>x.subject);
   if(possibilities.length===1){p=possibilities[0].period;t=possibilities[0].subject;}
+  else if(possibilities.length>1){
+   const names=path.split(' / ').slice(0,-1).map(norm);
+   const exact=possibilities.filter(x=>names.includes(norm(x.subject)));
+   if(exact.length===1){p=exact[0].period;t=exact[0].subject;}
+  }
  }
  if(!p)return {issue:'Período não identificado',path};
  if(!t)return {issue:'Matéria não identificada na grade',path};
