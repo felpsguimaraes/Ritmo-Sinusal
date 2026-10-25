@@ -165,7 +165,7 @@ function render(){
  '<button type="button" data-sx-filter="all" class="is-active">Todos</button>'+
  '<button type="button" data-sx-filter="video">Vídeos</button>'+
  '<button type="button" data-sx-filter="visual">Imagens e lâminas</button>'+
- '<button type="button" data-sx-filter="playlist">Playlists</button>'+
+ (data.base==='anatomia'?'':'<button type="button" data-sx-filter="playlist">Playlists</button>')+
  '</div><div class="sxCourseMediaGrid"></div><div class="sxCourseMediaActions"></div>';
  function draw(){
   const filtered=all.filter(x=>S.filter==='all'||S.filter==='video'&&x.type==='video'||S.filter==='visual'&&['image','document'].includes(x.type)||S.filter==='playlist'&&x.type==='playlist');
