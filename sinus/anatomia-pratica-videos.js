@@ -151,13 +151,13 @@ function mount(){
   section.innerHTML='<div class="sxAPVStatus"><h2>Cátedra · Anatomia '+(ctx.subj==='1'?'I':'II')+'</h2><p>Nenhum vídeo da seleção atual foi encontrado.</p></div>';
   return;
  }
- // Prioridade fixa: vídeos da UCP no Drive primeiro; YouTube depois.
- items.sort((a,b)=>Number(b.source==='drive')-Number(a.source==='drive'));
+ // Mostrar primeiro as aulas do YouTube; manter os vídeos da UCP disponíveis no filtro Drive.
+ items.sort((a,b)=>Number(a.source==='drive')-Number(b.source==='drive'));
  const driveCount=items.filter(x=>x.source==='drive').length;
  const youtubeCount=items.length-driveCount;
  const done=readDone(ctx.subj);
  const profs=['Todos',...new Set(items.map(professor))];
- let chosen=items[0].id,filter='Todos',query='';
+ let chosen=(items.find(x=>x.source!=='drive')||items[0]).id,filter='Todos',query='',sourceFilter=youtubeCount?'youtube':'all';
  section.innerHTML='<header class="sxAPVHero"><div><span class="sxAPVLabel">PRÁTICA · ANATOMIA '+(ctx.subj==='1'?'I':'II')+'</span><h2>Cátedra</h2>'+
   '<p>Assista às aulas dos professores e acompanhe seu estudo sem sair da matéria.</p>'+
   '<div class="sxAPVHeroTags"><span>'+driveCount+' vídeos da UCP · Drive</span><span>'+youtubeCount+' do YouTube</span><span>Progresso salvo neste aparelho</span></div></div>'+
@@ -171,12 +171,16 @@ function mount(){
   '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Abrir aula na origem ↗</a>'+'<p class="sxAPVSource">UCP: vídeos do acervo do Drive. YouTube: aulas individuais dos canais públicos selecionados. Cada fonte respeita as permissões de reprodução.</p>'+
   '</div><aside class="sxAPVSide" aria-label="Lista de videoaulas"><div class="sxAPVListHead"><div><h3>Lista de aulas</h3><small data-apv-progress></small></div>'+
   '<input type="search" data-apv-search placeholder="Buscar aula" aria-label="Buscar aula"></div>'+
+  '<div class="sxAPVSources" role="group" aria-label="Origem das videoaulas">'+
+  '<button type="button" data-apv-source="youtube" class="'+(sourceFilter==='youtube'?'selected':'')+'">▶ YouTube · '+youtubeCount+'</button>'+
+  '<button type="button" data-apv-source="drive">UCP · Drive · '+driveCount+'</button>'+
+  '<button type="button" data-apv-source="all">Todas as aulas</button></div>'+
   '<div class="sxAPVControls" data-apv-filters role="group" aria-label="Filtrar por professor">'+
   profs.map(p=>'<button type="button" class="sxAPVFilter'+(p==='Todos'?' active':'')+'" data-apv-prof="'+esc(p)+'">'+esc(p)+'</button>').join('')+
   '</div><div class="sxAPVPlaylist" data-apv-list></div></aside></div>';
  const player=section.querySelector('[data-apv-player]'),list=section.querySelector('[data-apv-list]');
  function displayed(){
-  return items.filter(x=>(filter==='Todos'||professor(x)===filter)&&(!query||norm(x.title).includes(norm(query))));
+  return items.filter(x=>(sourceFilter==='all'||(sourceFilter==='youtube'?x.source!=='drive':x.source==='drive'))&&(filter==='Todos'||professor(x)===filter)&&(!query||norm(x.title).includes(norm(query))));
  }
  function playerPoster(it){
   player.innerHTML='<button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir '+esc(it.title)+'">'+
@@ -185,8 +189,7 @@ function mount(){
  }
  function draw(){
   const shown=displayed();
-  list.innerHTML=(shown.some(it=>it.source==='drive')?'<div class="sxAPVSourceHeading sxAPVDriveHeading">① UCP · Vídeos do Drive <small>'+shown.filter(it=>it.source==='drive').length+'</small></div>':'<div class="sxAPVSourceHeading sxAPVDriveHeading">① UCP · Vídeos do Drive <small>Sem vídeos identificados</small></div>')+
-   shown.map((it,index)=> (it.source!=='drive'&&(index===0||shown[index-1].source==='drive')?'<div class="sxAPVSourceHeading sxAPVYoutubeHeading">② Aulas do YouTube <small>'+shown.filter(x=>x.source!=='drive').length+'</small></div>':'')+
+  list.innerHTML=shown.map((it,index)=> (index===0||shown[index-1].source!==it.source?'<div class="sxAPVSourceHeading '+(it.source==='drive'?'sxAPVDriveHeading':'sxAPVYoutubeHeading')+'">'+(it.source==='drive'?'UCP · Vídeos do Drive':'YouTube · Aulas individuais')+' <small>'+shown.filter(x=>x.source===it.source).length+'</small></div>':'')+
     '<button type="button" class="sxAPVLesson'+(it.id===chosen?' selected':'')+'" data-apv-id="'+esc(it.id)+'" aria-current="'+(it.id===chosen?'true':'false')+'">'+
     '<span class="sxAPVMini"><img alt="" loading="lazy" src="'+(it.source==='drive'?'https://drive.google.com/thumbnail?id='+encodeURIComponent(it.id)+'&sz=w320':'https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/mqdefault.jpg')+'">'+
      '<small>'+(done.has(it.id)?'✓':'▶')+'</small></span>'+
@@ -215,6 +218,13 @@ function mount(){
   select(items[(index+delta+items.length)%items.length].id,false);
  }
  section.addEventListener('click',e=>{
+  const source=e.target.closest('[data-apv-source]');
+  if(source){sourceFilter=source.dataset.apvSource;
+   section.querySelectorAll('[data-apv-source]').forEach(b=>b.classList.toggle('selected',b===source));
+   const available=displayed();
+   if(available.length&&!available.some(it=>it.id===chosen))select(available[0].id,false);
+   else draw();return;
+  }
   const a=e.target.closest('[data-apv-id]');if(a){select(a.dataset.apvId,true);return}
   const p=e.target.closest('[data-apv-prof]');if(p){filter=p.dataset.apvProf;section.querySelectorAll('[data-apv-prof]').forEach(b=>b.classList.toggle('active',b===p));draw();return}
   if(e.target.closest('[data-apv-play]')){select(chosen,true);return}
@@ -273,6 +283,7 @@ const upgradedStyle=D.createElement('style');upgradedStyle.textContent="\n#subje
 const launcherCSS=D.createElement('style');launcherCSS.textContent="\n#subjectTabs [data-apv-launch]{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 14px;margin:0 2px;border:1px solid #19744d!important;border-radius:11px!important;background:#176344!important;color:white!important;font-weight:800!important;white-space:nowrap;box-shadow:0 3px 12px #125b4022}\n#subjectTabs [data-apv-launch]:active,#subjectTabs [data-apv-launch].active{background:#104732!important}\n.sxAPVShortcut{display:flex!important;align-items:center;gap:14px;width:100%;text-align:left;padding:16px 18px;margin:0 0 18px;border:1px solid #b7d9c4;border-radius:15px;background:linear-gradient(110deg,#e7f3eb,#f7fbf8);color:#155037;cursor:pointer;font:inherit}\n.sxAPVShortcut span:nth-child(2){flex:1;min-width:0}.sxAPVShortcut strong,.sxAPVShortcut small{display:block}.sxAPVShortcut strong{font-size:15px;font-weight:800}.sxAPVShortcut small{font-size:11px;color:#5f806b;margin-top:4px}\n.sxAPVShortcutIcon{display:grid;place-items:center;min-width:44px;height:44px;background:#155b40;color:white;border-radius:12px;font-size:18px}\n.sxAPVShortcut>span:last-child{font-size:26px;color:#1b6645}\n@media(max-width:550px){.sxAPVShortcut{padding:12px;gap:10px}.sxAPVShortcutIcon{min-width:38px;height:38px}}\n";D.head.appendChild(launcherCSS);
 const sortStyle=D.createElement('style');sortStyle.textContent=".sxAPVSourceHeading{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 9px 8px;margin:7px 0 3px;border-bottom:1px solid #d9e8de;color:#1a6444;font-weight:800;font-size:11px}.sxAPVSourceHeading small{font-size:9px;color:#688574;font-weight:650}.sxAPVDriveHeading{background:#f0f8f1;border-radius:8px 8px 0 0}.sxAPVYoutubeHeading{margin-top:15px;color:#3b6150}";D.head.appendChild(sortStyle);
 const scopeStyle=D.createElement('style');scopeStyle.textContent='.sxAPVExternal{display:block;padding:2px 17px 14px;text-decoration:none;color:#14734a;font-size:11px;font-weight:700}.sxAPVExternal:hover{text-decoration:underline}';D.head.appendChild(scopeStyle);
+const youtubeStyle=D.createElement('style');youtubeStyle.textContent='.sxAPVSources{display:flex;gap:7px;padding:12px 13px 5px;flex-wrap:wrap}.sxAPVSources button{background:#f6faf7;border:1px solid #d1e5d7;color:#265f43;border-radius:9px;font-weight:750;padding:9px 11px;cursor:pointer;font-size:11px}.sxAPVSources button.selected{background:#196443;color:#fff;border-color:#196443}.sxAPVPlaybackHelp{font-size:11px;color:#6d856e;padding:9px 16px 4px;margin:0}';D.head.appendChild(youtubeStyle);
 const groupStyle=D.createElement('style');groupStyle.textContent='.sxAPVGroup{position:sticky;top:0;z-index:2;padding:9px 10px;margin:7px 1px 3px;border-radius:8px;background:#dceddf;color:#16563d;font-size:11px;letter-spacing:.03em;font-weight:800}';D.head.appendChild(groupStyle);
 const previous=W.renderSubject;
 if(typeof previous==='function'){
@@ -287,8 +298,10 @@ D.addEventListener('click',e=>{
  else {UI.tab='catedra';W.renderSubject?.()}
 });
 W.SinusAnatomiaPratica={mount,load,get catalog(){return cache.data},get error(){return cache.erro},course,anatomyId,ensureLauncher};
-W.addEventListener('sinus:drive-ready',()=>{if(context()){D.querySelector('[data-apv-root]')?.remove();mount()}});
-D.addEventListener('sinus:library-uploads-ready',()=>{if(context()){D.querySelector('[data-apv-root]')?.remove();mount()}});
+// Não reiniciar um iframe durante a atualização de bibliotecas e fontes.
+function refreshIfIdle(){if(!context())return;const root=D.querySelector('[data-apv-root]');if(root?.querySelector('iframe'))return;root?.remove();mount()}
+W.addEventListener('sinus:drive-ready',refreshIfIdle);
+D.addEventListener('sinus:library-uploads-ready',refreshIfIdle);
 if(D.getElementById('subjectView')&&!D.getElementById('subjectView').classList.contains('hidden')){
  try{mount()}catch(e){console.error('[SINUS Cátedra] Falha ao inicializar',e)}
 }
