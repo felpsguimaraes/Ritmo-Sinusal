@@ -40,3 +40,53 @@
 #subjectContent .sxMindItemConcept p{font-size:11px;line-height:1.6;margin:9px 0 0;color:var(--ink,#1b4735)}
 #subjectContent .sxMindMore{margin:6px 3px;color:var(--muted,#637970);font-size:11px}
 @media(max-width:540px){#subjectContent .sxUnifiedTrainNav{width:100%;max-width:none;gap:2px}#subjectContent .sxUnifiedTrainNav button{padding:12px 4px;font-size:11px}#subjectContent .sxUnifiedNumbers{gap:9px}#subjectContent .sxMindBranches{grid-template-columns:1fr}#subjectContent .sxUnifiedStart{width:100%}}
+
+
+/* SINUS: mapa mental é a entrada principal da aba Exercícios — revisão 4 abas */
+#subjectContent .sxMindView{max-width:1250px;margin:0 auto}
+#subjectContent .sxMindHeadline{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin:4px 0 22px}
+#subjectContent .sxMindHeadline h2{font-size:clamp(23px,3vw,29px);letter-spacing:-.04em;line-height:1.22;margin:7px 0}
+#subjectContent .sxMindHeadline p{color:var(--muted,#687e73);font-size:12px;line-height:1.65;margin:0}
+#subjectContent .sxMindCount{color:#43745b;background:#edf6ee;border:1px solid #e2ede4;border-radius:10px;padding:10px 13px;font-size:11px;font-weight:750}
+#subjectContent .sxMindLayout{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,310px);align-items:start;gap:17px}
+#subjectContent .sxMindCanvas,#subjectContent .sxMindAside{border:1px solid var(--line,#e1e9e3);background:var(--card,#fff);border-radius:17px;min-width:0;box-shadow:0 9px 26px rgba(17,72,48,.035)}
+#subjectContent .sxMindCanvas{padding:20px;min-height:480px}
+#subjectContent .sxMindRoot{max-width:305px;margin:6px auto 36px;background:#155f4a;color:#fff;border-radius:14px;box-shadow:0 11px 25px rgba(17,82,60,.14);padding:19px;text-align:center;position:relative;display:flex;flex-direction:column;gap:7px}
+#subjectContent .sxMindRoot small{color:#cce8da;font-size:9px;font-weight:800;letter-spacing:.14em}
+#subjectContent .sxMindRoot strong{font-size:clamp(16px,2.5vw,21px);letter-spacing:-.03em}
+#subjectContent .sxMindRoot span{font-size:10px;color:#d8ece1}
+#subjectContent .sxMindRoot:after{content:"";height:30px;width:2px;background:#cddfd3;position:absolute;left:50%;top:100%}
+#subjectContent .sxMindClusters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+#subjectContent .sxMindCluster{--sx-mind-accent:#196b4e;--sx-mind-soft:#e9f5eb;border:1px solid #e1ebe4;border-radius:13px;padding:13px;min-width:0;background:var(--card,#fff)}
+#subjectContent .sxMindCluster[data-tone=blue]{--sx-mind-accent:#466f9f;--sx-mind-soft:#ecf2fa}
+#subjectContent .sxMindCluster[data-tone=rose]{--sx-mind-accent:#a45e60;--sx-mind-soft:#fbefee}
+#subjectContent .sxMindCluster[data-tone=amber]{--sx-mind-accent:#966c36;--sx-mind-soft:#fcf4e4}
+#subjectContent .sxMindClusterHeader{display:flex;gap:9px;align-items:center;margin-bottom:12px}
+#subjectContent .sxMindClusterNumber{background:var(--sx-mind-soft);color:var(--sx-mind-accent);border-radius:9px;min-width:32px;height:32px;display:grid;place-items:center;font-size:11px;font-weight:850}
+#subjectContent .sxMindClusterHeader h3{font-size:13px;margin:0 0 3px;letter-spacing:-.01em;overflow-wrap:anywhere}
+#subjectContent .sxMindClusterHeader small{font-size:10px;color:var(--muted,#75897d)}
+#subjectContent .sxMindClusterNodes{display:grid;gap:6px}
+#subjectContent .sxMindNode{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:8px;border:1px solid transparent;border-radius:9px;background:var(--sx-mind-soft);color:var(--sx-mind-accent);padding:10px 11px;font:inherit;font-size:11px;line-height:1.4;font-weight:700;cursor:pointer}
+#subjectContent .sxMindNode span:first-child{min-width:0;overflow-wrap:anywhere}
+#subjectContent .sxMindNode span:last-child{font-size:16px;flex-shrink:0}
+#subjectContent .sxMindNode:hover,#subjectContent .sxMindNode.active{border-color:var(--sx-mind-accent)}
+#subjectContent .sxMindNode:focus-visible{outline:2px solid var(--sx-mind-accent);outline-offset:2px}
+#subjectContent .sxMindOverflow{padding:4px 3px;color:var(--muted,#728578);font-size:10px}
+#subjectContent .sxMindAside{padding:21px;min-height:480px;display:flex;flex-direction:column;gap:13px}
+#subjectContent #sxMindDetails h3{font-size:18px;line-height:1.42;letter-spacing:-.025em;margin:9px 0 15px;overflow-wrap:anywhere}
+#subjectContent .sxMindAnswer,#subjectContent .sxMindWhy{padding:13px;border-radius:11px;background:#f0f7f2;margin-bottom:12px}
+#subjectContent .sxMindWhy{background:#f5f8f5}
+#subjectContent .sxMindAnswer small,#subjectContent .sxMindWhy small{font-size:9px;color:#3c7957;letter-spacing:.11em;font-weight:850}
+#subjectContent .sxMindAnswer p,#subjectContent .sxMindWhy p{margin:7px 0 0;color:var(--ink,#214d38);font-size:12px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+#subjectContent .sxMindProvenance{font-size:10px;color:var(--muted,#6d867a)}
+#subjectContent .sxMindAsideFooter{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line,#e2ebe3)}
+#subjectContent .sxMindAsideFooter .btn{min-height:42px}
+#subjectContent .sxGuidedLink{font-size:12px;color:var(--acc,#126b51);font-weight:750;text-decoration:none}
+#subjectContent .sxGuidedLink:hover{text-decoration:underline}
+#subjectContent .sxMindPagination{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px}
+#subjectContent .sxMindPagination button{font:inherit;font-size:11px;font-weight:750;color:var(--acc,#155b48);background:#edf5ee;border:1px solid #dbe9df;border-radius:9px;padding:9px 12px;cursor:pointer}
+#subjectContent .sxMindPagination button:disabled{opacity:.35;cursor:default}
+#subjectContent .sxMindPagination span{font-size:10px;color:var(--muted,#708475)}
+#subjectContent .sxMindSourceNote{font-size:10px;color:var(--muted,#768b7e);margin:13px 3px;line-height:1.7}
+@media(max-width:920px){#subjectContent .sxMindLayout{grid-template-columns:1fr}#subjectContent .sxMindAside{min-height:220px}#subjectContent .sxMindClusters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){#subjectContent .sxMindCanvas{padding:14px}#subjectContent .sxMindClusters{grid-template-columns:1fr}#subjectContent .sxMindAside{padding:16px}#subjectContent .sxMindHeadline{gap:12px}#subjectContent .sxMindCount{font-size:10px}#subjectContent .sxMindPagination{gap:7px}}
