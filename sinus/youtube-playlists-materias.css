@@ -19,3 +19,12 @@
 @media(max-width:700px){.sxSPCards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sxSPHead h2{font-size:19px}}
 @media(max-width:430px){.sxSPCards{gap:10px}.sxSPCard .sxLibCover{height:135px}.sxSPCard .sxLibTitle{font-size:12px;min-height:35px}}
 html[data-theme="dark"] .sxSPCard .sxLibFallback{background:linear-gradient(135deg,#244b3c,#203949);color:#c4e9d2}
+
+/* Anatomia I/II: miniaturas e aulas avulsas no padrão visual da Biblioteca */
+.sxSPAnatomy .sxSPCard .sxLibOpenCover>img{width:100%;height:100%;object-fit:cover}
+.sxSPAnatomy .sxSPCard .sxYTPlay{position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#102f25bb;border:1px solid #ffffffad;box-shadow:0 5px 18px #0003;color:#fff;font-size:17px;pointer-events:none}
+.sxSPAnatomy .sxSPCard .sxLibOpenCover:hover .sxYTPlay{transform:translate(-50%,-50%) scale(1.08)}
+.sxSPAnatomy .sxSPMessage{font-size:13px;padding:16px;color:var(--muted,#6b8273)}
+.sxSPAnatomy .sxSPCard .sxLibContext{font-size:11px}
+.sxSPNative .sxMediaSection{margin-top:12px}
+@media(max-width:430px){.sxSPAnatomy .sxSPCard .sxYTPlay{width:36px;height:36px}}
