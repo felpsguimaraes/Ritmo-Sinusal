@@ -115,10 +115,10 @@ function toCards(){
  if(!D.getElementById('subjectContent'))return null;
  const db=mediaFromDb(subject,mode),ignore=originalIds(base),seen=new Set(db.videos.map(x=>x.id));
  const youtube=(S.youtube||[]).filter(x=>validYT(x.id)&&ytGroup(x.title)===base&&!ignore.has(x.id))
-   .filter(x=>mode==='theory'||videoMode(x.title)!=='theory')
+   .filter(x=>mode==='theory'||['practice','shared'].includes(videoMode(x.title)))
    .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Aula do canal · conteúdo geral da disciplina'}))
    .filter(x=>{if(seen.has('yt_'+x.id))return false;seen.add('yt_'+x.id);return true});
- const pl=(S.playlists||[]).filter(p=>/^(?:PL|OLAK|UU|FL|LL)[a-zA-Z0-9_-]{10,}$/.test(p.id||''))
+ const pl=(mode==='practice'?S.playlists||[]:[]).filter(p=>/^(?:PL|OLAK|UU|FL|LL)[a-zA-Z0-9_-]{10,}$/.test(p.id||''))
    .filter(p=>{
      const t=norm(p.title);
      const keys={anatomia:['anato','anatomia'],histologia:['histo','histologia'],microbiologia:['microbiologia'],
@@ -137,7 +137,7 @@ function card(x){
  x.origin==='playlist'?' data-sx-playlist="'+esc(x.id)+'"':
  ' data-sx-drive="'+esc(x.id)+'"';
  return '<button type="button" class="sxCourseMediaCard"'+action+' aria-label="Abrir '+esc(x.title)+'">'+
- '<span class="sxCourseMediaThumb">'+pic+'<span class="sxCourseMediaType">'+esc(x.type==='image'?'IMAGEM':x.type==='document'?'LÂMINAS / PDF':x.type==='playlist'?'PLAYLIST':'VÍDEO')+'</span></span>'+
+ '<span class="sxCourseMediaThumb">'+pic+'<span class="sxCourseMediaType">'+esc(x.type==='image'?'IMAGEM':x.type==='document'?'MATERIAL VISUAL':x.type==='playlist'?'PLAYLIST':'VÍDEO')+'</span></span>'+
  '<span class="sxCourseMediaCaption"><b>'+esc(x.title)+'</b><small>'+esc(x.label)+'</small></span></button>';
 }
 function render(){
