@@ -60,11 +60,11 @@ function render(){
   const popular=[...examPhotos.slice(0,4),...videos.slice(0,3),...photos.slice(0,3)];
   const featured=popular.length?popular:all.slice(0,8); // Períodos clínicos sem imagens ainda exibem PDFs e resumos existentes.
   html='<section class="sxMG" data-sxmg><div class="sxMGHead"><div><small>'+h(subject)+' · ACERVO</small><h2>Arquivos da biblioteca</h2><p>Arquivos relacionados à sua matéria e turma.</p></div><strong>'+all.length+' arquivos</strong></div>'+
-  '<div class="sxMGStats">'+[['Fotos de provas',examPhotos.length,'provas'],['Vídeos',videos.length,'videos'],['Imagens',photos.length,'fotos'],['Resumos',summaries.length,'apostila'],['Slides',slides.length,'slides']].map(([name,n,tab])=>
+  '<div class="sxMGStats">'+[['Provas',exams.length,'provas'],['Vídeos',videos.length,'videos'],['Imagens',photos.length,'fotos'],['Resumos',summaries.length,'apostila'],['Slides',slides.length,'slides']].map(([name,n,tab])=>
   '<button type="button" data-sxmg-tab="'+tab+'"><b>'+n+'</b><small>'+name+'</small></button>').join('')+'</div>'+
   (featured.length?'<div class="sxMGGrid">'+featured.map(card).join('')+'</div>':'<p class="sxMGEmpty">Nenhum arquivo foi classificado com segurança para esta matéria ainda.</p>')+'</section>';
  }else if(tab==='provas'){
-  list=[...examPhotos,...exams.filter(x=>!isImage(x))];title='Fotos de provas e avaliações';
+  list=[...examPhotos,...exams.filter(x=>!isImage(x))];title='Provas e avaliações';
   desc='Fotos primeiro, seguidas de PDFs, questionários e simulados identificados.';label='PROVAS · '+subject;
  }else if(['fotos','laminas','pratica','macro'].includes(tab)){
   list=tab==='fotos'?photos:[...photos.filter(x=>x.studyMode==='practice'),...practical.filter(x=>!isImage(x)&&!isExam(x))];
