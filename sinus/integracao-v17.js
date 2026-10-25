@@ -495,7 +495,7 @@
     if (!UI.subject) return;
     var t = UI.tab;
     // Cátedra é exclusiva da prática de Anatomia I e II; não aparece em outras matérias.
-    var isAnatomyPractice = UI.mode === 'practice' && /^anatom[ií]a\s+(?:i|ii|1|2)$/i.test(String(UI.subject || '').trim());
+    var isAnatomyPractice = UI.mode === 'practice' && /^anatom[ií]a(?:\s+(?:humana|descriptiva|general))?\s+(?:i|ii|1|2)$/i.test(String(UI.subject || '').trim());
     if (t === 'catedra' && !isAnatomyPractice) { UI.tab = t = 'videos'; }
     if (t === 'catedra' && isAnatomyPractice) {
       v11SubjectHeader();
