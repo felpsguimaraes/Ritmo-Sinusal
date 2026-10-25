@@ -148,6 +148,9 @@ function card(x){
 function render(){
  const data=toCards(),host=D.getElementById('subjectContent');
  if(!data||!host||host.querySelector('[data-sx-course-media]'))return;
+ // Se a biblioteca dinâmica apareceu antes do catálogo do YouTube terminar de carregar,
+ // substituí-la pela videoteca unificada para não mostrar duas galerias iguais.
+ host.querySelector('[data-sxmg]')?.remove();
  const all=[...data.playlists,...data.videos,...data.visual];
  // O painel de Anatomia já exibe 35 vídeos da cátedra, e este complemento evita repeti-los.
  if(!all.length)return;
