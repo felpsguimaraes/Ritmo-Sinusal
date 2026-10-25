@@ -139,7 +139,7 @@ function load(){
 function mount(subject,mode,hasNative){
  S.context={subject,mode,hasNative:!!hasNative};
  if(mode!=='theory')return;
- if(anatomySeries(subject)){renderAnatomy(subject,mode,!!hasNative);return}
+ if(anatomySeries(subject)){Promise.resolve().then(()=>renderAnatomy(subject,mode,!!hasNative));return}
  if(S.list){render(subject,mode,!!hasNative);return}
  load();
 }
