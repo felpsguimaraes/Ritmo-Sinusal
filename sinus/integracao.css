@@ -286,3 +286,15 @@ html[data-theme="dark"] .sxHora{color:#8fa399}
 html[data-theme="dark"] .sxInfo b{color:#e6efe9}
 html[data-theme="dark"] .sxInfo small{color:#8fa399}
 html[data-theme="dark"] .sxCalVazio{color:#8fa399}
+
+
+/* Miniaturas reais de todos os arquivos na fila da matéria. */
+#subjectContent .resourceItem.sxResourceItem{display:flex;align-items:center;gap:10px;text-align:left;padding:8px;min-height:68px}
+#subjectContent .sxResourcePreview{position:relative;display:grid;place-items:center;flex:0 0 78px;width:78px;aspect-ratio:4/3;overflow:hidden;border-radius:8px;background:#e6f0e8;border:1px solid #d6e4da;color:#366f51}
+#subjectContent .sxResourcePreview>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;z-index:1}
+#subjectContent .sxResourcePreview.sxResourcePreviewReady>span{display:none}
+#subjectContent .sxResourcePreview>span{font-size:19px}
+#subjectContent .sxResourceText{min-width:0;flex:1;display:grid;gap:4px;overflow-wrap:anywhere}
+#subjectContent .sxResourceText b{font-size:12px;line-height:1.35}
+#subjectContent .sxResourceText small{font-size:10px;line-height:1.3}
+@media(max-width:600px){#subjectContent .sxResourcePreview{flex-basis:65px;width:65px}#subjectContent .resourceItem.sxResourceItem{gap:8px;padding:7px}}
