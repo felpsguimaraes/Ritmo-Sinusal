@@ -34,12 +34,14 @@ jobs:
           node --check sinus/ucp-catedra-catalog.js
           node --check sinus/subject-viewer-order.js
           node --check sinus/subject-resource-balloons.js
+          node --check sinus/biblioteca-visual.js
           node --check sinus/materias-galeria-acervo.js
           node --check sinus/youtube-curadoria.js
           node --check sinus/video-player-materias.js
           node --check sinus/estudo-acervo-disciplinas.js
           node tools/test_catedra_periodos.js
           node tools/test_acervo_fotos_provas.js
+          node tools/test_slides_biblioteca.js
           test -s sinus/anatomia-upe-videos.json
           test -s sinus/anatomia-pratica-videos.json
           test -s sinus/youtube-catalogo.json
@@ -122,6 +124,7 @@ jobs:
             CSS_URL="https://meusinus.pages.dev/sinus/video-player-materias.css?cf-check=$GIT_SHA-$attempt"
             CAT_URL="https://meusinus.pages.dev/sinus/youtube-catalogo.json?cf-check=$GIT_SHA-$attempt"
             SLIDES_URL="https://meusinus.pages.dev/sinus/subject-resource-balloons.js?cf-check=$GIT_SHA-$attempt"
+            LIBRARY_URL="https://meusinus.pages.dev/sinus/biblioteca-visual.js?cf-check=$GIT_SHA-$attempt"
             AUDIOS_URL="https://meusinus.pages.dev/sinus/drive-audios-catalogo.json?cf-check=$GIT_SHA-$attempt"
             ORDER_URL="https://meusinus.pages.dev/sinus/subject-viewer-order.js?cf-check=$GIT_SHA-$attempt"
             if curl -fLsS --connect-timeout 15 --max-time 40 "$URL" -o /tmp/sinus-home.html &&
@@ -129,6 +132,7 @@ jobs:
                curl -fLsS --connect-timeout 15 --max-time 40 "$CSS_URL" -o /tmp/sinus-video-player.css &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$CAT_URL" -o /tmp/sinus-video-catalogo.json &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$SLIDES_URL" -o /tmp/sinus-slides-by-tab.js &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$LIBRARY_URL" -o /tmp/sinus-library.js &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$AUDIOS_URL" -o /tmp/sinus-drive-audios.json &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$ORDER_URL" -o /tmp/sinus-viewer-order.js &&
                grep -Fq 'video-player-materias.js?v=20261025-audio-preview-fix2' /tmp/sinus-home.html &&
@@ -136,7 +140,10 @@ jobs:
                grep -Fq 'SinusVideoPlayerMateria' /tmp/sinus-video-player.js &&
                grep -Fq '.sxAVPGrid' /tmp/sinus-video-player.css &&
                node --check /tmp/sinus-video-player.js &&
-               grep -Fq 'subject-resource-balloons.js?v=20261025-preview-office-fix2' /tmp/sinus-home.html &&
+               grep -Fq 'subject-resource-balloons.js?v=20261025-slides-library-sync-v2' /tmp/sinus-home.html &&
+               grep -Fq 'biblioteca-visual.js?v=20261025-slides-library-sync-v2' /tmp/sinus-home.html &&
+               grep -Fq 'function showUploadedSlide' /tmp/sinus-slides-by-tab.js &&
+               grep -Fq 'previewUploaded' /tmp/sinus-library.js &&
                grep -Fq 'subject-viewer-order.js?v=20261025-players-by-tab-v1' /tmp/sinus-home.html &&
                grep -Fq "function sectionIsSlides(c){return c.mode==='theory'&&c.tab==='slides'}" /tmp/sinus-slides-by-tab.js &&
                grep -Fq 'primary.appendChild(el)' /tmp/sinus-viewer-order.js &&
@@ -144,6 +151,7 @@ jobs:
                grep -Fq 'data-sx-avp-alternate' /tmp/sinus-video-player.js &&
                python -c "import json; x=json.load(open('/tmp/sinus-drive-audios.json')); assert len(x['audios']) >= 80" &&
                node --check /tmp/sinus-slides-by-tab.js &&
+               node --check /tmp/sinus-library.js &&
                node --check /tmp/sinus-viewer-order.js &&
                python -c "import json; x=json.load(open('/tmp/sinus-video-catalogo.json')); assert len(x['videos']) >= 188"; then
               echo "Verificado: produção serve vídeos e somente a aba Slides monta TEORIA · SLIDES."
