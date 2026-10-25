@@ -91,6 +91,9 @@ function mediaFromDb(subject,mode){
  for(const cat of SECCTIONS){
   for(const item of (db[cat]||[])){
    if(item.active===false||!validDrive(item.id)||ids.has(item.id))continue;
+   const own=String(W.SinusApp?.S?.turma||'').trim().toUpperCase();
+   const marked=String(item.cohort||item.class_name||'').trim().toUpperCase()||(String(item.period||'').match(/\bTurma\s+([A-Z]{1,3})\b/i)?.[1]||'').toUpperCase();
+   if(marked&&(!own||marked!==own))continue;
    const m=String(item.mime||'').toLowerCase();
    const title=String(item.title||'');
    const area=item.studyMode||(cat==='pratica'?'practice':'theory');
@@ -159,7 +162,7 @@ function render(){
  wrap.className='sxCourseMedia';wrap.setAttribute('data-sx-course-media','');
  const practice=data.mode==='practice';
  wrap.innerHTML='<div class="sxCourseMediaHead"><div><small>'+esc(data.subject.toUpperCase())+' · '+(practice?'PRÁTICA':'TEORIA')+'</small>'+
- '<h2>Videoaulas e materiais visuais</h2><p>Acervo por disciplina, compartilhado com todas as turmas que cursam esta matéria. Alguns arquivos do Drive exigem acesso autorizado.</p></div>'+
+ '<h2>Videoaulas e materiais visuais</h2><p>Arquivos de apoio da disciplina, filtrados pela turma quando identificada. Alguns arquivos exigem permissão no Drive.</p></div>'+
  '<strong>'+all.length+' recursos</strong></div>'+
  '<div class="sxCourseMediaFilters" role="group" aria-label="Tipo de recurso">'+
  '<button type="button" data-sx-filter="all" class="is-active">Todos</button>'+
