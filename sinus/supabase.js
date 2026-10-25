@@ -15,8 +15,9 @@
   W.SinusBackend={client:client,auth:auth,db:{doc:doc,collection:function(c){return {limit:function(n){return {get:async function(){if(demo)return {forEach:function(){}};var r=await client.from('sinus_documents').select('id,payload').eq('collection',c).limit(n);if(r.error)throw r.error;return {forEach:function(f){r.data.forEach(function(row){f(snap(row))})}}}}}}}},signIn:async function(){
     if(demo){await doc('perfis/demo').set({nome:'Estudante Demo',turma:'G',whatsapp:'595981000000',email:'demo@sinus.local'});await doc('progresso/demo_sinus-perfil').set({prog:{onboarding:true,periodo:5,turma:'G',idioma:'pt',faculdade:'UCP',campus:'Ciudad del Este'}});emit({uid:'demo',email:'demo@sinus.local',displayName:'Estudante Demo',isAdmin:false});return}
     if(location.origin!=='https://meusinus.pages.dev')throw Error('Abra o SINUS em meusinus.pages.dev para entrar com segurança.');
-    var r=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+'/',queryParams:{prompt:'select_account'}}});if(r.error)throw r.error;
+    var r=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+'/',scopes:'https://www.googleapis.com/auth/drive.metadata.readonly',queryParams:{prompt:'select_account'}}});if(r.error)throw r.error;
   }};
+  W.SinusBackend_driveToken=async function(){if(demo||!client)return null;var r=await client.auth.getSession();return r.data&&r.data.session?(r.data.session.provider_token||null):null};
   if(!demo){client.auth.onAuthStateChange(function(event,session){var u=user(session?.user),key=u?.uid||'';auth.currentUser=u;if(event==='INITIAL_SESSION'||event==='SIGNED_OUT'||key!==active){active=key;emit(u)}})}
   else{setTimeout(function(){var b=document.getElementById('sxEntrar');if(b)b.querySelector('span').textContent='Explorar demo da V13';var p=document.getElementById('sxMsg');if(p)p.textContent='Demonstração local · sem login e sem alterações na sua conta.';emit(null)},0)}
 })(window);
