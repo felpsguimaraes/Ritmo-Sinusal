@@ -27,27 +27,33 @@ jobs:
           ref: main
           persist-credentials: false
 
-      - name: Validar catálogo e scripts da Cátedra
+      - name: Validar catálogo, Cátedra e player de cada matéria
         shell: bash
         run: |
           node --check sinus/anatomia-pratica-videos.js
           node --check sinus/ucp-catedra-catalog.js
           node --check sinus/subject-viewer-order.js
           node --check sinus/subject-resource-balloons.js
-          node tools/test_catedra_periodos.js
           node --check sinus/materias-galeria-acervo.js
+          node --check sinus/youtube-curadoria.js
+          node --check sinus/video-player-materias.js
+          node --check sinus/estudo-acervo-disciplinas.js
+          node tools/test_catedra_periodos.js
           node tools/test_acervo_fotos_provas.js
-          grep -Fq 'no-priority-photos' index.html
-          grep -Fq 'exam-label-cleanup' index.html
-          ! grep -Fq 'SUGESTÕES PRIORITÁRIAS' sinus/subject-resource-balloons.js
           test -s sinus/anatomia-upe-videos.json
           test -s sinus/anatomia-pratica-videos.json
-          grep -Fq 'catedra-titulos-limpos6' index.html
-          grep -Fq 'function displayTitle(it)' sinus/anatomia-pratica-videos.js
-          ! grep -Fq 'UCP · Vídeos do Drive' sinus/anatomia-pratica-videos.js
-          ! grep -Fq 'YouTube · Aulas individuais' sinus/anatomia-pratica-videos.js
-          ! grep -Fq 'data-apv-prof' sinus/anatomia-pratica-videos.js
-          grep -Fq "if(tab==='catedra'&&course())" sinus/anatomia-pratica-videos.js
+          test -s sinus/youtube-catalogo.json
+          test -s sinus/youtube-playlists.json
+          test -s sinus/video-player-materias.css
+          grep -Fq 'video-player-materias.js?v=20261025-player1' index.html
+          grep -Fq 'video-player-materias.css?v=20261025-player1' index.html
+          python - <<'PY'
+          import json, re
+          videos = json.load(open('sinus/youtube-catalogo.json', encoding='utf-8'))['videos']
+          assert videos and len({v['id'] for v in videos}) == len(videos), 'Catálogo vazio ou vídeos repetidos'
+          assert all(re.fullmatch(r'[A-Za-z0-9_-]{11}', v['id']) for v in videos), 'IDs inválidos'
+          print(f'{len(videos)} videoaulas públicas indexadas')
+          PY
 
       - name: Preparar somente os arquivos públicos do site
         shell: bash
@@ -100,40 +106,30 @@ jobs:
           command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=${{ github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verificar HTML e player no domínio de produção
+      - name: Verificar player unificado no domínio de produção
         env:
           GIT_SHA: ${{ github.sha }}
         shell: bash
         run: |
-          # Confere que o Cloudflare está servindo o HTML e o JS corrigido,
-          # não apenas que o GitHub recebeu o commit.
           for attempt in 1 2 3 4 5 6; do
             URL="https://meusinus.pages.dev/?cf-check=$GIT_SHA-$attempt"
-            JS_URL="https://meusinus.pages.dev/sinus/anatomia-pratica-videos.js?v=20261025-catedra-titulos-limpos6&cf-check=$GIT_SHA-$attempt"
+            JS_URL="https://meusinus.pages.dev/sinus/video-player-materias.js?cf-check=$GIT_SHA-$attempt"
+            CSS_URL="https://meusinus.pages.dev/sinus/video-player-materias.css?cf-check=$GIT_SHA-$attempt"
+            CAT_URL="https://meusinus.pages.dev/sinus/youtube-catalogo.json?cf-check=$GIT_SHA-$attempt"
             if curl -fLsS --connect-timeout 15 --max-time 40 "$URL" -o /tmp/sinus-home.html &&
-               curl -fLsS --connect-timeout 15 --max-time 40 "$JS_URL" -o /tmp/sinus-catedra.js &&
-               grep -Fq 'catedra-titulos-limpos6' /tmp/sinus-home.html &&
-               grep -Fq "if(tab==='catedra'&&course())" /tmp/sinus-catedra.js &&
-               grep -Fq 'function displayTitle(it)' /tmp/sinus-catedra.js &&
-               ! grep -Fq 'UCP · Vídeos do Drive' /tmp/sinus-catedra.js &&
-               ! grep -Fq 'YouTube · Aulas individuais' /tmp/sinus-catedra.js &&
-               node --check /tmp/sinus-catedra.js &&
-               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/painel-v17.js?v=20261025-anatomy-period-1-2-all-cohorts&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-grade.js &&
-               grep -Fq 'ensureAnatomyForEveryCohort' /tmp/sinus-grade.js &&
-               grep -Fq 'no-priority-photos' /tmp/sinus-home.html &&
-               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/subject-resource-balloons.js?v=20261025-no-priority-photos&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-acervo.js &&
-               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/materias-galeria-acervo.js?v=20261025-exam-label-cleanup&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-gallery.js &&
-               ! grep -Fq 'SUGESTÕES PRIORITÁRIAS' /tmp/sinus-acervo.js &&
-               ! grep -Fq 'renderExamHighlights' /tmp/sinus-acervo.js &&
-               grep -Fq 'isExam=x=>' /tmp/sinus-gallery.js &&
-               grep -Fq 'isImage=x=>' /tmp/sinus-gallery.js &&
-               grep -Fq 'isExam,isImage,isVideo,card' /tmp/sinus-gallery.js &&
-               node --check /tmp/sinus-acervo.js &&
-               node --check /tmp/sinus-gallery.js; then
-              echo "Verificado: HTML e JS corrigidos disponíveis em meusinus.pages.dev"
+               curl -fLsS --connect-timeout 15 --max-time 40 "$JS_URL" -o /tmp/sinus-video-player.js &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$CSS_URL" -o /tmp/sinus-video-player.css &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$CAT_URL" -o /tmp/sinus-video-catalogo.json &&
+               grep -Fq 'video-player-materias.js?v=20261025-player1' /tmp/sinus-home.html &&
+               grep -Fq 'video-player-materias.css?v=20261025-player1' /tmp/sinus-home.html &&
+               grep -Fq 'SinusVideoPlayerMateria' /tmp/sinus-video-player.js &&
+               grep -Fq '.sxAVPGrid' /tmp/sinus-video-player.css &&
+               node --check /tmp/sinus-video-player.js &&
+               python -c "import json; x=json.load(open('/tmp/sinus-video-catalogo.json')); assert len(x['videos']) >= 188"; then
+              echo "Verificado: o domínio de produção serve o player e o catálogo do YouTube."
               exit 0
             fi
             sleep 8
           done
-          echo "::error::O site ainda não serviu a versão com a navegação corrigida da Cátedra."
+          echo "::error::O domínio ainda não serve o player unificado desta alteração."
           exit 1
