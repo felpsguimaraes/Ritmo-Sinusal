@@ -87,6 +87,19 @@ Deno.serve(async(req:Request)=>{
    for(const x of rows){const key=[x.academic_period,x.cohort,x.subject,x.section].join('|');if(!groups[key])groups[key]={period:x.academic_period,cohort:x.cohort,subject:x.subject,section:x.section,files:0};groups[key].files++;}
    return reply({total:rows.length,groups:Object.values(groups)});
   }
+  if(b.action==='sync_log'){
+   const run=String(b.run_id||''),root=clean(b.root_id,120),status=clean(b.status,20);
+   if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(run)||!/^[A-Za-z0-9_-]{15,120}$/.test(root)||!['completed','partial','failed'].includes(status))throw new Fail(400,'Relatório inválido.');
+   const data=b.report||{},number=(k:string)=>Number.isSafeInteger(data[k])&&data[k]>=0&&data[k]<=100000?data[k]:0;
+   const report={read:number('read'),folders:number('folders'),created:number('created'),updated:number('updated'),pending:number('pending'),errors:number('errors'),verified:number('verified'),issues:Array.isArray(data.issues)?data.issues.slice(0,30).map((v:any)=>clean(v,180)):[]};
+   const row={id:run,actor_id:actor.id,root_id:root,status,result:report,finished_at:new Date().toISOString()};
+   await rest('/rest/v1/sinus_drive_sync_runs?on_conflict=id',{method:'POST',headers:{Prefer:'return=representation,resolution=merge-duplicates'},body:JSON.stringify(row)});
+   return reply({ok:true,report});
+  }
+  if(b.action==='sync_history'){
+   const rows=await rest('/rest/v1/sinus_drive_sync_runs?select=id,root_id,status,result,started_at,finished_at&order=started_at.desc&limit=10');
+   return reply({runs:rows});
+  }
   if(b.action==='list'){
    if(!isScope(b))throw new Fail(400,'Selecione período, turma e matéria.');
    const configs=await db(scopeQuery(b));
