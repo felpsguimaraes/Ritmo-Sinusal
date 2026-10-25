@@ -98,8 +98,8 @@ function showModal(item){
  D.querySelector('.sxAPVModal')?.remove();
  const modal=D.createElement('div');
  modal.className='sxAPVModal';modal.setAttribute('role','presentation');
- modal.innerHTML='<div class="sxAPVDialog" role="dialog" aria-modal="true" aria-label="'+esc(item.title)+'">'+
- '<div class="sxAPVDialogTop"><b>'+esc(item.title)+'</b><button type="button" class="sxAPVDialogClose" aria-label="Fechar vídeo">✕</button></div>'+
+ modal.innerHTML='<div class="sxAPVDialog" role="dialog" aria-modal="true" aria-label="'+esc(displayTitle(item))+'">'+
+ '<div class="sxAPVDialogTop"><b>'+esc(displayTitle(item))+'</b><button type="button" class="sxAPVDialogClose" aria-label="Fechar vídeo">✕</button></div>'+
  '<div class="sxAPVFrame"><iframe title="'+esc(displayTitle(item))+'" src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.id)+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="eager"></iframe></div>'+
  '<div class="sxAPVDialogFoot"><a href="https://www.youtube.com/watch?v='+encodeURIComponent(item.id)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo em nova janela ↗</a></div></div>';
  const close=()=>{modal.remove();D.removeEventListener('keydown',onKey)};
@@ -178,7 +178,7 @@ function mount(){
   return items.filter(x=>!query||norm(displayTitle(x)).includes(norm(query)));
  }
  function playerPoster(it){
-  player.innerHTML='<button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir '+esc(it.title)+'">'+
+  player.innerHTML='<button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir '+esc(displayTitle(it))+'">'+
    '<img src="'+(it.source==='drive'?'https://drive.google.com/thumbnail?id='+encodeURIComponent(it.id)+'&sz=w640':'https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/hqdefault.jpg')+'" alt="">'+
    '<span>▶</span><strong>Reproduzir aula</strong></button>';
  }
