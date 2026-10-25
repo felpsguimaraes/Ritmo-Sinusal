@@ -777,6 +777,10 @@ function v11Assets(name=UI.subject,mode=UI.mode){
   if(item.active===false)return;
   const area=v11InferredMode(cat,item);
   if(area!==mode)return;
+  // Evita que materiais exclusivos de outra turma apareçam nos players nativos.
+  const own=String(user()?.class||'').trim().toUpperCase();
+  const tagged=String(item.cohort||item.class_name||item.className||'').trim().toUpperCase()||(String(item.period||'').match(/\bTurma\s+([A-Z]{1,3})\b/i)?.[1]||'').toUpperCase();
+  if(tagged&&(!own||tagged!==own))return;
   out.push({cat,index,item,area,section:v11Section(cat,item)});
  })}
  return out;
