@@ -140,8 +140,17 @@ function render(c,data){
  let current=context();if(!current||current.subject!==c.subject||current.tab!==c.tab||current.mode!==c.mode)return;
  const own=customFiles(c,data),suggested=libraryFiles(c,own);
  let wrap=host.querySelector(':scope > .sxAcademicOrdered');
- if(wrap){const freshRem=host.querySelector(':scope > .sinus-rem-box');if(freshRem)wrap.querySelector('.sxAOReminders').replaceChildren(freshRem);
-  classBody(c,own);return;}
+ if(wrap){
+  const freshRem=host.querySelector(':scope > .sinus-rem-box');
+  if(freshRem)wrap.querySelector('.sxAOReminders')?.replaceChildren(freshRem);
+  const badge=wrap.querySelector('.sxAOSuggestCount');
+  if(badge)badge.textContent=suggested.length+' arquivos';
+  const library=wrap.querySelector('.sxAOLibraryItems');
+  if(library&&!library.querySelector('.sxMG,.sxCourseMedia')){
+   library.innerHTML=suggested.length?'<div class="sxAOLibraryGrid">'+suggested.slice(0,20).map(x=>'<a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer" class="sxAOLibraryItem"><span>▧</span><b>'+esc(x.title)+'</b><small>Ver arquivo ↗</small></a>').join('')+'</div>':'<p class="sxAOEmptyLibrary">Não há arquivos sugeridos com classificação confirmada para esta matéria e período.</p>';
+  }
+  classBody(c,own);return;
+ }
  wrap=createElement('div','sxAcademicOrdered','<section class="sxAOReminders"></section>'+
  '<section class="sxAOBlock" aria-label="Materiais da turma"><div class="sxAOHead"><div><small>CONTEÚDO OFICIAL DA TURMA</small><h2>'+(c.section==='slides'?'Slides da turma':'Materiais da turma')+'</h2><p>Arquivos da matéria vinculados ao seu período e turma.</p></div><span class="sxAOCohort">'+esc(c.cohort?'Turma '+c.cohort:'Sua turma')+'</span></div><div id="sxCourseOwn"><div class="sxAOStage"></div><div class="sxAOPlayQueue"><div class="sxAOViewer"></div><aside class="sxAOQueue" aria-label="Lista de materiais"></aside></div></div></section>'+
  '<section class="sxAOBlock sxAOLibrary" aria-label="Arquivos da biblioteca"><div class="sxAOHead"><div><small>ACERVO COMPLEMENTAR</small><h2>Arquivos da biblioteca</h2><p>Sugestões da biblioteca correspondentes à matéria e ao período.</p></div><span class="sxAOSuggestCount">'+suggested.length+' arquivos</span></div><div class="sxAOLibraryItems"></div></section>');
@@ -175,13 +184,7 @@ if(typeof original==='function')W.renderSubject=function(){
  if(!cached)load(c).then(data=>{
   const current=context();
   if(current&&keyFor(current)===k&&current.tab===c.tab&&current.mode===c.mode){
-   const previous=D.querySelector('#subjectContent > .sxAcademicOrdered');
-   const old=previous?.querySelector('.sxAOReminders > .sinus-rem-box');
-   const gallery=previous?.querySelector('.sxAOLibrary .sxMG,.sxAOLibrary .sxCourseMedia');
-   const content=D.getElementById('subjectContent');
-   if(gallery)content.prepend(gallery);
-   if(old)content.prepend(old);
-   previous?.remove();
+   // Atualização incremental: não destruir lembretes, players ou o iframe da Cátedra.
    render(c,data);
   }
  }).catch(()=>{});
