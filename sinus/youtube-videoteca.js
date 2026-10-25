@@ -2,6 +2,7 @@
 (function(W,D){
 'use strict';
 const CATALOG='/sinus/youtube-catalogo.json';
+const UPE_CATALOG='/sinus/anatomia-upe-videos.json';
 const STORE='sinus_youtube_aislan_v1';
 const S={catalog:null,loading:null,error:'',q:'',filter:'all',sort:'new',limit:40,opened:''};
 const H=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -84,10 +85,26 @@ function mount(query){
 }
 function load(force){
  if(S.loading)return S.loading;
- S.loading=fetch(CATALOG+(force?'?refresh='+Date.now():''),{cache:force?'no-store':'default'})
- .then(r=>{if(!r.ok)throw Error('Falha ao carregar');return r.json()})
- .then(data=>{if(!data||!Array.isArray(data.videos))throw Error('Formato de catálogo inválido');S.catalog=data;S.error=''})
- .catch(e=>{S.error=e.message;if(!S.catalog)S.catalog={videos:[]}})
+ const suffix=force?'?refresh='+Date.now():'?v=20261025-upe';
+ const options={cache:force?'no-store':'default'};
+ S.loading=Promise.allSettled([CATALOG,UPE_CATALOG].map(url=>fetch(url+suffix,options)
+   .then(r=>{if(!r.ok)throw Error('Catálogo '+url+' HTTP '+r.status);return r.json()})))
+ .then(results=>{
+  const valid=results.filter(r=>r.status==='fulfilled'&&Array.isArray(r.value?.videos));
+  if(!valid.length)throw Error('Não foi possível carregar os catálogos de vídeo.');
+  const all=[],seen=new Set();
+  // Vídeos UPE em primeiro lugar; cada vídeo é um cartão independente.
+  for(const which of [1,0]){
+   const entry=results[which];
+   if(entry.status!=='fulfilled'||!Array.isArray(entry.value?.videos))continue;
+   for(const item of entry.value.videos){
+    if(!item||!idOK(item.id)||seen.has(item.id))continue;
+    seen.add(item.id);all.push(item);
+   }
+  }
+  S.catalog={videos:all};S.error='';
+ })
+ .catch(err=>{S.error=String(err);if(!S.catalog)S.catalog={videos:[]}})
  .finally(()=>{S.loading=null;render()});
  return S.loading;
 }
