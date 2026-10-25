@@ -873,6 +873,42 @@
     resumen: 'Diez láminas sorteadas solo del laminario total (20 nov). Sin banco de palabras y con cronómetro; la planilla sale al final.',
     fuente: SRC_LT, laminas: TOTAL, procesos: PROCESOS };
 
+  /* um exercício por lâmina (aba Laminario): fotos separadas do PDF, sem a etiqueta do porta-objeto */
+  var LT_IMG = {
+    1: ['img/laminario/lt-01-1.jpg'],
+    2: ['img/laminario/lt-02-1.jpg'],
+    3: ['img/laminario/lt-03-1.jpg', 'img/laminario/lt-03-2.jpg'],
+    4: ['img/laminario/lt-04-1.jpg', 'img/laminario/lt-04-2.jpg'],
+    5: ['img/laminario/lt-05-1.jpg'],
+    6: ['img/laminario/lt-06-1.jpg', 'img/laminario/lt-06-2.jpg'],
+    7: ['img/laminario/lt-07-2.jpg'],
+    8: ['img/laminario/lt-08-1.jpg', 'img/laminario/lt-08-2.jpg'],
+    9: ['img/laminario/lt-09-1.jpg', 'img/laminario/lt-09-2.jpg'],
+    10: ['img/laminario/lt-10-1.jpg'],
+    11: ['img/laminario/lt-11-1.jpg'],
+    12: ['img/laminario/lt-12-1.jpg'],
+    13: ['img/laminario/lt-13-1.jpg'],
+    14: ['img/laminario/lt-14-2.jpg'],
+    15: ['img/laminario/lt-15-1.jpg', 'img/laminario/lt-15-2.jpg'],
+    16: ['img/laminario/lt-16-1.jpg'],
+    17: ['img/laminario/lt-17-1.jpg', 'img/laminario/lt-17-2.jpg'],
+    18: ['img/laminario/lt-18-1.jpg'],
+    19: ['img/laminario/lt-19-1.jpg', 'img/laminario/lt-19-2.jpg'],
+    20: ['img/laminario/lt-20-1.jpg', 'img/laminario/lt-20-2.jpg'],
+    21: ['img/laminario/lt-21-1.jpg', 'img/laminario/lt-21-2.jpg'],
+    22: ['img/laminario/lt-22-1.jpg'],
+    23: ['img/laminario/lt-23-1.jpg'],
+    24: ['img/laminario/lt-24-1.jpg', 'img/laminario/lt-24-2.jpg'],
+    25: ['img/laminario/lt-25-1.jpg']
+  };
+  var LT_EXER = TOTAL.map(function (t, i) {
+    var n = i + 1, nn = (n < 10 ? '0' : '') + n;
+    var L = Object.assign({}, t, { id: 't' + n, g: 'lt' + n, img: (LT_IMG[n] || []).map(function (src) { return { src: src, k: 'pdf' }; }) });
+    return { id: 'lt_' + nn, area: PR, clase: 'Laminario', titulo: 'Lámina ' + n, tipo: 'laminas', nivel: '4', rotulo: 'Láminas',
+      resumen: 'Mirá las fotos y completá ÓRGANO, PROCESO, DESCRIPCIÓN y DX; cada descripción se corrige hallazgo por hallazgo.',
+      fuente: SRC_T, laminas: [L], procesos: PROCESOS };
+  });
+
   A.docentePratica = 'Dra. Alicia Gonzalez';
   A.fontePratica = 'Clases prácticas 1 a 4, láminas de la P1 y de la P2, laminario total corregido (20 nov) y pizarrones';
   [].push.apply(A.modulos, [].concat(
@@ -884,14 +920,13 @@
     par('lam_p2', 'Práctica · P2', 'Láminas de la P2',
       'Los 10 temas del pizarrón de la P2 (necrosis, inflamación, acúmulos y cirrosis), con la descripción de la profesora como respuesta.',
       'Las 10 láminas de la P2 en orden aleatorio, sin banco de palabras.', SRC_P + '; pizarrón «Temas P2 Práctica»; Hashimoto y cirrosis: tabla del laminario', P2Q),
-    par('lam_total', 'Laminario', 'Laminario completo (25 láminas)',
-      'La tabla corregida del laminario, en el orden de la tabla, con la foto de cada lámina.',
-      'Las 25 láminas del laminario en orden aleatorio, sin banco de palabras.', SRC_T, TOTAL),
-    LT_MAPAS, LT_CUADROS,
+    LT_EXER, LT_MAPAS, LT_CUADROS,
     [{ id: 'lam_simulacro', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 8, cronometro: true, clase: 'Simulacro', titulo: 'Simulacro de la prueba práctica',
       resumen: 'Ocho láminas sorteadas entre la P1, la P2 y el laminario. Sin banco de palabras y con cronómetro; la planilla sale al final.',
       fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }],
     TEO_CASOS,
     [LT_FOTO, LT_DESC, LT_SIM]
   ));
+  /* a aba Laminario (nível 4): os exercícios e mapas do laminario saem dos níveis 1 a 3 */
+  A.modulos.forEach(function (m) { if (m.clase === 'Laminario') m.nivel = '4'; });
 })();

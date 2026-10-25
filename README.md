@@ -44,7 +44,7 @@ Conteúdo do 5º semestre, montado a partir dos slides das aulas no Drive da tur
 
 | Matéria | Docente | Teoria | Prática |
 | --- | --- | --- | --- |
-| Anatomía Patológica I (`anatopato`) | Dra. Eliana Chamorro Krauer; prática: Dra. Alicia Gonzalez | 15 mapas das aulas 1 a 7, casos e simulado | láminas da P1, da P2 e do laminário (níveis 1 e 2) e simulacro; 10 mapas das aulas práticas 1 a 4 e do quadro da apendicite; casos de lâmina; treinos do Laminario total corregido (20 nov, pasta da turma E): mapas por processo e de mesmo órgão, 4 quadros por bloco, quiz pela foto, quiz pela descrição e simulacro só do laminário |
+| Anatomía Patológica I (`anatopato`) | Dra. Eliana Chamorro Krauer; prática: Dra. Alicia Gonzalez | 15 mapas das aulas 1 a 7, casos e simulado | láminas da P1, da P2 e do laminário (níveis 1 e 2) e simulacro; 10 mapas das aulas práticas 1 a 4 e do quadro da apendicite; casos de lâmina; treinos do Laminario total corregido (20 nov, pasta da turma E): mapas por processo e de mesmo órgão, 4 quadros por bloco, quiz pela foto, quiz pela descrição e simulacro só do laminário, numa aba própria (Nível 4, Laminario): um exercício por lâmina, com as fotos separadas do PDF (`mapas/img/laminario/lt-NN-k.jpg`) |
 | Farmacología I (`farmacologia`) | Dr. Cristhiam Giménez | 35 mapas das aulas 1, 1.2 (formas farmacêuticas) e 2 a 9, casos e simulado | — |
 | Fisiopatología I (`fisiopatologia`) | Dr. Kevin Feijó | 45 mapas das unidades 0 a 7 e anemias, casos de anemia e de choque, simulado | — |
 | Imagenología (`imagenologia`) | Dr. Kevin Feijó | 31 mapas das aulas 00 a 5.0, TC, RM e TCE, casos e simulado | — |
