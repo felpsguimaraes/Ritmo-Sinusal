@@ -162,7 +162,7 @@ async function run(){
  const btn=D.getElementById('sx-auto-run');btn.disabled=true;D.getElementById('sx-auto-report').innerHTML='';
  try{
   const ss=await session();let token=ss.provider_token;
-  if(!token){D.getElementById('sx-auto-connect').hidden=false;throw Error('Conecte sua conta Google com permissão de leitura dos nomes dos arquivos.');}
+  if(!token){status('Autorização Google necessária. Abrindo a conexão segura…');await oauth();return;}
   status('Verificando acesso ao Drive…');
   try{await drive('files/'+encodeURIComponent(root),{fields:'id,name,mimeType'},token);}catch(e){if(e.isAccess)D.getElementById('sx-auto-connect').hidden=false;throw e;}
   const files=await scan(root,token);
@@ -175,7 +175,7 @@ async function run(){
    const saved=await api('import_batch',{root_id:root,items:unique.slice(i,i+70)});
    state.imported+=Number(saved.created||0);state.updated+=Number(saved.updated||0);state.savedRows.push(...unique.slice(i,i+70));
   }
-  report();status('Importação concluída: '+state.imported+' novos e '+state.updated+' atualizados. Veja as abas alimentadas abaixo.');
+  report();status((state.errors.length?'Importação parcial: ':'Importação concluída: ')+state.imported+' novos e '+state.updated+' atualizados.'+(state.errors.length?' Algumas pastas não puderam ser lidas — confira os erros abaixo.':' Veja as abas alimentadas abaixo.'));
  }catch(e){
   report();
   status('Não foi possível concluir: '+e.message+(state.imported||state.updated?' Arquivos anteriores a este erro já foram salvos.':''),true);
