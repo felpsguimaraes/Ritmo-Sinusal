@@ -15,6 +15,17 @@
     var host = D.getElementById(hostId);
     var view = D.getElementById('subjectView');
     if (!host || !view || view.classList.contains('hidden')) return;
+    // O painel acadêmico mantém os lembretes dentro de sxAcademicOrdered.
+    // Insira a Cátedra no MESMO grupo, entre Lembretes e Materiais da turma;
+    // mover a Cátedra para o topo de subjectContent a colocava acima dos lembretes.
+    var academic = host.querySelector(':scope > .sxAcademicOrdered');
+    if (academic) {
+      var remSlot = academic.querySelector(':scope > .sxAOReminders');
+      var catedra = host.querySelector(':scope > .sxAPV');
+      if (remSlot && catedra) academic.insertBefore(catedra, remSlot.nextElementSibling);
+      if (host.firstElementChild !== academic) host.prepend(academic);
+      return;
+    }
     var children = Array.prototype.slice.call(host.children);
     if (!children.length) return;
     var reminders = children.filter(function (el) { return el.matches('.sinus-rem-box'); });
