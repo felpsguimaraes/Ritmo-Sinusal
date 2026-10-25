@@ -43,7 +43,7 @@ Deno.serve(async(req:Request)=>{
   const actor=await auth((req.headers.get('authorization')||'').replace(/^Bearer /i,''));
   const blocked=await rest('/rest/v1/sinus_access_controls?select=blocked&user_id=eq.'+actor.id+'&limit=1');
   if(blocked[0]?.blocked)throw new Fail(403,'Conta bloqueada.');
-  const raw=await req.text();if(raw.length>20000)throw new Fail(413,'Solicitação grande demais.');
+  const raw=await req.text();if(raw.length>180000)throw new Fail(413,'Solicitação grande demais.');
   let b:any;try{b=JSON.parse(raw);}catch{throw new Fail(400,'Dados inválidos.');}
   if(b.action==='student'){
    const s=await school(actor.id);
@@ -52,9 +52,41 @@ Deno.serve(async(req:Request)=>{
    if(!subject)return reply({configs:[],scope_ready:true});
    const all=await db(scopeQuery({period:s.period,subject}));
    const configs=all.filter((r:any)=>r.cohort==='*'||r.cohort===s.cohort).sort((a:any,b:any)=>(a.cohort==='*'?0:1)-(b.cohort==='*'?0:1));
-   return reply({configs,scope_ready:true});
+   const imported=await rest('/rest/v1/sinus_drive_resource_items?select=file_id,title,url,mime_type,academic_period,cohort,subject,section,stage,study_mode,source_path,source_root_id&academic_period=eq.'+s.period+'&subject=eq.'+encodeURIComponent(subject)+'&limit=2000');
+   return reply({configs,items:imported.filter((r:any)=>r.cohort==='*'||r.cohort===s.cohort),scope_ready:true});
   }
   if(!(await staff(actor.id)))throw new Fail(403,'Somente a equipe de conteúdo pode editar estes recursos.');
+  if(b.action==='import_batch'){
+   const root=clean(b.root_id,120);
+   if(!/^[A-Za-z0-9_-]{15,120}$/.test(root)||!Array.isArray(b.items)||!b.items.length||b.items.length>100)throw new Fail(400,'Lote inválido: máximo de 100 arquivos.');
+   const allowedSections=new Set(['slides','provas','audios','videos','pratica','laminas','complementares','resumos','livros']);
+   const allowedMime=/^[a-zA-Z0-9.+/_-]{0,140}$/;
+   const records:any[]=[],keys=new Set<string>();
+   for(const x of b.items){
+    const scope={period:x.period,cohort:x.cohort,subject:x.subject};
+    const id=clean(x.file_id,120),title=clean(x.title,220),mode=clean(x.study_mode,15),mime=clean(x.mime_type,140),p=clean(x.source_path,500),section=clean(x.section,40),stage=clean(x.stage,10);
+    if(!isScope(scope)||!allowedSections.has(section)||!/^[A-Za-z0-9_-]{10,120}$/.test(id)||!title||!['theory','practice'].includes(mode)||!['P1','P2','FINAL','OUTROS'].includes(stage)||!allowedMime.test(mime))throw new Fail(400,'Arquivo com classificação inválida.');
+    let url:URL;try{url=new URL(String(x.url));}catch{throw new Fail(400,'URL de arquivo inválida.');}
+    if(url.protocol!=='https:'||!['drive.google.com','docs.google.com'].includes(url.hostname)||url.username||url.password)throw new Fail(400,'Os links devem pertencer ao Google Drive.');
+    const k=[id,x.period,x.cohort,x.subject,section,mode].join('\u001f');
+    if(keys.has(k))continue;keys.add(k);
+    records.push({source_root_id:root,file_id:id,academic_period:x.period,cohort:x.cohort,subject:x.subject,section,stage,study_mode:mode,title,mime_type:mime,url:url.href,source_path:p,updated_by:actor.id,updated_at:new Date().toISOString()});
+   }
+   const existing=await rest('/rest/v1/sinus_drive_resource_items?select=file_id,academic_period,cohort,subject,section,study_mode&source_root_id=eq.'+encodeURIComponent(root)+'&file_id=in.('+records.map(x=>x.file_id).join(',')+')&limit=1000');
+   const existingKeys=new Set(existing.map((x:any)=>[x.file_id,x.academic_period,x.cohort,x.subject,x.section,x.study_mode].join('\u001f')));
+   await rest('/rest/v1/sinus_drive_resource_items?on_conflict=source_root_id,file_id,academic_period,cohort,subject,section,study_mode',{method:'POST',headers:{Prefer:'return=minimal,resolution=merge-duplicates'},body:JSON.stringify(records)});
+   const added=records.filter(x=>!existingKeys.has([x.file_id,x.academic_period,x.cohort,x.subject,x.section,x.study_mode].join('\u001f'))).length;
+   await rest('/rest/v1/sinus_admin_audit',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({actor_id:actor.id,action:'drive_bulk_import',target:root,details:{received:records.length,created:added,updated:records.length-added}})});
+   return reply({ok:true,created:added,updated:records.length-added,total:records.length});
+  }
+  if(b.action==='import_summary'){
+   const root=clean(b.root_id,120);
+   if(!/^[A-Za-z0-9_-]{15,120}$/.test(root))throw new Fail(400,'ID da pasta inválido.');
+   const rows=await rest('/rest/v1/sinus_drive_resource_items?select=file_id,academic_period,cohort,subject,section,stage&source_root_id=eq.'+root+'&limit=5000');
+   const groups:Record<string,{period:number,cohort:string,subject:string,section:string,files:number}>={};
+   for(const x of rows){const key=[x.academic_period,x.cohort,x.subject,x.section].join('|');if(!groups[key])groups[key]={period:x.academic_period,cohort:x.cohort,subject:x.subject,section:x.section,files:0};groups[key].files++;}
+   return reply({total:rows.length,groups:Object.values(groups)});
+  }
   if(b.action==='list'){
    if(!isScope(b))throw new Fail(400,'Selecione período, turma e matéria.');
    const configs=await db(scopeQuery(b));
