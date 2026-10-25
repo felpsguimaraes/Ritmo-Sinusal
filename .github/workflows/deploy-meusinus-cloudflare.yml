@@ -1,0 +1,97 @@
+name: Publicar SINUS no Cloudflare Pages (meusinus)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: meusinus-cloudflare-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Implantar main em meusinus.pages.dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter arquivos da branch main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Conferir configuração do Cloudflare
+        env:
+          CF_API_TOKEN: \${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: \${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        shell: bash
+        run: |
+          if [[ -z "$CF_API_TOKEN" || -z "$CF_ACCOUNT_ID" ]]; then
+            echo "::error::Configure CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit) e CLOUDFLARE_ACCOUNT_ID em Settings > Secrets and variables > Actions do repositório."
+            exit 1
+          fi
+
+      - name: Validar catálogo e scripts da Cátedra
+        shell: bash
+        run: |
+          node --check sinus/anatomia-pratica-videos.js
+          node --check sinus/ucp-catedra-catalog.js
+          node --check sinus/subject-viewer-order.js
+          node --check sinus/subject-resource-balloons.js
+          test -s sinus/anatomia-upe-videos.json
+          test -s sinus/anatomia-pratica-videos.json
+          grep -Fq 'drive-youtube-unified5' index.html
+
+      - name: Preparar somente os arquivos públicos do site
+        shell: bash
+        run: |
+          mkdir -p .cf-pages-dist
+          rsync -a \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.cf-pages-dist/' \
+            --exclude='supabase/' \
+            --exclude='tools/' \
+            --exclude='releases/' \
+            --exclude='*.sql' \
+            --exclude='*.zip' \
+            --exclude='README.md' \
+            --exclude='*.md' \
+            --exclude='admin/control/tests/' \
+            --exclude='admin/control/catalog.json' \
+            --exclude='wrangler.jsonc' \
+            --exclude='netlify.toml' \
+            --exclude='.assetsignore' \
+            ./ .cf-pages-dist/
+          test -s .cf-pages-dist/index.html
+          test -s .cf-pages-dist/sinus/anatomia-pratica-videos.js
+          test -s .cf-pages-dist/_headers
+          test -s .cf-pages-dist/_redirects
+
+      - name: Publicar diretamente no projeto meusinus
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: \${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: \${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=\${{ github.sha }}
+          gitHubToken: \${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verificar se o site recebeu a Cátedra atualizada
+        env:
+          GIT_SHA: \${{ github.sha }}
+        shell: bash
+        run: |
+          URL="https://meusinus.pages.dev/?cf-check=$GIT_SHA"
+          for attempt in 1 2 3 4 5; do
+            if curl -fLsS --connect-timeout 15 --max-time 40 -H 'Cache-Control: no-cache' "$URL" | grep -Fq 'drive-youtube-unified5'; then
+              echo "Publicação da Cátedra encontrada em meusinus.pages.dev"
+              exit 0
+            fi
+            sleep 6
+          done
+          echo "::error::O deploy foi solicitado, mas a versão da Cátedra não foi confirmada no domínio de produção."
+          exit 1
