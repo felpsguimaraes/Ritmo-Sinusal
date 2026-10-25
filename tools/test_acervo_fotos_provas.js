@@ -1,54 +1,45 @@
 'use strict';
-const assert=require('node:assert/strict');
-const fs=require('node:fs');
-const vm=require('node:vm');
-const source=fs.readFileSync('sinus/subject-resource-balloons.js','utf8');
-const gallerySource=fs.readFileSync('sinus/materias-galeria-acervo.js','utf8');
-const html=fs.readFileSync('index.html','utf8');
-assert.match(source,/function examPhotos\(c\)/);
-assert.match(source,/function renderExamHighlights\(wrap,c,photos\)/);
-assert.match(source,/const own=customFiles\(c,data\),suggested=libraryFiles\(c,own\),photos=examPhotos\(c\)/);
-assert.match(source,/renderExamHighlights\(wrap,c,photos\)/);
-assert.match(gallerySource,/W\.SinusGaleriaMateria=\{render,items,isExam,isImage,isVideo,card\}/);
-assert.match(html,/subject-resource-balloons\.js\?v=20261025-exam-photo-featured/);
-assert.match(html,/materias-galeria-acervo\.js\?v=20261025-exam-photo-cards/);
-const begin=source.indexOf('function examPhotos(c){');
-const end=source.indexOf('function suggestionTotal(',begin);
-assert.ok(begin>=0&&end>begin);
-const fixtures=[
- {id:'photo-1',subject:'Anatomía I',academicPeriod:1,cat:'provas',mime:'image/jpeg'},
- {id:'photo-other-period',subject:'Anatomía I',academicPeriod:2,cat:'provas',mime:'image/jpeg'},
- {id:'pdf-exam',subject:'Anatomía I',academicPeriod:1,cat:'provas',mime:'application/pdf'},
- {id:'non-exam-image',subject:'Anatomía I',academicPeriod:1,cat:'complementares',mime:'image/png'},
- {id:'photo-other-subject',subject:'Histología I',academicPeriod:1,cat:'provas',mime:'image/png'},
- {id:'uploaded-photo',subject:'Anatomía I',academicPeriod:null,uploaded:true,cat:'provas',mime:'image/png'},
- {id:'photo-1',subject:'Anatomía I',academicPeriod:1,cat:'provas',mime:'image/jpeg'},
- ...Array.from({length:12},(_,i)=>({id:'extra-'+i,subject:'Anatomía I',academicPeriod:1,cat:'provas',mime:'image/jpeg'}))
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+
+const source = fs.readFileSync('sinus/subject-resource-balloons.js', 'utf8');
+const gallery = fs.readFileSync('sinus/materias-galeria-acervo.js', 'utf8');
+const html = fs.readFileSync('index.html', 'utf8');
+
+// A preferência editorial do administrador não deve aparecer como bloco prioritário aos alunos.
+assert.doesNotMatch(source, /SUGESTÕES PRIORITÁRIAS|function renderExamHighlights|sxAOExamHighlights|Fotos de provas/);
+assert.match(source, /sxAOLibraryItems/);
+assert.match(gallery, /title='Provas e avaliações'/);
+assert.doesNotMatch(gallery, /Fotos de provas/);
+assert.match(html, /subject-resource-balloons\.js\?v=20261025-no-priority-photos/);
+assert.match(html, /materias-galeria-acervo\.js\?v=20261025-exam-label-cleanup/);
+
+// Os materiais continuam classificados e acessíveis na aba Provas, sem vazamento entre turmas.
+const from=gallery.indexOf('const norm='), to=gallery.indexOf('function kind(x){',from);
+assert.ok(from>=0&&to>from,'Trecho de filtros da Biblioteca não encontrado');
+const library=[
+ {id:'photo-c',subject:'Anatomía I',academicPeriod:1,cohort:'C',cat:'provas',mime:'image/jpeg',title:'Avaliação P1'},
+ {id:'exam-pdf',subject:'Anatomía I',academicPeriod:1,cohort:'C',cat:'provas',mime:'application/pdf',title:'Prova objetiva'},
+ {id:'photo-d',subject:'Anatomía I',academicPeriod:1,cohort:'D',cat:'provas',mime:'image/jpeg',title:'Avaliação turma D'},
+ {id:'photo-wrong-period',subject:'Anatomía I',academicPeriod:2,cohort:'C',cat:'provas',mime:'image/jpeg',title:'Avaliação outro período'},
+ {id:'other-subject',subject:'Histología I',academicPeriod:1,cohort:'C',cat:'provas',mime:'image/png',title:'Avaliação histologia'},
+ {id:'non-exam',subject:'Anatomía I',academicPeriod:1,cohort:'C',cat:'complementares',mime:'image/png',title:'Esquema didático'},
+ {id:'photo-c',subject:'Anatomía I',academicPeriod:1,cohort:'C',cat:'provas',mime:'image/jpeg',title:'Avaliação P1 duplicada'}
 ];
-let subject='Anatomía I',period=1;
-const gallery={
- items:()=>fixtures.filter(x=>x.subject===subject),
- isImage:x=>/^image\//.test(x.mime),
- isExam:x=>x.cat==='provas',
- card:x=>x.id
-};
-const context=vm.createContext({W:{SinusGaleriaMateria:gallery},console});
-vm.runInContext(source.slice(begin,end),context);
-const get=(c)=>Array.from(vm.runInContext('examPhotos('+JSON.stringify(c)+')',context)).map(x=>x.id);
-let actual=get({subject,period,cohort:'A'});
-assert.ok(actual.includes('photo-1'));
-assert.ok(actual.includes('uploaded-photo'));
-assert.ok(!actual.includes('photo-other-period'));
-assert.ok(!actual.includes('pdf-exam'));
-assert.ok(!actual.includes('non-exam-image'));
-assert.ok(!actual.includes('photo-other-subject'));
-assert.equal(new Set(actual).size,actual.length);
-assert.equal(actual.length,8);
-period=2;
-actual=get({subject,period,cohort:'A'});
-assert.ok(actual.includes('photo-other-period'));
-assert.ok(!actual.includes('photo-1'));
-subject='Histología I';
-actual=get({subject,period:1,cohort:'B'});
-assert.deepEqual(actual,['photo-other-subject']);
-console.log('OK: fotos reais de provas priorizadas, sem misturar matérias/períodos, com máximo de 8 prévias.');
+const W={SinusLibrary:{catalog:()=>library},SinusApp:{S:{turma:'C'}}};
+const UI={subject:'Anatomía I'};
+const DB={subjects:{'Anatomía I':{period:1}}};
+const ctx=vm.createContext({W,UI,DB});
+vm.runInContext(gallery.slice(from,to),ctx);
+const items=()=>Array.from(vm.runInContext('items()',ctx));
+const found=items();
+assert.deepEqual(found.map(x=>x.id),['photo-c','exam-pdf','non-exam']);
+assert.equal(vm.runInContext('isExam(items()[0])',ctx),true);
+assert.equal(vm.runInContext('isImage(items()[0])',ctx),true);
+assert.equal(vm.runInContext('isExam(items()[1])',ctx),true);
+assert.equal(vm.runInContext('isImage(items()[1])',ctx),false);
+assert.equal(vm.runInContext('isExam(items()[2])',ctx),false);
+W.SinusApp.S.turma='D';
+assert.deepEqual(items().map(x=>x.id),['photo-d']);
+console.log('OK: bloco editorial removido; Provas preservadas e corretamente filtradas por matéria, período e turma.');
