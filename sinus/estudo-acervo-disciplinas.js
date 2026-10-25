@@ -114,6 +114,11 @@ function toCards(){
  if(!base||!['practice','theory'].includes(mode)||UI.tab!=='videos')return null;
  if(!D.getElementById('subjectContent'))return null;
  const db=mediaFromDb(subject,mode),ignore=originalIds(base),seen=new Set(db.videos.map(x=>x.id));
+ const anatomyVersion=/^anatomia\s+(?:i|1)$/.test(norm(subject))?'1':'2';
+ // Os simulados práticos são complementares, não aulas da Cátedra.
+ const anatomyPractice=(base==='anatomia'&&mode==='practice'?(S.anatomy?.subjects?.[anatomyVersion]||[]):[])
+  .filter(x=>x.type==='pratica'&&validYT(x.id))
+  .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Revisão e demonstração prática'}));
  const youtube=(S.youtube||[]).filter(x=>validYT(x.id)&&ytGroup(x.title)===base&&!ignore.has(x.id))
    .filter(x=>mode==='theory'||['practice','shared'].includes(videoMode(x.title)))
    .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Aula do canal · conteúdo geral da disciplina'}))
@@ -127,7 +132,7 @@ function toCards(){
      return (keys[base]||[]).includes(t);
    }).map(p=>({id:p.id,title:p.title,origin:'playlist',type:'playlist',label:'Playlist da disciplina · aulas gerais'}));
  // No ambiente prático, dar destaque a recursos de prática. As aulas gerais permanecem rotuladas.
- return {subject,mode,base,videos:[...db.videos,...youtube],visual:db.visual,playlists:pl};
+ return {subject,mode,base,videos:[...db.videos,...anatomyPractice,...youtube],visual:db.visual,playlists:pl};
 }
 function card(x){
  const media=x.origin==='youtube';
