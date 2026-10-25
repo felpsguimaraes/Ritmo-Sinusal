@@ -34,47 +34,106 @@ function showModal(item){
  D.body.appendChild(modal);
  modal.querySelector('button')?.focus();
 }
-function cards(box,items,filter){
- const selected=filter==='all'?items:items.filter(x=>norm(x.title).includes(filter));
- box.innerHTML=selected.map(it=>'<button class="sxAPVCard" type="button" data-apv-video="'+esc(it.id)+'" aria-label="Assistir '+esc(it.title)+'">'+
- '<span class="sxAPVThumb"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/mqdefault.jpg"><span class="sxAPVPlay"><span>▶</span></span></span>'+
- '<span class="sxAPVText"><b>'+esc(it.title)+'</b><small>Aula da cátedra · Anatomia '+(course()==='1'?'I':'II')+'</small></span></button>').join('')||
- '<div class="sxAPVEmpty">Nenhuma aula encontrada para esse filtro.</div>';
+function professor(it){
+ const n=norm(it.title);
+ return /victor benitez/.test(n)?'Dr. Víctor Benítez':/ronald martinez|dr. ronald\b/.test(n)?'Dr. Ronald Martínez':'Outras aulas';
+}
+function statusKey(course){
+ const uid=String(W.SinusApp?.S?.uid||'estudante').replace(/[^a-z0-9_-]/gi,'').slice(0,80);
+ return 'sinus_catedra_progress_'+uid+'_'+course;
+}
+function readDone(course){
+ try{return new Set(JSON.parse(localStorage.getItem(statusKey(course))||'[]'))}catch(e){return new Set()}
+}
+function saveDone(course,done){
+ try{localStorage.setItem(statusKey(course),JSON.stringify([...done]))}catch(e){}
 }
 function mount(){
  const ctx=context(),target=D.getElementById('subjectContent');
- if(!ctx||!target||target.querySelector('[data-apv-root]'))return;
- if(!cache.data){load();return}
+ if(!ctx||!target)return;
+ if(target.querySelector('[data-apv-root]'))return;
+ const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
+ target.replaceChildren(section);
+ if(!cache.data){
+  section.innerHTML='<div class="sxAPVStatus" role="status"><h2>Cátedra · Anatomia '+(ctx.subj==='1'?'I':'II')+'</h2><p>'+
+   (cache.erro?'Não foi possível carregar as aulas agora. Tente novamente.':'Carregando aulas da Cátedra…')+
+   '</p><button type="button" class="sxAPVRetry">Atualizar aulas</button></div>';
+  section.querySelector('button').addEventListener('click',()=>{if(cache.loading)return;cache.erro='';load(true)});
+  if(!cache.erro)load();
+  return;
+ }
  const seen=new Set();
  const items=(cache.data.subjects?.[ctx.subj]||[]).filter(x=>{
   if(!x||x.type!=='catedra'||!idOK(x.id)||seen.has(x.id))return false;
   seen.add(x.id);return true;
  });
- const section=D.createElement('section');
- section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
- const professors=[
-  {id:'victor benitez',name:'Dr. Víctor Benítez'},
-  {id:'ronald martinez',name:'Dr. Ronald Martínez'}
- ].filter(p=>items.some(it=>norm(it.title).includes(p.id)));
- section.innerHTML='<div class="sxAPVHead"><div><span class="sxAPVLabel">ANATOMIA '+(ctx.subj==='1'?'I':'II')+' · AMBIENTE PRÁTICO</span>'+
- '<h2>Cátedra</h2><p>Aulas específicas dos docentes de Anatomia, separadas dos vídeos complementares e simulados.</p></div>'+
- '<span class="sxAPVCount">'+items.length+' '+(items.length===1?'aula':'aulas')+'</span></div>'+
- '<div class="sxAPVControls" role="group" aria-label="Filtrar por professor">'+
- '<button class="sxAPVFilter active" type="button" data-apv-filter="all">Todos</button>'+
- professors.map(p=>'<button class="sxAPVFilter" type="button" data-apv-filter="'+esc(p.id)+'">'+esc(p.name)+'</button>').join('')+
- '</div><div class="sxAPVCards"></div>';
- const listing=section.querySelector('.sxAPVCards');
- cards(listing,items,'all');
+ if(!items.length){
+  section.innerHTML='<div class="sxAPVStatus"><h2>Cátedra · Anatomia '+(ctx.subj==='1'?'I':'II')+'</h2><p>Nenhum vídeo da seleção atual foi encontrado.</p></div>';
+  return;
+ }
+ const done=readDone(ctx.subj);
+ const profs=['Todos',...new Set(items.map(professor))];
+ let chosen=items[0].id,filter='Todos',query='';
+ section.innerHTML='<header class="sxAPVHero"><div><span class="sxAPVLabel">PRÁTICA · ANATOMIA '+(ctx.subj==='1'?'I':'II')+'</span><h2>Cátedra</h2>'+
+  '<p>Assista às aulas dos professores e acompanhe seu estudo sem sair da matéria.</p>'+
+  '<div class="sxAPVHeroTags"><span>'+items.length+' aulas</span><span>'+profs.length-1+' docentes / grupos</span><span>Progresso salvo neste aparelho</span></div></div>'+
+  '<span class="sxAPVHeroIcon" aria-hidden="true">▶</span></header>'+
+  '<div class="sxAPVColumns"><div class="sxAPVMain">'+
+  '<div class="sxAPVPlayer" data-apv-player><button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir aula"><span>▶</span><strong>Assistir aula</strong></button></div>'+
+  '<div class="sxAPVNow"><div><small>AULA SELECIONADA</small><h3 data-apv-title></h3><p data-apv-prof></p></div>'+
+  '<button type="button" class="sxAPVDone" data-apv-done>Marcar como assistida</button></div>'+
+  '<div class="sxAPVPlayerActions"><button type="button" data-apv-prev>← Anterior</button>'+
+  '<button type="button" data-apv-next>Próxima aula →</button></div>'+
+  '<p class="sxAPVSource">Vídeos catalogados do canal público Clases Medicina - Py, separados por título e professor. A vinculação oficial à faculdade não foi confirmada.</p>'+
+  '</div><aside class="sxAPVSide" aria-label="Lista de videoaulas"><div class="sxAPVListHead"><div><h3>Lista de aulas</h3><small data-apv-progress></small></div>'+
+  '<input type="search" data-apv-search placeholder="Buscar aula" aria-label="Buscar aula"></div>'+
+  '<div class="sxAPVControls" data-apv-filters role="group" aria-label="Filtrar por professor">'+
+  profs.map(p=>'<button type="button" class="sxAPVFilter'+(p==='Todos'?' active':'')+'" data-apv-prof="'+esc(p)+'">'+esc(p)+'</button>').join('')+
+  '</div><div class="sxAPVPlaylist" data-apv-list></div></aside></div>';
+ const player=section.querySelector('[data-apv-player]'),list=section.querySelector('[data-apv-list]');
+ function displayed(){
+  return items.filter(x=>(filter==='Todos'||professor(x)===filter)&&(!query||norm(x.title).includes(norm(query))));
+ }
+ function playerPoster(it){
+  player.innerHTML='<button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir '+esc(it.title)+'">'+
+   '<img src="https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/hqdefault.jpg" alt="">'+
+   '<span>▶</span><strong>Reproduzir aula</strong></button>';
+ }
+ function draw(){
+  const shown=displayed();
+  list.innerHTML=shown.map(it=>'<button type="button" class="sxAPVLesson'+(it.id===chosen?' selected':'')+'" data-apv-id="'+esc(it.id)+'" aria-current="'+(it.id===chosen?'true':'false')+'">'+
+    '<span class="sxAPVMini"><img alt="" loading="lazy" src="https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/mqdefault.jpg">'+
+     '<small>'+(done.has(it.id)?'✓':'▶')+'</small></span>'+
+    '<span class="sxAPVLessonText"><b>'+esc(it.title)+'</b><small>'+esc(professor(it))+'</small></span></button>').join('')||
+    '<div class="sxAPVEmpty">Nenhuma aula com este filtro. Tente outra busca.</div>';
+  section.querySelector('[data-apv-progress]').textContent=items.filter(x=>done.has(x.id)).length+' de '+items.length+' assistidas';
+  const btn=section.querySelector('[data-apv-done]');
+  if(btn){btn.classList.toggle('on',done.has(chosen));btn.textContent=done.has(chosen)?'✓ Assistida':'Marcar como assistida'}
+ }
+ function select(id,autoplay){
+  const it=items.find(x=>x.id===id);if(!it)return;
+  chosen=id;
+  section.querySelector('[data-apv-title]').textContent=it.title;
+  section.querySelector('[data-apv-prof]').textContent=professor(it);
+  if(autoplay){
+   player.innerHTML='<iframe title="'+esc(it.title)+'" src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(it.id)+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  }else playerPoster(it);
+  draw();
+ }
+ function step(delta){
+  let index=items.findIndex(x=>x.id===chosen);
+  select(items[(index+delta+items.length)%items.length].id,false);
+ }
  section.addEventListener('click',e=>{
-  const open=e.target.closest('[data-apv-video]');
-  if(open){showModal(items.find(x=>x.id===open.dataset.apvVideo));return}
-  const btn=e.target.closest('[data-apv-filter]');
-  if(btn){
-   section.querySelectorAll('[data-apv-filter]').forEach(x=>x.classList.toggle('active',x===btn));
-   cards(listing,items,btn.dataset.apvFilter);
-  }
+  const a=e.target.closest('[data-apv-id]');if(a){select(a.dataset.apvId,true);return}
+  const p=e.target.closest('[data-apv-prof]');if(p){filter=p.dataset.apvProf;section.querySelectorAll('[data-apv-prof]').forEach(b=>b.classList.toggle('active',b===p));draw();return}
+  if(e.target.closest('[data-apv-play]')){select(chosen,true);return}
+  if(e.target.closest('[data-apv-prev]')){step(-1);return}
+  if(e.target.closest('[data-apv-next]')){step(1);return}
+  if(e.target.closest('[data-apv-done]')){if(done.has(chosen))done.delete(chosen);else done.add(chosen);saveDone(ctx.subj,done);draw()}
  });
- target.replaceChildren(section);
+ section.querySelector('[data-apv-search]').addEventListener('input',e=>{query=e.target.value;draw()});
+ select(chosen,false);
 }
 function load(){
  if(cache.data||cache.loading)return cache.loading;
@@ -90,6 +149,7 @@ function load(){
 }
 const css="\n#subjectTabs .sxCatedraTab{border:1px solid #92beab;background:#e5f2e9;color:#185840;font-weight:800;box-shadow:inset 0 0 0 1px rgba(24,88,64,.03)}\n#subjectTabs .sxCatedraTab:hover{background:#d5eadc;border-color:#4f9c7a}\n#subjectTabs .sxCatedraTab.active{background:#176449!important;color:#fff!important;border-color:#176449!important;box-shadow:0 4px 13px rgba(18,94,66,.22)}\n.sxAPV{margin:18px 0 22px;padding:20px;border:1px solid rgba(48,112,94,.18);border-radius:20px;background:linear-gradient(135deg,rgba(229,246,237,.75),rgba(255,255,255,.94));color:#1f3b32}\n.sxAPV *{box-sizing:border-box}\n.sxAPVHead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:12px}\n.sxAPV .sxAPVLabel{font-size:10px;letter-spacing:.12em;font-weight:800;color:#47796a}\n.sxAPV h2{font-size:19px;line-height:1.25;margin:5px 0 7px;font-weight:800;color:#1e4336}\n.sxAPV p{font-size:12px;line-height:1.5;margin:0;color:#587469}\n.sxAPVCount{background:#e1eee7;border:1px solid #c9e4d8;border-radius:30px;padding:7px 12px;font-size:11px;white-space:nowrap;color:#376c59;font-weight:700}\n.sxAPVControls{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:13px 0}\n.sxAPVFilter,.sxAPVAll{border:1px solid #cfe1d8;border-radius:11px;padding:7px 11px;font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;background:#fff;color:#365e50}\n.sxAPVFilter.active{background:#276f52;color:white;border-color:#276f52}\n.sxAPVAll{margin-left:auto;display:inline-flex;align-items:center}\n.sxAPVCards{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px}\n.sxAPVCard{border:1px solid #d9e9e2;overflow:hidden;text-align:left;border-radius:14px;background:#fff;cursor:pointer;color:#294738;padding:0;box-shadow:0 2px 9px rgba(29,84,59,.045);transition:transform .15s,border-color .15s}\n.sxAPVCard:hover{border-color:#7fbca3;transform:translateY(-2px)}\n.sxAPVThumb{aspect-ratio:16/9;position:relative;background:#d9e8df;display:block;overflow:hidden}\n.sxAPVThumb img{width:100%;height:100%;object-fit:cover;display:block}\n.sxAPVPlay{position:absolute;inset:0;display:grid;place-content:center;color:white;font-size:22px;text-shadow:0 2px 10px #0009}\n.sxAPVPlay>span{display:grid;place-content:center;width:39px;height:39px;background:#173d32bb;border-radius:50%}\n.sxAPVText{padding:11px;display:block}\n.sxAPVText b{font-size:12px;line-height:1.45;color:#253b32;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:35px}\n.sxAPVText small{display:block;margin-top:7px;font-size:10px;color:#60806e}\n.sxAPVEmpty{padding:15px;font-size:12px;color:#4e6b5e}\n.sxAPVModal{position:fixed;z-index:99999;inset:0;background:rgba(8,28,23,.78);display:grid;place-items:center;padding:18px}\n.sxAPVDialog{width:min(930px,100%);border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 20px 80px #0007}\n.sxAPVDialogTop{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 17px}\n.sxAPVDialogTop b{font-size:14px;line-height:1.5;color:#244a38}\n.sxAPVDialogClose{background:#e8f3ed;border:0;border-radius:10px;cursor:pointer;padding:8px 12px;color:#25503e}\n.sxAPVFrame{aspect-ratio:16/9;background:#111}\n.sxAPVFrame iframe{width:100%;height:100%;border:0}\n.sxAPVDialogFoot{padding:11px 17px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#506b5f;font-size:12px}\n.sxAPVDialogFoot a{color:#116b4b;font-weight:700}\n@media(max-width:560px){.sxAPV{padding:14px;border-radius:15px}.sxAPVCards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.sxAPV h2{font-size:17px}.sxAPVAll{margin-left:0}.sxAPVDialogTop b{font-size:12px}}\n";
 if(!D.getElementById('sxAnatomiaPraticaStyle')){const style=D.createElement('style');style.id='sxAnatomiaPraticaStyle';style.textContent=css;D.head.appendChild(style)}
+const upgradedStyle=D.createElement('style');upgradedStyle.textContent="\n#subjectTabs .sxCatedraTab{background:#175e43!important;border:1px solid #175e43!important;color:#fff!important;font-weight:800!important;box-shadow:0 4px 16px rgba(26,102,72,.25)!important;border-radius:12px!important}\n#subjectTabs .sxCatedraTab.active{background:#0f4935!important;color:#fff!important;outline:2px solid #76b99a;outline-offset:2px}\n.sxAPV{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;color:inherit!important}\n.sxAPVHero{display:flex;align-items:center;justify-content:space-between;padding:23px;gap:16px;border-radius:20px;background:linear-gradient(115deg,#123d2f,#1e7452);color:#fff}\n.sxAPVHero h2{font-size:25px!important;color:#fff!important;margin:6px 0!important}.sxAPVHero p{color:#d5e9de!important;font-size:12px;max-width:510px}\n.sxAPVHero .sxAPVLabel{color:#b5e9c9!important}.sxAPVHeroTags{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px}.sxAPVHeroTags span{padding:6px 9px;font-size:10px;border-radius:7px;background:#ffffff19;color:#e4f7e9}\n.sxAPVHeroIcon{font-size:33px;display:grid;place-items:center;background:#ffffff16;border:1px solid #ffffff3d;border-radius:16px;min-width:66px;height:66px}\n.sxAPVColumns{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.85fr);gap:15px;align-items:start;margin-top:17px}\n.sxAPVMain,.sxAPVSide{border:1px solid #d4e8db;border-radius:17px;background:#fff;overflow:hidden;color:#224335}\n.sxAPVPlayer{aspect-ratio:16/9;background:#112820;position:relative}\n.sxAPVPlayer iframe{width:100%;height:100%;border:0}\n.sxAPVStart{display:grid;place-items:center;width:100%;height:100%;border:0;position:relative;cursor:pointer;background:radial-gradient(circle,#3b6d55,#132d22);color:#fff;font:inherit}\n.sxAPVStart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55)}\n.sxAPVStart span{position:relative;display:grid;place-items:center;width:68px;height:68px;background:#f4f7f3e8;color:#184d32;border-radius:50%;font-size:25px;box-shadow:0 8px 28px #0005}\n.sxAPVStart strong{position:relative;font-size:12px;letter-spacing:.04em}\n.sxAPVNow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 17px 8px}\n.sxAPVNow small{font-size:9px;letter-spacing:.12em;color:#779683;font-weight:800}.sxAPVNow h3{color:#194f35;font-size:16px;margin:5px 0;line-height:1.35}.sxAPVNow p{font-size:11px;color:#6b8775}\n.sxAPVDone{border:1px solid #cde3d4;border-radius:9px;background:#eaf3ed;color:#236b47;font-weight:700;padding:9px 11px;font-size:11px;cursor:pointer}\n.sxAPVDone.on{background:#196643;color:#fff}\n.sxAPVPlayerActions{display:flex;justify-content:space-between;gap:8px;padding:8px 17px 13px}\n.sxAPVPlayerActions button{padding:9px 11px;background:#f2f8f3;color:#286647;border:1px solid #d5e8dc;border-radius:9px;cursor:pointer;font-size:11px}\n.sxAPVSource{border-top:1px solid #ebf1ec;padding:12px 17px!important;color:#829083!important;font-size:10px!important}\n.sxAPVSide{max-height:610px;display:flex;flex-direction:column}\n.sxAPVListHead{padding:15px 13px 9px}.sxAPVListHead h3{font-size:14px;margin:0 0 2px}.sxAPVListHead small{font-size:10px;color:#6d8977}\n.sxAPVListHead input{border:1px solid #dae9de;border-radius:10px;background:#f8fbf8;color:#274934;padding:10px;width:100%;box-sizing:border-box;font:inherit;font-size:12px;margin-top:12px}\n.sxAPVControls{margin:0!important;padding:4px 13px 11px;border-bottom:1px solid #e9f2e9}\n.sxAPVFilter{font-size:10px!important}.sxAPVPlaylist{overflow-y:auto;padding:5px 8px 12px;min-height:80px}\n.sxAPVLesson{display:flex;text-align:left;width:100%;gap:10px;align-items:center;padding:8px;border:1px solid transparent;border-radius:11px;background:#fff;color:#234b34;font:inherit;cursor:pointer}\n.sxAPVLesson:hover{background:#f3f8f4}.sxAPVLesson.selected{background:#e8f5eb;border-color:#b3d8c1}\n.sxAPVMini{position:relative;width:95px;min-width:95px;aspect-ratio:16/9;border-radius:7px;overflow:hidden;background:#d5e9db}\n.sxAPVMini img{display:block;width:100%;height:100%;object-fit:cover}.sxAPVMini small{position:absolute;right:3px;bottom:3px;font-size:9px;border-radius:5px;background:#146b48;color:#fff;padding:2px 5px}\n.sxAPVLessonText{display:grid;gap:4px;min-width:0}.sxAPVLessonText b{font-size:11px;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.sxAPVLessonText small{font-size:10px;color:#638370}\n.sxAPVStatus{background:#edf5ef;border:1px solid #cde5d3;border-radius:17px;padding:25px;color:#1e5a3a}.sxAPVStatus h2{font-size:20px}.sxAPVRetry{border:0;background:#1e6446;color:white;padding:10px;border-radius:9px;margin-top:12px;cursor:pointer}\n@media(max-width:870px){.sxAPVColumns{grid-template-columns:1fr}.sxAPVSide{max-height:440px}}\n@media(max-width:550px){.sxAPVHero{padding:15px;border-radius:13px}.sxAPVHeroIcon{min-width:42px;height:42px;font-size:19px}.sxAPVColumns{gap:9px}.sxAPVNow{padding:12px}.sxAPVMini{width:75px;min-width:75px}.sxAPVSide{max-height:395px}}\n";D.head.appendChild(upgradedStyle);
 const previous=W.renderSubject;
 if(typeof previous==='function'){
  W.renderSubject=function(){const out=previous.apply(this,arguments);mount();return out};
