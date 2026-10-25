@@ -40,7 +40,8 @@
     pancreas: ['Páncreas', 'pancrea'],
     trompa: ['Trompa uterina', 'trompa|^tuba|salping'],
     cervix: ['Cérvix (cuello uterino)', 'cervix|cuello uterino|cuello del utero|colo uterino|colo do utero|cervic'],
-    vulva: ['Vulva', 'vulva']
+    vulva: ['Vulva', 'vulva'],
+    mama: ['Mama', 'mama|mamari']
   };
   var ADAPT = ['Adaptación', 'adapta|hipertrof|hiperplas|atrofi|metaplas'];
   var ACUM = ['Acúmulos intracelulares', 'acumul'];
@@ -69,9 +70,6 @@
   };
 
   /* fotos do Drive da turma (pasta Semana 3 · TUBERCULOSIS): granulomas com células gigantes de Langhans */
-  /* foto do quadro da professora com a descrição das láminas 1 e 2 da P2 (com as respostas, como pediu o Felipe) */
-  FT.iam = FT.iam.concat([{ src: 'img/laminario/quadro-p2-descricao.jpg', k: 'turma' }]);
-  FT.tbc = FT.tbc.concat([{ src: 'img/laminario/quadro-p2-descricao.jpg', k: 'turma' }]);
   FT.tbc = FT.tbc.concat(['tbc-drive-1.jpg', 'tbc-drive-2.jpg', 'tbc-drive-3.jpg', 'tbc-drive-4.jpg'].map(function (f) { return { src: 'img/laminario/' + f, k: 'turma' }; }));
 
   /* ───────── P1 práctica: las 5 láminas que la profesora indicó para la prueba ───────── */
@@ -915,6 +913,28 @@
       fuente: SRC_T, laminas: [L], procesos: PROCESOS };
   });
 
+  /* láminas das semanas 7 e 8 (quadro da professora, pasta 2. P2): uma por lâmina, na aba Laminario, sem foto por enquanto */
+  var NEW_LAM = [
+    { id: 'lt_s7_cirrosis', sem: '7', nome: 'Cirrosis hepática', org: ORG.higado, proceso: ['Inflamación crónica', 'inflama;cronic!agud'],
+      desc: [['Nódulos regenerativos separados por tabiques de tejido conectivo', 'nodulo|regenerativ|tabiq'], ['Histoarquitectura alterada', 'arquitectura|histoarquit'], ['Hepatocitos con vacuolas lipídicas', 'vacuol|lipid|grasa'], ['Infiltrado inflamatorio crónico sobreagregado', 'infiltrad|inflamat']],
+      dx: ['Cirrosis hepática', 'cirros'] },
+    { id: 'lt_s7_gastritis', sem: '7', nome: 'Gastritis crónica moderada', org: ORG.estomago, proceso: ['Inflamación crónica', 'inflama;cronic!agud'],
+      desc: [['Linfocitos aislados y en nidos', 'linfocit'], ['Vasocongestión y edema', 'vasocong|congest|edema'], ['Mucosa gástrica alterada', 'mucosa']],
+      dx: ['Gastritis crónica moderada', 'gastrit'] },
+    { id: 'lt_s8_mastitis', sem: '8', nome: 'Mastitis granulomatosa', org: ORG.mama, proceso: ['Inflamatorio crónico granulomatoso', 'granulom'],
+      desc: [['Granulomas con linfocitos, fibroblastos y células epitelioides', 'granulom|epitelioid|linfocit'], ['Células gigantes multinucleadas tipo Langhans', 'langhans|gigante'], ['Proceso inflamatorio crónico lobulocéntrico', 'lobul']],
+      dx: ['Mastitis granulomatosa', 'mastitis;granulomat'] },
+    { id: 'lt_s8_crohn', sem: '8', nome: 'Enfermedad de Crohn', org: ORG.ileon, proceso: ['Inflamatorio crónico granulomatoso', 'granulom'],
+      desc: [['Afectación transmural, no necrotizante ni caseificante', 'transmural'], ['Glándulas distorsionadas e histoarquitectura alterada', 'distorsion|arquitectura|histoarquit'], ['Edema, fibrosis, erosión y fisuras', 'fisur|erosi|fibros|edema']],
+      dx: ['Enfermedad de Crohn', 'crohn'] }
+  ];
+  var NEW_EXER = NEW_LAM.map(function (n) {
+    var L = { id: n.id, g: n.id, nome: n.nome, img: [], organo: n.org, proceso: n.proceso, desc: n.desc, dx: n.dx };
+    return { id: n.id, area: PR, clase: 'Laminario', titulo: 'Lámina · Semana ' + n.sem, tipo: 'laminas', nivel: '4', rotulo: 'Láminas', org: n.org[0],
+      resumen: 'Mirá la descripción y completá ÓRGANO, PROCESO, DESCRIPCIÓN y DX; cada descripción se corrige hallazgo por hallazgo.',
+      fuente: 'Quadro de la práctica, semana ' + n.sem + ' (pasta 2. P2 de la turma)', laminas: [L], procesos: PROCESOS };
+  });
+
   A.docentePratica = 'Dra. Alicia Gonzalez';
   A.fontePratica = 'Clases prácticas 1 a 4, láminas de la P1 y de la P2, laminario total corregido (20 nov) y pizarrones';
   [].push.apply(A.modulos, [].concat(
@@ -926,7 +946,7 @@
     par('lam_p2', 'Práctica · P2', 'Láminas de la P2',
       'Los 10 temas del pizarrón de la P2 (necrosis, inflamación, acúmulos y cirrosis), con la descripción de la profesora como respuesta.',
       'Las 10 láminas de la P2 en orden aleatorio, sin banco de palabras.', SRC_P + '; pizarrón «Temas P2 Práctica»; Hashimoto y cirrosis: tabla del laminario', P2Q),
-    LT_EXER, LT_MAPAS, LT_CUADROS,
+    LT_EXER, NEW_EXER, LT_MAPAS, LT_CUADROS,
     [{ id: 'lam_simulacro', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 8, cronometro: true, clase: 'Simulacro', titulo: 'Simulacro de la prueba práctica',
       resumen: 'Ocho láminas sorteadas entre la P1, la P2 y el laminario. Sin banco de palabras y con cronómetro; la planilla sale al final.',
       fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }],
