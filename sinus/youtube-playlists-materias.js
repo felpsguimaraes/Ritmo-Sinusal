@@ -38,7 +38,7 @@ function anatomyItems(subject){
  });
 }
 function renderAnatomy(subject,mode,hasNative){
- if(mode!=='theory'||W.UI?.tab!=='videos')return;
+ if(mode!=='theory'||typeof UI==='undefined'||UI.tab!=='videos')return;
  const box=D.getElementById('subjectContent');
  if(!box||D.querySelector('#subjectHeader h1')?.textContent.trim()!==subject)return;
  const activeTab=D.querySelector('#subjectTabs button.active')?.textContent||'';
@@ -98,7 +98,7 @@ D.addEventListener('click',e=>{
  loadAnatomy(true);
 });
 function render(subject,mode,hasNative){
- if(anatomySeries(subject)){renderAnatomy(subject,mode,!!hasNative);return}
+ if(anatomySeries(subject)){renderAnatomy(subject,mode,!!hasNative);Promise.resolve().then(()=>renderAnatomy(subject,mode,!!hasNative));return}
  if(mode!=='theory'||W.UI?.tab==='practice')return;
  const box=D.getElementById('subjectContent');
  if(!box||D.querySelector('#subjectHeader h1')?.textContent.trim()!==subject)return;
