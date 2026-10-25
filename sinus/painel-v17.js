@@ -396,33 +396,54 @@ function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) ret
     <div class="questionCard">
       <span class="eyebrow">${esc(q.period||'Geral')} · ${q.mode==='practice'?'Prática':'Teoria'}</span>
       <h2>${esc(q.prompt)}</h2>
-      ${q.type==='image'?`<div class="questionImg">Questão com imagem — a imagem real pode ser associada pelo administrador.</div>`:''}
+      ${q.type==='image'?`<div class="questionImg">A imagem vinculada a esta questão será exibida quando estiver disponível.</div>`:''}
       <div>${questionUI(q)}</div>
       <div id="qFeedback"></div>
     </div>
   </div>`}
 function questionUI(q){
-  if(q.type==='multiple') return (q.options||[]).map((o,i)=>`<button class="answerBtn" data-answer="${esc(o)}" onclick="answerTraining(${esc(JSON.stringify(o))})"><span class="sxAnswerLetter">${String.fromCharCode(65+i)}</span><span>${esc(o)}</span><span class="sxAnswerMark" aria-hidden="true"></span></button>`).join('');
-  if(q.type==='truefalse') return ['Verdadeiro','Falso'].map(o=>`<button class="answerBtn" onclick="answerTraining('${o}')">${o}</button>`).join('');
-  if(['cita','complete','image'].includes(q.type)) return `<textarea id="answerText" rows="4" placeholder="Digite sua resposta..."></textarea><button class="btn primary sm" style="margin-top:10px" onclick="answerTraining($('answerText').value)">Responder</button>`;
-  if(q.type==='match') return `<div class="grid2">${(q.pairs||[]).map(p=>`<div class="quickItem"><span><b>${esc(p[0])}</b></span><span>${esc(p[1])}</span></div>`).join('')}</div><button class="btn primary sm" style="margin-top:10px" onclick="answerTraining(${esc(JSON.stringify(q.answer))})">Confirmar</button>`;
-  if(q.type==='flashcard') return `<div id="flashBox" class="flashBox" onclick="revealFlash()"><div><span class="eyebrow">Toque para virar</span><h2>${esc(q.prompt)}</h2></div></div><div id="flashRate" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn sm" onclick="answerTraining('__hard__')">Difícil</button><button class="btn sm" onclick="answerTraining('__medium__')">Lembrei</button><button class="btn primary sm" onclick="answerTraining('__easy__')">Fácil</button></div>`;
-  return `<button class="btn primary sm" onclick="answerTraining(${esc(JSON.stringify(q.answer))})">Revelar</button>`
+  if(q.type==='multiple')return(q.options||[]).map((o,i)=>`<button class="answerBtn" data-answer="${esc(o)}" onclick="answerTraining(${esc(JSON.stringify(o))})"><span class="sxAnswerLetter">${String.fromCharCode(65+i)}</span><span>${esc(o)}</span><span class="sxAnswerMark" aria-hidden="true"></span></button>`).join('');
+  if(q.type==='truefalse')return ['Verdadeiro','Falso'].map(o=>`<button class="answerBtn" data-answer="${esc(o)}" onclick="answerTraining('${o}')">${o}</button>`).join('');
+  if(q.type==='cita')return `<label class="field"><span>Sua resposta</span><textarea id="answerText" rows="4" placeholder="Responda com suas palavras..."></textarea></label><button class="btn primary sm" style="margin-top:10px" onclick="revealSubjectiveAnswer()">Conferir com o gabarito</button>`;
+  if(['complete','image'].includes(q.type))return `<textarea id="answerText" rows="3" placeholder="Digite sua resposta..."></textarea><button class="btn primary sm" style="margin-top:10px" onclick="answerTraining($('answerText').value)">Responder</button>`;
+  if(q.type==='match'){
+    const pairs=q.pairs||[],choices=[...new Set(pairs.map(p=>String(p[1])))].sort(()=>Math.random()-.5);
+    return `<div class="sxMatchList">${pairs.map((p,i)=>`<label class="field"><span>${esc(p[0])}</span><select id="sxMatch${i}" aria-label="Relacione ${esc(p[0])}"><option value="">Selecione a correspondência</option>${choices.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select></label>`).join('')}</div><button class="btn primary sm" style="margin-top:12px" onclick="answerTraining(matchSelections())">Conferir relações</button>`;
+  }
+  if(q.type==='flashcard')return `<div id="flashBox" class="flashBox" onclick="revealFlash()"><div><span class="eyebrow">Toque para virar</span><h2>${esc(q.prompt)}</h2></div></div><div id="flashRate" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn sm" onclick="answerTraining('__hard__')">Difícil</button><button class="btn sm" onclick="answerTraining('__medium__')">Lembrei</button><button class="btn primary sm" onclick="answerTraining('__easy__')">Fácil</button></div>`;
+  return `<button class="btn primary sm" onclick="answerTraining(${esc(JSON.stringify(q.answer))})">Revelar</button>`;
+}
+function matchSelections(){
+  const q=UI.training.questions[UI.training.index],pairs=q.pairs||[];
+  return JSON.stringify(pairs.map((p,i)=>$('sxMatch'+i)?.value||''));
+}
+function revealSubjectiveAnswer(){
+  const T=UI.training,q=T.questions[T.index];
+  if(T.answered)return;
+  const value=$('answerText')?.value?.trim()||'';
+  $('qFeedback').innerHTML=`<div class="sxSubjectiveCheck"><span class="eyebrow">Compare com o gabarito</span><p><b>Resposta esperada:</b> ${esc(q.answer||'')}</p><p>${esc(q.explanation||'')}</p><div class="sxQuestionActions"><button class="btn primary sm" onclick="answerTraining('__self_correct__')">Minha resposta está correta</button><button class="btn sm" onclick="answerTraining('__self_wrong__')">Preciso revisar</button></div>${!value?'<small>Você ainda não digitou sua resposta.</small>':''}</div>`;
 }
 function revealFlash(){const q=UI.training.questions[UI.training.index]; $('flashBox').innerHTML=`<div><span class="eyebrow">Resposta</span><h2>${esc(q.answer)}</h2><p class="soft" style="font-size:10px;line-height:1.7;margin-top:8px">${esc(q.explanation||'')}</p></div>`; $('flashRate').classList.remove('hidden')}
 function answerTraining(ans){
- const T=UI.training,q=T.questions[T.index];if(T.answered)return;
- const norm=x=>String(x||'').trim().toLowerCase();
- const ok=q.type==='flashcard'?ans!=='__hard__':q.type==='match'||norm(ans)===norm(q.answer);
- if(ok)T.correct++;T.answered=true;
- document.querySelectorAll('#subjectContent .answerBtn').forEach(btn=>{
-  const value=btn.dataset.answer||btn.textContent.trim(),correct=norm(value)===norm(q.answer),chosen=norm(value)===norm(ans);
-  btn.disabled=true;btn.classList.toggle('sxAnswerCorrect',correct);btn.classList.toggle('sxAnswerWrong',chosen&&!correct);
-  if(correct||chosen){let mark=btn.querySelector('.sxAnswerMark');if(mark)mark.textContent=correct?'✓':'×';btn.setAttribute('aria-label',value+(correct?' — resposta correta':' — sua resposta, incorreta'));}
- });
- $('qFeedback').innerHTML=`<div class="sxAnswerStatus" role="status">${ok?'✓ Resposta correta':'Vamos revisar esta resposta'}</div>
- <div class="sxQuestionActions"><button class="btn ${ok?'':'primary'}" onclick="showTrainingExplanation()">${ok?'Ver explicação':'Entender meu erro'}</button><button class="btn ${ok?'primary':''}" onclick="nextQuestion()">${T.index+1<T.questions.length?'Próxima questão':'Ver resultado'}</button></div>
- <section id="sxQuestionExplanation" class="sxQuestionExplanation" hidden><span class="eyebrow">Resposta esperada</span><h3>${esc(q.answer||'')}</h3><p>${esc(q.explanation||'Esta questão ainda não tem uma explicação cadastrada.')}</p></section>`;
+  const T=UI.training,q=T.questions[T.index];if(T.answered)return;
+  const norm=x=>String(x||'').trim().toLocaleLowerCase();
+  let ok=false;
+  if(q.type==='flashcard')ok=ans!=='__hard__';
+  else if(q.type==='cita')ok=ans==='__self_correct__';
+  else if(q.type==='match'){
+    let submitted=[];try{submitted=JSON.parse(ans)}catch(e){}
+    ok=Array.isArray(submitted)&&submitted.length===(q.pairs||[]).length&&(q.pairs||[]).every((p,i)=>norm(submitted[i])===norm(p[1]));
+    document.querySelectorAll('.sxMatchList select').forEach(x=>{x.disabled=true});
+  }else ok=norm(ans)===norm(q.answer);
+  if(ok)T.correct++;T.answered=true;
+  document.querySelectorAll('#subjectContent .answerBtn').forEach(btn=>{
+    const value=btn.dataset.answer||btn.textContent.trim(),correct=norm(value)===norm(q.answer),chosen=norm(value)===norm(ans);
+    btn.disabled=true;btn.classList.toggle('sxAnswerCorrect',correct);btn.classList.toggle('sxAnswerWrong',chosen&&!correct);
+    if(correct||chosen){let mark=btn.querySelector('.sxAnswerMark');if(mark)mark.textContent=correct?'✓':'×';btn.setAttribute('aria-label',value+(correct?' — resposta correta':' — sua resposta, incorreta'));}
+  });
+  $('qFeedback').innerHTML=`<div class="sxAnswerStatus" role="status">${ok?'✓ Resposta correta':'Vamos revisar esta resposta'}</div>
+  <div class="sxQuestionActions"><button class="btn ${ok?'':'primary'}" onclick="showTrainingExplanation()">${ok?'Ver explicação':'Entender meu erro'}</button><button class="btn ${ok?'primary':''}" onclick="nextQuestion()">${T.index+1<T.questions.length?'Próxima questão':'Ver resultado'}</button></div>
+  <section id="sxQuestionExplanation" class="sxQuestionExplanation" hidden><span class="eyebrow">Resposta esperada</span><h3>${esc(q.answer||'')}</h3><p>${esc(q.explanation||'Esta questão ainda não tem uma explicação cadastrada.')}</p></section>`;
 }
 function showTrainingExplanation(){const el=$('sxQuestionExplanation');if(el){el.hidden=!el.hidden;if(!el.hidden)el.scrollIntoView({behavior:'smooth',block:'nearest'});}}
 
