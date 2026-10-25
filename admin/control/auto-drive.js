@@ -174,9 +174,17 @@ async function run(){
  const btn=D.getElementById('sx-auto-run');btn.disabled=true;D.getElementById('sx-auto-report').innerHTML='';
  try{
   const ss=await session();let token=ss.provider_token;
-  if(!token){status('Autorização Google necessária. Abrindo a conexão segura…');await oauth();return;}
+  if(!token){status('Autorização Google necessária. Abrindo a conexão segura…');try{sessionStorage.setItem('sxAutoDriveConsentTried','1')}catch{}await oauth();return;}
   status('Verificando acesso ao Drive…');
-  try{await drive('files/'+encodeURIComponent(root),{fields:'id,name,mimeType'},token);}catch(e){if(e.isAccess)D.getElementById('sx-auto-connect').hidden=false;throw e;}
+  try{await drive('files/'+encodeURIComponent(root),{fields:'id,name,mimeType'},token);}catch(e){
+   if(e.isAccess&&!sessionStorage.getItem('sxAutoDriveConsentTried')){
+    sessionStorage.setItem('sxAutoDriveConsentTried','1');
+    status('Esta conta Google ainda precisa autorizar a leitura das pastas. Abrindo a autorização…');
+    await oauth();return;
+   }
+   if(e.isAccess){D.getElementById('sx-auto-connect').hidden=false;throw new Error('O Google não autorizou acesso a esta pasta. Use a mesma conta administrativa, verifique o compartilhamento da pasta e, se necessário, reconecte o Drive. Detalhe: '+e.message);}
+   throw e;
+  }
   const files=await scan(root,token);
   const ids=new Set();const unique=[];
   for(const f of files){const key=[f.file_id,f.period,f.cohort,f.subject,f.section,f.study_mode].join('|');if(!ids.has(key)){ids.add(key);unique.push(f);}}
@@ -187,6 +195,7 @@ async function run(){
    const saved=await api('import_batch',{root_id:root,items:unique.slice(i,i+70)});
    state.imported+=Number(saved.created||0);state.updated+=Number(saved.updated||0);state.savedRows.push(...unique.slice(i,i+70));
   }
+  try{sessionStorage.removeItem('sxAutoDriveConsentTried')}catch{}
   status('Conferindo os arquivos gravados no banco de dados…');
   state.verified=await api('import_summary',{root_id:root});
   const persisted=new Map((state.verified.groups||[]).map(x=>[[x.period,x.cohort,x.subject,x.section].join(' | '),x.files]));
