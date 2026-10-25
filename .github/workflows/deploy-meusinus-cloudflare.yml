@@ -37,7 +37,9 @@ jobs:
           node tools/test_catedra_periodos.js
           node --check sinus/materias-galeria-acervo.js
           node tools/test_acervo_fotos_provas.js
-          grep -Fq 'exam-photo-featured' index.html
+          grep -Fq 'no-priority-photos' index.html
+          grep -Fq 'exam-label-cleanup' index.html
+          ! grep -Fq 'SUGESTÕES PRIORITÁRIAS' sinus/subject-resource-balloons.js
           test -s sinus/anatomia-upe-videos.json
           test -s sinus/anatomia-pratica-videos.json
           grep -Fq 'catedra-titulos-limpos6' index.html
@@ -118,14 +120,16 @@ jobs:
                node --check /tmp/sinus-catedra.js &&
                curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/painel-v17.js?v=20261025-anatomy-period-1-2-all-cohorts&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-grade.js &&
                grep -Fq 'ensureAnatomyForEveryCohort' /tmp/sinus-grade.js &&
-               grep -Fq 'exam-photo-featured' /tmp/sinus-home.html &&
-               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/subject-resource-balloons.js?v=20261025-exam-photo-featured&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-acervo.js &&
-               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/materias-galeria-acervo.js?v=20261025-exam-photo-cards&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-gallery.js &&
-               grep -Fq 'function renderExamHighlights' /tmp/sinus-acervo.js &&
-               grep -Fq 'isExam(x)' /tmp/sinus-acervo.js &&
-               grep -Fq 'isImage(x)' /tmp/sinus-acervo.js &&
+               grep -Fq 'no-priority-photos' /tmp/sinus-home.html &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/subject-resource-balloons.js?v=20261025-no-priority-photos&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-acervo.js &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "https://meusinus.pages.dev/sinus/materias-galeria-acervo.js?v=20261025-exam-label-cleanup&cf-check=$GIT_SHA-$attempt" -o /tmp/sinus-gallery.js &&
+               ! grep -Fq 'SUGESTÕES PRIORITÁRIAS' /tmp/sinus-acervo.js &&
+               ! grep -Fq 'renderExamHighlights' /tmp/sinus-acervo.js &&
+               grep -Fq 'isExam=x=>' /tmp/sinus-gallery.js &&
+               grep -Fq 'isImage=x=>' /tmp/sinus-gallery.js &&
                grep -Fq 'isExam,isImage,isVideo,card' /tmp/sinus-gallery.js &&
-               node --check /tmp/sinus-acervo.js; then
+               node --check /tmp/sinus-acervo.js &&
+               node --check /tmp/sinus-gallery.js; then
               echo "Verificado: HTML e JS corrigidos disponíveis em meusinus.pages.dev"
               exit 0
             fi
