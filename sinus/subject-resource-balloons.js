@@ -249,6 +249,13 @@ function render(c,data){
   if(library&&!library.querySelector('.sxMG,.sxCourseMedia')){
    library.innerHTML=suggested.length?'<div class="sxAOLibraryGrid">'+suggested.slice(0,20).map(x=>'<a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer" class="sxAOLibraryItem"><span>▧</span><b>'+esc(x.title)+'</b><small>Ver arquivo ↗</small></a>').join('')+'</div>':'<p class="sxAOEmptyLibrary">Não há arquivos sugeridos com classificação confirmada para esta matéria e período.</p>';
   }
+  if(theory&&c.section==='slides'){
+   // A fila unificada substitui a galeria e a fila de slides nativas.
+   host.querySelector(':scope > .sxMG')?.remove();
+   host.querySelectorAll(':scope > .resourceLayout').forEach(el=>el.remove());
+   const librarySection=wrap.querySelector('.sxAOLibrary');
+   if(librarySection)librarySection.hidden=true;
+  }
   if(theory){drawSlides(c,data,wrap);renderOtherOfficial(c,own,wrap);}
   else classBody(c,own);
   return;
@@ -272,6 +279,10 @@ function render(c,data){
   wrap.querySelector('.sxAOLibraryItems').innerHTML='<p class="sxAOEmptyLibrary">Não há arquivos sugeridos com classificação confirmada para esta matéria e período.</p>';
  }
  host.prepend(wrap);
+ if(theory&&c.section==='slides'){
+  // Slides da turma e da biblioteca já estão no único leitor superior.
+  wrap.querySelector('.sxAOLibrary').hidden=true;
+ }
  if(theory){drawSlides(c,data,wrap);renderOtherOfficial(c,own,wrap);}
  else classBody(c,own);
  const originals=[...host.children].filter(el=>el!==wrap&&el.classList?.contains('resourceLayout'));
