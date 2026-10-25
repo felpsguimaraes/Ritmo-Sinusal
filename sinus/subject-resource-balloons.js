@@ -175,9 +175,13 @@ if(typeof original==='function')W.renderSubject=function(){
  if(!cached)load(c).then(data=>{
   const current=context();
   if(current&&keyFor(current)===k&&current.tab===c.tab&&current.mode===c.mode){
-   D.querySelector('#subjectContent > .sxAcademicOrdered')?.remove();
-   // Restaurar lembrete original antes de reconstruir os três blocos.
-   const old=D.querySelector('.sxAOReminders > .sinus-rem-box');if(old)D.getElementById('subjectContent').prepend(old);
+   const previous=D.querySelector('#subjectContent > .sxAcademicOrdered');
+   const old=previous?.querySelector('.sxAOReminders > .sinus-rem-box');
+   const gallery=previous?.querySelector('.sxAOLibrary .sxMG,.sxAOLibrary .sxCourseMedia');
+   const content=D.getElementById('subjectContent');
+   if(gallery)content.prepend(gallery);
+   if(old)content.prepend(old);
+   previous?.remove();
    render(c,data);
   }
  }).catch(()=>{});
