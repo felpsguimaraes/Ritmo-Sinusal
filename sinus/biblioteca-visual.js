@@ -115,6 +115,18 @@ function catalog(){
   ids.add(unique);if(origin)origins.add(fromOrigin);
   out.push({...item,id,subject,cat,academicPeriod:academicPeriod??null,local:false});
  }
+ // Vídeos oficiais UCP e materiais de Bioestatística: um cartão por arquivo.
+ const official=W.SinusAcademicOfficial;
+ for(const level of ['1','2'])for(const v of official?.anatomy?.[level]||[]){
+  add({id:v.id,title:v.title,mime:v.mime,kind:v.mime,source:'ucp-oficial',
+   studyMode:'practice',studySection:'catedra',requiresGooglePermission:true},
+   'Anatomía '+(level==='1'?'I':'II'),'videos',Number(level));
+ }
+ for(const v of official?.bioestadisticaSlides||[]){
+  add({id:v.id,title:v.title,mime:v.mime,kind:'PDF',source:'ucp-oficial',
+   studyMode:'theory',studySection:'slides',requiresGooglePermission:true},
+   'Bioestadística','slides',2);
+ }
  /* A Biblioteca cataloga materiais por período mesmo quando a turma está em outro semestre.
     Somente a grade determina quais matérias aparecem no portal. */
  (W.SinusAcervoAuditado?.items||[]).forEach(x=>add(x,x.subject,x.cat,x.academicPeriod));
