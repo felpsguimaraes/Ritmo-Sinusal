@@ -288,6 +288,7 @@ function selectVideo(i){localMedia.video=(subjectData().videos||[])[i]; renderVi
 function addYoutube(){openModal('Adicionar YouTube',`<label class="field"><span>Link</span><input id="ytLink" placeholder="https://youtube.com/watch?v=..."></label>`,()=>{const m=($('ytLink').value||'').match(/(?:youtu\.be\/|v=|shorts\/)([A-Za-z0-9_-]{6,})/); if(!m)return toast('Link inválido'); localMedia.video={title:'Vídeo do YouTube',youtubeId:m[1],kind:'YouTube'}; closeModal(); renderVideos()})}
 
 function renderTranscribe(){
+  if (window.SinusTranscricaoReal) return window.SinusTranscricaoReal.render();
   const saved=SAFE_STORE.getItem('trans_'+UI.subject)||'';
   $('subjectContent').innerHTML=`
   <div class="transLayout">
@@ -320,12 +321,14 @@ function renderTranscribe(){
 }
 function loadTransSource(file){if(!file)return; localMedia.source={title:file.name,localUrl:URL.createObjectURL(file),kind:'Local'}; renderTranscribe()}
 function simulateTranscription(){
-  if(!(localMedia.source||localMedia.audio||localMedia.video)) return toast('Escolha uma fonte primeiro');
-  let p=0; const bar=$('transBar'); const source=(localMedia.source||localMedia.audio||localMedia.video).title; const timer=setInterval(()=>{p+=10; bar.style.width=p+'%'; if(p>=100){clearInterval(timer); $('transText').value=`[Transcrição demonstrativa — ${source}]\n\nProfessor: Nesta aula revisamos os conceitos principais do tema.\n\n1. Definição e contextualização.\n2. Mecanismo fisiopatológico ou sequência lógica.\n3. Correlação clínica.\n4. Pontos de prova.\n\nObservação: esta é uma transcrição simulada para protótipo HTML.`; toast('Transcrição gerada') }},120)
+ return window.SinusTranscricaoReal?.transcribe() || toast('Transcrição indisponível. Recarregue o aplicativo.');
 }
 function saveTranscript(){SAFE_STORE.setItem('trans_'+UI.subject,$('transText').value); toast('Transcrição salva')}
 function deriveFromTranscript(kind){openModal(kind,`<div class="glass softcard" style="padding:16px;border-radius:18px"><b>${esc(kind)} gerado</b><p class="soft" style="font-size:10px;line-height:1.7;margin-top:6px">Demonstração baseada no texto atual da transcrição. A versão publicada poderá chamar um serviço real de IA.</p></div>`,closeModal)}
-async function recordHint(){try{await navigator.mediaDevices.getUserMedia({audio:true}); openModal('Gravação direta',`<p class="soft" style="font-size:11px;line-height:1.7">O navegador concedeu acesso ao microfone. Em produção, o Sinus poderá gravar direto aqui. Para este protótipo HTML, mantive a experiência como demonstração.</p>`,closeModal)}catch(e){openModal('Permissão do microfone',`<p class="soft" style="font-size:11px;line-height:1.7">Alguns navegadores bloqueiam microfone em arquivos abertos por <b>file://</b>. Quando publicarmos em HTTPS, a gravação direta poderá funcionar corretamente.</p>`,closeModal)}}
+async function recordHint(){
+ if(window.SinusTranscricaoReal)return window.SinusTranscricaoReal.toggleMic();
+ toast('Gravador indisponível. Atualize o aplicativo.');
+}
 
 function renderNotebook(){
   const key='note_'+UI.subject;
