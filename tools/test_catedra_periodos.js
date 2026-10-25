@@ -35,6 +35,23 @@ for(const [period,roman] of [[1,'i'],[2,'ii']]){
   }
   console.log('Período '+period+': Cátedra habilitada para turmas '+cohorts.join(', '));
 }
+// Validar também a grade efetiva utilizada após o login.
+// A sincronização do aluno substitui DB.subjects pelas matérias oficiais da turma.
+const official={};
+vm.runInNewContext(fs.readFileSync('sinus/calendario-dados.js','utf8'),{window:official});
+vm.runInNewContext(fs.readFileSync('sinus/calendario-motor.js','utf8'),{window:official});
+for(const [period,roman] of [[1,'i'],[2,'ii']]){
+  const cohorts=official.SinusTimetable.cohorts(String(period));
+  assert.deepEqual(cohorts,Object.keys(drive.periods[String(period)]||{}).sort(),'Turmas oficiais diferem do cadastro da grade');
+  for(const cohort of cohorts){
+    const subjects=official.SinusTimetable.academicOptions(period,cohort);
+    const match=subjects.filter(row=>normalize(row.title)==='anatomia '+roman);
+    assert.equal(match.length,1,'Grade oficial não inclui Anatomia '+roman+' para a turma '+cohort);
+    assert.ok(match[0].activities.some(x=>x.kind==='practice'), 'Falta prática de Anatomia para '+period+'º '+cohort);
+  }
+}
+console.log('OK: grades OFICIAIS de 19 turmas incluem Anatomia e aulas práticas.');
+
 assert.match(anatomy,/items\.sort\(\(a,b\)=>Number\(b\.source==='drive'\)-Number\(a\.source==='drive'\)\)/);
 assert.ok(!anatomy.includes('data-apv-source='),'Drive e YouTube não podem estar em listas distintas');
 assert.ok(anatomy.includes("if(tab==='catedra'&&course())"),'Cátedra sem navegação');
