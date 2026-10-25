@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T10:40:03Z",
+  "updatedAt": "2026-10-25T10:43:50Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -177,7 +177,7 @@
     },
     {
       "id": "CsMUNIslmeU",
-      "title": "CORAZÓN - Configuración Interna - Aurícula Derecha",
+      "title": "HEART - Internal Configuration - Right Atrium",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=CsMUNIslmeU",
@@ -187,7 +187,7 @@
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "CORAZÓN - Configuración Externa - Parte 2",
+      "title": "HEART - External Configuration - Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "CORAZÓN - Configuración Externa - Parte 1",
+      "title": "HEART - External Configuration - Part 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -227,7 +227,7 @@
     },
     {
       "id": "BllOA4xplp8",
-      "title": "CEREBRO 2da Parte",
+      "title": "BRAIN Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=BllOA4xplp8",
@@ -237,22 +237,12 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
+      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
       "section": "shorts",
       "anatomyPeriod": "1",
-      "type": "catedra"
-    },
-    {
-      "id": "UQsE3-rbjTw",
-      "title": "CEREBELO",
-      "channelHandle": "@anatomiaupefranco",
-      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
-      "url": "https://www.youtube.com/watch?v=UQsE3-rbjTw",
-      "section": "shorts",
-      "anatomyPeriod": "geral",
       "type": "catedra"
     },
     {
@@ -266,18 +256,8 @@
       "type": "catedra"
     },
     {
-      "id": "CHc84qG6Chs",
-      "title": "BRIDGE OR PROTUBERANCE",
-      "channelHandle": "@anatomiaupefranco",
-      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
-      "url": "https://www.youtube.com/watch?v=CHc84qG6Chs",
-      "section": "shorts",
-      "anatomyPeriod": "geral",
-      "type": "catedra"
-    },
-    {
       "id": "81SOI7dXwkQ",
-      "title": "BULBO RAQUÍDEO",
+      "title": "MEDULLA OBLONGATA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -287,17 +267,17 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "MÉDULA ESPINAL",
+      "title": "SPINAL CORD",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
       "section": "shorts",
-      "anatomyPeriod": "1",
+      "anatomyPeriod": "geral",
       "type": "catedra"
     },
     {
       "id": "nM0xvmPRiD8",
-      "title": "NÚCLEOS BASALES",
+      "title": "BASAL NUCLEI",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=nM0xvmPRiD8",
@@ -357,7 +337,7 @@
     },
     {
       "id": "7w96_AG4JWQ",
-      "title": "VENA CAVA INFERIOR",
+      "title": "INFERIOR VENA CAVA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=7w96_AG4JWQ",
@@ -367,7 +347,7 @@
     },
     {
       "id": "cEuy29taBA0",
-      "title": "AORTA ABDOMINAL",
+      "title": "ABDOMINAL AORTA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cEuy29taBA0",
@@ -377,7 +357,7 @@
     },
     {
       "id": "rx0qaehAcNk",
-      "title": "TRONCO CELIACO",
+      "title": "CELIAC TRUNK",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=rx0qaehAcNk",
@@ -387,7 +367,7 @@
     },
     {
       "id": "vh4Lra7LbvQ",
-      "title": "VÍAS BILIARES EXTRAHEPATICAS",
+      "title": "EXTRAHEPATIC BILE DUCTS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=vh4Lra7LbvQ",
@@ -397,7 +377,7 @@
     },
     {
       "id": "3fB4_gaPsFs",
-      "title": "ARTERIA MESENTERICA INFERIOR",
+      "title": "INFERIOR MESENTERIC ARTERY",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=3fB4_gaPsFs",
@@ -407,7 +387,7 @@
     },
     {
       "id": "yBaFEDZO4yY",
-      "title": "ARTERIA MESENTERICA SUPERIOR",
+      "title": "SUPERIOR MESENTERIC ARTERY",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=yBaFEDZO4yY",
@@ -423,6 +403,16 @@
       "url": "https://www.youtube.com/watch?v=77rW_Z210nc",
       "section": "shorts",
       "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "UQsE3-rbjTw",
+      "title": "CEREBELLUM",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=UQsE3-rbjTw",
+      "section": "shorts",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -563,16 +553,6 @@
       "url": "https://www.youtube.com/watch?v=KfO-b-jsud8",
       "section": "videos",
       "anatomyPeriod": "2",
-      "type": "catedra"
-    },
-    {
-      "id": "a1CZMFQhGXE",
-      "title": "III Edición de la Trívia de Anatomia",
-      "channelHandle": "@anatomiaupe2188",
-      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
-      "url": "https://www.youtube.com/watch?v=a1CZMFQhGXE",
-      "section": "videos",
-      "anatomyPeriod": "geral",
       "type": "catedra"
     },
     {
@@ -798,12 +778,12 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 42,
-      "total": 42
+      "newScan": 41,
+      "total": 41
     },
     "anatomiaupe2188": {
-      "newScan": 37,
-      "total": 37
+      "newScan": 36,
+      "total": 36
     }
   }
 }
