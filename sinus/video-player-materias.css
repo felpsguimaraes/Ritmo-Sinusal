@@ -40,3 +40,18 @@ html[data-theme="dark"] .sxAVPItem,html[data-theme="dark"] .sxAVPTools select,ht
 html[data-theme="dark"] .sxAVPItem.active{background:#355f44}
 @media(max-width:900px){.sxAVPGrid{grid-template-columns:1fr}.sxAVPQueue{max-height:330px}.sxAVPTools{grid-template-columns:repeat(2,minmax(0,1fr))}.sxAVPSearch{grid-column:span 2}}
 @media(max-width:600px){.sxAVP{padding:13px;border-radius:14px}.sxAVPHead{align-items:start;flex-wrap:wrap}.sxAVPHead h2{font-size:19px}.sxAVPTools{grid-template-columns:1fr}.sxAVPSearch{grid-column:auto}.sxAVPQueue{max-height:300px}.sxAVPFoot{flex-wrap:wrap}.sxAVPHead>span{padding:7px 9px}.sxAVPScreen{aspect-ratio:16/9}}
+
+/* Prévia de áudio via Drive com alternativa acessível; evitar player negro sem saída. */
+.sxAVPScreen:has(.sxAVPAudioBar){aspect-ratio:auto;min-height:350px;display:flex;flex-direction:column;background:#fff}
+.sxAVPScreen:has(.sxAVPAudioBar)>iframe{flex:1;min-height:330px;aspect-ratio:16/9;background:#fff}
+.sxAVPAudioBar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 13px;background:#f1f7f3;border-top:1px solid #d9e8dd;font-size:11px;color:#5a7b65}
+.sxAVPAudioBar button,.sxAVPAudioLinks button{border:1px solid #b8d9c5;border-radius:9px;background:#fff;color:#206f45;padding:8px 11px;font:inherit;font-size:11px;font-weight:750;cursor:pointer}
+.sxAVPAudioBar a,.sxAVPAudioLinks a{color:#206f45;font-size:11px;font-weight:750;text-decoration:underline;text-underline-offset:2px}
+.sxAVPScreen:has(.sxAVPAudioAlternate){aspect-ratio:auto;min-height:250px;background:#f7fbf8}
+.sxAVPAudioAlternate{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;text-align:center;padding:28px;min-height:250px}
+.sxAVPAudioAlternate>span{font-size:35px;color:#38865a}
+.sxAVPAudioAlternate>strong{font-size:13px;color:#214b36}
+.sxAVPAudioAlternate audio{width:min(100%,580px);height:54px}
+.sxAVPAudioAlternate p{font-size:11px;color:#688570;margin:0}
+.sxAVPAudioLinks{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+@media(max-width:600px){.sxAVPScreen:has(.sxAVPAudioBar)>iframe{min-height:260px}.sxAVPAudioBar{align-items:flex-start}}
