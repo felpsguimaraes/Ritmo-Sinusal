@@ -17,6 +17,17 @@
     if(location.origin!=='https://meusinus.pages.dev')throw Error('Abra o SINUS em meusinus.pages.dev para entrar com segurança.');
     var r=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+'/',queryParams:{prompt:'select_account'}}});if(r.error)throw r.error;
   }};
+  // Ao conceder leitura do Drive, voltar diretamente ao importador, nunca ao portal do aluno.
+  // A URL raiz já está autorizada no provedor OAuth; aguardamos a troca do código PKCE antes da volta.
+  if(!demo&&W.location.pathname==='/'&&W.sessionStorage?.getItem('sxAutoPendingDriveUrl')){
+    client.auth.getSession().then(function(reply){
+      if(reply.error)try{sessionStorage.setItem('sxAutoDriveOAuthError',String(reply.error.message||''));}catch(e){}
+      W.location.replace('/admin/control/');
+    }).catch(function(e){
+      try{sessionStorage.setItem('sxAutoDriveOAuthError',String(e.message||e));}catch(_){}
+      W.location.replace('/admin/control/');
+    });
+  }
   if(!demo){client.auth.onAuthStateChange(function(event,session){var u=user(session?.user),key=u?.uid||'';auth.currentUser=u;if(event==='INITIAL_SESSION'||event==='SIGNED_OUT'||key!==active){active=key;emit(u)}})}
   else{setTimeout(function(){var b=document.getElementById('sxEntrar');if(b)b.querySelector('span').textContent='Explorar demo da V13';var p=document.getElementById('sxMsg');if(p)p.textContent='Demonstração local · sem login e sem alterações na sua conta.';emit(null)},0)}
 })(window);
