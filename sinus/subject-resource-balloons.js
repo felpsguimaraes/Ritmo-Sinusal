@@ -106,6 +106,7 @@ function libraryFiles(c,known){
  * O mesmo iframe permanece montado durante sincronizações e trocas de filtro.
  */
 function slideCollection(c,data){
+ if(data?.configs?.slides?.visible===false)return {own:[],library:[],all:[]};
  const slideContext={...c,tab:'slides',section:'slides',mode:'theory'};
  const seen=new Set(),own=[],library=[];
  const add=(item,source)=>{
