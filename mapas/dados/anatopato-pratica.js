@@ -69,6 +69,9 @@
   };
 
   /* fotos do Drive da turma (pasta Semana 3 · TUBERCULOSIS): granulomas com células gigantes de Langhans */
+  /* foto do quadro da professora com a descrição das láminas 1 e 2 da P2 (com as respostas, como pediu o Felipe) */
+  FT.iam = FT.iam.concat([{ src: 'img/laminario/quadro-p2-descricao.jpg', k: 'turma' }]);
+  FT.tbc = FT.tbc.concat([{ src: 'img/laminario/quadro-p2-descricao.jpg', k: 'turma' }]);
   FT.tbc = FT.tbc.concat(['tbc-drive-1.jpg', 'tbc-drive-2.jpg', 'tbc-drive-3.jpg', 'tbc-drive-4.jpg'].map(function (f) { return { src: 'img/laminario/' + f, k: 'turma' }; }));
 
   /* ───────── P1 práctica: las 5 láminas que la profesora indicó para la prueba ───────── */
