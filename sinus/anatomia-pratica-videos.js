@@ -24,7 +24,8 @@ function driveVideos(level){
  const subject='anatomia '+(level==='1'?'i':'ii');
  const lib=W.SinusLibrary;
  const records=typeof lib?.catalog==='function'?lib.catalog():[];
- const seen=new Set(),items=[];
+ const official=W.SinusAcademicOfficial?.anatomy?.[level]||[];
+ const seen=new Set(official.map(v=>v.id)),items=[...official.map(v=>({...v,type:'catedra',source:'drive',origin:'UCP'}))];
  for(const v of records){
   const name=norm(v.subject);
   if(name!==subject&&name!=='anatomia humana '+(level==='1'?'i':'ii'))continue;
@@ -157,7 +158,7 @@ function mount(){
   '<button type="button" class="sxAPVDone" data-apv-done>Marcar como assistida</button></div>'+
   '<div class="sxAPVPlayerActions"><button type="button" data-apv-prev>← Anterior</button>'+
   '<button type="button" data-apv-next>Próxima aula →</button></div>'+
-  '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Se o player não abrir, assistir no YouTube ↗</a>'+'<p class="sxAPVSource">Videoaulas públicas dos canais Clases Medicina - Py e Anatomia UPE. Os direitos e a autoria permanecem com seus respectivos criadores.</p>'+
+  '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Abrir aula na origem ↗</a>'+'<p class="sxAPVSource">UCP: vídeos do acervo do Drive. YouTube: aulas individuais dos canais públicos selecionados. Cada fonte respeita as permissões de reprodução.</p>'+
   '</div><aside class="sxAPVSide" aria-label="Lista de videoaulas"><div class="sxAPVListHead"><div><h3>Lista de aulas</h3><small data-apv-progress></small></div>'+
   '<input type="search" data-apv-search placeholder="Buscar aula" aria-label="Buscar aula"></div>'+
   '<div class="sxAPVControls" data-apv-filters role="group" aria-label="Filtrar por professor">'+
@@ -259,6 +260,7 @@ const upgradedStyle=D.createElement('style');upgradedStyle.textContent="\n#subje
 const launcherCSS=D.createElement('style');launcherCSS.textContent="\n#subjectTabs [data-apv-launch]{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 14px;margin:0 2px;border:1px solid #19744d!important;border-radius:11px!important;background:#176344!important;color:white!important;font-weight:800!important;white-space:nowrap;box-shadow:0 3px 12px #125b4022}\n#subjectTabs [data-apv-launch]:active,#subjectTabs [data-apv-launch].active{background:#104732!important}\n.sxAPVShortcut{display:flex!important;align-items:center;gap:14px;width:100%;text-align:left;padding:16px 18px;margin:0 0 18px;border:1px solid #b7d9c4;border-radius:15px;background:linear-gradient(110deg,#e7f3eb,#f7fbf8);color:#155037;cursor:pointer;font:inherit}\n.sxAPVShortcut span:nth-child(2){flex:1;min-width:0}.sxAPVShortcut strong,.sxAPVShortcut small{display:block}.sxAPVShortcut strong{font-size:15px;font-weight:800}.sxAPVShortcut small{font-size:11px;color:#5f806b;margin-top:4px}\n.sxAPVShortcutIcon{display:grid;place-items:center;min-width:44px;height:44px;background:#155b40;color:white;border-radius:12px;font-size:18px}\n.sxAPVShortcut>span:last-child{font-size:26px;color:#1b6645}\n@media(max-width:550px){.sxAPVShortcut{padding:12px;gap:10px}.sxAPVShortcutIcon{min-width:38px;height:38px}}\n";D.head.appendChild(launcherCSS);
 const sortStyle=D.createElement('style');sortStyle.textContent=".sxAPVSourceHeading{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 9px 8px;margin:7px 0 3px;border-bottom:1px solid #d9e8de;color:#1a6444;font-weight:800;font-size:11px}.sxAPVSourceHeading small{font-size:9px;color:#688574;font-weight:650}.sxAPVDriveHeading{background:#f0f8f1;border-radius:8px 8px 0 0}.sxAPVYoutubeHeading{margin-top:15px;color:#3b6150}";D.head.appendChild(sortStyle);
 const scopeStyle=D.createElement('style');scopeStyle.textContent='.sxAPVExternal{display:block;padding:2px 17px 14px;text-decoration:none;color:#14734a;font-size:11px;font-weight:700}.sxAPVExternal:hover{text-decoration:underline}';D.head.appendChild(scopeStyle);
+const groupStyle=D.createElement('style');groupStyle.textContent='.sxAPVGroup{position:sticky;top:0;z-index:2;padding:9px 10px;margin:7px 1px 3px;border-radius:8px;background:#dceddf;color:#16563d;font-size:11px;letter-spacing:.03em;font-weight:800}';D.head.appendChild(groupStyle);
 const previous=W.renderSubject;
 if(typeof previous==='function'){
  W.renderSubject=function(){const out=previous.apply(this,arguments);mount();return out};
