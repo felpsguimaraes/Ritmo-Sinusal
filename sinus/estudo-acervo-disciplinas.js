@@ -16,7 +16,7 @@ const HISTO_DRIVE=[
  ['18i1kzrrspdKTbkzB1RthgFFExxBFrvkc','Tejido óseo'],
  ['1u6CJOfnnhAbJjpZONq7yJLabTnC3JEKM','Hematopoyesis — Dra. Solanche Molinas']
 ];
-const S={youtube:null,playlists:null,anatomy:null,promise:null,loading:false,error:'',filter:'all',limit:18,subject:'',mode:''};
+const S={youtube:null,playlists:null,anatomy:null,promise:null,loading:false,error:'',filter:'all',teacher:'all',limit:18,subject:'',mode:''};
 const norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validDrive=x=>/^[a-zA-Z0-9_-]{20,100}$/.test(String(x||''));
@@ -42,6 +42,8 @@ function baseSubject(s){
  return '';
 }
 function ytGroup(title){
+ const classified=W.SinusVideoCuradoria?.classify({title});
+ if(classified?.subject)return classified.subject;
  const n=norm(title);
  // Apenas expressões inequívocas; termos genéricos ou só o nome de um professor ficam fora.
  if (/anatomia\s+patologica|anatopato/.test(n))return 'anatopato';
@@ -62,7 +64,7 @@ function ytGroup(title){
  if (/\bparasitolog|\bprotozoarios/.test(n))return 'parasitologia';
  return '';
 }
-function videoMode(title){const n=norm(title);return /pr[aá]ctica|pratica|laboratorio|lab\b|microscop|macroscop|simulado de huesos/.test(n)?'practice':'shared'}
+function videoMode(title){const c=W.SinusVideoCuradoria?.classify({title});if(c)return c.isPractice?'practice':'shared';const n=norm(title);return /pr[aá]ctica|pratica|laboratorio|lab\b|microscop|macroscop|simulado de huesos/.test(n)?'practice':'shared'}
 function ensureHisto(){
  if(typeof DB==='undefined'||!DB?.subjects)return 0;
  let added=0;
@@ -123,9 +125,13 @@ function toCards(){
   .filter(x=>x.type==='pratica'&&validYT(x.id))
   .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Revisão e demonstração prática'}));
  const youtube=(S.youtube||[]).filter(x=>validYT(x.id)&&ytGroup(x.title)===base&&!ignore.has(x.id))
-   .filter(x=>mode==='theory'||['practice','shared'].includes(videoMode(x.title)))
-   .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Aula do canal · conteúdo geral da disciplina'}))
-   .filter(x=>{if(seen.has('yt_'+x.id))return false;seen.add('yt_'+x.id);return true});
+   .filter(x=>mode==='theory'||videoMode(x.title)==='practice')
+   .map(x=>{const c=W.SinusVideoCuradoria?.classify(x)||{};return {
+     id:x.id,title:x.title,origin:'youtube',type:'video',professor:c.professor||'Professor não identificado',
+     order:c.rank??9999,label:(c.professor||'Professor a identificar')+' · '+(c.isPractice?'Aula prática':'Aula teórica')+' · Vídeo público do canal'
+   }})
+   .filter(x=>{if(seen.has('yt_'+x.id))return false;seen.add('yt_'+x.id);return true})
+   .sort((a,b)=>a.order-b.order||a.title.localeCompare(b.title,'es'));
  const pl=(mode==='practice'&&base!=='anatomia'?S.playlists||[]:[]).filter(p=>/^(?:PL|OLAK|UU|FL|LL)[a-zA-Z0-9_-]{10,}$/.test(p.id||''))
    .filter(p=>{
      const t=norm(p.title);
@@ -157,25 +163,27 @@ function render(){
  const all=[...data.playlists,...data.videos,...data.visual];
  // O painel de Anatomia já exibe 35 vídeos da cátedra, e este complemento evita repeti-los.
  if(!all.length)return;
- S.subject=data.subject;S.mode=data.mode;S.filter='all';S.limit=18;
+ S.subject=data.subject;S.mode=data.mode;S.filter='all';S.teacher='all';S.limit=18;
  const wrap=D.createElement('section');
  wrap.className='sxCourseMedia';wrap.setAttribute('data-sx-course-media','');
  const practice=data.mode==='practice';
+ const professors=[...new Set(data.videos.filter(x=>x.origin==='youtube').map(x=>x.professor).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
  wrap.innerHTML='<div class="sxCourseMediaHead"><div><small>'+esc(data.subject.toUpperCase())+' · '+(practice?'PRÁTICA':'TEORIA')+'</small>'+
- '<h2>Videoaulas e materiais visuais</h2><p>Arquivos de apoio da disciplina, filtrados pela turma quando identificada. Alguns arquivos exigem permissão no Drive.</p></div>'+
+ '<h2>Videoaulas e materiais visuais</h2><p>Aulas públicas organizadas por professor e assunto; os arquivos particulares continuam filtrados pela turma.</p></div>'+
  '<strong>'+all.length+' recursos</strong></div>'+
  '<div class="sxCourseMediaFilters" role="group" aria-label="Tipo de recurso">'+
  '<button type="button" data-sx-filter="all" class="is-active">Todos</button>'+
  '<button type="button" data-sx-filter="video">Vídeos</button>'+
  '<button type="button" data-sx-filter="visual">Imagens e lâminas</button>'+
  (data.base==='anatomia'?'':'<button type="button" data-sx-filter="playlist">Playlists</button>')+
- '</div><div class="sxCourseMediaGrid"></div><div class="sxCourseMediaActions"></div>';
+ '</div><label class="sxCourseTeacherLabel">Professor <select data-sx-teacher aria-label="Filtrar vídeos por professor"><option value="all">Todos os professores</option>'+professors.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')+'</select></label><div class="sxCourseMediaGrid"></div><div class="sxCourseMediaActions"></div>';
  function draw(){
-  const filtered=all.filter(x=>S.filter==='all'||S.filter==='video'&&x.type==='video'||S.filter==='visual'&&['image','document'].includes(x.type)||S.filter==='playlist'&&x.type==='playlist');
+  const filtered=all.filter(x=>(S.teacher==='all'||x.professor===S.teacher)&& (S.filter==='all'||S.filter==='video'&&x.type==='video'||S.filter==='visual'&&['image','document'].includes(x.type)||S.filter==='playlist'&&x.type==='playlist'));
   const list=filtered.slice(0,S.limit);
   wrap.querySelector('.sxCourseMediaGrid').innerHTML=list.map(card).join('')||'<p class="sxCourseMediaEmpty">Nenhum recurso desta categoria por enquanto.</p>';
   wrap.querySelector('.sxCourseMediaActions').innerHTML=filtered.length>S.limit?'<button type="button" data-sx-more>Mostrar mais '+(filtered.length-S.limit)+' recursos</button>':'';
  }
+ wrap.addEventListener('change',e=>{if(e.target.matches('[data-sx-teacher]')){S.teacher=e.target.value;S.limit=18;draw()}});
  wrap.addEventListener('click',e=>{
   const f=e.target.closest('[data-sx-filter]');if(f){S.filter=f.dataset.sxFilter;S.limit=18;wrap.querySelectorAll('[data-sx-filter]').forEach(b=>b.classList.toggle('is-active',b===f));draw();return}
   if(e.target.closest('[data-sx-more]')){S.limit+=24;draw();return}
@@ -236,7 +244,7 @@ function load(){
 const style=D.createElement('style');style.textContent=
 '.sxCourseMedia{margin:14px 0 22px;border:1px solid #d4e5dc;border-radius:19px;padding:19px;background:#fcfffd;box-shadow:0 3px 20px #1f5b3908;color:#214735}'+
 '.sxCourseMediaHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.sxCourseMediaHead small{font-size:10px;font-weight:800;letter-spacing:.11em;color:#598071}.sxCourseMediaHead h2{font-size:19px;line-height:1.25;margin:6px 0;color:#173e30}.sxCourseMediaHead p{font-size:12px;color:#668073;line-height:1.55;margin:0;max-width:580px}.sxCourseMediaHead strong{padding:7px 11px;background:#e7f2eb;color:#336e50;border-radius:30px;white-space:nowrap;font-size:11px}'+
-'.sxCourseMediaFilters{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}.sxCourseMediaFilters button{font-family:inherit;background:white;border:1px solid #d7e8dc;color:#4a735d;border-radius:10px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:650}.sxCourseMediaFilters button.is-active{background:#246d50;color:white;border-color:#246d50}'+
+'.sxCourseTeacherLabel{display:flex;align-items:center;gap:8px;margin:-3px 0 13px;font-size:11px;font-weight:700;color:#52725e}.sxCourseTeacherLabel select{max-width:100%;border:1px solid #d7e8dc;border-radius:9px;padding:8px;background:#fff;color:#244a36;font-family:inherit}.sxCourseMediaFilters{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}.sxCourseMediaFilters button{font-family:inherit;background:white;border:1px solid #d7e8dc;color:#4a735d;border-radius:10px;padding:7px 10px;cursor:pointer;font-size:11px;font-weight:650}.sxCourseMediaFilters button.is-active{background:#246d50;color:white;border-color:#246d50}'+
 '.sxCourseMediaGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}.sxCourseMediaCard{border:1px solid #dfebe2;overflow:hidden;border-radius:13px;background:#fff;color:#234638;text-align:left;padding:0;cursor:pointer;font-family:inherit}.sxCourseMediaCard:hover{border-color:#83baa0;box-shadow:0 3px 14px #31785216}.sxCourseMediaThumb{display:block;aspect-ratio:16/9;position:relative;background:linear-gradient(145deg,#ddede3,#c8dfd1)}.sxCourseMediaThumb img{display:block;object-fit:cover;width:100%;height:100%}.sxCourseMediaGlyph{display:grid;place-content:center;height:100%;font-size:28px;color:#276f50}.sxCourseMediaType{position:absolute;right:7px;bottom:7px;background:#133c2de8;color:white;font-size:9px;padding:3px 6px;border-radius:5px}.sxCourseMediaCaption{display:block;padding:10px}.sxCourseMediaCaption b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:35px;font-size:12px;line-height:1.45}.sxCourseMediaCaption small{display:block;margin-top:7px;color:#658174;font-size:10px;line-height:1.4}.sxCourseMediaActions{margin-top:12px}.sxCourseMediaActions button{background:#edf5ef;border:1px solid #d4e6d9;border-radius:9px;padding:8px 12px;color:#296446;cursor:pointer}.sxCourseMediaEmpty{font-size:12px;color:#617c69}.sxCourseNative{border:1px solid #dae6de;border-radius:12px;background:#fff;padding:12px 15px;margin:16px 0}.sxCourseNative summary{cursor:pointer;font-weight:650;font-size:12px;color:#38684f}'+
 '.sxCourseModal{position:fixed;inset:0;z-index:99999;background:#071e19c9;display:grid;place-content:center;padding:16px}.sxCourseDialog{width:min(940px,95vw);background:white;border-radius:15px;overflow:hidden}.sxCourseDialogHead,.sxCourseDialogFoot{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 15px}.sxCourseDialogHead b{font-size:13px;color:#244b36}.sxCourseDialogHead button{cursor:pointer;border:0;background:#eef4ef;border-radius:8px;padding:7px 11px}.sxCourseFrame{aspect-ratio:16/9;background:#111}.sxCourseFrame iframe{width:100%;height:100%;border:0}.sxCourseDialogFoot{font-size:11px;color:#55715b}.sxCourseDialogFoot a{color:#1f734e;font-weight:750}'+
 '@media(max-width:580px){.sxCourseMedia{padding:13px;border-radius:14px}.sxCourseMediaGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.sxCourseMediaHead{flex-wrap:wrap}.sxCourseMediaHead h2{font-size:17px}}';

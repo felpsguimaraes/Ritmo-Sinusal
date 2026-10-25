@@ -15,6 +15,8 @@ function thumb(id){return 'https://i.ytimg.com/vi/'+encodeURIComponent(id)+'/hqd
 function videoURL(id){return 'https://www.youtube.com/watch?v='+encodeURIComponent(id)}
 function mediaKind(x){return x.section==='shorts'?'Vídeo curto':x.section==='streams'?'Transmissão':'Videoaula'}
 function area(x){
+ const cur=W.SinusVideoCuradoria?.classify(x);
+ if(cur)return cur.subjectLabel;
  const t=norm(x.title);
  const rules=[
  ['Anatomia',/\banatom|anatomy|osteolog|miolog|articulac|topografi/],
