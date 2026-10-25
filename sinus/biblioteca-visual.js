@@ -125,6 +125,15 @@ function catalog(){
    requiresGooglePermission:true},
    'Anatomía '+(level==='1'?'I':'II'),'videos',Number(level));
  }
+ // Cartões individuais do YouTube na Biblioteca principal.
+ for(const level of ['1','2']){
+  for(const v of W.SinusAnatomiaPratica?.catalog?.subjects?.[level]||[]){
+   if(!v||!/^[A-Za-z0-9_-]{11}$/.test(String(v.id||'')))continue;
+   add({id:'yt:'+v.id,youtubeId:v.id,title:v.title,mime:'video/youtube',
+     kind:'video/youtube',source:'youtube',studyMode:'practice',studySection:'catedra'},
+     'Anatomía '+(level==='1'?'I':'II'),'videos',Number(level));
+  }
+ }
  const official=W.SinusAcademicOfficial;
  for(const level of ['1','2'])for(const v of official?.anatomy?.[level]||[]){
   add({id:v.id,title:v.title,mime:v.mime,kind:v.mime,source:'ucp-oficial',
@@ -185,6 +194,7 @@ function coverPreview(x,type){
  if(x.uploaded){
   return type==='image'?'<img alt="Prévia do arquivo" loading="lazy" decoding="async" data-sinus-uploaded-thumbnail="'+H(fileId)+'" style="display:none" onload="'+onload+'" onerror="this.remove()">':'';
  }
+ if(x.youtubeId)return '<img src="https://i.ytimg.com/vi/'+encodeURIComponent(x.youtubeId)+'/hqdefault.jpg" alt="Miniatura da videoaula" loading="lazy" decoding="async" onload="'+onload+'" onerror="this.remove()">';
  if(x.local){
   const file=localLib[x.index];
   return type==='image'&&file?.url?'<img src="'+H(file.url)+'" alt="Prévia do arquivo" loading="lazy" decoding="async" onload="'+onload+'" onerror="this.remove()">':'';
@@ -239,8 +249,27 @@ hydrateThumbnails(box);
 const oldDrive=W.openDrive;W.openDrive=function(id){const file=catalog().find(x=>x.id===id);if(file){const data=read();data.recent=[id,...(data.recent||[]).filter(x=>x!==id)].slice(0,12);write(data)}const result=oldDrive.apply(this,arguments);if(UI.page==='library')render();return result};
 W.renderLibrary=render;
 const oldNav=W.nav;W.nav=function(page,button){const r=oldNav(page,button);if(page==='library'){if(D.getElementById('pageTitle'))D.getElementById('pageTitle').textContent='Biblioteca';loadUploads();}return r};
+function openYoutube(id){
+ const videoId=String(id||'').replace(/^yt:/,'');
+ if(!/^[A-Za-z0-9_-]{11}$/.test(videoId))return;
+ const item=catalog().find(x=>x.youtubeId===videoId);
+ if(!item)return;
+ D.getElementById('sxYoutubeLibraryModal')?.remove();
+ const modal=D.createElement('div');modal.id='sxYoutubeLibraryModal';
+ modal.style.cssText='position:fixed;inset:0;z-index:99999;background:#061f16d9;display:grid;place-items:center;padding:15px';
+ const panel=D.createElement('div');panel.style.cssText='background:#fff;border-radius:15px;width:min(900px,100%);overflow:hidden';
+ const header=D.createElement('header');header.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px';
+ const name=D.createElement('strong');name.textContent=item.title;
+ const close=D.createElement('button');close.type='button';close.textContent='✕ Fechar';close.style.cssText='border:0;background:#e6f3eb;border-radius:8px;padding:9px';
+ header.append(name,close);
+ const player=D.createElement('iframe');player.title=item.title;player.src='https://www.youtube-nocookie.com/embed/'+videoId+'?autoplay=1&rel=0';player.setAttribute('allow','autoplay; encrypted-media; picture-in-picture');player.setAttribute('allowfullscreen','');player.style.cssText='display:block;width:100%;aspect-ratio:16/9;border:0';
+ const link=D.createElement('a');link.href='https://www.youtube.com/watch?v='+videoId;link.target='_blank';link.rel='noopener noreferrer';link.textContent='Abrir no YouTube ↗';link.style.cssText='display:block;padding:12px 16px;color:#176744';
+ panel.append(header,player,link);modal.appendChild(panel);
+ close.addEventListener('click',()=>modal.remove());modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
+ D.body.appendChild(modal);
+}
 D.addEventListener('click',e=>{const t=e.target.closest('[data-lib-open],[data-lib-favorite],[data-lib-subject],[data-lib-view],[data-lib-more],[data-lib-upload],[data-lib-delete],[data-lib-purpose],[data-lib-period-short]');if(!t)return;
-if(t.hasAttribute('data-lib-open')){const id=t.dataset.libOpen;if(id.startsWith('uploaded:')){openUploaded(id);return}if(id.startsWith('local:')){const item=localLib[Number(id.split(':')[1])];if(item)W.open(item.url,'_blank','noopener');return}W.openDrive(id);return}
+if(t.hasAttribute('data-lib-open')){const id=t.dataset.libOpen;if(id.startsWith('yt:')){openYoutube(id);return}if(id.startsWith('uploaded:')){openUploaded(id);return}if(id.startsWith('local:')){const item=localLib[Number(id.split(':')[1])];if(item)W.open(item.url,'_blank','noopener');return}W.openDrive(id);return}
 if(t.hasAttribute('data-lib-favorite')){const data=read(),id=t.dataset.libFavorite;data.favorites=(data.favorites||[]).includes(id)?data.favorites.filter(x=>x!==id):[...(data.favorites||[]),id];write(data);render();return}
 if(t.hasAttribute('data-lib-upload')){openUploader();return}if(t.hasAttribute('data-lib-delete')){deleteUploaded(t.dataset.libDelete);return}
 if(t.hasAttribute('data-lib-more'))state.limit+=24;
