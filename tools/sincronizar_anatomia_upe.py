@@ -84,6 +84,12 @@ SECOND = re.compile(
     r"mesent[eé]ric|mesenteric|extrahepatic|bile|inferior vena cava|"
     r"f[eé]mur|f[eê]mur", re.I)
 
+# Identificação manual de casos sem referência explícita ao semestre no nome.
+PERIOD_BY_VIDEO_ID = {
+    "GAFw1clRXQw": "1",  # SPINAL CORD
+    "aVnzIxAZy4k": "2",  # Anatomía del Estómago
+}
+
 def classify(title):
     a = bool(FIRST.search(title))
     b = bool(SECOND.search(title))
@@ -123,7 +129,7 @@ def extract(handle, section):
             "channelHandle": "@" + handle,
             "channelUrl": f"https://www.youtube.com/@{handle}",
             "url": f"https://www.youtube.com/watch?v={vid}",
-            "section": section, "anatomyPeriod": classify(title),
+            "section": section, "anatomyPeriod": PERIOD_BY_VIDEO_ID.get(vid, classify(title)),
             "type": "catedra",
         })
     return result
@@ -151,6 +157,8 @@ def main():
         # Não inventar dados nem perder vídeos já validados em falha transitória.
         combined = {x["id"]: x for x in old_by_channel.get(handle, [])}
         combined.update({x["id"]: x for x in fresh})
+        for item in combined.values():
+            item["anatomyPeriod"] = PERIOD_BY_VIDEO_ID.get(item["id"], classify(str(item.get("title") or "")))
         combined = {vid: x for vid, x in combined.items()
                     if academic_video(vid, str(x.get("title") or ""))}
         if fresh:
