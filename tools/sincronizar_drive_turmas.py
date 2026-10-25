@@ -10,8 +10,9 @@ Regras de segurança:
 - Se uma turma falhar (403/404/erro de rede), mantém os dados anteriores dela.
 - Se nada for encontrado em nenhuma turma, não sobrescreve o arquivo publicado.
 
-Autenticação: conta de serviço cujo JSON está na variável de ambiente
-DRIVE_SERVICE_ACCOUNT_JSON; a pasta precisa estar compartilhada com o e-mail dessa conta.
+Autenticação (uma das duas):
+- DRIVE_SERVICE_ACCOUNT_JSON: JSON de conta de serviço (pasta compartilhada com ela);
+- GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET e GOOGLE_OAUTH_REFRESH_TOKEN: token da conta Google do dono.
 """
 import json
 import os
@@ -104,15 +105,30 @@ def to_catalog(entries, periodo, turma):
 
 
 def build_drive_client():
-    from google.oauth2 import service_account
+    """Credencial do Drive, em ordem de preferência:
+    1) DRIVE_SERVICE_ACCOUNT_JSON: conta de serviço (pastas compartilhadas com ela);
+    2) GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET / GOOGLE_OAUTH_REFRESH_TOKEN:
+       token da conta Google do dono (gerado uma vez por tools/obter_refresh_token_drive.py).
+    """
     from googleapiclient.discovery import build
 
+    scopes = ["https://www.googleapis.com/auth/drive.metadata.readonly"]
     raw = os.environ.get("DRIVE_SERVICE_ACCOUNT_JSON")
-    if not raw:
-        raise SystemExit("Defina DRIVE_SERVICE_ACCOUNT_JSON com o JSON da conta de serviço.")
-    creds = service_account.Credentials.from_service_account_info(
-        json.loads(raw), scopes=["https://www.googleapis.com/auth/drive.metadata.readonly"]
-    )
+    if raw:
+        from google.oauth2 import service_account
+        creds = service_account.Credentials.from_service_account_info(json.loads(raw), scopes=scopes)
+    elif all(os.environ.get(k) for k in ("GOOGLE_OAUTH_CLIENT_ID", "GOOGLE_OAUTH_CLIENT_SECRET", "GOOGLE_OAUTH_REFRESH_TOKEN")):
+        from google.oauth2.credentials import Credentials
+        creds = Credentials(
+            token=None,
+            refresh_token=os.environ["GOOGLE_OAUTH_REFRESH_TOKEN"],
+            token_uri="https://oauth2.googleapis.com/token",
+            client_id=os.environ["GOOGLE_OAUTH_CLIENT_ID"],
+            client_secret=os.environ["GOOGLE_OAUTH_CLIENT_SECRET"],
+            scopes=scopes,
+        )
+    else:
+        raise SystemExit("Defina DRIVE_SERVICE_ACCOUNT_JSON ou as três variáveis GOOGLE_OAUTH_*.")
     return build("drive", "v3", credentials=creds, cache_discovery=False)
 
 
