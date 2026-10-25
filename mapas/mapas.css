@@ -264,6 +264,8 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 /* ---------- níveis ---------- */
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
 .levels.four{grid-template-columns:repeat(4,1fr)}
+.orgfilter{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
+.orglbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
 .level{appearance:none;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:2px;font-family:var(--sans)}
 .level small{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 .level b{font-size:17px}

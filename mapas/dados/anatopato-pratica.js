@@ -875,36 +875,36 @@
 
   /* um exercício por lâmina (aba Laminario): fotos separadas do PDF, sem a etiqueta do porta-objeto */
   var LT_IMG = {
-    1: ['img/laminario/lt-01-1.jpg'],
-    2: ['img/laminario/lt-02-1.jpg'],
+    1: ['img/laminario/lt-01-1.jpg', 'img/laminario/lt-01-2.jpg'],
+    2: ['img/laminario/lt-02-1.jpg', 'img/laminario/lt-02-2.jpg'],
     3: ['img/laminario/lt-03-1.jpg', 'img/laminario/lt-03-2.jpg'],
     4: ['img/laminario/lt-04-1.jpg', 'img/laminario/lt-04-2.jpg'],
     5: ['img/laminario/lt-05-1.jpg'],
-    6: ['img/laminario/lt-06-1.jpg', 'img/laminario/lt-06-2.jpg'],
-    7: ['img/laminario/lt-07-2.jpg'],
-    8: ['img/laminario/lt-08-1.jpg', 'img/laminario/lt-08-2.jpg'],
-    9: ['img/laminario/lt-09-1.jpg', 'img/laminario/lt-09-2.jpg'],
-    10: ['img/laminario/lt-10-1.jpg'],
+    6: ['img/laminario/lt-06-1.jpg'],
+    7: ['img/laminario/lt-07-1.jpg'],
+    8: ['img/laminario/lt-08-1.jpg'],
+    9: ['img/laminario/lt-09-1.jpg'],
+    10: ['img/laminario/lt-10-1.jpg', 'img/laminario/lt-10-2.jpg'],
     11: ['img/laminario/lt-11-1.jpg'],
-    12: ['img/laminario/lt-12-1.jpg'],
+    12: ['img/laminario/lt-12-1.jpg', 'img/laminario/lt-12-2.jpg'],
     13: ['img/laminario/lt-13-1.jpg'],
-    14: ['img/laminario/lt-14-2.jpg'],
-    15: ['img/laminario/lt-15-1.jpg', 'img/laminario/lt-15-2.jpg'],
+    14: ['img/laminario/lt-14-1.jpg'],
+    15: ['img/laminario/lt-15-1.jpg'],
     16: ['img/laminario/lt-16-1.jpg'],
-    17: ['img/laminario/lt-17-1.jpg', 'img/laminario/lt-17-2.jpg'],
-    18: ['img/laminario/lt-18-1.jpg'],
-    19: ['img/laminario/lt-19-1.jpg', 'img/laminario/lt-19-2.jpg'],
-    20: ['img/laminario/lt-20-1.jpg', 'img/laminario/lt-20-2.jpg'],
-    21: ['img/laminario/lt-21-1.jpg', 'img/laminario/lt-21-2.jpg'],
-    22: ['img/laminario/lt-22-1.jpg'],
-    23: ['img/laminario/lt-23-1.jpg'],
-    24: ['img/laminario/lt-24-1.jpg', 'img/laminario/lt-24-2.jpg'],
+    17: ['img/laminario/lt-17-1.jpg'],
+    18: ['img/laminario/lt-18-1.jpg', 'img/laminario/lt-18-2.jpg', 'img/laminario/lt-18-3.jpg'],
+    19: ['img/laminario/lt-19-1.jpg'],
+    20: ['img/laminario/lt-20-1.jpg'],
+    21: ['img/laminario/lt-21-1.jpg'],
+    22: ['img/laminario/lt-22-1.jpg', 'img/laminario/lt-22-2.jpg', 'img/laminario/lt-22-3.jpg'],
+    23: ['img/laminario/lt-23-1.jpg', 'img/laminario/lt-23-2.jpg', 'img/laminario/lt-23-3.jpg'],
+    24: ['img/laminario/lt-24-1.jpg'],
     25: ['img/laminario/lt-25-1.jpg']
   };
   var LT_EXER = TOTAL.map(function (t, i) {
     var n = i + 1, nn = (n < 10 ? '0' : '') + n;
     var L = Object.assign({}, t, { id: 't' + n, g: 'lt' + n, img: (LT_IMG[n] || []).map(function (src) { return { src: src, k: 'pdf' }; }) });
-    return { id: 'lt_' + nn, area: PR, clase: 'Laminario', titulo: 'Lámina ' + n, tipo: 'laminas', nivel: '4', rotulo: 'Láminas',
+    return { id: 'lt_' + nn, area: PR, clase: 'Laminario', titulo: 'Lámina ' + n, tipo: 'laminas', nivel: '4', rotulo: 'Láminas', org: t.organo[0],
       resumen: 'Mirá las fotos y completá ÓRGANO, PROCESO, DESCRIPCIÓN y DX; cada descripción se corrige hallazgo por hallazgo.',
       fuente: SRC_T, laminas: [L], procesos: PROCESOS };
   });
