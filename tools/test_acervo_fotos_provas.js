@@ -12,7 +12,7 @@ assert.doesNotMatch(source, /SUGESTÕES PRIORITÁRIAS|function renderExamHighlig
 assert.match(source, /sxAOLibraryItems/);
 assert.match(gallery, /title='Provas e avaliações'/);
 assert.doesNotMatch(gallery, /Fotos de provas/);
-assert.match(html, /subject-resource-balloons\.js\?v=20261025-no-priority-photos/);
+assert.match(html, /subject-resource-balloons\.js\?v=20261025-players-by-tab-v1/);
 assert.match(html, /materias-galeria-acervo\.js\?v=20261025-exam-label-cleanup/);
 
 // Os materiais continuam classificados e acessíveis na aba Provas, sem vazamento entre turmas.
