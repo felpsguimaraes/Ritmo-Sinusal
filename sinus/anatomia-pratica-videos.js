@@ -131,8 +131,9 @@ function mount(){
  if(existing&&existing.querySelector('[data-apv-player]')&&existing.dataset.apvRoot===ctx.subj&&existing.dataset.apvTab===ctx.tab)return;
  if(existing)existing.remove();
  const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);section.setAttribute('data-apv-tab',ctx.tab);
- if(ctx.tab==='catedra')target.replaceChildren(section);
- else target.prepend(section);
+ // Não apagar os lembretes nem leitores montados por outros módulos.
+ // O organizador compartilhado posiciona a Cátedra logo após Lembretes.
+ target.prepend(section);
  if(!cache.data){
   section.innerHTML='<div class="sxAPVStatus" role="status"><h2>Cátedra · Anatomia '+(ctx.subj==='1'?'I':'II')+'</h2><p>'+
    (cache.erro?'Não foi possível carregar as aulas agora. Tente novamente.':'Carregando aulas da Cátedra…')+
