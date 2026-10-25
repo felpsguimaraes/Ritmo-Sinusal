@@ -6,7 +6,8 @@
 const CHANNEL='https://www.youtube.com/@aislanfernandes4039/videos';
 const VIDEO_SOURCE='/sinus/youtube-catalogo.json';
 const PLAYLIST_SOURCE='/sinus/youtube-playlists.json';
-const S={videos:null,playlists:null,loading:null,error:'',subject:'',mode:'',selected:'',query:'',teacher:'todos',type:'todos',limit:70};
+const AUDIO_SOURCE='/sinus/drive-audios-catalogo.json';
+const S={videos:null,playlists:null,audios:null,loading:null,error:'',subject:'',mode:'',selected:'',query:'',teacher:'todos',type:'todos',limit:70};
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\u0027':'&#39;'}[c]));
 const norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
 const vidOK=x=>/^[A-Za-z0-9_-]{11}$/.test(String(x||''));
@@ -66,7 +67,19 @@ function entries(name,mode){
   }).filter(v=>{if(found.has(v.id))return false;found.add(v.id);return true})
   .sort((a,b)=>a.order-b.order||a.title.localeCompare(b.title,'pt'));
  const playlists=mode==='theory'?(S.playlists||[]).filter(p=>playlistFor(p,name)).map(p=>({key:'p:'+p.id,id:p.id,title:p.title,kind:'playlist',teacher:'Playlist da disciplina',order:99999,origin:'playlist'})):[];
- return videos.concat(playlists);
+ // Áudios classificados pelo período e disciplina, preservando o original no Drive.
+ const dbSubject=typeof DB!=='undefined'&&DB?.subjects?.[name];
+ const period=Number(dbSubject?.period||W.SinusApp?.S?.prefs?.periodo||0);
+ const audios=mode==='theory'?(S.audios||[]).filter(a=>{
+  if(!a||a.kind!=='audio'||!/^[A-Za-z0-9_-]{20,100}$/.test(String(a.id||'')))return false;
+  if(base(a.subject)!==base(name))return false;
+  if(period&&Number(a.period)!==period)return false;
+  const series=x=>((norm(x).match(/\b(?:ii|i|2|1)\s*$/)||[])[0]||'').trim();
+  if(series(name)&&series(a.subject)&&series(name)!==series(a.subject))return false;
+  return true;
+ }).map(a=>({key:'a:'+a.id,id:a.id,title:a.title,kind:'audio',teacher:'Gravações do Drive',stage:a.stage||'Outros',topic:a.topic||'',order:9999,origin:'drive-audio'}))
+ .sort((a,b)=>({P1:1,P2:2,Final:3,Outros:4}[a.stage]||5)-({P1:1,P2:2,Final:3,Outros:4}[b.stage]||5)||a.title.localeCompare(b.title,'pt')):[];
+ return videos.concat(audios,playlists);
 }
 function current(){
  const view=D.getElementById('subjectView');
@@ -88,16 +101,18 @@ function slot(){
 }
 function addFrame(section,item){
  const panel=section.querySelector('[data-sx-avp-screen]');
- const url=item.origin==='playlist'
-  ?'https://www.youtube-nocookie.com/embed/videoseries?list='+encodeURIComponent(item.id)+'&rel=0'
-  :'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.id)+'?rel=0';
+ const url=item.origin==='drive-audio'?'https://drive.google.com/file/d/'+encodeURIComponent(item.id)+'/preview':
+  item.origin==='playlist'?'https://www.youtube-nocookie.com/embed/videoseries?list='+encodeURIComponent(item.id)+'&rel=0':
+  'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.id)+'?rel=0';
  if(panel.dataset.url!==url){
   panel.dataset.url=url;
   panel.innerHTML='<iframe title="'+esc(item.title)+'" src="'+url+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
  }
  section.querySelector('[data-sx-avp-title]').textContent=item.title;
  const link=section.querySelector('[data-sx-avp-link]');
- link.href=item.origin==='playlist'?'https://www.youtube.com/playlist?list='+encodeURIComponent(item.id):'https://www.youtube.com/watch?v='+encodeURIComponent(item.id);
+ link.href=item.origin==='drive-audio'?'https://drive.google.com/file/d/'+encodeURIComponent(item.id)+'/view':
+  item.origin==='playlist'?'https://www.youtube.com/playlist?list='+encodeURIComponent(item.id):'https://www.youtube.com/watch?v='+encodeURIComponent(item.id);
+ link.textContent=item.origin==='drive-audio'?'Abrir áudio no Drive ↗':'Abrir no YouTube ↗';
  link.hidden=false;
 }
 function draw(){
@@ -112,10 +127,10 @@ function draw(){
  if(place.after&&place.after.parentElement===place.host){
   if(section.previousElementSibling!==place.after)place.after.after(section);
  }else if(place.host.firstElementChild!==section)place.host.prepend(section);
- const list=entries(c.name,c.mode),teachers=[...new Set(list.filter(x=>x.origin==='video').map(x=>x.teacher))].sort((a,b)=>a.localeCompare(b,'pt'));
+ const list=entries(c.name,c.mode),teachers=[...new Set(list.filter(x=>x.origin==='video'||x.origin==='drive-audio').map(x=>x.teacher))].sort((a,b)=>a.localeCompare(b,'pt'));
  const filter=list.filter(x=>(S.teacher==='todos'||x.teacher===S.teacher)
    &&(S.type==='todos'||S.type===x.kind||(S.type==='video'&&x.kind==='audio'))
-   &&(!S.query||norm(x.title+' '+x.teacher).includes(norm(S.query))));
+   &&(!S.query||norm(x.title+' '+x.teacher+' '+(x.topic||'')+' '+(x.stage||'')).includes(norm(S.query))));
  if(!filter.some(x=>x.key===S.selected))S.selected=filter[0]?.key||'';
  const selected=filter.find(x=>x.key===S.selected);
  const savedScreen=section.querySelector('[data-sx-avp-screen]');
@@ -126,7 +141,7 @@ function draw(){
   '<div class="sxAVPGrid"><div class="sxAVPMain"><div data-sx-avp-screen class="sxAVPScreen"></div><div class="sxAVPFoot"><strong data-sx-avp-title></strong><a data-sx-avp-link target="_blank" rel="noopener noreferrer" hidden>Abrir no YouTube ↗</a></div></div><aside class="sxAVPQueue" aria-label="Aulas disponíveis"><div class="sxAVPQueueHead" data-sx-avp-queue-count></div><div data-sx-avp-items></div><div data-sx-avp-more></div></aside></div>'+
   '<div class="sxAVPSource">Fonte: <a href="'+CHANNEL+'" target="_blank" rel="noopener noreferrer">canal público Clases Medicina - Py</a> · Catálogo atualizado automaticamente</div></div>';
  }
- section.querySelector('[data-sx-avp-count]').textContent=list.filter(x=>x.origin==='video').length+' aulas · '+list.filter(x=>x.origin==='playlist').length+' playlists';
+ section.querySelector('[data-sx-avp-count]').textContent=list.filter(x=>x.origin==='video').length+' aulas · '+list.filter(x=>x.origin==='drive-audio').length+' áudios · '+list.filter(x=>x.origin==='playlist').length+' playlists';
  const prof=section.querySelector('[data-sx-avp-teacher]');
  prof.innerHTML='<option value="todos">Todos os professores</option>'+teachers.map(t=>'<option value="'+esc(t)+'">'+esc(t)+'</option>').join('');
  prof.value=S.teacher;
@@ -137,7 +152,7 @@ function draw(){
  if(query.value!==S.query)query.value=S.query;
  section.querySelector('[data-sx-avp-queue-count]').textContent=filter.length+' item(ns) · '+c.name;
  section.querySelector('[data-sx-avp-items]').innerHTML=filter.slice(0,S.limit).map((x,i)=>
-  '<button type="button" class="sxAVPItem'+(x.key===S.selected?' active':'')+'" data-sx-avp-choose="'+esc(x.key)+'" aria-current="'+(x.key===S.selected?'true':'false')+'"><span class="sxAVPIndex">'+String(i+1).padStart(2,'0')+'</span><span class="sxAVPItemCopy"><b>'+esc(x.title)+'</b><small>'+esc(x.teacher)+' · '+(x.kind==='playlist'?'Playlist':x.kind==='audio'?'Áudio':'Vídeo')+'</small></span><span class="sxAVPPlay" aria-hidden="true">▶</span></button>').join('')||
+  '<button type="button" class="sxAVPItem'+(x.key===S.selected?' active':'')+'" data-sx-avp-choose="'+esc(x.key)+'" aria-current="'+(x.key===S.selected?'true':'false')+'"><span class="sxAVPIndex">'+String(i+1).padStart(2,'0')+'</span><span class="sxAVPItemCopy"><b>'+esc(x.title)+'</b><small>'+esc(x.teacher)+' · '+(x.kind==='playlist'?'Playlist':x.kind==='audio'?'Áudio'+(x.stage?' · '+esc(x.stage):''):'Vídeo')+'</small></span><span class="sxAVPPlay" aria-hidden="true">▶</span></button>').join('')||
   '<div class="sxAVPEmpty">Nenhuma aula localizada com esses filtros. Consulte a fonte ou experimente outro professor.</div>';
  section.querySelector('[data-sx-avp-more]').innerHTML=filter.length>S.limit?'<button type="button" data-sx-avp-more-btn>Mostrar mais '+(filter.length-S.limit)+' aulas</button>':'';
  if(selected){
@@ -156,12 +171,14 @@ function draw(){
 }
 function load(){
  if(S.loading)return S.loading;
- S.loading=Promise.allSettled([VIDEO_SOURCE,PLAYLIST_SOURCE].map(path=>fetch(path+'?v=20261025-video-2').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()})))
+ S.loading=Promise.allSettled([VIDEO_SOURCE,PLAYLIST_SOURCE,AUDIO_SOURCE].map(path=>fetch(path+'?v=20261025-video-2').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()})))
  .then(results=>{
   if(results[0].status==='fulfilled'&&Array.isArray(results[0].value?.videos))S.videos=results[0].value.videos;
   if(results[1].status==='fulfilled'&&Array.isArray(results[1].value?.playlists))S.playlists=results[1].value.playlists;
+  if(results[2].status==='fulfilled'&&Array.isArray(results[2].value?.audios))S.audios=results[2].value.audios;
   if(!S.videos)S.error='Catálogo de vídeos indisponível';
   if(!S.playlists)S.playlists=[];
+  if(!S.audios)S.audios=[];
  }).finally(()=>{S.loading=null;draw()});
  return S.loading;
 }
@@ -188,5 +205,5 @@ D.addEventListener('input',e=>{
 });
 const previous=W.renderSubject;
 if(typeof previous==='function')W.renderSubject=function(){const result=previous.apply(this,arguments);mount();return result;};
-W.SinusVideoPlayerMateria={mount,load,entries,get catalog(){return S.videos},get error(){return S.error}};
+W.SinusVideoPlayerMateria={mount,load,entries,get catalog(){return S.videos},get audioCatalog(){return S.audios},get error(){return S.error}};
 })(window,document);
