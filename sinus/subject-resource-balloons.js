@@ -4,6 +4,24 @@
 const END='https://qyioizupudjrwmtasrue.supabase.co/functions/v1/sinus-subject-resources';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+function sameSubject(a,b){
+ const ka=norm(a),kb=norm(b);
+ if(ka===kb)return true;
+ // Equivalências efetivas da grade, sem misturar I com II nem outras disciplinas.
+ const alias=x=>x.replace(/^semiologia medica (?=[ivx0-9]+$)/,'semiologia ')
+  .replace(/^anatomia patologica (?=[ivx0-9]+$)/,'anatopato ')
+  .replace(/^genetica humana$/,'genetica').replace(/^bioestadistica$/,'bioestatistica');
+ return !!ka&&alias(ka)===alias(kb);
+}
+function isSlideItem(item){
+ if(!item||item.active===false||item.studyMode==='practice'||item.mode==='practice')return false;
+ const type=norm(item.mime||item.mime_type||item.kind||'');
+ const category=norm(item.cat||item.category||''),section=norm(item.studySection||item.section||'');
+ if(['provas','exam','pratica','videos','audios','books'].includes(category))return false;
+ return category==='slides'||section==='slides'||
+  /presentation|powerpoint/.test(type)||/\.pptx?$/i.test(item.title||item.name||'')||
+  (/pdf/.test(type)&&/\b(slides?|diapositivas?|presentacion|apresentacao|clase\s+\d+|aula\s+\d+)\b/.test(norm(item.title||item.name)));
+}
 const stages={P1:'P1',P2:'P2',FINAL:'Final',OUTROS:'Outros'};
 const cache=new Map(),pending=new Map(),active=new Map();let switching=false;
 const sectionFor=t=>({apostila:'resumos',fotos:'laminas',cartoes:'training',mapas:'training',macro:'laminas'}[t]||t);
@@ -11,7 +29,7 @@ function context(){
  const view=D.getElementById('subjectView');
  if(!view||view.classList.contains('hidden')||typeof UI==='undefined'||!UI.subject)return null;
  const s=W.SinusApp?.S||{};
- return {subject:UI.subject,tab:UI.tab||'overview',section:sectionFor(UI.tab||'overview'),mode:UI.mode||'theory',period:Number(s.prefs?.periodo||DB?.subjects?.[UI.subject]?.period||0),cohort:String(s.turma||'').trim().toUpperCase()};
+ return {subject:UI.subject,tab:UI.tab||'overview',section:sectionFor(UI.tab||'overview'),mode:UI.mode||'theory',period:Number(DB?.subjects?.[UI.subject]?.period||s.prefs?.periodo||0),cohort:String(s.turma||'').trim().toUpperCase()};
 }
 const keyFor=c=>[c.period,c.cohort,c.subject].join('|');
 async function load(c){
@@ -33,6 +51,13 @@ function fileLink(item){
  try{
   const raw=String(item.url||'');
   let url;
+  if(item.uploaded&&String(item.id||'').startsWith('uploaded:')){
+   const id=String(item.id),title=String(item.title||item.name||'Material');
+   const name=norm([title,item.period,item.stage].filter(Boolean).join(' '));
+   let stage=String(item.stage||'').toUpperCase();
+   if(!stages[stage])stage=/\bp[\s._-]*1\b/.test(name)?'P1':/\bp[\s._-]*2\b/.test(name)?'P2':/\bfinal\b/.test(name)?'FINAL':'OUTROS';
+   return {id,title,url:id,preview:'',stage,section:'slides',cohort:'',uploaded:true,mime:item.mime||item.kind||''};
+  }
   if(raw)url=new URL(raw);else if(/^[a-zA-Z0-9_-]{15,}$/.test(String(item.id||item.file_id||'')))url=new URL('https://drive.google.com/file/d/'+encodeURIComponent(item.id||item.file_id)+'/view');
   else return null;
   if(url.protocol!=='https:'||!['drive.google.com','docs.google.com'].includes(url.hostname))return null;
@@ -62,7 +87,7 @@ function fileLink(item){
 }
 function cohortMatch(x,c){
  const tagged=String(x.cohort||x.class_name||x.turma||'').trim().toUpperCase()||(String(x.period||'').match(/\bTurma\s+([A-Z]{1,3})\b/i)?.[1]||'').toUpperCase();
- return !tagged||!!c&&tagged===c;
+ return !tagged||['*','TODAS','TODOS','GERAL','ALL'].includes(tagged)||!!c&&tagged===c;
 }
 function customFiles(c,data){
  const result=[],section=c.section;
@@ -124,23 +149,24 @@ function slideCollection(c,data){
   if(!file||seen.has(file.url))return;
   seen.add(file.url);(source==='turma'?own:library).push({...file,source});
  };
- // O painel do administrador e o Drive da turma alimentam a primeira categoria.
- // customFiles já respeita matéria, turma, período e configurações da seção Slides.
+ // As fontes oficiais da turma entram primeiro e vencem apenas duplicados reais.
  for(const item of customFiles(slideContext,data))add(item,'turma');
  const db=typeof DB!=='undefined'?DB.subjects?.[c.subject]:null;
  if(db){
-  for(const item of [...(db.slides||[]),...(db.complementares||[]).filter(x=>x.studySection==='slides')]){
-   if(item.active===false)continue;
+  for(const item of [...(db.slides||[]),...(db.complementares||[]).filter(isSlideItem)]){
+   if(!isSlideItem({...item,cat:item.cat||'slides'}))continue;
    const tagged=String(item.cohort||item.class_name||item.turma||'')||
      (String(item.period||'').match(/\bTurma\s+([A-Z]{1,3})\b/i)?.[1]||'');
-   add(item,tagged?'turma':'biblioteca');
+   // "Medicina" e demais índices gerais não viram Slides da turma só por estarem no DB.
+   const source=tagged&&!['*','GERAL','TODAS','TODOS'].includes(tagged.toUpperCase())?'turma':'biblioteca';
+   add(item,source);
   }
  }
+ // A Biblioteca é a fonte da verdade para slides indexados, PDFs de aulas e uploads.
+ // Não exigir URL do Drive para arquivos privados da Biblioteca.
  for(const item of W.SinusLibrary?.catalog?.()||[]){
-  if(norm(item.subject)!==norm(c.subject))continue;
-  if(!['slides'].includes(String(item.cat||''))&&item.studySection!=='slides')continue;
-  const tagged=String(item.cohort||item.class_name||item.turma||'').trim();
-  add(item,tagged?'turma':'biblioteca');
+  if(!sameSubject(item.subject,c.subject)||!isSlideItem(item))continue;
+  add(item,'biblioteca');
  }
  return {own,library,all:[...own,...library]};
 }
