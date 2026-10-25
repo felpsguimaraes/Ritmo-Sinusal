@@ -405,10 +405,10 @@
   // abas da matéria: as do painel + Apostila, Flashcards, Fotos e Macroscopia
   V11_SUBJECT_TABS.theory.splice(0, V11_SUBJECT_TABS.theory.length,
     ['overview', 'Visão geral'], ['apostila', 'Apostila'], ['cartoes', 'Flashcards'], ['mapas', 'Mapas guiados'], ['slides', 'Slides'], ['provas', 'Provas'], ['audios', 'Áudios'], ['videos', 'Vídeos'],
-    ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
+    ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['notebook', 'Caderno']);
   V11_SUBJECT_TABS.practice.splice(0, V11_SUBJECT_TABS.practice.length,
     ['overview', 'Visão geral'], ['apostila', 'Resumo / Apostila'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
-    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['review', 'Revisão e progresso'], ['notebook', 'Caderno']);
+    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['notebook', 'Caderno']);
 
   function pillPlano() { var p = $id('subjectPlanPill'); if (p) p.textContent = 'Acesso completo' }
   var renderVideoOriginal = W.renderVideos, renderAudioOriginal = W.renderAudios;
@@ -427,7 +427,7 @@
   W.renderTrainingBuilder = function () {
     renderTrainingOriginal();
     var duplicate = D.querySelector('#subjectContent .trainTabs'); if (duplicate) duplicate.remove();
-    var intro = D.querySelector('#subjectContent .trainHero p'); if (intro) intro.textContent = 'Selecione um formato ou combine vários na lista abaixo.';
+    var intro = D.querySelector('#subjectContent .trainHero p'); if (intro) intro.textContent = 'Os formatos são intercalados automaticamente.';
   };
   var studyQuery = new URLSearchParams(location.search);
   var studyEmbedded = W.parent !== W && studyQuery.has('sxStudySubject');
@@ -541,13 +541,13 @@
       if (CART.key !== k || !snap.exists || !snap.data().prog) return;
       PROG = Object.assign({}, PROG, snap.data().prog); gravarLocal(k, PROG);
       CART.fila = montarFila(CART.deck.cartoes); CART.i = 0; CART.mostrar = false;
-      if (UI.tab === 'cartoes') renderCartoes();
+      if ((UI.tab === 'training' && UI.trainingPane === 'flashcards') || UI.tab === 'cartoes') renderCartoes();
     }).catch(function () {});
   }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });
     var box = $id('subjectContent');
-    if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, use o Treino e a Revisão e progresso.'); return }
+    if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, utilize os Exercícios ou os Mapas mentais.'); return }
     var k = ESCOLHA[slug] && DECKS[ESCOLHA[slug]] ? ESCOLHA[slug] : deckPadrao(slug);
     abrirDeck(k);
     var deck = CART.deck, c = CART.fila[CART.i], total = deck.cartoes.length;
