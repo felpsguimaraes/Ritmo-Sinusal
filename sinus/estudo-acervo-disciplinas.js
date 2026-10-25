@@ -65,6 +65,17 @@ function ytGroup(title){
  return '';
 }
 function videoMode(title){const c=W.SinusVideoCuradoria?.classify({title});if(c)return c.isPractice?'practice':'shared';const n=norm(title);return /pr[aá]ctica|pratica|laboratorio|lab\b|microscop|macroscop|simulado de huesos/.test(n)?'practice':'shared'}
+function anatomyTopicMatches(video,subject){
+ // O plano de Anatomia I prioriza cabeça, crânio e pares cranianos.
+ // Abdome, pelve e membro inferior pertencem à sequência de Anatomia II.
+ // Títulos genéricos permanecem disponíveis nas duas matérias, sem inventar um tema.
+ const series=/^anatomia\s+(?:ii|2)$/.test(norm(subject))?'2':'1';
+ const title=norm(video.title);
+ if(/craneo|craneales|esfenoid|viscerocraneo|cabeza|cara/.test(title))return series==='1';
+ if(/abdomen|abdominal|inguinal|peritoneo|pelv|muslo|pierna|miembro inferior|viscera|ciego|colon|intestino|estomago|duodeno|higado|vesicula|pancreas|bazo|rins/.test(title))return series==='2';
+ if(/simulado\s*:\s*p2\b/.test(title))return series==='2';
+ return true;
+}
 function ensureHisto(){
  if(typeof DB==='undefined'||!DB?.subjects)return 0;
  let added=0;
@@ -125,6 +136,7 @@ function toCards(){
   .filter(x=>x.type==='pratica'&&validYT(x.id))
   .map(x=>({id:x.id,title:x.title,origin:'youtube',type:'video',label:'Revisão e demonstração prática'}));
  const youtube=(S.youtube||[]).filter(x=>validYT(x.id)&&ytGroup(x.title)===base&&!ignore.has(x.id))
+   .filter(x=>base!=='anatomia'||anatomyTopicMatches(x,subject))
    .filter(x=>mode==='theory'||videoMode(x.title)==='practice')
    .map(x=>{const c=W.SinusVideoCuradoria?.classify(x)||{};return {
      id:x.id,title:x.title,origin:'youtube',type:'video',professor:c.professor||'Professor não identificado',
