@@ -116,6 +116,15 @@ function catalog(){
   out.push({...item,id,subject,cat,academicPeriod:academicPeriod??null,local:false});
  }
  // Vídeos oficiais UCP e materiais de Bioestatística: um cartão por arquivo.
+ // 53 arquivos identificados do Drive da UCP: um vídeo = um cartão na Biblioteca.
+ for(const v of W.SinusCatedraUCP?.videos||[]){
+  const level=String(v.anatomyPeriod);
+  if(level!=='1'&&level!=='2')continue;
+  add({id:v.id,title:v.title,mime:v.mime||'video/mp4',kind:v.mime||'video/mp4',
+   source:'ucp-oficial',studyMode:'practice',studySection:'catedra',
+   requiresGooglePermission:true},
+   'Anatomía '+(level==='1'?'I':'II'),'videos',Number(level));
+ }
  const official=W.SinusAcademicOfficial;
  for(const level of ['1','2'])for(const v of official?.anatomy?.[level]||[]){
   add({id:v.id,title:v.title,mime:v.mime,kind:v.mime,source:'ucp-oficial',
