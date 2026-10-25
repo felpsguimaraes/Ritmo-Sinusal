@@ -7,7 +7,7 @@ const CHANNEL='https://www.youtube.com/@aislanfernandes4039/videos';
 const VIDEO_SOURCE='/sinus/youtube-catalogo.json';
 const PLAYLIST_SOURCE='/sinus/youtube-playlists.json';
 const AUDIO_SOURCE='/sinus/drive-audios-catalogo.json';
-const S={videos:null,playlists:null,audios:null,loading:null,error:'',subject:'',mode:'',selected:'',query:'',teacher:'todos',type:'todos',limit:70};
+const S={videos:null,playlists:null,audios:null,loading:null,error:'',subject:'',mode:'',selected:'',query:'',teacher:'todos',type:'todos',limit:70,audioMode:'preview'};
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\u0027':'&#39;'}[c]));
 const norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
 const vidOK=x=>/^[A-Za-z0-9_-]{11}$/.test(String(x||''));
@@ -101,25 +101,43 @@ function slot(){
 }
 function addFrame(section,item){
  const panel=section.querySelector('[data-sx-avp-screen]');
- const url=item.origin==='drive-audio'?'https://drive.google.com/file/d/'+encodeURIComponent(item.id)+'/preview':
+ const isDrive=item.origin==='drive-audio';
+ const embed=isDrive?'https://drive.google.com/file/d/'+encodeURIComponent(item.id)+'/preview':
   item.origin==='playlist'?'https://www.youtube-nocookie.com/embed/videoseries?list='+encodeURIComponent(item.id)+'&rel=0':
   'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.id)+'?rel=0';
- if(panel.dataset.url!==url){
-  panel.dataset.url=url;
-  panel.innerHTML='<iframe title="'+esc(item.title)+'" src="'+url+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+ const driveUrl=isDrive?'https://drive.google.com/file/d/'+encodeURIComponent(item.id)+'/view':'';
+ const alt=isDrive&&S.audioMode==='alternate';
+ const renderKey=embed+(alt?'|alternate':'|iframe');
+ if(panel.dataset.url!==renderKey){
+  panel.dataset.url=renderKey;
+  if(alt){
+   // Recurso alternativo para arquivos cuja prévia incorporada falha no Drive.
+   // A URL continua no Google Drive e a mesma permissão do arquivo se aplica.
+   const direct='https://drive.google.com/uc?export=download&id='+encodeURIComponent(item.id);
+   panel.innerHTML='<div class="sxAVPAudioAlternate"><span aria-hidden="true">♫</span><strong>'+esc(item.title)+'</strong>'+
+    '<audio controls preload="none" data-sx-avp-native aria-label="Reproduzir '+esc(item.title)+'" src="'+esc(direct)+'"></audio>'+
+    '<p data-sx-avp-audio-status>Se o navegador não conseguir carregar esta gravação, abra o arquivo no Google Drive.</p>'+
+    '<div class="sxAVPAudioLinks"><button type="button" data-sx-avp-standard>Voltar à pré-visualização</button>'+
+    '<a href="'+esc(driveUrl)+'" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a></div></div>';
+  }else{
+   panel.innerHTML='<iframe title="'+esc(item.title)+'" src="'+esc(embed)+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'+
+    (isDrive?'<div class="sxAVPAudioBar"><span>O Google Drive não exibiu esta gravação?</span>'+
+    '<button type="button" data-sx-avp-alternate>Usar outro player</button>'+
+    '<a href="'+esc(driveUrl)+'" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a></div>':'');
+  }
  }
  section.querySelector('[data-sx-avp-title]').textContent=item.title;
  const link=section.querySelector('[data-sx-avp-link]');
- link.href=item.origin==='drive-audio'?'https://drive.google.com/file/d/'+encodeURIComponent(item.id)+'/view':
+ link.href=isDrive?driveUrl:
   item.origin==='playlist'?'https://www.youtube.com/playlist?list='+encodeURIComponent(item.id):'https://www.youtube.com/watch?v='+encodeURIComponent(item.id);
- link.textContent=item.origin==='drive-audio'?'Abrir áudio no Drive ↗':'Abrir no YouTube ↗';
+ link.textContent=isDrive?'Abrir áudio no Drive ↗':'Abrir no YouTube ↗';
  link.hidden=false;
 }
 function draw(){
  const c=current(),place=slot();
  if(!c||!place)return;
  const reset=c.name!==S.subject||c.mode!==S.mode;
- if(reset){S.subject=c.name;S.mode=c.mode;S.selected='';S.query='';S.teacher='todos';S.type='todos';S.limit=70;}
+ if(reset){S.subject=c.name;S.mode=c.mode;S.selected='';S.query='';S.teacher='todos';S.type='todos';S.limit=70;S.audioMode='preview';}
  let section=place.host.querySelector(':scope > [data-sx-avp]');
  if(!section){
   section=D.createElement('section');section.className='sxAVP';section.setAttribute('data-sx-avp','');
@@ -191,7 +209,9 @@ D.addEventListener('click',e=>{
  const box=e.target.closest('[data-sx-avp]');
  if(!box)return;
  const choose=e.target.closest('[data-sx-avp-choose]');
- if(choose){S.selected=choose.dataset.sxAvpChoose;draw();return}
+ if(choose){S.selected=choose.dataset.sxAvpChoose;S.audioMode='preview';draw();return}
+ if(e.target.closest('[data-sx-avp-alternate]')){S.audioMode='alternate';draw();return}
+ if(e.target.closest('[data-sx-avp-standard]')){S.audioMode='preview';draw();return}
  if(e.target.closest('[data-sx-avp-more-btn]')){S.limit+=70;draw();}
 });
 D.addEventListener('change',e=>{
@@ -203,6 +223,12 @@ D.addEventListener('input',e=>{
  if(!e.target.matches('[data-sx-avp-query]'))return;
  S.query=e.target.value;S.selected='';S.limit=70;draw();
 });
+D.addEventListener('error',e=>{
+ if(e.target.matches?.('[data-sx-avp-native]')){
+  const status=e.target.closest('[data-sx-avp]')?.querySelector('[data-sx-avp-audio-status]');
+  if(status)status.textContent='Este arquivo não pode ser transmitido diretamente. Abra a gravação no Google Drive para ouvir.';
+ }
+},true);
 const previous=W.renderSubject;
 if(typeof previous==='function')W.renderSubject=function(){const result=previous.apply(this,arguments);mount();return result;};
 W.SinusVideoPlayerMateria={mount,load,entries,get catalog(){return S.videos},get audioCatalog(){return S.audios},get error(){return S.error}};
