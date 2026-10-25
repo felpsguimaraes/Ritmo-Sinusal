@@ -102,7 +102,7 @@ function libraryFiles(c,known){
  }
  return list.slice(0,36);
 }
-/* Leitor único de slides para todas as matérias teóricas, com acervo e turma.
+/* Leitor único de slides na aba Slides de todas as matérias teóricas, com acervo e turma.
  * O mesmo iframe permanece montado durante sincronizações e trocas de filtro.
  */
 function slideCollection(c,data){
@@ -217,87 +217,91 @@ function setTabs(c,data){
  return true;
 }
 function createElement(tag,className,inner){const el=D.createElement(tag);el.className=className;el.innerHTML=inner;return el;}
-function classBody(c,files){
- const root=D.getElementById('sxCourseOwn');if(!root)return;
- const k=[...Object.values(stages)],chosen=active.get([keyFor(c),c.tab,c.mode].join('|'))||{stage:'TODOS',url:''};
- const currentList=files.filter(x=>c.section!=='slides'||chosen.stage==='TODOS'||x.stage===chosen.stage);
- if(!currentList.some(x=>x.url===chosen.url))chosen.url=currentList[0]?.url||'';
- active.set([keyFor(c),c.tab,c.mode].join('|'),chosen);
- const item=currentList.find(x=>x.url===chosen.url)||null;
- root.querySelector('.sxAOStage').innerHTML=c.section==='slides'?'<span>Selecionar avaliação</span><div class="sxAOPills">'+[['TODOS','Todos'],...Object.entries(stages)].map(([id,label])=>'<button type="button" class="'+(chosen.stage===id?'selected':'')+'" data-sx-aostage="'+id+'">'+label+'</button>').join('')+'</div>':'';
- const view=root.querySelector('.sxAOViewer');
- view.innerHTML=item?
- '<div class="sxAOFile"><strong>'+esc(item.title)+'</strong><a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">Abrir no Drive ↗</a></div>'+
- (item.preview?'<iframe title="'+esc(item.title)+'" src="'+esc(item.preview)+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>':'<div class="sxAOEmptyPreview">Pasta do Drive · abra para consultar os arquivos internos.</div>'):
- '<div class="sxAOEmptyPreview">'+(files.length?'Nenhum material identificado para essa avaliação.':'Nenhum material da turma cadastrado. Ao importar o Drive, os arquivos aparecerão aqui automaticamente.')+'</div>';
- const side=root.querySelector('.sxAOQueue');
- side.innerHTML='<div class="sxAOQueueTitle">'+currentList.length+' arquivo(s) · '+esc(c.cohort?'Turma '+c.cohort:'Conteúdo compartilhado')+'</div>'+
- currentList.map((x,i)=>'<button type="button" class="sxAOFileItem '+(chosen.url===x.url?'is-active':'')+'" data-sx-aourl="'+esc(x.url)+'"><b>'+esc(x.title)+'</b><small>'+esc(stages[x.stage])+' · '+esc(x.section||'Arquivo')+'</small></button>').join('');
- root.onclick=e=>{
-  const stage=e.target.closest('[data-sx-aostage]');if(stage){chosen.stage=stage.dataset.sxAostage;chosen.url='';classBody(c,files);return;}
-  const open=e.target.closest('[data-sx-aourl]');if(open){chosen.url=open.dataset.sxAourl;classBody(c,files);}
- };
+/* Cada aba tem exatamente um conteúdo principal.
+ * Slides teóricos: leitor único; demais abas: conteúdo nativo próprio,
+ * abaixo dos lembretes. Nunca montar um iframe de slides fora de Slides.
+ */
+function sectionIsSlides(c){return c.mode==='theory'&&c.tab==='slides'}
+function libraryMarkup(suggested){
+ const total=suggested.length;
+ return '<section class="sxAOBlock sxAOLibrary" aria-label="Arquivos da biblioteca">'+
+  '<div class="sxAOHead"><div><small>ACERVO COMPLEMENTAR</small><h2>Arquivos da biblioteca</h2>'+
+  '<p>Materiais relacionados a esta disciplina.</p></div><span class="sxAOSuggestCount">'+total+' arquivos</span></div>'+
+  '<div class="sxAOLibraryItems"></div></section>';
+}
+function renderLibrary(c,suggested,wrap){
+ const library=wrap.querySelector('.sxAOLibrary');
+ if(!library)return;
+ // O treino precisa conservar o painel de exercícios como foco, sem acervo concorrente.
+ const hide=['training','cartoes','mapas'].includes(c.tab)||suggested.length===0;
+ library.hidden=hide;
+ const label=wrap.querySelector('.sxAOSuggestCount');
+ if(label)label.textContent=suggested.length+' arquivos';
+ const list=wrap.querySelector('.sxAOLibraryItems');
+ if(list&&!hide){
+  const html=suggested.slice(0,20).map(x=>
+   '<a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer" class="sxAOLibraryItem">'+
+   '<span>▧</span><b>'+esc(x.title)+'</b><small>Abrir arquivo ↗</small></a>'
+  ).join('');
+  if(list.dataset.contents!==html){list.innerHTML='<div class="sxAOLibraryGrid">'+html+'</div>';list.dataset.contents=html;}
+ }
+}
+function prioritizeNative(host,wrap,c){
+ const reminderSlot=wrap.querySelector('.sxAOReminders');
+ const primary=wrap.querySelector('[data-sx-primary]');
+ for(const node of [...host.children]){
+  if(node===wrap)continue;
+  if(node.matches('.sinus-rem-box')){
+   if(reminderSlot)reminderSlot.replaceChildren(node);
+  }else if(sectionIsSlides(c)){
+   // O leitor único da aba Slides substitui a fila e a galeria antigas de slides.
+   if(node.matches('.resourceLayout,.sxMG,.sxMGOriginal'))node.remove();
+   else if(primary)primary.appendChild(node);
+  }else if(primary){
+   // Preservar os ouvintes e os players originais: apenas mover os nós.
+   primary.appendChild(node);
+  }
+ }
 }
 function render(c,data){
  const host=D.getElementById('subjectContent');if(!host||!c||!setTabs(c,data))return;
- let current=context();if(!current||current.subject!==c.subject||current.tab!==c.tab||current.mode!==c.mode)return;
- const own=customFiles(c,data),suggested=libraryFiles(c,own);
- const total=suggested.length;
- const theory=c.mode==='theory';
+ const current=context();if(!current||current.subject!==c.subject||current.tab!==c.tab||current.mode!==c.mode)return;
+ const slideOnly=sectionIsSlides(c);
+ // Não consultar o catálogo de slides nas demais abas: menor trabalho e zero player indevido.
+ const own=slideOnly?[]:customFiles(c,data);
+ const suggested=slideOnly?[]:libraryFiles(c,own);
  let wrap=host.querySelector(':scope > .sxAcademicOrdered');
- if(wrap){
-  const freshRem=host.querySelector(':scope > .sinus-rem-box');
-  if(freshRem)wrap.querySelector('.sxAOReminders')?.replaceChildren(freshRem);
-  const badge=wrap.querySelector('.sxAOSuggestCount');
-  if(badge)badge.textContent=total+' arquivos';
-  const library=wrap.querySelector('.sxAOLibraryItems');
-  if(library&&!library.querySelector('.sxMG,.sxCourseMedia')){
-   library.innerHTML=suggested.length?'<div class="sxAOLibraryGrid">'+suggested.slice(0,20).map(x=>'<a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer" class="sxAOLibraryItem"><span>▧</span><b>'+esc(x.title)+'</b><small>Ver arquivo ↗</small></a>').join('')+'</div>':'<p class="sxAOEmptyLibrary">Não há arquivos sugeridos com classificação confirmada para esta matéria e período.</p>';
-  }
-  if(theory&&c.section==='slides'){
-   // A fila unificada substitui a galeria e a fila de slides nativas.
-   host.querySelector(':scope > .sxMG')?.remove();
-   host.querySelectorAll(':scope > .resourceLayout').forEach(el=>el.remove());
-   const librarySection=wrap.querySelector('.sxAOLibrary');
-   if(librarySection)librarySection.hidden=true;
-  }
-  if(theory){drawSlides(c,data,wrap,true);renderOtherOfficial(c,own,wrap);}
-  else classBody(c,own);
-  return;
+ if(wrap&&!!wrap.querySelector('[data-sx-unified-slides]')!==slideOnly){wrap.remove();wrap=null;}
+ if(!wrap){
+  const slideHTML='<section class="sxAOBlock sxAOUnified" data-sx-unified-slides aria-label="TEORIA · SLIDES">'+
+   '<div class="sxAOHead"><div><small>TEORIA · SLIDES</small><h2>Estudar slides</h2>'+
+   '<p>Slides da turma e da biblioteca em um único leitor.</p></div>'+
+   '<div class="sxAOUnifiedMeta"><span class="sxAOCohort" data-sx-slide-total>0 slides</span>'+
+   '<small data-sx-slide-breakdown></small></div></div>'+
+   '<div class="sxAOSlideControls"><div class="sxAOPills sxAOSourcePills" data-sx-slide-sources></div>'+
+   '<div class="sxAOPills" data-sx-slide-stages></div>'+
+   '<input data-sx-slide-query aria-label="Buscar slides" type="search" placeholder="Buscar apresentação..." autocomplete="off"></div>'+
+   '<div class="sxAOPlayQueue"><div class="sxAOViewer" data-sx-slide-view></div>'+
+   '<aside class="sxAOQueue" aria-label="Slides para estudar" data-sx-slide-queue></aside></div></section>';
+  const primaryHTML='<section class="sxAOPrimary" data-sx-primary aria-label="Conteúdo principal da aba"></section>'+
+   '<details class="sxAOOtherOwn" data-sx-official-other hidden><summary>Outros materiais desta aba</summary>'+
+   '<div class="sxAOOtherList" data-sx-official-list></div></details>';
+  wrap=createElement('div','sxAcademicOrdered',
+   '<section class="sxAOReminders"></section>'+ (slideOnly?slideHTML:primaryHTML+libraryMarkup(suggested)));
+  host.prepend(wrap);
  }
- wrap=createElement('div','sxAcademicOrdered','<section class="sxAOReminders"></section>'+
- (theory?'<section class="sxAOBlock sxAOUnified" data-sx-unified-slides aria-label="TEORIA · SLIDES"><div class="sxAOHead"><div><small>TEORIA · SLIDES</small><h2>Estudar slides</h2><p>Slides oficiais da turma e da biblioteca no mesmo leitor, organizados por avaliação.</p></div><div class="sxAOUnifiedMeta"><span class="sxAOCohort" data-sx-slide-total>0 slides</span><small data-sx-slide-breakdown></small></div></div><div class="sxAOSlideControls"><div class="sxAOPills sxAOSourcePills" data-sx-slide-sources></div><div class="sxAOPills" data-sx-slide-stages></div><input data-sx-slide-query aria-label="Buscar slides" type="search" placeholder="Buscar apresentação..." autocomplete="off"></div><div class="sxAOPlayQueue"><div class="sxAOViewer" data-sx-slide-view></div><aside class="sxAOQueue" aria-label="Slides para estudar" data-sx-slide-queue></aside></div></section><details class="sxAOOtherOwn" data-sx-official-other hidden><summary>Outros materiais da turma</summary><div class="sxAOOtherList" data-sx-official-list></div></details>':
- '<section class="sxAOBlock" aria-label="Materiais da turma"><div class="sxAOHead"><div><small>CONTEÚDO OFICIAL DA TURMA</small><h2>'+(c.section==='slides'?'Slides da turma':'Materiais da turma')+'</h2><p>Arquivos da matéria vinculados ao seu período e turma.</p></div><span class="sxAOCohort">'+esc(c.cohort?'Turma '+c.cohort:'Sua turma')+'</span></div><div id="sxCourseOwn"><div class="sxAOStage"></div><div class="sxAOPlayQueue"><div class="sxAOViewer"></div><aside class="sxAOQueue" aria-label="Lista de materiais"></aside></div></div></section>')+
- '<section class="sxAOBlock sxAOLibrary" aria-label="Arquivos da biblioteca"><div class="sxAOHead"><div><small>ACERVO COMPLEMENTAR</small><h2>Arquivos da biblioteca</h2><p>Sugestões da biblioteca correspondentes à matéria e ao período.</p></div><span class="sxAOSuggestCount">'+total+' arquivos</span></div><div class="sxAOLibraryItems"></div></section>');
- const reminder=host.querySelector(':scope > .sinus-rem-box');
- if(reminder)wrap.querySelector('.sxAOReminders').appendChild(reminder);
- else wrap.querySelector('.sxAOReminders').innerHTML='<div class="sxAORemindFallback"><strong>Lembretes</strong><button type="button" data-rem-add="'+esc(c.subject)+'">＋ Adicionar lembrete</button></div>';
- // Reaproveitar galerias existentes, sem perder seus players ou seus manipuladores de eventos.
- const gallery=host.querySelector(':scope > .sxMG, :scope > .sxCourseMedia');
- if(theory&&c.section==='slides'&&gallery?.matches('.sxMG'))gallery.remove();
- if(gallery&&gallery.isConnected){
-  gallery.querySelector('.sxMGHead h2,.sxCourseMediaHead h2')?.replaceChildren(D.createTextNode('Arquivos da biblioteca'));
-  wrap.querySelector('.sxAOLibraryItems').appendChild(gallery);
- }else if(suggested.length){
-  wrap.querySelector('.sxAOLibraryItems').innerHTML='<div class="sxAOLibraryGrid">'+suggested.slice(0,20).map(x=>'<a href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer" class="sxAOLibraryItem"><span>▧</span><b>'+esc(x.title)+'</b><small>Ver arquivo ↗</small></a>').join('')+'</div>';
+ const freshRem=host.querySelector(':scope > .sinus-rem-box');
+ if(freshRem)wrap.querySelector('.sxAOReminders')?.replaceChildren(freshRem);
+ else if(!wrap.querySelector('.sxAOReminders')?.firstElementChild)
+  wrap.querySelector('.sxAOReminders').innerHTML=
+   '<div class="sxAORemindFallback"><strong>Lembretes</strong>'+
+   '<button type="button" data-rem-add="'+esc(c.subject)+'">＋ Adicionar lembrete</button></div>';
+ prioritizeNative(host,wrap,c);
+ if(slideOnly){
+  drawSlides(c,data,wrap,true);
  }else{
-  wrap.querySelector('.sxAOLibraryItems').innerHTML='<p class="sxAOEmptyLibrary">Não há arquivos sugeridos com classificação confirmada para esta matéria e período.</p>';
- }
- host.prepend(wrap);
- if(theory&&c.section==='slides'){
-  // Slides da turma e da biblioteca já estão no único leitor superior.
-  wrap.querySelector('.sxAOLibrary').hidden=true;
- }
- if(theory){drawSlides(c,data,wrap,true);renderOtherOfficial(c,own,wrap);}
- else classBody(c,own);
- const originals=[...host.children].filter(el=>el!==wrap&&el.classList?.contains('resourceLayout'));
- if(theory&&c.section==='slides'){
-  // Não deixar o leitor nativo de slides criar um segundo iframe e outra fila.
-  originals.forEach(el=>el.remove());
- }else if(originals.length&&own.length){
-  // Outros tipos de recurso mantêm seus controles originais, sem duplicar o player de slides.
-  const details=createElement('details','sxAOExtras','<summary>Mais ferramentas e materiais da aba</summary>');
-  originals.forEach(el=>details.appendChild(el));host.appendChild(details);
+  renderOtherOfficial(c,own,wrap);
+  renderLibrary(c,suggested,wrap);
  }
 }
 const original=W.renderSubject;
@@ -322,5 +326,5 @@ function refreshLibrarySuggestions(){
 }
 ['sinus:drive-ready','sinus:medicina-ready','sinus:library-uploads-ready'].forEach(event=>W.addEventListener(event,refreshLibrarySuggestions));
 W.SinusAcervoAuditado?.ready?.then(refreshLibrarySuggestions).catch(()=>{});
-D.head.insertAdjacentHTML('beforeend','<style>.sxAcademicOrdered{display:flex;flex-direction:column;gap:15px;margin-bottom:18px;color:#244632}.sxAcademicOrdered .sinus-rem-box{margin:0!important}.sxAOBlock{background:#fff;border:1px solid #dce9e0;border-radius:17px;padding:20px}.sxAOHead{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:17px}.sxAOHead small{font-size:10px;letter-spacing:.12em;font-weight:800;color:#608b6e}.sxAOHead h2{font-size:21px;margin:5px 0}.sxAOHead p{font-size:12px;color:#788e7d;margin:0}.sxAOCohort,.sxAOSuggestCount{padding:8px 11px;border-radius:12px;background:#ebf5ee;color:#386e4c;font-size:11px;white-space:nowrap}.sxAOPlayQueue{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(225px,.9fr);gap:14px}.sxAOViewer,.sxAOQueue{border:1px solid #dce9e0;border-radius:12px;background:#fafcfb;min-height:220px;overflow:hidden}.sxAOViewer iframe{width:100%;height:min(54vw,520px);min-height:345px;border:0;background:#fff}.sxAOFile{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px}.sxAOFile strong{font-size:13px;overflow-wrap:anywhere}.sxAOFile a{font-size:11px;white-space:nowrap;color:#267449}.sxAOEmptyPreview{height:220px;display:grid;place-items:center;text-align:center;padding:22px;color:#6d8575;font-size:13px}.sxAOQueue{padding:9px;max-height:530px;overflow:auto}.sxAOQueueTitle{font-size:11px;color:#708a78;padding:9px 7px}.sxAOFileItem{display:block;text-align:left;width:100%;border:1px solid #e1eae4;background:#fff;color:#2a4e36;padding:11px;margin-bottom:6px;border-radius:11px;cursor:pointer}.sxAOFileItem.is-active{background:#e7f4e9;border-color:#a6ceb0}.sxAOFileItem b{display:block;font-size:12px}.sxAOFileItem small{display:block;margin-top:5px;color:#809786;font-size:10px}.sxAOStage{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}.sxAOStage>span{font-size:11px;color:#65856e}.sxAOPills{display:flex;flex-wrap:wrap;gap:5px}.sxAOPills button{padding:7px 12px;border-radius:16px;border:1px solid #d6e6dc;color:#3e6850;background:#f5f9f6;font-size:11px;cursor:pointer}.sxAOPills button.selected{background:#1f7850;border-color:#1f7850;color:white}.sxAOLibraryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:9px}.sxAOLibraryItem{display:flex;flex-direction:column;gap:8px;padding:15px;text-decoration:none;border:1px solid #e1e9e3;border-radius:12px;background:#f8fbf8;color:#2e5a3e}.sxAOLibraryItem b{font-size:12px;overflow-wrap:anywhere}.sxAOLibraryItem small{font-size:10px;color:#709079}.sxAOEmptyLibrary{font-size:12px;color:#7c8c7f}.sxAOLibrary .sxMG,.sxAOLibrary .sxCourseMedia{margin:0!important;border:none!important;padding:0!important;background:transparent!important}.sxAOLibrary .sxMGHead h2,.sxAOLibrary .sxCourseMediaHead h2{display:none}.sxAOExtras{margin:12px 0;border:1px solid #e3eae5;padding:14px;border-radius:12px}.sxAOExtras summary{font-size:12px;cursor:pointer;color:#537b61}.sxAORemindFallback{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#e9f1fa;border-radius:14px}.sxAORemindFallback button{background:#fff;border:1px solid #d5e1eb;padding:8px 12px;border-radius:9px}@media(max-width:780px){.sxAOPlayQueue{grid-template-columns:1fr}.sxAOViewer iframe{min-height:300px;height:400px}.sxAOHead{flex-wrap:wrap}.sxAOBlock{padding:14px}.sxAOQueue{min-height:80px;max-height:320px}}.sxAOUnified{padding:17px 18px}.sxAOUnifiedMeta{display:flex;align-items:flex-end;flex-direction:column;gap:5px}.sxAOUnifiedMeta small{font-size:10px;color:#698775}.sxAOSlideControls{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin:0 0 13px}.sxAOSlideControls .sxAOPills{max-width:100%}.sxAOSourcePills button{border-radius:10px}.sxAOSourcePills button span{opacity:.65;margin-left:5px}.sxAOSlideControls input{width:min(100%,420px);font:inherit;font-size:12px;background:#fff;border:1px solid #d7e7dd;border-radius:10px;padding:10px;color:#214d36}.sxAOUnified .sxAOHead{margin-bottom:12px}.sxAOUnified .sxAOViewer iframe{min-height:365px}.sxAOUnified .sxAOQueue{max-height:555px}.sxAOMore{width:100%;padding:10px;border:1px solid #dce9e0;background:#eef7f0;border-radius:10px;color:#275e40;cursor:pointer;font:inherit;font-size:12px}.sxAOOtherOwn{margin:0;background:#fff;border:1px solid #e0eae4;padding:11px 15px;border-radius:13px}.sxAOOtherOwn summary{font-size:12px;color:#3b6a50;cursor:pointer}.sxAOOtherList{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:7px;margin-top:12px}.sxAOOtherItem{display:flex;flex-direction:column;gap:4px;border:1px solid #e1eae4;border-radius:10px;padding:9px;text-decoration:none;color:#2b6746;font-size:11px}.sxAOOtherItem small{color:#6f8c79}.sxAOUnified+.sxAOLibrary{margin-top:0}@media(max-width:780px){.sxAOUnified{padding:14px}.sxAOUnifiedMeta{align-items:flex-start}.sxAOSlideControls input{width:100%}.sxAOUnified .sxAOViewer iframe{min-height:300px}}</style>');
+D.head.insertAdjacentHTML('beforeend','<style>.sxAcademicOrdered{display:flex;flex-direction:column;gap:15px;margin-bottom:18px;color:#244632}.sxAOPrimary{min-width:0;display:flex;flex-direction:column;gap:14px}.sxAOPrimary:empty{display:none}.sxAOPrimary>.resourceLayout,.sxAOPrimary>.sxCourseMedia,.sxAOPrimary>.sxMG,.sxAOPrimary>.sxSPSection,.sxAOPrimary>.sxMediaSection,.sxAOPrimary>.sxSubjectHub{margin-top:0!important}.sxAcademicOrdered .sxAOLibrary[hidden],.sxAcademicOrdered .sxAOOtherOwn[hidden]{display:none!important}.sxAcademicOrdered .sinus-rem-box{margin:0!important}.sxAOBlock{background:#fff;border:1px solid #dce9e0;border-radius:17px;padding:20px}.sxAOHead{display:flex;justify-content:space-between;align-items:start;gap:12px;margin-bottom:17px}.sxAOHead small{font-size:10px;letter-spacing:.12em;font-weight:800;color:#608b6e}.sxAOHead h2{font-size:21px;margin:5px 0}.sxAOHead p{font-size:12px;color:#788e7d;margin:0}.sxAOCohort,.sxAOSuggestCount{padding:8px 11px;border-radius:12px;background:#ebf5ee;color:#386e4c;font-size:11px;white-space:nowrap}.sxAOPlayQueue{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(225px,.9fr);gap:14px}.sxAOViewer,.sxAOQueue{border:1px solid #dce9e0;border-radius:12px;background:#fafcfb;min-height:220px;overflow:hidden}.sxAOViewer iframe{width:100%;height:min(54vw,520px);min-height:345px;border:0;background:#fff}.sxAOFile{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px}.sxAOFile strong{font-size:13px;overflow-wrap:anywhere}.sxAOFile a{font-size:11px;white-space:nowrap;color:#267449}.sxAOEmptyPreview{height:220px;display:grid;place-items:center;text-align:center;padding:22px;color:#6d8575;font-size:13px}.sxAOQueue{padding:9px;max-height:530px;overflow:auto}.sxAOQueueTitle{font-size:11px;color:#708a78;padding:9px 7px}.sxAOFileItem{display:block;text-align:left;width:100%;border:1px solid #e1eae4;background:#fff;color:#2a4e36;padding:11px;margin-bottom:6px;border-radius:11px;cursor:pointer}.sxAOFileItem.is-active{background:#e7f4e9;border-color:#a6ceb0}.sxAOFileItem b{display:block;font-size:12px}.sxAOFileItem small{display:block;margin-top:5px;color:#809786;font-size:10px}.sxAOStage{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}.sxAOStage>span{font-size:11px;color:#65856e}.sxAOPills{display:flex;flex-wrap:wrap;gap:5px}.sxAOPills button{padding:7px 12px;border-radius:16px;border:1px solid #d6e6dc;color:#3e6850;background:#f5f9f6;font-size:11px;cursor:pointer}.sxAOPills button.selected{background:#1f7850;border-color:#1f7850;color:white}.sxAOLibraryGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:9px}.sxAOLibraryItem{display:flex;flex-direction:column;gap:8px;padding:15px;text-decoration:none;border:1px solid #e1e9e3;border-radius:12px;background:#f8fbf8;color:#2e5a3e}.sxAOLibraryItem b{font-size:12px;overflow-wrap:anywhere}.sxAOLibraryItem small{font-size:10px;color:#709079}.sxAOEmptyLibrary{font-size:12px;color:#7c8c7f}.sxAOLibrary .sxMG,.sxAOLibrary .sxCourseMedia{margin:0!important;border:none!important;padding:0!important;background:transparent!important}.sxAOLibrary .sxMGHead h2,.sxAOLibrary .sxCourseMediaHead h2{display:none}.sxAOExtras{margin:12px 0;border:1px solid #e3eae5;padding:14px;border-radius:12px}.sxAOExtras summary{font-size:12px;cursor:pointer;color:#537b61}.sxAORemindFallback{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#e9f1fa;border-radius:14px}.sxAORemindFallback button{background:#fff;border:1px solid #d5e1eb;padding:8px 12px;border-radius:9px}@media(max-width:780px){.sxAOPlayQueue{grid-template-columns:1fr}.sxAOViewer iframe{min-height:300px;height:400px}.sxAOHead{flex-wrap:wrap}.sxAOBlock{padding:14px}.sxAOQueue{min-height:80px;max-height:320px}}.sxAOUnified{padding:17px 18px}.sxAOUnifiedMeta{display:flex;align-items:flex-end;flex-direction:column;gap:5px}.sxAOUnifiedMeta small{font-size:10px;color:#698775}.sxAOSlideControls{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin:0 0 13px}.sxAOSlideControls .sxAOPills{max-width:100%}.sxAOSourcePills button{border-radius:10px}.sxAOSourcePills button span{opacity:.65;margin-left:5px}.sxAOSlideControls input{width:min(100%,420px);font:inherit;font-size:12px;background:#fff;border:1px solid #d7e7dd;border-radius:10px;padding:10px;color:#214d36}.sxAOUnified .sxAOHead{margin-bottom:12px}.sxAOUnified .sxAOViewer iframe{min-height:365px}.sxAOUnified .sxAOQueue{max-height:555px}.sxAOMore{width:100%;padding:10px;border:1px solid #dce9e0;background:#eef7f0;border-radius:10px;color:#275e40;cursor:pointer;font:inherit;font-size:12px}.sxAOOtherOwn{margin:0;background:#fff;border:1px solid #e0eae4;padding:11px 15px;border-radius:13px}.sxAOOtherOwn summary{font-size:12px;color:#3b6a50;cursor:pointer}.sxAOOtherList{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:7px;margin-top:12px}.sxAOOtherItem{display:flex;flex-direction:column;gap:4px;border:1px solid #e1eae4;border-radius:10px;padding:9px;text-decoration:none;color:#2b6746;font-size:11px}.sxAOOtherItem small{color:#6f8c79}.sxAOUnified+.sxAOLibrary{margin-top:0}@media(max-width:780px){.sxAOUnified{padding:14px}.sxAOUnifiedMeta{align-items:flex-start}.sxAOSlideControls input{width:100%}.sxAOUnified .sxAOViewer iframe{min-height:300px}}</style>');
 })(window,document);
