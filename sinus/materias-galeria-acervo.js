@@ -18,6 +18,9 @@ function items(){
  return (W.SinusLibrary.catalog()||[]).filter(x=>{
   if(!x?.id||x.active===false||!matching(subject,x.subject))return false;
   if(period(x.academicPeriod)!==p&&!(x.uploaded&&!period(x.academicPeriod)))return false;
+  const cohort=String(W.SinusApp?.S?.turma||'').trim().toUpperCase();
+  const marked=String(x.cohort||x.class_name||x.className||'').trim().toUpperCase()||(String(x.period||'').match(/\bTurma\s+([A-Z]{1,3})\b/i)?.[1]||'').toUpperCase();
+  if(marked&&(!cohort||marked!==cohort))return false;
   if(seen.has(x.id))return false;
   seen.add(x.id);return true;
  });
@@ -56,7 +59,7 @@ function render(){
  if(tab==='overview'){
   const popular=[...examPhotos.slice(0,4),...videos.slice(0,3),...photos.slice(0,3)];
   const featured=popular.length?popular:all.slice(0,8); // Períodos clínicos sem imagens ainda exibem PDFs e resumos existentes.
-  html='<section class="sxMG" data-sxmg><div class="sxMGHead"><div><small>'+h(subject)+' · ACERVO</small><h2>Materiais mais procurados</h2><p>Fotos de provas, vídeos e imagens da Biblioteca desta matéria.</p></div><strong>'+all.length+' arquivos</strong></div>'+
+  html='<section class="sxMG" data-sxmg><div class="sxMGHead"><div><small>'+h(subject)+' · ACERVO</small><h2>Arquivos da biblioteca</h2><p>Arquivos relacionados à sua matéria e turma.</p></div><strong>'+all.length+' arquivos</strong></div>'+
   '<div class="sxMGStats">'+[['Fotos de provas',examPhotos.length,'provas'],['Vídeos',videos.length,'videos'],['Imagens',photos.length,'fotos'],['Resumos',summaries.length,'apostila'],['Slides',slides.length,'slides']].map(([name,n,tab])=>
   '<button type="button" data-sxmg-tab="'+tab+'"><b>'+n+'</b><small>'+name+'</small></button>').join('')+'</div>'+
   (featured.length?'<div class="sxMGGrid">'+featured.map(card).join('')+'</div>':'<p class="sxMGEmpty">Nenhum arquivo foi classificado com segurança para esta matéria ainda.</p>')+'</section>';
@@ -70,7 +73,7 @@ function render(){
   if(host.querySelector('[data-sx-course-media]'))return;
   list=videos;title='Vídeos da matéria';desc='Vídeos indexados na Biblioteca.';label='VIDEOAULAS';
  }else if(tab==='slides'){
-  list=slides;title='Slides da Biblioteca';desc='Apresentações e materiais de aula.';label='SLIDES';
+  list=slides;title='Arquivos da biblioteca';desc='Apresentações e materiais de aula.';label='SLIDES';
  }else if(tab==='apostila'){
   list=summaries;title='Resumos e apostilas';desc='Revisões desta disciplina.';label='ESTUDAR';
  }else if(['training','cartoes'].includes(tab)){
