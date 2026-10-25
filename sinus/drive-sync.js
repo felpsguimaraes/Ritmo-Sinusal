@@ -78,12 +78,9 @@ function apply(DB,period,cohort){
  selected.forEach(function(x){
    if(!x.id||exists.has(String(x.id)))return;
    var name=subjectName(x.s);
-   if(!DB.subjects[name])DB.subjects[name]={
-    teacher:'',practiceTeacher:'',mode:'Teoria + Prática',
-    accent:'mint',slides:[],provas:[],audios:[],videos:[],pratica:[],complementares:[],
-    id:'sx_drive_'+norm(name).replace(/[^a-z0-9]+/g,'_'),active:true,period:num,slug:'drive-'+num
-   };
-   var subject=DB.subjects[name],info=category(x),cat=info[0];
+   var gradeName=Object.keys(DB.subjects).find(function(key){return norm(key)===norm(name)&&Number(DB.subjects[key].period)===num});
+   if(!gradeName)return; // Jamais criar disciplina a partir de pasta ou arquivo.
+   var subject=DB.subjects[gradeName],info=category(x),cat=info[0];
    if(!Array.isArray(subject[cat]))subject[cat]=[];
    var item={
     title:x.t,period:'Turma '+c+(x.sec?' · '+x.sec:''),
