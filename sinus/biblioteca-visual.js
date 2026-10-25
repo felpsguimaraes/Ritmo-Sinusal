@@ -24,6 +24,15 @@ async function loadUploads(){
  } catch(err){console.error('SINUS biblioteca',err);W.toast?.('Não foi possível carregar seus arquivos: '+(err.message||'erro desconhecido'));}
  finally{uploads.loading=false;}
 }
+// URL curta e autorizada para pré-visualizar, apenas quando o aluno escolher um slide privado.
+async function previewUploaded(id){
+ const item=uploads.items.find(x=>'uploaded:'+x.id===String(id));
+ if(!item)throw Error('Arquivo não encontrado na sua biblioteca.');
+ if(!backend())throw Error('Faça login para abrir seu slide.');
+ const {data,error}=await backend().storage.from(uploadBucket).createSignedUrl(item.storage_path,120);
+ if(error||!data?.signedUrl)throw Error(error?.message||'Não foi possível visualizar o arquivo.');
+ return {url:data.signedUrl,mime:item.mime_type||'',title:item.title||item.file_name};
+}
 async function openUploaded(id){
  const item=uploads.items.find(x=>'uploaded:'+x.id===id);if(!item)return;
  const popup=W.open('about:blank','_blank');try{
@@ -304,5 +313,5 @@ function privateForSubject(subject,period){
  const p=Number(period);
  return uploadedItems().filter(x=>x.subject===subject&&(!x.academicPeriod||Number(x.academicPeriod)===p));
 }
-W.SinusLibrary={catalog,filtered,render,purpose,priority,isSlide,loadUploads,openUploaded,openYoutube,privateForSubject,openCollection,hydrateThumbnails,coverPreview,get uploadsReady(){return uploads.ready}};
+W.SinusLibrary={catalog,filtered,render,purpose,priority,isSlide,loadUploads,openUploaded,previewUploaded,openYoutube,privateForSubject,openCollection,hydrateThumbnails,coverPreview,get uploadsReady(){return uploads.ready}};
 })(window,document);
