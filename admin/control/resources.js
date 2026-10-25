@@ -1,7 +1,7 @@
 /* SINUS · Edição dos balões por período, turma e matéria */
 (function(W,D){'use strict';
 const END='https://qyioizupudjrwmtasrue.supabase.co/functions/v1/sinus-subject-resources';
-const C=[['overview','Visão geral'],['resumos','Resumos e apostilas'],['slides','Slides'],['provas','Provas e gabaritos'],['audios','Áudios'],['videos','Vídeos'],['pratica','Materiais práticos'],['laminas','Lâminas e imagens'],['complementares','Complementares'],['livros','Livros'],['training','Exercícios e treino'],['review','Revisão'],['transcribe','Transcrição'],['notebook','Caderno'],['lembretes','Lembretes']];
+const C=[['overview','Visão geral'],['resumos','Resumos e apostilas'],['slides','Slides da turma'],['provas','Provas e gabaritos'],['audios','Áudios'],['videos','Vídeos'],['pratica','Materiais práticos'],['laminas','Lâminas e imagens'],['complementares','Complementares'],['livros','Livros'],['training','Exercícios e treino'],['review','Revisão'],['transcribe','Transcrição'],['notebook','Caderno'],['lembretes','Lembretes']];
 const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const S={period:5,cohort:'*',subject:'',section:'resumos',configs:[],loading:false};
 const root=()=>D.getElementById('view');
@@ -13,7 +13,15 @@ const direct=()=>S.configs.find(x=>x.cohort===S.cohort&&x.section===S.section);
 const inherited=()=>S.configs.find(x=>x.cohort==='*'&&x.section===S.section);
 const chosen=()=>direct()||(S.cohort==='*'?null:inherited());
 function alertText(value,err){const x=D.getElementById('resources-status');if(x){x.textContent=value;x.classList.toggle('is-error',!!err);}}
-function drawLinks(links){return (links||[]).map((item,i)=>'<div class="res-link"><label>Título<input class="res-link-title" maxlength="100" placeholder="Ex.: Slides da semana" value="'+esc(item.title||'')+'"></label><label>Link do Drive<input class="res-link-url" type="url" maxlength="1800" placeholder="https://drive.google.com/drive/folders/…" value="'+esc(item.url||'')+'"></label><button class="res-remove" type="button" data-res-remove="'+i+'" aria-label="Remover link">×</button></div>').join('');}
+function drawLinks(links){
+ return (links||[]).map((item,i)=>{
+  const stage=String(item.stage||'OUTROS').toUpperCase();
+  return '<div class="res-link"><label>Título<input class="res-link-title" maxlength="100" placeholder="Ex.: Slides de Fisiopatologia" value="'+esc(item.title||'')+'"></label>'+
+   '<label>Link do Drive<input class="res-link-url" type="url" maxlength="1800" placeholder="https://drive.google.com/drive/folders/…" value="'+esc(item.url||'')+'"></label>'+
+   (S.section==='slides'?'<label class="res-stage-label">Avaliação<select class="res-link-stage">'+[['P1','P1'],['P2','P2'],['FINAL','Final'],['OUTROS','Outros']].map(([value,text])=>'<option value="'+value+'" '+(stage===value?'selected':'')+'>'+text+'</option>').join('')+'</select></label>':'')+
+   '<button class="res-remove" type="button" data-res-remove="'+i+'" aria-label="Remover link">×</button></div>';
+ }).join('');
+}
 function renderEditor(){
  const cfg=chosen()||{visible:true,label:'',links:[]},owned=direct();
  const here=D.getElementById('res-editor');if(!here)return;
@@ -21,14 +29,14 @@ function renderEditor(){
  '<form id="res-editor-form"><label class="res-check"><input id="res-visible" type="checkbox" '+(cfg.visible?'checked':'')+'> Exibir esta aba ou balão na matéria</label>'+
  '<label>Nome exibido (opcional)<input id="res-label" maxlength="65" value="'+esc(cfg.label||'')+'" placeholder="'+esc(C.find(c=>c[0]===S.section)?.[1]||'')+'"></label>'+
  '<div class="res-links-head"><h3>Links dos materiais</h3><button type="button" id="res-add">+ Adicionar link</button></div>'+
- '<p class="res-hint">Cole a pasta ou o arquivo do Google Drive. Até 10 links por balão. Não é necessário mudar o código para atualizar depois.</p>'+
+ '<p class="res-hint">Cole a pasta ou o arquivo do Google Drive. Até 10 links por balão. Na aba Slides, classifique cada pasta/arquivo em P1, P2, Final ou Outros. O aluno seleciona essas divisões ao lado do player.</p>'+
  '<div id="res-link-list">'+drawLinks(cfg.links)+'</div>'+
  '<div class="res-actions"><button class="primary" type="submit">Salvar esta aba</button><button type="button" id="res-reset" '+(owned?'':'disabled')+'>Restaurar padrão</button></div></form>';
  const list=D.getElementById('res-link-list');
  D.getElementById('res-add').onclick=()=>{if(list.children.length>=10){alertText('Cada balão aceita até 10 links.',true);return}const wrap=D.createElement('div');wrap.innerHTML=drawLinks([{title:'',url:''}]);list.append(wrap.firstElementChild);};
  list.onclick=e=>{const b=e.target.closest('[data-res-remove]');if(b)b.closest('.res-link').remove();};
  D.getElementById('res-reset').onclick=async()=>{if(!confirm('Remover a personalização desta aba e voltar ao padrão?'))return;try{await api('delete',{...scope(),section:S.section});await refresh();alertText('Configuração restaurada.');}catch(e){alertText(e.message,true);}};
- D.getElementById('res-editor-form').onsubmit=async e=>{e.preventDefault();const links=[...list.querySelectorAll('.res-link')].map(r=>({title:r.querySelector('.res-link-title').value.trim(),url:r.querySelector('.res-link-url').value.trim()}));const btn=e.target.querySelector('[type=submit]');btn.disabled=true;try{await api('save',{...scope(),section:S.section,label:D.getElementById('res-label').value.trim(),visible:D.getElementById('res-visible').checked,links});await refresh();alertText('Balão atualizado para '+S.period+'º período · '+(S.cohort==='*'?'todas as turmas':'turma '+S.cohort)+' · '+S.subject+'.');}catch(ex){alertText(ex.message,true);}finally{btn.disabled=false;}};
+ D.getElementById('res-editor-form').onsubmit=async e=>{e.preventDefault();const links=[...list.querySelectorAll('.res-link')].map(r=>({title:r.querySelector('.res-link-title').value.trim(),url:r.querySelector('.res-link-url').value.trim(),stage:r.querySelector('.res-link-stage')?.value||'OUTROS'}));const btn=e.target.querySelector('[type=submit]');btn.disabled=true;try{await api('save',{...scope(),section:S.section,label:D.getElementById('res-label').value.trim(),visible:D.getElementById('res-visible').checked,links});await refresh();alertText('Balão atualizado para '+S.period+'º período · '+(S.cohort==='*'?'todas as turmas':'turma '+S.cohort)+' · '+S.subject+'.');}catch(ex){alertText(ex.message,true);}finally{btn.disabled=false;}};
 }
 function drawTiles(){const grid=D.getElementById('res-section-grid');if(!grid)return;grid.innerHTML=C.map(([id,label])=>{const d=S.configs.find(x=>x.cohort===S.cohort&&x.section===id);const inher=S.cohort==='*'?null:S.configs.find(x=>x.cohort==='*'&&x.section===id);const x=d||inher;return '<button type="button" class="res-tile '+(S.section===id?'on':'')+'" data-section="'+id+'"><span>'+esc(label)+'</span><small>'+(x?.visible===false?'Oculto':(x?.links?.length||0)+' link(s)')+' · '+(d?'Turma':inher?'Padrão geral':'Original')+'</small></button>';}).join('');grid.onclick=e=>{const b=e.target.closest('[data-section]');if(!b)return;S.section=b.dataset.section;drawTiles();renderEditor();};}
 async function refresh(){if(!S.subject){alertText('Selecione uma matéria.',true);return;}S.configs=(await api('list',scope())).configs||[];drawTiles();renderEditor();}
