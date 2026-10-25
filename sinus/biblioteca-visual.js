@@ -113,8 +113,26 @@ function catalog(){
   ids.add(id);if(origin)origins.add(origin);
   out.push({...item,id,subject,cat,academicPeriod:academicPeriod??null,local:false});
  }
- /* Preferir a cópia auditada e sua disciplina corrigida; manter todos os catálogos preexistentes. */
+ /* A Biblioteca cataloga materiais por período mesmo quando a turma está em outro semestre.
+    Somente a grade determina quais matérias aparecem no portal. */
  (W.SinusAcervoAuditado?.items||[]).forEach(x=>add(x,x.subject,x.cat,x.academicPeriod));
+ (W.SinusMedicina?.state?.items||[]).forEach(x=>{
+  if(!x.id||!x.s||!Number.isInteger(Number(x.p))||Number(x.p)<1||Number(x.p)>10)return;
+  add({title:x.t,id:x.id,kind:x.m,mime:x.m,source:'medicina',studyMode:x.area==='practice'?'practice':'theory',
+     studySection:x.section||x.cat,requiresGooglePermission:true},x.s,x.cat||'complementares',Number(x.p));
+ });
+ (W.SinusDrive?.state?.items||[]).forEach(x=>{
+  const period=Number(x.p);if(!x.id||!x.s||!Number.isInteger(period)||period<1||period>10)return;
+  const mime=String(x.m||'');
+  const desc=norm((x.sec||'')+' '+(x.t||''));
+  const practice=/pratica|practica|lamina|laboratorio|microscop|macroscop/.test(desc);
+  const exam=/prova|prueba|examen|parcial|avaliac|evaluac|simulado|questionario|cuestionario/.test(desc);
+  const mode=practice?'practice':'theory';
+  const category=exam?'provas':/^video\//.test(mime)?'videos':/^audio\//.test(mime)?'audios':
+     practice?'pratica':/presentation|powerpoint/.test(mime)?'slides':'complementares';
+  add({title:x.t,id:x.id,kind:mime,mime,source:'drive-indexado',studyMode:mode,
+       studySection:category==='pratica'?'laminas':category,cohort:x.c||'',requiresGooglePermission:true},x.s,category,period);
+ });
  Object.keys(DB.subjects||{}).forEach(subject=>{V11_CATS.forEach(cat=>{(DB.subjects[subject][cat]||[]).forEach(item=>add(item,subject,cat,item.academicPeriod??DB.subjects[subject].period))})});
  return out.concat(uploadedItems());
 }
