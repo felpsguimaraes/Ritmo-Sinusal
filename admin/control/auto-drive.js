@@ -26,6 +26,8 @@ function cohort(text){
  for(const ch of chunks){
   const m=ch.match(/(?:^|\s)(?:turma|classe|grupo)\s*[-.:]?\s*([A-Z])\b/i);
   if(m)return m[1].toUpperCase();
+  const numbered=ch.match(/^\s*(?:[1-9]|10)\s*[º°]?\s*([A-Z])\b/i);
+  if(numbered)return numbered[1].toUpperCase();
  }
  return '*';
 }
@@ -42,7 +44,7 @@ function subjects(){
 }
 const aliases={'anatomia patologica':'anatomia patologica','anatopato':'anatomia patologica','semiologia':'semiologia','fisiopatologia':'fisiopatologia','medicina familiar':'medicina de la familia','medicina da familia':'medicina de la familia'};
 function matchSubject(path,p,catalog){
- const parents=path.split(' / ').slice(0,-1),options=catalog.filter(s=>s.period===p);
+ const parts=path.split(' / '),parents=parts.slice(0,-1),filename=norm(parts.at(-1)||''),options=catalog.filter(s=>s.period===p);
  const candidates=options.map(s=>{
   const full=s.n.replace(/\s+(?:i|ii|iii|iv|v|1|2|3|4|5)$/,'');
   const terms=[s.n,full,...Object.entries(aliases).filter(([,v])=>s.n.includes(v)).map(([k])=>k)];
@@ -54,6 +56,7 @@ function matchSubject(path,p,catalog){
     else if(segment.includes(term))score=Math.max(score,60+idx);
    }
   }
+  for(const term of terms){if(term.length>=7&&filename.includes(term))score=Math.max(score,15);}
   return {s,score};
  }).sort((a,b)=>b.score-a.score);
  if(!candidates[0]?.score)return null;
