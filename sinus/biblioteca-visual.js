@@ -118,6 +118,15 @@ function catalog(){
  /* A Biblioteca cataloga materiais por período mesmo quando a turma está em outro semestre.
     Somente a grade determina quais matérias aparecem no portal. */
  (W.SinusAcervoAuditado?.items||[]).forEach(x=>add(x,x.subject,x.cat,x.academicPeriod));
+ // Cada arquivo de vídeo UCP é um cartão individual na Biblioteca,
+ // separado por disciplina e mantendo as permissões originais do Drive.
+ (W.SinusCatedraUCP?.videos||[]).forEach(x=>{
+  const p=Number(x.anatomyPeriod);
+  if(![1,2].includes(p)||!/^video\//.test(x.mime||''))return;
+  add({id:x.id,title:x.title,kind:'Vídeo',mime:x.mime,source:'ucp-drive',
+   studyMode:'practice',studySection:'videos',requiresGooglePermission:true},
+   'Anatomía '+(p===1?'I':'II'),'videos',p);
+ });
  (W.SinusMedicina?.state?.items||[]).forEach(x=>{
   if(!x.id||!x.s||!Number.isInteger(Number(x.p))||Number(x.p)<1||Number(x.p)>10)return;
   add({title:x.t,id:x.id,kind:x.m,mime:x.m,source:'medicina',studyMode:x.area==='practice'?'practice':'theory',
