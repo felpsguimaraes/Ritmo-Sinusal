@@ -1,9 +1,539 @@
 {
-  "updatedAt": null,
+  "updatedAt": "2026-10-25T10:33:49Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
   ],
-  "videos": [],
-  "counts": {}
+  "videos": [
+    {
+      "id": "NbspWagqMoU",
+      "title": "SAGITTAL SECTION PART 1",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=NbspWagqMoU",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "cm_m6UO3c1k",
+      "title": "Sagittal section Larynx and Pharynx",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=cm_m6UO3c1k",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "n6ufOldVq64",
+      "title": "ESTRUCTURAS DE LA LÍNEA MEDIA DESDE UN CORTE SAGITAL",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=n6ufOldVq64",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "lc3ZkF7-O-g",
+      "title": "MENINGES Y SENOS VENOSOS DE LA DURAMADRE",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=lc3ZkF7-O-g",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "6KwT9LHsq5U",
+      "title": "PRACTICAL NEUROANATOMY - Full Video",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=6KwT9LHsq5U",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "xb24qVYAzY8",
+      "title": "CEREBRO - Video Completo",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=xb24qVYAzY8",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "UgBZxounxKc",
+      "title": "Sistema Genital Femenino",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=UgBZxounxKc",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "f6uVTef7zJs",
+      "title": "CADENA SIMPÁTICA CERVICAL",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=f6uVTef7zJs",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "mM6v6CRJv-o",
+      "title": "ESTOMAGO",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=mM6v6CRJv-o",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "osl4JYIqOSE",
+      "title": "Bazo",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=osl4JYIqOSE",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "1Ubtg0UOzRg",
+      "title": "Tronco celiaco",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=1Ubtg0UOzRg",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "yYrBt3nBuGg",
+      "title": "Repaso de abdomen 3",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=yYrBt3nBuGg",
+      "section": "streams",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "SW3R6hSJ64E",
+      "title": "Repaso de abdomen 2",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=SW3R6hSJ64E",
+      "section": "streams",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "J0hzjNU5DF4",
+      "title": "Repasso Anatomia Abdomen 1",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=J0hzjNU5DF4",
+      "section": "streams",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "X9uJRyrnAi8",
+      "title": "REPASO - 1ra Parcial Práctica",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=X9uJRyrnAi8",
+      "section": "streams",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "NHJQ27JjaBw",
+      "title": "Región posterior del muslo",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=NHJQ27JjaBw",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "RBbeyY36HKM",
+      "title": "Regiones glúteas - II",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=RBbeyY36HKM",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "noXovneNDL8",
+      "title": "Regiones glúteas - I",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=noXovneNDL8",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "UIx4qDSI2Tw",
+      "title": "Repaso - Abdomen",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=UIx4qDSI2Tw",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "1AHM8rvHwNQ",
+      "title": "Anatomía del hígado - II",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=1AHM8rvHwNQ",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "7s64mANgbpI",
+      "title": "Anatomía del riñón - II",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=7s64mANgbpI",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "R4s5DSjkT0Q",
+      "title": "Corazón",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=R4s5DSjkT0Q",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "SWINBbcl-68",
+      "title": "Plexo braquial",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=SWINBbcl-68",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "u1HxLGIjEG8",
+      "title": "Músculos del antebrazo",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=u1HxLGIjEG8",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "nHZW6CK0o2g",
+      "title": "Músculos del Muslo",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=nHZW6CK0o2g",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "bcqxoSRCBmc",
+      "title": "Músculos de la pierna",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=bcqxoSRCBmc",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "aQfyD5J9oKg",
+      "title": "Músculos Pelvitrocantericos",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=aQfyD5J9oKg",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "fl0E86lgVnU",
+      "title": "Tibia, Rótula y Peroné",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=fl0E86lgVnU",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "KfO-b-jsud8",
+      "title": "Anatomía del Fémur",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=KfO-b-jsud8",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "a1CZMFQhGXE",
+      "title": "III Edición de la Trívia de Anatomia",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=a1CZMFQhGXE",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "qzyutNBRyC0",
+      "title": "Vasos y Nervios del Abdomen",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=qzyutNBRyC0",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "2feLM0VhtV0",
+      "title": "Riñones y uréteres",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=2feLM0VhtV0",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "U4aAwizUofk",
+      "title": "Anatomía del Corazón",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=U4aAwizUofk",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "dbzt_0G1OW4",
+      "title": "Anatomia de las vías biliares",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=dbzt_0G1OW4",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "JqXZYOPzPZg",
+      "title": "Músculos del Abdomen",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=JqXZYOPzPZg",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "pSZ4pFmM6Ow",
+      "title": "Hueso Coxal",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=pSZ4pFmM6Ow",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "CDmx1IzN7Ik",
+      "title": "Intestino delgado, grueso y peritoneo",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=CDmx1IzN7Ik",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "aVnzIxAZy4k",
+      "title": "Anatomía del Estómago",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=aVnzIxAZy4k",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "d9GAxTr08Ic",
+      "title": "Anatomia Humana Hígado",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=d9GAxTr08Ic",
+      "section": "videos",
+      "anatomyPeriod": "2",
+      "type": "catedra"
+    },
+    {
+      "id": "Q4CwOL--cX0",
+      "title": "Plexo Braquial",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=Q4CwOL--cX0",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "WfKyfsQ3UpE",
+      "title": "Músculos del Brazo",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=WfKyfsQ3UpE",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "a7SJfkbVuNg",
+      "title": "Anatomia Humana Pulmones",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=a7SJfkbVuNg",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "4SYaKGuRLlk",
+      "title": "Músculos del Tórax",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=4SYaKGuRLlk",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "co6UY9miafc",
+      "title": "Músculos del Dorso",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=co6UY9miafc",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "68bE5owXJko",
+      "title": "Columna Vertebral",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=68bE5owXJko",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "naFHPer5XSk",
+      "title": "Músculos de la mano",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=naFHPer5XSk",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "4ITE-O9hUIU",
+      "title": "Huesos del Antebrazo - Radio y Cubito",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=4ITE-O9hUIU",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "_K4pkEyQ-ek",
+      "title": "Anatomia Humana Esternón",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=_K4pkEyQ-ek",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "x02f_tblzS4",
+      "title": "Anatomia Humana Clavícula",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=x02f_tblzS4",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "gY8JJkXZDMg",
+      "title": "Anatomia Humana Húmero",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=gY8JJkXZDMg",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "FsNbz7x7xtI",
+      "title": "Anatomia Humana Escápula",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=FsNbz7x7xtI",
+      "section": "videos",
+      "anatomyPeriod": "geral",
+      "type": "catedra"
+    },
+    {
+      "id": "0901cT6Yr8g",
+      "title": "Anatomia Humana Costillas",
+      "channelHandle": "@anatomiaupe2188",
+      "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
+      "url": "https://www.youtube.com/watch?v=0901cT6Yr8g",
+      "section": "videos",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    }
+  ],
+  "counts": {
+    "anatomiaupefranco": {
+      "newScan": 15,
+      "total": 15
+    },
+    "anatomiaupe2188": {
+      "newScan": 37,
+      "total": 37
+    }
+  }
 }
