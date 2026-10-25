@@ -52,10 +52,9 @@ async function sync(DB,context,onDone){
    var p=Number(raw.p||5),subject=legacySubject(raw.s);
    if(p<1||p>10){libraryStatus.skipped++;continue}
    var k=kind(raw.m,raw.t),cat=category(raw,k);
-   var key=subject;
-   if(DB.subjects[key]&&Number(DB.subjects[key].period||5)!==p)key=subject+' · '+p+'º período';
+   var key=Object.keys(DB.subjects||{}).find(function(name){return str(name)===str(subject)&&Number(DB.subjects[name].period)===p});
+   if(!key){libraryStatus.skipped++;continue} // A grade determina matérias, nunca a biblioteca.
    var box=DB.subjects[key];
-   if(!box){box=DB.subjects[key]=emptySubject(subject,p)}
    var title=String(raw.t||'Material sem título');
    box[cat].push({title,period:'Turma '+(raw.c||'')+(raw.sec?' · '+raw.sec:''),kind:k,id:raw.id,uid:'drive_'+raw.id,active:true,studyMode:cat==='pratica'?'practice':'theory',studySection:cat==='pratica'?'laminas':cat==='slides'?'slides':'complementares',mime:raw.m||'',cohort:raw.c||'',origin:'drive-class',requiresGooglePermission:true});
    existing.add(raw.id);libraryStatus.indexed++;
