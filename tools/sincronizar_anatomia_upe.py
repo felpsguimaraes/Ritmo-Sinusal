@@ -6,6 +6,7 @@ O catálogo anterior é preservado quando a origem falha.
 import json
 import re
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,6 +17,45 @@ OUTPUT = ROOT / "sinus" / "anatomia-upe-videos.json"
 CHANNELS = ("anatomiaupefranco", "anatomiaupe2188")
 SECTIONS = ("videos", "shorts", "streams")
 ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
+
+# Curadoria SINUS: aceita somente videoaulas, demonstrações e revisões.
+# Títulos de divulgação de eventos, marketing ou propaganda nunca são importados.
+BLOCKED_IDS = {"a1CZMFQhGXE"}  # III Edición de la Trívia de Anatomia (evento)
+PROMOTIONAL = re.compile(
+    r"\b(?:trivia|anatotrivia|edicion|edicao|edition|promo|promocion|"
+    r"promotional|publicidad|propaganda|anuncio|advertisement|"
+    r"inscripcion|matricula|admisiones|oferta|descuento|"
+    r"evento|event|invitacion|convocatoria|inauguracion|graduacion|"
+    r"congreso|conferencia institucional|seminario institucional|"
+    r"ceremonia|entrevista|testimonio|sorteo|lanzamiento|"
+    r"aniversario|institucional|tour del campus|suscribete|"
+    r"jornada cientifica|noticia|festival|competencia|campeonato)\b",
+    re.I
+)
+ACADEMIC = re.compile(
+    r"anatom|neuro|histolog|sagittal|sagital|section|"
+    r"repaso|repasso|revision|review|practical|"
+    r"muscul|hueso|estructur|regi[oó]n|vascular|vasos|nervio|"
+    r"vena|arteria|braquial|cran|cerebral|spinal|m[eé]dula|"
+    r"coraz[oó]n|heart|brain|kidney|spleen|larynx|pharynx|"
+    r"est[oó]mag|stomach|intestin|abdomen|glute|pelvi|"
+    r"peritone|trunk|cerebell|dors|plexo",
+    re.I
+)
+
+def normalize_title(value):
+    return "".join(c for c in unicodedata.normalize("NFD", value.lower())
+                   if unicodedata.category(c) != "Mn")
+
+def academic_video(video_id, title):
+    # Em caso de dúvida não incluir automaticamente na biblioteca de estudo.
+    canonical = normalize_title(title)
+    return (
+        video_id not in BLOCKED_IDS
+        and not PROMOTIONAL.search(canonical)
+        and bool(ACADEMIC.search(canonical) or FIRST.search(title) or SECOND.search(title))
+    )
+
 
 # Só classificar quando o título aponta claramente para o conteúdo;
 # as aulas genéricas continuam disponíveis em ambas, sem inventar semestre.
@@ -75,6 +115,9 @@ def extract(handle, section):
             "[Private video]", "[Deleted video]", "[Unavailable video]"
         ):
             continue
+        if not academic_video(vid, title):
+            print(f"Excluído (não é aula verificada pelo título): {vid} | {title}", flush=True)
+            continue
         result.append({
             "id": vid, "title": title[:300],
             "channelHandle": "@" + handle,
@@ -89,7 +132,9 @@ def main():
     previous = json.loads(OUTPUT.read_text("utf-8")) if OUTPUT.exists() else {"videos": []}
     old_by_channel = {}
     for x in previous.get("videos", []):
-        if x.get("channelHandle", "").lstrip("@") in CHANNELS and ID.fullmatch(str(x.get("id") or "")):
+        if (x.get("channelHandle", "").lstrip("@") in CHANNELS
+                and ID.fullmatch(str(x.get("id") or ""))
+                and academic_video(str(x.get("id")), str(x.get("title") or ""))):
             old_by_channel.setdefault(x["channelHandle"].lstrip("@"), []).append(x)
     all_items = []
     stats = {}
@@ -106,6 +151,8 @@ def main():
         # Não inventar dados nem perder vídeos já validados em falha transitória.
         combined = {x["id"]: x for x in old_by_channel.get(handle, [])}
         combined.update({x["id"]: x for x in fresh})
+        combined = {vid: x for vid, x in combined.items()
+                    if academic_video(vid, str(x.get("title") or ""))}
         if fresh:
             recovered += 1
         stats[handle] = {"newScan": len(set(x["id"] for x in fresh)), "total": len(combined)}
