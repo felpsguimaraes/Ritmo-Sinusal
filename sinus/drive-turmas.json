@@ -24,20 +24,21 @@
       "turma": "C",
       "rootId": "1Ziq2Wy9FPEF5D67y2B3WFIufHcXOHj4h",
       "pasta": "DRIVE TURMA C - 2026.1 / 5° SEMESTRE 2025.1"
-    }
-  ],
-  "pendentes": [
+    },
     {
       "periodo": 5,
       "turma": "E",
-      "motivo": "Pasta 'Turma E' não tem subpasta de 5º semestre; confirmar a raiz correta."
+      "rootId": "1NzcI2etFz753ogc4wxhuWTUTgOyCDdTS",
+      "pasta": "Turma E / Material das Aulas / 5º Semestre"
     },
     {
       "periodo": 5,
       "turma": "F",
-      "motivo": "Pasta da turma F não localizada na conta conectada."
+      "rootId": "1e_V7Ed9bO6lcz-YFDVVGMIfcdX2wm3W2",
+      "pasta": "5 F"
     }
   ],
+  "pendentes": [],
   "ignorar": [
     "Horários ônibus UCP",
     "INFORMAÇÕES GERAIS",

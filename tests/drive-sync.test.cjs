@@ -14,6 +14,14 @@ global.fetch = async (p) => {
 require(path.join(repo, 'sinus/drive-sync.js'));
 
 // Nomes de pastas reais observados no Drive (turmas A, B, C e G) -> matéria do app
+const NOMES_TURMAS_EF = {
+  'Anatomia Patológica I': 'Anatomía Patológica I', 'Farmacologia': 'Farmacología I',
+  'Medicina da Família': 'Medicina de la Familia', 'Semiologia médica I': 'Semiología Médica I',
+  'Imagenologia': 'Imagenología', 'Fisiopatologia I': 'Fisiopatología I',
+  'Anatomía Patologica': 'Anatomía Patológica I', 'Semiología I': 'Semiología Médica I',
+  'Medicina de la família': 'Medicina de la Familia', 'Farmacología I': 'Farmacología I',
+  'Fisiopatología I': 'Fisiopatología I',
+};
 const NOMES = {
   'Farmacologia I': 'Farmacología I', 'Anatomia patológica I': 'Anatomía Patológica I',
   'Semiologia I': 'Semiología Médica I', 'Imagenologia': 'Imagenología', 'Fisio patologia I': 'Fisiopatología I',
@@ -36,7 +44,7 @@ const test = (name, fn) => { try { fn(); console.log('ok  ', name); } catch (e) 
   });
 
   test('todas as variações de nome de pasta caem na matéria do app', () => {
-    for (const [pasta, esperado] of Object.entries(NOMES)) {
+    for (const [pasta, esperado] of Object.entries({ ...NOMES, ...NOMES_TURMAS_EF })) {
       assert.strictEqual(W.SinusDriveSubjectName(pasta), esperado, `pasta "${pasta}"`);
     }
   });
