@@ -66,7 +66,7 @@ function matchSubject(path,p,catalog){
 function sectionOf(path,file){
  const n=norm(path),name=norm(file.name),mime=String(file.mimeType||'');
  if(/(?:provas?|exames?|evaluacion|examenes?|gabarito|parcial|simulado|prueba)/.test(name))return 'provas';
- if(/(?:^|\/)(?:provas?|exames?|parciais?|evaluaciones|pruebas?)(?:\/|$)/.test(n))return 'provas';
+ if(/(?:^|\/)\s*(?:provas?|exames?|parciais?|evaluaciones|pruebas?)\b/.test(n))return 'provas';
  if(/\b(?:livros?|libros?|books?|bibliografia)\b/.test(n))return 'livros';
  if(/\b(?:resumos?|resumenes?|apostilas?|apuntes?|revisao|revision)\b/.test(n))return 'resumos';
  if(/\b(?:laminas?|laminas?|microscopia|histologia\s+pratica)\b/.test(n))return 'laminas';
@@ -116,7 +116,7 @@ async function oauth(){
  localStorage.setItem('sinus_admin_return','1');
  const {error}=await W.SinusBackend.client.auth.signInWithOAuth({provider:'google',options:{
   redirectTo:location.origin+'/',scopes:'https://www.googleapis.com/auth/drive.metadata.readonly',
-  queryParams:{access_type:'offline',prompt:'consent'}
+  queryParams:{access_type:'offline',prompt:'consent select_account'}
  }});
  if(error)status(error.message,true);
 }
