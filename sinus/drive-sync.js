@@ -49,11 +49,16 @@ function extKind(x){
  return 'Arquivo'
 }
 function category(x){
- var str=norm((x.s||'')+' '+(x.sec||'')+' '+(x.t||''));
- if(/^video\//.test(x.m||''))return ['videos',/pratica|lamina|macroscopia/.test(str)?'practice':'theory','videos'];
- if(/^audio\//.test(x.m||''))return ['audios','theory','audios'];
- if(/pratica|lamina|laminario|macroscopia|practica|histologia ii pratica/.test(norm((x.s||'')+' '+(x.sec||''))))return ['pratica','practice',/macroscopia/.test(str)?'macro':'laminas'];
- if(/prova|parcial|final|simulad|examen/.test(str))return ['provas','theory','provas'];
+ var title=norm(x.t||''),sec=norm(x.sec||''),str=norm((x.s||'')+' '+sec+' '+title);
+ var isPractice=/pratica|practica|lamina|laminario|macroscopia|microscopia|laboratorio/.test(sec+' '+title);
+ // Provas da prática não podem cair em "Lâminas"; priorizar exames e simulados.
+ var isExam=(/provas?|pruebas?|examen|avaliac|evaluac|parcial|simulad|questionario|cuestionario|questoes|exercicios/.test(title)&&!/^repasso|^repaso|^resumo/.test(title))
+    ||/\b(provas|questionarios|simulados|avaliacoes|evaluaciones)\b/.test(sec)
+    ||/\bfinal\b/.test(title)&&!/repasso|repaso|resumo|revision/.test(title);
+ if(isExam)return ['provas',isPractice?'practice':'theory','provas'];
+ if(/^video\//.test(x.m||''))return ['videos',isPractice?'practice':'theory','videos'];
+ if(/^audio\//.test(x.m||''))return ['audios',isPractice?'practice':'theory','audios'];
+ if(isPractice)return ['pratica','practice',/macroscopia/.test(str)?'macro':'laminas'];
  if(/slide|aula|teorica|teoria|clase|presentacion/.test(str))return ['slides','theory','slides'];
  if(/^image\//.test(x.m||''))return ['complementares','theory','fotos'];
  return ['complementares','theory','complementares'];
