@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T10:36:50Z",
+  "updatedAt": "2026-10-25T10:40:03Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -77,7 +77,7 @@
     },
     {
       "id": "f6uVTef7zJs",
-      "title": "CADENA SIMPÁTICA CERVICAL",
+      "title": "CERVICAL SYMPATHETIC CHAIN",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=f6uVTef7zJs",
@@ -107,7 +107,7 @@
     },
     {
       "id": "1Ubtg0UOzRg",
-      "title": "Tronco celiaco",
+      "title": "Celiac Trunk",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=1Ubtg0UOzRg",
@@ -177,32 +177,32 @@
     },
     {
       "id": "CsMUNIslmeU",
-      "title": "HEART - Internal Configuration - Right Atrium",
+      "title": "CORAZÓN - Configuración Interna - Aurícula Derecha",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=CsMUNIslmeU",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "HEART - External Configuration - Part 2",
+      "title": "CORAZÓN - Configuración Externa - Parte 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "HEART - External Configuration - Part 1",
+      "title": "CORAZÓN - Configuración Externa - Parte 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -212,7 +212,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=QTCq70XbM1c",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -227,7 +227,7 @@
     },
     {
       "id": "BllOA4xplp8",
-      "title": "BRAIN Part 2",
+      "title": "CEREBRO 2da Parte",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=BllOA4xplp8",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
+      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -247,7 +247,7 @@
     },
     {
       "id": "UQsE3-rbjTw",
-      "title": "CEREBELLUM",
+      "title": "CEREBELO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=UQsE3-rbjTw",
@@ -257,17 +257,17 @@
     },
     {
       "id": "bM3vsmRIdDE",
-      "title": "VISIÓN MEDIAL DEL TRONCO ENCEFÁLICO",
+      "title": "MEDIAL VIEW OF THE BRAINSTEM",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=bM3vsmRIdDE",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
       "id": "CHc84qG6Chs",
-      "title": "PUENTE O PROTUBERANCIA",
+      "title": "BRIDGE OR PROTUBERANCE",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=CHc84qG6Chs",
@@ -282,7 +282,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -292,7 +292,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -302,17 +302,17 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=nM0xvmPRiD8",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "POLÍGONO DE WILLIS",
+      "title": "Willis's Polygon",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -322,7 +322,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=L_rCAQf3duk",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -332,7 +332,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cU6MngfQ3rQ",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -342,7 +342,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=o4XSz3Wy27A",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -352,22 +352,22 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=xB3nHIM8-4Y",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
       "id": "7w96_AG4JWQ",
-      "title": "INFERIOR VENA CAVA",
+      "title": "VENA CAVA INFERIOR",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=7w96_AG4JWQ",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
       "id": "cEuy29taBA0",
-      "title": "ABDOMINAL AORTA",
+      "title": "AORTA ABDOMINAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cEuy29taBA0",
@@ -377,7 +377,7 @@
     },
     {
       "id": "rx0qaehAcNk",
-      "title": "CELIAC TRUNK",
+      "title": "TRONCO CELIACO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=rx0qaehAcNk",
@@ -387,32 +387,32 @@
     },
     {
       "id": "vh4Lra7LbvQ",
-      "title": "EXTRAHEPATIC BILE DUCTS",
+      "title": "VÍAS BILIARES EXTRAHEPATICAS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=vh4Lra7LbvQ",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
       "id": "3fB4_gaPsFs",
-      "title": "INFERIOR MESENTERIC ARTERY",
+      "title": "ARTERIA MESENTERICA INFERIOR",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=3fB4_gaPsFs",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
       "id": "yBaFEDZO4yY",
-      "title": "SUPERIOR MESENTERIC ARTERY",
+      "title": "ARTERIA MESENTERICA SUPERIOR",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=yBaFEDZO4yY",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
@@ -422,7 +422,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=77rW_Z210nc",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
@@ -562,7 +562,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
       "url": "https://www.youtube.com/watch?v=KfO-b-jsud8",
       "section": "videos",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
