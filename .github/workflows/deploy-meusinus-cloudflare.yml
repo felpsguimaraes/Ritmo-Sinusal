@@ -106,7 +106,7 @@ jobs:
           command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=${{ github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verificar player unificado no domínio de produção
+      - name: Verificar vídeos, Slides exclusivos e conteúdo prioritário no domínio
         env:
           GIT_SHA: ${{ github.sha }}
         shell: bash
@@ -116,17 +116,27 @@ jobs:
             JS_URL="https://meusinus.pages.dev/sinus/video-player-materias.js?cf-check=$GIT_SHA-$attempt"
             CSS_URL="https://meusinus.pages.dev/sinus/video-player-materias.css?cf-check=$GIT_SHA-$attempt"
             CAT_URL="https://meusinus.pages.dev/sinus/youtube-catalogo.json?cf-check=$GIT_SHA-$attempt"
+            SLIDES_URL="https://meusinus.pages.dev/sinus/subject-resource-balloons.js?cf-check=$GIT_SHA-$attempt"
+            ORDER_URL="https://meusinus.pages.dev/sinus/subject-viewer-order.js?cf-check=$GIT_SHA-$attempt"
             if curl -fLsS --connect-timeout 15 --max-time 40 "$URL" -o /tmp/sinus-home.html &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$JS_URL" -o /tmp/sinus-video-player.js &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$CSS_URL" -o /tmp/sinus-video-player.css &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$CAT_URL" -o /tmp/sinus-video-catalogo.json &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$SLIDES_URL" -o /tmp/sinus-slides-by-tab.js &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$ORDER_URL" -o /tmp/sinus-viewer-order.js &&
                grep -Fq 'video-player-materias.js?v=20261025-player1' /tmp/sinus-home.html &&
                grep -Fq 'video-player-materias.css?v=20261025-player1' /tmp/sinus-home.html &&
                grep -Fq 'SinusVideoPlayerMateria' /tmp/sinus-video-player.js &&
                grep -Fq '.sxAVPGrid' /tmp/sinus-video-player.css &&
                node --check /tmp/sinus-video-player.js &&
+               grep -Fq 'subject-resource-balloons.js?v=20261025-players-by-tab-v1' /tmp/sinus-home.html &&
+               grep -Fq 'subject-viewer-order.js?v=20261025-players-by-tab-v1' /tmp/sinus-home.html &&
+               grep -Fq "function sectionIsSlides(c){return c.mode==='theory'&&c.tab==='slides'}" /tmp/sinus-slides-by-tab.js &&
+               grep -Fq 'primary.appendChild(el)' /tmp/sinus-viewer-order.js &&
+               node --check /tmp/sinus-slides-by-tab.js &&
+               node --check /tmp/sinus-viewer-order.js &&
                python -c "import json; x=json.load(open('/tmp/sinus-video-catalogo.json')); assert len(x['videos']) >= 188"; then
-              echo "Verificado: o domínio de produção serve o player e o catálogo do YouTube."
+              echo "Verificado: produção serve vídeos e somente a aba Slides monta TEORIA · SLIDES."
               exit 0
             fi
             sleep 8
