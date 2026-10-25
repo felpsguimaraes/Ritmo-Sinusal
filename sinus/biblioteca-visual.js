@@ -109,8 +109,10 @@ function catalog(){
   if(item.active===false||!item.id)return;
   const id=String(item.id),m=String(item.title||'').match(/\[([a-z0-9_-]{6,14})\](?:\.[a-z0-9]+)?$/i);
   const origin=item.originalSuffix||(m&&m[1])||'';
-  if(ids.has(id)||(origin&&origins.has(origin)))return;
-  ids.add(id);if(origin)origins.add(origin);
+  // O mesmo material pode pertencer a matérias/períodos diferentes: indexar por contexto.
+  const scope=norm(subject)+'|'+String(academicPeriod??''),unique=id+'|'+scope,fromOrigin=origin+'|'+scope;
+  if(ids.has(unique)||(origin&&origins.has(fromOrigin)))return;
+  ids.add(unique);if(origin)origins.add(fromOrigin);
   out.push({...item,id,subject,cat,academicPeriod:academicPeriod??null,local:false});
  }
  /* A Biblioteca cataloga materiais por período mesmo quando a turma está em outro semestre.
