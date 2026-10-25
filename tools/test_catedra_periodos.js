@@ -57,7 +57,11 @@ assert.ok(!anatomy.includes('data-apv-source='),'Drive e YouTube não podem esta
 assert.ok(anatomy.includes("if(tab==='catedra'&&course())"),'Cátedra sem navegação');
 assert.ok(anatomy.includes("W.SinusAccess.authorize('videos','view')"),'Cátedra deve respeitar acesso a Vídeos');
 assert.ok(html.includes('anatomy-period-1-2-all-cohorts'),'Página não referencia a grade atualizada');
-assert.ok(html.includes('catedra-navfix3-allcohorts'),'Página não referencia o player atualizado');
+assert.ok(html.includes('catedra-titulos-limpos6'),'Página não referencia a versão limpa da Cátedra');
+assert.ok(anatomy.includes('function displayTitle(it)'),'Títulos da Cátedra não foram normalizados');
+for(const providerLabel of ['UCP · Vídeos do Drive','YouTube · Aulas individuais','data-apv-prof']){
+  assert.ok(!anatomy.includes(providerLabel),'Identificação visível da fonte ainda presente: '+providerLabel);
+}
 const match=catalog.match(/videos:(\[[\s\S]*?\])\};\}\)\(window\)/);
 assert.ok(match,'Catálogo UCP ausente');
 const videos=JSON.parse(match[1]);assert.equal(videos.length,53);
