@@ -101,7 +101,7 @@ function showModal(item){
  modal.innerHTML='<div class="sxAPVDialog" role="dialog" aria-modal="true" aria-label="'+esc(item.title)+'">'+
  '<div class="sxAPVDialogTop"><b>'+esc(item.title)+'</b><button type="button" class="sxAPVDialogClose" aria-label="Fechar vídeo">✕</button></div>'+
  '<div class="sxAPVFrame"><iframe title="'+esc(item.title)+'" src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(item.id)+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="eager"></iframe></div>'+
- '<div class="sxAPVDialogFoot"><span>Canal Clases Medicina - Py</span><a href="https://www.youtube.com/watch?v='+encodeURIComponent(item.id)+'" target="_blank" rel="noopener noreferrer">Abrir no YouTube ↗</a></div></div>';
+ '<div class="sxAPVDialogFoot"><a href="https://www.youtube.com/watch?v='+encodeURIComponent(item.id)+'" target="_blank" rel="noopener noreferrer">Abrir vídeo em nova janela ↗</a></div></div>';
  const close=()=>{modal.remove();D.removeEventListener('keydown',onKey)};
  const onKey=e=>{if(e.key==='Escape')close()};
  modal.addEventListener('click',e=>{if(e.target===modal||e.target.closest('.sxAPVDialogClose'))close()});
@@ -109,9 +109,12 @@ function showModal(item){
  D.body.appendChild(modal);
  modal.querySelector('button')?.focus();
 }
-function professor(it){
- const n=norm(it.title);
- return it.source==='drive'?'UCP · Drive':it.channelHandle==='@anatomiaupefranco'?'Anatomia UPE Franco':it.channelHandle==='@anatomiaupe2188'?'Anatomia UPE':/victor benitez/.test(n)?'Dr. Víctor Benítez':/ronald martinez|dr. ronald\b/.test(n)?'Dr. Ronald Martínez':'Outras aulas';
+// Somente o texto exibido é simplificado; IDs e arquivos de origem não mudam.
+function displayTitle(it){
+ return String(it?.title||'Videoaula')
+  .replace(/^\s*anatom[ií]a\s+ucp\s*[-–—:]\s*/i,'')
+  .replace(/^\s*(?:ucp|youtube|drive)\s*[-–—:]\s*/i,'')
+  .trim()||'Videoaula';
 }
 function statusKey(course){
  const uid=String(W.SinusApp?.S?.uid||'estudante').replace(/[^a-z0-9_-]/gi,'').slice(0,80);
@@ -153,27 +156,26 @@ function mount(){
  }
  // Uma única playlist: vídeos da cátedra no Drive primeiro, seguidos pelos vídeos do YouTube.
  items.sort((a,b)=>Number(b.source==='drive')-Number(a.source==='drive'));
- const driveCount=items.filter(x=>x.source==='drive').length;
- const youtubeCount=items.length-driveCount;
+ const totalCount=items.length;
  const done=readDone(ctx.subj);
  let chosen=items[0].id,filter='Todos',query='';
  section.innerHTML='<header class="sxAPVHero"><div><span class="sxAPVLabel">PRÁTICA · ANATOMIA '+(ctx.subj==='1'?'I':'II')+'</span><h2>Cátedra</h2>'+
   '<p>Assista às aulas dos professores e acompanhe seu estudo sem sair da matéria.</p>'+
-  '<div class="sxAPVHeroTags"><span>'+driveCount+' vídeos da UCP · Drive</span><span>'+youtubeCount+' do YouTube</span><span>Progresso salvo neste aparelho</span></div></div>'+
+  '<div class="sxAPVHeroTags"><span>'+totalCount+' videoaulas</span><span>Progresso salvo neste aparelho</span></div></div>'+
   '<span class="sxAPVHeroIcon" aria-hidden="true">▶</span></header>'+
   '<div class="sxAPVColumns"><div class="sxAPVMain">'+
   '<div class="sxAPVPlayer" data-apv-player><button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir aula"><span>▶</span><strong>Assistir aula</strong></button></div>'+
-  '<div class="sxAPVNow"><div><small>AULA SELECIONADA</small><h3 data-apv-title></h3><p data-apv-prof></p></div>'+
+  '<div class="sxAPVNow"><div><small>AULA SELECIONADA</small><h3 data-apv-title></h3></div>'+
   '<button type="button" class="sxAPVDone" data-apv-done>Marcar como assistida</button></div>'+
   '<div class="sxAPVPlayerActions"><button type="button" data-apv-prev>← Anterior</button>'+
   '<button type="button" data-apv-next>Próxima aula →</button></div>'+
-  '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Abrir aula na origem ↗</a>'+'<p class="sxAPVSource">UCP: vídeos do acervo do Drive. YouTube: aulas individuais dos canais públicos selecionados. Cada fonte respeita as permissões de reprodução.</p>'+
+  '<a class="sxAPVExternal" data-apv-external target="_blank" rel="noopener noreferrer">Abrir vídeo em nova janela ↗</a>'+
   '</div><aside class="sxAPVSide" aria-label="Lista de videoaulas"><div class="sxAPVListHead"><div><h3>Lista de aulas</h3><small data-apv-progress></small></div>'+
   '<input type="search" data-apv-search placeholder="Buscar aula" aria-label="Buscar aula"></div>'+
   '<div class="sxAPVPlaylist" data-apv-list></div></aside></div>';
  const player=section.querySelector('[data-apv-player]'),list=section.querySelector('[data-apv-list]');
  function displayed(){
-  return items.filter(x=>!query||norm(x.title).includes(norm(query))||norm(professor(x)).includes(norm(query)));
+  return items.filter(x=>!query||norm(displayTitle(x)).includes(norm(query)));
  }
  function playerPoster(it){
   player.innerHTML='<button type="button" class="sxAPVStart" data-apv-play aria-label="Reproduzir '+esc(it.title)+'">'+
@@ -182,11 +184,11 @@ function mount(){
  }
  function draw(){
   const shown=displayed();
-  list.innerHTML=shown.map((it,index)=> (index===0||shown[index-1].source!==it.source?'<div class="sxAPVSourceHeading '+(it.source==='drive'?'sxAPVDriveHeading':'sxAPVYoutubeHeading')+'">'+(it.source==='drive'?'UCP · Vídeos do Drive':'YouTube · Aulas individuais')+' <small>'+shown.filter(x=>x.source===it.source).length+'</small></div>':'')+
+  list.innerHTML=shown.map(it=>
     '<button type="button" class="sxAPVLesson'+(it.id===chosen?' selected':'')+'" data-apv-id="'+esc(it.id)+'" aria-current="'+(it.id===chosen?'true':'false')+'">'+
     '<span class="sxAPVMini"><img alt="" loading="lazy" src="'+(it.source==='drive'?'https://drive.google.com/thumbnail?id='+encodeURIComponent(it.id)+'&sz=w320':'https://i.ytimg.com/vi/'+encodeURIComponent(it.id)+'/mqdefault.jpg')+'">'+
      '<small>'+(done.has(it.id)?'✓':'▶')+'</small></span>'+
-    '<span class="sxAPVLessonText"><b>'+esc(it.title)+'</b><small>'+esc(professor(it))+'</small></span></button>').join('')||
+    '<span class="sxAPVLessonText"><b>'+esc(displayTitle(it))+'</b></span></button>').join('')||
     '<div class="sxAPVEmpty">Nenhuma aula com este filtro. Tente outra busca.</div>';
   section.querySelector('[data-apv-progress]').textContent=items.filter(x=>done.has(x.id)).length+' de '+items.length+' assistidas';
   const btn=section.querySelector('[data-apv-done]');
@@ -195,14 +197,13 @@ function mount(){
  function select(id,autoplay){
   const it=items.find(x=>x.id===id);if(!it)return;
   chosen=id;
-  const external=section.querySelector('[data-apv-external]');if(external){external.href=it.source==='drive'?'https://drive.google.com/file/d/'+encodeURIComponent(it.id)+'/view':'https://www.youtube.com/watch?v='+encodeURIComponent(it.id);external.textContent=it.source==='drive'?'Se o player não abrir, abrir arquivo no Drive ↗':'Se o player não abrir, assistir no YouTube ↗';}
-  section.querySelector('[data-apv-title]').textContent=it.title;
-  section.querySelector('[data-apv-prof]').textContent=professor(it);
+  const external=section.querySelector('[data-apv-external]');if(external){external.href=it.source==='drive'?'https://drive.google.com/file/d/'+encodeURIComponent(it.id)+'/view':'https://www.youtube.com/watch?v='+encodeURIComponent(it.id);external.textContent='Abrir vídeo em nova janela ↗';}
+  section.querySelector('[data-apv-title]').textContent=displayTitle(it);
   section.querySelectorAll('.sxAPVPlaybackHelp').forEach(el=>el.remove());
   if(autoplay){
    const embed=it.source==='drive'?'https://drive.google.com/file/d/'+encodeURIComponent(it.id)+'/preview':'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(it.id)+'?autoplay=1&rel=0';
    player.innerHTML='<iframe title="'+esc(it.title)+'" src="'+embed+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="eager"></iframe>';
-   player.insertAdjacentHTML('afterend','<p class="sxAPVPlaybackHelp" role="status">Se não reproduzir, confira o acesso ao arquivo e utilize “Abrir aula na origem”.</p>');
+   player.insertAdjacentHTML('afterend','<p class="sxAPVPlaybackHelp" role="status">Se não reproduzir, confira as permissões de visualização e use “Abrir vídeo em nova janela”.</p>');
   }else playerPoster(it);
   draw();
  }
