@@ -14,7 +14,7 @@ import yt_dlp
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "sinus" / "anatomia-upe-videos.json"
 CHANNELS = ("anatomiaupefranco", "anatomiaupe2188")
-SECTIONS = ("videos", "streams")
+SECTIONS = ("videos", "shorts", "streams")
 ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
 
 # Só classificar quando o título aponta claramente para o conteúdo;
@@ -25,7 +25,9 @@ FIRST = re.compile(
     r"h[uú]mero|antebrazo|mu[nñ]eca|mano\b|t[oó]rax|tor[aá]x|costilla|"
     r"estern[oó]n|mediastin|coraz[oó]n|plexo braquial|"
     r"sistema nervioso central|cerebro|enc[eé]falo|"
-    r"maxilar|mand[ií]bula|m[aá]sculos? de la cara", re.I)
+    r"maxilar|mand[ií]bula|m[aá]sculos? de la cara|larynx|pharynx|faring|laringe|"
+    r"mening|duramadre|neuroanatom|brain|cervical|pulmon|pulm[oó]n|"
+    r"brazo|esc[aá]pula|shoulder|neck|columna vertebral|dorso", re.I)
 SECOND = re.compile(
     r"abd[oô]m|abdom[ií]n|digestiv|est[oô]mag|intestin|duoden|colon|c[oó]lon|"
     r"h[ií]gad|ves[ií]cula|p[aâ]ncre|bazo|ri[nñ][oó]n|renal|"
@@ -33,7 +35,9 @@ SECOND = re.compile(
     r"miembro inferior|m[ií]embro inferior|muslo|pierna|rodilla|"
     r"tibia|f[ií]bula|peron[eé]|f[eê]mur|pie\b|"
     r"cadera|coxal|sacro|c[oó]ccix|aorta abdominal|"
-    r"vena cava inferior", re.I)
+    r"vena cava inferior|gl[uú]te|glute|pelvitrocant|femur|f[eê]mur|"
+    r"biliar|spleen|celiac|stomach|kidney|ureter|sagital de pelvis|"
+    r"sistema genital|genital femenin", re.I)
 
 def classify(title):
     a = bool(FIRST.search(title))
