@@ -20,9 +20,9 @@ ID = re.compile(r"^[A-Za-z0-9_-]{11}$")
 # Só classificar quando o título aponta claramente para o conteúdo;
 # as aulas genéricas continuam disponíveis em ambas, sem inventar semestre.
 FIRST = re.compile(
-    r"cr[aâ]n|cran[eé]|cabe[zç]|cara\\b|facial|rostro|cuello|pesco[cç]|"
+    r"cr[aâ]n|cran[eé]|cabe[zç]|cara\b|facial|rostro|cuello|pesco[cç]|"
     r"m[ií]embro superior|miembro superior|hombro|escapul|clav[ií]cula|"
-    r"h[uú]mero|antebrazo|mu[nñ]eca|mano\\b|t[oó]rax|tor[aá]x|costilla|"
+    r"h[uú]mero|antebrazo|mu[nñ]eca|mano\b|t[oó]rax|tor[aá]x|costilla|"
     r"estern[oó]n|mediastin|coraz[oó]n|plexo braquial|"
     r"sistema nervioso central|cerebro|enc[eé]falo|"
     r"maxilar|mand[ií]bula|m[aá]sculos? de la cara", re.I)
@@ -31,7 +31,7 @@ SECOND = re.compile(
     r"h[ií]gad|ves[ií]cula|p[aâ]ncre|bazo|ri[nñ][oó]n|renal|"
     r"pelv|per[ií]ne|uter|ovari|vejiga|inguinal|lombar|lumbar|"
     r"miembro inferior|m[ií]embro inferior|muslo|pierna|rodilla|"
-    r"tibia|f[ií]bula|peron[eé]|f[eê]mur|pie\\b|"
+    r"tibia|f[ií]bula|peron[eé]|f[eê]mur|pie\b|"
     r"cadera|coxal|sacro|c[oó]ccix|aorta abdominal|"
     r"vena cava inferior", re.I)
 
