@@ -43,3 +43,51 @@ assert.equal(vm.runInContext('isExam(items()[2])',ctx),false);
 W.SinusApp.S.turma='D';
 assert.deepEqual(items().map(x=>x.id),['photo-d']);
 console.log('OK: bloco editorial removido; Provas preservadas e corretamente filtradas por matéria, período e turma.');
+
+// Regressão da navegação: TEORIA · SLIDES só pertence à aba Slides.
+// Nenhum player de slides deve disputar espaço com Vídeos / Áudios, Provas e Treino.
+const viewerOrder=fs.readFileSync('sinus/subject-viewer-order.js','utf8');
+const slideshowStart=source.indexOf('function sectionIsSlides(c){');
+const slideshowEnd=source.indexOf('function libraryMarkup(suggested){',slideshowStart);
+const nativeStart=source.indexOf('function prioritizeNative(host,wrap,c){');
+const nativeEnd=source.indexOf('function render(c,data){',nativeStart);
+assert.ok(slideshowStart>=0&&slideshowEnd>slideshowStart&&nativeStart>=0&&nativeEnd>nativeStart);
+const sourceQA=source.slice(slideshowStart,slideshowEnd)+'\n'+source.slice(nativeStart,nativeEnd);
+const tabs=vm.createContext({});
+vm.runInContext(sourceQA,tabs);
+const isSlide=(tab,mode='theory')=>vm.runInContext('sectionIsSlides('+JSON.stringify({tab,mode})+')',tabs);
+assert.equal(isSlide('slides'),true);
+for(const tab of ['videos','audios','provas','training','overview','cartoes','mapas','pratica']){
+ assert.equal(isSlide(tab),false,'Outro player invadido por Slides: '+tab);
+}
+assert.equal(isSlide('slides','practice'),false);
+
+function testNativeOrder(tab){
+ const children=[],moved=[],removed=[];
+ const remind={id:'Lembretes',matches:selector=>selector.includes('.sinus-rem-box')};
+ const main={id:tab==='videos'?'Vídeos / Áudios':tab==='provas'?'Provas':'Treino',matches:selector=>selector.includes('.resourceLayout'),remove(){removed.push(this.id)}};
+ const gallery={id:'Galeria da matéria',matches:selector=>selector.includes('.sxMG'),remove(){removed.push(this.id)}};
+ const remSlot={replaceChildren:node=>moved.push('primeiro:'+node.id)};
+ const primary={appendChild:node=>moved.push('principal:'+node.id)};
+ const wrap={querySelector:selector=>selector==='.sxAOReminders'?remSlot:
+  selector==='[data-sx-primary]'&&tab!=='slides'?primary:null};
+ children.push(wrap,remind,main,gallery);
+ vm.runInContext('prioritizeNative',tabs)({children},wrap,{tab,mode:'theory'});
+ return {moved,removed};
+}
+const slideState=testNativeOrder('slides');
+assert.deepEqual(slideState.removed,['Treino','Galeria da matéria']);
+for(const tab of ['videos','provas','training']){
+ const result=testNativeOrder(tab);
+ assert.deepEqual(result.removed,[]);
+ assert.equal(result.moved[0],'primeiro:Lembretes');
+ assert.ok(result.moved[1]?.startsWith('principal:'),tab+' perdeu o conteúdo próprio');
+}
+assert.match(source,/slideOnly\?slideHTML:primaryHTML\+libraryMarkup/);
+assert.match(source,/if\(slideOnly\)\{\s*drawSlides\(c,data,wrap,true\)/);
+assert.match(viewerOrder,/primary\.appendChild\(el\)/);
+assert.match(viewerOrder,/new MutationObserver\(schedule\)/);
+assert.match(html,/subject-resource-balloons\.js\?v=20261025-players-by-tab-v1/);
+assert.match(html,/subject-viewer-order\.js\?v=20261025-players-by-tab-v1/);
+console.log('OK: Slides exclusivos da aba Slides; Vídeos, Provas e Treino priorizam seus componentes, após Lembretes.');
+
