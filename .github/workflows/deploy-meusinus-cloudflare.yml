@@ -17,23 +17,15 @@ jobs:
   deploy:
     name: Implantar main em meusinus.pages.dev
     runs-on: ubuntu-latest
+    env:
+      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - name: Obter arquivos da branch main
         uses: actions/checkout@v4
         with:
           ref: main
           persist-credentials: false
-
-      - name: Conferir configuração do Cloudflare
-        env:
-          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        shell: bash
-        run: |
-          if [[ -z "$CF_API_TOKEN" || -z "$CF_ACCOUNT_ID" ]]; then
-            echo "::error::Configure CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit) e CLOUDFLARE_ACCOUNT_ID em Settings > Secrets and variables > Actions do repositório."
-            exit 1
-          fi
 
       - name: Validar catálogo e scripts da Cátedra
         shell: bash
@@ -72,7 +64,26 @@ jobs:
           test -s .cf-pages-dist/_headers
           test -s .cf-pages-dist/_redirects
 
+      - name: Preparar pacote de contingência para publicação manual
+        if: ${{ env.CF_API_TOKEN == '' || env.CF_ACCOUNT_ID == '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sinus-meusinus-site-${{ github.sha }}
+          path: .cf-pages-dist/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Informar integração Cloudflare ainda não autorizada
+        if: ${{ env.CF_API_TOKEN == '' || env.CF_ACCOUNT_ID == '' }}
+        shell: bash
+        run: |
+          echo "::error::O pacote do SINUS está pronto na aba Artifacts desta execução. A publicação automática não ocorreu: faltam CLOUDFLARE_API_TOKEN e CLOUDFLARE_ACCOUNT_ID como segredos Actions deste repositório."
+          echo "::error::Não coloque credenciais no código ou na conversa; adicione-as a Settings > Secrets and variables > Actions."
+          exit 1
+
       - name: Publicar diretamente no projeto meusinus
+        if: ${{ env.CF_API_TOKEN != '' && env.CF_ACCOUNT_ID != '' }}
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -81,6 +92,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verificar se o site recebeu a Cátedra atualizada
+        if: ${{ env.CF_API_TOKEN != '' && env.CF_ACCOUNT_ID != '' }}
         env:
           GIT_SHA: ${{ github.sha }}
         shell: bash
