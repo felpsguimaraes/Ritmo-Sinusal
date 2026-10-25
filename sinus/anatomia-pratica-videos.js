@@ -281,10 +281,22 @@ const originalSetTab=W.setTab;
 if(typeof originalSetTab==='function'){
  W.setTab=function(tab){
   if(tab==='catedra'&&course()){
-   UI.tab='catedra';
-   W.renderSubject?.();
-   if(typeof W.rememberCourse==='function')W.rememberCourse();
-   return;
+   // Respeitar as mesmas permissões do módulo Vídeos para qualquer turma.
+   // A rota Cátedra não pode contornar limites de acesso dos planos.
+   const subject=UI.subject;
+   const open=()=>{
+    if(UI.subject!==subject||!course())return;
+    UI.tab='catedra';
+    W.renderSubject?.();
+    if(typeof W.rememberCourse==='function')W.rememberCourse();
+   };
+   if(typeof W.SinusAccess?.authorize==='function'){
+    return W.SinusAccess.authorize('videos','view').then(open).catch(err=>{
+     if(typeof W.toast==='function')W.toast(err.message||'Vídeos indisponíveis para este acesso');
+     else console.warn('[SINUS Cátedra]',err);
+    });
+   }
+   return open();
   }
   return originalSetTab.apply(this,arguments);
  };
