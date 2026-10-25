@@ -497,7 +497,7 @@
     var principal = t === 'catedra' ? 'catedra' : t === 'provas' ? 'provas' : exercicios.indexOf(t) >= 0 ? 'training' : (t === 'audios' ? 'videos' : (['slides', 'videos'].indexOf(t) >= 0 ? t : 'apostila'));
     var tabs = $id('subjectTabs');
     if (tabs) tabs.innerHTML = [['apostila','Resumo / Apostila'],['slides','Slides']].concat(isAnatomyPractice ? [['catedra','Cátedra']] : [], [['videos','Vídeos / Áudios'],['provas','Provas'],['training','Exercícios']]).map(function (item) {
-      return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
+      return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + (item[0] === 'catedra' ? ' sxCatedraTab' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + (item[0] === 'catedra' ? '▣ ' : '') + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
     if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || (UI.mode === 'theory' && subjectData() && /^(anatopato|farmaco)/.test(subjectData().slug || '')); }).map(function (item) {
