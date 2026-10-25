@@ -44,7 +44,7 @@ function setupSubjects(){const list=grade(S.period,S.cohort);const input=D.getEl
 async function updateScope(){setupSubjects();try{await refresh();alertText('Escolha um balão para editar.');}catch(e){alertText(e.message,true);}}
 function render(){const view=root();if(!view)return;
  view.innerHTML='<div class="res-dashboard"><div class="res-intro"><span>GESTÃO ACADÊMICA · 1º AO 10º PERÍODO</span><h2>Conteúdo de cada matéria</h2><p>Determine quais balões aparecem para cada turma. Associe pastas e arquivos do Drive à aba correspondente — um padrão para o período inteiro ou uma configuração exclusiva por turma.</p></div>'+
- '<div class="res-filters"><label>Período<select id="res-period">'+Array.from({length:10},(_,i)=>'<option value="'+(i+1)+'" '+(S.period===i+1?'selected':'')+'>'+(i+1)+'º período</option>').join('')+'</select></label><label>Turma<select id="res-cohort">'+options()+'</select></label><label>Matéria<input type="text" id="res-subject" list="res-subject-list" placeholder="Selecione ou digite a matéria"><datalist id="res-subject-list"></datalist></label></div>'+
+ '<div id="sxAutoDriveImport"></div><div class="res-filters"><label>Período<select id="res-period">'+Array.from({length:10},(_,i)=>'<option value="'+(i+1)+'" '+(S.period===i+1?'selected':'')+'>'+(i+1)+'º período</option>').join('')+'</select></label><label>Turma<select id="res-cohort">'+options()+'</select></label><label>Matéria<input type="text" id="res-subject" list="res-subject-list" placeholder="Selecione ou digite a matéria"><datalist id="res-subject-list"></datalist></label></div>'+
  '<div class="res-grade-note" id="res-academic-count"></div><div class="res-main"><div class="res-panes"><div class="res-panes-title"><h3>Balões da matéria</h3><span>Escolha um para configurar</span></div><div id="res-section-grid"></div></div><article id="res-editor" class="res-editor"></article></div>'+
  '<p class="res-foot">“Todas as turmas” define o padrão. Uma turma específica pode ter links ou visibilidade diferentes. Recursos sem personalização permanecem como estão hoje; ocultar um balão não revoga o compartilhamento original do Drive.</p><div id="resources-status" role="status" aria-live="polite"></div></div>';
  const input=D.getElementById('res-subject');let debounce;
@@ -52,6 +52,7 @@ function render(){const view=root();if(!view)return;
  D.getElementById('res-cohort').onchange=e=>{S.cohort=e.target.value;updateScope();};
  input.onchange=()=>{S.subject=input.value.trim();refresh().catch(e=>alertText(e.message,true));};
  input.oninput=()=>{clearTimeout(debounce);debounce=setTimeout(()=>{if(input.value.trim()){S.subject=input.value.trim();refresh().catch(e=>alertText(e.message,true));}},700);};
+ W.SinusAutoDrive?.mount(D.getElementById('sxAutoDriveImport'));
  setupSubjects();if(S.subject)refresh().catch(e=>alertText(e.message,true));else{drawTiles();renderEditor();}
 }
 W.SinusResourceAdmin={render,sections:C};
