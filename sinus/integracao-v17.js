@@ -399,6 +399,20 @@
       if (S.dentro && status.indexed > 0) { try { renderAll() } catch(e) {} }
     });
     if (W.SinusDrive) W.SinusDrive.apply(DB, S.prefs.periodo || 5, S.turma || "G");
+    // Bioestatística: slides em PDF pertencem à Teoria da disciplina oficial.
+    // Somente anexar à matéria existente na grade; nunca inventar matérias.
+    Object.keys(DB.subjects||{}).filter(function(name){
+      return /^bioesta[dt]istica$/i.test(cleaned(name));
+    }).forEach(function(name){
+      var mat=DB.subjects[name],seen=new Set((mat.slides||[]).map(function(x){return String(x.id)}));
+      mat.slides=mat.slides||[];
+      (W.SinusAcademicOfficial?.bioestadisticaSlides||[]).forEach(function(v){
+        if(seen.has(v.id))return;seen.add(v.id);
+        mat.slides.push({id:v.id,title:v.title,kind:'PDF',mime:'application/pdf',
+          source:'ucp-oficial',studyMode:'theory',studySection:'slides',
+          period:'Teoria',academicPeriod:2,active:true});
+      });
+    });
     DB.schedules = montarHorarios();
     DB.training = DB.training || { types: [], questions: [] };
     DB.training.questions = montarQuestoes();
