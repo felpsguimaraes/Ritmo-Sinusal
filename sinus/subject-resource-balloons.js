@@ -153,8 +153,9 @@ function slideCollection(c,data){
  for(const item of customFiles(slideContext,data))add(item,'turma');
  const db=typeof DB!=='undefined'?DB.subjects?.[c.subject]:null;
  if(db){
-  for(const item of [...(db.slides||[]),...(db.complementares||[]).filter(isSlideItem)]){
-   if(!isSlideItem({...item,cat:item.cat||'slides'}))continue;
+  const dbSlides=[...(db.slides||[]).map(item=>({...item,cat:'slides'})),...(db.complementares||[]).filter(isSlideItem)];
+  for(const item of dbSlides){
+   if(!isSlideItem(item))continue;
    const tagged=String(item.cohort||item.class_name||item.turma||'')||
      (String(item.period||'').match(/\bTurma\s+([A-Z]{1,3})\b/i)?.[1]||'');
    // "Medicina" e demais índices gerais não viram Slides da turma só por estarem no DB.
