@@ -1,0 +1,79 @@
+// SINUS · gerenciamento de recursos por matéria (endpoint separado da API financeira).
+const base=Deno.env.get('SUPABASE_URL')!;
+const secret=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+const allowedOrigin='https://meusinus.pages.dev';
+class Fail extends Error { status:number; constructor(status:number,message:string){super(message);this.status=status;} }
+const sections=new Set(['overview','slides','provas','audios','videos','pratica','laminas','complementares','transcribe','training','review','notebook','resumos','livros','lembretes']);
+const clean=(v:unknown,max:number)=>String(v??'').trim().slice(0,max);
+const isScope=(v:any)=>Number.isInteger(v.period)&&v.period>=1&&v.period<=10&&typeof v.subject==='string'&&v.subject.trim().length>0&&v.subject.trim().length<=160&&typeof v.cohort==='string'&&(/^([A-Z]{1,3}|\*)$/).test(v.cohort);
+async function rest(path:string,options:RequestInit={}) {
+ const response=await fetch(base+path,{...options,headers:{'apikey':secret,'Authorization':'Bearer '+secret,'Content-Type':'application/json',...options.headers}});
+ const text=await response.text();let data:any;try{data=text?JSON.parse(text):null;}catch{throw new Fail(502,'Resposta inválida do banco.');}
+ if(!response.ok)throw new Fail(502,'Falha ao acessar o banco de dados.');
+ return data;
+}
+const db=(filter:string)=>rest('/rest/v1/sinus_subject_resource_configs?'+filter);
+async function auth(token:string){if(!token)throw new Fail(401,'Entre no SINUS.');const r=await fetch(base+'/auth/v1/user',{headers:{'apikey':secret,'Authorization':'Bearer '+token}});if(!r.ok)throw new Fail(401,'Sessão expirada. Entre novamente.');return r.json();}
+const doc=(uid:string,collection:string,id:string)=>rest('/rest/v1/sinus_documents?select=payload&user_id=eq.'+uid+'&collection=eq.'+collection+'&id=eq.'+encodeURIComponent(id)+'&limit=1');
+async function school(uid:string) {
+ const [p,u,pr]=await Promise.all([doc(uid,'progresso',uid+'_sinus-perfil'),doc(uid,'perfis',uid),rest('/rest/v1/profiles?select=academic_period&id=eq.'+uid+'&limit=1')]);
+ const prefs=p[0]?.payload?.prog||{},profile=u[0]?.payload||{};
+ const n=Number(String(prefs.periodo||prefs.period||pr[0]?.academic_period||'').match(/\d+/)?.[0]||0);
+ const cohort=clean(profile.turma||prefs.turma||'',3).toUpperCase();
+ return {period:n,cohort};
+}
+async function staff(uid:string){const m=await rest('/rest/v1/sinus_admin_members?select=role&user_id=eq.'+uid+'&limit=1');return ['owner','content'].includes(m[0]?.role);}
+function validLinks(input:any){
+ if(!Array.isArray(input)||input.length>10)throw new Fail(400,'Cadastre até 10 links por aba.');
+ return input.map((x:any)=>{const title=clean(x?.title,100);const raw=clean(x?.url,1800);if(!title||!raw)throw new Fail(400,'Informe o título e o link de cada material.');
+ let u:URL;try{u=new URL(raw);}catch{throw new Fail(400,'Link de Drive inválido.');}
+ if(u.protocol!=='https:'||!['drive.google.com','docs.google.com'].includes(u.hostname)||u.username||u.password)throw new Fail(400,'Use links HTTPS do Google Drive ou Google Docs.');
+ return {title,url:u.href};});
+}
+const scopeQuery=(s:any)=>'academic_period=eq.'+s.period+'&subject=eq.'+encodeURIComponent(s.subject.trim())+'&select=academic_period,cohort,subject,section,label,visible,links,updated_at,updated_by&limit=1000';
+Deno.serve(async(req:Request)=>{
+ const origin=req.headers.get('origin')||'';
+ const headers={'Content-Type':'application/json','Cache-Control':'no-store','Vary':'Origin',...(origin===allowedOrigin?{'Access-Control-Allow-Origin':origin,'Access-Control-Allow-Headers':'authorization,content-type,apikey,x-client-info','Access-Control-Allow-Methods':'POST,OPTIONS'}:{})};
+ const reply=(value:any,status=200)=>new Response(JSON.stringify(value),{status,headers});
+ if(origin&&origin!==allowedOrigin)return reply({error:'Origem inválida.'},403);
+ if(req.method==='OPTIONS')return new Response(null,{status:204,headers});
+ if(req.method!=='POST')return reply({error:'Método inválido.'},405);
+ try{
+  const actor=await auth((req.headers.get('authorization')||'').replace(/^Bearer /i,''));
+  const blocked=await rest('/rest/v1/sinus_access_controls?select=blocked&user_id=eq.'+actor.id+'&limit=1');
+  if(blocked[0]?.blocked)throw new Fail(403,'Conta bloqueada.');
+  const raw=await req.text();if(raw.length>20000)throw new Fail(413,'Solicitação grande demais.');
+  let b:any;try{b=JSON.parse(raw);}catch{throw new Fail(400,'Dados inválidos.');}
+  if(b.action==='student'){
+   const s=await school(actor.id);
+   if(!(s.period>=1&&s.period<=10&&/^[A-Z]{1,3}$/.test(s.cohort)))return reply({configs:[],scope_ready:false});
+   const subject=clean(b.subject,160);
+   if(!subject)return reply({configs:[],scope_ready:true});
+   const all=await db(scopeQuery({period:s.period,subject}));
+   const configs=all.filter((r:any)=>r.cohort==='*'||r.cohort===s.cohort).sort((a:any,b:any)=>(a.cohort==='*'?0:1)-(b.cohort==='*'?0:1));
+   return reply({configs,scope_ready:true});
+  }
+  if(!(await staff(actor.id)))throw new Fail(403,'Somente a equipe de conteúdo pode editar estes recursos.');
+  if(b.action==='list'){
+   if(!isScope(b))throw new Fail(400,'Selecione período, turma e matéria.');
+   const configs=await db(scopeQuery(b));
+   return reply({configs:configs.filter((r:any)=>r.cohort==='*'||r.cohort===b.cohort)});
+  }
+  if(b.action==='save'){
+   if(!isScope(b)||!sections.has(b.section)||typeof b.visible!=='boolean')throw new Fail(400,'Configuração inválida.');
+   const links=validLinks(b.links);const label=clean(b.label,65);
+   const record={academic_period:b.period,cohort:b.cohort,subject:b.subject.trim(),section:b.section,label,visible:b.visible,links,updated_by:actor.id,updated_at:new Date().toISOString()};
+   await rest('/rest/v1/sinus_subject_resource_configs?on_conflict=academic_period,cohort,subject,section',{method:'POST',headers:{Prefer:'return=representation,resolution=merge-duplicates'},body:JSON.stringify(record)});
+   await rest('/rest/v1/sinus_admin_audit',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({actor_id:actor.id,action:'subject_resource_saved',target:b.period+'|'+b.cohort+'|'+b.subject+'|'+b.section,details:{visible:b.visible,links:links.length}})});
+   return reply({ok:true});
+  }
+  if(b.action==='delete'){
+   if(!isScope(b)||!sections.has(b.section))throw new Fail(400,'Configuração inválida.');
+   const filter='academic_period=eq.'+b.period+'&cohort=eq.'+encodeURIComponent(b.cohort)+'&subject=eq.'+encodeURIComponent(b.subject.trim())+'&section=eq.'+b.section;
+   await rest('/rest/v1/sinus_subject_resource_configs?'+filter,{method:'DELETE'});
+   await rest('/rest/v1/sinus_admin_audit',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({actor_id:actor.id,action:'subject_resource_reset',target:b.period+'|'+b.cohort+'|'+b.subject+'|'+b.section,details:{}})});
+   return reply({ok:true});
+  }
+  throw new Fail(404,'Ação não encontrada.');
+ }catch(err){const e=err as any;return reply({error:e instanceof Fail?e.message:'Não foi possível concluir a operação.'},e instanceof Fail?e.status:500);}
+});
