@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T10:43:50Z",
+  "updatedAt": "2026-10-25T10:58:49Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -272,7 +272,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
       "section": "shorts",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "1",
       "type": "catedra"
     },
     {
@@ -632,7 +632,7 @@
       "channelUrl": "https://www.youtube.com/@anatomiaupe2188",
       "url": "https://www.youtube.com/watch?v=aVnzIxAZy4k",
       "section": "videos",
-      "anatomyPeriod": "geral",
+      "anatomyPeriod": "2",
       "type": "catedra"
     },
     {
