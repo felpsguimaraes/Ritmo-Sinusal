@@ -123,6 +123,15 @@
       }).join('');
     }
     if(selected==='training')nav();
+    // As provas continuam acessíveis dentro de Resumo/Apostila, sem criar uma quinta aba.
+    if(selected==='apostila'){
+      var area=host(),extras=area&&area.querySelector('.sxStudyExtras .sxExerciseChoices');
+      if(extras&&!extras.querySelector('[data-sx-top-tab="provas"]')){
+        extras.insertAdjacentHTML('beforeend','<button type="button" class="btn sm" data-sx-top-tab="provas">Provas anteriores</button>');
+      }else if(area&&!extras&&!area.querySelector('.sxProvasShortcut')){
+        area.insertAdjacentHTML('beforeend','<button type="button" class="btn sm sxProvasShortcut" data-sx-top-tab="provas">Ver provas anteriores</button>');
+      }
+    }
   };
   D.addEventListener('click',function(e){
     var tab=e.target.closest('[data-sx-training-pane]');
