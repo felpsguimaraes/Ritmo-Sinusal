@@ -9,7 +9,7 @@ const isImage=x=>/^image\//.test(mime(x))||/\.(jpg|jpeg|png|webp|heic|heif)$/i.t
 const isVideo=x=>/^video\//.test(mime(x))||/\.(mp4|mov|webm)$/i.test(x.title||'');
 const isExam=x=>['provas','exam'].includes(x.cat)||x.category==='exam'||['prova','foto-prova','simulado','questionario','banco'].includes(x.auditType)||/prova|prueba|examen|parcial|simulado|cuestionario|questionario/i.test(x.title||'');
 const aliases={'genetica humana':['genetica'],'semiologia medica i':['semiologia i'],'semiologia medica ii':['semiologia ii'],'anatomia patologica i':['anatopato i'],'anatomia patologica ii':['anatopato ii']};
-function matching(a,b){return norm(a)===norm(b)||(aliases[norm(a)]||[]).includes(norm(b))}
+function matching(a,b){const n=norm(a),m=norm(b);return n===m||(/^bioesta[dt]istica$/.test(n)&&/^bioesta[dt]istica$/.test(m))||(aliases[n]||[]).includes(m)}
 function items(){
  if(typeof UI==='undefined'||typeof DB==='undefined'||!UI.subject||!DB.subjects?.[UI.subject]||!W.SinusLibrary)return [];
  const subject=UI.subject,p=period(DB.subjects[subject].period);
