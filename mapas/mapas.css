@@ -333,8 +333,9 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .lamdot[data-st="part"]{border-style:solid;border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
 .lamdot[data-st="miss"]{border-style:solid;border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
 .lamdot[aria-current]{box-shadow:0 0 0 2px var(--board),0 0 0 4px var(--green)}
-.lamgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
-@media (max-width:860px){.lamgrid{grid-template-columns:1fr}}
+/* a foto em cima e a folha (órgano, proceso, descripción, dx) embaixo, em qualquer largura */
+.lamgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.lamgrid .lamstage{aspect-ratio:auto;height:min(62vh,520px)}
 .lamfig{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
 .lamstage{position:relative;background:#0c1311;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
 .lammain{display:block;width:100%;height:100%;object-fit:contain;cursor:zoom-in}
@@ -414,7 +415,6 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .lbimg.z{width:auto;height:auto;min-width:200%;max-width:none;max-height:none;object-fit:initial;cursor:zoom-out}
 .lbnav{position:absolute;top:50%;transform:translateY(-50%);appearance:none;border:0;width:46px;height:66px;border-radius:12px;background:rgba(255,255,255,.14);color:#fff;font:400 32px/1 var(--sans);cursor:pointer}
 .lbprev{left:10px}.lbnext{right:10px}
-@media (min-width:861px){.lamfig{position:sticky;top:12px}}
 @media (max-width:640px){
   .lamact{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .lamact .btn.primary{grid-column:1 / -1;order:-1}

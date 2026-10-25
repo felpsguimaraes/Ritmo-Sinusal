@@ -873,55 +873,6 @@
     resumen: 'Diez láminas sorteadas solo del laminario total (20 nov). Sin banco de palabras y con cronómetro; la planilla sale al final.',
     fuente: SRC_LT, laminas: TOTAL, procesos: PROCESOS };
 
-  /* verdadero o falso: uma afirmação por vez, no formato da tela de exercício (afirmação e duas opções) */
-  var VF = [
-    ['En el infarto agudo de miocardio aparecen miocardiocitos sin núcleo por cariólisis.', true, 'Lámina 1 · Corazón · Infarto agudo del miocardio: miocardiocitos sin núcleo (cariólisis).'],
-    ['Lámina 1: el infiltrado de neutrófilos indica más de 2 semanas de evolución.', false, 'La tabla indica 1 a 3 días de evolución.'],
-    ['Lámina 2 · hipertrofia cardíaca: aumenta el número de miocardiocitos.', false, 'En la hipertrofia aumenta el tamaño de los miocardiocitos, no su número.'],
-    ['Lámina 2: en la hipertrofia cardíaca los núcleos quedan centrados y agrandados.', true, 'La tabla describe fibroblastos intersticiales, núcleo centrado y agrandado.'],
-    ['Lámina 5 · esófago de Barret: el epitelio cilíndrico simple reemplaza al epitelio plano estratificado.', true, 'Metaplasia: epitelio cilíndrico simple con células caliciformes.'],
-    ['Lámina 5: el esófago de Barret es un ejemplo de hiperplasia.', false, 'En la tabla es adaptación por metaplasia, no hiperplasia.'],
-    ['Lámina 10 · apendicitis aguda: el infiltrado de neutrófilos está en la capa muscular.', true, 'Infiltrado de neutrófilos en la muscular, con edema y necrosis.'],
-    ['Lámina 10: la apendicitis aguda figura como inflamación crónica.', false, 'En la tabla figura como inflamación aguda.'],
-    ['Lámina 9 · enfermedad de Crohn: afectación transmural de todas las capas.', true, 'Afectación transmural de todas las capas, con fibrosis.'],
-    ['Lámina 9: en la enfermedad de Crohn las criptas quedan sin distorsión.', false, 'La tabla describe distorsión de las criptas.'],
-    ['Lámina 13 · cirrosis hepática: fibrosis en puente de una tríada a otra.', true, 'Fibrosis en puente, nódulos de regeneración y hemorragia.'],
-    ['Lámina 13: la cirrosis hepática es una neoplasia benigna.', false, 'La tabla la clasifica como inflamación crónica.'],
-    ['Lámina 14 · hepatocarcinoma: patrón de crecimiento en cordones.', true, 'Hepatocitos con atipias y crecimiento en cordones.'],
-    ['Lámina 15 · tiroiditis de Hashimoto: aparecen células de Hürthle.', true, 'La tabla menciona células de Hürthle.'],
-    ['Lámina 16 · tumor de Wilms: es una neoplasia benigna.', false, 'La tabla lo clasifica como neoplasia maligna.'],
-    ['Lámina 16: el tumor de Wilms tiene componentes blastematoso, epitelial y estromal.', true, 'Proliferación maligna con componente blastematoso, epitelial y estromal.'],
-    ['Lámina 17 · trompa uterina: glándulas endometriales benignas y estroma denso.', true, 'Compatible con endometriosis; figura como inflamación crónica.'],
-    ['Lámina 18 · ovario: el epitelio de las dilataciones quísticas es plano estratificado.', false, 'Es epitelio cilíndrico ciliado.'],
-    ['Lámina 18: el cistoadenoma mucinoso tiene un componente homogéneo de mucina.', true, 'Componente homogéneo que corresponde a mucina.'],
-    ['Lámina 19 · cérvix: hay coilocitos y bastante infiltrado inflamatorio crónico.', true, 'Cervicitis crónica con coilocitos e infiltrado inflamatorio.'],
-    ['Lámina 21 · carcinoma escamoso de cuello uterino: se observa queratinización.', false, 'La tabla dice que no se observa queratinización.'],
-    ['Lámina 22 · teratoma ovárico maduro: folículos pilosos y tejido adiposo.', true, 'Glándulas sebáceas y sudoríparas, folículos pilosos y tejido adiposo.'],
-    ['Lámina 23 · atrofia testicular: aumentan las células de Leydig en el intersticio.', true, 'Aumento de células de Leydig en el intersticio.'],
-    ['Lámina 23: en la atrofia testicular aumentan las células de Sertoli.', false, 'La tabla dice pocas células de Sertoli.'],
-    ['Lámina 24 · hiperplasia prostática benigna: proliferación del tejido glandular.', true, 'Proliferación del tejido glandular, estroma fibromuscular y cuerpos amiláceos.'],
-    ['Lámina 25 · seminoma: células de citoplasma claro con nucléolos grandes.', true, 'Células cúbicas a poliédricas, citoplasma claro y nucléolos grandes.'],
-    ['Lámina 25: el seminoma es una neoplasia benigna.', false, 'Dx de la tabla: seminoma, neoplasia maligna de tipo germinal.'],
-    ['Lámina 7 · carcinoma gástrico de tipo difuso: células en anillo de sello.', true, 'Patrón difuso, con pérdida de cadherina E.'],
-    ['Lámina 8: la desmoplasia es el hallazgo de la gastritis crónica.', false, 'La desmoplasia es de la lámina 7; en la 8 hay atrofia, linfocitos y células parietales.'],
-    ['Lámina 11 · pancreatitis crónica: islotes de Langerhans hipertrofiados.', true, 'Atrofia acinar, fibrosis e islotes hipertrofiados.'],
-    ['Lámina 3 · adenoma pleomorfo de parótida: presenta atipia marcada.', false, 'La tabla dice sin atipia, con pseudoquistes.'],
-    ['Lámina 4 · carcinoma epidermoide de lengua: rosetas de queratina (globos córneos).', true, 'Rosetas de queratina y papilas filiformes.'],
-    ['Lámina 6 · carcinoma epidermoide de esófago: presenta coilocitos.', true, 'Nidos sólidos con atipias y coilocitos.'],
-    ['Lámina 12 · adenocarcinoma de páncreas: es bien diferenciado.', false, 'La tabla dice moderadamente diferenciado, grado II.']
-  ];
-  var LT_VF = {
-    id: 'ap_lt_vf', area: PR, clase: 'Laminario', titulo: 'Verdadero o falso: laminario total', tipo: 'casos', rotulo: 'Verdadero o falso', explicar: true,
-    resumen: 'Una afirmación por vez, con los datos de la tabla del laminario. Elegí Verdadero o Falso, verificá y mirá la explicación.',
-    fuente: SRC_LT,
-    casos: VF.map(function (q, i) {
-      var op = i % 2 ? ['a) Falso', 'b) Verdadero'] : ['a) Verdadero', 'b) Falso'];
-      var txt = q[1] ? 'Verdadero' : 'Falso';
-      var letter = op[0].slice(3) === txt ? 'a' : 'b';
-      return [q[0], '¿Verdadero o falso?', letter + ') ' + txt, letter, q[2], op];
-    })
-  };
-
   A.docentePratica = 'Dra. Alicia Gonzalez';
   A.fontePratica = 'Clases prácticas 1 a 4, láminas de la P1 y de la P2, laminario total corregido (20 nov) y pizarrones';
   [].push.apply(A.modulos, [].concat(
@@ -941,6 +892,6 @@
       resumen: 'Ocho láminas sorteadas entre la P1, la P2 y el laminario. Sin banco de palabras y con cronómetro; la planilla sale al final.',
       fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }],
     TEO_CASOS,
-    [LT_FOTO, LT_DESC, LT_VF, LT_SIM]
+    [LT_FOTO, LT_DESC, LT_SIM]
   ));
 })();
