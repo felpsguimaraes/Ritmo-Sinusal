@@ -9,32 +9,32 @@ var cats=['slides','provas','audios','videos','pratica','complementares'];
 var state={items:[],ready:false,loading:true,error:'',count:0,unclassified:0,sourceCount:0};
 var norm=function(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()};
 var RULES=[
-  [/anatom.*patol.*(?:\bii\b|\b2\b)|anatopato.*(?:\bii\b|\b2\b)|anatopa.*(?:\bii\b|\b2\b)/,'Anatomía Patológica II',6],
-  [/anatom.*patol.*(?:\bi\b|\b1\b)|anatopato.*(?:\bi\b|\b1\b)/,'Anatomía Patológica I',5],
+  [/anatomi?a?\s*patolog[iy]?[ca]*\s*(?:ii|2)\b|anatopato\s*(?:ii|2)\b|anatopa\s*(?:ii|2)\b/,'Anatomía Patológica II',6],
+  [/anatomi?a?\s*patolog[iy]?[ca]*\s*(?:i|1)\b|anatopato\s*(?:i|1)\b/,'Anatomía Patológica I',5],
   [/anatom.*patol|anatopato|anatopa|coba|chamorro/,'Anatomía Patológica',null],
-  [/semiolog.*(?:\bii\b|\b2\b)|semio.*(?:\bii\b|\b2\b)|fernanda brittez/,'Semiología Médica II',6],
-  [/semiolog.*(?:\bi\b|\b1\b)|semio.*(?:\bi\b|\b1\b)/,'Semiología Médica I',5],
+  [/semiolog[iy]?[ca]*\s*(?:ii|2)\b|semio\s*(?:ii|2)\b|fernanda brittez/,'Semiología Médica II',6],
+  [/semiolog[iy]?[ca]*\s*(?:i|1)\b|semio\s*(?:i|1)\b/,'Semiología Médica I',5],
   [/semiolog|semio\b|brittez/,'Semiología Médica',null],
-  [/farmacol.*(?:\bii\b|\b2\b)|farmaco.*(?:\bii\b|\b2\b)/,'Farmacología II',6],
-  [/farmacol.*(?:\bi\b|\b1\b)|farmaco.*(?:\bi\b|\b1\b)|edgar pineda/,'Farmacología I',5],
+  [/farmacolog[iy]?[ca]*\s*(?:ii|2)\b|farmaco\s*(?:ii|2)\b/,'Farmacología II',6],
+  [/farmacolog[iy]?[ca]*\s*(?:i|1)\b|farmaco\s*(?:i|1)\b|edgar pineda/,'Farmacología I',5],
   [/farmacol|farmaco|belem|belen/,'Farmacología',null],
-  [/fisiopatol.*(?:\bii\b|\b2\b)|fisiopato.*(?:\bii\b|\b2\b)/,'Fisiopatología II',6],
-  [/fisiopatol.*(?:\bi\b|\b1\b)|fisiopato.*(?:\bi\b|\b1\b)/,'Fisiopatología I',5],
+  [/fisiopatolog[iy]?[ca]*\s*(?:ii|2)\b|fisiopato\s*(?:ii|2)\b/,'Fisiopatología II',6],
+  [/fisiopatolog[iy]?[ca]*\s*(?:i|1)\b|fisiopato\s*(?:i|1)\b/,'Fisiopatología I',5],
   [/fisiopatol|fisiopato/,'Fisiopatología',null],
-  [/fisiolog.*(?:\bii\b|\b2\b)|fisio.*(?:\bii\b|\b2\b)/,'Fisiología II',4],
-  [/fisiolog.*(?:\bi\b|\b1\b)|fisio.*(?:\bi\b|\b1\b)/,'Fisiología I',3],
+  [/fisiolog[iy]?[ca]*\s*(?:ii|2)\b|fisio\s*(?:ii|2)\b/,'Fisiología II',4],
+  [/fisiolog[iy]?[ca]*\s*(?:i|1)\b|fisio\s*(?:i|1)\b/,'Fisiología I',3],
   [/fisiolog|fisio\b|fiso\b|eduardo zorrilla|federico/,'Fisiología',null],
-  [/histolog.*(?:\bii\b|\b2\b)|histo.*(?:\bii\b|\b2\b)/,'Histología II',2],
-  [/histolog.*(?:\bi\b|\b1\b)|histo.*(?:\bi\b|\b1\b)/,'Histología I',1],
+  [/histolog[iy]?[ca]*\s*(?:ii|2)\b|histo\s*(?:ii|2)\b/,'Histología II',2],
+  [/histolog[iy]?[ca]*\s*(?:i|1)\b|histo\s*(?:i|1)\b/,'Histología I',1],
   [/histolog|histo\b/,'Histología',null],
-  [/microbiolog.*(?:\bii\b|\b2\b)|micro.*(?:\bii\b|\b2\b)/,'Microbiología II',4],
-  [/microbiolog.*(?:\bi\b|\b1\b)|micro.*(?:\bi\b|\b1\b)/,'Microbiología I',3],
+  [/microbiolog[iy]?[ca]*\s*(?:ii|2)\b|micro\s*(?:ii|2)\b/,'Microbiología II',4],
+  [/microbiolog[iy]?[ca]*\s*(?:i|1)\b|micro\s*(?:i|1)\b/,'Microbiología I',3],
   [/microbiolog|micro\b|micosis|micologia|gramnegativo|grampositivo/,'Microbiología',null],
-  [/bioquim.*(?:\bii\b|\b2\b)|bioq.*(?:\bii\b|\b2\b)/,'Bioquímica II',4],
-  [/bioquim.*(?:\bi\b|\b1\b)|bioq.*(?:\bi\b|\b1\b)/,'Bioquímica I',3],
+  [/bioquimic?a?\s*(?:ii|2)\b|bioq\s*(?:ii|2)\b/,'Bioquímica II',4],
+  [/bioquimic?a?\s*(?:i|1)\b|bioq\s*(?:i|1)\b/,'Bioquímica I',3],
   [/bioquim|bioq\b/,'Bioquímica',null],
-  [/anatom.*(?:\bii\b|\b2\b)|anato.*(?:\bii\b|\b2\b)/,'Anatomía II',2],
-  [/anatom.*(?:\bi\b|\b1\b)|anato.*(?:\bi\b|\b1\b)/,'Anatomía I',1],
+  [/anatomi?a?\s*(?:ii|2)\b|anato\s*(?:ii|2)\b/,'Anatomía II',2],
+  [/anatomi?a?\s*(?:i|1)\b|anato\s*(?:i|1)\b/,'Anatomía I',1],
   [/anatom|anato\b|victor benitez|dr victor|latarjet/,'Anatomía',null],
   [/embriolog|dra\.? karen/,'Embriología',1],
   [/genetic|gene[st]ica/,'Genética',3],
@@ -63,7 +63,7 @@ function apply(){if(typeof DB==='undefined'||!DB||!DB.subjects||!state.ready)ret
 var n=0;state.items.forEach(function(item){if(item.subject==='Matéria a confirmar'||!item.academicPeriod||existing.has(item.id))return;/* O acervo auditado prevalece na Biblioteca, sem substituir o original dentro da matéria. */if(item.originalSuffix&&existingOrigin.has(item.originalSuffix))return;
 var s=DB.subjects[item.subject];if(!s){s=DB.subjects[item.subject]={id:'audit_'+norm(item.subject).replace(/[^a-z0-9]+/g,'_'),period:item.academicPeriod,active:true,teacher:'',mode:'Teoria',accent:'mint',slides:[],provas:[],audios:[],videos:[],pratica:[],complementares:[]};}
 if(!Array.isArray(s[item.cat]))s[item.cat]=[];s[item.cat].push({...item,uid:'audit_'+item.id});existing.add(item.id);if(item.originalSuffix)existingOrigin.add(item.originalSuffix);n++;});return n;}
-function refresh(){var added=apply();if(added&&W.SinUSApp?.S?.dentro){W.renderSubjects?.();}if(typeof UI!=='undefined'&&UI.page==='library')W.renderLibrary?.();}
+function refresh(){var added=apply();if(added&&W.SinusApp?.S?.dentro){W.renderSubjects?.();}if(typeof UI!=='undefined'&&UI.page==='library')W.renderLibrary?.();}
 state.promise=fetch(SOURCE,{cache:'no-store'}).then(function(r){if(!r.ok)throw Error('Índice PROVAS HTTP '+r.status);return r.json()}).then(function(data){state.items=(data.items||[]).map(normalizeFile);state.ready=true;state.loading=false;state.count=state.items.length;state.unclassified=state.items.filter(x=>x.subject==='Matéria a confirmar').length;state.sourceCount=data.count||0;refresh();return state.items}).catch(function(e){state.loading=false;state.error=String(e);return []});
 W.addEventListener('sinus:drive-ready',refresh);
 var oldNav=W.nav;if(oldNav)W.nav=function(){apply();return oldNav.apply(this,arguments)};
