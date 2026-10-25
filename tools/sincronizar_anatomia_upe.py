@@ -27,7 +27,10 @@ FIRST = re.compile(
     r"sistema nervioso central|cerebro|enc[eé]falo|"
     r"maxilar|mand[ií]bula|m[aá]sculos? de la cara|larynx|pharynx|faring|laringe|"
     r"mening|duramadre|neuroanatom|brain|cervical|pulmon|pulm[oó]n|"
-    r"brazo|esc[aá]pula|shoulder|neck|columna vertebral|dorso", re.I)
+    r"brazo|esc[aá]pula|shoulder|neck|columna vertebral|dorso|heart|"
+    r"cerebell|n[uú]cleos basal|basal nuclei|willis|"
+    r"bulbo raqu[ií]deo|m[eé]dula espinal|medulla oblongata|"
+    r"tronco encef[aá]lico|protuberancia|upper limb|brachial plexus", re.I)
 SECOND = re.compile(
     r"abd[oô]m|abdom[ií]n|digestiv|est[oô]mag|intestin|duoden|colon|c[oó]lon|"
     r"h[ií]gad|ves[ií]cula|p[aâ]ncre|bazo|ri[nñ][oó]n|renal|"
@@ -37,7 +40,9 @@ SECOND = re.compile(
     r"cadera|coxal|sacro|c[oó]ccix|aorta abdominal|"
     r"vena cava inferior|gl[uú]te|glute|pelvitrocant|femur|f[eê]mur|"
     r"biliar|spleen|celiac|stomach|kidney|ureter|sagital de pelvis|"
-    r"sistema genital|genital femenin", re.I)
+    r"sistema genital|genital femenin|peritoneal|periton|"
+    r"mesent[eé]ric|mesenteric|extrahepatic|bile|inferior vena cava|"
+    r"f[eé]mur|f[eê]mur", re.I)
 
 def classify(title):
     a = bool(FIRST.search(title))
