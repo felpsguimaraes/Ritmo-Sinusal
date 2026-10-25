@@ -89,19 +89,20 @@ jobs:
           command: pages deploy .cf-pages-dist --project-name=meusinus --branch=main --commit-hash=${{ github.sha }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verificar se o site recebeu a Cátedra atualizada
-        if: ${{ env.CF_API_TOKEN != '' && env.CF_ACCOUNT_ID != '' }}
+      - name: Verificar a Cátedra no domínio de produção mesmo via Git integration
         env:
           GIT_SHA: ${{ github.sha }}
         shell: bash
         run: |
+          # A integração Git do Worker pode publicar sem este workflow fazer upload.
+          # Validar o conteúdo realmente servido evita resultados verdes enganosos.
           URL="https://meusinus.pages.dev/?cf-check=$GIT_SHA"
           for attempt in 1 2 3 4 5; do
-            if curl -fLsS --connect-timeout 15 --max-time 40 -H 'Cache-Control: no-cache' "$URL" | grep -Fq 'drive-youtube-unified5'; then
-              echo "Publicação da Cátedra encontrada em meusinus.pages.dev"
+            if curl -fLsS --connect-timeout 12 --max-time 25 -H 'Cache-Control: no-cache' "$URL" | grep -Fq 'anatomia-i-ii-drive-youtube-unified-published-20261025'; then
+              echo "Confirmado: Cátedra publicada em meusinus.pages.dev"
               exit 0
             fi
-            sleep 6
+            sleep 8
           done
-          echo "::error::O deploy foi solicitado, mas a versão da Cátedra não foi confirmada no domínio de produção."
+          echo "::error::A versão da Cátedra NÃO foi confirmada no endereço meusinus.pages.dev. Verifique a integração Git do Worker sinus com o domínio Pages, e a branch main."
           exit 1
