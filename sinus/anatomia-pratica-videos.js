@@ -274,6 +274,21 @@ const previous=W.renderSubject;
 if(typeof previous==='function'){
  W.renderSubject=function(){const out=previous.apply(this,arguments);mount();return out};
 }
+// A navegação V11 rejeita abas fora da lista fixa. O botão Cátedra foi
+// acrescentado depois: deve ter uma rota explícita para Anatomia I e II.
+// Sem a exceção, o botão fica visível mas clicar não abre a Cátedra.
+const originalSetTab=W.setTab;
+if(typeof originalSetTab==='function'){
+ W.setTab=function(tab){
+  if(tab==='catedra'&&course()){
+   UI.tab='catedra';
+   W.renderSubject?.();
+   if(typeof W.rememberCourse==='function')W.rememberCourse();
+   return;
+  }
+  return originalSetTab.apply(this,arguments);
+ };
+}
 D.addEventListener('click',e=>{
  const btn=e.target.closest('[data-apv-launch]');
  if(!btn||!course())return;
