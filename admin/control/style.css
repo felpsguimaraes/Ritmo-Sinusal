@@ -3,3 +3,11 @@
 .tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}.tool-switch{margin:0;padding:14px;border:1px solid #e1e8e1;border-radius:10px;display:flex;gap:12px;align-items:center}.tool-switch small{display:block;margin-top:5px}.tool-switch[hidden]{display:none}.quota-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}#image-preview{display:block;margin-bottom:15px}#image-preview[hidden]{display:none}nav{max-height:70vh;overflow:auto}nav button{flex-shrink:0}h3{font-size:15px;margin-top:28px}textarea{min-height:95px}#message-form textarea{width:100%}#tool-search{margin:12px 0 20px}@media(max-width:650px){.quota-grid{grid-template-columns:1fr}nav{max-height:none;display:flex}}
 
 .finance-cards .metric{font-size:clamp(24px,3vw,40px);overflow-wrap:anywhere}.finance-cards{margin-bottom:20px}#finance-year{width:110px}
+
+/* Único ponto de entrada destacado para o importador em massa */
+nav button.nav-drive-special{background:#e3f4e7;color:#185339;font-weight:750;border:1px solid #9bd0aa;box-shadow:0 5px 15px #0b2b2020;padding:13px 12px;margin:8px 0}
+nav button.nav-drive-special.active{background:#fff;color:#145139;border-color:#fff}
+.admin-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+button.drive-primary-button{background:#217c50;color:#fff;border-color:#217c50;font-weight:720;box-shadow:0 6px 18px #1b67432e}
+button.drive-primary-button:hover{background:#186640}
+@media(max-width:650px){.admin-header-actions{width:100%;justify-content:stretch}.admin-header-actions button{flex:1 1 155px}}
