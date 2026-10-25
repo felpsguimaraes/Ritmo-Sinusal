@@ -529,6 +529,16 @@
       return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('') + '</div>');
     else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
+    // Cátedra é parte da renderização principal de Prática. Não esperar outro módulo
+    // observar renderSubject: a aba deve exibir aulas ao ser selecionada.
+    if (t === 'catedra' && isAnatomyPractice) {
+      if (W.SinusAnatomiaPratica && typeof W.SinusAnatomiaPratica.mount === 'function') {
+        W.SinusAnatomiaPratica.mount();
+      } else {
+        var cbox = $id('subjectContent');
+        if (cbox) cbox.innerHTML = '<div class="glass" role="status" style="padding:20px;border-radius:15px">Preparando videoaulas da Cátedra…</div>';
+      }
+    }
     var fc = $id('focusClock'); if (fc) { fc.classList.add('pip-mode'); fc.setAttribute('draggable', 'true'); }
   };
   var _overview = W.renderSubjectOverview;
