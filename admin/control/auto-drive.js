@@ -5,7 +5,7 @@ const END='https://qyioizupudjrwmtasrue.supabase.co/functions/v1/sinus-subject-r
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
 let busy=false,latest=null;
-const state={root:'',found:0,folders:0,processed:0,imported:0,updated:0,skipped:0,issues:[],rows:[],errors:[]};
+const state={root:'',found:0,folders:0,processed:0,imported:0,updated:0,skipped:0,issues:[],rows:[],savedRows:[],errors:[]};
 function idOf(link){try{const u=new URL(link);if(u.protocol!=='https:'||!['drive.google.com','docs.google.com'].includes(u.hostname))return '';return u.pathname.match(/\/folders\/([A-Za-z0-9_-]{15,})/)?.[1]||u.searchParams.get('id')||'';}catch{return '';}}
 function stage(text){
  const n=norm(text);
@@ -72,15 +72,19 @@ function sectionOf(path,file){
  if(/\b(?:pratica|practica|laboratorio|hospital|rotacion|rotacao)\b/.test(n))return 'pratica';
  if(/presentation/.test(mime)||/\.(ppt|pptx|odp)$/i.test(name)||/\b(?:slides?|diapositivas?|presentaciones?)\b/.test(n))return 'slides';
  if(mime.includes('pdf')||/\.(pdf)$/i.test(name)){
-  if(stage(n)!=='OUTROS')return 'slides';
-  return 'complementares';
+  // PDFs de aula sob pastas da disciplina vão para Slides, salvo pasta explicitamente classificada acima.
+  return 'slides';
  }
  return 'complementares';
 }
 function classify(file,path,cat,root){
- const p=period(path);
+ let p=period(path),t=p?matchSubject(path,p,cat):null;
+ if(!p){
+  // Uma pasta de disciplina isolada só é atribuída quando a grade indica um único período possível.
+  const possibilities=[...new Set(cat.map(s=>s.period))].map(pp=>({period:pp,subject:matchSubject(path,pp,cat)})).filter(x=>x.subject);
+  if(possibilities.length===1){p=possibilities[0].period;t=possibilities[0].subject;}
+ }
  if(!p)return {issue:'Período não identificado',path};
- const t=matchSubject(path,p,cat);
  if(!t)return {issue:'Matéria não identificada na grade',path};
  const sec=sectionOf(path,file),classGroup=cohort(path);
  const id=String(file.id||'');
@@ -141,7 +145,7 @@ async function scan(root,token){
 }
 function groups(rows){const map=new Map();for(const x of rows){const key=[x.period,x.cohort,x.subject,x.section].join(' | ');map.set(key,(map.get(key)||0)+1);}return [...map].sort((a,b)=>a[0].localeCompare(b[0]));}
 function report(){const r=D.getElementById('sx-auto-report');if(!r)return;
- const g=groups(state.rows);
+ const g=groups(state.savedRows);
  r.innerHTML='<div class="sxAutoSummary"><b>'+state.imported+'</b><span>Novos arquivos cadastrados</span><b>'+state.updated+'</b><span>Arquivos atualizados</span><b>'+state.issues.length+'</b><span>Sem classificação</span></div>'+
  (g.length?'<h3>Abas alimentadas</h3><div class="sxAutoGroups">'+g.map(([name,n])=>'<div><span>'+esc(name.replace(/ \| /g,' · '))+'</span><b>'+n+' arquivo(s)</b></div>').join('')+'</div>':'<p>Nenhuma aba foi alimentada.</p>')+
  (state.issues.length?'<details><summary>Ver '+state.issues.length+' arquivo(s) não classificados</summary><div class="sxAutoIssues">'+state.issues.slice(0,100).map(x=>'<p><b>'+esc(x.issue)+'</b> — '+esc(x.path)+'</p>').join('')+'</div></details>':'')+
@@ -151,7 +155,7 @@ async function run(){
  if(busy)return;
  const url=D.getElementById('sx-auto-url')?.value.trim()||'',root=idOf(url);
  if(!root)return status('Cole um link válido de pasta do Google Drive.',true);
- busy=true;state.root=root;state.imported=0;state.updated=0;
+ busy=true;state.root=root;state.imported=0;state.updated=0;state.savedRows=[];
  const btn=D.getElementById('sx-auto-run');btn.disabled=true;D.getElementById('sx-auto-report').innerHTML='';
  try{
   const ss=await session();let token=ss.provider_token;
@@ -166,7 +170,7 @@ async function run(){
   for(let i=0;i<unique.length;i+=70){
    status('Salvando os materiais no SINUS: '+Math.min(i+70,unique.length)+' / '+unique.length+'…');
    const saved=await api('import_batch',{root_id:root,items:unique.slice(i,i+70)});
-   state.imported+=Number(saved.created||0);state.updated+=Number(saved.updated||0);
+   state.imported+=Number(saved.created||0);state.updated+=Number(saved.updated||0);state.savedRows.push(...unique.slice(i,i+70));
   }
   report();status('Importação concluída: '+state.imported+' novos e '+state.updated+' atualizados. Veja as abas alimentadas abaixo.');
  }catch(e){
