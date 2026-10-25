@@ -24,8 +24,16 @@ function driveVideos(level){
  const subject='anatomia '+(level==='1'?'i':'ii');
  const lib=W.SinusLibrary;
  const records=typeof lib?.catalog==='function'?lib.catalog():[];
- const official=W.SinusAcademicOfficial?.anatomy?.[level]||[];
- const seen=new Set(official.map(v=>v.id)),items=[...official.map(v=>({...v,type:'catedra',source:'drive',origin:'UCP'}))];
+ // O catálogo oficial tem 53 vídeos identificados. Não usar somente a lista antiga de 28.
+ const curated=(W.SinusCatedraUCP?.videos||[]).filter(v=>String(v.anatomyPeriod)===level);
+ const legacy=W.SinusAcademicOfficial?.anatomy?.[level]||[];
+ const seen=new Set(),items=[];
+ for(const v of [...curated,...legacy]){
+  const id=String(v.id||'');
+  if(!/^[A-Za-z0-9_-]{20,}$/.test(id)||seen.has(id))continue;
+  seen.add(id);
+  items.push({...v,id,type:'catedra',source:'drive',origin:'UCP'});
+ }
  for(const v of records){
   const name=norm(v.subject);
   if(name!==subject&&name!=='anatomia humana '+(level==='1'?'i':'ii'))continue;
@@ -120,7 +128,7 @@ function mount(){
  const ctx=context(),target=D.getElementById('subjectContent');
  if(!ctx||!target)return;
  const existing=target.querySelector('[data-apv-root]');
- if(existing&&existing.querySelector('[data-apv-player]'))return;
+ if(existing&&existing.querySelector('[data-apv-player]')&&existing.dataset.apvRoot===ctx.subj)return;
  if(existing)existing.remove();
  const section=D.createElement('section');section.className='sxAPV';section.setAttribute('data-apv-root',ctx.subj);
  target.replaceChildren(section);
