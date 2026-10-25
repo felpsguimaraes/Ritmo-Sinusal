@@ -201,8 +201,11 @@ function mount(){
   const external=section.querySelector('[data-apv-external]');if(external){external.href=it.source==='drive'?'https://drive.google.com/file/d/'+encodeURIComponent(it.id)+'/view':'https://www.youtube.com/watch?v='+encodeURIComponent(it.id);external.textContent=it.source==='drive'?'Se o player não abrir, abrir arquivo no Drive ↗':'Se o player não abrir, assistir no YouTube ↗';}
   section.querySelector('[data-apv-title]').textContent=it.title;
   section.querySelector('[data-apv-prof]').textContent=professor(it);
+  section.querySelectorAll('.sxAPVPlaybackHelp').forEach(el=>el.remove());
   if(autoplay){
-   player.innerHTML='<iframe title="'+esc(it.title)+'" src="'+(it.source==='drive'?'https://drive.google.com/file/d/'+encodeURIComponent(it.id)+'/preview':'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(it.id)+'?autoplay=1&rel=0')+'" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+   const embed=it.source==='drive'?'https://drive.google.com/file/d/'+encodeURIComponent(it.id)+'/preview':'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(it.id)+'?autoplay=1&rel=0';
+   player.innerHTML='<iframe title="'+esc(it.title)+'" src="'+embed+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="eager"></iframe>';
+   player.insertAdjacentHTML('afterend','<p class="sxAPVPlaybackHelp" role="status">Se não reproduzir, confira o acesso ao arquivo e utilize “Abrir aula na origem”.</p>');
   }else playerPoster(it);
   draw();
  }
