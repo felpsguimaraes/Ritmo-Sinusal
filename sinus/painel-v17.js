@@ -817,18 +817,21 @@ setSubjectMode=function(mode){
 setTab=function(tab){if(!V11_SUBJECT_TABS[UI.mode].some(t=>t[0]===tab))return;const old=UI.tab;UI.tab=tab;if(tab==='training'&&old!=='training')UI.training=null;renderSubject();rememberCourse()};
 openSubject=function(name){if(!DB.subjects[name])return;UI.subject=name;UI.mode='theory';UI.tab='overview';UI.training=null;lessonUnitNumber=null;$('app').classList.add('hidden');$('subjectView').classList.remove('hidden');renderSubject()};
 function v11TabsText(){return UI.mode==='theory'?'Teoria':'Prática'}
-renderSubjectOverview=function(){const a=v11Assets(),counts=v11Counts(),units=v11CourseUnits();const errors=v11Attempts().filter(x=>!x.ok).length;
- const firstAsset=a.find(x=>x.section==='slides'||x.section==='pratica'||x.section==='laminas');
- $('subjectContent').innerHTML=`<div class="glass v11Journey"><div class="v11JourneyHead"><div><span class="eyebrow">${v11ContextTag()} · UMA JORNADA</span><h2>${UI.mode==='theory'?'Tudo para entender a teoria.':'Tudo para praticar com contexto.'}</h2><p>A ordem orienta seus estudos; o conteúdo e o histórico pertencem somente a este ambiente.</p></div><span class="pill green">${units.length} unidade(s) identificada(s)</span></div>
- <div class="v11StepGrid">${[
- ['01',UI.mode==='theory'?'Slides e materiais':'Aula prática','pratica',firstAsset?'v11JumpFirst()':'v11OpenEmpty()'],
- ['02','Áudio ou vídeo','audios',"setTab('audios')"],
- ['03','Transcrever aula','transcribe',"setTab('transcribe')"],
- ['04','Treino da área','training',"setTab('training')"],
- ['05','Revisão e progresso','review',"setTab('review')"]
- ].map(([n,label,key,action])=>`<button class="v11Step" onclick="${action}"><span class="eyebrow">ETAPA ${n}</span><b>${label}</b><small>${n==='04'?'Questões apenas de '+v11TabsText().toLowerCase():n==='05'?errors+' erro(s) neste ambiente':'Abrir conteúdo'}</small><span class="v11StepArrow">→</span></button>`).join('')}</div></div>
- <div class="v11OverviewGrid"><div class="glass v11InfoBox"><span class="eyebrow">ACERVO ${v11ContextTag()}</span><h3>O que já está disponível</h3><div class="stack" style="margin-top:14px">${[['Materiais e aulas',counts.materials],['Provas',counts.provas],['Áudios',counts.audios],['Vídeos',counts.videos],['Questões do banco',v11Questions().length]].map(([n,c])=>`<div class="quickItem"><span>${n}</span><b>${c}</b></div>`).join('')}</div></div>
- <div class="glass v11InfoBox"><span class="eyebrow">SEU FLUXO</span><h3>${UI.mode==='theory'?'Acompanhe a aula teórica':'Acompanhe a aula prática'}</h3><p>O Caderno guarda suas anotações. Revisão e progresso reúne seus erros, flashcards de revisão e desempenho — sem repetir essas funções no menu principal.</p><div class="heroActions" style="margin-top:18px"><button class="btn primary" onclick="setTab('training')">Treinar ${v11TabsText().toLowerCase()} →</button><button class="btn" onclick="setTab('review')">Abrir revisão</button></div></div></div>`;
+renderSubjectOverview=function(){
+ const counts=v11Counts(),errors=v11Attempts().filter(x=>!x.ok).length;
+ const isPractice=UI.mode==='practice';
+ const links=[
+  [isPractice?'Aulas práticas':'Slides e materiais',isPractice?'pratica':'slides',counts.materials],
+  ['Provas','provas',counts.provas],
+  ['Vídeos','videos',counts.videos],
+  ['Áudios','audios',counts.audios],
+  ['Transcrever aula','transcribe',null],
+  ['Treino da matéria','training',v11Questions().length],
+  ['Revisão','review',errors],
+  ['Caderno','notebook',null]
+ ];
+ const linksHtml=links.map(([label,tab,count])=>`<button type="button" class="sxSubjectHubAction" onclick="setTab('${tab}')"><span>${label}</span>${count>0?`<small class="sxSubjectHubCount">${count}</small>`:''}<span class="sxSubjectHubArrow" aria-hidden="true">→</span></button>`).join('');
+ $('subjectContent').innerHTML=`<section class="glass sxSubjectHub" aria-label="Acessos da matéria"><div class="sxSubjectHubHead"><span class="eyebrow">${v11ContextTag()}</span><h2>Acessar ${v11TabsText().toLowerCase()}</h2></div><div class="sxSubjectHubActions">${linksHtml}</div></section>`;
 };
 function v11OpenEmpty(){UI.tab=UI.mode==='theory'?'slides':'pratica';renderSubject()}
 function v11JumpFirst(){const x=v11Assets().find(x=>['slides','pratica','laminas'].includes(x.section));if(x){setTab(x.section);v11Preview(x.section,v11List(x.section).findIndex(v=>v.item.uid===x.item.uid))}else v11OpenEmpty()}
