@@ -28,7 +28,8 @@ function validLinks(input:any){
  return input.map((x:any)=>{const title=clean(x?.title,100);const raw=clean(x?.url,1800);if(!title||!raw)throw new Fail(400,'Informe o título e o link de cada material.');
  let u:URL;try{u=new URL(raw);}catch{throw new Fail(400,'Link de Drive inválido.');}
  if(u.protocol!=='https:'||!['drive.google.com','docs.google.com'].includes(u.hostname)||u.username||u.password)throw new Fail(400,'Use links HTTPS do Google Drive ou Google Docs.');
- return {title,url:u.href};});
+ const stage=['P1','P2','FINAL','OUTROS'].includes(String(x?.stage||'').toUpperCase())?String(x.stage).toUpperCase():'OUTROS';
+ return {title,url:u.href,stage};});
 }
 const scopeQuery=(s:any)=>'academic_period=eq.'+s.period+'&subject=eq.'+encodeURIComponent(s.subject.trim())+'&select=academic_period,cohort,subject,section,label,visible,links,updated_at,updated_by&limit=1000';
 Deno.serve(async(req:Request)=>{
