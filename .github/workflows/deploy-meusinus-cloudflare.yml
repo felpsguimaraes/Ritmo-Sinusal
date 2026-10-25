@@ -45,14 +45,19 @@ jobs:
           test -s sinus/youtube-catalogo.json
           test -s sinus/youtube-playlists.json
           test -s sinus/video-player-materias.css
-          grep -Fq 'video-player-materias.js?v=20261025-player1' index.html
-          grep -Fq 'video-player-materias.css?v=20261025-player1' index.html
+          test -s sinus/drive-audios-catalogo.json
+          grep -Fq 'video-player-materias.js?v=20261025-audio-preview-fix2' index.html
+          grep -Fq 'video-player-materias.css?v=20261025-audio-preview-fix2' index.html
           python - <<'PY'
           import json, re
           videos = json.load(open('sinus/youtube-catalogo.json', encoding='utf-8'))['videos']
           assert videos and len({v['id'] for v in videos}) == len(videos), 'Catálogo vazio ou vídeos repetidos'
           assert all(re.fullmatch(r'[A-Za-z0-9_-]{11}', v['id']) for v in videos), 'IDs inválidos'
           print(f'{len(videos)} videoaulas públicas indexadas')
+          audios = json.load(open('sinus/drive-audios-catalogo.json', encoding='utf-8'))['audios']
+          assert len(audios) >= 80, 'Catálogo de áudios incompleto'
+          assert len(set(x['id'] for x in audios)) == len(audios), 'Áudios duplicados'
+          print(f'{len(audios)} gravações do Drive vinculadas')
           PY
 
       - name: Preparar somente os arquivos públicos do site
@@ -117,22 +122,27 @@ jobs:
             CSS_URL="https://meusinus.pages.dev/sinus/video-player-materias.css?cf-check=$GIT_SHA-$attempt"
             CAT_URL="https://meusinus.pages.dev/sinus/youtube-catalogo.json?cf-check=$GIT_SHA-$attempt"
             SLIDES_URL="https://meusinus.pages.dev/sinus/subject-resource-balloons.js?cf-check=$GIT_SHA-$attempt"
+            AUDIOS_URL="https://meusinus.pages.dev/sinus/drive-audios-catalogo.json?cf-check=$GIT_SHA-$attempt"
             ORDER_URL="https://meusinus.pages.dev/sinus/subject-viewer-order.js?cf-check=$GIT_SHA-$attempt"
             if curl -fLsS --connect-timeout 15 --max-time 40 "$URL" -o /tmp/sinus-home.html &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$JS_URL" -o /tmp/sinus-video-player.js &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$CSS_URL" -o /tmp/sinus-video-player.css &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$CAT_URL" -o /tmp/sinus-video-catalogo.json &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$SLIDES_URL" -o /tmp/sinus-slides-by-tab.js &&
+               curl -fLsS --connect-timeout 15 --max-time 40 "$AUDIOS_URL" -o /tmp/sinus-drive-audios.json &&
                curl -fLsS --connect-timeout 15 --max-time 40 "$ORDER_URL" -o /tmp/sinus-viewer-order.js &&
-               grep -Fq 'video-player-materias.js?v=20261025-player1' /tmp/sinus-home.html &&
-               grep -Fq 'video-player-materias.css?v=20261025-player1' /tmp/sinus-home.html &&
+               grep -Fq 'video-player-materias.js?v=20261025-audio-preview-fix2' /tmp/sinus-home.html &&
+               grep -Fq 'video-player-materias.css?v=20261025-audio-preview-fix2' /tmp/sinus-home.html &&
                grep -Fq 'SinusVideoPlayerMateria' /tmp/sinus-video-player.js &&
                grep -Fq '.sxAVPGrid' /tmp/sinus-video-player.css &&
                node --check /tmp/sinus-video-player.js &&
-               grep -Fq 'subject-resource-balloons.js?v=20261025-players-by-tab-v1' /tmp/sinus-home.html &&
+               grep -Fq 'subject-resource-balloons.js?v=20261025-preview-office-fix2' /tmp/sinus-home.html &&
                grep -Fq 'subject-viewer-order.js?v=20261025-players-by-tab-v1' /tmp/sinus-home.html &&
                grep -Fq "function sectionIsSlides(c){return c.mode==='theory'&&c.tab==='slides'}" /tmp/sinus-slides-by-tab.js &&
                grep -Fq 'primary.appendChild(el)' /tmp/sinus-viewer-order.js &&
+               grep -Fq 'sxAOPreviewHelp' /tmp/sinus-slides-by-tab.js &&
+               grep -Fq 'data-sx-avp-alternate' /tmp/sinus-video-player.js &&
+               python -c "import json; x=json.load(open('/tmp/sinus-drive-audios.json')); assert len(x['audios']) >= 80" &&
                node --check /tmp/sinus-slides-by-tab.js &&
                node --check /tmp/sinus-viewer-order.js &&
                python -c "import json; x=json.load(open('/tmp/sinus-video-catalogo.json')); assert len(x['videos']) >= 188"; then
