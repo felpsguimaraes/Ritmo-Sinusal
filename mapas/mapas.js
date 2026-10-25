@@ -181,6 +181,8 @@
     return 'guiado';
   }
   function levelOf(mod) { if (mod.nivel) return mod.nivel; return mod.tipo === 'casos' ? '3' : modelOf(mod) === 'guiado' ? '1' : '2'; }
+  /* nome do nível sem a palavra "Nível"/número: só "Guiado", "Desafio", "Prova"... */
+  function levelName(mod) { var n = levelOf(mod); return T['l' + n] || ''; }
   function levelList(sid, lvl) {
     return DATA[sid].modulos.filter(function (m) {
       if (areaOf(m) !== curArea) return false;
@@ -188,6 +190,16 @@
       if (lvl === '4' && S.org && S.org.length) return !!m.org && S.org.indexOf(m.org) > -1;
       return lvl === '1' ? m.tipo !== 'casos' : lvl === '2' ? hasDes(m) : lvl === '3' ? m.tipo === 'casos' : false;
     });
+  }
+  /* primeiro mapa de uma matéria, no mesmo critério de nível padrão da lista (para abrir direto, sem tela de níveis) */
+  function firstModOf(sid) {
+    var areas = areasOf(sid), area = curArea;
+    if (areas.length && areas.indexOf(area) < 0) area = areas[0];
+    var before = curArea; curArea = area;
+    var lvl = S.lvl || ((area === 'pratica' && DATA[sid].modulos.some(function (m) { return m.nivel === '4' && areaOf(m) === 'pratica'; })) ? '4' : '1');
+    var list = levelList(sid, lvl);
+    curArea = before;
+    return list[0] || null;
   }
   function coverOk(mod, bi) { return memCover(mod, bi).filter(function (c) { return c.st === 'ok'; }).length; }
   function statsModel(mod, model) {
@@ -376,7 +388,7 @@
     root.appendChild(top);
 
     var head = el('header', { class: 'head' });
-    head.innerHTML = '<div><p class="eyebrow">' + esc(DATA[mod.sid].nome) + ' · ' + esc(slideText(mod)) + ' · ' + esc(mod.rotulo || TYPE[mod.tipo]) + ' · ' + esc(T.level) + ' ' + levelOf(mod) + '</p><h1>' + esc(mod.titulo) + '</h1>' + (mod.resumen ? '<p class="sub">' + esc(mod.resumen) + '</p>' : '') + '</div>';
+    head.innerHTML = '<div><p class="eyebrow">' + esc(DATA[mod.sid].nome) + ' · ' + esc(slideText(mod)) + ' · ' + esc(mod.rotulo || TYPE[mod.tipo]) + ' · ' + esc(levelName(mod)) + '</p><h1>' + esc(mod.titulo) + '</h1>' + (mod.resumen ? '<p class="sub">' + esc(mod.resumen) + '</p>' : '') + '</div>';
     root.appendChild(head);
 
     var bar = el('div', { class: 'toolbar' });
@@ -404,7 +416,7 @@
       var seg = el('div', { class: 'seg', role: 'group', 'aria-label': T.level });
       [['g', T.l1], ['des', T.l2]].forEach(function (p) {
         var on = (p[0] === 'des') === (model !== 'guiado');
-        var b = el('button', { type: 'button', 'aria-pressed': on ? 'true' : 'false' }, esc(T.level + ' ' + (p[0] === 'g' ? '1 · ' : '2 · ') + p[1]));
+        var b = el('button', { type: 'button', 'aria-pressed': on ? 'true' : 'false' }, esc(p[1]));
         b.addEventListener('click', function () {
           if (on) return;
           if (p[0] === 'des') { S.m[mod.id] = 'des'; S.lvl = '2'; } else { delete S.m[mod.id]; S.lvl = '1'; }
@@ -418,7 +430,7 @@
       var seg2 = el('div', { class: 'seg', role: 'group', 'aria-label': T.level });
       [mod, findMod(mod.sid, mod.par)].sort(function (a, b) { return (+a.nivel) - (+b.nivel); }).forEach(function (m2) {
         var on2 = m2 === mod;
-        var b2 = el('button', { type: 'button', 'aria-pressed': on2 ? 'true' : 'false' }, esc(T.level + ' ' + m2.nivel + ' · ' + (m2.nivel === '1' ? T.l1 : T.l2)));
+        var b2 = el('button', { type: 'button', 'aria-pressed': on2 ? 'true' : 'false' }, esc(m2.nivel === '1' ? T.l1 : T.l2));
         b2.addEventListener('click', function () { if (on2) return; S.lvl = m2.nivel; save(); location.hash = '#/' + m2.sid + '/' + m2.id; });
         seg2.appendChild(b2);
       });
@@ -1454,6 +1466,11 @@
       }
     }
     if (h[0] && DATA[h[0]] && (!ONLY || h[0] === ONLY)) curSid = h[0];
+    /* embutido numa matéria (?s=): pula a lista/níveis e abre direto no primeiro mapa */
+    if (ONLY && DATA[ONLY] && !(h[0] && h[1])) {
+      var first = firstModOf(ONLY);
+      if (first) { location.hash = '#/' + first.sid + '/' + first.id; return; }
+    }
     renderHome();
   }
   window.addEventListener('hashchange', route);
