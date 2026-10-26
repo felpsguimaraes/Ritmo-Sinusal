@@ -852,6 +852,7 @@ $('estudoFim').onclick = () => encerrarEstudo();
 // ===================== interface desenhada → ações =====================
 const abrirApp = (cam = '/') => () => window.open(APP + cam, '_blank', 'noopener');
 const HITS = [
+  [18, 12, 160, 44, 'Voltar ao app SINUS', () => { location.href = '/'; }],
   [222, 14, 96, 40, 'Início', () => sairParaCampus()],
   [336, 14, 90, 40, 'Horários', abrirApp()],
   [448, 14, 96, 40, 'Biblioteca', () => irPara('bib')],

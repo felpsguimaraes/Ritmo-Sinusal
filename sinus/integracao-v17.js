@@ -694,7 +694,12 @@
   W.renderHome = function () {
     var el=$id('page-home');if(!el)return;
     var first=(S.nome||S.nomeGoogle||'estudante').split(' ')[0];
-    el.innerHTML='<div class="sxHomeWelcome"><span class="eyebrow">Seu espaço no SINUS</span><h1>Olá, '+H(first)+'.</h1><p>O que vamos fazer hoje?</p></div><div class="sxHomeActions">'+
+    el.innerHTML='<div class="sxHomeWelcome"><span class="eyebrow">Seu espaço no SINUS</span><h1>Olá, '+H(first)+'.</h1><p>O que vamos fazer hoje?</p></div>'+
+      '<a class="glass" href="/jogo/" style="display:flex;gap:16px;align-items:center;margin:0 0 14px;padding:12px;text-decoration:none;color:inherit;overflow:hidden">'+
+        '<img src="/jogo/assets/sinus-campus-vazio.jpg" alt="" loading="lazy" style="width:clamp(96px,26vw,180px);aspect-ratio:3/2;object-fit:cover;border-radius:12px;flex:none">'+
+        '<span style="min-width:0"><span class="eyebrow">Novo · Campus SINUS</span><h2 style="margin:4px 0 4px">Estude jogando</h2><span class="soft" style="display:block;font-size:13px;line-height:1.45">Entre nas salas das suas matérias, conte o foco do dia e estude com playlist e sons de hospital.</span></span>'+
+        '<span aria-hidden="true" style="margin-left:auto;font-size:24px;padding:0 6px">›</span></a>'+
+      '<div class="sxHomeActions">'+
       '<button class="glass" onclick="nav(\'subjects\')"><span>▤</span><h2>Estudar</h2><p>Apostilas, slides e aulas</p></button>'+
       '<button class="glass" onclick="nav(\'questions\')"><span>◎</span><h2>Treinar</h2><p>Questões e exercícios</p></button>'+
       '<button class="glass" onclick="nav(\'schedule\')"><span>▦</span><h2>Horários</h2><p>Aulas e compromissos</p></button>'+
