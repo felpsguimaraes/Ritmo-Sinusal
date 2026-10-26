@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-25T10:58:49Z",
+  "updatedAt": "2026-10-26T16:05:18Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -97,7 +97,7 @@
     },
     {
       "id": "osl4JYIqOSE",
-      "title": "Spleen",
+      "title": "Bazo",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=osl4JYIqOSE",
@@ -167,7 +167,7 @@
     },
     {
       "id": "JUzZXhrMVCo",
-      "title": "KIDNEY - Internal Configuration",
+      "title": "RIÑÓN - Configuración Interna",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=JUzZXhrMVCo",
@@ -187,7 +187,7 @@
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "HEART - External Configuration - Part 2",
+      "title": "CORAZÓN - Configuración Externa - Parte 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "HEART - External Configuration - Part 1",
+      "title": "CORAZÓN - Configuración Externa - Parte 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -217,7 +217,7 @@
     },
     {
       "id": "sr3oNjOQvXc",
-      "title": "PULMONARY HILUM",
+      "title": "HILIO PULMONAR",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=sr3oNjOQvXc",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
+      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -247,7 +247,7 @@
     },
     {
       "id": "bM3vsmRIdDE",
-      "title": "MEDIAL VIEW OF THE BRAINSTEM",
+      "title": "VISIÓN MEDIAL DEL TRONCO ENCEFÁLICO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=bM3vsmRIdDE",
@@ -257,7 +257,7 @@
     },
     {
       "id": "81SOI7dXwkQ",
-      "title": "MEDULLA OBLONGATA",
+      "title": "BULBO RAQUÍDEO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -267,7 +267,7 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "SPINAL CORD",
+      "title": "MÉDULA ESPINAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
@@ -277,7 +277,7 @@
     },
     {
       "id": "nM0xvmPRiD8",
-      "title": "BASAL NUCLEI",
+      "title": "NÚCLEOS BASALES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=nM0xvmPRiD8",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "Willis's Polygon",
+      "title": "POLÍGONO DE WILLIS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -347,7 +347,7 @@
     },
     {
       "id": "cEuy29taBA0",
-      "title": "ABDOMINAL AORTA",
+      "title": "AORTA ABDOMINAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cEuy29taBA0",
@@ -411,6 +411,16 @@
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=UQsE3-rbjTw",
+      "section": "shorts",
+      "anatomyPeriod": "1",
+      "type": "catedra"
+    },
+    {
+      "id": "CHc84qG6Chs",
+      "title": "PUENTE O PROTUBERANCIA",
+      "channelHandle": "@anatomiaupefranco",
+      "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
+      "url": "https://www.youtube.com/watch?v=CHc84qG6Chs",
       "section": "shorts",
       "anatomyPeriod": "1",
       "type": "catedra"
@@ -779,7 +789,7 @@
   "counts": {
     "anatomiaupefranco": {
       "newScan": 41,
-      "total": 41
+      "total": 42
     },
     "anatomiaupe2188": {
       "newScan": 36,
