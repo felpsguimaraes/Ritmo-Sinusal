@@ -16,17 +16,20 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit}
+a{color:inherit}
 
 /* ---------- palco: a arte original em 1536x1024, escalada para caber ---------- */
 #stage{position:absolute;left:50%;top:50%;width:1536px;height:1024px;transform:translate(-50%,-50%) scale(var(--fit,1));overflow:hidden;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 #cam{position:absolute;inset:0;transform-origin:0 0;transition:transform 1.05s var(--ease);will-change:transform}
 #cam img.arte{position:absolute;inset:0;width:1536px;height:1024px;display:block;user-select:none;-webkit-user-drag:none}
 #veu{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 30% 50%,transparent 30%,rgba(3,8,6,.5) 70%),linear-gradient(90deg,transparent 45%,rgba(3,8,6,.55));opacity:0;transition:opacity .9s}
+body.esq #veu{background:radial-gradient(ellipse at 70% 50%,transparent 30%,rgba(3,8,6,.5) 70%),linear-gradient(270deg,transparent 45%,rgba(3,8,6,.55))}
 body.zoom #veu{opacity:1}
-body.zoom .hud-hit,body.zoom .live{pointer-events:none}
+body.zoom .hud-hit,body.zoom .live,body.zoom #piso{pointer-events:none}
 
 /* ---------- efeitos vivos sobre a arte ---------- */
 svg#fx{position:absolute;inset:0;width:1536px;height:1024px;overflow:visible}
+#piso{fill:transparent;cursor:pointer}
 .sala-hit{fill:rgba(74,222,128,0);stroke:transparent;stroke-width:3;cursor:pointer;transition:fill .25s,stroke .25s,filter .25s}
 .sala-hit:hover,.sala-hit.on{fill:rgba(74,222,128,.10);stroke:#4ade80;filter:drop-shadow(0 0 10px rgba(74,222,128,.9))}
 body.zoom .sala-hit{pointer-events:none;stroke:transparent;fill:transparent}
@@ -38,13 +41,27 @@ body.zoom .sala-hit{pointer-events:none;stroke:transparent;fill:transparent}
 @keyframes halo{0%,100%{opacity:.35;transform:scale(.94)}15%{opacity:.85;transform:scale(1.06)}30%{opacity:.45;transform:scale(.98)}45%{opacity:.75;transform:scale(1.03)}}
 .part{fill:#a7f3d0;mix-blend-mode:screen;animation:sobe 5s linear infinite}
 @keyframes sobe{0%{transform:translateY(0);opacity:0}15%{opacity:.9}100%{transform:translateY(-150px);opacity:0}}
-.pe{transform-origin:778px 868px;animation:pe 2s ease-in-out infinite;mix-blend-mode:screen}
-@keyframes pe{0%,100%{opacity:.25;transform:scale(.85)}50%{opacity:.8;transform:scale(1.1)}}
 .chev{animation:chev 1.6s ease-in-out infinite;mix-blend-mode:screen}
 @keyframes chev{0%,100%{opacity:.15}50%{opacity:.9}}
-.trilha{fill:none;stroke:#86efac;stroke-width:5;stroke-linecap:round;stroke-dasharray:2 14;filter:drop-shadow(0 0 6px #4ade80);opacity:0}
-.trilha.on{opacity:1;animation:anda .8s linear forwards}
-@keyframes anda{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+.destino{fill:none;stroke:#86efac;stroke-width:3;opacity:0;transform-box:fill-box;transform-origin:center}
+.destino.on{animation:destino .9s ease-out}
+@keyframes destino{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(1.6)}}
+.porta{fill:#4ade80;opacity:.0;mix-blend-mode:screen;transition:opacity .3s}
+.porta.on{opacity:.55;animation:porta 1s ease-in-out infinite}
+@keyframes porta{50%{opacity:.25}}
+
+/* ---------- personagem ---------- */
+#player{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;transition:opacity .35s}
+#player .corpo{position:absolute;left:0;top:0;transform-origin:50% 100%}
+#player .vira{transform-origin:50% 100%;transition:transform .2s}
+#player.esq .vira{transform:scaleX(-1)}
+#player img{display:block;width:66px;height:135px;transform-origin:50% 100%}
+#player.andando img{animation:passo .38s ease-in-out infinite}
+@keyframes passo{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-4px) rotate(-1.6deg)}50%{transform:translateY(0) rotate(0)}75%{transform:translateY(-4px) rotate(1.6deg)}}
+#player .sombra{position:absolute;left:-36px;top:-12px;width:72px;height:22px;border-radius:50%;background:radial-gradient(closest-side,rgba(20,30,25,.45),rgba(20,30,25,0));}
+#player .luz{position:absolute;left:-48px;top:-15px;width:96px;height:30px;border-radius:50%;background:radial-gradient(closest-side,rgba(134,239,172,.75),rgba(34,197,94,0));mix-blend-mode:screen;animation:luz 2s ease-in-out infinite}
+@keyframes luz{50%{opacity:.35}}
+#player.saindo{opacity:0}
 
 /* ---------- áreas clicáveis da interface desenhada ---------- */
 .hud-hit{position:absolute;border:0;background:transparent;border-radius:12px;cursor:pointer;transition:background .2s,box-shadow .2s}
@@ -64,15 +81,33 @@ body.zoom .sala-hit{pointer-events:none;stroke:transparent;fill:transparent}
 .barra i u{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#6ee7b7,#4ade80);transition:width .6s var(--ease)}
 .ico{width:28px;height:28px;border-radius:50%;background:#0c1a21;display:grid;place-items:center}
 
-/* ---------- painel de estudo (fora do palco, sempre nítido) ---------- */
-#painel{position:fixed;top:50%;right:clamp(12px,3vw,48px);width:min(460px,calc(100vw - 24px));max-height:calc(100vh - 32px);overflow:auto;transform:translate(30px,-50%);opacity:0;pointer-events:none;transition:opacity .45s,transform .45s var(--ease);background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(16px);box-shadow:0 24px 60px rgba(0,0,0,.55);z-index:20}
+/* ---------- painel (fora do palco, sempre nítido) ---------- */
+#painel{position:fixed;top:50%;right:clamp(12px,3vw,48px);width:min(480px,calc(100vw - 24px));max-height:calc(100vh - 32px);overflow:auto;transform:translate(30px,-50%);opacity:0;pointer-events:none;transition:opacity .45s,transform .45s var(--ease);background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(16px);box-shadow:0 24px 60px rgba(0,0,0,.55);z-index:20}
 #painel.on{opacity:1;transform:translate(0,-50%);pointer-events:auto}
+body.esq #painel{right:auto;left:clamp(12px,3vw,48px);transform:translate(-30px,-50%)}
+body.esq #painel.on{transform:translate(0,-50%)}
 .p-top{display:flex;align-items:center;gap:12px}
 .badge{width:44px;height:44px;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;font-weight:800;font-size:18px;color:var(--accent);background:rgba(74,222,128,.08);flex:none;box-shadow:0 0 18px rgba(74,222,128,.35)}
-.p-top h3{margin:0;font-size:19px;font-weight:700}
+.p-top h3{margin:0;font-size:19px;font-weight:700;line-height:1.2}
 .p-top small{color:var(--muted);font-size:13px}
 .xp{margin-left:auto;text-align:right;font-size:12px;color:var(--muted);white-space:nowrap}
 .xp b{display:block;font-size:16px;color:var(--accent)}
+.eyebrow{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.prof{margin:14px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.prof b{color:#dbe7e1;font-weight:600}
+.modo{display:flex;gap:4px;margin:16px 0 4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.modo button{flex:1;padding:9px;border:0;border-radius:10px;background:transparent;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer}
+.modo button.on{background:var(--accent-soft);color:var(--accent)}
+.grade{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.acao{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--line);text-decoration:none;cursor:pointer;text-align:left;min-width:0;transition:border-color .2s,background .2s,transform .15s}
+.acao:hover{border-color:rgba(74,222,128,.6);background:rgba(74,222,128,.06);transform:translateY(-1px)}
+.acao:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.acao .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-size:15px}
+.acao b{font-size:13.5px;font-weight:600;line-height:1.25}
+.acao small{font-size:11.5px;color:var(--muted);line-height:1.3}
+.acao.destaque{grid-column:1/-1;flex-direction:row;align-items:center;gap:12px;background:linear-gradient(90deg,rgba(74,222,128,.16),rgba(94,234,212,.06));border-color:rgba(74,222,128,.45)}
+.acao.destaque .ic{background:var(--accent);color:#052e16}
+.nota{margin:14px 0 0;font-size:12px;color:var(--muted)}
 .prog{display:flex;gap:6px;margin:18px 0 6px}
 .prog i{flex:1;height:5px;border-radius:4px;background:rgba(255,255,255,.1)}
 .prog i.ok{background:var(--accent)}.prog i.no{background:var(--bad)}.prog i.cur{background:var(--teal)}
@@ -101,18 +136,19 @@ body.zoom .sala-hit{pointer-events:none;stroke:transparent;fill:transparent}
 
 #voltar{position:fixed;left:clamp(12px,2vw,28px);top:clamp(12px,2vw,24px);z-index:21;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(12px);font-weight:600;font-size:14px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s}
 body.zoom #voltar{opacity:1;pointer-events:auto}
-body.esq #painel{right:auto;left:clamp(12px,3vw,48px);transform:translate(-30px,-50%)}
-body.esq #painel.on{transform:translate(0,-50%)}
 body.esq #voltar{left:auto;right:clamp(12px,2vw,28px)}
-body.esq #veu{background:radial-gradient(ellipse at 70% 50%,transparent 30%,rgba(3,8,6,.5) 70%),linear-gradient(270deg,transparent 45%,rgba(3,8,6,.55))}
 #toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-20px);opacity:0;z-index:30;padding:10px 18px;border-radius:999px;background:var(--glass);border:1px solid rgba(74,222,128,.4);font-size:14px;transition:opacity .3s,transform .3s var(--ease);pointer-events:none;white-space:nowrap}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 #tip{position:absolute;padding:7px 12px;border-radius:999px;background:rgba(8,16,13,.92);border:1px solid rgba(74,222,128,.5);font-size:13px;font-weight:600;color:var(--accent);pointer-events:none;opacity:0;transform:translate(-50%,-100%);transition:opacity .2s;white-space:nowrap}
 #tip.on{opacity:1}
 
 @media (max-width:760px){
-  #painel{top:auto;bottom:12px;right:12px;transform:translateY(30px);max-height:62vh}
-  #painel.on{transform:none}
+  #painel,body.esq #painel{top:auto;bottom:12px;left:12px;right:12px;width:auto;transform:translateY(30px);max-height:62vh}
+  #painel.on,body.esq #painel.on{transform:none}
+  .grade{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
 }
 </style>
 </head>
@@ -120,28 +156,33 @@ body.esq #veu{background:radial-gradient(ellipse at 70% 50%,transparent 30%,rgba
 
 <div id="stage">
   <div id="cam">
-    <img class="arte" src="assets/sinus-campus.jpg" alt="Campus SINUS com salas de estudo ao redor de um coração holográfico">
+    <img class="arte" src="assets/sinus-campus-vazio.jpg" alt="Campus SINUS com salas de estudo ao redor de um coração holográfico">
 
     <svg id="fx" viewBox="0 0 1536 1024">
       <defs>
         <radialGradient id="gHalo"><stop offset="0" stop-color="#86efac" stop-opacity=".75"/><stop offset=".45" stop-color="#22c55e" stop-opacity=".28"/><stop offset="1" stop-color="#22c55e" stop-opacity="0"/></radialGradient>
-        <radialGradient id="gPe"><stop offset="0" stop-color="#86efac" stop-opacity=".9"/><stop offset="1" stop-color="#22c55e" stop-opacity="0"/></radialGradient>
       </defs>
+      <!-- piso clicável: a personagem anda até o ponto -->
+      <rect id="piso" x="0" y="0" width="1536" height="1024"/>
       <!-- coração pulsando -->
-      <ellipse class="halo" cx="783" cy="455" rx="150" ry="150" fill="url(#gHalo)"/>
-      <g id="particulas"></g>
-      <!-- traçado de ECG correndo pelo piso -->
-      <polyline class="ecg" points="690,642 748,642 760,642 771,614 784,668 797,624 808,642 820,642 878,642"/>
-      <!-- luz sob a personagem -->
-      <ellipse class="pe" cx="778" cy="868" rx="46" ry="14" fill="url(#gPe)"/>
-      <g class="chev" fill="none" stroke="#bbf7d0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="766,890 781,880 796,890"/><polyline points="766,902 781,892 796,902" style="animation-delay:.2s"/>
+      <ellipse class="halo" cx="783" cy="455" rx="150" ry="150" fill="url(#gHalo)" pointer-events="none"/>
+      <g id="particulas" pointer-events="none"></g>
+      <polyline class="ecg" pointer-events="none" points="690,642 748,642 760,642 771,614 784,668 797,624 808,642 820,642 878,642"/>
+      <g class="chev" pointer-events="none" fill="none" stroke="#bbf7d0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="766,890 781,880 796,890"/><polyline points="766,902 781,892 796,902"/>
       </g>
-      <!-- trilha até a sala escolhida -->
-      <path id="trilha" class="trilha" d=""/>
+      <!-- portas das salas (acendem quando a personagem vai até elas) -->
+      <g id="portas" pointer-events="none"></g>
+      <circle id="destino" class="destino" cx="0" cy="0" r="16" pointer-events="none"/>
       <!-- salas clicáveis (contorno acompanha a arte) -->
       <g id="salas"></g>
     </svg>
+
+    <!-- a estudante, recortada da própria arte -->
+    <div id="player" aria-hidden="true">
+      <div class="luz"></div><div class="sombra"></div>
+      <div class="corpo"><div class="vira"><img src="assets/estudante.png" alt=""></div></div>
+    </div>
 
     <!-- valores ao vivo sobre o painel "Foco de hoje" -->
     <div class="live anel"><svg width="76" height="76" viewBox="0 0 76 76">
@@ -166,22 +207,72 @@ body.esq #veu{background:radial-gradient(ellipse at 70% 50%,transparent 30%,rgba
 <section id="painel" aria-live="polite"></section>
 
 <script>
-// ===================== conteúdo =====================
+// ===================== app SINUS =====================
+const APP = 'https://meusinus.pages.dev';
+const linkMateria = slug => `${APP}/?m=${slug}`;
+const linkMapas = (slug, modo) => `${APP}/mapas/?s=${slug}&modo=${modo}`;
+// matérias que têm mapas guiados em cada modo (igual ao app)
+const MAPAS = { anatopato:{ teoria:1, pratica:1 }, farmacologia:{ teoria:1 }, fisiopatologia:{ teoria:1 }, imagenologia:{ teoria:1 }, semiologia:{ teoria:1, pratica:1 }, familia:{ teoria:1 } };
+
+// ===================== caminhos no piso =====================
+// nós do piso (coordenadas da arte) e ligações entre eles
+const NOS = {
+  S:[778,858], A:[780,745], B:[700,672], C:[862,672],
+  E6:[688,738], E7:[892,740], E4:[630,592], E5:[948,592],
+  P1:[640,505], P2:[925,505], E1:[662,398], E3:[892,402], E2:[782,388],
+};
+const ARESTAS = [['S','A'],['A','B'],['A','C'],['A','E6'],['A','E7'],['B','E4'],['C','E5'],['E4','P1'],['E5','P2'],['P1','E1'],['P2','E3'],['E1','E2'],['E3','E2'],['B','E6'],['C','E7']];
+
+// ===================== salas → matérias do app =====================
 const SALAS = [
-  { id:'morfo', n:'1', nome:'Morfofuncional',     sub:'Anatomia · Histologia · Fisiologia', poly:[[280,205],[420,132],[626,150],[640,372],[560,396],[300,404]], ent:[650,420] },
-  { id:'patho', n:'2', nome:'Patologia Geral',    sub:'Anatomia Patológica',                poly:[[640,140],[880,124],[906,166],[906,346],[652,360],[640,330]], ent:[782,382] },
-  { id:'semio', n:'3', nome:'Semiologia I',       sub:'Teoria e Prática',                   poly:[[935,170],[1000,150],[1266,196],[1270,386],[1232,426],[935,396]], ent:[930,430] },
-  { id:'farma', n:'4', nome:'Farmacologia',       sub:'Fármacos e interações',              poly:[[268,456],[560,398],[640,388],[640,576],[560,600],[268,562]], ent:[680,500] },
-  { id:'mi',    n:'5', nome:'Medicina Interna I', sub:'Clínica médica',                     poly:[[935,420],[1250,452],[1252,590],[942,600],[930,452]], ent:[900,535] },
-  { id:'saude', n:'6', nome:'Saúde Coletiva',     sub:'Epidemiologia · SUS',                poly:[[270,629],[587,575],[667,712],[653,899],[493,945],[380,945],[313,732]], ent:[690,700] },
-  { id:'bib',   n:'📖', nome:'Biblioteca',        sub:'Resumos · Slides · Provas · Livros', poly:[[988,575],[1355,559],[1425,639],[1425,899],[1315,999],[961,919],[905,732]], ent:[880,720] },
+  { id:'morfo', n:'1', sala:'Morfofuncional', slug:'fisiopatologia', materia:'Fisiopatología I', teoria:'Dr. Kevin Feijó',
+    poly:[[280,205],[420,132],[626,150],[640,372],[560,396],[300,404]], no:'E1' },
+  { id:'patho', n:'2', sala:'Patologia Geral', slug:'anatopato', materia:'Anatomía Patológica I', teoria:'Dra. Eliana Chamorro Krauer', pratica:'Dra. Alicia Gonzalez',
+    poly:[[640,140],[880,124],[906,166],[906,346],[652,360],[640,330]], no:'E2' },
+  { id:'semio', n:'3', sala:'Semiologia I', slug:'semiologia', materia:'Semiología Médica I', teoria:'Dra. Cielo Brizueña', pratica:'Dra. Lilian Nuñez',
+    poly:[[935,170],[1000,150],[1266,196],[1270,386],[1232,426],[935,396]], no:'E3' },
+  { id:'farma', n:'4', sala:'Farmacologia', slug:'farmacologia', materia:'Farmacología I', teoria:'Dr. Cristhiam Giménez',
+    poly:[[268,456],[560,398],[640,388],[640,576],[560,600],[268,562]], no:'E4' },
+  { id:'mi', n:'5', sala:'Medicina Interna I', slug:'imagenologia', materia:'Imagenología', teoria:'Dr. Kevin Feijó',
+    poly:[[935,420],[1250,452],[1252,590],[942,600],[930,452]], no:'E5' },
+  { id:'saude', n:'6', sala:'Saúde Coletiva', slug:'familia', materia:'Medicina de la Familia', teoria:'Dra. Loren Noguera',
+    poly:[[270,629],[587,575],[667,712],[653,899],[493,945],[380,945],[313,732]], no:'E6' },
+  { id:'bib', n:'📖', sala:'Biblioteca', materia:'Biblioteca', poly:[[988,575],[1355,559],[1425,639],[1425,899],[1315,999],[961,919],[905,732]], no:'E7' },
 ];
+
+// funções de cada matéria, com os mesmos nomes do app
+const FUNCOES = {
+  teoria: [
+    ['▤','Resumo / Apostila','A teoria para ler'],
+    ['▭','Slides','Aulas da cátedra'],
+    ['▶','Vídeos / Áudios','Aulas gravadas e podcasts'],
+    ['✎','Treino','Questões intercaladas'],
+    ['▢','Flashcards','Repetição espaçada'],
+    ['⬡','Mapas guiados','Mapas, tabelas e fluxos','mapas'],
+    ['◷','Provas','Provas anteriores'],
+    ['↻','Revisão','Seus erros e progresso'],
+    ['✐','Caderno','Suas anotações'],
+  ],
+  pratica: [
+    ['▤','Resumo / Apostila','Roteiro da prática'],
+    ['▭','Slides','Slides das práticas'],
+    ['◉','Lâminas e imagens','Laminário e fotos','', 'anatopato'],
+    ['◍','Macroscopia','Peças e fotos','', 'anatopato'],
+    ['⚕','Aulas práticas','Material das práticas'],
+    ['◷','Provas práticas','O que caiu na prática'],
+    ['▶','Vídeos práticos','Procedimentos em vídeo'],
+    ['▢','Flashcards','Repetição espaçada'],
+    ['⬡','Mapas guiados','Mapas da prática','mapas'],
+    ['✎','Treino prático','Casos e lâminas'],
+    ['✐','Caderno','Suas anotações'],
+  ],
+};
 
 const PERGUNTAS = {
   morfo: [
-    { q:'Qual é o único osso do corpo que não se articula com nenhum outro osso?', o:['Clavícula','Hioide','Escápula','Esterno'], a:1, e:'O hioide é suspenso por músculos e ligamentos; não possui articulação óssea.' },
-    { q:'Qual é a unidade contrátil básica do músculo esquelético?', o:['Miofibrila','Sarcômero','Actina','Miosina'], a:1, e:'O sarcômero (entre duas linhas Z) é a unidade contrátil.' },
-    { q:'Qual nervo inerva o diafragma?', o:['Vago','Frênico','Torácico longo','Intercostal'], a:1, e:'Nervo frênico (C3–C5): "C3, C4 e C5 mantêm o diafragma vivo".' },
+    { q:'Qual é a anemia microcítica e hipocrômica mais comum?', o:['Anemia ferropriva','Anemia megaloblástica','Anemia aplásica','Anemia hemolítica autoimune'], a:0, e:'A deficiência de ferro reduz a síntese de hemoglobina: hemácias pequenas (VCM baixo) e pálidas (HCM baixa).' },
+    { q:'Choque com débito cardíaco baixo e resistência vascular sistêmica alta, causado por perda de volume:', o:['Distributivo','Hipovolêmico','Neurogênico','Séptico'], a:1, e:'No choque hipovolêmico a pré-carga cai; a vasoconstrição compensatória eleva a resistência vascular sistêmica.' },
+    { q:'A anemia megaloblástica decorre principalmente da deficiência de:', o:['Ferro','Vitamina B12 ou ácido fólico','Vitamina C','Zinco'], a:1, e:'B12 e folato são necessários à síntese de DNA; a falha gera células grandes com núcleo imaturo.' },
   ],
   patho: [
     { q:'A necrose caseosa é típica de qual agente?', o:['Mycobacterium tuberculosis','Staphylococcus aureus','Candida albicans','HPV'], a:0, e:'O granuloma caseoso da tuberculose é o exemplo clássico de necrose caseosa.' },
@@ -199,14 +290,14 @@ const PERGUNTAS = {
     { q:'Primeira escolha no choque anafilático:', o:['Difenidramina','Hidrocortisona','Adrenalina IM','Salbutamol'], a:2, e:'Adrenalina IM (face anterolateral da coxa) é a primeira linha.' },
   ],
   mi: [
-    { q:'Qual critério diferencia derrame pleural exsudato de transudato?', o:['Critérios de Light','Critérios de Ranson','Escala de Glasgow','Critérios de Duke'], a:0, e:'Relações de proteína e LDH do líquido pleural e do soro.' },
-    { q:'Hipotensão, ingurgitamento jugular e bulhas abafadas formam a tríade de Beck de:', o:['Tamponamento cardíaco','Embolia pulmonar','Pneumotórax hipertensivo','Dissecção aórtica'], a:0, e:'Tríade clássica do tamponamento cardíaco.' },
-    { q:'Autoanticorpos altamente específicos do lúpus eritematoso sistêmico:', o:['Anti-dsDNA e anti-Smith','Fator reumatoide','Anti-CCP','ANCA'], a:0, e:'Anti-Smith tem alta especificidade; anti-dsDNA se correlaciona com atividade.' },
+    { q:'Na radiografia, estruturas que absorvem muito o feixe, como o osso, aparecem:', o:['Pretas (radiotransparentes)','Brancas (radiopacas)','Cinza-escuras','Invisíveis'], a:1, e:'Quanto mais o tecido atenua os raios X, menos o filme é sensibilizado e mais branca fica a imagem.' },
+    { q:'Na tomografia computadorizada, a densidade dos tecidos é medida em:', o:['Unidades Hounsfield','Teslas','Decibéis','Gray'], a:0, e:'Água = 0 UH, ar ≈ −1000 UH e osso cortical acima de +1000 UH.' },
+    { q:'Qual destes exames não usa radiação ionizante?', o:['Tomografia computadorizada','Radiografia','Ressonância magnética','Cintilografia'], a:2, e:'A RM usa campo magnético e radiofrequência; a cintilografia usa radiação gama.' },
   ],
   saude: [
-    { q:'A mortalidade infantil refere-se a óbitos de menores de:', o:['28 dias','1 ano','5 anos','10 anos'], a:1, e:'Mede óbitos antes de 1 ano de idade por mil nascidos vivos.' },
-    { q:'No coeficiente de incidência, o numerador é:', o:['Casos novos no período','Total de casos existentes','População total','Óbitos'], a:0, e:'Incidência conta casos novos; prevalência conta casos existentes.' },
-    { q:'Princípio do SUS que garante atendimento a todos, sem discriminação:', o:['Universalidade','Hierarquização','Descentralização','Regionalização'], a:0, e:'Universalidade, equidade e integralidade são princípios doutrinários do SUS.' },
+    { q:'O familiograma (genograma) representa:', o:['Apenas doenças hereditárias','A estrutura e as relações da família, em geral em três gerações','A renda familiar','O calendário vacinal'], a:1, e:'Mostra membros, vínculos, conflitos e problemas de saúde, normalmente em pelo menos três gerações.' },
+    { q:'O APGAR familiar avalia:', o:['A vitalidade do recém-nascido','A funcionalidade familiar percebida','O risco cardiovascular','O desenvolvimento motor'], a:1, e:'Adaptação, participação, crescimento, afeto e resolução, na percepção do próprio paciente.' },
+    { q:'A escala de Holmes e Rahe mede:', o:['Dor crônica','Estresse por eventos de vida','Dependência funcional','Risco de queda'], a:1, e:'Soma pontos de eventos vitais recentes para estimar o risco de adoecer por estresse.' },
   ],
   bib: [
     { q:'Técnica de estudo que espaça revisões ao longo do tempo chama-se:', o:['Repetição espaçada','Leitura dinâmica','Mnemônica','Sublinhado'], a:0, e:'Melhora a retenção de longo prazo (ex.: flashcards no Anki).' },
@@ -231,10 +322,11 @@ function salvar() { try { localStorage.setItem(CHAVE, JSON.stringify(D)); } catc
 
 // ===================== palco e câmera =====================
 const $ = id => document.getElementById(id);
-const stage = $('stage'), cam = $('cam');
+const cam = $('cam');
+let FIT = 1;
 function encaixar() {
-  const fit = Math.min(innerWidth / 1536, innerHeight / 1024);
-  document.documentElement.style.setProperty('--fit', fit);
+  FIT = Math.min(innerWidth / 1536, innerHeight / 1024);
+  document.documentElement.style.setProperty('--fit', FIT);
 }
 addEventListener('resize', encaixar);
 encaixar();
@@ -275,9 +367,122 @@ function campus() {
   camera();
   document.body.classList.remove('zoom', 'esq');
   $('painel').classList.remove('on');
-  SALAS.forEach(s => s.el.classList.remove('on'));
+  SALAS.forEach(s => { s.el.classList.remove('on'); s.porta.classList.remove('on'); });
+  // a estudante sai da sala pela mesma porta
+  if (P.dentro) { P.dentro = null; setTimeout(() => $('player').classList.remove('saindo'), 500); }
   G = null;
 }
+
+// ===================== personagem e caminhos =====================
+const P = { x:NOS.S[0], y:NOS.S[1], rota:[], aoChegar:null, dentro:null };
+const VEL = 260; // unidades da arte por segundo
+const player = $('player'), corpo = player.querySelector('.corpo');
+
+// perspectiva: menor quanto mais ao fundo do campus
+const escala = y => 0.6 + 0.4 * Math.min(Math.max((y - 388) / (858 - 388), 0), 1);
+function desenharPlayer() {
+  const s = escala(P.y);
+  player.style.transform = `translate(${P.x}px,${P.y}px)`;
+  corpo.style.transform = `translate(-33px,-135px) scale(${s})`;
+  player.querySelector('.sombra').style.transform = `scale(${s})`;
+  player.querySelector('.luz').style.transform = `scale(${s})`;
+}
+
+const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+function pontoNoSegmento(p, a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy;
+  const t = L ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L)) : 0;
+  return [a[0] + t * dx, a[1] + t * dy];
+}
+function arestaMaisProxima(p) {
+  let melhor = null;
+  ARESTAS.forEach(([u, v]) => {
+    const q = pontoNoSegmento(p, NOS[u], NOS[v]), d = dist(p, q);
+    if (!melhor || d < melhor.d) melhor = { u, v, q, d };
+  });
+  return melhor;
+}
+// menor caminho entre dois nós (Dijkstra; o grafo é pequeno)
+function caminho(de, ate) {
+  const d = {}, ant = {}, aberto = new Set(Object.keys(NOS));
+  Object.keys(NOS).forEach(k => d[k] = Infinity); d[de] = 0;
+  while (aberto.size) {
+    let u = null; aberto.forEach(k => { if (u === null || d[k] < d[u]) u = k; });
+    aberto.delete(u);
+    if (u === ate) break;
+    ARESTAS.forEach(([a, b]) => {
+      const v = a === u ? b : b === u ? a : null;
+      if (!v || !aberto.has(v)) return;
+      const nd = d[u] + dist(NOS[u], NOS[v]);
+      if (nd < d[v]) { d[v] = nd; ant[v] = u; }
+    });
+  }
+  const r = [ate]; while (r[0] !== de) r.unshift(ant[r[0]]);
+  return { nos:r, custo:d[ate] };
+}
+// rota da posição atual até um ponto qualquer do piso
+function rotaAte(alvo) {
+  const de = arestaMaisProxima([P.x, P.y]), para = arestaMaisProxima(alvo);
+  const mesma = (de.u === para.u && de.v === para.v) || (de.u === para.v && de.v === para.u);
+  if (mesma) return [para.q];
+  let melhor = null;
+  [de.u, de.v].forEach(a => [para.u, para.v].forEach(b => {
+    const c = caminho(a, b), total = dist([P.x, P.y], NOS[a]) + c.custo + dist(NOS[b], para.q);
+    if (!melhor || total < melhor.total) melhor = { total, nos:c.nos };
+  }));
+  return [...melhor.nos.map(k => NOS[k]), para.q];
+}
+function andarAte(alvo, aoChegar) {
+  if (P.dentro) return;
+  P.rota = rotaAte(alvo);
+  P.aoChegar = aoChegar || null;
+  const d = $('destino');
+  d.setAttribute('cx', alvo[0]); d.setAttribute('cy', alvo[1]);
+  d.classList.remove('on'); void d.getBoundingClientRect(); d.classList.add('on');
+}
+
+const teclas = {};
+let ultimo = performance.now();
+function passo(t) {
+  const dt = Math.min((t - ultimo) / 1000, 0.05); ultimo = t;
+  let andando = false;
+  if (!P.dentro && !document.body.classList.contains('zoom')) {
+    // setas / WASD: anda livre, mas só sobre os caminhos do piso
+    let dx = (teclas.arrowright || teclas.d ? 1 : 0) - (teclas.arrowleft || teclas.a ? 1 : 0);
+    let dy = (teclas.arrowdown || teclas.s ? 1 : 0) - (teclas.arrowup || teclas.w ? 1 : 0);
+    if (dx || dy) {
+      P.rota = []; P.aoChegar = null;
+      const n = Math.hypot(dx, dy), nx = P.x + dx / n * VEL * dt, ny = P.y + dy / n * VEL * dt;
+      const a = arestaMaisProxima([nx, ny]);
+      const [qx, qy] = a.d <= 24 ? [nx, ny] : a.q; // desliza pelo caminho em vez de travar
+      if (dx) player.classList.toggle('esq', dx < 0);
+      P.x = qx; P.y = qy; andando = true;
+      // chegou numa porta andando pelas setas: entra na sala
+      const s = SALAS.find(s => dist([P.x, P.y], NOS[s.no]) < 14);
+      if (s) entrarNaSala(s);
+    } else if (P.rota.length) {
+      const alvo = P.rota[0], d = dist([P.x, P.y], alvo), passoLen = VEL * dt;
+      if (Math.abs(alvo[0] - P.x) > 2) player.classList.toggle('esq', alvo[0] < P.x);
+      if (d <= passoLen) { P.x = alvo[0]; P.y = alvo[1]; P.rota.shift(); }
+      else { P.x += (alvo[0] - P.x) / d * passoLen; P.y += (alvo[1] - P.y) / d * passoLen; }
+      andando = true;
+      if (!P.rota.length && P.aoChegar) { const f = P.aoChegar; P.aoChegar = null; f(); }
+    }
+  }
+  player.classList.toggle('andando', andando);
+  desenharPlayer();
+  requestAnimationFrame(passo);
+}
+requestAnimationFrame(passo);
+
+// clique no piso: anda até o ponto mais próximo do caminho
+$('piso').addEventListener('click', e => {
+  const r = $('stage').getBoundingClientRect();
+  const p = [(e.clientX - r.left) / FIT, (e.clientY - r.top) / FIT];
+  const a = arestaMaisProxima(p);
+  if (a.d > 90) return toast('Ande pelo piso do campus ou clique numa sala');
+  andarAte(a.q);
+});
 
 // ===================== efeitos =====================
 const NS = 'http://www.w3.org/2000/svg';
@@ -294,20 +499,6 @@ const NS = 'http://www.w3.org/2000/svg';
     g.appendChild(c);
   }
 })();
-
-function trilha(ate) {
-  return new Promise(ok => {
-    const p = $('trilha');
-    const [x0, y0] = [778, 862], [x1, y1] = ate;
-    const mx = (x0 + x1) / 2 + (x1 < x0 ? -80 : 80), my = Math.max(y0, y1) - 40;
-    p.setAttribute('d', `M${x0} ${y0} Q${mx} ${my} ${x1} ${y1}`);
-    const len = p.getTotalLength();
-    p.style.setProperty('--len', len);
-    p.style.strokeDashoffset = len;
-    p.classList.remove('on'); void p.getBoundingClientRect(); p.classList.add('on');
-    setTimeout(() => { ok(); setTimeout(() => p.classList.remove('on'), 900); }, 750);
-  });
-}
 
 let toastT;
 function toast(msg) {
@@ -326,30 +517,118 @@ SALAS.forEach(s => {
   el.setAttribute('class', 'sala-hit');
   el.setAttribute('tabindex', '0');
   el.setAttribute('role', 'button');
-  el.setAttribute('aria-label', 'Entrar em ' + s.nome);
-  el.addEventListener('click', () => entrar(s.id));
-  el.addEventListener('keydown', e => { if (e.key === 'Enter') entrar(s.id); });
+  el.setAttribute('aria-label', 'Ir para ' + s.sala);
+  el.addEventListener('click', () => irPara(s.id));
+  el.addEventListener('keydown', e => { if (e.key === 'Enter') irPara(s.id); });
   el.addEventListener('mouseenter', () => {
     const b = caixa(s.poly);
     tip.style.left = b.cx + 'px';
     tip.style.top = (b.y0 + 30) + 'px';
-    tip.textContent = 'Entrar · ' + s.nome + ' ›';
+    tip.textContent = 'Ir para ' + s.sala + ' ›';
     tip.classList.add('on');
   });
   el.addEventListener('mouseleave', () => tip.classList.remove('on'));
   s.el = el;
   $('salas').appendChild(el);
+  const porta = document.createElementNS(NS, 'ellipse');
+  porta.setAttribute('cx', NOS[s.no][0]); porta.setAttribute('cy', NOS[s.no][1]);
+  porta.setAttribute('rx', 30); porta.setAttribute('ry', 11);
+  porta.setAttribute('class', 'porta');
+  s.porta = porta;
+  $('portas').appendChild(porta);
 });
+
+const sala = id => SALAS.find(s => s.id === id);
+
+// anda até a porta da sala e entra
+function irPara(id, depois) {
+  const s = sala(id);
+  if (document.body.classList.contains('zoom')) campus();
+  tip.classList.remove('on');
+  SALAS.forEach(x => { x.el.classList.toggle('on', x === s); x.porta.classList.toggle('on', x === s); });
+  const ir = () => andarAte(NOS[s.no], () => entrarNaSala(s, depois));
+  P.dentro ? setTimeout(ir, 600) : ir();
+}
+
+function entrarNaSala(s, depois) {
+  if (P.dentro) return;
+  P.dentro = s.id; P.rota = [];
+  // posiciona exatamente na porta e "atravessa" a porta
+  P.x = NOS[s.no][0]; P.y = NOS[s.no][1];
+  player.classList.add('saindo');
+  s.el.classList.add('on'); s.porta.classList.add('on');
+  setTimeout(() => {
+    focar(s);
+    setTimeout(() => (depois || (() => menuSala(s)))(), 550);
+  }, 300);
+}
+
+// ===================== o que fazer na sala =====================
+let MODO = 'teoria';
+function menuSala(s, modo) {
+  if (s.id === 'bib') return menuBiblioteca();
+  MODO = modo || (s.pratica ? MODO : 'teoria');
+  G = { tipo:'menu', sala:s };
+  const lista = FUNCOES[MODO].filter(f => !f[4] || f[4] === s.slug);
+  const itens = lista.map(([ic, nome, desc, tipo]) => {
+    let href = linkMateria(s.slug), extra = 'Abre no app SINUS';
+    if (tipo === 'mapas') {
+      if (!(MAPAS[s.slug] || {})[MODO]) return '';
+      href = linkMapas(s.slug, MODO); extra = 'Abre os mapas da matéria';
+    }
+    return `<a class="acao" href="${href}" target="_blank" rel="noopener" title="${extra}"><span class="ic">${ic}</span><b>${nome}</b><small>${desc}</small></a>`;
+  }).join('');
+  const prof = MODO === 'pratica' && s.pratica ? s.pratica : s.teoria;
+  $('painel').innerHTML =
+    `<div class="p-top"><div class="badge">${s.n}</div><div><span class="eyebrow">Sala ${s.n} · ${s.sala}</span><h3>${s.materia}</h3></div>
+       <div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>
+     <p class="prof">${MODO === 'pratica' ? 'Prática' : 'Teoria'}: <b>${prof}</b></p>
+     ${s.pratica ? `<div class="modo" role="group" aria-label="Teoria ou prática">
+        <button class="${MODO === 'teoria' ? 'on' : ''}" data-m="teoria">Teoria</button>
+        <button class="${MODO === 'pratica' ? 'on' : ''}" data-m="pratica">Prática</button></div>` : ''}
+     <div class="grade">
+       <button class="acao destaque" id="quiz"><span class="ic">⚡</span><span><b>Desafio rápido aqui no campus</b><br><small>${PERGUNTAS[s.id].length} questões · vale XP e conta nos desafios da semana</small></span></button>
+       ${itens}
+     </div>
+     <p class="nota">As funções abrem a matéria no app SINUS, em uma nova aba.</p>
+     <div class="acoes"><button class="btn" onclick="campus()">Sair da sala</button></div>`;
+  $('painel').querySelectorAll('.modo button').forEach(b => b.onclick = () => menuSala(s, b.dataset.m));
+  $('quiz').onclick = () => iniciarQuiz(s);
+  $('painel').classList.add('on');
+  $('painel').scrollTop = 0;
+}
+
+function menuBiblioteca() {
+  const s = sala('bib');
+  G = { tipo:'menu', sala:s };
+  const mats = SALAS.filter(x => x.slug).map(x =>
+    `<a class="acao" href="${linkMateria(x.slug)}" target="_blank" rel="noopener"><span class="ic">${x.n}</span><b>${x.materia}</b><small>Resumos, slides, provas e vídeos</small></a>`).join('');
+  $('painel').innerHTML =
+    `<div class="p-top"><div class="badge">📖</div><div><span class="eyebrow">Biblioteca</span><h3>Resumos · Slides · Provas · Livros</h3></div>
+       <div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>
+     <div class="grade">
+       <button class="acao destaque" id="quiz"><span class="ic">⚡</span><span><b>Desafio rápido de técnicas de estudo</b><br><small>${PERGUNTAS.bib.length} questões · vale XP</small></span></button>
+       ${mats}
+       <a class="acao" href="${APP}/sinus/revalida-treino.html" target="_blank" rel="noopener"><span class="ic">♡</span><b>Revalida · Treino</b><small>Questões por tema</small></a>
+       <a class="acao" href="${APP}/sinus/revalida-estacoes.html" target="_blank" rel="noopener"><span class="ic">⚕</span><b>Revalida · Estações</b><small>Prova prática</small></a>
+       <a class="acao" href="${APP}/" target="_blank" rel="noopener"><span class="ic">⌂</span><b>Abrir o app</b><small>Painel completo do SINUS</small></a>
+     </div>
+     <p class="nota">As matérias abrem no app SINUS, em uma nova aba.</p>
+     <div class="acoes"><button class="btn" onclick="campus()">Sair da biblioteca</button></div>`;
+  $('quiz').onclick = () => iniciarQuiz(s);
+  $('painel').classList.add('on');
+  $('painel').scrollTop = 0;
+}
 
 // ===================== interface desenhada → ações =====================
 const embreve = nome => () => toast(nome + ' chega na próxima versão');
 const HITS = [
   // barra superior
   [222, 14, 96, 40, 'Início', () => campus()],
-  [336, 14, 90, 40, 'Horários', embreve('Horários')],
-  [448, 14, 96, 40, 'Biblioteca', () => entrar('bib')],
+  [336, 14, 90, 40, 'Horários', () => window.open(APP + '/', '_blank', 'noopener')],
+  [448, 14, 96, 40, 'Biblioteca', () => irPara('bib')],
   [566, 14, 84, 40, 'Atlas 3D', embreve('Atlas 3D')],
-  [674, 14, 74, 40, 'Mapas', embreve('Mapas')],
+  [674, 14, 74, 40, 'Mapas', () => window.open(APP + '/mapas/', '_blank', 'noopener')],
   [772, 14, 84, 40, 'Revalida', () => simulado('Revalida')],
   [880, 14, 82, 40, 'Enamed', () => simulado('Enamed')],
   [986, 14, 98, 40, 'Exercícios', () => aleatoria()],
@@ -360,17 +639,17 @@ const HITS = [
   [202, 237, 44, 44, 'Meta do dia', () => toast('Meta de hoje: 8h de foco'), true],
   [32, 312, 214, 44, 'Continuar estudando', () => continuar()],
   [24, 377, 226, 38, 'Meu progresso', () => progresso()],
-  [24, 422, 226, 38, 'Agenda de estudos', embreve('Agenda de estudos')],
-  [24, 470, 226, 38, 'Meus resumos', () => entrar('bib')],
+  [24, 422, 226, 38, 'Agenda de estudos', () => window.open(APP + '/', '_blank', 'noopener')],
+  [24, 470, 226, 38, 'Meus resumos', () => irPara('bib')],
   [24, 515, 226, 38, 'Meus exercícios', () => aleatoria()],
-  [24, 561, 226, 38, 'Flashcards', embreve('Flashcards')],
+  [24, 561, 226, 38, 'Flashcards', () => continuar()],
   [24, 607, 226, 38, 'Simulados', () => simulado('Simulado')],
-  [24, 653, 226, 38, 'Anotações', embreve('Anotações')],
+  [24, 653, 226, 38, 'Anotações', () => window.open(APP + '/', '_blank', 'noopener')],
   // cartões
-  [1262, 126, 252, 72, 'Próxima aula: Semiologia I', () => entrar('semio')],
-  [1452, 94, 66, 22, 'Ver todas as aulas', embreve('Agenda de aulas')],
-  [1003, 334, 100, 50, 'Teoria', () => entrar('semio')],
-  [1114, 353, 108, 52, 'Prática', () => entrar('semio')],
+  [1262, 126, 252, 72, 'Próxima aula: Semiologia I - Prática', () => irPara('semio', () => menuSala(sala('semio'), 'pratica'))],
+  [1452, 94, 66, 22, 'Ver todas as aulas', () => window.open(APP + '/', '_blank', 'noopener')],
+  [1003, 334, 100, 50, 'Semiologia: Teoria', () => irPara('semio', () => menuSala(sala('semio'), 'teoria'))],
+  [1114, 353, 108, 52, 'Semiologia: Prática', () => irPara('semio', () => menuSala(sala('semio'), 'pratica'))],
   [252, 770, 66, 22, 'Ver todos os desafios', () => progresso()],
   [634, 922, 424, 72, 'Escolha uma sala', () => continuar()],
 ];
@@ -422,47 +701,40 @@ setInterval(() => {
 }, 1000);
 atualizarHud();
 
-// ===================== sessões de estudo =====================
-let G = null; // sessão atual
+// ===================== desafio rápido e simulados =====================
+let G = null; // o que está aberto no painel
 const embaralhar = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
-const sala = id => SALAS.find(s => s.id === id);
 
-async function entrar(id) {
-  const s = sala(id);
-  if (document.body.classList.contains('zoom')) campus();
-  tip.classList.remove('on');
-  SALAS.forEach(x => x.el.classList.toggle('on', x === s));
-  await trilha(s.ent);
-  focar(s);
-  G = { tipo:'sala', sala:s, fila:embaralhar(PERGUNTAS[id].map(q => ({ ...q, sala:id }))), i:0, res:[] };
-  setTimeout(render, 650);
+function iniciarQuiz(s) {
+  G = { tipo:'sala', sala:s, fila:embaralhar(PERGUNTAS[s.id].map(q => ({ ...q, sala:s.id }))), i:0, res:[] };
+  render();
 }
 
-async function simulado(titulo) {
-  if (document.body.classList.contains('zoom')) campus();
-  const todas = Object.entries(PERGUNTAS).flatMap(([id, l]) => l.map(q => ({ ...q, sala:id })));
-  document.body.classList.remove('esq');
-  await trilha([783, 600]);
-  camera(783, 470, 1.9, innerWidth < 760 ? 768 : 1536 * 0.32, innerWidth < 760 ? 1024 * 0.3 : 512);
-  document.body.classList.add('zoom');
-  G = { tipo:'simulado', titulo, fila:embaralhar(todas).slice(0, 5), i:0, res:[] };
-  setTimeout(render, 650);
+function simulado(titulo) {
+  const ir = () => {
+    camera(783, 470, 1.9, innerWidth < 760 ? 768 : 1536 * 0.32, innerWidth < 760 ? 1024 * 0.3 : 512);
+    document.body.classList.remove('esq');
+    document.body.classList.add('zoom');
+    const todas = Object.entries(PERGUNTAS).flatMap(([id, l]) => l.map(q => ({ ...q, sala:id })));
+    G = { tipo:'simulado', titulo, fila:embaralhar(todas).slice(0, 5), i:0, res:[] };
+    setTimeout(render, 650);
+  };
+  if (document.body.classList.contains('zoom')) { campus(); setTimeout(() => andarAte(NOS.A, ir), 650); }
+  else andarAte(NOS.A, ir);
 }
 
-function aleatoria() { entrar(SALAS[Math.floor(Math.random() * SALAS.length)].id); }
+function aleatoria() { irPara(SALAS[Math.floor(Math.random() * SALAS.length)].id); }
 
 function continuar() {
   // a sala com menor aproveitamento (ou nunca visitada) primeiro
   const nota = s => { const p = D.porSala[s.id]; return p && p.t ? p.a / p.t : -1; };
-  entrar([...SALAS].sort((a, b) => nota(a) - nota(b))[0].id);
+  irPara([...SALAS].sort((a, b) => nota(a) - nota(b))[0].id);
 }
 
 function cabecalho() {
   const s = G.sala;
-  const badge = G.tipo === 'sala' ? s.n : '⚡';
-  const nome = G.tipo === 'sala' ? s.nome : G.titulo;
-  const sub = G.tipo === 'sala' ? s.sub : 'Questões de todas as salas';
-  return `<div class="p-top"><div class="badge">${badge}</div><div><h3>${nome}</h3><small>${sub}</small></div>
+  const sim = G.tipo === 'simulado';
+  return `<div class="p-top"><div class="badge">${sim ? '⚡' : s.n}</div><div><span class="eyebrow">${sim ? 'Simulado' : 'Desafio rápido · ' + s.sala}</span><h3>${sim ? G.titulo : s.materia}</h3></div>
     <div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>`;
 }
 
@@ -474,12 +746,13 @@ function render() {
   const dots = G.fila.map((_, i) => `<i class="${i < G.res.length ? (G.res[i] ? 'ok' : 'no') : i === G.i ? 'cur' : ''}"></i>`).join('');
   p.innerHTML = cabecalho() +
     `<div class="prog">${dots}</div>
-     <div class="qnum">Questão ${G.i + 1} de ${G.fila.length}${G.tipo === 'simulado' ? ' · ' + sala(q.sala).nome : ''}</div>
+     <div class="qnum">Questão ${G.i + 1} de ${G.fila.length}${G.tipo === 'simulado' ? ' · ' + sala(q.sala).materia : ''}</div>
      <h2>${q.q}</h2>
      <div id="ops">${q.o.map((t, i) => `<button class="opt" data-i="${i}"><span class="l">${'ABCD'[i]}</span><span>${t}</span></button>`).join('')}</div>
      <div class="exp" id="exp"></div>
-     <div class="acoes"><button class="btn" onclick="campus()">Sair</button><button class="btn pri" id="prox" disabled>Responder</button></div>`;
+     <div class="acoes"><button class="btn" id="sairQuiz">${G.tipo === 'sala' ? '← Voltar à sala' : 'Sair'}</button><button class="btn pri" id="prox" disabled>Responder</button></div>`;
   p.querySelectorAll('.opt').forEach(b => b.onclick = () => responder(+b.dataset.i));
+  $('sairQuiz').onclick = () => G.tipo === 'sala' ? menuSala(G.sala) : campus();
   p.classList.add('on');
   p.scrollTop = 0;
 }
@@ -515,14 +788,16 @@ function responder(i) {
 
 function resultado() {
   const ac = G.res.filter(Boolean).length, tot = G.res.length;
-  if (G.tipo === 'sala') { D.materias++; } else { D.simulados++; }
+  if (G.tipo === 'sala') D.materias++; else D.simulados++;
   salvar(); atualizarHud();
   const pct = Math.round(ac / tot * 100);
   $('painel').innerHTML = cabecalho() +
     `<div class="res"><div class="big">${ac}/${tot}</div>
      <p>${pct >= 70 ? 'Excelente! Sala dominada.' : pct >= 40 ? 'Bom caminho. Revise as explicações.' : 'Vale revisar o conteúdo e tentar de novo.'}</p></div>
-     <div class="acoes"><button class="btn" id="refazer">Refazer</button><button class="btn pri" onclick="campus()">Voltar ao campus</button></div>`;
-  $('refazer').onclick = () => G.tipo === 'sala' ? entrar(G.sala.id) : simulado(G.titulo);
+     <div class="acoes"><button class="btn" id="refazer">Refazer</button><button class="btn pri" id="fim">${G.tipo === 'sala' ? 'Voltar à sala' : 'Voltar ao campus'}</button></div>`;
+  const g = G;
+  $('refazer').onclick = () => g.tipo === 'sala' ? iniciarQuiz(g.sala) : simulado(g.titulo);
+  $('fim').onclick = () => g.tipo === 'sala' ? menuSala(g.sala) : campus();
 }
 
 function progresso() {
@@ -534,10 +809,10 @@ function progresso() {
   const linhas = SALAS.map(s => {
     const p = D.porSala[s.id] || { a:0, t:0 };
     const pct = p.t ? Math.round(p.a / p.t * 100) : 0;
-    return `<li><b>${s.nome}</b><span>${p.a}/${p.t} · ${pct}%</span><i><u style="width:${pct}%"></u></i></li>`;
+    return `<li><b>${s.materia}</b><span>${p.a}/${p.t} · ${pct}%</span><i><u style="width:${pct}%"></u></i></li>`;
   }).join('');
   $('painel').innerHTML =
-    `<div class="p-top"><div class="badge">★</div><div><h3>Meu progresso</h3><small>Aproveitamento por sala</small></div>
+    `<div class="p-top"><div class="badge">★</div><div><span class="eyebrow">Meu progresso</span><h3>Aproveitamento por matéria</h3></div>
      <div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>
      <ul class="lista-prog">${linhas}</ul>
      <div class="acoes"><button class="btn pri" onclick="campus()">Voltar ao campus</button></div>`;
@@ -546,13 +821,22 @@ function progresso() {
 
 // ===================== teclado =====================
 addEventListener('keydown', e => {
-  if (e.key === 'Escape') return campus();
-  if (!G || G.tipo === 'progresso') return;
   const k = e.key.toLowerCase();
-  const idx = { '1':0, '2':1, '3':2, '4':3, a:0, b:1, c:2, d:3 }[k];
-  if (idx !== undefined && G.res.length === G.i) responder(idx);
-  if (e.key === 'Enter' && !$('prox')?.disabled && document.activeElement !== $('prox')) $('prox').click();
+  if (e.key === 'Escape') return campus();
+  const quiz = G && (G.tipo === 'sala' || G.tipo === 'simulado') && $('ops');
+  if (quiz) {
+    const idx = { '1':0, '2':1, '3':2, '4':3, a:0, b:1, c:2, d:3 }[k];
+    if (idx !== undefined && G.res.length === G.i) { responder(idx); return; }
+    if (e.key === 'Enter' && !$('prox')?.disabled && document.activeElement !== $('prox')) $('prox').click();
+    return;
+  }
+  if (['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(k)) {
+    if (e.target.tagName === 'INPUT') return;
+    teclas[k] = true; e.preventDefault();
+  }
 });
+addEventListener('keyup', e => { teclas[e.key.toLowerCase()] = false; });
+addEventListener('blur', () => { for (const k in teclas) teclas[k] = false; });
 $('voltar').onclick = campus;
 </script>
 </body>
