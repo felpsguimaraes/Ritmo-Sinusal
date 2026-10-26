@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SINUS · Início</title>
+<style>
+:root{
+  --bg:#07120e;--panel:rgba(9,20,16,.86);--panel-line:rgba(255,255,255,.09);
+  --accent:#4ade80;--accent-2:#22c55e;--text:#f1f7f4;--muted:#93a9a0;--bad:#f87171;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+button{font:inherit}
+canvas#cena{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+
+/* ---------- barra superior ---------- */
+.nav{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;gap:18px;padding:0 18px;background:rgba(6,14,11,.82);border-bottom:1px solid var(--panel-line);backdrop-filter:blur(8px);z-index:5}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.5px;font-size:20px;color:var(--accent);min-width:150px}
+.brand svg{width:34px;height:22px}
+.menu-top{display:flex;gap:4px;flex:1;overflow:hidden}
+.menu-top a{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:10px;color:var(--muted);font-size:14px;text-decoration:none;white-space:nowrap;cursor:default}
+.menu-top a.on{background:rgba(74,222,128,.14);color:var(--accent)}
+.busca{display:flex;align-items:center;gap:8px;width:290px;background:rgba(255,255,255,.05);border:1px solid var(--panel-line);border-radius:12px;padding:8px 12px;color:var(--muted);font-size:14px}
+.busca input{flex:1;background:none;border:0;outline:0;color:var(--text);font:inherit;min-width:0}
+.busca kbd{font:inherit;font-size:12px;border:1px solid var(--panel-line);border-radius:6px;padding:1px 6px}
+.sino{position:relative;width:36px;height:36px;border-radius:50%;background:none;border:0;color:var(--text);font-size:18px;cursor:default}
+.sino i{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#f43f5e}
+.avatar{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#f5d0b0 0 30%,#1f3b30 31%);border:2px solid var(--accent)}
+
+/* ---------- painéis ---------- */
+.panel{position:fixed;background:var(--panel);border:1px solid var(--panel-line);border-radius:18px;backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.35);z-index:4}
+.side{left:14px;top:80px;width:262px;padding:18px 18px 14px}
+.perfil{display:flex;gap:12px;align-items:center}
+.perfil .avatar{width:50px;height:50px;flex:none}
+.perfil b{display:block;font-size:16px}
+.perfil small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.pill{display:inline-block;margin-top:6px;font-size:12px;padding:2px 10px;border-radius:999px;background:rgba(74,222,128,.18);color:var(--accent)}
+hr{border:0;border-top:1px solid var(--panel-line);margin:16px 0}
+h4{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--muted)}
+.foco{display:flex;align-items:center;gap:12px}
+.ring{width:58px;height:58px;flex:none}
+.foco b{font-size:19px;display:block}
+.foco small{color:var(--muted);font-size:13px}
+.alvo{margin-left:auto;width:40px;height:40px;border-radius:12px;border:1px solid var(--panel-line);background:rgba(255,255,255,.04);color:var(--accent);font-size:18px;cursor:pointer}
+.cta{width:100%;margin:16px 0 14px;padding:13px;border:0;border-radius:14px;background:linear-gradient(90deg,#86efac,#4ade80);color:#052e16;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 6px 20px rgba(74,222,128,.35)}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{display:flex;align-items:center;gap:12px;padding:10px 6px;border-radius:10px;color:#dbe7e1;font-size:14px;cursor:default}
+.lista li:hover{background:rgba(255,255,255,.05)}
+.lista span.ico{width:22px;text-align:center;color:var(--accent)}
+
+.next{right:14px;top:80px;width:270px;padding:16px 16px 12px}
+.cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cab b{font-size:15px}
+.cab a{color:var(--accent);font-size:13px;cursor:default}
+.aula{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--panel-line);cursor:pointer}
+.aula .cal{width:42px;height:42px;border-radius:12px;background:rgba(74,222,128,.14);display:grid;place-items:center;color:var(--accent);font-size:18px;flex:none}
+.aula small{display:block;color:var(--muted);font-size:12px}
+.aula b{display:block;font-size:14px;margin-top:2px}
+.aula em{font-style:normal;color:var(--muted);font-size:12px}
+.aula .seta{margin-left:auto;color:var(--muted)}
+
+.desafios{left:16px;bottom:18px;width:312px;padding:16px 16px 12px}
+.desafio{display:grid;grid-template-columns:22px 1fr auto;gap:4px 10px;align-items:center;margin:10px 0}
+.desafio .ck{color:var(--accent);font-size:15px;text-align:center}
+.desafio .ck.off{color:var(--muted)}
+.desafio .nome{font-size:13px;color:#dbe7e1}
+.desafio .num{font-size:12px;color:var(--muted)}
+.desafio .bar{grid-column:2 / 4;height:5px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.desafio .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+
+.banner{bottom:24px;left:50%;transform:translateX(-50%);width:424px;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid rgba(74,222,128,.45);background:rgba(8,22,16,.9);cursor:pointer}
+.banner .avatar{width:44px;height:44px;flex:none}
+.banner b{display:block;font-size:14px}
+.banner small{color:var(--muted);font-size:12px}
+.banner .go{margin-left:auto;width:40px;height:40px;border-radius:50%;background:var(--accent-2);color:#052e16;display:grid;place-items:center;font-size:18px;flex:none}
+
+.hint{position:fixed;left:50%;top:76px;transform:translateX(-50%);z-index:3;font-size:12px;color:var(--muted);background:rgba(6,14,11,.7);padding:4px 12px;border-radius:999px;white-space:nowrap}
+
+/* ---------- quiz ---------- */
+.modal{position:fixed;inset:0;background:rgba(2,8,6,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.modal.on{display:flex}
+.card{background:#0c1b15;border:1px solid var(--panel-line);border-radius:18px;max-width:520px;width:100%;padding:22px}
+.sala{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.card h2{font-size:18px;margin:6px 0 14px;line-height:1.35}
+.opt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--panel-line);border-radius:12px;padding:11px 14px;margin:6px 0;font-size:15px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.ok{background:#14532d;border-color:var(--accent)}
+.opt.no{background:#4c1d1d;border-color:var(--bad)}
+.opt:disabled{cursor:default}
+#exp{margin:12px 0 0;font-size:14px;color:var(--muted);min-height:20px;line-height:1.45}
+#next{margin-top:14px;background:var(--accent);color:#052e16;border:0;border-radius:12px;padding:10px 18px;font-weight:700;cursor:pointer;display:none}
+
+/* ---------- responsivo ---------- */
+@media (max-width:1180px){
+  .side,.next,.desafios{display:none}
+  .menu-top a span.t{display:none}
+  .busca{width:200px}
+}
+@media (max-width:640px){
+  .menu-top,.busca{display:none}
+  .banner{width:calc(100vw - 24px)}
+}
+</style>
+</head>
+<body>
+<canvas id="cena"></canvas>
+
+<header class="nav">
+  <div class="brand">
+    <svg viewBox="0 0 34 22" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12h7l3-8 5 16 4-11 3 3h10"/></svg>
+    SINUS
+  </div>
+  <nav class="menu-top">
+    <a class="on">⌂ <span class="t">Início</span></a>
+    <a>▦ <span class="t">Horários</span></a>
+    <a>▤ <span class="t">Biblioteca</span></a>
+    <a>◈ <span class="t">Atlas 3D</span></a>
+    <a>⬡ <span class="t">Mapas</span></a>
+    <a>♡ <span class="t">Revalida</span></a>
+    <a>▣ <span class="t">Enamed</span></a>
+    <a>✎ <span class="t">Exercícios</span></a>
+  </nav>
+  <div class="busca">⌕ <input placeholder="Buscar no SINUS..."><kbd>⌘ K</kbd></div>
+  <button class="sino" aria-label="Notificações">🔔<i></i></button>
+  <div class="avatar" title="Estudante"></div>
+</header>
+
+<div class="hint" id="hint">Setas / WASD ou toque para andar · entre numa porta para responder</div>
+
+<aside class="panel side">
+  <div class="perfil">
+    <div class="avatar"></div>
+    <div>
+      <b>Olá, Estudante 👋</b>
+      <small>7º Período · Turma C</small>
+      <span class="pill">Premium</span>
+    </div>
+  </div>
+  <hr>
+  <h4>Foco de hoje</h4>
+  <div class="foco">
+    <svg class="ring" viewBox="0 0 58 58">
+      <circle cx="29" cy="29" r="24" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="5"/>
+      <circle id="anel" cx="29" cy="29" r="24" fill="none" stroke="#4ade80" stroke-width="5" stroke-linecap="round" transform="rotate(-90 29 29)" stroke-dasharray="150.8" stroke-dashoffset="150.8"/>
+    </svg>
+    <div><b id="focoTxt">0h 0min</b><small>de 8h</small></div>
+    <button class="alvo" title="Meta">◎</button>
+  </div>
+  <button class="cta" id="continuar">▶ Continuar estudando</button>
+  <ul class="lista">
+    <li><span class="ico">↻</span>Meu progresso</li>
+    <li><span class="ico">▦</span>Agenda de estudos</li>
+    <li><span class="ico">▤</span>Meus resumos</li>
+    <li><span class="ico">✎</span>Meus exercícios</li>
+    <li><span class="ico">▢</span>Flashcards</li>
+    <li><span class="ico">◷</span>Simulados</li>
+    <li><span class="ico">✐</span>Anotações</li>
+  </ul>
+</aside>
+
+<aside class="panel next">
+  <div class="cab"><b>Próxima aula</b><a>Ver todos</a></div>
+  <div class="aula">
+    <div class="cal">▦</div>
+    <div>
+      <small>08:00 - 10:00</small>
+      <b>Semiologia I - Prática</b>
+      <em>Laboratório 2</em>
+    </div>
+    <span class="seta">›</span>
+  </div>
+</aside>
+
+<aside class="panel desafios">
+  <div class="cab"><b>Desafios da semana</b><a>Ver todos</a></div>
+  <div class="desafio">
+    <span class="ck" id="ck1">✓</span><span class="nome">Estudar 5h hoje</span><span class="num" id="t1">0/5h</span>
+    <div class="bar"><i id="b1"></i></div>
+  </div>
+  <div class="desafio">
+    <span class="ck off" id="ck2">○</span><span class="nome">Resolver 20 questões</span><span class="num" id="t2">0/20</span>
+    <div class="bar"><i id="b2"></i></div>
+  </div>
+  <div class="desafio">
+    <span class="ck off" id="ck3">▢</span><span class="nome">Revisar 1 matéria</span><span class="num" id="t3">0/1</span>
+    <div class="bar"><i id="b3"></i></div>
+  </div>
+  <div class="desafio">
+    <span class="ck off">▢</span><span class="nome">Fazer 1 simulado</span><span class="num">0/1</span>
+    <div class="bar"><i></i></div>
+  </div>
+</aside>
+
+<div class="panel banner" id="banner">
+  <div class="avatar"></div>
+  <div>
+    <b>Escolha uma sala para começar a estudar!</b>
+    <small>Continue sua jornada e evolua no SINUS.</small>
+  </div>
+  <div class="go">›</div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="card">
+    <div class="sala" id="sala"></div>
+    <h2 id="pergunta"></h2>
+    <div id="opts"></div>
+    <div id="exp"></div>
+    <button id="next">Continuar</button>
+  </div>
+</div>
+
+<script>
+// ================= dados do mundo =================
+const WORLD = { w: 1200, h: 800 };
+const P = 26, SPEED = 230, META = 20, WALL = 62, TILE = 40;
+
+const ROOMS = [
+  { id:'morfo', n:1, nome:'Morfofuncional',    sub:'Anatomia · Histologia · Fisiologia', cor:'#1e3a5f', rect:[60,60,300,200],   door:[180,262,60,36] },
+  { id:'patho', n:2, nome:'Patologia Geral',   sub:'Anatomia Patológica',                cor:'#5b2150', rect:[450,40,300,170],  door:[570,212,60,36] },
+  { id:'semio', n:3, nome:'Semiologia I',      sub:'Teoria e Prática',                   cor:'#14483a', rect:[840,60,300,200],  door:[960,262,60,36] },
+  { id:'farma', n:4, nome:'Farmacologia',      sub:'Fármacos e interações',              cor:'#4a4418', rect:[60,300,300,180],  door:[362,360,36,60] },
+  { id:'mi',    n:5, nome:'Medicina Interna I',sub:'Clínica médica',                     cor:'#5a3418', rect:[840,300,300,180], door:[802,360,36,60] },
+  { id:'saude', n:6, nome:'Saúde Coletiva',    sub:'Epidemiologia · SUS',                cor:'#1f4a33', rect:[60,560,300,200],  door:[362,620,36,60] },
+  { id:'bib',   n:0, nome:'Biblioteca',        sub:'Resumos · Slides · Provas · Livros', cor:'#2b2b4f', rect:[840,560,300,200], door:[802,620,36,60] },
+];
+const PLANTAS = [[18,18],[1180,30],[30,780],[1170,770],[600,15],[610,785],[20,420],[1185,420]];
+
+const PERGUNTAS = {
+  morfo: [
+    { q:'Qual é o único osso do corpo que não se articula com nenhum outro osso?', o:['Clavícula','Hioide','Escápula','Esterno'], a:1, e:'O hioide é suspenso por músculos e ligamentos; não possui articulação óssea.' },
+    { q:'Qual é a unidade contrátil básica do músculo esquelético?', o:['Miofibrila','Sarcômero','Actina','Miosina'], a:1, e:'O sarcômero (entre duas linhas Z) é a unidade contrátil.' },
+    { q:'Qual nervo inerva o diafragma?', o:['Vago','Frênico','Torácico longo','Intercostal'], a:1, e:'Nervo frênico (C3–C5): "C3, C4 e C5 mantêm o diafragma vivo".' },
+  ],
+  patho: [
+    { q:'A necrose caseosa é típica de qual agente?', o:['Mycobacterium tuberculosis','Staphylococcus aureus','Candida albicans','HPV'], a:0, e:'O granuloma caseoso da tuberculose é o exemplo clássico de necrose caseosa.' },
+    { q:'Qual alteração celular é reversível?', o:['Necrose coagulativa','Apoptose','Tumefação turva (degeneração hidrópica)','Calcificação distrófica'], a:2, e:'Na lesão reversível a célula se recupera se a agressão cessar. Apoptose e necrose já são morte celular.' },
+    { q:'Qual é a célula característica do granuloma?', o:['Plasmócito','Célula epitelioide com células gigantes multinucleadas','Mastócito','Neutrófilo'], a:1, e:'Macrófagos transformados em células epitelioides, com células gigantes de Langhans.' },
+  ],
+  semio: [
+    { q:'O sinal de Murphy sugere qual diagnóstico?', o:['Apendicite','Colecistite aguda','Pancreatite','Pielonefrite'], a:1, e:'Parada da inspiração durante a palpação do hipocôndrio direito: positivo na colecistite aguda.' },
+    { q:'Dor à descompressão brusca do abdome indica:', o:['Sinal de Blumberg (irritação peritoneal)','Sinal de Lasègue','Sinal de Kernig','Sinal de Courvoisier'], a:0, e:'Blumberg positivo é sugestivo de peritonite.' },
+    { q:'Pulso paradoxal (queda da PA sistólica >10 mmHg na inspiração) é típico de:', o:['Insuficiência aórtica','Tamponamento cardíaco','Estenose mitral','Miocardite'], a:1, e:'Clássico do tamponamento. Também aparece na asma grave e na DPOC.' },
+  ],
+  farma: [
+    { q:'Antídoto da intoxicação por paracetamol:', o:['Naloxona','Flumazenil','N-acetilcisteína','Atropina'], a:2, e:'A NAC repõe a glutationa e neutraliza o metabólito tóxico NAPQI.' },
+    { q:'Antídoto da intoxicação por opioides:', o:['Naloxona','Flumazenil','Protamina','Vitamina K'], a:0, e:'Antagonista opioide competitivo.' },
+    { q:'Primeira escolha no choque anafilático:', o:['Difenidramina','Hidrocortisona','Adrenalina IM','Salbutamol'], a:2, e:'Adrenalina IM (face anterolateral da coxa) é a primeira linha.' },
+  ],
+  mi: [
+    { q:'Qual critério diferencia derrame pleural exsudato de transudato?', o:['Critérios de Light','Critérios de Ranson','Escala de Glasgow','Critérios de Duke'], a:0, e:'Relações de proteína e LDH do líquido pleural e do soro.' },
+    { q:'Hipotensão, ingurgitamento jugular e bulhas abafadas formam a tríade de Beck de:', o:['Tamponamento cardíaco','Embolia pulmonar','Pneumotórax hipertensivo','Dissecção aórtica'], a:0, e:'Tríade clássica do tamponamento cardíaco.' },
+    { q:'Autoanticorpos altamente específicos do lúpus eritematoso sistêmico:', o:['Anti-dsDNA e anti-Smith','Fator reumatoide','Anti-CCP','ANCA'], a:0, e:'Anti-Smith tem alta especificidade; anti-dsDNA se correlaciona com atividade.' },
+  ],
+  saude: [
+    { q:'A mortalidade infantil refere-se a óbitos de menores de:', o:['28 dias','1 ano','5 anos','10 anos'], a:1, e:'Mede óbitos antes de 1 ano de idade por mil nascidos vivos.' },
+    { q:'No coeficiente de incidência, o numerador é:', o:['Casos novos no período','Total de casos existentes','População total','Óbitos'], a:0, e:'Incidência conta casos novos; prevalência conta casos existentes.' },
+    { q:'Princípio do SUS que garante atendimento a todos, sem discriminação:', o:['Universalidade','Hierarquização','Descentralização','Regionalização'], a:0, e:'Universalidade, equidade e integralidade são princípios doutrinários do SUS.' },
+  ],
+  bib: [
+    { q:'Técnica de estudo que espaça revisões ao longo do tempo chama-se:', o:['Repetição espaçada','Leitura dinâmica','Mnemônica','Sublinhado'], a:0, e:'Melhora a retenção de longo prazo (ex.: flashcards no Anki).' },
+    { q:'Evocar o conteúdo da memória, sem consultar o material, é:', o:['Prática de recuperação','Copiar o resumo','Releitura','Grifar'], a:0, e:'Lembrar ativamente fortalece o aprendizado mais do que reler.' },
+  ],
+};
+
+// ================= estado =================
+const SAVE = 'sinus-cena-v1';
+const HOJE = new Date().toDateString();
+const S = { x: 587, y: 690, target: null, xp: 0, acertos: 0, total: 0, seq: 0, hoje: 0, vidas: 3, foco: 0, modal: false, cool: null, usadas: new Set(), visitadas: new Set() };
+try {
+  const d = JSON.parse(localStorage.getItem(SAVE) || 'null');
+  if (d) {
+    S.xp = d.xp || 0; S.acertos = d.acertos || 0; S.total = d.total || 0;
+    if (d.dia === HOJE) S.hoje = d.hoje || 0;
+  }
+} catch (e) {}
+function salvar() {
+  try { localStorage.setItem(SAVE, JSON.stringify({ xp: S.xp, acertos: S.acertos, total: S.total, hoje: S.hoje, dia: HOJE })); } catch (e) {}
+}
+
+const $ = id => document.getElementById(id);
+const cvs = $('cena'), ctx = cvs.getContext('2d');
+
+// ================= projeção isométrica =================
+const C30 = Math.cos(Math.PI / 6);
+let K = 1, OX = 0, OY = 0, DPR = 1;
+function resize() {
+  DPR = window.devicePixelRatio || 1;
+  cvs.width = innerWidth * DPR;
+  cvs.height = innerHeight * DPR;
+  const W = cvs.width, H = cvs.height;
+  K = Math.min(W * 0.92 / (2000 * C30), H * 0.78 / 1040);
+  OX = W / 2 - 200 * C30 * K;
+  OY = H * 0.46 - 500 * K;
+}
+addEventListener('resize', resize);
+resize();
+const proj = (x, y, z = 0) => [(x - y) * C30 * K + OX, ((x + y) * 0.5 - z) * K + OY];
+
+// piso com leve ondulação vinda do coração
+function alturaChao(x, y, t) {
+  const d = Math.hypot(x - 600, y - 400);
+  return 3 * Math.exp(-d / 140) + 1.2 * Math.sin(d / 40 - t / 260) * Math.exp(-d / 320);
+}
+
+// ================= colisão e interação =================
+const SOLIDOS = ROOMS.map(r => r.rect);
+const sobrepoe = (x, y, w, h, [rx, ry, rw, rh]) => x < rx + rw && x + w > rx && y < ry + rh && y + h > ry;
+function bateu(x, y) {
+  if (x < 0 || y < 0 || x + P > WORLD.w || y + P > WORLD.h) return true;
+  return SOLIDOS.some(r => sobrepoe(x, y, P, P, r));
+}
+function mover(dx, dy) {
+  if (!bateu(S.x + dx, S.y)) S.x += dx;
+  if (!bateu(S.x, S.y + dy)) S.y += dy;
+}
+
+const keys = {};
+addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  keys[k] = true;
+  if (e.key.startsWith('Arrow') || e.key === ' ') e.preventDefault();
+  if (S.modal) {
+    const bs = [...document.querySelectorAll('#opts .opt:not(:disabled)')];
+    const n = Number(e.key);
+    if (n >= 1 && n <= bs.length) bs[n - 1].click();
+    if (k === 'enter' && $('next').style.display !== 'none') $('next').click();
+  }
+});
+addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+
+cvs.addEventListener('pointerdown', e => {
+  const sx = e.clientX * DPR, sy = e.clientY * DPR;
+  const a = (sx - OX) / (C30 * K), b = (sy - OY) / (0.5 * K);
+  S.target = { x: (a + b) / 2 - P / 2, y: (b - a) / 2 - P / 2 };
+});
+
+function escolher(room) {
+  const lista = PERGUNTAS[room.id];
+  let idxs = lista.map((_, i) => i).filter(i => !S.usadas.has(room.id + i));
+  if (!idxs.length) { lista.forEach((_, i) => S.usadas.delete(room.id + i)); idxs = lista.map((_, i) => i); }
+  const idx = idxs[Math.floor(Math.random() * idxs.length)];
+  S.usadas.add(room.id + idx);
+  return lista[idx];
+}
+
+function abrirPergunta(room) {
+  S.modal = true;
+  S.cool = room.id;
+  S.visitadas.add(room.id);
+  const p = escolher(room);
+  $('sala').textContent = room.nome + ' · ' + room.sub;
+  $('pergunta').textContent = p.q;
+  $('exp').textContent = '';
+  $('next').style.display = 'none';
+  const box = $('opts');
+  box.innerHTML = '';
+  p.o.forEach((texto, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.textContent = (i + 1) + ') ' + texto;
+    b.onclick = () => responder(i, p, box);
+    box.appendChild(b);
+  });
+  $('modal').classList.add('on');
+}
+
+function responder(i, p, box) {
+  const btns = [...box.children];
+  btns.forEach(b => b.disabled = true);
+  btns[p.a].classList.add('ok');
+  const certa = i === p.a;
+  if (!certa) btns[i].classList.add('no');
+  S.total++;
+  S.hoje++;
+  if (certa) { S.acertos++; S.seq++; S.xp += 10 + Math.min(S.seq, 5) * 2; }
+  else { S.seq = 0; S.vidas--; }
+  if (S.hoje === META) { S.xp += 50; $('hint').textContent = 'Desafio do dia concluído! +50 XP'; }
+  $('exp').textContent = (certa ? 'Correto! ' : 'Não foi dessa vez. ') + p.e;
+  const nx = $('next');
+  nx.textContent = S.vidas > 0 ? 'Continuar' : 'Recarregar vidas e continuar';
+  nx.style.display = 'inline-block';
+  nx.onclick = fechar;
+  salvar();
+}
+function fechar() {
+  if (S.vidas <= 0) S.vidas = 3;
+  S.modal = false;
+  $('modal').classList.remove('on');
+}
+
+function update(dt) {
+  if (S.modal) return;
+  S.foco += dt;
+  let dx = 0, dy = 0;
+  if (keys.arrowleft || keys.a) dx -= 1;
+  if (keys.arrowright || keys.d) dx += 1;
+  if (keys.arrowup || keys.w) dy -= 1;
+  if (keys.arrowdown || keys.s) dy += 1;
+  if (dx || dy) S.target = null;
+  if (S.target) {
+    const cx = S.target.x - S.x, cy = S.target.y - S.y, d = Math.hypot(cx, cy);
+    if (d < 4) S.target = null;
+    else { dx = cx / d; dy = cy / d; }
+  }
+  const len = Math.hypot(dx, dy);
+  if (len > 1) { dx /= len; dy /= len; }
+  const antes = S.x + S.y;
+  mover(dx * SPEED * dt, dy * SPEED * dt);
+  if (S.target && Math.abs(S.x + S.y - antes) < 0.01) S.target = null;
+  const alvo = ROOMS.find(r => sobrepoe(S.x, S.y, P, P, r.door));
+  if (alvo) { if (S.cool !== alvo.id) abrirPergunta(alvo); }
+  else S.cool = null;
+}
+
+// ================= HUD =================
+function hm(seg) {
+  const h = Math.floor(seg / 3600), m = Math.floor((seg % 3600) / 60);
+  return h + 'h ' + m + 'min';
+}
+function atualizarHud() {
+  $('focoTxt').textContent = hm(S.foco);
+  $('anel').setAttribute('stroke-dashoffset', (150.8 * (1 - Math.min(S.foco / 28800, 1))).toFixed(1));
+  const h5 = Math.min(S.foco / 18000, 1), q = Math.min(S.hoje / META, 1), v = Math.min(S.visitadas.size, 1);
+  $('t1').textContent = Math.floor(S.foco / 3600) + '/5h';
+  $('b1').style.width = h5 * 100 + '%';
+  $('ck1').textContent = h5 >= 1 ? '✓' : '○';
+  $('ck1').className = 'ck' + (h5 >= 1 ? '' : ' off');
+  $('t2').textContent = Math.min(S.hoje, META) + '/' + META;
+  $('b2').style.width = q * 100 + '%';
+  $('ck2').textContent = q >= 1 ? '✓' : '○';
+  $('ck2').className = 'ck' + (q >= 1 ? '' : ' off');
+  $('t3').textContent = v + '/1';
+  $('b3').style.width = v * 100 + '%';
+  $('ck3').textContent = v ? '✓' : '▢';
+  $('ck3').className = 'ck' + (v ? '' : ' off');
+  $('hint').style.display = S.modal ? 'none' : '';
+}
+
+// ================= desenho =================
+function poligono(pts, cor) {
+  ctx.beginPath();
+  pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+  ctx.closePath();
+  ctx.fillStyle = cor;
+  ctx.fill();
+}
+function tom(hex, f) {
+  const n = parseInt(hex.slice(1), 16);
+  const c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => Math.min(255, Math.round(v * f)));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+function linha(a, b, cor, w = 1) {
+  ctx.strokeStyle = cor; ctx.lineWidth = w * K * 2;
+  ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+}
+
+function desenharFundo() {
+  // gramado em volta do campus
+  const g = ctx.createLinearGradient(0, 0, 0, cvs.height);
+  g.addColorStop(0, '#0d2a20'); g.addColorStop(1, '#06160f');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, cvs.width, cvs.height);
+  poligono([proj(-260, -260, -2), proj(1460, -260, -2), proj(1460, 1060, -2), proj(-260, 1060, -2)], '#1d4a37');
+  // caminhos claros
+  poligono([proj(-260, 840, -1), proj(1460, 840, -1), proj(1460, 900, -1), proj(-260, 900, -1)], '#c9d6cf');
+}
+
+function desenharChao(t) {
+  for (let gx = 0; gx < WORLD.w; gx += TILE) {
+    for (let gy = 0; gy < WORLD.h; gy += TILE) {
+      const cx = gx + TILE / 2, cy = gy + TILE / 2;
+      if (ROOMS.some(r => cx > r.rect[0] && cx < r.rect[0] + r.rect[2] && cy > r.rect[1] && cy < r.rect[1] + r.rect[3])) continue;
+      const z00 = alturaChao(gx, gy, t), z10 = alturaChao(gx + TILE, gy, t);
+      const z11 = alturaChao(gx + TILE, gy + TILE, t), z01 = alturaChao(gx, gy + TILE, t);
+      const par = ((gx / TILE) + (gy / TILE)) % 2;
+      const base = par ? '#eef4f1' : '#e3ece8';
+      poligono([proj(gx, gy, z00), proj(gx + TILE, gy, z10), proj(gx + TILE, gy + TILE, z11), proj(gx, gy + TILE, z01)], base);
+    }
+  }
+  // portas: faixas luminosas
+  ROOMS.forEach(r => {
+    const [dx, dy, dw, dh] = r.door;
+    const z = 0.6;
+    poligono([proj(dx, dy, z), proj(dx + dw, dy, z), proj(dx + dw, dy + dh, z), proj(dx, dy + dh, z)],
+      S.cool === r.id ? 'rgba(255,255,255,.4)' : 'rgba(74,222,128,.55)');
+  });
+}
+
+// caixa (mobília/parede opaca) com 3 faces visíveis
+function caixa(x, y, w, d, h, cor) {
+  poligono([proj(x, y, h), proj(x + w, y, h), proj(x + w, y + d, h), proj(x, y + d, h)], cor);
+  poligono([proj(x + w, y, 0), proj(x + w, y + d, 0), proj(x + w, y + d, h), proj(x + w, y, h)], tom(cor, 0.7));
+  poligono([proj(x, y + d, 0), proj(x + w, y + d, 0), proj(x + w, y + d, h), proj(x, y + d, h)], tom(cor, 0.5));
+}
+
+function mobilia(r) {
+  const [x, y, w, h] = r.rect;
+  const itens = [];
+  // estante ao fundo
+  itens.push(() => caixa(x + 24, y + 14, w - 48, 16, 40, '#8c6a4b'));
+  // duas mesas de estudo
+  [0.3, 0.7].forEach(f => itens.push(() => caixa(x + w * f - 34, y + h * 0.56, 68, 30, 18, '#e8dccb')));
+  // computador e cadeira em cada mesa
+  [0.3, 0.7].forEach(f => itens.push(() => caixa(x + w * f - 8, y + h * 0.56 + 6, 16, 12, 6, '#1f2937')));
+  if (r.id === 'bib') {
+    [0.2, 0.5].forEach(f => itens.push(() => caixa(x + w * f, y + 12, 22, 16, 44, '#6b4f3a')));
+  }
+  return itens.map(fn => ({ k: x + y, fn }));
+}
+
+function etiqueta(r) {
+  const [x, y, w, h] = r.rect;
+  const [px, py] = proj(x + w / 2, y + h / 2, WALL + 22);
+  const txt = r.nome;
+  ctx.font = `bold ${Math.round(14 * DPR)}px system-ui`;
+  const tw = ctx.measureText(txt).width;
+  const pad = 14 * DPR, bh = 34 * DPR, numR = 13 * DPR;
+  const bw = tw + pad * 2 + numR * 2 + 10 * DPR;
+  const bx = px - bw / 2, by = py - bh / 2;
+  ctx.fillStyle = 'rgba(8,16,13,.88)';
+  ctx.strokeStyle = 'rgba(255,255,255,.18)';
+  ctx.lineWidth = DPR;
+  roundRect(bx, by, bw, bh, 12 * DPR);
+  ctx.fill(); ctx.stroke();
+  ctx.beginPath();
+  ctx.fillStyle = '#4ade80';
+  ctx.arc(bx + pad / 2 + numR, by + bh / 2, numR, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#052e16';
+  ctx.font = `bold ${Math.round(13 * DPR)}px system-ui`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  if (r.n) ctx.fillText(String(r.n), bx + pad / 2 + numR, by + bh / 2 + DPR * 0.5);
+  else ctx.fillText('📚', bx + pad / 2 + numR, by + bh / 2 + DPR * 0.5);
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#f1f7f4';
+  ctx.font = `bold ${Math.round(14 * DPR)}px system-ui`;
+  ctx.fillText(txt, bx + pad + numR * 2 + 8 * DPR, by + bh / 2 + DPR * 0.5);
+  ctx.textBaseline = 'alphabetic';
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function desenharSala(r) {
+  const [x, y, w, h] = r.rect;
+  // piso da sala
+  poligono([proj(x, y, 0.2), proj(x + w, y, 0.2), proj(x + w, y + h, 0.2), proj(x, y + h, 0.2)], '#d5e2dc');
+  // faixa de cor no chão
+  poligono([proj(x + 6, y + 6, 0.4), proj(x + w - 6, y + 6, 0.4), proj(x + w - 6, y + 16, 0.4), proj(x + 6, y + 16, 0.4)], r.cor);
+  // paredes de vidro de trás (fundo)
+  const vid = 'rgba(190,240,225,.16)', borda = 'rgba(255,255,255,.55)';
+  poligono([proj(x, y, 0), proj(x, y + h, 0), proj(x, y + h, WALL), proj(x, y, WALL)], vid);
+  poligono([proj(x, y, 0), proj(x + w, y, 0), proj(x + w, y, WALL), proj(x, y, WALL)], vid);
+  // mobília (ordenada)
+  mobilia(r).sort((a, b) => a.k - b.k).forEach(i => i.fn());
+  // paredes de vidro da frente
+  poligono([proj(x + w, y, 0), proj(x + w, y + h, 0), proj(x + w, y + h, WALL), proj(x + w, y, WALL)], 'rgba(190,240,225,.12)');
+  poligono([proj(x, y + h, 0), proj(x + w, y + h, 0), proj(x + w, y + h, WALL), proj(x, y + h, WALL)], 'rgba(190,240,225,.12)');
+  // contorno e montantes
+  const cantos = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
+  for (let i = 0; i < 4; i++) {
+    linha(proj(...cantos[i], 0), proj(...cantos[i], WALL), borda, 1.5);
+  }
+  const topo = [proj(x, y, WALL), proj(x + w, y, WALL), proj(x + w, y + h, WALL), proj(x, y + h, WALL)];
+  ctx.strokeStyle = borda; ctx.lineWidth = 2 * K * 2;
+  ctx.beginPath(); topo.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); ctx.stroke();
+  // divisórias verticais leves na fachada
+  for (let t = 40; t < w; t += 60) linha(proj(x + t, y + h, 0), proj(x + t, y + h, WALL), 'rgba(255,255,255,.22)', 0.8);
+  // etiqueta
+  etiqueta(r);
+}
+
+function desenharPlanta(px, py) {
+  const base = proj(px, py, 0);
+  const s = 18 * K * 2;
+  ctx.fillStyle = 'rgba(0,0,0,.25)';
+  ctx.beginPath(); ctx.ellipse(base[0], base[1], s * 0.9, s * 0.4, 0, 0, Math.PI * 2); ctx.fill();
+  caixa(px - 6, py - 6, 12, 12, 10, '#7c4a2d');
+  [[0, 0, 16], [-8, 4, 12], [7, 3, 13]].forEach(([dx, dy, r]) => {
+    const [cx, cy] = proj(px + dx, py + dy, 26);
+    ctx.fillStyle = dx === 0 ? '#2f9e5b' : '#1f7a45';
+    ctx.beginPath(); ctx.arc(cx, cy, r * K * 2.2, 0, Math.PI * 2); ctx.fill();
+  });
+}
+
+function desenharCoracao(t) {
+  const pulso = 1 + Math.sin(t / 400) * 0.05;
+  // pedestal circular
+  const base = [], topo = [];
+  for (let i = 0; i < 40; i++) {
+    const a = i / 40 * Math.PI * 2;
+    base.push(proj(600 + Math.cos(a) * 62, 400 + Math.sin(a) * 62, 0));
+    topo.push(proj(600 + Math.cos(a) * 62, 400 + Math.sin(a) * 62, 22));
+  }
+  poligono(base, 'rgba(74,222,128,.25)');
+  for (let i = 0; i < 40; i++) {
+    const a = topo[i], b = topo[(i + 1) % 40], c = base[(i + 1) % 40], d = base[i];
+    poligono([d, c, b, a], 'rgba(40,160,90,.55)');
+  }
+  poligono(topo, '#d5f5e3');
+  // ondulação de ECG no piso (sobre o pedestal e ao redor)
+  ctx.strokeStyle = 'rgba(74,222,128,.9)';
+  ctx.lineWidth = 2.5 * DPR;
+  ctx.beginPath();
+  for (let i = 0; i <= 26; i++) {
+    const xx = 480 + i * 9;
+    const spike = (i === 11) ? -70 : (i === 12) ? 40 : (i === 13) ? -20 : 0;
+    const [px, py] = proj(xx, 540 + spike * 0.2, 0.5);
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+  }
+  ctx.stroke();
+
+  // coração holográfico
+  const [hx, hy] = proj(600, 400, 78 + Math.sin(t / 500) * 4);
+  const s = 92 * K * pulso;
+  const glow = ctx.createRadialGradient(hx, hy, s * 0.1, hx, hy, s * 1.6);
+  glow.addColorStop(0, 'rgba(74,222,128,.55)');
+  glow.addColorStop(1, 'rgba(74,222,128,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(hx, hy, s * 1.6, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(hx, hy + s * 0.38);
+  ctx.bezierCurveTo(hx - s * 0.62, hy - s * 0.05, hx - s * 0.38, hy - s * 0.62, hx, hy - s * 0.22);
+  ctx.bezierCurveTo(hx + s * 0.38, hy - s * 0.62, hx + s * 0.62, hy - s * 0.05, hx, hy + s * 0.38);
+  const gh = ctx.createLinearGradient(hx, hy - s * 0.6, hx, hy + s * 0.4);
+  gh.addColorStop(0, 'rgba(190,255,215,.95)');
+  gh.addColorStop(1, 'rgba(34,197,94,.75)');
+  ctx.fillStyle = gh;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,.7)';
+  ctx.lineWidth = 1.5 * DPR;
+  ctx.stroke();
+
+  // rótulo
+  const [lx, ly] = proj(600, 400, 0);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#c6f6da';
+  ctx.font = `800 ${Math.round(18 * DPR)}px system-ui`;
+  ctx.fillText('SINUS', lx, ly + 44 * K);
+  ctx.textAlign = 'left';
+}
+
+function desenharJogador(t) {
+  const [fx, fy] = proj(S.x + P / 2, S.y + P / 2, 0);
+  const s = 1.7 * K * 2;
+  ctx.fillStyle = 'rgba(0,0,0,.28)';
+  ctx.beginPath(); ctx.ellipse(fx, fy, 9 * s, 4 * s, 0, 0, Math.PI * 2); ctx.fill();
+  // mochila
+  ctx.fillStyle = '#1e3a8a';
+  ctx.fillRect(fx - 9 * s, fy - 22 * s, 4 * s, 12 * s);
+  // pernas
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(fx - 5 * s, fy - 6 * s, 4 * s, 6 * s);
+  ctx.fillRect(fx + 1 * s, fy - 6 * s, 4 * s, 6 * s);
+  // jaleco
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillRect(fx - 7 * s, fy - 22 * s, 14 * s, 17 * s);
+  ctx.fillStyle = '#4ade80';
+  ctx.fillRect(fx - 1 * s, fy - 22 * s, 2 * s, 17 * s);
+  // cabelo e rosto
+  ctx.fillStyle = '#f1c9a5';
+  ctx.beginPath(); ctx.arc(fx, fy - 28 * s, 6 * s, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#1f2937';
+  ctx.beginPath(); ctx.arc(fx, fy - 30 * s, 6 * s, Math.PI, 0); ctx.fill();
+}
+
+function desenhar(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  desenharFundo();
+  desenharChao(t);
+  PLANTAS.forEach(([px, py]) => desenharPlanta(px, py));
+  const itens = [
+    ...ROOMS.map(r => ({ k: r.rect[0] + r.rect[2] / 2 + r.rect[1] + r.rect[3] / 2, fn: () => desenharSala(r) })),
+    { k: 1000, fn: () => desenharCoracao(t) },
+    { k: S.x + S.y + P, fn: () => desenharJogador(t) },
+  ].sort((a, b) => a.k - b.k);
+  itens.forEach(i => i.fn());
+}
+
+let ultimo = performance.now();
+function loop(t) {
+  const dt = Math.min((t - ultimo) / 1000, 0.05);
+  ultimo = t;
+  update(dt);
+  desenhar(t);
+  atualizarHud();
+  requestAnimationFrame(loop);
+}
+$('continuar').onclick = () => $('hint').textContent = 'Ande até uma porta verde para começar';
+$('banner').onclick = () => $('hint').textContent = 'Ande até uma porta verde para começar';
+atualizarHud();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
