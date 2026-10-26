@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SINUS · Ritmo Sinusal</title>
+<style>
+:root{--bg:#0b1410;--panel:rgba(12,22,18,.9);--line:#1f3a2f;--accent:#4ade80;--text:#e7f5ee;--muted:#8fb3a3;--bad:#f87171}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.hud{position:fixed;top:12px;left:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:240px;max-width:calc(100vw - 24px)}
+.hud h1{margin:0 0 8px;font-size:14px;letter-spacing:.5px;color:var(--accent)}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin:5px 0;color:var(--muted)}
+.row b{color:var(--text)}
+.bar{height:8px;background:#16291f;border-radius:6px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.hint{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:calc(100vw - 24px);overflow:hidden;text-overflow:ellipsis}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.on{display:flex}
+.card{background:#0f1f19;border:1px solid var(--line);border-radius:16px;max-width:520px;width:100%;padding:20px}
+.sala{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.card h2{font-size:18px;margin:6px 0 14px;line-height:1.35}
+.opt{display:block;width:100%;text-align:left;background:#132a20;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:6px 0;font-size:15px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.ok{background:#14532d;border-color:var(--accent)}
+.opt.no{background:#4c1d1d;border-color:var(--bad)}
+.opt:disabled{cursor:default}
+#exp{margin:12px 0 0;font-size:14px;color:var(--muted);min-height:20px;line-height:1.45}
+#next{margin-top:14px;background:var(--accent);color:#052e16;border:0;border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;display:none}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div class="hud">
+  <h1>SINUS · Ritmo Sinusal</h1>
+  <div class="row"><span>Foco nesta sessão</span><b id="foco">0min</b></div>
+  <div class="row"><span>Vidas</span><b id="vidas"></b></div>
+  <div class="row"><span>XP</span><b id="xp">0</b></div>
+  <div class="row"><span>Acertos / respostas</span><b id="placar">0 / 0</b></div>
+  <div class="row"><span>Sequência</span><b id="seq">0</b></div>
+  <div class="row"><span>Desafio do dia (20 questões)</span><b id="desafioTxt">0/20</b></div>
+  <div class="bar"><i id="desafio"></i></div>
+</div>
+
+<div class="hint" id="hint">Setas / WASD ou toque para andar · entre numa sala para responder</div>
+
+<div class="modal" id="modal">
+  <div class="card">
+    <div class="sala" id="sala"></div>
+    <h2 id="pergunta"></h2>
+    <div id="opts"></div>
+    <div id="exp"></div>
+    <button id="next">Continuar</button>
+  </div>
+</div>
+
+<script>
+const WORLD = { w: 1200, h: 800 };
+const P = 26;            // tamanho do personagem (px no mundo)
+const SPEED = 230;       // px/s
+const META = 20;         // questões do desafio diário
+
+const ROOMS = [
+  { id:'morfo', nome:'Morfofuncional',    sub:'Anatomia · Histologia · Fisiologia', cor:'#1e3a5f', rect:[60,60,300,200],   door:[180,262,60,36] },
+  { id:'patho', nome:'Patologia Geral',   sub:'Anatomia Patológica',                cor:'#4a1d3d', rect:[450,40,300,170],  door:[570,212,60,36] },
+  { id:'semio', nome:'Semiologia I',      sub:'Teoria e Prática',                   cor:'#14483a', rect:[840,60,300,200],  door:[960,262,60,36] },
+  { id:'farma', nome:'Farmacologia',      sub:'Fármacos e interações',              cor:'#3d3a1a', rect:[60,300,300,180],  door:[362,360,36,60] },
+  { id:'mi',    nome:'Medicina Interna I',sub:'Clínica médica',                     cor:'#4a2a16', rect:[840,300,300,180], door:[802,360,36,60] },
+  { id:'saude', nome:'Saúde Coletiva',    sub:'Epidemiologia · SUS',                cor:'#1f3f2c', rect:[60,560,300,200],  door:[362,620,36,60] },
+  { id:'bib',   nome:'Biblioteca',        sub:'Resumos · Slides · Provas',          cor:'#2a2a44', rect:[840,560,300,200], door:[802,620,36,60] },
+];
+
+const PERGUNTAS = {
+  morfo: [
+    { q:'Qual é o único osso do corpo que não se articula com nenhum outro osso?', o:['Clavícula','Hioide','Escápula','Esterno'], a:1, e:'O hioide é suspenso por músculos e ligamentos; não possui articulação óssea.' },
+    { q:'Qual é a unidade contrátil básica do músculo esquelético?', o:['Miofibrila','Sarcômero','Actina','Miosina'], a:1, e:'O sarcômero (entre duas linhas Z) é a unidade contrátil.' },
+    { q:'Qual nervo inerva o diafragma?', o:['Vago','Frênico','Torácico longo','Intercostal'], a:1, e:'Nervo frênico (C3–C5): "C3, C4 e C5 mantêm o diafragma vivo".' },
+  ],
+  patho: [
+    { q:'A necrose caseosa é típica de qual agente?', o:['Mycobacterium tuberculosis','Staphylococcus aureus','Candida albicans','HPV'], a:0, e:'O granuloma caseoso da tuberculose é o exemplo clássico de necrose caseosa.' },
+    { q:'Qual alteração celular é reversível?', o:['Necrose coagulativa','Apoptose','Tumefação turva (degeneração hidrópica)','Calcificação distrófica'], a:2, e:'Na lesão reversível a célula se recupera se a agressão cessar. Apoptose e necrose já são morte celular.' },
+    { q:'Qual é a célula característica do granuloma?', o:['Plasmócito','Célula epitelioide com células gigantes multinucleadas','Mastócito','Neutrófilo'], a:1, e:'Macrófagos transformados em células epitelioides, com células gigantes de Langhans.' },
+  ],
+  semio: [
+    { q:'O sinal de Murphy sugere qual diagnóstico?', o:['Apendicite','Colecistite aguda','Pancreatite','Pielonefrite'], a:1, e:'Parada da inspiração durante a palpação do hipocôndrio direito: positivo na colecistite aguda.' },
+    { q:'Dor à descompressão brusca do abdome indica:', o:['Sinal de Blumberg (irritação peritoneal)','Sinal de Lasègue','Sinal de Kernig','Sinal de Courvoisier'], a:0, e:'Blumberg positivo é sugestivo de peritonite.' },
+    { q:'Pulso paradoxal (queda da PA sistólica >10 mmHg na inspiração) é típico de:', o:['Insuficiência aórtica','Tamponamento cardíaco','Estenose mitral','Miocardite'], a:1, e:'Clássico do tamponamento. Também aparece na asma grave e na DPOC.' },
+  ],
+  farma: [
+    { q:'Antídoto da intoxicação por paracetamol:', o:['Naloxona','Flumazenil','N-acetilcisteína','Atropina'], a:2, e:'A NAC repõe a glutationa e neutraliza o metabólito tóxico NAPQI.' },
+    { q:'Antídoto da intoxicação por opioides:', o:['Naloxona','Flumazenil','Protamina','Vitamina K'], a:0, e:'Antagonista opioide competitivo.' },
+    { q:'Primeira escolha no choque anafilático:', o:['Difenidramina','Hidrocortisona','Adrenalina IM','Salbutamol'], a:2, e:'Adrenalina IM (face anterolateral da coxa) é a primeira linha.' },
+  ],
+  mi: [
+    { q:'Qual critério diferencia derrame pleural exsudato de transudato?', o:['Critérios de Light','Critérios de Ranson','Escala de Glasgow','Critérios de Duke'], a:0, e:'Relações de proteína e LDH do líquido pleural e do soro.' },
+    { q:'Hipotensão, ingurgitamento jugular e bulhas abafadas formam a tríade de Beck de:', o:['Tamponamento cardíaco','Embolia pulmonar','Pneumotórax hipertensivo','Dissecção aórtica'], a:0, e:'Tríade clássica do tamponamento cardíaco.' },
+    { q:'Autoanticorpos altamente específicos do lúpus eritematoso sistêmico:', o:['Anti-dsDNA e anti-Smith','Fator reumatoide','Anti-CCP','ANCA'], a:0, e:'Anti-Smith tem alta especificidade; anti-dsDNA se correlaciona com atividade.' },
+  ],
+  saude: [
+    { q:'A mortalidade infantil refere-se a óbitos de menores de:', o:['28 dias','1 ano','5 anos','10 anos'], a:1, e:'Mede óbitos antes de 1 ano de idade por mil nascidos vivos.' },
+    { q:'No coeficiente de incidência, o numerador é:', o:['Casos novos no período','Total de casos existentes','População total','Óbitos'], a:0, e:'Incidência conta casos novos; prevalência conta casos existentes.' },
+    { q:'Princípio do SUS que garante atendimento a todos, sem discriminação:', o:['Universalidade','Hierarquização','Descentralização','Regionalização'], a:0, e:'Universalidade, equidade e integralidade são princípios doutrinários do SUS.' },
+  ],
+  bib: [
+    { q:'Técnica de estudo que espaça revisões ao longo do tempo chama-se:', o:['Repetição espaçada','Leitura dinâmica','Mnemônica','Sublinhado'], a:0, e:'Melhora a retenção de longo prazo (ex.: flashcards no Anki).' },
+    { q:'Evocar o conteúdo da memória, sem consultar o material, é:', o:['Prática de recuperação','Copiar o resumo','Releitura','Grifar'], a:0, e:'Lembrar ativamente fortalece o aprendizado mais do que reler.' },
+  ],
+};
+
+const SAVE = 'sinus-ritmo-v1';
+const HOJE = new Date().toDateString();
+const S = { x: 587, y: 690, target: null, xp: 0, acertos: 0, total: 0, seq: 0, hoje: 0, vidas: 3, foco: 0, modal: false, cool: null, usadas: new Set() };
+try {
+  const d = JSON.parse(localStorage.getItem(SAVE) || 'null');
+  if (d) {
+    S.xp = d.xp || 0; S.acertos = d.acertos || 0; S.total = d.total || 0;
+    if (d.dia === HOJE) S.hoje = d.hoje || 0;
+  }
+} catch (e) {}
+function salvar() {
+  try { localStorage.setItem(SAVE, JSON.stringify({ xp: S.xp, acertos: S.acertos, total: S.total, hoje: S.hoje, dia: HOJE })); } catch (e) {}
+}
+
+const $ = id => document.getElementById(id);
+const cvs = $('c'), ctx = cvs.getContext('2d');
+let scale = 1, ox = 0, oy = 0, dpr = 1;
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  cvs.width = innerWidth * dpr; cvs.height = innerHeight * dpr;
+  scale = Math.min(cvs.width / WORLD.w, cvs.height / WORLD.h);
+  ox = (cvs.width - WORLD.w * scale) / 2;
+  oy = (cvs.height - WORLD.h * scale) / 2;
+}
+addEventListener('resize', resize);
+resize();
+
+const SOLIDOS = ROOMS.map(r => r.rect);
+const sobrepoe = (x, y, w, h, [rx, ry, rw, rh]) => x < rx + rw && x + w > rx && y < ry + rh && y + h > ry;
+function bateu(x, y) {
+  if (x < 0 || y < 0 || x + P > WORLD.w || y + P > WORLD.h) return true;
+  return SOLIDOS.some(r => sobrepoe(x, y, P, P, r));
+}
+function mover(dx, dy) {
+  if (!bateu(S.x + dx, S.y)) S.x += dx;
+  if (!bateu(S.x, S.y + dy)) S.y += dy;
+}
+
+const keys = {};
+addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  keys[k] = true;
+  if (e.key.startsWith('Arrow') || e.key === ' ') e.preventDefault();
+  if (S.modal) {
+    const bs = [...document.querySelectorAll('#opts .opt:not(:disabled)')];
+    const n = Number(e.key);
+    if (n >= 1 && n <= bs.length) bs[n - 1].click();
+    if (k === 'enter' && $('next').style.display !== 'none') $('next').click();
+  }
+});
+addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+
+cvs.addEventListener('pointerdown', e => {
+  S.target = { x: (e.clientX * dpr - ox) / scale - P / 2, y: (e.clientY * dpr - oy) / scale - P / 2 };
+});
+
+function escolher(room) {
+  const lista = PERGUNTAS[room.id];
+  let idxs = lista.map((_, i) => i).filter(i => !S.usadas.has(room.id + i));
+  if (!idxs.length) { lista.forEach((_, i) => S.usadas.delete(room.id + i)); idxs = lista.map((_, i) => i); }
+  const idx = idxs[Math.floor(Math.random() * idxs.length)];
+  S.usadas.add(room.id + idx);
+  return lista[idx];
+}
+
+function abrirPergunta(room) {
+  S.modal = true;
+  S.cool = room.id;
+  const p = escolher(room);
+  $('sala').textContent = room.nome + ' · ' + room.sub;
+  $('pergunta').textContent = p.q;
+  $('exp').textContent = '';
+  $('next').style.display = 'none';
+  const box = $('opts');
+  box.innerHTML = '';
+  p.o.forEach((texto, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.textContent = (i + 1) + ') ' + texto;
+    b.onclick = () => responder(i, p, box);
+    box.appendChild(b);
+  });
+  $('modal').classList.add('on');
+}
+
+function responder(i, p, box) {
+  const btns = [...box.children];
+  btns.forEach(b => b.disabled = true);
+  btns[p.a].classList.add('ok');
+  const certa = i === p.a;
+  if (!certa) btns[i].classList.add('no');
+
+  S.total++;
+  S.hoje++;
+  if (certa) { S.acertos++; S.seq++; S.xp += 10 + Math.min(S.seq, 5) * 2; }
+  else { S.seq = 0; S.vidas--; }
+  if (S.hoje === META) { S.xp += 50; $('hint').textContent = 'Desafio do dia concluído! +50 XP 🎉'; }
+
+  $('exp').textContent = (certa ? 'Correto! ' : 'Não foi dessa vez. ') + p.e;
+  const nx = $('next');
+  nx.textContent = S.vidas > 0 ? 'Continuar' : 'Recarregar vidas e continuar';
+  nx.style.display = 'inline-block';
+  nx.onclick = fechar;
+  salvar();
+}
+
+function fechar() {
+  if (S.vidas <= 0) S.vidas = 3;
+  S.modal = false;
+  $('modal').classList.remove('on');
+}
+
+function update(dt) {
+  if (S.modal) return;
+  S.foco += dt;
+
+  let dx = 0, dy = 0;
+  if (keys.arrowleft || keys.a) dx -= 1;
+  if (keys.arrowright || keys.d) dx += 1;
+  if (keys.arrowup || keys.w) dy -= 1;
+  if (keys.arrowdown || keys.s) dy += 1;
+
+  if (dx || dy) S.target = null;
+  if (S.target) {
+    const cx = S.target.x - S.x, cy = S.target.y - S.y, d = Math.hypot(cx, cy);
+    if (d < 4) S.target = null;
+    else { dx = cx / d; dy = cy / d; }
+  }
+  const len = Math.hypot(dx, dy);
+  if (len > 1) { dx /= len; dy /= len; }
+
+  const antes = S.x + S.y;
+  mover(dx * SPEED * dt, dy * SPEED * dt);
+  // se bateu numa parede durante o toque, desiste do destino
+  if (S.target && Math.abs(S.x + S.y - antes) < 0.01) S.target = null;
+
+  const alvo = ROOMS.find(r => sobrepoe(S.x, S.y, P, P, r.door));
+  if (alvo) { if (S.cool !== alvo.id) abrirPergunta(alvo); }
+  else S.cool = null;
+}
+
+function fmt(seg) {
+  const m = Math.floor(seg / 60);
+  return m >= 60 ? Math.floor(m / 60) + 'h ' + (m % 60) + 'min' : m + 'min';
+}
+
+function atualizarHud() {
+  $('foco').textContent = fmt(S.foco);
+  $('vidas').textContent = '♥'.repeat(S.vidas) + '♡'.repeat(Math.max(0, 3 - S.vidas));
+  $('xp').textContent = S.xp;
+  $('placar').textContent = S.acertos + ' / ' + S.total;
+  $('seq').textContent = S.seq;
+  $('desafioTxt').textContent = Math.min(S.hoje, META) + '/' + META;
+  $('desafio').style.width = Math.min(S.hoje / META, 1) * 100 + '%';
+}
+
+function desenhar(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = '#0b1410';
+  ctx.fillRect(0, 0, cvs.width, cvs.height);
+  ctx.setTransform(scale, 0, 0, scale, ox, oy);
+
+  // piso
+  ctx.fillStyle = '#d6e7de';
+  ctx.fillRect(0, 0, WORLD.w, WORLD.h);
+  ctx.strokeStyle = '#bfd6c9';
+  ctx.lineWidth = 1;
+  for (let x = 0; x <= WORLD.w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, WORLD.h); ctx.stroke(); }
+  for (let y = 0; y <= WORLD.h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WORLD.w, y); ctx.stroke(); }
+
+  // hub central (coração pulsante)
+  const pulso = 1 + Math.sin(t / 400) * 0.05;
+  ctx.fillStyle = 'rgba(74,222,128,.25)';
+  ctx.beginPath(); ctx.arc(600, 400, 95 * pulso, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#16a34a';
+  ctx.beginPath(); ctx.arc(600, 400, 50, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#eafff1';
+  ctx.font = 'bold 18px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('SINUS', 600, 407);
+  ctx.font = '12px system-ui';
+  ctx.fillStyle = '#166534';
+  ctx.fillText('Escolha uma sala', 600, 480);
+
+  // salas
+  ROOMS.forEach(r => {
+    const [x, y, w, h] = r.rect;
+    ctx.fillStyle = r.cor;
+    ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = 'rgba(255,255,255,.07)';
+    ctx.fillRect(x + 10, y + 10, w - 20, h - 20);
+    ctx.fillStyle = 'rgba(255,255,255,.18)';
+    ctx.fillRect(x + w / 2 - 50, y + h / 2 - 14, 100, 28);
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 6;
+    ctx.strokeRect(x, y, w, h);
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 17px system-ui';
+    ctx.fillText(r.nome, x + 16, y + 34);
+    ctx.font = '13px system-ui';
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText(r.sub, x + 16, y + 54);
+
+    const [dx, dy, dw, dh] = r.door;
+    ctx.fillStyle = S.cool === r.id ? 'rgba(255,255,255,.25)' : 'rgba(74,222,128,.55)';
+    ctx.fillRect(dx, dy, dw, dh);
+  });
+
+  // personagem (estudante de jaleco)
+  const px = S.x + P / 2;
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(S.x + 8, S.y + P - 6, 4, 6);
+  ctx.fillRect(S.x + P - 12, S.y + P - 6, 4, 6);
+  ctx.fillStyle = '#f8fafc';
+  ctx.fillRect(S.x + 4, S.y + 8, P - 8, P - 12);
+  ctx.fillStyle = '#4ade80';
+  ctx.fillRect(S.x + P / 2 - 1, S.y + 8, 2, P - 12);
+  ctx.fillStyle = '#f1c9a5';
+  ctx.beginPath(); ctx.arc(px, S.y + 6, 6, 0, Math.PI * 2); ctx.fill();
+}
+
+let ultimo = performance.now();
+function loop(t) {
+  const dt = Math.min((t - ultimo) / 1000, 0.05);
+  ultimo = t;
+  update(dt);
+  desenhar(t);
+  atualizarHud();
+  requestAnimationFrame(loop);
+}
+atualizarHud();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
