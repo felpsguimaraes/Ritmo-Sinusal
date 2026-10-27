@@ -130,16 +130,18 @@
     name=name||ST.name;k=k===undefined?ST.k:k;g=g===undefined?ST.g:g;
     try{localStorage.setItem(KEY,JSON.stringify({name:name,k:k,g:g,modo:modo,area:ST.area}))}catch(e){}
     if(modo==='guiados')return W.nav('mapas');
-    W.openSubject(name);
+    /* openSubject e setTab passam por uma fila assíncrona (checagem de acesso): só aplicamos modo e destino depois que a matéria abriu */
     var d=k&&DK()[k],modeArea=(ST.area||(d&&d.area)||'teoria')==='pratica'?'practice':'theory';
-    UI.mode=modeArea;
-    if(modo==='estudar')return W.renderSubject();
-    if(modo==='cartoes'){
-      if(W.sxTreinoAbrir)W.sxTreinoAbrir(k,g);
-      return W.setTab('cartoes');
-    }
-    if(modo==='mindmaps')return W.setTab('mapas');
-    W.setTab('review');
+    Promise.resolve(W.openSubject(name)).then(function(){
+      UI.mode=modeArea;
+      if(modo==='estudar')return W.renderSubject();
+      if(modo==='cartoes'){
+        if(W.sxTreinoAbrir)W.sxTreinoAbrir(k,g);
+        return W.setTab('cartoes');
+      }
+      if(modo==='mindmaps')return W.setTab('mapas');
+      return W.setTab('review');
+    });
   }
   D.addEventListener('click',function(e){
     var t=e.target.closest&&e.target.closest('[data-th],[data-th-mat],[data-th-tab],[data-th-area],[data-th-as],[data-th-all],[data-th-modo]');
