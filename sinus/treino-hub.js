@@ -149,10 +149,10 @@
     if(t.hasAttribute('data-th-mat'))return go('mat',{name:t.getAttribute('data-th-mat'),tab:'',k:'',g:'',area:''});
     if(t.hasAttribute('data-th-area'))return go('mat',{area:t.getAttribute('data-th-area'),tab:''});
     if(t.hasAttribute('data-th-tab'))return go('mat',{tab:t.getAttribute('data-th-tab')});
-    if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];return go('modo',{k:a.k,g:a.g,titulo:a.t})}
+    if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];ST.k=a.k;ST.g=a.g;ST.titulo=a.t;return launch('cartoes')}
     if(t.hasAttribute('data-th-all')){
       var ks=ST._as.map(function(x){return x.k}).filter(function(v,i,arr){return arr.indexOf(v)===i});
-      return go('modo',{k:ks[0],g:'',titulo:'Todos os assuntos'});
+      ST.k=ks[0];ST.g='';ST.titulo='Todos os assuntos';return launch('cartoes');
     }
     if(t.hasAttribute('data-th-modo'))return launch(t.getAttribute('data-th-modo'));
     var act=t.getAttribute('data-th');

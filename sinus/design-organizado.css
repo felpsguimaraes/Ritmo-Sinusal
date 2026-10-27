@@ -89,3 +89,7 @@ html[data-theme="dark"] #app{--bg2:#19271f}html[data-theme="dark"] #subjectTabs>
 .sxSplitTools{margin:0 0 14px!important}
 html[data-theme="dark"] #subjectTabs>button:hover{background:#223a2e!important}
 @media(max-width:850px){#subjectTabs{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;padding:2px 16px 16px!important}#subjectTabs>button{flex:1 1 calc(50% - 8px);justify-content:center}#subjectTabs>button:last-child:nth-child(odd){flex-basis:100%}#subjectView .subjectHero,#subjectView .v11SubjectHero{padding:18px 16px 12px!important}}
+
+/* Laminário: imagem em destaque, fundo branco, cartões discretos */
+.sxFlashStudy .sxLamDestaque{background:#fff;border-radius:16px;padding:8px;margin:12px 0}
+.sxFlashStudy .sxLamDestaque img{cursor:zoom-in;border-radius:12px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.06)}

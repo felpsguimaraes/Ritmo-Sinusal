@@ -609,3 +609,24 @@ window.SINUS_CARTOES["anatopato/p2-referencias"] = {
     }
   ]
 };
+
+/* SINUS: integração Laminário — vídeos e referências dentro da experiência principal, sem categorias separadas */
+(function () {
+  var D = window.SINUS_CARTOES;
+  if (!D || !D['anatopato/p2']) return;
+  var p2 = D['anatopato/p2'];
+  var vids = (D['anatopato/p2-videos'] && D['anatopato/p2-videos'].cartoes) || [];
+  vids.forEach(function (v) {
+    if (!p2.cartoes.some(function (c) { return c.id === v.id; })) {
+      var copy = Object.assign({}, v, { g: 'Vídeos' });
+      p2.cartoes.push(copy);
+    }
+  });
+  // Esconde categorias separadas da navegação (conteúdo preservado nos dados)
+  ['anatopato/p2-videos', 'anatopato/p2-referencias', 'anatopato/p2-sin-rotulo'].forEach(function (k) {
+    if (D[k]) D[k]._oculto = true;
+  });
+  // Renomeia o deck principal para Laminário e mantém os 10 assuntos como filtro
+  p2.curto = 'Laminário';
+  p2.nome = 'Laminário P2 · 143 lâminas';
+})();

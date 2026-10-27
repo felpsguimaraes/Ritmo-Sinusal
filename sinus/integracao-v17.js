@@ -632,11 +632,12 @@
       }).join('');
       return (g.t ? '<div class="sxBalTitle">' + H(g.t) + '</div>' : '') + bal;
     }).join('');
-    return '<div class="sxBalWrap">' + html + (c.x ? '<small class="sxBalFonte">' + H(c.x) + '</small>' : '') + '</div>';
+    var fonte = (c.x && !/drive\.google|auditoria|revisión visual|pendiente/i.test(c.x)) ? '<small class="sxBalFonte">' + H(c.x) + '</small>' : '';
+    return '<div class="sxBalWrap">' + html + fonte + '</div>';
   }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, area = UI.mode === 'practice' ? 'pratica' : 'teoria';
-    var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area; });
+    var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area && !DECKS[x]._oculto; });
     var box = $id('subjectContent');
     if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, utilize os Exercícios ou os Mapas mentais.'); return }
     ks.sort(function (a, b) { return (DECKS[a].ordem || 99) - (DECKS[b].ordem || 99) });
@@ -654,7 +655,7 @@
     box.innerHTML = '<section class="sxFlashStudy' + (c && (c.img || c.video) ? ' sxMedia' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">' + (laminario ? 'LAMINÁRIO' : 'FLASHCARDS') + '</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
       '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (laminario ? 'Imagem e resposta' : CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
-      (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"></figure>' : '') + '<div class="sxSide"><p class="sxQ' + (c && (c.img || c.video) ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>' +
+      (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg' + (laminario ? ' sxLamDestaque' : '') + '"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"' + (laminario ? ' data-laminario-zoom' : '') + '></figure>' : '') + '<div class="sxSide"><p class="sxQ' + (c && (c.img || c.video) ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>' +
       (CART.mostrar ? (c.b ? baloes(c) : '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div>')
         : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>') + '</div>' +
       (CART.mostrar && c && c.k && c.k.t ? '<aside class="sxComent"><h4>Comentário da lámina</h4>' + sxRico(c.k.t) + sxPorqueErrei(c.k.e) + (c.k.f ? '<div class="sxComentFonte"><span>Fonte</span><em>' + H(c.k.f) + '</em></div>' : '') + '</aside>' : '') +
