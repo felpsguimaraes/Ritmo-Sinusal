@@ -105,7 +105,7 @@
     var name=ST.name,d=ST.k&&DK()[ST.k],q=qCount(name,ST.area),slug=((DB.subjects||{})[name]||{}).slug,h='';
     if(d){
       var x=stat(ST.k,ST.g),prat=d.area==='pratica';
-      h+='<button class="thMode full" data-th-modo="cartoes"><i>'+(prat?'🔬':'🗂')+'</i><span><b>'+(prat?'Láminas e flashcards':'Flashcards')+'</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
+      h+='<button class="thMode full" data-th-modo="cartoes"><i>'+(prat?'🔬':'🗂')+'</i><span><b>'+(prat?'Laminário':'Flashcards')+'</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
     }
     h+='<div class="thGrid">';
     h+='<button class="thMode" data-th-modo="exercises"><i>❓</i><b>Questões</b><small>'+(q?q+' disponíveis':'da matéria')+'</small></button>';

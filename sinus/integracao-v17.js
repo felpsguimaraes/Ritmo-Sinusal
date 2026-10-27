@@ -451,7 +451,7 @@
     ['fotos', 'Fotos'], ['complementares', 'Complementares'], ['transcribe', 'Transcrever'], ['training', 'Treino'], ['notebook', 'Caderno']);
   V11_SUBJECT_TABS.practice.splice(0, V11_SUBJECT_TABS.practice.length,
     ['overview', 'Visão geral'], ['apostila', 'Resumo / Apostila'], ['slides', 'Slides'], ['catedra', 'Cátedra'], ['laminas', 'Lâminas e imagens'], ['macro', 'Macroscopia'], ['pratica', 'Aulas práticas'], ['provas', 'Provas práticas'], ['audios', 'Áudios práticos'],
-    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Flashcards'], ['mapas', 'Mapas guiados'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['notebook', 'Caderno']);
+    ['videos', 'Vídeos práticos'], ['complementares', 'Complementares'], ['cartoes', 'Laminário'], ['mapas', 'Mapas guiados'], ['transcribe', 'Transcrever'], ['training', 'Treino prático'], ['notebook', 'Caderno']);
 
   function pillPlano() { var p = $id('subjectPlanPill'); if (p) p.textContent = 'Acesso completo' }
   var renderVideoOriginal = W.renderVideos, renderAudioOriginal = W.renderAudios;
@@ -539,7 +539,7 @@
       return '<button type="button" class="' + (principal === item[0] ? 'active' : '') + (item[0] === 'catedra' ? ' sxCatedraTab' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + (item[0] === 'catedra' ? '▣ ' : '') + item[1] + '</button>';
     }).join('');
     var content = $id('subjectContent');
-    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes','Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || temMapas(); }).map(function (item) {
+    if (content && exercicios.indexOf(t) >= 0) content.insertAdjacentHTML('afterbegin', '<div class="sxExerciseChoices" role="group" aria-label="Tipo de exercício">' + [['training','Treino'],['cartoes',UI.mode === 'practice' ? 'Laminário' : 'Flashcards'],['mapas','Mapas guiados'],['provas','Provas'],['review','Revisão']].filter(function(item){ return item[0] !== 'mapas' || temMapas(); }).map(function (item) {
       return '<button type="button" class="btn sm ' + (t === item[0] ? 'primary' : '') + '" onclick="setTab(\'' + item[0] + '\')">' + item[1] + '</button>';
     }).join('') + '</div>');
     else if (content && principal === 'apostila') content.insertAdjacentHTML('afterbegin', '<details class="sxStudyExtras"><summary>Outros materiais e ferramentas</summary><div class="sxExerciseChoices">' + [['overview','Visão geral'],['laminas','Lâminas e imagens'],['macro','Macroscopia'],['pratica','Aulas práticas'],['audios','Áudios'],['fotos','Fotos'],['complementares','Complementares'],['notebook','Caderno'],['transcribe','Transcrever']].filter(function(item){return V11_SUBJECT_TABS[UI.mode].some(function(x){return x[0]===item[0]})}).map(function(item){return '<button class="btn sm" onclick="setTab(\''+item[0]+'\')">'+item[1]+'</button>'}).join('') + '</div></details>');
@@ -643,22 +643,24 @@
     var k = ESCOLHA[slug] && ks.indexOf(ESCOLHA[slug]) >= 0 ? ESCOLHA[slug] : (ks.filter(function (x) { return DECKS[x].padrao })[0] || (ks.indexOf(deckPadrao(slug)) >= 0 ? deckPadrao(slug) : ks[0]));
     abrirDeck(k);
     var deck = CART.deck, c = CART.fila[CART.i], lista = ativos(CART.key), total = lista.length;
+    var laminario = area === 'pratica';
+    if (laminario) CART.mostrar = true;
     var dom = lista.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
     var temParcial = ks.some(function (x) { return DECKS[x].curto });
     var chips = ks.length > 1 ? '<div class="sxParciais"><span class="sxParcialLbl">' + (temParcial ? 'Qual parcial você vai estudar?' : 'Baralho') + '</span><div class="sxParcialBtns">' + ks.map(function (x) { var d = DECKS[x]; return '<button class="sxParcial' + (x === CART.key ? ' active' : '') + (d.curto ? '' : ' longo') + '" data-sx-deck="' + H(x) + '"><b>' + H(d.curto || d.nome || x.split('/')[1]) + '</b>' + (d.curto ? '<small>' + d.cartoes.length + ' cartões</small>' : '') + '</button>' }).join('') + '</div></div>' : '';
     var gs = [], gn = {};
     deck.cartoes.forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
     if (gs.length > 1) chips += '<div class="sxGrupos" aria-label="Assunto"><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + deck.cartoes.length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
-    box.innerHTML = '<section class="sxFlashStudy' + (c && (c.img || c.video) ? ' sxMedia' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">FLASHCARDS</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
+    box.innerHTML = '<section class="sxFlashStudy' + (c && (c.img || c.video) ? ' sxMedia' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">' + (laminario ? 'LAMINÁRIO' : 'FLASHCARDS') + '</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
-      '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
+      '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (laminario ? 'Imagem e resposta' : CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
       (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"></figure>' : '') + '<div class="sxSide"><p class="sxQ' + (c && (c.img || c.video) ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>' +
       (CART.mostrar ? (c.b ? baloes(c) : '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div>')
         : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>') + '</div>' +
       (CART.mostrar && c && c.k && c.k.t ? '<aside class="sxComent"><h4>Comentário da lámina</h4>' + sxRico(c.k.t) + sxPorqueErrei(c.k.e) + (c.k.f ? '<div class="sxComentFonte"><span>Fonte</span><em>' + H(c.k.f) + '</em></div>' : '') + '</aside>' : '') +
-      (CART.mostrar ? '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>' : '') + '</div>' +
-      '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">Pular →</button></nav>' +
-      '<footer class="sxFlashFooter"><b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span><details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';
+      (!laminario && CART.mostrar ? '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>' : '') + '</div>' +
+      '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">' + (laminario ? 'Próxima →' : 'Pular →') + '</button></nav>' +
+      '<footer class="sxFlashFooter">' + (laminario ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>') + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';
   }
   function gravarGrau(g) {
     var c = CART.fila[CART.i]; if (!c) return;
