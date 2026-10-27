@@ -205,6 +205,9 @@ body.zoom:not(.esq) #doca{right:auto;left:clamp(10px,1.6vw,22px);align-items:fle
 .mbt{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.05);cursor:pointer;display:grid;place-items:center;font-size:13px;flex:none}
 .mbt.play{background:var(--accent);color:#052e16;border:0}
 .mbt[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent)}
+.idiomas{display:flex;gap:4px;margin:2px 0 10px}
+.idiomas button{flex:1;padding:6px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:12px;font-weight:700;cursor:pointer;color:var(--muted)}
+.idiomas button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 #musica .extra{display:none;margin-top:10px}
 #musica.aberto .extra{display:block}
 #musica input[type=range]{width:100%;accent-color:#4ade80}
@@ -266,17 +269,17 @@ body.zoom:not(.esq) #doca{right:auto;left:clamp(10px,1.6vw,22px);align-items:fle
       <circle cx="38" cy="38" r="29" fill="none" stroke="#2a3a3d" stroke-width="6"/>
       <circle id="anel" cx="38" cy="38" r="29" fill="none" stroke="url(#gAnel)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 38 38)" stroke-dasharray="182.2" stroke-dashoffset="182.2"/>
     </svg></div>
-    <div class="live foco-txt"><b id="focoTxt">0h 0min</b><small>de 8h</small></div>
+    <div class="live foco-txt"><b id="focoTxt">0h 0min</b><small data-t="de8">de 8h</small></div>
 
     <div id="desafios"></div>
     <div id="hits"></div>
-    <div id="tip">Entrar na sala ›</div>
+    <div id="tip"></div>
   </div>
   <div id="veu"></div>
 </div>
 </div>
 
-<button id="voltar">← Sair da sala</button>
+<button id="voltar" data-t="sairSalaSeta">← Sair da sala</button>
 <div id="toast"></div>
 <section id="painel" aria-live="polite"></section>
 
@@ -284,23 +287,24 @@ body.zoom:not(.esq) #doca{right:auto;left:clamp(10px,1.6vw,22px);align-items:fle
   <div class="dock" id="estudo" aria-live="polite">
     <div class="linha">
       <span class="ponto"></span>
-      <div class="info"><small>Estudando agora</small><b id="estudoNome">—</b></div>
+      <div class="info"><small data-t="estudandoAgora">Estudando agora</small><b id="estudoNome">—</b></div>
       <span class="tempo" id="estudoTempo">00:00</span>
     </div>
-    <div class="pomo" title="Ciclo de 25 minutos"><u id="pomo"></u></div>
-    <div class="bts"><button id="estudoPausa">Pausar</button><button id="estudoFim">Encerrar</button></div>
+    <div class="pomo" data-t-title="ciclo25" title="Ciclo de 25 minutos"><u id="pomo"></u></div>
+    <div class="bts"><button id="estudoPausa" data-t="pausar">Pausar</button><button id="estudoFim" data-t="encerrar">Encerrar</button></div>
   </div>
   <div class="dock" id="musica">
     <div class="linha">
       <div class="capa" id="capa">♫</div>
-      <div class="info"><small>Playlist de estudo</small><b id="faixa">Lo-fi · Café da biblioteca</b></div>
+      <div class="info"><small data-t="playlist">Playlist de estudo</small><b id="faixa">Lo-fi · Café da biblioteca</b></div>
       <button class="mbt play" id="tocar" aria-label="Tocar">▶</button>
-      <button class="mbt" id="proxFaixa" aria-label="Próxima faixa">⏭</button>
-      <button class="mbt" id="hospital" aria-label="Sons do hospital no campus" aria-pressed="false" title="Sons do hospital no campus">🏥</button>
-      <button class="mbt" id="abrirLista" aria-label="Lista e volume" aria-expanded="false">≡</button>
+      <button class="mbt" id="proxFaixa" data-t-aria="proxFaixa" aria-label="Próxima faixa">⏭</button>
+      <button class="mbt" id="hospital" data-t-aria="sonsHosp" data-t-title="sonsHosp" aria-label="Sons do hospital no campus" aria-pressed="false" title="Sons do hospital no campus">🏥</button>
+      <button class="mbt" id="abrirLista" data-t-aria="listaVol" aria-label="Lista e volume" aria-expanded="false">≡</button>
     </div>
     <div class="extra">
-      <label class="eyebrow" for="volume">Volume</label>
+      <div class="idiomas" role="group" aria-label="Idioma"><button data-l="pt">PT</button><button data-l="es">ES</button><button data-l="en">EN</button></div>
+      <label class="eyebrow" for="volume" data-t="volume">Volume</label>
       <input type="range" id="volume" min="0" max="1" step="0.01" value="0.6">
       <ol id="faixas"></ol>
     </div>
@@ -308,6 +312,39 @@ body.zoom:not(.esq) #doca{right:auto;left:clamp(10px,1.6vw,22px);align-items:fle
 </div>
 
 <script>
+// ===================== idioma: o mesmo escolhido no app SINUS (pt, es ou en) =====================
+const LANG = (() => {
+  try { const l = localStorage.getItem('sinus_idioma'); if (['pt', 'es', 'en'].includes(l)) return l; } catch (e) {}
+  const n = String(navigator.language || 'pt').slice(0, 2).toLowerCase();
+  return n === 'es' ? 'es' : n === 'en' ? 'en' : 'pt';
+})();
+const IDX = { pt:0, es:1, en:2 }[LANG];
+// L('português', 'español', 'english')
+const L = (...t) => t[IDX] ?? t[0];
+document.documentElement.lang = { pt:'pt-BR', es:'es', en:'en' }[LANG];
+function trocarIdioma(l) { try { localStorage.setItem('sinus_idioma', l); } catch (e) {} location.reload(); }
+
+const TXT = {
+  de8: L('de 8h','de 8 h','of 8h'),
+  sairSalaSeta: L('← Sair da sala','← Salir de la sala','← Leave the room'),
+  estudandoAgora: L('Estudando agora','Estudiando ahora','Studying now'),
+  ciclo25: L('Ciclo de 25 minutos','Ciclo de 25 minutos','25-minute cycle'),
+  pausar: L('Pausar','Pausar','Pause'),
+  encerrar: L('Encerrar','Terminar','End'),
+  playlist: L('Playlist de estudo','Playlist de estudio','Study playlist'),
+  proxFaixa: L('Próxima faixa','Siguiente pista','Next track'),
+  sonsHosp: L('Sons do hospital no campus','Sonidos de hospital en el campus','Hospital sounds on campus'),
+  listaVol: L('Lista e volume','Lista y volumen','List and volume'),
+  volume: L('Volume','Volumen','Volume'),
+};
+function traduzirPagina() {
+  document.querySelectorAll('[data-t]').forEach(e => e.textContent = TXT[e.dataset.t]);
+  document.querySelectorAll('[data-t-aria]').forEach(e => e.setAttribute('aria-label', TXT[e.dataset.tAria]));
+  document.querySelectorAll('[data-t-title]').forEach(e => e.title = TXT[e.dataset.tTitle]);
+  document.querySelector('img.arte').alt = L('Campus SINUS com salas de estudo ao redor de um coração holográfico','Campus SINUS con salas de estudio alrededor de un corazón holográfico','SINUS campus with study rooms around a holographic heart');
+  document.querySelectorAll('.idiomas button').forEach(b => { b.classList.toggle('on', b.dataset.l === LANG); b.onclick = () => trocarIdioma(b.dataset.l); });
+}
+
 // ===================== app SINUS =====================
 const APP = 'https://meusinus.pages.dev';
 const linkMateria = slug => `${APP}/?m=${slug}`;
@@ -316,21 +353,21 @@ const MAPAS = { anatopato:{ teoria:1, pratica:1 }, farmacologia:{ teoria:1 }, fi
 
 // funções do app (mesmos nomes) e o que cada objeto da sala abre
 const FUNC = {
-  quiz:      ['⚡','Desafio rápido','Questões aqui no campus, valem XP'],
-  apostila:  ['▤','Resumo / Apostila','A teoria para ler'],
-  slides:    ['▭','Slides','Aulas da cátedra'],
-  videos:    ['▶','Vídeos / Áudios','Aulas gravadas e podcasts'],
-  treino:    ['✎','Treino','Questões intercaladas'],
-  flashcards:['▢','Flashcards','Repetição espaçada'],
-  mapas:     ['⬡','Mapas guiados','Mapas, tabelas e fluxos'],
-  provas:    ['◷','Provas','Provas anteriores'],
-  revisao:   ['↻','Revisão','Seus erros e progresso'],
-  caderno:   ['✐','Caderno','Suas anotações'],
-  laminas:   ['◉','Lâminas e imagens','Laminário e fotos'],
-  macro:     ['◍','Macroscopia','Peças e fotos'],
-  praticas:  ['⚕','Aulas práticas','Material das práticas'],
-  livros:    ['▥','Livros','Referências e complementares'],
-  playlist:  ['♫','Playlist de estudo','Música para manter o foco'],
+  quiz:      ['⚡', L('Desafio rápido','Desafío rápido','Quick challenge'), L('Questões aqui no campus, valem XP','Preguntas aquí en el campus, valen XP','Questions here on campus, earn XP')],
+  apostila:  ['▤', L('Resumo / Apostila','Resumen / Apunte','Summary / Study guide'), L('A teoria para ler','La teoría para leer','The theory to read')],
+  slides:    ['▭', L('Slides','Diapositivas','Slides'), L('Aulas da cátedra','Clases de la cátedra','Lecture slides')],
+  videos:    ['▶', L('Vídeos / Áudios','Videos / Audios','Videos / Audio'), L('Aulas gravadas e podcasts','Clases grabadas y podcasts','Recorded classes and podcasts')],
+  treino:    ['✎', L('Treino','Entrenamiento','Training'), L('Questões intercaladas','Preguntas intercaladas','Interleaved questions')],
+  flashcards:['▢', 'Flashcards', L('Repetição espaçada','Repetición espaciada','Spaced repetition')],
+  mapas:     ['⬡', L('Mapas guiados','Mapas guiados','Guided maps'), L('Mapas, tabelas e fluxos','Mapas, tablas y flujos','Maps, tables and flowcharts')],
+  provas:    ['◷', L('Provas','Exámenes','Exams'), L('Provas anteriores','Exámenes anteriores','Past exams')],
+  revisao:   ['↻', L('Revisão','Repaso','Review'), L('Seus erros e progresso','Tus errores y progreso','Your mistakes and progress')],
+  caderno:   ['✐', L('Caderno','Cuaderno','Notebook'), L('Suas anotações','Tus notas','Your notes')],
+  laminas:   ['◉', L('Lâminas e imagens','Láminas e imágenes','Microscope slides and images'), L('Laminário e fotos','Laminario y fotos','Slide collection and photos')],
+  macro:     ['◍', L('Macroscopia','Macroscopía','Gross pathology'), L('Peças e fotos','Piezas y fotos','Specimens and photos')],
+  praticas:  ['⚕', L('Aulas práticas','Clases prácticas','Practical classes'), L('Material das práticas','Material de las prácticas','Practical class material')],
+  livros:    ['▥', L('Livros','Libros','Books'), L('Referências e complementares','Referencias y complementarios','References and extra material')],
+  playlist:  ['♫', L('Playlist de estudo','Playlist de estudio','Study playlist'), L('Música para manter o foco','Música para mantener el foco','Music to stay focused')],
 };
 const SO_PRATICA = ['laminas', 'macro', 'praticas'];
 const ORDEM = ['apostila','slides','videos','treino','flashcards','mapas','provas','revisao','caderno','laminas','macro','praticas'];
@@ -364,11 +401,11 @@ const SALAS = [
   { id:'saude', n:'6', sala:'Medicina de la Familia', slug:'familia', materia:'Medicina de la Familia', teoria:'Dra. Loren Noguera',
     poly:[[270,629],[587,575],[667,712],[653,899],[493,945],[380,945],[313,732]], no:'E6', dentro:[470,802],
     obj:[['quiz',398,668,470,800],['slides',420,692,420,762],['mapas',516,690,530,762],['treino',456,738,440,776],['flashcards',492,776,500,800],['provas',560,700,566,770],['caderno',368,770,384,792],['apostila',600,720,590,790]] },
-  { id:'bib', n:'📖', sala:'Biblioteca', materia:'Biblioteca', poly:[[988,575],[1355,559],[1425,639],[1425,899],[1315,999],[961,919],[905,732]], no:'E7', dentro:[1150,842],
+  { id:'bib', n:'📖', sala:L('Biblioteca','Biblioteca','Library'), materia:L('Biblioteca','Biblioteca','Library'), poly:[[988,575],[1355,559],[1425,639],[1425,899],[1315,999],[961,919],[905,732]], no:'E7', dentro:[1150,842],
     obj:[['quiz',1068,640,1150,840],['apostila',1060,700,1062,800],['slides',1160,706,1160,800],['videos',1215,748,1212,806],['livros',1330,730,1312,792],['treino',1150,790,1150,840],['caderno',985,760,1010,800],['playlist',1270,820,1250,852],['provas',1352,782,1322,822]] },
 ];
 
-const PERGUNTAS = {
+const PERGUNTAS_PT = {
   morfo: [
     { q:'Qual é a anemia microcítica e hipocrômica mais comum?', o:['Anemia ferropriva','Anemia megaloblástica','Anemia aplásica','Anemia hemolítica autoimune'], a:0, e:'A deficiência de ferro reduz a síntese de hemoglobina: hemácias pequenas (VCM baixo) e pálidas (HCM baixa).' },
     { q:'Choque com débito cardíaco baixo e resistência vascular sistêmica alta, causado por perda de volume:', o:['Distributivo','Hipovolêmico','Neurogênico','Séptico'], a:1, e:'No choque hipovolêmico a pré-carga cai; a vasoconstrição compensatória eleva a resistência vascular sistêmica.' },
@@ -404,12 +441,85 @@ const PERGUNTAS = {
     { q:'Evocar o conteúdo da memória, sem consultar o material, é:', o:['Prática de recuperação','Copiar o resumo','Releitura','Grifar'], a:0, e:'Lembrar ativamente fortalece o aprendizado mais do que reler.' },
   ],
 };
+const PERGUNTAS_ES = {
+  morfo: [
+    { q:'¿Cuál es la anemia microcítica e hipocrómica más común?', o:['Anemia ferropénica','Anemia megaloblástica','Anemia aplásica','Anemia hemolítica autoinmune'], a:0, e:'La deficiencia de hierro reduce la síntesis de hemoglobina: hematíes pequeños (VCM bajo) y pálidos (HCM baja).' },
+    { q:'Shock con gasto cardíaco bajo y resistencia vascular sistémica alta, causado por pérdida de volumen:', o:['Distributivo','Hipovolémico','Neurogénico','Séptico'], a:1, e:'En el shock hipovolémico cae la precarga; la vasoconstricción compensatoria eleva la resistencia vascular sistémica.' },
+    { q:'La anemia megaloblástica se debe principalmente a la deficiencia de:', o:['Hierro','Vitamina B12 o ácido fólico','Vitamina C','Zinc'], a:1, e:'La B12 y el folato son necesarios para la síntesis de ADN; su falta genera células grandes con núcleo inmaduro.' },
+  ],
+  patho: [
+    { q:'¿De qué agente es típica la necrosis caseosa?', o:['Mycobacterium tuberculosis','Staphylococcus aureus','Candida albicans','VPH'], a:0, e:'El granuloma caseoso de la tuberculosis es el ejemplo clásico de necrosis caseosa.' },
+    { q:'¿Qué alteración celular es reversible?', o:['Necrosis coagulativa','Apoptosis','Tumefacción turbia (degeneración hidrópica)','Calcificación distrófica'], a:2, e:'En la lesión reversible la célula se recupera si cesa la agresión. La apoptosis y la necrosis ya son muerte celular.' },
+    { q:'¿Cuál es la célula característica del granuloma?', o:['Plasmocito','Célula epitelioide con células gigantes multinucleadas','Mastocito','Neutrófilo'], a:1, e:'Macrófagos transformados en células epitelioides, con células gigantes de Langhans.' },
+  ],
+  semio: [
+    { q:'¿Qué diagnóstico sugiere el signo de Murphy?', o:['Apendicitis','Colecistitis aguda','Pancreatitis','Pielonefritis'], a:1, e:'Detención de la inspiración al palpar el hipocondrio derecho: positivo en la colecistitis aguda.' },
+    { q:'El dolor a la descompresión brusca del abdomen indica:', o:['Signo de Blumberg (irritación peritoneal)','Signo de Lasègue','Signo de Kernig','Signo de Courvoisier'], a:0, e:'Un Blumberg positivo sugiere peritonitis.' },
+    { q:'El pulso paradójico (caída de la PA sistólica >10 mmHg en la inspiración) es típico de:', o:['Insuficiencia aórtica','Taponamiento cardíaco','Estenosis mitral','Miocarditis'], a:1, e:'Clásico del taponamiento. También aparece en el asma grave y en la EPOC.' },
+  ],
+  farma: [
+    { q:'Antídoto de la intoxicación por paracetamol:', o:['Naloxona','Flumazenil','N-acetilcisteína','Atropina'], a:2, e:'La NAC repone el glutatión y neutraliza el metabolito tóxico NAPQI.' },
+    { q:'Antídoto de la intoxicación por opioides:', o:['Naloxona','Flumazenil','Protamina','Vitamina K'], a:0, e:'Antagonista opioide competitivo.' },
+    { q:'Primera elección en el shock anafiláctico:', o:['Difenhidramina','Hidrocortisona','Adrenalina IM','Salbutamol'], a:2, e:'La adrenalina IM (cara anterolateral del muslo) es la primera línea.' },
+  ],
+  mi: [
+    { q:'En la radiografía, las estructuras que absorben mucho el haz, como el hueso, aparecen:', o:['Negras (radiolúcidas)','Blancas (radiopacas)','Gris oscuro','Invisibles'], a:1, e:'Cuanto más atenúa el tejido los rayos X, menos se sensibiliza la película y más blanca queda la imagen.' },
+    { q:'En la tomografía computarizada, la densidad de los tejidos se mide en:', o:['Unidades Hounsfield','Teslas','Decibelios','Gray'], a:0, e:'Agua = 0 UH, aire ≈ −1000 UH y hueso cortical por encima de +1000 UH.' },
+    { q:'¿Cuál de estos estudios no usa radiación ionizante?', o:['Tomografía computarizada','Radiografía','Resonancia magnética','Gammagrafía'], a:2, e:'La RM usa campo magnético y radiofrecuencia; la gammagrafía usa radiación gamma.' },
+  ],
+  saude: [
+    { q:'El familiograma (genograma) representa:', o:['Solo enfermedades hereditarias','La estructura y las relaciones de la familia, en general en tres generaciones','El ingreso familiar','El calendario de vacunación'], a:1, e:'Muestra miembros, vínculos, conflictos y problemas de salud, normalmente en al menos tres generaciones.' },
+    { q:'El APGAR familiar evalúa:', o:['La vitalidad del recién nacido','La funcionalidad familiar percibida','El riesgo cardiovascular','El desarrollo motor'], a:1, e:'Adaptación, participación, crecimiento, afecto y resolución, según la percepción del propio paciente.' },
+    { q:'La escala de Holmes y Rahe mide:', o:['Dolor crónico','Estrés por acontecimientos vitales','Dependencia funcional','Riesgo de caídas'], a:1, e:'Suma puntos de acontecimientos vitales recientes para estimar el riesgo de enfermar por estrés.' },
+  ],
+  bib: [
+    { q:'La técnica de estudio que espacia los repasos en el tiempo se llama:', o:['Repetición espaciada','Lectura rápida','Mnemotecnia','Subrayado'], a:0, e:'Mejora la retención a largo plazo (ej.: flashcards en Anki).' },
+    { q:'Evocar el contenido de memoria, sin consultar el material, es:', o:['Práctica de recuperación','Copiar el resumen','Relectura','Resaltar'], a:0, e:'Recordar activamente fortalece el aprendizaje más que releer.' },
+  ],
+};
+const PERGUNTAS_EN = {
+  morfo: [
+    { q:'What is the most common microcytic, hypochromic anemia?', o:['Iron deficiency anemia','Megaloblastic anemia','Aplastic anemia','Autoimmune hemolytic anemia'], a:0, e:'Iron deficiency reduces hemoglobin synthesis: small (low MCV) and pale (low MCH) red cells.' },
+    { q:'Shock with low cardiac output and high systemic vascular resistance, caused by volume loss:', o:['Distributive','Hypovolemic','Neurogenic','Septic'], a:1, e:'In hypovolemic shock preload falls; compensatory vasoconstriction raises systemic vascular resistance.' },
+    { q:'Megaloblastic anemia is mainly caused by a deficiency of:', o:['Iron','Vitamin B12 or folic acid','Vitamin C','Zinc'], a:1, e:'B12 and folate are needed for DNA synthesis; without them, large cells with immature nuclei form.' },
+  ],
+  patho: [
+    { q:'Caseous necrosis is typical of which agent?', o:['Mycobacterium tuberculosis','Staphylococcus aureus','Candida albicans','HPV'], a:0, e:'The caseating granuloma of tuberculosis is the classic example of caseous necrosis.' },
+    { q:'Which cellular change is reversible?', o:['Coagulative necrosis','Apoptosis','Cloudy swelling (hydropic degeneration)','Dystrophic calcification'], a:2, e:'In reversible injury the cell recovers if the insult stops. Apoptosis and necrosis are already cell death.' },
+    { q:'Which cell is characteristic of a granuloma?', o:['Plasma cell','Epithelioid cell with multinucleated giant cells','Mast cell','Neutrophil'], a:1, e:'Macrophages transformed into epithelioid cells, with Langhans giant cells.' },
+  ],
+  semio: [
+    { q:"Murphy's sign suggests which diagnosis?", o:['Appendicitis','Acute cholecystitis','Pancreatitis','Pyelonephritis'], a:1, e:'Inspiration stops during palpation of the right upper quadrant: positive in acute cholecystitis.' },
+    { q:'Pain on sudden release of abdominal pressure indicates:', o:["Blumberg's sign (peritoneal irritation)","Lasègue's sign","Kernig's sign","Courvoisier's sign"], a:0, e:"A positive Blumberg's sign suggests peritonitis." },
+    { q:'Pulsus paradoxus (systolic BP drop >10 mmHg on inspiration) is typical of:', o:['Aortic regurgitation','Cardiac tamponade','Mitral stenosis','Myocarditis'], a:1, e:'Classic in tamponade. It also appears in severe asthma and COPD.' },
+  ],
+  farma: [
+    { q:'Antidote for acetaminophen (paracetamol) poisoning:', o:['Naloxone','Flumazenil','N-acetylcysteine','Atropine'], a:2, e:'NAC restores glutathione and neutralizes the toxic metabolite NAPQI.' },
+    { q:'Antidote for opioid poisoning:', o:['Naloxone','Flumazenil','Protamine','Vitamin K'], a:0, e:'Competitive opioid antagonist.' },
+    { q:'First-line treatment in anaphylactic shock:', o:['Diphenhydramine','Hydrocortisone','IM epinephrine','Salbutamol'], a:2, e:'IM epinephrine (anterolateral thigh) is first line.' },
+  ],
+  mi: [
+    { q:'On a radiograph, structures that absorb much of the beam, such as bone, appear:', o:['Black (radiolucent)','White (radiopaque)','Dark gray','Invisible'], a:1, e:'The more a tissue attenuates X-rays, the less the detector is exposed and the whiter the image.' },
+    { q:'On computed tomography, tissue density is measured in:', o:['Hounsfield units','Teslas','Decibels','Gray'], a:0, e:'Water = 0 HU, air ≈ −1000 HU and cortical bone above +1000 HU.' },
+    { q:'Which of these exams does not use ionizing radiation?', o:['Computed tomography','Radiography','Magnetic resonance imaging','Scintigraphy'], a:2, e:'MRI uses a magnetic field and radiofrequency; scintigraphy uses gamma radiation.' },
+  ],
+  saude: [
+    { q:'The family genogram represents:', o:['Only hereditary diseases','The structure and relationships of the family, usually across three generations','Family income','The vaccination schedule'], a:1, e:'It shows members, bonds, conflicts and health problems, usually across at least three generations.' },
+    { q:'The family APGAR assesses:', o:['Newborn vitality','Perceived family functioning','Cardiovascular risk','Motor development'], a:1, e:"Adaptation, partnership, growth, affection and resolve, as perceived by the patient." },
+    { q:'The Holmes and Rahe scale measures:', o:['Chronic pain','Stress from life events','Functional dependence','Fall risk'], a:1, e:'It adds points for recent life events to estimate the risk of stress-related illness.' },
+  ],
+  bib: [
+    { q:'The study technique that spaces reviews out over time is called:', o:['Spaced repetition','Speed reading','Mnemonics','Underlining'], a:0, e:'It improves long-term retention (e.g., flashcards in Anki).' },
+    { q:'Recalling content from memory, without looking at the material, is:', o:['Retrieval practice','Copying the summary','Rereading','Highlighting'], a:0, e:'Active recall strengthens learning more than rereading.' },
+  ],
+};
+const PERGUNTAS = L(PERGUNTAS_PT, PERGUNTAS_ES, PERGUNTAS_EN);
 
 // placas: [centro x, centro y, largura, altura, rotação, título, subtítulo, tamanho do título]
 const PLACAS = [
-  [463, 212, 186, 62, -9, 'Fisiopatología I', 'Anemias · Choque · Unidades 0 a 7', 21],
-  [805, 170, 140, 50, 0, 'Anatomía Patológica I', 'Teoria e Prática', 15],
-  [1134, 210, 166, 58, 10, 'Semiología Médica I', 'Teoria e Prática', 16],
+  [463, 212, 186, 62, -9, 'Fisiopatología I', L('Anemias · Choque · Unidades 0 a 7','Anemias · Shock · Unidades 0 a 7','Anemias · Shock · Units 0 to 7'), 21],
+  [805, 170, 140, 50, 0, 'Anatomía Patológica I', L('Teoria e Prática','Teoría y Práctica','Theory and Practice'), 15],
+  [1134, 210, 166, 58, 10, 'Semiología Médica I', L('Teoria e Prática','Teoría y Práctica','Theory and Practice'), 16],
   [508, 426, 136, 32, -13, 'Farmacología I', '', 17],
   [1137, 449, 154, 34, 13, 'Imagenología', '', 19],
   [489, 630, 160, 32, -11, 'Medicina de la Familia', '', 15],
@@ -433,6 +543,7 @@ function salvar() { try { localStorage.setItem(CHAVE, JSON.stringify(D)); } catc
 // ===================== palco e câmera =====================
 const $ = id => document.getElementById(id);
 const cam = $('cam');
+traduzirPagina();
 $('placas').innerHTML = PLACAS.map(([x, y, w, h, r, t, sub, fs]) =>
   `<div class="placa" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;--r:${r}deg"><b style="font-size:${fs}px">${t}</b>${sub ? `<small style="font-size:${Math.round(fs * 0.62)}px">${sub}</small>` : ''}</div>`).join('');
 // diminui a fonte até o texto caber na placa
@@ -604,7 +715,7 @@ $('piso').addEventListener('click', e => {
   const r = cam.getBoundingClientRect(), z = CAM.z * FIT;
   const p = [(e.clientX - r.left) / z, (e.clientY - r.top) / z];
   const a = arestaMaisProxima(p);
-  if (a.d > 90) return toast('Ande pelo piso do campus ou toque numa sala');
+  if (a.d > 90) return toast(L('Ande pelo piso do campus ou toque numa sala','Camina por el piso del campus o toca una sala','Walk on the campus floor or tap a room'));
   andarAte(a.q);
 });
 
@@ -642,14 +753,14 @@ SALAS.forEach(s => {
   el.setAttribute('class', 'sala-hit');
   el.setAttribute('tabindex', '0');
   el.setAttribute('role', 'button');
-  el.setAttribute('aria-label', 'Ir para ' + s.sala);
+  el.setAttribute('aria-label', L('Ir para ','Ir a ','Go to ') + s.sala);
   el.addEventListener('click', () => irPara(s.id));
   el.addEventListener('keydown', e => { if (e.key === 'Enter') irPara(s.id); });
   el.addEventListener('mouseenter', () => {
     const b = caixa(s.poly);
     tip.style.left = b.cx + 'px';
     tip.style.top = (b.y0 + 30) + 'px';
-    tip.textContent = 'Ir para ' + s.sala + ' ›';
+    tip.textContent = L('Ir para ','Ir a ','Go to ') + s.sala + ' ›';
     tip.classList.add('on');
   });
   el.addEventListener('mouseleave', () => tip.classList.remove('on'));
@@ -742,8 +853,8 @@ function sairParaCampus() {
 
 // ===================== dentro da sala =====================
 function cabecalhoSala(s) {
-  return `<div class="p-top"><div class="badge">${s.n}</div><div><span class="eyebrow">${s.slug ? 'Sala ' + s.n + (s.pratica ? ' · Teoria e Prática' : ' · Teoria') : 'Resumos · Slides · Provas · Livros'}</span><h3>${s.materia}</h3></div>
-    <div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>`;
+  return `<div class="p-top"><div class="badge">${s.n}</div><div><span class="eyebrow">${s.slug ? L('Sala ','Sala ','Room ') + s.n + ' · ' + (s.pratica ? L('Teoria e Prática','Teoría y Práctica','Theory and Practice') : L('Teoria','Teoría','Theory')) : L('Resumos · Slides · Provas · Livros','Resúmenes · Diapositivas · Exámenes · Libros','Summaries · Slides · Exams · Books')}</span><h3>${s.materia}</h3></div>
+    <div class="xp"><b>${D.xp} XP</b>${L('sequência','racha','streak')} ${D.seq}</div></div>`;
 }
 
 function menuSala(s) {
@@ -755,16 +866,16 @@ function menuSala(s) {
     ? ORDEM.filter(f => FUNC[f] && !(SO_PRATICA.includes(f) && TEORIA !== 'pratica') && !(['laminas','macro'].includes(f) && s.slug !== 'anatopato') && !(f === 'praticas' && !s.pratica) && !(f === 'mapas' && !(MAPAS[s.slug] || {})[TEORIA]))
     : ['apostila','slides','videos','provas','livros','playlist'];
   $('painel').innerHTML = cabecalhoSala(s) +
-    (s.slug ? `<p class="prof">${TEORIA === 'pratica' ? 'Prática' : 'Teoria'}: <b>${prof}</b></p>` : '') +
-    (s.pratica ? `<div class="modo" role="group" aria-label="Teoria ou prática">
-        <button class="${TEORIA === 'teoria' ? 'on' : ''}" data-m="teoria">Teoria</button>
-        <button class="${TEORIA === 'pratica' ? 'on' : ''}" data-m="pratica">Prática</button></div>` : '') +
-    `<p class="dica">Toque nos objetos da sala para ir até eles, ou escolha aqui.</p>
+    (s.slug ? `<p class="prof">${TEORIA === 'pratica' ? L('Prática','Práctica','Practice') : L('Teoria','Teoría','Theory')}: <b>${prof}</b></p>` : '') +
+    (s.pratica ? `<div class="modo" role="group" aria-label="${L('Teoria ou prática','Teoría o práctica','Theory or practice')}">
+        <button class="${TEORIA === 'teoria' ? 'on' : ''}" data-m="teoria">${L('Teoria','Teoría','Theory')}</button>
+        <button class="${TEORIA === 'pratica' ? 'on' : ''}" data-m="pratica">${L('Prática','Práctica','Practice')}</button></div>` : '') +
+    `<p class="dica">${L('Toque nos objetos da sala para ir até eles, ou escolha aqui.','Toca los objetos de la sala para ir hasta ellos, o elige aquí.','Tap the objects in the room to walk to them, or choose here.')}</p>
      <div class="grade">
-       <button class="acao destaque" data-f="quiz"><span class="ic">⚡</span><span><b>Desafio rápido</b><br><small>${PERGUNTAS[s.id].length} questões · valem XP e contam nos desafios da semana</small></span></button>
+       <button class="acao destaque" data-f="quiz"><span class="ic">⚡</span><span><b>${FUNC.quiz[1]}</b><br><small>${PERGUNTAS[s.id].length} ${L('questões · valem XP e contam nos desafios da semana','preguntas · valen XP y cuentan en los desafíos de la semana','questions · earn XP and count toward the weekly challenges')}</small></span></button>
        ${disponiveis.map(f => `<button class="acao" data-f="${f}"><span class="ic">${FUNC[f][0]}</span><b>${FUNC[f][1]}</b><small>${FUNC[f][2]}</small></button>`).join('')}
      </div>
-     <div class="acoes"><button class="btn" onclick="sairParaCampus()">Sair da sala</button></div>`;
+     <div class="acoes"><button class="btn" onclick="sairParaCampus()">${L('Sair da sala','Salir de la sala','Leave the room')}</button></div>`;
   $('painel').querySelectorAll('.modo button').forEach(b => b.onclick = () => { TEORIA = b.dataset.m; menuSala(s); });
   $('painel').querySelectorAll('.acao[data-f]').forEach(b => b.onclick = () => {
     const o = s.obj.find(o => o[0] === b.dataset.f);
@@ -793,17 +904,17 @@ function cartaoFuncao(s, f) {
     // biblioteca: escolhe a matéria
     corpo = `<div class="grade">${SALAS.filter(x => x.slug).map(x =>
       `<a class="acao" href="${linkMateria(x.slug)}" target="_blank" rel="noopener" data-estudo="${x.materia}"><span class="ic">${x.n}</span><b>${x.materia}</b><small>${nome}</small></a>`).join('')}
-      <a class="acao" href="${APP}/sinus/revalida-treino.html" target="_blank" rel="noopener" data-estudo="Revalida"><span class="ic">♡</span><b>Revalida · Treino</b><small>Questões por tema</small></a>
-      <a class="acao" href="${APP}/sinus/revalida-estacoes.html" target="_blank" rel="noopener" data-estudo="Revalida"><span class="ic">⚕</span><b>Revalida · Estações</b><small>Prova prática</small></a></div>`;
+      <a class="acao" href="${APP}/sinus/revalida-treino.html" target="_blank" rel="noopener" data-estudo="Revalida"><span class="ic">♡</span><b>Revalida · ${L('Treino','Entrenamiento','Training')}</b><small>${L('Questões por tema','Preguntas por tema','Questions by topic')}</small></a>
+      <a class="acao" href="${APP}/sinus/revalida-estacoes.html" target="_blank" rel="noopener" data-estudo="Revalida"><span class="ic">⚕</span><b>Revalida · ${L('Estações','Estaciones','Stations')}</b><small>${L('Prova prática','Examen práctico','Practical exam')}</small></a></div>`;
   } else {
     const href = f === 'mapas' ? linkMapas(s.slug, TEORIA) : linkMateria(s.slug);
-    corpo = `<div class="acoes"><a class="btn pri" id="comecar" href="${href}" target="_blank" rel="noopener">▶ Começar a estudar</a>
-      <button class="btn" id="aqui">Só contar o foco</button></div>
-      <p class="nota">${f === 'mapas' ? 'Abre os mapas guiados desta matéria.' : `Abre a matéria no app SINUS; lá, escolha a aba ${nome}.`} O foco começa a contar quando você inicia.</p>`;
+    corpo = `<div class="acoes"><a class="btn pri" id="comecar" href="${href}" target="_blank" rel="noopener">▶ ${L('Começar a estudar','Empezar a estudiar','Start studying')}</a>
+      <button class="btn" id="aqui">${L('Só contar o foco','Solo contar el foco','Just track focus')}</button></div>
+      <p class="nota">${f === 'mapas' ? L('Abre os mapas guiados desta matéria.','Abre los mapas guiados de esta materia.',"Opens this subject's guided maps.") : L(`Abre a matéria no app SINUS; lá, escolha a aba ${nome}.`,`Abre la materia en la app SINUS; allí, elige la pestaña ${nome}.`,`Opens the subject in the SINUS app; there, choose the ${nome} tab.`)} ${L('O foco começa a contar quando você inicia.','El foco empieza a contar cuando comienzas.','Focus time starts when you begin.')}</p>`;
   }
   $('painel').innerHTML = cabecalhoSala(s) +
-    `<div class="cartao"><div class="ic">${ic}</div><h4>${nome}</h4><p>${desc}${s.slug ? ' · ' + (TEORIA === 'pratica' ? 'Prática' : 'Teoria') : ''}</p>${corpo}</div>
-     <div class="acoes"><button class="btn" id="voltarSala">← Voltar à sala</button></div>`;
+    `<div class="cartao"><div class="ic">${ic}</div><h4>${nome}</h4><p>${desc}${s.slug ? ' · ' + (TEORIA === 'pratica' ? L('Prática','Práctica','Practice') : L('Teoria','Teoría','Theory')) : ''}</p>${corpo}</div>
+     <div class="acoes"><button class="btn" id="voltarSala">${L('← Voltar à sala','← Volver a la sala','← Back to the room')}</button></div>`;
   $('voltarSala').onclick = () => menuSala(s);
   if (s.slug) {
     $('comecar').addEventListener('click', () => iniciarEstudo(s.materia, nome));
@@ -824,14 +935,14 @@ function iniciarEstudo(materia, funcao) {
   if (D.sessao) encerrarEstudo(true);
   D.sessao = { inicio:Date.now(), materia, funcao, pomos:0 };
   salvar(); atualizarEstudo();
-  toast(`Foco iniciado: ${materia} · ${funcao}`);
+  toast(`${L('Foco iniciado','Foco iniciado','Focus started')}: ${materia} · ${funcao}`);
 }
 function encerrarEstudo(silencioso) {
   if (!D.sessao) return;
   const seg = decorrido();
   D.focoHoje += seg; D.sessao = null;
   salvar(); atualizarEstudo(); atualizarHud();
-  if (!silencioso) toast(`Sessão registrada: ${Math.round(seg / 60)} min de foco`);
+  if (!silencioso) toast(L(`Sessão registrada: ${Math.round(seg / 60)} min de foco`,`Sesión registrada: ${Math.round(seg / 60)} min de foco`,`Session saved: ${Math.round(seg / 60)} min of focus`));
 }
 const hms = s => { s = Math.floor(s); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' : '') + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0'); };
 function atualizarEstudo() {
@@ -844,7 +955,7 @@ function atualizarEstudo() {
   $('pomo').style.width = ((e % 1500) / 1500 * 100) + '%';
   // ciclo pomodoro: a cada 25 min avisa da pausa
   const n = Math.floor(e / 1500);
-  if (n > (D.sessao.pomos || 0)) { D.sessao.pomos = n; salvar(); sino(); toast(`${n * 25} min de foco! Que tal 5 minutos de pausa?`); }
+  if (n > (D.sessao.pomos || 0)) { D.sessao.pomos = n; salvar(); sino(); toast(L(`${n * 25} min de foco! Que tal 5 minutos de pausa?`,`¡${n * 25} min de foco! ¿Qué tal 5 minutos de pausa?`,`${n * 25} min of focus! How about a 5-minute break?`)); }
 }
 $('estudoPausa').onclick = () => encerrarEstudo();
 $('estudoFim').onclick = () => encerrarEstudo();
@@ -852,33 +963,33 @@ $('estudoFim').onclick = () => encerrarEstudo();
 // ===================== interface desenhada → ações =====================
 const abrirApp = (cam = '/') => () => window.open(APP + cam, '_blank', 'noopener');
 const HITS = [
-  [18, 12, 160, 44, 'Voltar ao app SINUS', () => { location.href = '/'; }],
-  [222, 14, 96, 40, 'Início', () => sairParaCampus()],
-  [336, 14, 90, 40, 'Horários', abrirApp()],
-  [448, 14, 96, 40, 'Biblioteca', () => irPara('bib')],
-  [566, 14, 84, 40, 'Atlas 3D', () => toast('Atlas 3D chega na próxima versão')],
-  [674, 14, 74, 40, 'Mapas', abrirApp('/mapas/')],
+  [18, 12, 160, 44, L('Voltar ao app SINUS','Volver a la app SINUS','Back to the SINUS app'), () => { location.href = '/'; }],
+  [222, 14, 96, 40, L('Início','Inicio','Home'), () => sairParaCampus()],
+  [336, 14, 90, 40, L('Horários','Horarios','Schedules'), abrirApp()],
+  [448, 14, 96, 40, L('Biblioteca','Biblioteca','Library'), () => irPara('bib')],
+  [566, 14, 84, 40, 'Atlas 3D', () => toast(L('Atlas 3D chega na próxima versão','Atlas 3D llega en la próxima versión','Atlas 3D is coming in the next version'))],
+  [674, 14, 74, 40, L('Mapas','Mapas','Maps'), abrirApp('/mapas/')],
   [772, 14, 84, 40, 'Revalida', () => simulado('Revalida')],
   [880, 14, 82, 40, 'Enamed', () => simulado('Enamed')],
-  [986, 14, 98, 40, 'Exercícios', () => aleatoria()],
-  [1117, 13, 272, 42, 'Buscar', () => toast('Busca chega na próxima versão')],
-  [1408, 12, 42, 42, 'Notificações', () => toast(`Você tem ${D.xp} XP · sequência de ${D.seq}`), true],
-  [1468, 10, 46, 46, 'Perfil', () => progresso(), true],
-  [202, 237, 44, 44, 'Foco livre', () => D.sessao ? encerrarEstudo() : iniciarEstudo('Estudo livre', 'Foco'), true],
-  [32, 312, 214, 44, 'Continuar estudando', () => continuar()],
-  [24, 377, 226, 38, 'Meu progresso', () => progresso()],
-  [24, 422, 226, 38, 'Agenda de estudos', abrirApp()],
-  [24, 470, 226, 38, 'Meus resumos', () => irPara('bib')],
-  [24, 515, 226, 38, 'Meus exercícios', () => aleatoria()],
+  [986, 14, 98, 40, L('Exercícios','Ejercicios','Exercises'), () => aleatoria()],
+  [1117, 13, 272, 42, L('Buscar','Buscar','Search'), () => toast(L('Busca chega na próxima versão','La búsqueda llega en la próxima versión','Search is coming in the next version'))],
+  [1408, 12, 42, 42, L('Notificações','Notificaciones','Notifications'), () => toast(L(`Você tem ${D.xp} XP · sequência de ${D.seq}`,`Tienes ${D.xp} XP · racha de ${D.seq}`,`You have ${D.xp} XP · streak of ${D.seq}`)), true],
+  [1468, 10, 46, 46, L('Perfil','Perfil','Profile'), () => progresso(), true],
+  [202, 237, 44, 44, L('Foco livre','Foco libre','Free focus'), () => D.sessao ? encerrarEstudo() : iniciarEstudo(L('Estudo livre','Estudio libre','Free study'), L('Foco','Foco','Focus')), true],
+  [32, 312, 214, 44, L('Continuar estudando','Seguir estudiando','Continue studying'), () => continuar()],
+  [24, 377, 226, 38, L('Meu progresso','Mi progreso','My progress'), () => progresso()],
+  [24, 422, 226, 38, L('Agenda de estudos','Agenda de estudio','Study planner'), abrirApp()],
+  [24, 470, 226, 38, L('Meus resumos','Mis resúmenes','My summaries'), () => irPara('bib')],
+  [24, 515, 226, 38, L('Meus exercícios','Mis ejercicios','My exercises'), () => aleatoria()],
   [24, 561, 226, 38, 'Flashcards', () => continuar()],
-  [24, 607, 226, 38, 'Simulados', () => simulado('Simulado')],
-  [24, 653, 226, 38, 'Anotações', abrirApp()],
-  [1262, 126, 252, 72, 'Próxima aula: Semiologia I - Prática', () => { TEORIA = 'pratica'; irPara('semio'); }],
-  [1452, 94, 66, 22, 'Ver todas as aulas', abrirApp()],
-  [1003, 334, 100, 50, 'Semiologia: Teoria', () => { TEORIA = 'teoria'; irPara('semio'); }],
-  [1114, 353, 108, 52, 'Semiologia: Prática', () => { TEORIA = 'pratica'; irPara('semio'); }],
-  [252, 770, 66, 22, 'Ver todos os desafios', () => progresso()],
-  [634, 922, 424, 72, 'Escolha uma sala', () => continuar()],
+  [24, 607, 226, 38, L('Simulados','Simulacros','Mock exams'), () => simulado(L('Simulado','Simulacro','Mock exam'))],
+  [24, 653, 226, 38, L('Anotações','Notas','Notes'), abrirApp()],
+  [1262, 126, 252, 72, L('Próxima aula: Semiología Médica I · Prática','Próxima clase: Semiología Médica I · Práctica','Next class: Semiología Médica I · Practice'), () => { TEORIA = 'pratica'; irPara('semio'); }],
+  [1452, 94, 66, 22, L('Ver todas as aulas','Ver todas las clases','See all classes'), abrirApp()],
+  [1003, 334, 100, 50, L('Semiologia: Teoria','Semiología: Teoría','Semiology: Theory'), () => { TEORIA = 'teoria'; irPara('semio'); }],
+  [1114, 353, 108, 52, L('Semiologia: Prática','Semiología: Práctica','Semiology: Practice'), () => { TEORIA = 'pratica'; irPara('semio'); }],
+  [252, 770, 66, 22, L('Ver todos os desafios','Ver todos los desafíos','See all challenges'), () => progresso()],
+  [634, 922, 424, 72, L('Escolha uma sala','Elige una sala','Choose a room'), () => continuar()],
 ];
 HITS.forEach(([x, y, w, h, nome, fn, redondo]) => {
   const b = document.createElement('button');
@@ -930,7 +1041,7 @@ atualizarHud(); atualizarEstudo();
 const embaralhar = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
 
 function iniciarQuiz(s) {
-  iniciarEstudo(s.materia, 'Desafio rápido');
+  iniciarEstudo(s.materia, FUNC.quiz[1]);
   G = { tipo:'sala', sala:s, fila:embaralhar(PERGUNTAS[s.id].map(q => ({ ...q, sala:s.id }))), i:0, res:[] };
   render();
 }
@@ -941,7 +1052,7 @@ function simulado(titulo) {
     camera(783, 470, 1.9, innerWidth < 760 ? 768 : 1536 * 0.32, innerWidth < 760 ? 1024 * 0.3 : 512);
     document.body.classList.remove('esq');
     document.body.classList.add('zoom');
-    iniciarEstudo(titulo, 'Simulado');
+    iniciarEstudo(titulo, L('Simulado','Simulacro','Mock exam'));
     const todas = Object.entries(PERGUNTAS).flatMap(([id, l]) => l.map(q => ({ ...q, sala:id })));
     G = { tipo:'simulado', titulo, fila:embaralhar(todas).slice(0, 5), i:0, res:[] };
     setTimeout(render, 650);
@@ -958,8 +1069,8 @@ function continuar() {
 }
 
 function cabecalho() {
-  if (G.tipo === 'simulado') return `<div class="p-top"><div class="badge">⚡</div><div><span class="eyebrow">Simulado</span><h3>${G.titulo}</h3></div><div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>`;
-  return cabecalhoSala(G.sala).replace(/<span class="eyebrow">[^<]*<\/span>/, `<span class="eyebrow">Desafio rápido · Sala ${G.sala.n}</span>`);
+  if (G.tipo === 'simulado') return `<div class="p-top"><div class="badge">⚡</div><div><span class="eyebrow">${L('Simulado','Simulacro','Mock exam')}</span><h3>${G.titulo}</h3></div><div class="xp"><b>${D.xp} XP</b>${L('sequência','racha','streak')} ${D.seq}</div></div>`;
+  return cabecalhoSala(G.sala).replace(/<span class="eyebrow">[^<]*<\/span>/, `<span class="eyebrow">${FUNC.quiz[1]} · ${L('Sala','Sala','Room')} ${G.sala.n}</span>`);
 }
 
 function render() {
@@ -970,11 +1081,11 @@ function render() {
   const dots = G.fila.map((_, i) => `<i class="${i < G.res.length ? (G.res[i] ? 'ok' : 'no') : i === G.i ? 'cur' : ''}"></i>`).join('');
   p.innerHTML = cabecalho() +
     `<div class="prog">${dots}</div>
-     <div class="qnum">Questão ${G.i + 1} de ${G.fila.length}${G.tipo === 'simulado' ? ' · ' + sala(q.sala).materia : ''}</div>
+     <div class="qnum">${L('Questão','Pregunta','Question')} ${G.i + 1} ${L('de','de','of')} ${G.fila.length}${G.tipo === 'simulado' ? ' · ' + sala(q.sala).materia : ''}</div>
      <h2>${q.q}</h2>
      <div id="ops">${q.o.map((t, i) => `<button class="opt" data-i="${i}"><span class="l">${'ABCD'[i]}</span><span>${t}</span></button>`).join('')}</div>
      <div class="exp" id="exp"></div>
-     <div class="acoes"><button class="btn" id="sairQuiz">${G.tipo === 'sala' ? '← Voltar à sala' : 'Sair'}</button><button class="btn pri" id="prox" disabled>Responder</button></div>`;
+     <div class="acoes"><button class="btn" id="sairQuiz">${G.tipo === 'sala' ? L('← Voltar à sala','← Volver a la sala','← Back to the room') : L('Sair','Salir','Exit')}</button><button class="btn pri" id="prox" disabled>${L('Responder','Responder','Answer')}</button></div>`;
   p.querySelectorAll('.opt').forEach(b => b.onclick = () => responder(+b.dataset.i));
   $('sairQuiz').onclick = () => G.tipo === 'sala' ? menuSala(G.sala) : sairParaCampus();
   p.classList.add('on');
@@ -997,16 +1108,16 @@ function responder(i) {
   if (certa) { ps.a++; D.seq++; D.xp += 10 + Math.min(D.seq, 5) * 2; }
   else D.seq = 0;
   efeito(certa ? 'certo' : 'errado');
-  if (D.questoes === 20) toast('Desafio concluído: 20 questões na semana! 🎉');
+  if (D.questoes === 20) toast(L('Desafio concluído: 20 questões na semana! 🎉','¡Desafío completado: 20 preguntas en la semana! 🎉','Challenge complete: 20 questions this week! 🎉'));
   salvar(); atualizarHud();
-  document.querySelector('#painel .xp').innerHTML = `<b>${D.xp} XP</b>sequência ${D.seq}`;
+  document.querySelector('#painel .xp').innerHTML = `<b>${D.xp} XP</b>${L('sequência','racha','streak')} ${D.seq}`;
 
   const e = $('exp');
-  e.innerHTML = `<b style="color:${certa ? 'var(--accent)' : 'var(--bad)'}">${certa ? 'Correto!' : 'Não foi dessa vez.'}</b> ${q.e}`;
+  e.innerHTML = `<b style="color:${certa ? 'var(--accent)' : 'var(--bad)'}">${certa ? L('Correto!','¡Correcto!','Correct!') : L('Não foi dessa vez.','Esta vez no.','Not this time.')}</b> ${q.e}`;
   e.classList.add('on');
   const prox = $('prox');
   prox.disabled = false;
-  prox.textContent = G.i + 1 < G.fila.length ? 'Próxima questão →' : 'Ver resultado';
+  prox.textContent = G.i + 1 < G.fila.length ? L('Próxima questão →','Siguiente pregunta →','Next question →') : L('Ver resultado','Ver resultado','See result');
   prox.onclick = () => { G.i++; render(); };
   prox.focus();
 }
@@ -1018,8 +1129,8 @@ function resultado() {
   const pct = Math.round(ac / tot * 100);
   $('painel').innerHTML = cabecalho() +
     `<div class="res"><div class="big">${ac}/${tot}</div>
-     <p>${pct >= 70 ? 'Excelente! Sala dominada.' : pct >= 40 ? 'Bom caminho. Revise as explicações.' : 'Vale revisar o conteúdo e tentar de novo.'}</p></div>
-     <div class="acoes"><button class="btn" id="refazer">Refazer</button><button class="btn pri" id="fim">${G.tipo === 'sala' ? 'Voltar à sala' : 'Voltar ao campus'}</button></div>`;
+     <p>${pct >= 70 ? L('Excelente! Sala dominada.','¡Excelente! Sala dominada.','Excellent! Room mastered.') : pct >= 40 ? L('Bom caminho. Revise as explicações.','Buen camino. Repasa las explicaciones.','Good progress. Review the explanations.') : L('Vale revisar o conteúdo e tentar de novo.','Conviene repasar el contenido e intentarlo de nuevo.','Worth reviewing the content and trying again.')}</p></div>
+     <div class="acoes"><button class="btn" id="refazer">${L('Refazer','Rehacer','Retry')}</button><button class="btn pri" id="fim">${G.tipo === 'sala' ? L('Voltar à sala','Volver a la sala','Back to the room') : L('Voltar ao campus','Volver al campus','Back to campus')}</button></div>`;
   const g = G;
   $('refazer').onclick = () => g.tipo === 'sala' ? iniciarQuiz(g.sala) : simulado(g.titulo);
   $('fim').onclick = () => g.tipo === 'sala' ? menuSala(g.sala) : sairParaCampus();
@@ -1037,11 +1148,11 @@ function progresso() {
     return `<li><b>${s.materia}</b><span>${p.a}/${p.t} · ${pct}%</span><i><u style="width:${pct}%"></u></i></li>`;
   }).join('');
   $('painel').innerHTML =
-    `<div class="p-top"><div class="badge">★</div><div><span class="eyebrow">Meu progresso</span><h3>Aproveitamento por matéria</h3></div>
-     <div class="xp"><b>${D.xp} XP</b>sequência ${D.seq}</div></div>
-     <p class="prof">Foco hoje: <b>${hms(focoTotal())}</b> · questões na semana: <b>${D.questoes}</b></p>
+    `<div class="p-top"><div class="badge">★</div><div><span class="eyebrow">${L('Meu progresso','Mi progreso','My progress')}</span><h3>${L('Aproveitamento por matéria','Rendimiento por materia','Score by subject')}</h3></div>
+     <div class="xp"><b>${D.xp} XP</b>${L('sequência','racha','streak')} ${D.seq}</div></div>
+     <p class="prof">${L('Foco hoje','Foco hoy','Focus today')}: <b>${hms(focoTotal())}</b> · ${L('questões na semana','preguntas en la semana','questions this week')}: <b>${D.questoes}</b></p>
      <ul class="lista-prog">${linhas}</ul>
-     <div class="acoes"><button class="btn pri" onclick="sairParaCampus()">Voltar ao campus</button></div>`;
+     <div class="acoes"><button class="btn pri" onclick="sairParaCampus()">${L('Voltar ao campus','Volver al campus','Back to campus')}</button></div>`;
   $('painel').classList.add('on');
 }
 
@@ -1188,8 +1299,8 @@ function ligarSons(ligar) {
 }
 
 const FAIXAS = [
-  { nome:'Plantão · sons de hospital', tipo:'ambiente', criar(out) { return hospital(out, 1.3); } },
-  { nome:'Lo-fi · Café da biblioteca', tipo:'batida suave', criar(out) {
+  { nome:L('Plantão · sons de hospital','Guardia · sonidos de hospital','On call · hospital sounds'), tipo:L('ambiente','ambiente','ambient'), criar(out) { return hospital(out, 1.3); } },
+  { nome:L('Lo-fi · Café da biblioteca','Lo-fi · Café de la biblioteca','Lo-fi · Library café'), tipo:L('batida suave','ritmo suave','soft beat'), criar(out) {
       const c = AUD.ctx, filtro = c.createBiquadFilter(); filtro.type = 'lowpass'; filtro.frequency.value = 1300; filtro.connect(out);
       const eco = c.createDelay(); eco.delayTime.value = 0.42; const fb = c.createGain(); fb.gain.value = 0.3;
       eco.connect(fb); fb.connect(eco); eco.connect(filtro);
@@ -1211,7 +1322,7 @@ const FAIXAS = [
       });
       return () => { parar(); vinil.stop(); };
   } },
-  { nome:'Chuva na janela', tipo:'ambiente', criar(out) {
+  { nome:L('Chuva na janela','Lluvia en la ventana','Rain on the window'), tipo:L('ambiente','ambiente','ambient'), criar(out) {
       const c = AUD.ctx;
       const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 400;
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2600;
@@ -1229,12 +1340,12 @@ const FAIXAS = [
       }, 90);
       return () => { a.stop(); b.stop(); clearInterval(id); };
   } },
-  { nome:'Ruído marrom · foco profundo', tipo:'concentração', criar(out) {
+  { nome:L('Ruído marrom · foco profundo','Ruido marrón · foco profundo','Brown noise · deep focus'), tipo:L('concentração','concentración','concentration'), criar(out) {
       const c = AUD.ctx, lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 650; lp.connect(out);
       const s = fonteRuido('marrom', lp, 0.9);
       return () => s.stop();
   } },
-  { nome:'Piano calmo', tipo:'leitura', criar(out) {
+  { nome:L('Piano calmo','Piano tranquilo','Calm piano'), tipo:L('leitura','lectura','reading'), criar(out) {
       const c = AUD.ctx, eco = c.createDelay(); eco.delayTime.value = 0.38;
       const fb = c.createGain(); fb.gain.value = 0.35; eco.connect(fb); fb.connect(eco); eco.connect(out);
       const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400; lp.connect(out); lp.connect(eco);
@@ -1249,7 +1360,7 @@ const FAIXAS = [
       })();
       return () => { vivo = false; };
   } },
-  { nome:'Ondas alfa 10 Hz', tipo:'use fones', criar(out) {
+  { nome:L('Ondas alfa 10 Hz','Ondas alfa 10 Hz','Alpha waves 10 Hz'), tipo:L('use fones','usa auriculares','use headphones'), criar(out) {
       const c = AUD.ctx, nos = [];
       [[200, -1], [210, 1]].forEach(([f, lado]) => {
         const o = c.createOscillator(), g = c.createGain(), p = c.createStereoPanner();
@@ -1294,7 +1405,7 @@ function sino() {
 function atualizarMusica() {
   $('faixa').textContent = FAIXAS[D.faixa].nome;
   $('tocar').textContent = AUD.tocando ? '❚❚' : '▶';
-  $('tocar').setAttribute('aria-label', AUD.tocando ? 'Pausar' : 'Tocar');
+  $('tocar').setAttribute('aria-label', AUD.tocando ? L('Pausar','Pausar','Pause') : L('Tocar','Reproducir','Play'));
   $('capa').classList.toggle('tocando', AUD.tocando);
   $('faixas').innerHTML = FAIXAS.map((f, i) => `<li><button class="${i === D.faixa ? 'on' : ''}" data-i="${i}"><span>${f.nome}</span><small>${f.tipo}</small></button></li>`).join('');
   $('faixas').querySelectorAll('button').forEach(b => b.onclick = () => tocarFaixa(+b.dataset.i));
@@ -1303,10 +1414,10 @@ function abrirMusica(tocar) {
   $('musica').classList.add('aberto');
   $('abrirLista').setAttribute('aria-expanded', 'true');
   if (tocar && !AUD.tocando) tocarFaixa(D.faixa);
-  toast('Playlist de estudo: escolha uma faixa');
+  toast(L('Playlist de estudo: escolha uma faixa','Playlist de estudio: elige una pista','Study playlist: pick a track'));
 }
 $('tocar').onclick = () => AUD.tocando ? pararFaixa() : tocarFaixa(D.faixa);
-$('hospital').onclick = () => { ligarSons(!D.sons); toast(D.sons ? 'Sons do hospital ligados' : 'Sons do hospital desligados'); };
+$('hospital').onclick = () => { ligarSons(!D.sons); toast(D.sons ? L('Sons do hospital ligados','Sonidos de hospital activados','Hospital sounds on') : L('Sons do hospital desligados','Sonidos de hospital desactivados','Hospital sounds off')); };
 // o navegador só libera o som depois de um toque: religa os sons do hospital no primeiro clique
 if (D.sons) {
   $('hospital').setAttribute('aria-pressed', 'true');
