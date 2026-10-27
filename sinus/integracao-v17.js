@@ -353,7 +353,7 @@
       var slug = key.split('/')[0], deck = DECKS[key], nome = NOMES[slug];
       if (!nome) return;
       (deck.cartoes || []).forEach(function (c) {
-        qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: 'theory', type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: null, active: true, deck: key, topic: c.t });
+        qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: (deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: null, active: true, deck: key, topic: c.t });
       });
     });
     return qs;
@@ -618,10 +618,11 @@
     box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
   function renderCartoes() {
-    var s = subjectData(), slug = s && s.slug, ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });
+    var s = subjectData(), slug = s && s.slug, area = UI.mode === 'practice' ? 'pratica' : 'teoria';
+    var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area; });
     var box = $id('subjectContent');
     if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, utilize os Exercícios ou os Mapas mentais.'); return }
-    var k = ESCOLHA[slug] && DECKS[ESCOLHA[slug]] ? ESCOLHA[slug] : deckPadrao(slug);
+    var k = ESCOLHA[slug] && ks.indexOf(ESCOLHA[slug]) >= 0 ? ESCOLHA[slug] : (ks.indexOf(deckPadrao(slug)) >= 0 ? deckPadrao(slug) : ks[0]);
     abrirDeck(k);
     var deck = CART.deck, c = CART.fila[CART.i], total = deck.cartoes.length;
     var dom = deck.cartoes.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
@@ -629,7 +630,7 @@
     box.innerHTML = '<section class="sxFlashStudy">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">FLASHCARDS</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
       '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
-      '<p class="sxQ">' + H(c ? c.q : '') + '</p>' +
+      (c && c.img ? '<figure class="sxCardImg"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"></figure>' : '') + '<p class="sxQ' + (c && c.img ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>' +
       (CART.mostrar ? '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div><div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>'
         : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>') + '</div>' +
       '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">Pular →</button></nav>' +
@@ -640,7 +641,7 @@
     PROG[c.id] = g; gravarLocal(CART.key, PROG);
     if (S.uid) docProg(CART.key).set({ uid: S.uid, aula: 'cartoes-' + CART.key.replace('/', '-'), prog: PROG, em: agora() }, { merge: true }).catch(function () {});
     try {
-      STUDY.attempts.push({ id: 'fc_' + CART.key.replace('/', '_') + '_' + c.id, subject: UI.subject, mode: 'theory', type: 'flashcard', ok: g === 'normal' || g === 'facil', date: new Date().toISOString(), tag: 'flashcards' });
+      STUDY.attempts.push({ id: 'fc_' + CART.key.replace('/', '_') + '_' + c.id, subject: UI.subject, mode: (CART.deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', ok: g === 'normal' || g === 'facil', date: new Date().toISOString(), tag: 'flashcards' });
       studySave();
     } catch (e) {}
     CART.i++; CART.mostrar = false;

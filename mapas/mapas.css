@@ -429,3 +429,17 @@ input.cloze[data-st="miss"],textarea.cloze[data-st="miss"]{background:var(--bad-
 .case>.inline-answer{display:flex;width:100%;margin-top:10px}
 .inline-answer:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 .homenote{margin:-6px 0 14px;font-size:13px}
+
+/* celular: laminário com foto mais compacta, ações fixas embaixo e alvos de toque maiores */
+@media (max-width:640px){
+  .lamstage{min-height:0;max-height:44vh;border-radius:12px}
+  .lammain{max-height:44vh}
+  .lamthumb{width:64px;height:64px}
+  .lamdot{min-width:44px;height:44px}
+  .lamsheet{padding:12px;gap:12px}
+  .lamact{position:sticky;bottom:0;z-index:4;background:var(--surface);padding:10px 0 calc(10px + env(safe-area-inset-bottom));margin:0 -12px -12px;padding-inline:12px;border-top:1px solid var(--line);box-shadow:0 -6px 16px rgba(0,0,0,.06)}
+  .lamact .btn{flex:1 1 auto;min-height:44px}
+  .lamhead{flex-wrap:wrap}
+}
+/* desafio e prova: campos de órgão, processo e DX só com botões */
+.lamf.pick-only .lamin{display:none}

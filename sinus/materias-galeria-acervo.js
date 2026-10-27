@@ -82,7 +82,8 @@ function render(){
  if(!html&&list.length)html=gallery(title,desc,list,label);
  if(!html)return;
  const box=D.createElement('div');box.innerHTML=html;
- const el=box.firstElementChild;if(!el)return;host.prepend(el);
+ const el=box.firstElementChild;if(!el)return;
+ if(['training','cartoes'].includes(tab))host.append(el);else host.prepend(el);
  W.SinusLibrary?.hydrateThumbnails?.(el);
  if(['provas','videos'].includes(tab)){
   const native=host.querySelector(':scope > .resourceLayout');

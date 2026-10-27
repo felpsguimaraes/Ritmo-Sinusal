@@ -129,7 +129,7 @@
 
   /* ───────── P2 práctica: necrosis, inflamación y acúmulos ───────── */
   var P2 = [
-    { id: 'iam', g: 'iam', nome: 'Infarto agudo de miocardio', img: [L(1)].concat(FT.iam), gab: [G('1AwwXQRH-pSbJfEue1Kq6li8ZIv1TFk0M')],
+    { id: 'iam', g: 'iam', nome: 'Infarto agudo de miocardio', img: F('1XvREENEKrHUCyo8IULQo5VoGFAelP6yJ','1ungSnk028EupDaP15nVaxXCMjucWf8g0','1QrXE-DgNg71LEWDJrU3XaItozew0w-0h','1Y8FT-iEtjJoMauy2UJ3dK26KRcWXaUMe','14I5RPbo5uY4HdeQRT1lDWR2v4tldkyKs','1ZOu8Ii0RXUWF-NFC_-jYyFVPJELMl_5m','13sJUu_efGDfbFNlah2AeIRqe1pPAlWV6','16M6-48bj9xbL9cl8ly33u96oJESx_yo4').concat([L(1)], FT.iam), gab: [G('1AwwXQRH-pSbJfEue1Kq6li8ZIv1TFk0M')],
       organo: ORG.corazon, proceso: ['Necrosis coagulativa isquémica', 'necros;coagul'],
       desc: [
         ['Cardiomiocitos anucleados por cariólisis', 'anucle|cariolis|sin nucleo|sem nucleo'],
@@ -137,7 +137,7 @@
         ['Áreas de hemorragia', 'hemorrag']
       ],
       dx: ['Infarto agudo de miocardio', 'infarto|^iam'] },
-    { id: 'apendicitis', g: 'apendicitis', nome: 'Apendicitis aguda', img: [L(10)].concat(FT.apendicitis), gab: [G('1T9Ke2qJLyFQQ6FRPwZ5S2F10uPggy7yi')],
+    { id: 'apendicitis', g: 'apendicitis', nome: 'Apendicitis aguda', img: F('17RgfNzX1cKNALr1GZ7CDqGtCjSEe-CHy','10wtOsTkQUfkS2hxS3Xc1AyDPlGwgF49C').concat([L(10)], FT.apendicitis), gab: [G('1T9Ke2qJLyFQQ6FRPwZ5S2F10uPggy7yi')],
       organo: ORG.apendice, proceso: ['Inflamatorio agudo', 'inflama;agud!cronic'],
       desc: [
         ['Necrosis transmural, de la mucosa a la serosa', 'transmural|necros'],
@@ -146,7 +146,7 @@
         ['Erosión y úlcera', 'erosi|ulcer']
       ],
       dx: ['Apendicitis aguda gangrenosa con periapendicitis supurada', 'apendicit;gangren|periapend|supurad'] },
-    { id: 'esteatosis', g: 'esteatosis', nome: 'Esteatosis hepática', img: FT.higado, gab: [G('1NEyJpJAavRSSL5e2Ei4kb9Bfb0f2Q5qJ')],
+    { id: 'esteatosis', g: 'esteatosis', nome: 'Esteatosis hepática', img: F('1pxLnN5jRWvKxv3x-sssKffEjKXCbkU3v','1He3EmD-4XNHfe_g7KN7Eyp5-lHJw8tcb','1uOmVx6D7tirkiqJ5-bbI2pF1yjJyvNBK','1vYD3WDOzw7gHO8JDEnzybs6TU31nV6gs','11XihIRp7vFJIDficx92UG0OSM4vRi2aI','1A2tKMdNFXf0S27qKi64m5HTHkOSOoNSp').concat(FT.higado), gab: [G('1NEyJpJAavRSSL5e2Ei4kb9Bfb0f2Q5qJ')],
       organo: ORG.higado, proceso: ACUM,
       desc: [
         ['Histoarquitectura alterada', 'arquitectura|histoarquit'],
@@ -341,7 +341,7 @@
     var base = { area: 'pratica', tipo: 'laminas', clase: clase, titulo: titulo, fuente: fuente, laminas: laminas, procesos: PROCESOS };
     return [
       Object.assign({ id: id, par: id + '_d', nivel: '1', banco: true, resumen: r1 }, base),
-      Object.assign({ id: id + '_d', par: id, nivel: '2', barajar: true, resumen: r2 }, base)
+      Object.assign({ id: id + '_d', par: id, nivel: '2', barajar: true, banco: true, resumen: r2 }, base)
     ];
   }
   /* P2 na ordem do quadro «Temas P2 Práctica»: 1 IAM, 2 TBC, 3 aterosclerosis, 4 vesícula biliar, 5 esteatosis,
@@ -617,9 +617,12 @@
     par('lam_total', 'Laminario', 'Laminario completo (28 láminas)',
       'La tabla corregida del laminario (25 láminas) más 3 láminas nuevas de duodeno y estómago de la prueba práctica oficial, en orden, con la foto de cada lámina. Seis láminas tienen una segunda foto oficial, también tomada de la prueba.',
       'Las 28 láminas del laminario en orden aleatorio, sin banco de palabras.', SRC_T + '; 3 láminas y 6 fotos extra: PDF oficial «Laminas Anatopato I - Practica P1_P2_Final»', TOTAL),
-    [{ id: 'lam_simulacro', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 8, cronometro: true, clase: 'Simulacro', titulo: 'Simulacro de la prueba práctica',
-      resumen: 'Ocho láminas sorteadas entre la P1, la P2 y el laminario. Sin banco de palabras y con cronómetro; la planilla sale al final.',
-      fuente: 'Láminas de la P1, de la P2 y del laminario completo', laminas: uniq(P1.concat(P2Q, TOTAL)), procesos: PROCESOS }],
+    [{ id: 'lam_simulacro_p1', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 5, cronometro: true, banco: true, clase: 'Simulacro P1', titulo: 'Simulacro P1',
+      resumen: 'Las láminas de la P1, en orden aleatorio, con botones de órgano, proceso y DX; sólo la descripción se escribe. Con cronómetro.',
+      fuente: 'Láminas de la P1 (clases prácticas 1 y 2)', laminas: P1, procesos: uniq(P1.map(function (L) { return L.proceso[0]; })) },
+    { id: 'lam_simulacro_p2', area: 'pratica', tipo: 'laminas', nivel: '3', barajar: true, cronometro: true, banco: true, clase: 'Simulacro P2', titulo: 'Simulacro P2',
+      resumen: 'Los 10 temas de la P2 del pizarrón, en orden aleatorio, con botones de órgano, proceso y DX; sólo la descripción se escribe. Con cronómetro.',
+      fuente: 'Temas P2 Práctica (pizarrón) y láminas de la P2 (clases 2 a 4)', laminas: P2Q, procesos: uniq(P2Q.map(function (L) { return L.proceso[0]; })) }],
     TEO_CASOS
   ));
 })();
