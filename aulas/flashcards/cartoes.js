@@ -3,7 +3,7 @@
    Cada cartão: t = tema/clase, q = pergunta, a = resposta, x = explicação e referência ao slide. */
 window.SINUS_CARTOES = {
   "anatopato/chamorro": {
-    nome: "Dra. Eliana Chamorro", fonte: "Slides de Anatomía Patológica I, Unidad I (Clases 1 a 7), seção F-G",
+    nome: "Dra. Eliana Chamorro", fonte: "Slides de Anatomía Patológica I, Unidad I (Clases 1 a 7), seção F-G", area: "teoria",
     cartoes: [
       { id: "c1-1", t: "Clase 1 · Introducción", q: "¿Qué diferencia la patología general de la patología sistémica?", a: "La general estudia las reacciones habituales de células y tejidos ante estímulos lesivos (ej.: inflamación aguda por bacterias). La sistémica estudia alteraciones de órganos específicos (ej.: cardiopatía isquémica, cirrosis).", x: "Slide 'Introducción'. Es la base de toda la asignatura." },
       { id: "c1-2", t: "Clase 1 · Introducción", q: "Diferencie etiología de patogenia.", a: "Etiología = causa (¿por qué?). Patogenia = secuencia celular, bioquímica y molecular que sigue a la exposición al agente lesivo (¿cómo?).", x: "Los 4 aspectos del proceso patológico: etiología, patogenia, cambios morfológicos y manifestaciones clínicas." },
@@ -69,7 +69,7 @@ window.SINUS_CARTOES = {
     ]
   },
   "fisiopatologia/jorge": {
-    nome: "Dr. Jorge Manuel Duarte (Fisiopatología I)", fonte: "Slides de Fisiopatología I, Unidad III (Shock), Clase 8, seção CT5E",
+    nome: "Dr. Jorge Manuel Duarte (Fisiopatología I)", fonte: "Slides de Fisiopatología I, Unidad III (Shock), Clase 8, seção CT5E", area: "teoria",
     cartoes: [
       { id: "f8-1", t: "Shock · Concepto", q: "Defina choque circulatorio y diga cuál es su manifestación más frecuente.", a: "Insuficiencia circulatoria aguda que no suministra sangre suficiente a los tejidos, causando hipoxia celular. Se manifiesta como hipotensión e hipoperfusión, aunque los signos vitales pueden estar normales.", x: "Slide 2." },
       { id: "f8-2", t: "Shock · Clasificación", q: "Clasificación del choque y la alteración primaria de cada tipo.", a: "Cardiogénico: bomba (falla de la contractilidad). Hipovolémico: volumen. Distributivo: tono vascular (neurogénico, anafiláctico, séptico). Obstructivo: obstrucción mecánica (embolia pulmonar, taponamiento, neumotórax).", x: "Slide 4." },
@@ -87,7 +87,7 @@ window.SINUS_CARTOES = {
     ]
   },
   "anatopato/coba": {
-    nome: "Dra. Carmen Coba", fonte: "Prova P1 e Prova Comentada (2ª parcial) da Dra. Coba, Anatomía Patológica I",
+    nome: "Dra. Carmen Coba", fonte: "Prova P1 e Prova Comentada (2ª parcial) da Dra. Coba, Anatomía Patológica I", area: "teoria",
     cartoes: [
       { id: "co-1", t: "Coba · Necrosis", q: "¿Qué tipo de necrosis predomina en el infarto agudo de miocardio y por qué se conserva la arquitectura al inicio?", a: "Necrosis coagulativa: la desnaturalización de proteínas estructurales y enzimas bloquea la proteólisis de la célula muerta.", x: "P1 Coba, pregunta 1. Caso típico de necrosis coagulativa (no caseosa, no licuefactiva ni fibrinoide)." },
       { id: "co-2", t: "Coba · Necrosis", q: "Pancreatitis aguda: ¿qué patrón de necrosis y qué lo produce?", a: "Necrosis grasa, por acción de lipasas sobre el tejido adiposo peripancreático y peritoneal.", x: "P1 Coba, pregunta 2." },
@@ -110,7 +110,7 @@ window.SINUS_CARTOES = {
     ]
   },
   "anatopato/cielo": {
-    nome: "Dra. Cielo Brizueña", fonte: "Slides de Anatomía Patológica I, Clase 1 (Introducción) y Clase 2 (Adaptación celular), secciones C y E",
+    nome: "Dra. Cielo Brizueña", fonte: "Slides de Anatomía Patológica I, Clase 1 (Introducción) y Clase 2 (Adaptación celular), secciones C y E", area: "teoria",
     cartoes: [
       { id: "ci-1", t: "Cielo · Clase 1", q: "Cite las seis ramas de la patología y qué estudia cada una. ¿En cuál se ubica la anatomía patológica?", a: "Etiología (causas), patogenia (mecanismos), fisiopatología (alteraciones funcionales), anatomía patológica (alteraciones morfológicas), semiología (signos y síntomas) y clínica (manejo integral). La AP es la cuarta.", x: "Tópico 2. La AP es el puente entre clínica y diagnóstico definitivo." },
       { id: "ci-2", t: "Cielo · Clase 1", q: "Diferencie anatomía patológica general de especial.", a: "General: principios y mecanismos generales (inflamación, neoplasias). Especial: aplicada a un órgano o aparato (patología cardíaca, pulmonar).", x: "Tópico 3." },
@@ -134,7 +134,7 @@ window.SINUS_CARTOES = {
     ]
   },
   "semiologia/geral": {
-    nome: "Semiología Médica I (simulados y flashcards de la cátedra)", fonte: "Simulado Final Semiologia I (Dra. Natalia), Flashcard Semi Teórica P2 y Cuestionario de Semiología I",
+    nome: "Semiología Médica I (simulados y flashcards de la cátedra)", fonte: "Simulado Final Semiologia I (Dra. Natalia), Flashcard Semi Teórica P2 y Cuestionario de Semiología I", area: "teoria",
     cartoes: [
       { id: "se-1", t: "Semiología · Conceptos", q: "Defina semiología y semiotecnia.", a: "Semiología: ciencia que identifica las manifestaciones de enfermedades (signos, síntomas y síndromes). Semiotecnia: técnica para buscar esos signos.", x: "Simulado, preguntas 1 y 2." },
       { id: "se-2", t: "Semiología · Conceptos", q: "Sintoma, sinal y síndrome: dé un ejemplo de signo que no sea síntoma.", a: "Síntoma: manifestación subjetiva del paciente. Signo: hallazgo objetivo del examinador (ej.: petequias). Síndrome: conjunto de signos y síntomas relacionados.", x: "Simulado, preguntas 3 a 5." },
