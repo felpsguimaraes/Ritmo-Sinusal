@@ -353,7 +353,7 @@
       var slug = key.split('/')[0], deck = DECKS[key], nome = NOMES[slug];
       if (!nome) return;
       (deck.cartoes || []).forEach(function (c) {
-        qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: 'theory', type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: null, active: true, deck: key, topic: c.t });
+        qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: (deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: null, active: true, deck: key, topic: c.t });
       });
     });
     return qs;
@@ -618,7 +618,8 @@
     box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
   function renderCartoes() {
-    var s = subjectData(), slug = s && s.slug, ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });
+    var s = subjectData(), slug = s && s.slug, area = UI.mode === 'practice' ? 'pratica' : 'teoria';
+    var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area; });
     var box = $id('subjectContent');
     if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, utilize os Exercícios ou os Mapas mentais.'); return }
     var k = ESCOLHA[slug] && DECKS[ESCOLHA[slug]] ? ESCOLHA[slug] : deckPadrao(slug);
@@ -640,7 +641,7 @@
     PROG[c.id] = g; gravarLocal(CART.key, PROG);
     if (S.uid) docProg(CART.key).set({ uid: S.uid, aula: 'cartoes-' + CART.key.replace('/', '-'), prog: PROG, em: agora() }, { merge: true }).catch(function () {});
     try {
-      STUDY.attempts.push({ id: 'fc_' + CART.key.replace('/', '_') + '_' + c.id, subject: UI.subject, mode: 'theory', type: 'flashcard', ok: g === 'normal' || g === 'facil', date: new Date().toISOString(), tag: 'flashcards' });
+      STUDY.attempts.push({ id: 'fc_' + CART.key.replace('/', '_') + '_' + c.id, subject: UI.subject, mode: (CART.deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', ok: g === 'normal' || g === 'facil', date: new Date().toISOString(), tag: 'flashcards' });
       studySave();
     } catch (e) {}
     CART.i++; CART.mostrar = false;
