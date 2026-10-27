@@ -2,7 +2,7 @@
 (function treinoHub(){
   'use strict';
   var W=window,D=document;
-  var ST={v:'home',name:'',tab:'',k:'',g:'',titulo:''};
+  var ST={v:'home',name:'',tab:'',k:'',g:'',titulo:'',area:''};
   var KEY='sinus_treino_ultimo';
   function H(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
   function DK(){return W.SINUS_CARTOES||{}}
@@ -17,16 +17,18 @@
     cs.forEach(function(c){var x=p[c.id];if(x==='normal'||x==='facil')dom++;if(x==='errou'||x==='dificil')pend++});
     return {total:cs.length,dom:dom,pend:pend};
   }
-  function qCount(name){var q=((W.DB||{}).training||{}).questions||[];return q.filter(function(x){return x&&x.active!==false&&x.subject===name&&x.type!=='flashcard'}).length}
+  function temPratica(name){var s=(DB.subjects||{})[name]||{};return keys(s.slug).some(function(k){return DK()[k].area==='pratica'})||(s.pratica||[]).length>0}
+  function qCount(name,area){var tr=((typeof DB!=="undefined"&&DB)||{}).training||{},q=tr.questions||[];return q.filter(function(x){return x&&x.active!==false&&x.subject===name&&x.type!=='flashcard'&&(!area||(x.mode==='practice'?'pratica':'teoria')===area)}).length}
   function resumo(name){
     var s=(DB.subjects||{})[name]||{},ks=keys(s.slug),t=0,d=0,p=0,n=0;
     ks.forEach(function(k){var x=stat(k);t+=x.total;d+=x.dom;p+=x.pend;var gs={};DK()[k].cartoes.forEach(function(c){gs[c.g||'']=1});n+=Object.keys(gs).length});
     return {ks:ks,total:t,dom:d,pend:p,assuntos:n,q:qCount(name)};
   }
-  function assuntos(name,tab){
+  function assuntos(name,tab,area){
     var s=(DB.subjects||{})[name]||{},out=[];
     keys(s.slug).forEach(function(k){
       var d=DK()[k],pa=parcial(k);
+      if(area&&(d.area||'teoria')!==area)return;
       if(tab&&tab!=='Todos'&&pa!==tab)return;
       var gs=[];d.cartoes.forEach(function(c){if(c.g&&gs.indexOf(c.g)<0)gs.push(c.g)});
       if(gs.length)gs.forEach(function(g){out.push({k:k,g:g,t:g.replace(/^\d+\s*·\s*/,''),area:d.area,st:stat(k,g)})});
@@ -34,13 +36,13 @@
     });
     return out;
   }
-  function tabsDe(name){
-    var s=(DB.subjects||{})[name]||{},ks=keys(s.slug),has=ks.some(function(k){return parcial(k)});
+  function tabsDe(name,area){
+    var s=(DB.subjects||{})[name]||{},ks=keys(s.slug).filter(function(k){return !area||(DK()[k].area||'teoria')===area}),has=ks.some(function(k){return parcial(k)});
     if(!has)return null;
     return ['P1','P2','Final','Todos'];
   }
-  function tabInicial(name){
-    var s=(DB.subjects||{})[name]||{},ks=keys(s.slug),pad=ks.filter(function(k){return DK()[k].padrao})[0];
+  function tabInicial(name,area){
+    var s=(DB.subjects||{})[name]||{},ks=keys(s.slug).filter(function(k){return !area||(DK()[k].area||'teoria')===area}),pad=ks.filter(function(k){return DK()[k].padrao})[0];
     return (pad&&parcial(pad))||'Todos';
   }
   function bar(p){return '<div class="thBar"><i style="width:'+Math.max(0,Math.min(100,p))+'%"></i></div>'}
@@ -61,7 +63,7 @@
     var u=ultimo(),pt=pendTotal(),est=estudados(),h='';
     h+='<div class="thHead"><h1>Treinar</h1><p>Escolha uma matéria e comece.</p></div>';
     h+='<div class="thStats"><div><b>'+est+'</b><span>cartões estudados</span></div><div><b>'+pt.tot+'</b><span>para revisar</span></div><div><b>'+es.filter(function(x){return x[1].total}).length+'</b><span>matérias com treino</span></div></div>';
-    if(u&&(W.DB.subjects||{})[u.name]){
+    if(u&&((DB||{}).subjects||{})[u.name]){
       var d=u.k&&DK()[u.k];
       h+='<button class="thCta" data-th="continuar"><i>▶</i><span><b>Continuar de onde parou</b><small>'+H(u.name)+(u.g?' · '+H(u.g):d?' · '+H(d.curto||d.nome):'')+'</small></span></button>';
     }
@@ -73,14 +75,23 @@
     return h;
   }
   function crumb(parts){return '<div class="thTop"><button class="thBack" data-th="voltar" aria-label="Voltar">‹</button><div class="thCrumb">'+parts+'</div></div>'}
+  function escolhaArea(){
+    var name=ST.name,a=function(area){return assuntos(name,'Todos',area).reduce(function(n,x){return n+x.st.total},0)};
+    function sub(area){var n=a(area),q=qCount(name,area);return (n?nc(n):'')+(n&&q?' · ':'')+(q?q+' questões':'')||'em breve'}
+    return crumb('Treinar › <b>'+H(name)+'</b>')+'<div class="thHead"><h1>'+H(name)+'</h1><p>O que você quer estudar?</p></div>'+
+      '<div class="thGrid thArea"><button class="thMode" data-th-area="teoria"><i>📚</i><b>Teoria</b><small>'+H(sub('teoria'))+'</small></button>'+
+      '<button class="thMode" data-th-area="pratica"><i>🔬</i><b>Prática</b><small>'+H(sub('pratica'))+'</small></button></div>';
+  }
   function materia(){
-    var name=ST.name,tabs=tabsDe(name);
-    if(tabs&&!ST.tab)ST.tab=tabInicial(name);
-    var h=crumb('Treinar › <b>'+H(name)+'</b>')+'<div class="thHead"><h1>'+H(name)+'</h1><p>Escolha o assunto.</p></div>';
+    var name=ST.name;
+    if(temPratica(name)&&!ST.area)return escolhaArea();
+    var area=ST.area,tabs=tabsDe(name,area);
+    if(tabs&&!ST.tab)ST.tab=tabInicial(name,area);
+    var h=crumb('Treinar › '+H(name)+(area?' › <b>'+(area==='pratica'?'Prática':'Teoria')+'</b>':''))+'<div class="thHead"><h1>'+H(area==='pratica'?'Prática':area==='teoria'?'Teoria':name)+'</h1><p>'+H(name)+' · escolha o assunto.</p></div>';
     if(tabs)h+='<div class="thTabs">'+tabs.map(function(t){return '<button class="'+(ST.tab===t?'on':'')+'" data-th-tab="'+t+'">'+t+'</button>'}).join('')+'</div>';
-    var as=tabs?assuntos(name,ST.tab):assuntos(name,'Todos');
+    var as=tabs?assuntos(name,ST.tab,area):assuntos(name,'Todos',area);
     if(!as.length){
-      var q=qCount(name);
+      var q=qCount(name,area);
       h+='<div class="thNote">'+(tabs&&ST.tab==='Final'?'O material do Final ainda não foi cadastrado. Em breve.':'Esta matéria ainda não tem cartões por assunto.')+'</div>';
       if(!tabs||ST.tab==='Final'||!q)h+=modos(null);
       return h;
@@ -91,7 +102,7 @@
     return h;
   }
   function modos(a){
-    var name=ST.name,d=ST.k&&DK()[ST.k],q=qCount(name),slug=((DB.subjects||{})[name]||{}).slug,h='';
+    var name=ST.name,d=ST.k&&DK()[ST.k],q=qCount(name,ST.area),slug=((DB.subjects||{})[name]||{}).slug,h='';
     if(d){
       var x=stat(ST.k,ST.g),prat=d.area==='pratica';
       h+='<button class="thMode full" data-th-modo="cartoes"><i>'+(prat?'🔬':'🗂')+'</i><span><b>'+(prat?'Láminas e flashcards':'Flashcards')+'</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
@@ -117,13 +128,13 @@
   function go(v,p){for(var k in p||{})ST[k]=p[k];ST.v=v;draw()}
   function launch(modo,name,k,g){
     name=name||ST.name;k=k===undefined?ST.k:k;g=g===undefined?ST.g:g;
-    try{localStorage.setItem(KEY,JSON.stringify({name:name,k:k,g:g,modo:modo}))}catch(e){}
+    try{localStorage.setItem(KEY,JSON.stringify({name:name,k:k,g:g,modo:modo,area:ST.area}))}catch(e){}
     if(modo==='guiados')return W.nav('mapas');
     W.openSubject(name);
-    var d=k&&DK()[k];
-    if(modo==='estudar')return;
+    var d=k&&DK()[k],modeArea=(ST.area||(d&&d.area)||'teoria')==='pratica'?'practice':'theory';
+    UI.mode=modeArea;
+    if(modo==='estudar')return W.renderSubject();
     if(modo==='cartoes'){
-      W.UI.mode=d&&d.area==='pratica'?'practice':'theory';
       if(W.sxTreinoAbrir)W.sxTreinoAbrir(k,g);
       return W.setTab('cartoes');
     }
@@ -131,9 +142,10 @@
     W.setTab('review');
   }
   D.addEventListener('click',function(e){
-    var t=e.target.closest&&e.target.closest('[data-th],[data-th-mat],[data-th-tab],[data-th-as],[data-th-all],[data-th-modo]');
+    var t=e.target.closest&&e.target.closest('[data-th],[data-th-mat],[data-th-tab],[data-th-area],[data-th-as],[data-th-all],[data-th-modo]');
     if(!t||!box()||!box().contains(t))return;
-    if(t.hasAttribute('data-th-mat'))return go('mat',{name:t.getAttribute('data-th-mat'),tab:'',k:'',g:''});
+    if(t.hasAttribute('data-th-mat'))return go('mat',{name:t.getAttribute('data-th-mat'),tab:'',k:'',g:'',area:''});
+    if(t.hasAttribute('data-th-area'))return go('mat',{area:t.getAttribute('data-th-area'),tab:''});
     if(t.hasAttribute('data-th-tab'))return go('mat',{tab:t.getAttribute('data-th-tab')});
     if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];return go('modo',{k:a.k,g:a.g,titulo:a.t})}
     if(t.hasAttribute('data-th-all')){
@@ -142,9 +154,9 @@
     }
     if(t.hasAttribute('data-th-modo'))return launch(t.getAttribute('data-th-modo'));
     var act=t.getAttribute('data-th');
-    if(act==='voltar')return ST.v==='modo'?go('mat'):go('home');
-    if(act==='continuar'){var u=ultimo();if(u)launch(u.modo||'cartoes',u.name,u.k,u.g)}
-    if(act==='pendentes'){var p=pendTotal();if(p.best)launch('cartoes',p.best.name,p.best.k,'')}
+    if(act==='voltar'){if(ST.v==='modo')return go('mat');if(ST.v==='mat'&&ST.area&&temPratica(ST.name))return go('mat',{area:'',tab:''});return go('home')}
+    if(act==='continuar'){var u=ultimo();if(u){ST.area=u.area||(u.k&&DK()[u.k]&&DK()[u.k].area)||'';launch(u.modo||'cartoes',u.name,u.k,u.g)}}
+    if(act==='pendentes'){var p=pendTotal();if(p.best){ST.area=DK()[p.best.k].area||'teoria';launch('cartoes',p.best.name,p.best.k,'')}}
   });
   function render(){ST.v='home';draw()}
   W.renderV11Hub=render;W.renderStudy=render;
