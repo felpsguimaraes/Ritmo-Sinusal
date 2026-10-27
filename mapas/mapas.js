@@ -186,6 +186,7 @@
   function levelList(sid, lvl) {
     return DATA[sid].modulos.filter(function (m) {
       if (areaOf(m) !== curArea) return false;
+      if (m.tipo === 'laminas' && S.org && S.org.length) { if (!(m.laminas || []).some(function (L) { return S.org.indexOf(L.organo[0]) > -1; })) return false; }
       if (m.nivel) return m.nivel === lvl && (lvl !== '4' || !S.org || !S.org.length || (!!m.org && S.org.indexOf(m.org) > -1));
       if (lvl === '4' && S.org && S.org.length) return !!m.org && S.org.indexOf(m.org) > -1;
       return lvl === '1' ? m.tipo !== 'casos' : lvl === '2' ? hasDes(m) : lvl === '3' ? m.tipo === 'casos' : false;
@@ -305,15 +306,17 @@
     }
 
     /* aba Laminario: filtro por órgão (o aluno escolhe quais estudar) */
-    if (lvl === '4') {
-      var orgs = [];
-      DATA[curSid].modulos.forEach(function (m) { if (m.nivel === '4' && m.org && orgs.indexOf(m.org) < 0) orgs.push(m.org); });
+    var lamOrgs = [];
+    if (lamArea) DATA[curSid].modulos.forEach(function (m) { if (m.tipo === 'laminas' && areaOf(m) === 'pratica') (m.laminas || []).forEach(function (L) { var o = L.organo && L.organo[0]; if (o && lamOrgs.indexOf(o) < 0) lamOrgs.push(o); }); });
+    if (lamOrgs.length || lvl === '4') {
+      var orgs = lamOrgs.slice();
+      if (lvl === '4') DATA[curSid].modulos.forEach(function (m) { if (m.nivel === '4' && m.org && orgs.indexOf(m.org) < 0) orgs.push(m.org); });
       if (orgs.length) {
         var of = el('div', { class: 'orgfilter', role: 'group', 'aria-label': T.orgF });
         of.appendChild(el('span', { class: 'orglbl' }, esc(T.orgF)));
         orgs.forEach(function (o) {
           var ob = el('button', { type: 'button', class: 'chip', 'aria-pressed': S.org.indexOf(o) > -1 ? 'true' : 'false' }, esc(o));
-          ob.addEventListener('click', function () { var i = S.org.indexOf(o); if (i > -1) S.org.splice(i, 1); else S.org.push(o); save(); renderHome(); });
+          ob.addEventListener('click', function () { var i = S.org.indexOf(o); if (i > -1) S.org.splice(i, 1); else S.org.push(o); S.o = {}; save(); renderHome(); });
           of.appendChild(ob);
         });
         root.appendChild(of);
@@ -983,16 +986,20 @@
   /* simulacro: sorteia sem repetir a mesma lâmina que aparece em duas listas (campo g) */
   function drawLam(mod) {
     var seen = {}, out = [];
-    shuffled(range(mod._tree.length)).forEach(function (i) { var g = mod._tree[i].g; if (out.length < mod.sorteo && !seen[g]) { seen[g] = 1; out.push(i); } });
+    shuffled(range(mod._tree.length)).forEach(function (i) { var g = mod._tree[i].g; if (lamOrgOk(mod._tree[i]) && out.length < mod.sorteo && !seen[g]) { seen[g] = 1; out.push(i); } });
     return out;
   }
-  function lamWant(mod) { return mod.sorteo ? Math.min(mod.sorteo, mod._tree.length) : mod._tree.length; }
+  /* filtro por órgão (aluno escolhe quais estudar): vale para as lâminas de todos os níveis da prática */
+  function lamOrgOk(t) { return !S.org || !S.org.length || S.org.indexOf(t.L.organo[0]) > -1; }
+  function lamCand(mod) { return mod._tree.filter(lamOrgOk).length; }
+  function lamWant(mod) { var c = lamCand(mod); return mod.sorteo ? Math.min(mod.sorteo, c) : c; }
   /* ordem das lâminas (guardada): na ordem da lista, embaralhada (Desafío) ou sorteada (simulacro) */
   function lamOrder(mod, noCreate) {
     var n = mod._tree.length, o = S.o[mod.id];
     if (o && o.length === lamWant(mod) && o.every(function (v) { return typeof v === 'number' && v >= 0 && v < n; })) return o;
-    if (noCreate) return mod.sorteo ? [] : range(n);
-    o = mod.sorteo ? drawLam(mod) : mod.barajar ? shuffled(range(n)) : range(n);
+    var inOrg = range(n).filter(function (i) { return lamOrgOk(mod._tree[i]); });
+    if (noCreate) return mod.sorteo ? [] : inOrg;
+    o = mod.sorteo ? drawLam(mod) : mod.barajar ? shuffled(inOrg) : inOrg;
     S.o[mod.id] = o; save();
     return o;
   }
@@ -1137,10 +1144,12 @@
     sheet.innerHTML = '<header class="lamhead"><div>' + (order.length === 1 ? '<b>' + esc(mod.titulo) + '</b>' : '<small>' + esc(T.lamWord) + '</small><b>' + (pos + 1) + '</b><span>' + esc(T.of2) + ' ' + order.length + '</span>') + '</div>' +
       (ver ? '<em class="lamsc" data-st="' + lamState(t) + '">' + Math.round(lamScore(t) * 100) + '%</em>' : '') + '</header>' +
       ((rev || ver) ? '<p class="lamname">' + esc(L.nome || t.x.ans) + '</p>' : '');
-    var useBank = !!mod.banco && !sim;
+    var useBank = !!mod.banco;
     function field(it, lbl, ph, bank, multi) {
       var w = el('div', { class: 'lamf', 'data-hold': '1' });
       w.innerHTML = '<label for="in-' + it.id + '">' + esc(lbl) + '</label><div class="lamin"' + (sim ? '' : ' style="--n:' + Math.max(18, Math.min(46, String(it.ans).length)) + '"') + '><input id="in-' + it.id + '" data-f="' + it.id + '" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="' + esc(ph) + '"><span class="ico" aria-hidden="true"></span></div>';
+      /* desafio e prova: órgão, processo e DX só por botão; a descrição é a única resposta digitada */
+      if (bank && bank.length && mod.nivel !== '1') w.classList.add('pick-only');
       if (bank && bank.length) {
         var bk = el('div', { class: 'chips', role: 'group', 'aria-label': T.bank + ': ' + lbl });
         bank.forEach(function (c) {
