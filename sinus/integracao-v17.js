@@ -579,7 +579,7 @@
 
   // ---------------- flashcards (cartões do Sinus, com progresso na conta)
   var CART = { key: '', deck: null, fila: [], i: 0, mostrar: false }, PROG = {}, ESCOLHA = {}, GRUPO = {};
-  var GRAUS = [['errou', 'Errei'], ['dificil', 'Difícil'], ['normal', 'Normal'], ['facil', 'Fácil']], RANK = { errou: 0, dificil: 1, normal: 3, facil: 4 };
+  var GRAUS = [['errou', 'Errei'], ['normal', 'Acertei']], RANK = { errou: 0, dificil: 1, normal: 3, facil: 4 };
   function lerLocal(k) { try { return JSON.parse(localStorage.getItem('sinus_cartoes_' + k) || '{}') } catch (e) { return {} } }
   function gravarLocal(k, o) { try { localStorage.setItem('sinus_cartoes_' + k, JSON.stringify(o)) } catch (e) {} }
   function docProg(k) { return db.doc('progresso/' + S.uid + '_cartoes-' + k.replace('/', '-')) }

@@ -368,6 +368,7 @@ function renderTraining(){
   renderTrainingBuilder();
 }
 function filteredQs(){
+  window.sxJuntarExercicios&&sxJuntarExercicios();
   const allowed=new Set(trainingTypes().filter(t=>t.id!=='flashcard').map(t=>t.id));
   return (DB.training?.questions||[]).filter(q=>q.active!==false && q.subject===UI.subject && allowed.has(q.type) && (q.type!=='image'||!!q.image));
 }
@@ -420,7 +421,7 @@ function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) ret
     </div>
     <progress class="sxQuestionProgress" aria-label="Progresso do treino" max="${T.questions.length}" value="${T.index}"></progress>
     <div class="questionCard">
-      <span class="eyebrow">${esc(q.period||'Geral')} · ${q.mode==='practice'?'Prática':'Teoria'}</span>
+      <span class="eyebrow">${esc(q.period||'Geral')} · ${q.mode==='practice'?'Prática':'Teoria'}</span>${q.prova?`<details class="sxProvaRef"><summary>🎯 Já caiu em prova${q.prova.ref?' · '+esc(q.prova.ref):''}</summary>${q.prova.img?`<img src="https://drive.google.com/thumbnail?id=${esc(q.prova.img)}&sz=w900" alt="Foto da prova" loading="lazy">`:''}</details>`:''}
       <h2>${esc(q.prompt)}</h2>
       ${q.type==='image'?`<div class="questionImg">A imagem vinculada a esta questão será exibida quando estiver disponível.</div>`:''}
       <div>${questionUI(q)}</div>
@@ -436,7 +437,7 @@ function questionUI(q){
     const pairs=q.pairs||[],choices=[...new Set(pairs.map(p=>String(p[1])))].sort(()=>Math.random()-.5);
     return `<div class="sxMatchList">${pairs.map((p,i)=>`<label class="field"><span>${esc(p[0])}</span><select id="sxMatch${i}" aria-label="Relacione ${esc(p[0])}"><option value="">Selecione a correspondência</option>${choices.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select></label>`).join('')}</div><button class="btn primary sm" style="margin-top:12px" onclick="answerTraining(matchSelections())">Conferir relações</button>`;
   }
-  if(q.type==='flashcard')return `<div id="flashBox" class="flashBox" onclick="revealFlash()"><div><span class="eyebrow">Toque para virar</span><h2 style="font-size:18px">Mostrar resposta</h2></div></div><div id="flashRate" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn sm" onclick="answerTraining('__hard__')">Difícil</button><button class="btn sm" onclick="answerTraining('__medium__')">Lembrei</button><button class="btn primary sm" onclick="answerTraining('__easy__')">Fácil</button></div>`;
+  if(q.type==='flashcard')return `<div id="flashBox" class="flashBox" onclick="revealFlash()"><div><span class="eyebrow">Toque para virar</span><h2 style="font-size:18px">Mostrar resposta</h2></div></div><div id="flashRate" class="hidden" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn sm" onclick="answerTraining('__hard__')">Errei</button><button class="btn primary sm" onclick="answerTraining('__easy__')">Acertei</button></div>`;
   return `<button class="btn primary sm" onclick="answerTraining(${esc(JSON.stringify(q.answer))})">Revelar</button>`;
 }
 function matchSelections(){
@@ -586,7 +587,7 @@ const STUDY_KEY='sinusalEditorialStudy';
 let STUDY;try{STUDY=JSON.parse(SAFE_STORE.getItem(STUDY_KEY)||'null')||{attempts:[],flashcards:[],pockets:[],saves:[],seconds:0}}catch(e){STUDY={attempts:[],flashcards:[],pockets:[],saves:[],seconds:0}}
 let examTimer=null,focusTimer=null,focusStart=0,focusElapsed=0,questionFilter='all',questionSubject='all',flashIndex=0;
 function studySave(){SAFE_STORE.setItem(STUDY_KEY,JSON.stringify(STUDY))}
-function allQuestions(){return (DB.training?.questions||[]).filter(q=>q.active!==false)}
+function allQuestions(){window.sxJuntarExercicios&&sxJuntarExercicios();return (DB.training?.questions||[]).filter(q=>q.active!==false)}
 function attempted(){return STUDY.attempts||[]}
 function getQ(id){return allQuestions().find(q=>q.id===id)}
 function dayKey(){return new Date().toISOString().slice(0,10)}

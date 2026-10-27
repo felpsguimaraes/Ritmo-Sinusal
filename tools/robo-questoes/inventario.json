@@ -1,0 +1,481 @@
+{
+ "geradoEm": "2026-10-27T18:07:37.996Z",
+ "fonte": "aulas/catalogo.js",
+ "materias": {
+  "anatopato": {
+   "materia": "Anatomía Patológica I",
+   "itens": 260,
+   "listados": 260,
+   "porTipo": {
+    "slide": 8,
+    "prova": 1,
+    "livro": 4,
+    "material": 24,
+    "video": 2,
+    "pratica-aula": 7,
+    "foto": 5,
+    "lamina": 209
+   },
+   "provas": [
+    {
+     "id": "1xFsdCzkkMfYghyxNuItfJZjUkE3Ua14Z",
+     "titulo": "Provas antigas Chamorro",
+     "mime": "application/pdf"
+    }
+   ],
+   "slides": [
+    {
+     "id": "1N6_IEPPqSFKWg_odhPnCJ7cLUTUhbF5s",
+     "titulo": "ADAPTACIONES.pptx",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "1NzOQTTaqOmEU_IH4vncWDm0urQoPkgYj",
+     "titulo": "Clase 6 - Acumulación intracelular.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1iWVZwYwbClFyNFYf2OPr2uDOIigqBe62",
+     "titulo": "Clase 7 - Acumulación intracelular.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1U875LvyU5-v6zuS3RoqxHIzdEczGoZSl",
+     "titulo": "Clase 5 - Apoptosis anatopato teórico.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1FWDmkbzAQ3QDmx1bswqUHMH1kGyg3yE3",
+     "titulo": "Clase 4 - Necrosis anatopato teórico.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "19LUlIjLFV_x8-cWcBuh28jehua7snbI_",
+     "titulo": "Clase 3 - Lesión celular anatopato teórico.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1NJi77IuX3MnqYkfKFmwSxjCJT3rjRkzT",
+     "titulo": "Clase 2 - Adaptación celular anatopato teórico.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "15qqofsENXZTVeXSveMQI383m6mqSmQCZ",
+     "titulo": "Clase 1 - Introducción a la Anatopato teórico.pdf",
+     "mime": "application/pdf"
+    }
+   ]
+  },
+  "farmacologia": {
+   "materia": "Farmacología I",
+   "itens": 48,
+   "listados": 48,
+   "porTipo": {
+    "livro": 3,
+    "material": 24,
+    "slide": 19,
+    "foto": 2
+   },
+   "provas": [],
+   "slides": [
+    {
+     "id": "1rde8JioZgFCmZelvxDmLwy4Q92HGDAaZ",
+     "titulo": "CLASE 6 alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "16sylU8Oi1Xh_sdAH9Qzem8-2_SBWlfe-",
+     "titulo": "CLASE 3 alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1MDlDUpq9YMWvt4rLrVW-o5OIeWBbzIwP",
+     "titulo": "CLASE 1 - alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1JQSKh8T-cMCWNdmNGW1s77lSoJZqsnQD",
+     "titulo": "CLASE 5 alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1XXSO7Rn-Ud4nzS4dnQBxu34xhwt9y5lr",
+     "titulo": "CLASE 2 alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "19hr1ql1Fy8Qtev07kB0urLHHBAL2XomW",
+     "titulo": "CLASE 4 alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1BLn4tQ2X8SDaub5l8Dyfl8JuEXhRqGDI",
+     "titulo": "CLASE 1.2 FORMA FARMACEUTICA.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1VQ8Ey48zOyd_CrsmZMeFO4fjghM9C1AX",
+     "titulo": "CLASE 8 ALUMNO",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1DogE8HdDwKbLfyKqbUKtFVyH_J8VNgYH",
+     "titulo": "CLASE 7  alumno.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1zqGViPyfj4sQ8jKQ_79khheyTj9ggyQb",
+     "titulo": "CLASE 9.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1MnCNlKBxg9OpNR4hPtZNRBwlLwi0UTO-",
+     "titulo": "CLASE 6 alumno farmaco.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1oAS8kHHzeNz2kA9YLW8hGkU0hZKuOSpD",
+     "titulo": "CLASE 3 alumno.pptx",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "1zmkuMIAoZ_8oUSc5ey4sbF8IyMMC-wYj",
+     "titulo": "CLASE 1 - alumno farmaco",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1h3sXGwZMpPBks_W4r4Ko3Y54S86dS8wV",
+     "titulo": "CLASE 1.2 FORMA FARMACEUTICA.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1GsyauZMJ6rssj8F_Lcs3tx8miDXHCUwN",
+     "titulo": "CLASE 2 alumno farmaco.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1Y0igw4zniKBAMPrRN1EyQpE6POKpuqN-",
+     "titulo": "CLASE 3 alumno farmaco.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1Y3EQQh0e-Okjk_zxMMULZFqlKUKOHvGJ",
+     "titulo": "CLASE 4 alumno farmaco.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "13ES-Cig_4JO-lRYtIk1mfGvKe3VZAbx0",
+     "titulo": "CLASE 5 alumno farmacologia.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1gRGOlxD-Msn-mj-CTanz7EpunyGaCy8h",
+     "titulo": "CLASE 6 alumno. g.pdf",
+     "mime": "application/pdf"
+    }
+   ]
+  },
+  "fisiopatologia": {
+   "materia": "Fisiopatología I",
+   "itens": 40,
+   "listados": 40,
+   "porTipo": {
+    "material": 19,
+    "livro": 2,
+    "prova": 1,
+    "slide": 18
+   },
+   "provas": [
+    {
+     "id": "1069xgSwtRvvQPHjZfxpJ-iSC6uZ-xqW2",
+     "titulo": "Fisiopatologia revisão p1.pdf",
+     "mime": "application/pdf"
+    }
+   ],
+   "slides": [
+    {
+     "id": "1gwf8sopmDTJaHeoAkQ8YPuM-qV7tpDvJ",
+     "titulo": "clase 2.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1nQswmRghZleEmhl3F5un2ExT3xTzwZsZ",
+     "titulo": "clase 3.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1HB2gxvxMJzd8j7WDaJnnA55zXLreQpFg",
+     "titulo": "clase  1.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1ZzzyNZXNzum0GVchyWsKxtfvcm73SOUW",
+     "titulo": "Clase 8",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1tUUMPcl86-pLCPz-Fq1Gd4WkN8LviUkU",
+     "titulo": "clase 9.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "157EFerWBq6HtohpzMwF9Y5GEkTWHyzaN",
+     "titulo": "clase 7.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1nJxriUgbg7LhuYLncO9yPQB9O57yhsvQ",
+     "titulo": "clase 6.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "10hYAVJnlrgrp-mezLpCjTS0XjRgaXWy1",
+     "titulo": "CLASE 4 Y 5.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1v6yK9n2kfV9TfvE3ErbxAfD0qcFO_RXi",
+     "titulo": "CLASE 4 Y 5(1).pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "11rXAE1qu3ge5LnqMGdAZ1N-LG79zWJTI",
+     "titulo": "UNIDADE 0 FISIOPATOLOGIA",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1Jd0tffygfN88yzBzYUeJngbv2vYg5Vrl",
+     "titulo": "UNIDADE 1 Signos y Síntomas.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1-k1XnH4MTa4Rc3Pzx0w4a1cZUk1ktYC4",
+     "titulo": "UNIDADE 2 Inflamación - Dr. K.F. fisiopato.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1RbGWVygOla_mAy3kBNIE9vJ1_P82zgfm",
+     "titulo": "UNIDADE 3 Conceptos y Generalidades - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1I-QOFVNzt0dnDFrrkfs9PTnTHyLlv98-",
+     "titulo": "UNIDADE 4 Hemorragias - Dr. K.F. fisiopato.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1S7px7IGnTrKcwILUJEn28YKl4j6-tlEN",
+     "titulo": "UNIDADE 5 Edema - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1_4hOhrTWdnBRhmWG--d8LggehzKCW1Zn",
+     "titulo": "UNIDADE 6 Regeneración, Reparación y Cicatrización - Dr. K.F. fisiopato.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1kcdWLyUlRBT8pgUyPpe5w-6zI_ojfbGn",
+     "titulo": "UNIDADE 7 Shock - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1dtKxTcZP2vRNIE_XB0-TQ7vzYHvv8N4V",
+     "titulo": "Caso Clínico Anemia Megaloblástica Perniciosa - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    }
+   ]
+  },
+  "imagenologia": {
+   "materia": "Imagenología",
+   "itens": 21,
+   "listados": 21,
+   "porTipo": {
+    "material": 9,
+    "slide": 11,
+    "livro": 1
+   },
+   "provas": [],
+   "slides": [
+    {
+     "id": "1A9UHrAVsvuuACf9WriK9qaH4cC33TZ-k",
+     "titulo": "Imagens Actividad.pptx",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "1AG4-5UOgUn64HN3c0SwsdUzqvsvd6DfM",
+     "titulo": "00. História de la Imagenologia - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1urk1zOZXr36LGdBFnwpGZ19kJVsG_-sx",
+     "titulo": "01. Radiografia de Tórax - Dr. K.F. imagenologia.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1g7qLuuIcqVHRd8bj6f1p2-eUCk-6dO4W",
+     "titulo": "02. RX de Tórax (Parte II) - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1gy1JpybeffvcwkX60npwM-PkqnPwS-j4",
+     "titulo": "03. RX Abdominal - Dr. K.F. imagenologia.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "17Tbbv3BUFY8U0UPbfCVaotTWm99fZhuq",
+     "titulo": "04.1 RX de Abdomen Patológico (Parte II) - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1wxkeTjMvfEdCrityrJCmDIilEsty81HK",
+     "titulo": "04. RX de Abdomen Patológico (Parte I) - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1W-mxNcjHMbW4Qs9CqkWNczQovL_hukNN",
+     "titulo": "5.0 EJERCÍCIOS DE CASOS CLÍNICOS EN RADIOLOGIA.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1naC8Zg_h6g1hhJtFk85dOIqPvUYx7Qzf",
+     "titulo": "Resonancia Magnética (RM) - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1qYhDifwL9VYQoO1oIZpyKR6UXCmC-zIa",
+     "titulo": "Tomografia Computadorizada (TC) - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1bn3EYmeHh10tI3svlk57cVDzujY8RXvT",
+     "titulo": "Trauma Craneoencefálico (TCE) - Dr. K.F..pdf",
+     "mime": "application/pdf"
+    }
+   ]
+  },
+  "familia": {
+   "materia": "Medicina de la Familia",
+   "itens": 17,
+   "listados": 17,
+   "porTipo": {
+    "slide": 5,
+    "material": 12
+   },
+   "provas": [],
+   "slides": [
+    {
+     "id": "11Zn3UGSoZ6MTqZVO89E4XWh2HrINRxqW",
+     "titulo": "Trabajo N1 - Entrevista Clínica.pptx",
+     "mime": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    },
+    {
+     "id": "1pzhxWnGlIRZgCXuZiSVSEJQ5YGYX_Ogz",
+     "titulo": "7. APGAR FAMILIAR Y HOLMES.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1BGeOHMsTWFRgp9I0YpccEQ2XZUoWBo7D",
+     "titulo": "8. PROMOCION DE SALUD MF.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1nMEVzGM1V703wU8YegZo6787Cst8FSpk",
+     "titulo": "9. Prevencion de enfermedades MF.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1RRTdN3tq7-3MPYSluTFP1VpBfuvLN0Y7",
+     "titulo": "10. SALUD DEL NIÑO 1.pdf",
+     "mime": "application/pdf"
+    }
+   ]
+  },
+  "semiologia": {
+   "materia": "Semiología Médica I",
+   "itens": 52,
+   "listados": 52,
+   "porTipo": {
+    "material": 12,
+    "livro": 3,
+    "prova": 5,
+    "slide": 9,
+    "pratica-aula": 1,
+    "lamina": 22
+   },
+   "provas": [
+    {
+     "id": "11K2vpiz673alS9xsTVkc-_sQRK2XC1P-",
+     "titulo": "Conteúdos P1 (base)",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1F_DA7kIiHJowZYASKjT9bJgUHw2LMcJL",
+     "titulo": "Fascies clínicas escolhidas pela professora P1",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1vpWAa2PSmz3sG-Pf_tpYZAdLsjnBo1wy",
+     "titulo": "conteúdos p1 anotações 2",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1Zys-LpVHbqCYG8WZGll_Tb9vU81GVBpN",
+     "titulo": "conteúdos p1 anotações 1",
+     "mime": "image/jpeg"
+    },
+    {
+     "id": "1Tcl5YLc_3UuIDW3Z4iPrL3knBPrCUAAi",
+     "titulo": "Conteúdo da P1 semiologia teórica",
+     "mime": "image/heif"
+    }
+   ],
+   "slides": [
+    {
+     "id": "1VrZUjMZ8ZXarCtYnnk1Du_2rVx3j4oBj",
+     "titulo": "1 - Introduccion a la Semiologia Clase I - CLASE 1.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1kVEz0gnQOxGjtbaix9exwixGsqRAlnp4",
+     "titulo": "2 - Introduccion a la Semiologia Clase I CLASE 2.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "12a80dkUtVQ3hy8gKnBa3lIf20maE8wGs",
+     "titulo": "3 - Signos Vitales Clase II 2026-2.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1rDMu0oYqFWZTjTjQNXuHND9CsBUJJFqt",
+     "titulo": "4.0 - Historia Clínica - Clase III Listo.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "12nF-QDGREJXeWJnML-GE7Olx0mQ9H1Uc",
+     "titulo": "4.1 - Historia Clínica - Clase III com + imagens.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1u3yJP-0yJW1crnV5CwWwffc4RCelVn5D",
+     "titulo": "UNIDADES SEMIOLOGIA MEDICA I.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "11LB15YjZe_MVodS7oXy1Ip2sfq_jO9aM",
+     "titulo": "5 - Ectoscopia.pdf",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "16iLwHp8pWQ4YoKwPydWLIiPvna_mxo8R",
+     "titulo": "6 - Ectoscopia Clase IV",
+     "mime": "application/pdf"
+    },
+    {
+     "id": "1PcN-1Csaiz9optt3aqp8ykEiXUp7QU37",
+     "titulo": "7 - Examen Físico Tórax - Clase V.pdf",
+     "mime": "application/pdf"
+    }
+   ]
+  }
+ }
+}
