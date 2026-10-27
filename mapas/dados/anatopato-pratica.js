@@ -54,7 +54,7 @@
   var NEO_B = ['Neoplasia benigna', 'neoplas|tumor;benign!malign'];
   var NEO_M = ['Neoplasia maligna', 'neoplas|tumor|cancer|carcinom;malign!benign'];
   /* banco de palavras do nível Guiado (os processos que aparecem nas descrições das láminas) */
-  var PROCESOS = ['Adaptación', 'Acúmulos intracelulares', 'Necrosis coagulativa', 'Necrosis caseosa', 'Inflamación aguda', 'Inflamación crónica', 'Inflamación granulomatosa', 'Neoplasia benigna', 'Neoplasia maligna', 'Aterosclerosis: depósito lipídico intimal e inflamación crónica'];
+  var PROCESOS = ['Adaptación', 'Acúmulos intracelulares', 'Necrosis coagulativa', 'Necrosis caseosa', 'Inflamación aguda', 'Inflamación crónica', 'Inflamación granulomatosa', 'Neoplasia benigna', 'Neoplasia maligna', 'Acúmulos intracelulares (clase 3); depósito lipídico intimal e inflamación crónica'];
 
   /* fotos da pasta LAMINÁRIO (P1 e P2) */
   var FT = {
@@ -153,7 +153,7 @@
         ['Hepatocitos con vacuolas lipídicas', 'vacuol|lipid|grasa|gordura'],
         ['Triglicéridos', 'triglic']
       ],
-      dx: ['Esteatosis hepática', 'esteatos|higado graso|figado gorduroso'] },
+      dx: ['Esteatosis hepática', 'esteatos|higado graso|figado gorduroso!cirros'] },
     { id: 'tbc', g: 'tbc', nome: 'Tuberculosis (ovario)', img: FT.tbc, gab: [G('1GgEt-IbDEiczjc1EFiiSyO_tCPzuCC1O')],
       organo: ORG.ovario, proceso: ['Inflamatorio crónico granulomatoso / necrosis caseosa', 'granulom|inflama;caseos'],
       desc: [
@@ -167,7 +167,7 @@
       dx: ['Tuberculosis', 'tuberculos|^tbc|^tb'] },
     { id: 'melanoma', g: 'melanoma', nome: 'Melanoma', img: FT.melanoma, gab: [G('1WZa5iW5V5qUTU5KvE4bo9E_0uUkzRjLm')],
       obs: 'El melanoma es una neoplasia maligna de melanocitos. La melanina explica su inclusión en la clase de pigmentos, pero no sustituye la clasificación neoplásica.',
-      organo: ORG.piel, proceso: ['Neoplasia maligna melanocítica', 'neoplas|malign|melanoma'],
+      organo: ORG.piel, proceso: ['Acúmulos intracelulares (enfoque de la clase); neoplasia maligna melanocítica', 'acumul;intracel|neoplas|malign|melanoma'],
       desc: [
         ['Epidermis con acantosis', 'acantos'],
         ['Papilomatosis', 'papilomat'],
@@ -184,7 +184,7 @@
       ],
       dx: ['Pielonefritis crónica', 'pielonefrit'] },
     { id: 'aterosclerosis', g: 'aterosclerosis', nome: 'Aterosclerosis', img: FT.aterosclerosis, gab: [G('1fM_Fmf5yF6Jw4UDd0FlgZDBm5fz0sPUI')],
-      organo: ORG.vaso, proceso: ['Aterosclerosis: depósito lipídico intimal e inflamación crónica', 'ateroscler|ateroma|lipid;inflama'],
+      organo: ORG.vaso, proceso: ['Acúmulos intracelulares (clase 3); depósito lipídico intimal e inflamación crónica', 'acumul;intracel|ateroscler|ateroma|lipid;inflama'],
       obs: 'Placa de la íntima arterial con lípidos intra y extracelulares e inflamación crónica. La calcificación puede aparecer en lesiones avanzadas; verificarla en el campo.',
       desc: [
         ['Hendiduras de colesterol', 'hendidur|fenda|colesterol'],
@@ -199,7 +199,7 @@
         ['En la lámina propia', 'lamina propia']
       ],
       obs: 'En el pizarrón de temas de la P2: «V. biliar → colesterolosis / colecistitis crónica».',
-      dx: ['Colesterolosis', 'colesterolos|colecistit'] }
+      dx: ['Colesterolosis', 'colesterolos'] }
   ];
 
   /* ───────── Laminario completo (tabla corregida, 25 láminas) ───────── */
@@ -348,12 +348,27 @@
   /* P2 na ordem do quadro «Temas P2 Práctica»: 1 IAM, 2 TBC, 3 aterosclerosis, 4 vesícula biliar, 5 esteatosis,
      6 melanoma, 7 apendicitis, 8 pielonefritis, 9 Hashimoto y 10 cirrosis (estas dos, con la foto y la descripción del laminario) */
   function byId(arr, id) { for (var i = 0; i < arr.length; i++) if (arr[i].id === id) return arr[i]; return null; }
+  // Fuentes P2 verificadas en el Drive docente; conservar separada la correlación visual.
+  var P2FUENTES = {"iam": "Clase 2 · Lesión celular, diapositiva 27. https://drive.google.com/file/d/1RfsKKB8cX2BCq202hgTqJbbVRjUlae9y/view", "tbc": "Clase 2 · Lesión celular, diapositiva 30 (ovario). https://drive.google.com/file/d/1RfsKKB8cX2BCq202hgTqJbbVRjUlae9y/view", "aterosclerosis": "Clase 3 · Acúmulos intracelulares, diapositivas 7 y 15. https://drive.google.com/file/d/1UBffITbLRxYZstiZlVTuhNQrt4FWtt_2/view", "colesterolosis": "Clase 3, diapositiva 16; Clase 4, diapositiva 14: colecistitis crónica con colesterolosis (linfocitos, hipertrofia muscular, senos de Rokitansky-Aschoff y macrófagos espumosos en lámina propia). Son procesos distintos que pueden coexistir; no diagnosticar colecistitis solo por macrófagos espumosos. https://drive.google.com/file/d/1LLXnUTHG9aku2ynPLAkP7NU7kryi7slk/view", "esteatosis": "Clase 3, diapositiva 17: esteatosis. Clase 4, diapositiva 19: cirrosis con esteatosis asociada (nódulos regenerativos, tabiques, vacuolas lipídicas e infiltrado crónico). La barra del diagnóstico docente no hace sinónimos a las dos lesiones. https://drive.google.com/file/d/1LLXnUTHG9aku2ynPLAkP7NU7kryi7slk/view", "melanoma": "Clase 3, diapositivas 18–19: el cuadro usa acúmulos intracelulares por la melanina; la diapositiva siguiente define melanoma como tumor maligno del melanocito. Se conservan ambos contextos. https://drive.google.com/file/d/1UBffITbLRxYZstiZlVTuhNQrt4FWtt_2/view", "apendicitis": "Cuadro de la Dra. Alicia González, 30/09: neutrófilos en la muscular, erosión/ulceración mucosa, hemorragia, necrosis, hiperemia y edema seroso. El subtipo gangrenoso exige correlación con necrosis de la pared. https://drive.google.com/file/d/1JgJiMrB_cOJCP7VI4SMa3km-vZZxLi1c/view", "pielonefritis": "Clase 4 · Inflamación crónica, diapositiva 9. https://drive.google.com/file/d/1LLXnUTHG9aku2ynPLAkP7NU7kryi7slk/view", "t15": "Clase 4 · Inflamación crónica, diapositiva 5. Las células de Hürthle son un hallazgo complementario, no listado en ese gabarito. https://drive.google.com/file/d/1LLXnUTHG9aku2ynPLAkP7NU7kryi7slk/view", "t13": "Clase 4 · Inflamación crónica, diapositiva 19: cirrosis hepática / esteatosis hepática; el texto describe ambas lesiones asociadas. https://drive.google.com/file/d/1LLXnUTHG9aku2ynPLAkP7NU7kryi7slk/view"};
+  P2.forEach(function (L) { L.obs = 'Fuente docente: ' + P2FUENTES[L.id] + ' ' + (L.obs || ''); });
+  function p2Referencia(id, desc, proceso, dx) {
+    return Object.assign({}, byId(TOTAL, id), {desc: desc, proceso: proceso, dx: dx,
+      obs: 'Fuente docente: ' + P2FUENTES[id] + ' La correspondencia visual de la foto del laminario sigue pendiente.'});
+  }
+  var P2HASH = p2Referencia('t15', [
+    ['Infiltrado inflamatorio crónico con formación de centros germinales', 'germinal'],
+    ['Folículos tiroideos atróficos y residuales', 'folicul;atrofi'],
+    ['Áreas de fibrosis', 'fibros']], ['Inflamación crónica', 'inflama;cronic'], ['Tiroiditis de Hashimoto', 'hashimoto']);
+  var P2CIRR = p2Referencia('t13', [
+    ['Histoarquitectura alterada con nódulos regenerativos separados por tabiques de tejido conectivo', 'nodul;regener;tabiqu|fibros'],
+    ['Hepatocitos con vacuolas lipídicas', 'vacuol|lipid'],
+    ['Infiltrado inflamatorio crónico sobreagregado', 'inflama;cronic']], ['Inflamación crónica y acúmulos intracelulares', 'inflama;cronic;acumul'], ['Cirrosis hepática con esteatosis asociada', 'cirros;esteatos']);
   var P2Q = ['iam', 'tbc', 'aterosclerosis', 'colesterolosis', 'esteatosis', 'melanoma', 'apendicitis', 'pielonefritis'].map(function (id) { return byId(P2, id); })
-    .concat([byId(TOTAL, 't15'), byId(TOTAL, 't13')]);
+    .concat([P2HASH, P2CIRR]);
   /* P2 · una lámina por foto (carpeta LAMINARIO P2 del Drive de la turma, 133 fotos rotuladas, + 6 fotos enviadas por el alumno):
      cada foto es un ejercicio con las 4 preguntas (ÓRGANO, PROCESO, DESCRIPCIÓN, DX), con la respuesta de su tema.
      p = foto marcada o compartida por la profesora; t = foto de la turma. Hígado: la carpeta mezcla cirrosis y esteatosis
-     sin decir cuál foto es cuál; se acepta esteatosis o cirrosis. Quedan afuera los videos, las imágenes de texto y las
+     sin identificar cada foto; no se aceptan como sinónimos. Quedan afuera los videos, las imágenes de texto y las
      fotos sin rótulo (IMG_xxxx, FullSizeRender). */
   var P2DR = {"iam":[["13sJUu_efGDfbFNlah2AeIRqe1pPAlWV6","t"],["14I5RPbo5uY4HdeQRT1lDWR2v4tldkyKs","t"],["16M6-48bj9xbL9cl8ly33u96oJESx_yo4","t"],["1QrXE-DgNg71LEWDJrU3XaItozew0w-0h","t"],["1XvREENEKrHUCyo8IULQo5VoGFAelP6yJ","t"],["1Y8FT-iEtjJoMauy2UJ3dK26KRcWXaUMe","t"],["1ZOu8Ii0RXUWF-NFC_-jYyFVPJELMl_5m","t"],["1ungSnk028EupDaP15nVaxXCMjucWf8g0","t"]],"apendicitis":[["13P9Z5QUlzA7jFNvtH2arygnt2_TpLuC8","p"],["153KUKeyjQNfTxVf2mvh1ccN5aY2gefre","p"],["15yI546aF1_wwrXaO6fuS40hdENqDFwNg","p"],["1B6B2wNJIFFnbq5cpCNESCn2tFV9KSv3M","p"],["1dUMClFWqZL7d4-r4_F9evvKcDuK4jmUH","p"],["1gGvVUKIBvQwhyjTjZAXaZOtuUXlzidvi","p"],["1rYJud0LVUa0CDHUVsXnp54DOkxYo4Jgs","p"],["1smoEI2p_yPtgOS4_ceObtZIJBWLrqWTY","p"],["10wtOsTkQUfkS2hxS3Xc1AyDPlGwgF49C","p"],["17RgfNzX1cKNALr1GZ7CDqGtCjSEe-CHy","p"],["18KPN0Hjmbfq_AuTX0q4mVMdKOzTnRzlH","p"],["1JRqvRFYOvv8F_2UgW0vKY3kO4DkzjjHe","p"],["1LZ404xy2Mubk3NA2DC0GXTz-YVQs-lEP","p"],["1cQRMOBugGILmYR8WWkZprzxvD9WXe7_h","p"],["1i1jY_rJ8PvhqGsygD2ZJALbuU1nZ4qvQ","p"],["1jJJGtv-gr_aUrNFrLWxTWb9iqupA5X0d","p"]],"esteatosis":[["1--PR0AUrE4D-eYjcLbkZlK0ugOaEhvUD","t"],["13CRPod78gtvOe7WBX99HBK3u43yeJpmx","t"],["18RzZXelGobSC2k8KUyXzih9geTebnSw_","t"],["1BJzemsmdbwp-hvUu9gxiYAm9spvs8Be-","t"],["1DAOgwuB_hofntY2Dkxf4zYrHe4lct5aF","t"],["1ExGcAo2inFYGtan99_RSoCR3TUWmKI23","t"],["1NWWwocDjWIDivVJTeIeMoilMg1PFbKpZ","t"],["11sul5prd7aQext3WO6cO8mGKSo_saEsM","t"],["1A2tKMdNFXf0S27qKi64m5HTHkOSOoNSp","t"],["1He3EmD-4XNHfe_g7KN7Eyp5-lHJw8tcb","t"],["1K4LqG_eAzY4v5OyvTh3b-2bRVMw3lFXv","t"],["1TTWnTG0jjPeRfp7xyJxjsUAolaU7fArF","t"],["1pxLnN5jRWvKxv3x-sssKffEjKXCbkU3v","t"],["1uOmVx6D7tirkiqJ5-bbI2pF1yjJyvNBK","t"],["1vYD3WDOzw7gHO8JDEnzybs6TU31nV6gs","t"],["11XihIRp7vFJIDficx92UG0OSM4vRi2aI","t"],["1bR2_9vTZT9Ao_YPn4WpKsU9qaFEp0BVj","t"],["1ea7ZguvqHeChpM_yLfsHgYOENyamnG14","t"],["1SFG2UVnneKTe5hsrmEXKa0xxctqj6rxv","p"],["1YpTJ_Mi7TeIHV8cChH8ZrUu-LQ0QAcMX","p"],["1hZ6GuXlAc7QkLLWyh8leLJZhytdkUdBJ","p"]],"tbc":[["12y9IJ5fJ0LadJB6AyLU2vZKXvEcW4_RK","t"],["15TNX1GMxWx54pogVi_rKtk-ofH_qGIau","t"],["16RXB5Um2hIiBA1aF1BmFZNmuOeG-Wyk0","t"],["1M0-Ac9r3La3hAedb7iP7k3Ig4d2loxKD","t"],["1VLF0wfGiIsph97GC1--z7QW2qQThBGbL","t"],["1YSgRLxPN7on7MzPTLND9fNuqQRa7X3eV","t"],["1evIUbsdJ0Xm6EcbnD0cojnmUoxMJonuh","t"],["1gkmPjgZ13xO-g3UvIc8ZmqLAOAmVAFbj","t"],["1mdiLTa4vOFPUOaVFVJola4m6_xH_01fk","t"],["1qZ4jfBDgD7Dfm5Zc3AMOof--To2AnUuP","t"],["133pmaWeWhhU3rI4_8vjzEX_41YnHUMpp","p"],["1BH8qisdKS0i0PpQfjXBlXsrudVjaUZMk","p"],["1BLrBxWr78rkQR1kjirZ2Y9hiBmMRMlfd","p"],["1BofPyX0Xrbe-M2r_lIlsua0CG49EToQw","p"],["1EwIqMUV3d1bEIscogJHlxdNMAuV7WY0Y","p"],["1Kn5gT_H_-X1CAMaxb5xbw6YzaA2uRWIP","p"],["1O4vo23fgpfdxzuAikr7bAAsXFSRL6mff","p"],["1OxP9KuOMAgnIEcRXsi4m_SrWJ6J1TNCE","p"],["1bHQyYrYxYUcvQMSkn-45S2xgA-olvxRf","p"],["1d-l43wNTfl00cGu8k__sEPlXkbuKjno_","p"]],"melanoma":[["1A742IpxVCRpRTUjX7p-Dxjaz92-Eo9TJ","t"],["1C5Xh3ebXxSy_wm4epW0S0C41EzSAuSG8","t"],["1G4RHlyhxsOQt_dEPZFrcQ9Lp3liAcrfV","t"],["1GcCk92KK_mBeuSGnea1Kju-neEgNOiQ2","t"],["1K9mv73DYescqP9UcaKsAcgzwfuL4RVOr","t"],["1KL305S2qr5UHyNzwfVWkRkplcfwKlBls","t"],["1MxpIWSkig8W738RRuvGo-LD0zmlQj8Vz","t"],["1PU03s-Ea-ty9b85elNzRIu2w_J_VqPEe","t"],["1UGwkjRsUAkVOJpEt8SZQILgy6_j3DOQJ","t"],["1gTUydoh0TGBedU39fWQRhhteg92IF6Bb","t"],["1tqtoiIyOt7FHE8HNYY9u-nc5O0vlYf-p","t"],["18xBMY7oDTyC5WtEFtvxwsa2pst_H4kMT","p"],["1BFocHa5_FPaBFljO4lWOujp3zgjtX8Iw","p"],["1OLMcIY7wQBk8Crs9KUwGH6SzpshWOiWD","p"],["1Tgq13miDf2rUbbh2cpiUwnzhlIy0cVtO","p"]],"pielonefritis":[["12CgyChfi8v329fcGjzG1oFWnYIBPh_b5","p"],["1FGOayff2qKUwy36sRG4U11wBuTDrvBo0","p"],["1FsdWLm-tivu-RUia9QGr5DRexd1dBFTJ","p"],["1Fy6Dqjp0Q6pTlH0lW07q8B9MdC3Rh3Vb","p"],["1IAO4QJZmBaNyqc80AaxobPXPIV5pSyMG","p"],["1RGJ1CHgAtm18KzH9HmjO5WsCcwh826Ty","p"],["1h5zDu5mdJHvUqhoe85IBX_y-9WaE3-ek","p"],["1jE48PUQhwTDicM9-da4srXSLgOVLd4aG","p"],["1lBvfYywFBjIMJ-qfmgXcH8MI1-oUBiFG","p"],["1t2c7FfvI9bkW1PhZKvH69zHNayRHTPiE","p"],["12QRp7l6JR-gCnP7IRzbqi75nvWvSCH8Y","t"],["12paEcT6_f1Pe2auP39Xrm_Yl_hKnUH5-","t"],["1J5ATOLcAQSUEZqytKTK0vp-CpbbKiwWB","t"],["1LqXQvKD4z50hip5Z_rDV2hsGwdK91JAa","t"],["1S3tIBPoQOGl2dwkBFHL7b77qHGEVDBVL","t"],["1T0C3OlgqQwqaEvX0Q2X15iq_A6n1bXqQ","t"],["1XIRUOqs64958dQiUIl_ozuqvn7zmdF3E","t"],["1_qWz315TGrY5fP9ZXh-NlBgSoJlWcyeC","t"],["1blji9JvQa2zam7iT6uZMqeCB3rgYcWaX","t"],["1fn2cxySqBRPecCawYKTGXeOU_nWn8z2r","t"],["1l7eG3n7pZBqwK64Z2-7GA8lkzyb-Kj8W","t"],["1pZL3Wu1bGurE5_5PJ-Ul5I92GSlZzc3R","t"],["1uBANMlyUf0jf3v13N9EO0_Qi1HGp_Yep","t"],["1zoCN_Ee5tiotZMIqTRtTtO-jfsLpNd_c","t"]],"aterosclerosis":[["12NIpNEu6NbOdTORz98fonRqoFpY_dT2n","t"],["19PGyfPa3_3Jwq1gL0VHV4vDkrMzb6Gf2","t"],["1H5q1P35H5eFBcY04Rifa_6xeBnnyjc64","t"],["1VcajfSJl5EaFrR33-Jjfr-DHvD4Jo8ui","t"],["1VgNcQ1Y2HfIsXvkbMRch0kUFPZRvm4m0","t"],["1ZFHPLdY3zS0y2ap5SDGooC2QyiPtD0CE","t"],["1fj9u1oRqndijgdqQNzcdJHT4cn3nln6i","t"],["1k9T7dKgjmi-JtXLcferXXQ9SuFeeCR-3","t"],["1kBZRUBV_gguu6wtQeisuG7i_Cvi1-Tp9","t"],["1-u0IlsAFSUFslKmSXd86W1nCIFjJ83bx","p"],["1IU4xor21xB4XGXP_y76nNdrNX2hdgHmI","p"],["1K0xjDjBVT9yUPRAHJZQzHLSlCRH8E_o_","p"],["1_qcvJ3NJ0a_Y40xHsq0k8iHXebN4Y98J","p"],["1erjrnCylABmPkOnBSsu5E-DMRRMakNyK","p"],["1h6q3g7EpOqkdPgKefRLv0nwPZSSCP7Fe","p"],["1oqALL1cCDq1BI-IP7Ps4ia9lciikBmZI","p"],["1w_Sr_xSffRisFuVktu9R6q2hvDjmQkyA","p"],["1zDIqkow4her7pHKneUppvhM3PpUV_QPc","p"]],"colesterolosis":[["1PVBqplZe0UIhCl6tDvbc5ssM73LG6pq6","p"],["1Xw2yEbbsj6NfDFKzOwbFGrFXMyGDxORo","p"],["1mItNKgsUqm9J0felHW6XHnvJyAkO9UmZ","p"],["1HLn5hrnWtxPhL3cQTJzjmpa0sB9orqHy","t"],["1J8numuo87wxxlZg73Bxq1nYEk-f0cmL1","t"],["1K5IS7Kqh6T8WYQNdfcHMMz48B7a8ZxnM","t"],["1b5BJ6fXE6YkY-OHOYdji4qL9Lc_j9bmf","t"],["1jxOWXfBRv80V0rYwwLn0iYQ5dFd80__c","t"],["1kXjYaRA3dZVMZo5NhMc6u4oTcoAdlOv3","t"],["1lqnLyCX-G55XZN01zXQP9x8TzRfC5Mxb","t"],["1uKoJeYztOj3L4yp8K7vrsb5byI1t2zsL","t"]]};
   // Revisión por identidad del archivo, no por posición en la secuencia.
@@ -515,10 +530,10 @@
       fuente: 'Práctica 3 · Descripciones de las láminas de aterosclerosis, colesterolosis, esteatosis y melanoma',
       columnas: ['Órgano', 'Proceso', 'Alteraciones', 'Dx'],
       filas: [
-        ['Vaso sanguíneo', 'Aterosclerosis: depósito lipídico intimal e inflamación crónica', 'Hendiduras de [[colesterol::colesterol]], macrófagos espumosos cargados de lípidos y calcificación [[distrófica::distrof]]', '[[Aterosclerosis::ateroscl]]'],
+        ['Vaso sanguíneo', 'Acúmulos intracelulares (clase 3); depósito lipídico intimal e inflamación crónica', 'Hendiduras de [[colesterol::colesterol]], macrófagos espumosos cargados de lípidos y calcificación [[distrófica::distrof]]', '[[Aterosclerosis::ateroscl]]'],
         ['Vesícula biliar', 'Acúmulos intracelulares', 'Macrófagos [[espumosos::espumos]] cargados de colesterol en la lámina propia', '[[Colesterolosis::colesterolosis]]'],
         ['Hígado', 'Acúmulos intracelulares', 'Histoarquitectura alterada por hepatocitos con vacuolas lipídicas ([[triglicéridos::triglicer]])', '[[Esteatosis hepática::esteatosis]]'],
-        ['Piel', 'Neoplasia maligna melanocítica', 'Epidermis con acantosis y papilomatosis; en la dermis, células atípicas y pigmento de [[melanina::melanina]]', '[[Melanoma::melanoma]]']
+        ['Piel', 'Acúmulos intracelulares (enfoque de la clase); neoplasia maligna melanocítica', 'Epidermis con acantosis y papilomatosis; en la dermis, células atípicas y pigmento de [[melanina::melanina]]', '[[Melanoma::melanoma]]']
       ]
     }
   ];
@@ -580,7 +595,7 @@
     },
     {
       id: 'ap_pr_rep_p4', area: PR, clase: 'Práctica 4', titulo: 'Láminas de la práctica 4: cuadro de repaso', tipo: 'tabla', sl: [['p4', 5, 25]],
-      resumen: 'Las cuatro láminas de inflamación crónica con el formato de la prueba.',
+      resumen: 'Gabaritos de la profesora: Hashimoto (slide 5), pielonefritis (9), colecistitis con colesterolosis (14), cirrosis con esteatosis (19). Las lesiones asociadas no son sinónimos.',
       fuente: 'Práctica 4 · Tiroiditis de Hashimoto, pielonefritis crónica, colecistitis crónica y cirrosis',
       columnas: ['Órgano', 'Proceso', 'Alteraciones', 'Dx'],
       filas: [
