@@ -578,12 +578,14 @@
   }
 
   // ---------------- flashcards (cartões do Sinus, com progresso na conta)
-  var CART = { key: '', deck: null, fila: [], i: 0, mostrar: false }, PROG = {}, ESCOLHA = {};
+  var CART = { key: '', deck: null, fila: [], i: 0, mostrar: false }, PROG = {}, ESCOLHA = {}, GRUPO = {};
   var GRAUS = [['errou', 'Errei'], ['dificil', 'Difícil'], ['normal', 'Normal'], ['facil', 'Fácil']], RANK = { errou: 0, dificil: 1, normal: 3, facil: 4 };
   function lerLocal(k) { try { return JSON.parse(localStorage.getItem('sinus_cartoes_' + k) || '{}') } catch (e) { return {} } }
   function gravarLocal(k, o) { try { localStorage.setItem('sinus_cartoes_' + k, JSON.stringify(o)) } catch (e) {} }
   function docProg(k) { return db.doc('progresso/' + S.uid + '_cartoes-' + k.replace('/', '-')) }
   function montarFila(cards) { return cards.map(function (c, n) { var g = PROG[c.id]; return { c: c, r: (g in RANK) ? RANK[g] : 2, n: n } }).sort(function (a, b) { return a.r - b.r || a.n - b.n }).map(function (x) { return x.c }) }
+  /* cartões ativos do baralho: todos, ou só os do assunto (g) escolhido no filtro */
+  function ativos(k) { var d = DECKS[k], g = GRUPO[k]; return g ? d.cartoes.filter(function (c) { return c.g === g }) : d.cartoes }
   function deckPadrao(slug) {
     var s = subjectData(), prof = null;
     (CAT.materias || []).forEach(function (m) { if (m.slug === slug) prof = profTeoria(m) });
@@ -595,11 +597,11 @@
   function abrirDeck(k) {
     if (CART.key === k) return;
     PROG = lerLocal(k);
-    CART = { key: k, deck: DECKS[k], fila: montarFila(DECKS[k].cartoes), i: 0, mostrar: false };
+    CART = { key: k, deck: DECKS[k], fila: montarFila(ativos(k)), i: 0, mostrar: false };
     if (S.uid) docProg(k).get().then(function (snap) {
       if (CART.key !== k || !snap.exists || !snap.data().prog) return;
       PROG = Object.assign({}, PROG, snap.data().prog); gravarLocal(k, PROG);
-      CART.fila = montarFila(CART.deck.cartoes); CART.i = 0; CART.mostrar = false;
+      CART.fila = montarFila(ativos(CART.key)); CART.i = 0; CART.mostrar = false;
       if ((UI.tab === 'training' && UI.trainingPane === 'flashcards') || UI.tab === 'cartoes') renderCartoes();
     }).catch(function () {});
   }
@@ -634,11 +636,16 @@
     var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area; });
     var box = $id('subjectContent');
     if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, utilize os Exercícios ou os Mapas mentais.'); return }
-    var k = ESCOLHA[slug] && ks.indexOf(ESCOLHA[slug]) >= 0 ? ESCOLHA[slug] : (ks.indexOf(deckPadrao(slug)) >= 0 ? deckPadrao(slug) : ks[0]);
+    ks.sort(function (a, b) { return (DECKS[a].ordem || 99) - (DECKS[b].ordem || 99) });
+    var k = ESCOLHA[slug] && ks.indexOf(ESCOLHA[slug]) >= 0 ? ESCOLHA[slug] : (ks.filter(function (x) { return DECKS[x].padrao })[0] || (ks.indexOf(deckPadrao(slug)) >= 0 ? deckPadrao(slug) : ks[0]));
     abrirDeck(k);
-    var deck = CART.deck, c = CART.fila[CART.i], total = deck.cartoes.length;
-    var dom = deck.cartoes.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
-    var chips = ks.length > 1 ? '<div class="filters" style="margin-bottom:12px">' + ks.map(function (x) { return '<button class="chip ' + (x === CART.key ? 'active' : '') + '" data-sx-deck="' + H(x) + '">' + H(DECKS[x].nome || x.split('/')[1]) + '</button>' }).join('') + '</div>' : '';
+    var deck = CART.deck, c = CART.fila[CART.i], lista = ativos(CART.key), total = lista.length;
+    var dom = lista.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
+    var temParcial = ks.some(function (x) { return DECKS[x].curto });
+    var chips = ks.length > 1 ? '<div class="sxParciais"><span class="sxParcialLbl">' + (temParcial ? 'Qual parcial você vai estudar?' : 'Baralho') + '</span><div class="sxParcialBtns">' + ks.map(function (x) { var d = DECKS[x]; return '<button class="sxParcial' + (x === CART.key ? ' active' : '') + (d.curto ? '' : ' longo') + '" data-sx-deck="' + H(x) + '"><b>' + H(d.curto || d.nome || x.split('/')[1]) + '</b>' + (d.curto ? '<small>' + d.cartoes.length + ' cartões</small>' : '') + '</button>' }).join('') + '</div></div>' : '';
+    var gs = [], gn = {};
+    deck.cartoes.forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
+    if (gs.length > 1) chips += '<div class="sxGrupos" aria-label="Assunto"><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + deck.cartoes.length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
     box.innerHTML = '<section class="sxFlashStudy' + (c && (c.img || c.video) ? ' sxMedia' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">FLASHCARDS</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
       '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
@@ -658,7 +665,7 @@
       studySave();
     } catch (e) {}
     CART.i++; CART.mostrar = false;
-    if (CART.i >= CART.fila.length) { CART.fila = montarFila(CART.deck.cartoes); CART.i = 0 }
+    if (CART.i >= CART.fila.length) { CART.fila = montarFila(ativos(CART.key)); CART.i = 0 }
     renderCartoes();
   }
 
@@ -821,7 +828,7 @@
   };
 
   D.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-virar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
+    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-grupo],[data-sx-virar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
     if (!t) return;
     if (t.id === 'sxEntrar') return entrar();
     if (t.hasAttribute('data-sx-tema')) return alternarTema();
@@ -841,6 +848,7 @@
       if (b) b.innerHTML = htmlSemana(SCHEDULE_UI.className);
       return;
     }
+    if (t.hasAttribute('data-sx-grupo')) { GRUPO[CART.key] = t.getAttribute('data-sx-grupo'); CART.fila = montarFila(ativos(CART.key)); CART.i = 0; CART.mostrar = false; return renderCartoes() }
     if (t.hasAttribute('data-sx-deck')) { var s = subjectData(); ESCOLHA[s.slug] = t.getAttribute('data-sx-deck'); CART.key = ''; return renderCartoes() }
     if (t.hasAttribute('data-sx-virar')) { CART.mostrar = true; return renderCartoes() }
     if (t.hasAttribute('data-sx-card-move')) { CART.i = (CART.i + Number(t.getAttribute('data-sx-card-move')) + CART.fila.length) % CART.fila.length; CART.mostrar = false; return renderCartoes() }
