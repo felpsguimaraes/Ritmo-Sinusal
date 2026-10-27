@@ -250,3 +250,16 @@ html[data-theme="dark"] .sxFlashStudy .sxBal.o{--bal-bg:#1f3d2e;--bal-b:#3d6b52;
 .sxFlashStudy.sxMedia .sxBalTitle{font-size:max(9px,1.8cqh);margin:0}
 .sxFlashStudy.sxMedia .sxGrades{grid-column:1/-1}
 }
+.sxFlashStudy .sxParciais{margin:0 0 14px}.sxFlashStudy .sxParcialLbl{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#486356;margin:0 0 8px}
+.sxFlashStudy .sxParcialBtns{display:flex;flex-wrap:wrap;gap:8px}
+.sxFlashStudy .sxParcial{flex:1 1 130px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 14px;border-radius:16px;border:1.5px solid #cfe3d8;background:#fff;color:#1b4a35;cursor:pointer;font:inherit;transition:background .15s,border-color .15s,transform .1s}
+.sxFlashStudy .sxParcial b{font-size:17px;letter-spacing:-.01em}.sxFlashStudy .sxParcial small{font-size:11px;color:#5b7c6b}
+.sxFlashStudy .sxParcial:hover{border-color:#6fb895}.sxFlashStudy .sxParcial.active{background:linear-gradient(135deg,#0c7a5c,#1fa37a);border-color:#0c7a5c;color:#fff;box-shadow:0 6px 16px #0c7a5c33}.sxFlashStudy .sxParcial.active small{color:#d8f3e8}
+.sxFlashStudy .sxParcial.longo{flex:0 1 auto}.sxFlashStudy .sxParcial.longo b{font-size:14px}
+.sxFlashStudy .sxGrupos{display:flex;gap:6px;overflow-x:auto;padding:2px 0 12px;margin-bottom:6px;scrollbar-width:thin}.sxFlashStudy .sxGrupos .chip{white-space:nowrap;flex:0 0 auto}.sxFlashStudy .sxGrupos .chip small{opacity:.7;margin-left:3px}
+html[data-theme="dark"] .sxFlashStudy .sxParcial{background:#1d3328;border-color:#3d6b52;color:#e3f3ea}html[data-theme="dark"] .sxFlashStudy .sxParcial small,html[data-theme="dark"] .sxFlashStudy .sxParcialLbl{color:#bed9c9}html[data-theme="dark"] .sxFlashStudy .sxParcial.active{background:linear-gradient(135deg,#0c7a5c,#1fa37a);color:#fff}
+@media(max-width:600px){.sxFlashStudy .sxParcial{flex:1 1 90px;padding:9px 8px}.sxFlashStudy .sxParcial b{font-size:15px}}
+.sxFlashStudy .sxGrupos .chip{border:1.5px solid #cfe3d8;background:#fff;border-radius:99px;padding:6px 13px;font-size:13px;font-weight:600;color:#1b4a35;cursor:pointer;font-family:inherit}
+.sxFlashStudy .sxGrupos .chip:hover{border-color:#6fb895}.sxFlashStudy .sxGrupos .chip.active{background:#0c7a5c;border-color:#0c7a5c;color:#fff}
+html[data-theme="dark"] .sxFlashStudy .sxGrupos .chip{background:#1d3328;border-color:#3d6b52;color:#e3f3ea}html[data-theme="dark"] .sxFlashStudy .sxGrupos .chip.active{background:#0c7a5c;color:#fff}
+@media(min-width:900px){.sxFlashStudy .sxGrupos{flex-wrap:wrap;overflow:visible}}
