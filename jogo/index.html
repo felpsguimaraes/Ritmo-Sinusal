@@ -147,6 +147,10 @@ body.esq #painel.on{transform:translate(0,-50%)}
 .prog{display:flex;gap:6px;margin:18px 0 6px}
 .prog i{flex:1;height:5px;border-radius:4px;background:rgba(255,255,255,.1)}
 .prog i.ok{background:var(--accent)}.prog i.no{background:var(--bad)}.prog i.cur{background:var(--teal)}
+.caso{margin:10px 0 0;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.04);border-left:3px solid var(--teal);font-size:14px;line-height:1.5;color:#d5e4df}
+.figura{display:block;margin:10px 0 0;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.figura img{display:block;width:100%;max-height:240px;object-fit:contain}
+.fonte{display:block;margin-top:8px;font-size:12px;color:var(--muted)}
 .qnum{font-size:12px;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-top:12px}
 #painel h2{font-size:18px;line-height:1.4;margin:8px 0 16px;font-weight:600}
 .opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0;font-size:15px;line-height:1.35;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
@@ -525,6 +529,13 @@ const PLACAS = [
   [489, 630, 160, 32, -11, 'Medicina de la Familia', '', 15],
 ];
 
+// ===================== banco de questões das aulas =====================
+// jogo/assets/questoes.json é gerado de mapas/dados (casos e simulados) por tools/gerar-questoes-jogo.js
+const RAIZ = location.pathname.includes('/jogo/') ? '../' : '';
+let BANCO = null;
+fetch('assets/questoes.json').then(r => r.ok ? r.json() : null).then(j => { if (j && j.materias) BANCO = j.materias; }).catch(() => {});
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' })[c]);
+
 // ===================== progresso salvo =====================
 const CHAVE = 'sinus-campus-v1';
 const hoje = new Date().toDateString();
@@ -872,7 +883,9 @@ function menuSala(s) {
         <button class="${TEORIA === 'pratica' ? 'on' : ''}" data-m="pratica">${L('Prática','Práctica','Practice')}</button></div>` : '') +
     `<p class="dica">${L('Toque nos objetos da sala para ir até eles, ou escolha aqui.','Toca los objetos de la sala para ir hasta ellos, o elige aquí.','Tap the objects in the room to walk to them, or choose here.')}</p>
      <div class="grade">
-       <button class="acao destaque" data-f="quiz"><span class="ic">⚡</span><span><b>${FUNC.quiz[1]}</b><br><small>${PERGUNTAS[s.id].length} ${L('questões · valem XP e contam nos desafios da semana','preguntas · valen XP y cuentan en los desafíos de la semana','questions · earn XP and count toward the weekly challenges')}</small></span></button>
+       <button class="acao destaque" data-f="quiz"><span class="ic">⚡</span><span><b>${FUNC.quiz[1]}</b><br><small>${bancoDaSala(s).length
+  ? L(`${RODADA} questões por rodada · ${bancoDaSala(s).length} das suas aulas e provas (em espanhol)`, `${RODADA} preguntas por ronda · ${bancoDaSala(s).length} de tus clases y exámenes`, `${RODADA} questions per round · ${bancoDaSala(s).length} from your classes and exams (in Spanish)`)
+  : `${PERGUNTAS[s.id].length} ${L('questões · valem XP e contam nos desafios da semana','preguntas · valen XP y cuentan en los desafíos de la semana','questions · earn XP and count toward the weekly challenges')}`}</small></span></button>
        ${disponiveis.map(f => `<button class="acao" data-f="${f}"><span class="ic">${FUNC[f][0]}</span><b>${FUNC[f][1]}</b><small>${FUNC[f][2]}</small></button>`).join('')}
      </div>
      <div class="acoes"><button class="btn" onclick="sairParaCampus()">${L('Sair da sala','Salir de la sala','Leave the room')}</button></div>`;
@@ -1039,10 +1052,29 @@ atualizarHud(); atualizarEstudo();
 
 // ===================== desafio rápido e simulados =====================
 const embaralhar = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+const RODADA = 5;
+const salaDaMateria = slug => (SALAS.find(s => s.slug === slug) || {}).id;
+// sorteia sem repetir até esgotar as questões daquela matéria
+const USADAS = {};
+function sortear(lista, n, chave) {
+  const usadas = USADAS[chave] || (USADAS[chave] = new Set());
+  let livres = lista.filter(q => !usadas.has(q.id));
+  if (livres.length < n) { usadas.clear(); livres = lista; }
+  const fila = embaralhar(livres).slice(0, n);
+  fila.forEach(q => usadas.add(q.id));
+  return fila;
+}
+const todasDoBanco = () => Object.entries(BANCO || {}).flatMap(([slug, m]) => m.questoes.map(q => ({ ...q, sala:salaDaMateria(slug) })));
+function bancoDaSala(s) { return BANCO ? (s.slug ? (BANCO[s.slug] || {}).questoes || [] : todasDoBanco()) : []; }
+function questoesDaSala(s) {
+  const lista = bancoDaSala(s);
+  if (lista.length) return sortear(lista, RODADA, s.slug || 'todas').map(q => ({ ...q, sala:q.sala || s.id }));
+  return embaralhar(PERGUNTAS[s.id].map(q => ({ ...q, sala:s.id })));
+}
 
 function iniciarQuiz(s) {
   iniciarEstudo(s.materia, FUNC.quiz[1]);
-  G = { tipo:'sala', sala:s, fila:embaralhar(PERGUNTAS[s.id].map(q => ({ ...q, sala:s.id }))), i:0, res:[] };
+  G = { tipo:'sala', sala:s, fila:questoesDaSala(s), i:0, res:[] };
   render();
 }
 
@@ -1053,8 +1085,9 @@ function simulado(titulo) {
     document.body.classList.remove('esq');
     document.body.classList.add('zoom');
     iniciarEstudo(titulo, L('Simulado','Simulacro','Mock exam'));
-    const todas = Object.entries(PERGUNTAS).flatMap(([id, l]) => l.map(q => ({ ...q, sala:id })));
-    G = { tipo:'simulado', titulo, fila:embaralhar(todas).slice(0, 5), i:0, res:[] };
+    const banco = todasDoBanco();
+    const fila = banco.length ? sortear(banco, 10, 'simulado') : embaralhar(Object.entries(PERGUNTAS).flatMap(([id, l]) => l.map(q => ({ ...q, sala:id })))).slice(0, 5);
+    G = { tipo:'simulado', titulo, fila, i:0, res:[] };
     setTimeout(render, 650);
   };
   if (MODO !== 'campus') { sairParaCampus(); setTimeout(() => andarAte(NOS.A, ir), 700); }
@@ -1082,8 +1115,10 @@ function render() {
   p.innerHTML = cabecalho() +
     `<div class="prog">${dots}</div>
      <div class="qnum">${L('Questão','Pregunta','Question')} ${G.i + 1} ${L('de','de','of')} ${G.fila.length}${G.tipo === 'simulado' ? ' · ' + sala(q.sala).materia : ''}</div>
-     <h2>${q.q}</h2>
-     <div id="ops">${q.o.map((t, i) => `<button class="opt" data-i="${i}"><span class="l">${'ABCD'[i]}</span><span>${t}</span></button>`).join('')}</div>
+     ${q.c ? `<p class="caso">${esc(q.c)}</p>` : ''}
+     ${q.img ? `<a class="figura" href="${RAIZ + q.img.src}" target="_blank" rel="noopener"><img src="${RAIZ + q.img.src}" alt="${esc(q.img.alt)}"></a>` : ''}
+     <h2>${esc(q.q)}</h2>
+     <div id="ops">${q.o.map((t, i) => `<button class="opt" data-i="${i}"><span class="l">${'ABCDE'[i]}</span><span>${esc(t)}</span></button>`).join('')}</div>
      <div class="exp" id="exp"></div>
      <div class="acoes"><button class="btn" id="sairQuiz">${G.tipo === 'sala' ? L('← Voltar à sala','← Volver a la sala','← Back to the room') : L('Sair','Salir','Exit')}</button><button class="btn pri" id="prox" disabled>${L('Responder','Responder','Answer')}</button></div>`;
   p.querySelectorAll('.opt').forEach(b => b.onclick = () => responder(+b.dataset.i));
@@ -1113,7 +1148,7 @@ function responder(i) {
   document.querySelector('#painel .xp').innerHTML = `<b>${D.xp} XP</b>${L('sequência','racha','streak')} ${D.seq}`;
 
   const e = $('exp');
-  e.innerHTML = `<b style="color:${certa ? 'var(--accent)' : 'var(--bad)'}">${certa ? L('Correto!','¡Correcto!','Correct!') : L('Não foi dessa vez.','Esta vez no.','Not this time.')}</b> ${q.e}`;
+  e.innerHTML = `<b style="color:${certa ? 'var(--accent)' : 'var(--bad)'}">${certa ? L('Correto!','¡Correcto!','Correct!') : L('Não foi dessa vez.','Esta vez no.','Not this time.')}</b> ${esc(q.e)}${q.f ? `<span class="fonte">${L('Fonte','Fuente','Source')}: ${esc(q.f)}</span>` : ''}`;
   e.classList.add('on');
   const prox = $('prox');
   prox.disabled = false;
@@ -1439,8 +1474,8 @@ addEventListener('keydown', e => {
   if (e.key === 'Escape') return MODO === 'sala' && G && G.tipo !== 'menu' ? menuSala(SALA) : sairParaCampus();
   const quiz = G && (G.tipo === 'sala' || G.tipo === 'simulado') && $('ops');
   if (quiz) {
-    const idx = { '1':0, '2':1, '3':2, '4':3, a:0, b:1, c:2, d:3 }[k];
-    if (idx !== undefined && G.res.length === G.i) { responder(idx); return; }
+    const idx = { '1':0, '2':1, '3':2, '4':3, '5':4, a:0, b:1, c:2, d:3, e:4 }[k];
+    if (idx !== undefined && idx < G.fila[G.i].o.length && G.res.length === G.i) { responder(idx); return; }
     if (e.key === 'Enter' && !$('prox')?.disabled && document.activeElement !== $('prox')) $('prox').click();
     return;
   }
