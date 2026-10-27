@@ -4,11 +4,17 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-10-26T15:19:09Z",
+  "updatedAt": "2026-10-27T14:42:19Z",
   "videos": [
     {
+      "id": "DMicstsSpD4",
+      "title": "Gastro Physiology I (10/26/2026) - Dr. Federico Hogë",
+      "section": "videos",
+      "description": ""
+    },
+    {
       "id": "OKYQlaPLNpA",
-      "title": "(22.10.2026) - Dr Federico Hogë",
+      "title": "(22.10.2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -128,13 +134,13 @@
     },
     {
       "id": "N15xLUyP3X0",
-      "title": "Micosis Endemicas (27.08.2026) - Dra Noelia Scappini",
+      "title": "Endemic Mycoses (08/27/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ny6pVL00LlM",
-      "title": "Micro Práctica (16.09.2026) - Dra Nilse Cubilla",
+      "title": "Microbiology Lab (09/16/2026) - Dr. Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
@@ -146,43 +152,43 @@
     },
     {
       "id": "WfCsjF2pWaQ",
-      "title": "Fisiología Neuro (10.09.2026) - Dr Federico Hogë",
+      "title": "Neuro Physiology (09/10/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "KqdjuG-YWME",
-      "title": "Lípidos II (09.09.2026) - Dra Gloria Martinez",
+      "title": "Lipids II (09/09/2026) - Dr. Gloria Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "nMNExddxmK4",
-      "title": "Bioquímica Revisão - Dra Glória Martinez",
+      "title": "Biochemistry Review - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "LrT2DUN-A-s",
-      "title": "Circulatório Final ( Parte I / 03.09.2026) - Dr Federico Hogë",
+      "title": "Circulatory Final (Part I / 09/03/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "9p7ZkKENYLA",
-      "title": "Microbiología práctica (26.08.2026) - Dra Nilse Cubilla",
+      "title": "Practical Microbiology (08/26/2026) - Dr. Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
     {
       "id": "t8_OUgZYtQs",
-      "title": "Circulatório - Dr Federico Hoë",
+      "title": "Circulatory System - Dr. Federico Hoë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "hUV9m65WhQs",
-      "title": "Determinantes de la Salud (25.08.2026) - Dr Andrea Villamayor",
+      "title": "Determinants of Health (08/25/2026) - Dr. Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
@@ -206,13 +212,13 @@
     },
     {
       "id": "aBCm_wNQEEs",
-      "title": "Atención Primária de la Salud (I) - Dra Andrea Villamayor",
+      "title": "Primary Health Care (I) - Dr. Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
     {
       "id": "hTGbWq_rseA",
-      "title": "Fisiología Respiratória VII (24.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology VII (08/24/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -260,13 +266,13 @@
     },
     {
       "id": "0D2DOGt07nE",
-      "title": "Superficial Mycoses (08/13/2026) - Dr. Noelia Scappini",
+      "title": "Micosis Superficiales (13.08.2026) - Dra Noelia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "gPnZ_GYj83I",
-      "title": "Metabolismo de los Carbohidratos II (12.08.2026) - Dra Glória Martinez",
+      "title": "Carbohydrate Metabolism II (08/12/2026) - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -410,13 +416,13 @@
     },
     {
       "id": "otGbXjRTnZA",
-      "title": "Biofísica de la Audición I - Dr Josué Schmidt (02.06.2026)",
+      "title": "Biophysics of Hearing I - Dr. Josué Schmidt (02.06.2026)",
       "section": "videos",
       "description": ""
     },
     {
       "id": "tflyB6s0aiI",
-      "title": "Inmunidad Antitumoral - Dra Andrea Isasi (02.06.2026)",
+      "title": "Antitumor Immunity - Dr. Andrea Isasi (06/02/2026)",
       "section": "videos",
       "description": ""
     },
@@ -428,7 +434,7 @@
     },
     {
       "id": "w83Xq1yfU9g",
-      "title": "Vitamins - Dr. Andrea López (05/27/2026)",
+      "title": "Vitaminas - Dra Andrea López (27.05.2026)",
       "section": "videos",
       "description": ""
     },
@@ -452,13 +458,13 @@
     },
     {
       "id": "meIF5x5l4BQ",
-      "title": "Revisión: Biofísica de la Circulación - Dr Josué Schmidt",
+      "title": "Review: Biophysics of Circulation - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ypyf1RtTZhQ",
-      "title": "Biofísica del Sonido - Dr Josué Schmidt",
+      "title": "Biophysics of Sound - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -602,13 +608,13 @@
     },
     {
       "id": "ZfR7fDLp-Gg",
-      "title": "Proteins V - Dr. Andrea López (06.04.26)",
+      "title": "Proteínas V - Dra Andrea López (06.04.26)",
       "section": "videos",
       "description": ""
     },
     {
       "id": "__ufLjL_rs0",
-      "title": "Proteins IV -- Dr. Andrea López (25.03.26)",
+      "title": "Proteínas IV -- Dra Andrea López (25.03.26)",
       "section": "videos",
       "description": ""
     },
@@ -632,7 +638,7 @@
     },
     {
       "id": "LbQsUnKqYns",
-      "title": "Proteins (continued) - Dr. Andrea López - 18.03.26",
+      "title": "Proteínas (continuación) - Dra Andrea López - 18.03.26",
       "section": "videos",
       "description": ""
     },
@@ -680,7 +686,7 @@
     },
     {
       "id": "xqJ9dp-y3to",
-      "title": "Músculo Cardiaco - Dr Carlos Ariel - 11.03.26",
+      "title": "Cardiac Muscle - Dr. Carlos Ariel - 11.03.26",
       "section": "videos",
       "description": ""
     },
@@ -764,7 +770,7 @@
     },
     {
       "id": "NFraiT0Qca0",
-      "title": "Dra Andrea Isasi (áudio) - 03.03.26 (II)",
+      "title": "Dr. Andrea Isasi (audio) - 03.03.26 (II)",
       "section": "videos",
       "description": ""
     },
@@ -776,7 +782,7 @@
     },
     {
       "id": "j6A5N9bQbvg",
-      "title": "Dra Andrea Isasi (áudio) - 24.02.26 (II)",
+      "title": "Dr. Andrea Isasi (audio) - 24.02.26 (II)",
       "section": "videos",
       "description": ""
     },
@@ -890,13 +896,13 @@
     },
     {
       "id": "5NntAzgVPVE",
-      "title": "Digestive System - Dr. Eduardo Oviedo",
+      "title": "Sistema Digestivo - Dr Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
     {
       "id": "POB9Aw7M6sA",
-      "title": "Sistema Urinário - Dr Eduardo Oviedo",
+      "title": "Urinary System - Dr. Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -914,7 +920,7 @@
     },
     {
       "id": "C-EJi8B_Er0",
-      "title": "Hígado y Visícula Biliar - Dr Víctor Benítez",
+      "title": "Liver and Gallbladder - Dr. Victor Benitez",
       "section": "videos",
       "description": ""
     },
@@ -1040,7 +1046,7 @@
     },
     {
       "id": "EP89wGf8UX8",
-      "title": "Peritoneo 1 y 2 - Dr Víctor Benítez",
+      "title": "Peritoneum 1 and 2 - Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1058,7 +1064,7 @@
     },
     {
       "id": "_7_9ViJFL1c",
-      "title": "Simulado - Dr Ronald Martinez",
+      "title": "Simulation - Dr. Ronald Martinez",
       "section": "videos",
       "description": ""
     },
@@ -1088,7 +1094,7 @@
     },
     {
       "id": "CtP5hMFLbuI",
-      "title": "Abdominal Aorta - Dr Ronald Martinez",
+      "title": "Aorta abdominal - Dr Ronald Martinez",
       "section": "videos",
       "description": ""
     },
