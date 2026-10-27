@@ -63,6 +63,7 @@ body.interior #mascara{opacity:1}
 
 /* ---------- placas das salas reescritas com as matérias do 5º semestre ---------- */
 .placa{position:absolute;transform:translate(-50%,-50%) rotate(var(--r,0deg));display:flex;flex-direction:column;justify-content:center;padding:0 6px;border-radius:9px;background:linear-gradient(180deg,#1c272e,#162128);box-shadow:0 0 5px 3px #19242b;color:#f6f8f8;pointer-events:none;white-space:nowrap;overflow:hidden}
+.arte-txt{position:absolute;display:flex;align-items:center;padding:0 3px;white-space:nowrap;pointer-events:none;letter-spacing:-.1px;font-family:Inter,system-ui,sans-serif}
 .placa b{display:block;width:max-content;font-weight:800;letter-spacing:-.2px;line-height:1.05}
 .placa small{display:block;width:max-content;font-weight:500;color:#dfe7e9;margin-top:3px;line-height:1.05}
 
@@ -536,6 +537,45 @@ let BANCO = null;
 fetch('assets/questoes.json').then(r => r.ok ? r.json() : null).then(j => { if (j && j.materias) BANCO = j.materias; }).catch(() => {});
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' })[c]);
 
+// textos desenhados na arte, cobertos com a tradução em espanhol e inglês
+// [x, y, largura, altura, fundo, cor, tamanho, peso, espanhol, inglês, largura máxima, centralizar]
+const ARTE_TXT = [
+  [267, 27, 32, 11, '#183233', '#84d6b8', 14.5, 600, 'Inicio', 'Home', 46],
+  [368, 28, 51, 11, '#0b1821', '#b8bfc7', 14.5, 500, 'Horarios', 'Schedules', 82],
+  [478, 28, 59, 11, '#0b1921', '#bbc1c9', 14.5, 500, 'Biblioteca', 'Library', 80],
+  [703, 28, 39, 13, '#0b1921', '#b7bfc5', 14.5, 500, 'Mapas', 'Maps', 46],
+  [1016, 27, 61, 12, '#0b1921', '#bcc5cb', 14.5, 500, 'Ejercicios', 'Exercises', 72],
+  [1163, 28, 104, 10, '#15212b', '#79848e', 13.5, 400, 'Buscar en SINUS...', 'Search SINUS...', 150],
+  [97, 104, 122, 16, '#122221', '#e1dcd2', 16, 700, 'Hola, Estudiante 👋', 'Hi, Student 👋', 150],
+  [97, 127, 119, 11, '#112020', '#afb8b8', 13, 400, '7.º semestre · Sección C', '7th semester · Class C', 152],
+  [33, 196, 80, 14, '#0f1c20', '#cdd0d5', 14.5, 600, 'Foco de hoy', "Today's focus", 160],
+  [86, 328, 131, 11, '#67f5ab', '#0f331c', 15, 700, 'Seguir estudiando', 'Continue studying', 150, true],
+  [74, 391, 88, 14, '#102020', '#adb2b5', 14.5, 500, 'Mi progreso', 'My progress', 170],
+  [73, 436, 110, 14, '#1c2424', '#afb2b4', 14.5, 500, 'Agenda de estudio', 'Study planner', 170],
+  [74, 484, 85, 11, '#1a2225', '#b4b6bb', 14.5, 500, 'Mis resúmenes', 'My summaries', 170],
+  [74, 529, 95, 11, '#151e23', '#a6acb1', 14.5, 500, 'Mis ejercicios', 'My exercises', 170],
+  [74, 621, 61, 10, '#192124', '#c0c4c7', 14.5, 500, 'Simulacros', 'Mock exams', 170],
+  [73, 668, 63, 13, '#2b2c2a', '#c8cac7', 14.5, 500, 'Notas', 'Notes', 170],
+  [1270, 98, 89, 13, '#111e29', '#d7dbdf', 15.5, 700, 'Próxima clase', 'Next class', 150],
+  [1459, 101, 47, 9, '#0c1d21', '#66c39a', 12, 500, 'Ver todos', 'See all', 66],
+  [1324, 154, 130, 14, '#0f1e25', '#ced3d7', 14.5, 700, 'Semiología I · Práctica', 'Semiology I · Practice', 142],
+  [1325, 174, 77, 11, '#0e1c24', '#8c949c', 13, 400, 'Laboratorio 2', 'Lab 2', 130],
+  [35, 775, 135, 13, '#192225', '#e2e6e9', 15.5, 700, 'Desafíos de la semana', 'Weekly challenges', 210],
+  [259, 777, 49, 10, '#0e1c22', '#6ab694', 12, 500, 'Ver todos', 'See all', 66],
+  [74, 813, 84, 13, '#101c23', '#b1b8be', 13.5, 400, 'Estudiar 5 h hoy', 'Study 5h today', 170],
+  [74, 861, 116, 13, '#0b1a21', '#aeb6bc', 13.5, 400, 'Resolver 20 preguntas', 'Solve 20 questions', 170],
+  [74, 909, 93, 10, '#0a1820', '#9399a0', 13.5, 400, 'Repasar 1 materia', 'Review 1 subject', 170],
+  [74, 957, 91, 10, '#09161e', '#949ba3', 13.5, 400, 'Hacer 1 simulacro', 'Take 1 mock exam', 170],
+  [721, 942, 264, 14, '#142129', '#d6dade', 15, 700, '¡Elige una sala para empezar a estudiar!', 'Choose a room to start studying!', 290],
+  [721, 964, 232, 13, '#152129', '#8f99a1', 13, 400, 'Sigue tu camino y evoluciona en SINUS.', 'Keep going and grow with SINUS.', 290],
+];
+// placa da Biblioteca e pílulas Teoria/Prática da Semiología, inclinadas como na arte
+if (LANG !== 'pt') PLACAS.push(
+  [1182, 653, 206, 54, 10, L('', 'Biblioteca', 'Library'), L('', 'Resúmenes · Diapositivas · Exámenes · Libros', 'Summaries · Slides · Exams · Books'), 19],
+  [1066, 362, 46, 20, 8, L('', 'Teoría', 'Theory'), '', 14],
+  [1184, 382, 56, 20, 9, L('', 'Práctica', 'Practice'), '', 14],
+);
+
 // ===================== progresso salvo =====================
 const CHAVE = 'sinus-campus-v1';
 const hoje = new Date().toDateString();
@@ -557,6 +597,12 @@ const cam = $('cam');
 traduzirPagina();
 $('placas').innerHTML = PLACAS.map(([x, y, w, h, r, t, sub, fs]) =>
   `<div class="placa" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;--r:${r}deg"><b style="font-size:${fs}px">${t}</b>${sub ? `<small style="font-size:${Math.round(fs * 0.62)}px">${sub}</small>` : ''}</div>`).join('');
+if (LANG !== 'pt') $('placas').insertAdjacentHTML('beforeend', ARTE_TXT.map(([x, y, w, h, fundo, cor, fs, peso, es, en, max, centro]) =>
+  `<div class="arte-txt" data-max="${max}" style="${centro ? `left:${x + w / 2}px;transform:translate(-50%,-50%);justify-content:center` : `left:${x - 3}px;transform:translateY(-50%)`};top:${y + h / 2}px;min-width:${w + 6}px;height:${h + 10}px;background:${fundo};box-shadow:0 0 3px 2px ${fundo};color:${cor};font-size:${fs}px;font-weight:${peso}">${L('', es, en)}</div>`).join(''));
+document.querySelectorAll('.arte-txt').forEach(el => {
+  let f = parseFloat(el.style.fontSize);
+  while (el.scrollWidth > +el.dataset.max && f > 9) el.style.fontSize = (f -= 0.5) + 'px';
+});
 // diminui a fonte até o texto caber na placa
 document.querySelectorAll('.placa').forEach(pl => pl.querySelectorAll('b,small').forEach(el => {
   let f = parseFloat(el.style.fontSize);
