@@ -617,6 +617,18 @@
     var modo = UI.mode === 'practice' ? 'pratica' : 'teoria';
     box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
+  /* resposta em balões: um para cada pergunta da prova prática (ÓRGANO, PROCESO, DESCRIPCIÓN, DX) */
+  function baloes(c) {
+    var L = [['o', 'Órgano'], ['p', 'Proceso'], ['d', 'Alteraciones (descripción)'], ['x', 'Diagnóstico presuntivo']];
+    var html = c.b.map(function (g) {
+      var bal = L.map(function (l) {
+        var v = g[l[0]], body = Array.isArray(v) ? '<ul>' + v.map(function (i) { return '<li>' + H(i) + '</li>' }).join('') + '</ul>' : '<p>' + H(v) + '</p>';
+        return '<div class="sxBal ' + l[0] + '"><span class="sxBalLbl">' + l[1] + '</span>' + body + '</div>';
+      }).join('');
+      return (g.t ? '<div class="sxBalTitle">' + H(g.t) + '</div>' : '') + bal;
+    }).join('');
+    return '<div class="sxBalWrap">' + html + (c.x ? '<small class="sxBalFonte">' + H(c.x) + '</small>' : '') + '</div>';
+  }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, area = UI.mode === 'practice' ? 'pratica' : 'teoria';
     var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area; });
@@ -631,7 +643,7 @@
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
       '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
       (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"></figure>' : '') + '<p class="sxQ' + (c && (c.img || c.video) ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>' +
-      (CART.mostrar ? '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div><div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>'
+      (CART.mostrar ? (c.b ? baloes(c) : '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div>') + '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>'
         : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>') + '</div>' +
       '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">Pular →</button></nav>' +
       '<footer class="sxFlashFooter"><b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span><details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';

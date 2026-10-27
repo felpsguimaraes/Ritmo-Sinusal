@@ -218,3 +218,14 @@ html[data-theme="dark"] .sxLibSearch,html[data-theme="dark"] .sxLibFolder{backgr
 
 .sxFlashStudy .sxCardImg{margin:18px 0 0;text-align:center}.sxFlashStudy .sxCardImg img{display:block;width:100%;max-height:min(62vh,560px);object-fit:contain;border-radius:18px;background:#14101c}.sxFlashStudy .sxQ.comImg{min-height:0;margin:18px 0 22px;font-size:clamp(16px,2vw,20px)}
 .sxFlashStudy .sxCardVideo{margin:18px 0 0;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}.sxFlashStudy .sxCardVideo iframe{width:100%;height:100%;border:0;display:block}
+.sxFlashStudy .sxBalWrap{display:grid;gap:12px;margin-bottom:22px}.sxFlashStudy .sxBalTitle{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#486356;margin-top:6px}
+.sxFlashStudy .sxBal{position:relative;padding:14px 18px 15px;border-radius:22px 22px 22px 6px;border:1px solid var(--bal-b);background:var(--bal-bg);color:var(--bal-c);box-shadow:0 6px 18px #1b51320d}
+.sxFlashStudy .sxBal .sxBalLbl{display:inline-block;font-size:11px;font-weight:750;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:99px;background:var(--bal-l);color:#fff;margin-bottom:8px}
+.sxFlashStudy .sxBal p{font-size:18px;line-height:1.5;margin:0;font-weight:600}.sxFlashStudy .sxBal ul{margin:0;padding-left:20px;font-size:16.5px;line-height:1.55}.sxFlashStudy .sxBal li{margin:3px 0}
+.sxFlashStudy .sxBal.o{--bal-bg:#e5f2ea;--bal-b:#c6e3d2;--bal-c:#173f2c;--bal-l:#1c8a5e}
+.sxFlashStudy .sxBal.p{--bal-bg:#e8effc;--bal-b:#c8d8f4;--bal-c:#1c3566;--bal-l:#3868c4}
+.sxFlashStudy .sxBal.d{--bal-bg:#fff4dd;--bal-b:#f0dcab;--bal-c:#5b3f0c;--bal-l:#b9770e}
+.sxFlashStudy .sxBal.x{--bal-bg:#efe8fb;--bal-b:#d8c9f1;--bal-c:#3a2269;--bal-l:#7447c7}.sxFlashStudy .sxBal.x p{font-size:20px;font-weight:700}
+.sxFlashStudy .sxBalFonte{font-size:12px;line-height:1.5;color:#486356}
+html[data-theme="dark"] .sxFlashStudy .sxBal.o{--bal-bg:#1f3d2e;--bal-b:#3d6b52;--bal-c:#e3f3ea}html[data-theme="dark"] .sxFlashStudy .sxBal.p{--bal-bg:#1f2f52;--bal-b:#3d5a96;--bal-c:#e3ecff}html[data-theme="dark"] .sxFlashStudy .sxBal.d{--bal-bg:#4a3814;--bal-b:#7d6226;--bal-c:#fdf0d4}html[data-theme="dark"] .sxFlashStudy .sxBal.x{--bal-bg:#35245c;--bal-b:#6a4fa8;--bal-c:#efe6ff}html[data-theme="dark"] .sxFlashStudy .sxBalFonte,html[data-theme="dark"] .sxFlashStudy .sxBalTitle{color:#bed9c9}
+@media(max-width:600px){.sxFlashStudy .sxBal p{font-size:17px}.sxFlashStudy .sxBal ul{font-size:15.5px}}
