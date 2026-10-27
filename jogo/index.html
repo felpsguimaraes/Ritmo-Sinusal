@@ -546,8 +546,8 @@ const ARTE_TXT = [
   [703, 28, 39, 13, '#0b1921', '#b7bfc5', 14.5, 500, 'Mapas', 'Maps', 46],
   [1016, 27, 61, 12, '#0b1921', '#bcc5cb', 14.5, 500, 'Ejercicios', 'Exercises', 72],
   [1163, 28, 104, 10, '#15212b', '#79848e', 13.5, 400, 'Buscar en SINUS...', 'Search SINUS...', 150],
-  [97, 104, 122, 16, '#122221', '#e1dcd2', 16, 700, 'Hola, Estudiante 👋', 'Hi, Student 👋', 150],
-  [97, 127, 119, 11, '#112020', '#afb8b8', 13, 400, '7.º semestre · Sección C', '7th semester · Class C', 152],
+  [97, 104, 122, 16, '#122221', '#e1dcd2', 16, 700, 'Hola, Estudiante 👋', 'Hi, Student 👋', 150, false, 'ola'],
+  [97, 127, 119, 11, '#112020', '#afb8b8', 13, 400, '7.º semestre · Sección C', '7th semester · Class C', 152, false, 'turma'],
   [33, 196, 80, 14, '#0f1c20', '#cdd0d5', 14.5, 600, 'Foco de hoy', "Today's focus", 160],
   [86, 328, 131, 11, '#67f5ab', '#0f331c', 15, 700, 'Seguir estudiando', 'Continue studying', 150, true],
   [74, 391, 88, 14, '#102020', '#adb2b5', 14.5, 500, 'Mi progreso', 'My progress', 170],
@@ -569,6 +569,19 @@ const ARTE_TXT = [
   [721, 942, 264, 14, '#142129', '#d6dade', 15, 700, '¡Elige una sala para empezar a estudiar!', 'Choose a room to start studying!', 290],
   [721, 964, 232, 13, '#152129', '#8f99a1', 13, 400, 'Sigue tu camino y evoluciona en SINUS.', 'Keep going and grow with SINUS.', 290],
 ];
+// nome, período e turma do aluno, gravados pelo app SINUS neste aparelho
+const ALUNO = (() => { try { return JSON.parse(localStorage.getItem('sinus_aluno') || 'null'); } catch (e) { return null; } })();
+if (ALUNO && ALUNO.nome) {
+  const n = ALUNO.nome, per = ALUNO.periodo || 5, t = ALUNO.turma;
+  const ord = { 1:'1st', 2:'2nd', 3:'3rd' }[per] || per + 'th';
+  ARTE_TXT[6][8] = L('', `Hola, ${n} 👋`, `Hi, ${n} 👋`);
+  ARTE_TXT[6][9] = ARTE_TXT[6][8];
+  ARTE_TXT[6].pt = `Olá, ${n} 👋`;
+  ARTE_TXT[7][8] = L('', `${per}.º semestre${t ? ' · Sección ' + t : ''}`, `${ord} semester${t ? ' · Class ' + t : ''}`);
+  ARTE_TXT[7][9] = ARTE_TXT[7][8];
+  ARTE_TXT[7].pt = `${per}º Período${t ? ' · Turma ' + t : ''}`;
+}
+
 // placa da Biblioteca e pílulas Teoria/Prática da Semiología, inclinadas como na arte
 if (LANG !== 'pt') PLACAS.push(
   [1182, 653, 206, 54, 10, L('', 'Biblioteca', 'Library'), L('', 'Resúmenes · Diapositivas · Exámenes · Libros', 'Summaries · Slides · Exams · Books'), 19],
@@ -597,8 +610,12 @@ const cam = $('cam');
 traduzirPagina();
 $('placas').innerHTML = PLACAS.map(([x, y, w, h, r, t, sub, fs]) =>
   `<div class="placa" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;--r:${r}deg"><b style="font-size:${fs}px">${t}</b>${sub ? `<small style="font-size:${Math.round(fs * 0.62)}px">${sub}</small>` : ''}</div>`).join('');
-if (LANG !== 'pt') $('placas').insertAdjacentHTML('beforeend', ARTE_TXT.map(([x, y, w, h, fundo, cor, fs, peso, es, en, max, centro]) =>
-  `<div class="arte-txt" data-max="${max}" style="${centro ? `left:${x + w / 2}px;transform:translate(-50%,-50%);justify-content:center` : `left:${x - 3}px;transform:translateY(-50%)`};top:${y + h / 2}px;min-width:${w + 6}px;height:${h + 10}px;background:${fundo};box-shadow:0 0 3px 2px ${fundo};color:${cor};font-size:${fs}px;font-weight:${peso}">${L('', es, en)}</div>`).join(''));
+// em português só entram os textos personalizados; nos outros idiomas, todos
+$('placas').insertAdjacentHTML('beforeend', ARTE_TXT.filter(i => LANG !== 'pt' || i.pt).map(item => {
+  const [x, y, w, h, fundo, cor, fs, peso, es, en, max, centro] = item;
+  const texto = LANG === 'pt' ? item.pt : L('', es, en);
+  return `<div class="arte-txt" data-max="${max}" style="${centro ? `left:${x + w / 2}px;transform:translate(-50%,-50%);justify-content:center` : `left:${x - 3}px;transform:translateY(-50%)`};top:${y + h / 2}px;min-width:${w + 6}px;height:${h + 10}px;background:${fundo};box-shadow:0 0 3px 2px ${fundo};color:${cor};font-size:${fs}px;font-weight:${peso}">${esc(texto)}</div>`;
+}).join(''));
 document.querySelectorAll('.arte-txt').forEach(el => {
   let f = parseFloat(el.style.fontSize);
   while (el.scrollWidth > +el.dataset.max && f > 9) el.style.fontSize = (f -= 0.5) + 'px';

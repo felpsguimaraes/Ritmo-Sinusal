@@ -694,6 +694,7 @@
   W.renderHome = function () {
     var el=$id('page-home');if(!el)return;
     var first=(S.nome||S.nomeGoogle||'estudante').split(' ')[0];
+    try { localStorage.setItem('sinus_aluno', JSON.stringify({ nome:(S.nome||S.nomeGoogle) ? first : '', periodo:(S.prefs&&S.prefs.periodo)||5, turma:S.turma||(S.prefs&&S.prefs.turma)||'' })) } catch (e) {}
     el.innerHTML='<div class="sxHomeWelcome"><span class="eyebrow">Seu espaço no SINUS</span><h1>Olá, '+H(first)+'.</h1><p>O que vamos fazer hoje?</p></div>'+
       '<a class="glass" href="/jogo/" style="display:flex;gap:16px;align-items:center;margin:0 0 14px;padding:12px;text-decoration:none;color:inherit;overflow:hidden">'+
         '<img src="/jogo/assets/sinus-campus-vazio.jpg" alt="" loading="lazy" style="width:clamp(96px,26vw,180px);aspect-ratio:3/2;object-fit:cover;border-radius:12px;flex:none">'+
