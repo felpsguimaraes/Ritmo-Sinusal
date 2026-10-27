@@ -349,6 +349,19 @@
   function byId(arr, id) { for (var i = 0; i < arr.length; i++) if (arr[i].id === id) return arr[i]; return null; }
   var P2Q = ['iam', 'tbc', 'aterosclerosis', 'colesterolosis', 'esteatosis', 'melanoma', 'apendicitis', 'pielonefritis'].map(function (id) { return byId(P2, id); })
     .concat([byId(TOTAL, 't15'), byId(TOTAL, 't13')]);
+  /* P2 · una lámina por foto (carpeta LAMINARIO P2 + fotos enviadas por el alumno): cada foto es un ejercicio
+     con las 4 preguntas (ÓRGANO, PROCESO, DESCRIPCIÓN, DX), con la respuesta de su tema.
+     Hígado: la carpeta se llama «Hígado – Cirrosis (esteatose)» y no dice cuál foto es cuál; se acepta esteatosis o cirrosis. */
+  var P2FOTOS = [];
+  [['iam', 'iam', 7], ['apendicitis', 'apendicitis', 16], ['esteatosis', 'higado', 8]].forEach(function (b) {
+    var base = byId(P2, b[0]);
+    for (var i = 1; i <= b[2]; i++) {
+      var n = (i < 10 ? '0' : '') + i;
+      var o = Object.assign({}, base, { id: base.id + '_f' + n, nome: base.nome + ' · foto ' + i, img: [{ src: 'img/p2fotos/' + b[1] + '-' + n + '.jpg', k: 'turma' }] });
+      if (b[0] === 'esteatosis') o.dx = ['Esteatosis hepática (o cirrosis)', 'esteatos|higado graso|figado gorduroso|cirros'];
+      P2FOTOS.push(o);
+    }
+  });
   function uniq(arr) { var out = []; arr.forEach(function (x) { if (out.indexOf(x) < 0) out.push(x); }); return out; }
 
   /* ───────── Teoria das aulas práticas da Dra. Alicia Gonzalez (pasta da turma G) ─────────
@@ -617,6 +630,9 @@
     par('lam_total', 'Laminario', 'Laminario completo (28 láminas)',
       'La tabla corregida del laminario (25 láminas) más 3 láminas nuevas de duodeno y estómago de la prueba práctica oficial, en orden, con la foto de cada lámina. Seis láminas tienen una segunda foto oficial, también tomada de la prueba.',
       'Las 28 láminas del laminario en orden aleatorio, sin banco de palabras.', SRC_T + '; 3 láminas y 6 fotos extra: PDF oficial «Laminas Anatopato I - Practica P1_P2_Final»', TOTAL),
+    par('lam_p2_fotos', 'Práctica · P2 fotos', 'Láminas de la P2: una por foto',
+      'Cada foto de la P2 es una lámina: marque órgano, proceso y dx con botones y escriba la descripción.',
+      'Las mismas fotos en orden aleatorio, sin banco de palabras.', 'Carpeta LAMINARIO P2 (Drive de la turma), pizarrón «Temas P2 Práctica» y fotos enviadas por el alumno', P2FOTOS),
     [{ id: 'lam_simulacro_p1', area: 'pratica', tipo: 'laminas', nivel: '3', sorteo: 5, cronometro: true, banco: true, clase: 'Simulacro P1', titulo: 'Simulacro P1',
       resumen: 'Las láminas de la P1, en orden aleatorio, con botones de órgano, proceso y DX; sólo la descripción se escribe. Con cronómetro.',
       fuente: 'Láminas de la P1 (clases prácticas 1 y 2)', laminas: P1, procesos: uniq(P1.map(function (L) { return L.proceso[0]; })) },
