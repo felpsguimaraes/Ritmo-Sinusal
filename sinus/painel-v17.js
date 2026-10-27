@@ -447,9 +447,9 @@ function revealSubjectiveAnswer(){
   const T=UI.training,q=T.questions[T.index];
   if(T.answered)return;
   const value=$('answerText')?.value?.trim()||'';
-  $('qFeedback').innerHTML=`<div class="sxSubjectiveCheck"><span class="eyebrow">Compare com o gabarito</span><p><b>Resposta esperada:</b> ${esc(q.answer||'')}</p><p>${esc(q.explanation||'')}</p><div class="sxQuestionActions"><button class="btn primary sm" onclick="answerTraining('__self_correct__')">Minha resposta está correta</button><button class="btn sm" onclick="answerTraining('__self_wrong__')">Preciso revisar</button></div>${!value?'<small>Você ainda não digitou sua resposta.</small>':''}</div>`;
+  $('qFeedback').innerHTML=`<div class="sxSubjectiveCheck"><span class="eyebrow">Compare com o gabarito</span><p><b>Resposta esperada:</b> ${esc(q.answer||'')}</p><div class="sxExplica">${sxRico(q.explanation||'')}</div>${sxPorqueErrei(q.why)}<div class="sxQuestionActions"><button class="btn primary sm" onclick="answerTraining('__self_correct__')">Minha resposta está correta</button><button class="btn sm" onclick="answerTraining('__self_wrong__')">Preciso revisar</button></div>${!value?'<small>Você ainda não digitou sua resposta.</small>':''}</div>`;
 }
-function revealFlash(){const q=UI.training.questions[UI.training.index]; $('flashBox').innerHTML=`<div><span class="eyebrow">Resposta</span><h2>${esc(q.answer)}</h2><p class="soft" style="font-size:10px;line-height:1.7;margin-top:8px">${esc(q.explanation||'')}</p></div>`; $('flashRate').classList.remove('hidden')}
+function revealFlash(){const q=UI.training.questions[UI.training.index]; $('flashBox').innerHTML=`<div><span class="eyebrow">Resposta</span><h2>${esc(q.answer)}</h2><div class="sxExplica" style="margin-top:8px">${sxRico(q.explanation||'')}</div>${sxPorqueErrei(q.why)}</div>`; $('flashRate').classList.remove('hidden')}
 function answerTraining(ans){
   const T=UI.training,q=T.questions[T.index];if(T.answered)return;
   const norm=x=>String(x||'').trim().toLocaleLowerCase();
@@ -469,7 +469,7 @@ function answerTraining(ans){
   });
   $('qFeedback').innerHTML=`<div class="sxAnswerStatus" role="status">${ok?'✓ Resposta correta':'Vamos revisar esta resposta'}</div>
   <div class="sxQuestionActions"><button class="btn ${ok?'':'primary'}" onclick="showTrainingExplanation()">${ok?'Ver explicação':'Entender meu erro'}</button><button class="btn ${ok?'primary':''}" onclick="nextQuestion()">${T.index+1<T.questions.length?'Próxima questão':'Ver resultado'}</button></div>
-  <section id="sxQuestionExplanation" class="sxQuestionExplanation" hidden><span class="eyebrow">Resposta esperada</span><h3>${esc(q.answer||'')}</h3><p>${esc(q.explanation||'Esta questão ainda não tem uma explicação cadastrada.')}</p></section>`;
+  <section id="sxQuestionExplanation" class="sxQuestionExplanation" hidden><span class="eyebrow">Resposta esperada</span><h3>${esc(q.answer||'')}</h3><div class="sxExplica">${q.explanation?sxRico(q.explanation):'<p>Esta questão ainda não tem uma explicação cadastrada.</p>'}</div>${sxPorqueErrei(q.why)}</section>`;
 }
 function showTrainingExplanation(){const el=$('sxQuestionExplanation');if(el){el.hidden=!el.hidden;if(!el.hidden)el.scrollIntoView({behavior:'smooth',block:'nearest'});}}
 

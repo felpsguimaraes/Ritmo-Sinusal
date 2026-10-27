@@ -272,3 +272,14 @@ html[data-theme="dark"] .sxFlashStudy .sxGrupos .chip{background:#1d3328;border-
 .sxComentFonte em{font-style:normal;background:#fff;border:1px solid #dce7df;border-radius:999px;padding:2px 8px}
 html[data-theme="dark"] .sxComent{background:#17261f}html[data-theme="dark"] .sxComent h4{color:#7fd1ae}html[data-theme="dark"] .sxComentFonte em{background:#1c2f26;border-color:#2c4538}
 @media(min-width:900px){.sxFlashStudy.sxMedia .sxComent{grid-column:1;margin:0}}
+
+/* Grifos e "por que se erra" nos comentários e explicações */
+.sxExplica p,.sxComent p{margin:0 0 .6em;line-height:1.6}.sxExplica p:last-child,.sxComent p:last-child{margin-bottom:0}
+.sxExplica strong,.sxComent strong{font-weight:800;color:#0e5a41}
+mark.sxGrifo{background:linear-gradient(transparent 38%,#ffe27a 38%);color:inherit;padding:0 2px;border-radius:2px}
+html[data-theme="dark"] mark.sxGrifo{background:linear-gradient(transparent 38%,#7a6410 38%)}
+html[data-theme="dark"] .sxExplica strong,html[data-theme="dark"] .sxComent strong{color:#8fe0bf}
+.sxPorque{margin:10px 0 0;border-left:3px solid #c0623a;background:#fdf1ea;border-radius:0 14px 14px 0;padding:9px 13px}
+.sxPorque h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c0623a;margin:0 0 4px}
+.sxPorque p{font-size:13px;line-height:1.55;margin:0 0 .5em}.sxPorque p:last-child{margin:0}
+html[data-theme="dark"] .sxPorque{background:#2a1c16}
