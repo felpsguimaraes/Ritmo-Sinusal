@@ -229,3 +229,13 @@ html[data-theme="dark"] .sxLibSearch,html[data-theme="dark"] .sxLibFolder{backgr
 .sxFlashStudy .sxBalFonte{font-size:12px;line-height:1.5;color:#486356}
 html[data-theme="dark"] .sxFlashStudy .sxBal.o{--bal-bg:#1f3d2e;--bal-b:#3d6b52;--bal-c:#e3f3ea}html[data-theme="dark"] .sxFlashStudy .sxBal.p{--bal-bg:#1f2f52;--bal-b:#3d5a96;--bal-c:#e3ecff}html[data-theme="dark"] .sxFlashStudy .sxBal.d{--bal-bg:#4a3814;--bal-b:#7d6226;--bal-c:#fdf0d4}html[data-theme="dark"] .sxFlashStudy .sxBal.x{--bal-bg:#35245c;--bal-b:#6a4fa8;--bal-c:#efe6ff}html[data-theme="dark"] .sxFlashStudy .sxBalFonte,html[data-theme="dark"] .sxFlashStudy .sxBalTitle{color:#bed9c9}
 @media(max-width:600px){.sxFlashStudy .sxBal p{font-size:17px}.sxFlashStudy .sxBal ul{font-size:15.5px}}
+@media(min-width:900px){
+.sxFlashStudy.sxMedia{max-width:1240px}
+.sxFlashStudy.sxMedia .sxCard{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);column-gap:32px;align-items:start}
+.sxFlashStudy.sxMedia .sxDeckRow{grid-column:1/-1;margin-bottom:14px}
+.sxFlashStudy.sxMedia .sxCardImg,.sxFlashStudy.sxMedia .sxCardVideo{grid-column:1;grid-row:2/span 8;position:sticky;top:16px;margin:0}
+.sxFlashStudy.sxMedia .sxCardImg img{max-height:calc(100vh - 150px);min-height:320px}
+.sxFlashStudy.sxMedia .sxQ,.sxFlashStudy.sxMedia .sxBalWrap,.sxFlashStudy.sxMedia .sxA,.sxFlashStudy.sxMedia .sxGrades,.sxFlashStudy.sxMedia [data-sx-virar]{grid-column:2}
+.sxFlashStudy.sxMedia .sxQ.comImg{margin:0 0 16px;font-size:clamp(17px,1.5vw,21px)}
+.sxFlashStudy.sxMedia .sxBalWrap{margin-bottom:18px}
+}
