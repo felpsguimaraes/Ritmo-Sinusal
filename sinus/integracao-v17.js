@@ -594,6 +594,9 @@
     var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 });
     return ks.indexOf(slug + '/geral') >= 0 ? slug + '/geral' : ks[0];
   }
+  /* API para o hub de Treino: escolhe baralho/assunto e lê o progresso sem abrir a matéria antes */
+  W.sxTreinoAbrir = function (k, g) { var s = subjectData(); if (!s || !DECKS[k]) return false; ESCOLHA[s.slug] = k; if (g) GRUPO[k] = g; else delete GRUPO[k]; CART.key = ''; return true };
+  W.sxTreinoProg = function (k) { return lerLocal(k) };
   function abrirDeck(k) {
     if (CART.key === k) return;
     PROG = lerLocal(k);
