@@ -1115,12 +1115,12 @@
       var im = imgs[i];
       stage.innerHTML = ''; stage.classList.remove('fail');
       if (!im) { stage.appendChild(el('p', { class: 'lamnoimg' }, esc(T.imgFail))); cap.textContent = ''; return; }
-      var img = el('img', { class: 'lammain', src: imgURL(im, 'w1600'), alt: T.lamWord + ' ' + (pos + 1) + ' · ' + T.photo + ' ' + (i + 1), referrerpolicy: 'no-referrer', decoding: 'async' });
+      var img = el('img', { class: 'lammain', src: imgURL(im, 'w1600'), alt: T.lamWord + ' ' + (pos + 1) + ' · ' + T.photo + ' ' + (i + 1), referrerpolicy: 'no-referrer', decoding: 'async', 'data-laminario-zoom': '' });
       img.addEventListener('error', function () {
         stage.classList.add('fail');
         stage.appendChild(el('p', { class: 'lamnoimg' }, esc(T.imgFail) + (im.drive ? ' <a href="' + esc(driveView(im.drive)) + '" target="_blank" rel="noopener">' + esc(T.openDrive) + '</a>' : '')));
       });
-      function zoom() { openLightbox(imgs, k, function (j) { if (j !== k) showImg(j); }); }
+      function zoom() { if (window.SINUSLaminarioZoom && img) { window.SINUSLaminarioZoom.open(img); return; } openLightbox(imgs, k, function (j) { if (j !== k) showImg(j); }); }
       img.addEventListener('click', zoom);
       stage.appendChild(img);
       var zb = el('button', { type: 'button', class: 'lamzoom' }, ZOOM_SVG + '<span>' + esc(T.zoom) + '</span>');
