@@ -77,3 +77,15 @@ html[data-theme="dark"] .sxSeg button.on{background:#254538!important;color:#c2e
 html[data-theme="dark"] #app{--bg2:#19271f}html[data-theme="dark"] #subjectTabs>button.active{background:#254538!important;color:#e3eee8!important}
 
 .sxAcademicSubject{border:1px solid var(--line);border-radius:18px;padding:18px;margin:12px 0}.sxAcademicSubject h4{font-size:16px;margin-bottom:7px}.sxAcademicSubject>.soft{font-size:12px;margin-bottom:12px}.sxAcademicActivity{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}.sxAcademicActivity>strong{display:block;font-size:13px;margin-bottom:12px}.sxAcademicActivity .field{margin-top:12px}
+
+/* Matéria: botões de seção dentro do quadro do cabeçalho, compactos (ocupam uma faixa, não cinco cartões) */
+#subjectView .subjectHero,#subjectView .v11SubjectHero{padding:22px 26px 14px!important;margin-bottom:0!important;border-bottom:0!important;border-bottom-left-radius:0!important;border-bottom-right-radius:0!important}
+#subjectView .subjectHero h1{margin-top:4px}
+#subjectTabs{display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:0 0 16px!important;padding:2px 26px 20px!important;background:var(--bg2)!important;border:1px solid var(--line)!important;border-top:0!important;border-radius:0 0 24px 24px!important;overflow:visible}
+#subjectTabs>button{flex-direction:row!important;gap:8px!important;min-height:38px!important;padding:6px 15px!important;border-radius:999px!important;font-size:13px!important;font-weight:650!important;background:transparent!important;border:1px solid var(--line)!important;color:var(--text)!important;white-space:nowrap}
+#subjectTabs>button svg{width:17px!important;height:17px!important}
+#subjectTabs>button:hover{border-color:#a8cdbb!important;background:#f1f7f3!important}
+#subjectTabs>button.active{background:#e4f1eb!important;border-color:#8fc1a9!important;color:#176650!important}
+.sxSplitTools{margin:0 0 14px!important}
+html[data-theme="dark"] #subjectTabs>button:hover{background:#223a2e!important}
+@media(max-width:850px){#subjectTabs{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;padding:2px 16px 16px!important}#subjectTabs>button{flex:1 1 calc(50% - 8px);justify-content:center}#subjectTabs>button:last-child:nth-child(odd){flex-basis:100%}#subjectView .subjectHero,#subjectView .v11SubjectHero{padding:18px 16px 12px!important}}
