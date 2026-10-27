@@ -89,3 +89,36 @@ html[data-theme="dark"] #app{--bg2:#19271f}html[data-theme="dark"] #subjectTabs>
 .sxSplitTools{margin:0 0 14px!important}
 html[data-theme="dark"] #subjectTabs>button:hover{background:#223a2e!important}
 @media(max-width:850px){#subjectTabs{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;padding:2px 16px 16px!important}#subjectTabs>button{flex:1 1 calc(50% - 8px);justify-content:center}#subjectTabs>button:last-child:nth-child(odd){flex-basis:100%}#subjectView .subjectHero,#subjectView .v11SubjectHero{padding:18px 16px 12px!important}}
+
+/* ===== Padrão compacto: proporção única para Início, Matérias, Biblioteca e Treino ===== */
+/* Início: cartões horizontais (ícone à esquerda, texto à direita) */
+.sxHomeActions{gap:10px!important}
+.sxHomeActions>button{display:grid!important;grid-template-columns:40px minmax(0,1fr);column-gap:12px;align-items:center;padding:12px 14px!important;min-height:0}
+.sxHomeActions>button>span{grid-row:1/3;width:40px!important;height:40px!important;font-size:20px!important;border-radius:12px!important;margin:0!important}
+.sxHomeActions h2{font-size:16px!important;line-height:1.25;margin:0!important}
+.sxHomeActions p{font-size:12.5px!important;margin:2px 0 0!important;line-height:1.35}
+.sxHomeWelcome{margin-bottom:12px!important}
+/* Matérias: cartões baixos */
+#app .cards{gap:12px!important}
+#app .cards>.card{padding:14px 16px!important;min-height:0!important;border-radius:18px!important}
+#app .cards .iconWrap{width:34px!important;height:34px!important}
+#app .cards .iconWrap svg{width:24px!important;height:24px!important}
+#app .cards h3{font-size:17px!important;margin:10px 0 4px!important;line-height:1.25}
+#app .cards p{font-size:13px!important;margin:0!important}
+#app .cards .tagRow{padding-top:8px!important}
+/* Biblioteca */
+.sxLibHeader{margin:8px 0 14px!important}
+.sxLibHeader h1{font-size:28px!important;margin:4px 0!important}
+.sxLibHeader p{font-size:13.5px!important}
+.sxLibHeader .btn{min-height:38px!important}
+/* Treino */
+.sxUnifiedIntro{padding:16px 18px!important}
+.sxUnifiedIntro h2{font-size:clamp(19px,2.4vw,23px)!important;margin:4px 0 6px!important}
+.sxUnifiedIntro p{margin:0 0 10px!important;line-height:1.5!important}
+.sxUnifiedNumbers{margin:12px 0!important;padding:10px 0!important;gap:8px 16px!important}
+.sxUnifiedNumbers b{font-size:18px!important}
+/* Botões proporcionais em geral */
+#app .btn{min-height:36px;padding:7px 14px;font-size:13px}
+#app .btn.sm{min-height:32px;padding:5px 11px;font-size:12.5px}
+@media(max-width:850px){.sxHomeActions{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sxHomeActions>button{grid-template-columns:34px minmax(0,1fr);padding:10px!important}.sxHomeActions>button>span{width:34px!important;height:34px!important;font-size:17px!important}.sxHomeActions p{display:none}#app .cards{grid-template-columns:1fr!important}}
+@media(min-width:900px){.sxHomeActions{grid-template-columns:repeat(4,minmax(0,1fr))!important}.sxHomeWelcome h1{font-size:34px!important;margin:4px 0!important}}
