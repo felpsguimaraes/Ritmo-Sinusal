@@ -937,6 +937,73 @@
   aplicarTema(temaAtual());
   definirIdioma(idioma(), false);
   if (!W.SINUS_DEMO && 'serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(function () {});
+
+  // Exercícios do laminário: mesma estrutura dos flashcards, com campos de resposta e botão Corrigir
+  var EX = { key: '', fila: [], i: 0, respostas: {}, mostrar: false };
+  function gabaritoLiteral(c) {
+    if (!c || !c.b || !c.b[0]) return null;
+    var b = c.b[0];
+    var alt = Array.isArray(b.d) ? b.d.join('; ') : (b.d || '');
+    if (/cirrosis|esteatosis/i.test(b.x || '') || /t13|lam-t13/i.test(c.id || '')) {
+      return { o: 'Hígado', p: 'Inflamatorio crónico / Acúmulos intracelulares',
+        alt: 'Parénquima hepático con histoarquitectura alterada y reemplazada por nódulos regenerativos, separados por tabiques de tejido conectivo. Hepatocitos con vacuolas lipídicas. Infiltrado inflamatorio crónico sobreagregado.',
+        dx: 'Cirrosis hepática / Esteatosis hepática' };
+    }
+    if (/colecistit|colesterolos/i.test(b.x || '') || /colesterolosis|vesicula/i.test(c.id || '')) {
+      return { o: 'Vesícula biliar', p: 'Inflamación crónica - Acúmulos intracelulares',
+        alt: 'Proceso inflamatorio crónico con presencia de linfocitos aislados y en nidos. Hipertrofia de la capa muscular con acentuación de los senos de Rokitansky-Aschoff. Macrófagos espumosos en la lámina propria.',
+        dx: 'Colecistitis crónica / Colesterolosis' };
+    }
+    return { o: b.o || '', p: b.p || '', alt: alt, dx: b.x || '' };
+  }
+  W.renderExercicios = function () {
+    var s = subjectData(), slug = s && s.slug;
+    if (slug !== 'anatopato') { if (W.setTab) W.setTab('cartoes'); return; }
+    var box = $id('subjectContent');
+    var ks = ['anatopato/p1', 'anatopato/p2', 'anatopato/laminario'].filter(function (k) { return DECKS[k]; });
+    if (!ks.length) { box.innerHTML = emptyBox('Nenhuma lâmina disponível.', ''); return; }
+    if (!EX.key || ks.indexOf(EX.key) < 0) EX.key = ks[0];
+    var deck = DECKS[EX.key];
+    if (!EX.fila.length || EX._k !== EX.key) { EX.fila = (deck.cartoes || []).slice(); EX.i = 0; EX._k = EX.key; EX.mostrar = false; }
+    var c = EX.fila[EX.i] || {};
+    var g = gabaritoLiteral(c);
+    var rid = c.id || ('ex' + EX.i);
+    var r = EX.respostas[rid] || { o: '', p: '', alt: '', dx: '' };
+    var img = c.img ? '<img src="' + H(c.img) + '" alt="Lâmina" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;margin-bottom:12px">' : '';
+    var chips = '<div class="filters" style="margin-bottom:12px">' + ks.map(function (x) {
+      var label = x.indexOf('/p1') >= 0 ? 'P1' : x.indexOf('/p2') >= 0 ? 'P2' : 'Laminário';
+      return '<button class="chip ' + (x === EX.key ? 'active' : '') + '" data-ex-deck="' + H(x) + '">' + label + '</button>';
+    }).join('') + '</div>';
+    var fields = '<div class="fields" style="display:grid;gap:10px;margin:12px 0">' +
+      '<label>1. Órgano<textarea data-ex-f="o" style="width:100%;min-height:56px;border:1px solid #d7dde6;border-radius:8px;padding:8px;font:inherit">' + H(r.o) + '</textarea></label>' +
+      '<label>2. Proceso<textarea data-ex-f="p" style="width:100%;min-height:56px;border:1px solid #d7dde6;border-radius:8px;padding:8px;font:inherit">' + H(r.p) + '</textarea></label>' +
+      '<label>3. Alteraciones<textarea data-ex-f="alt" style="width:100%;min-height:72px;border:1px solid #d7dde6;border-radius:8px;padding:8px;font:inherit">' + H(r.alt) + '</textarea></label>' +
+      '<label>4. Diagnóstico<textarea data-ex-f="dx" style="width:100%;min-height:56px;border:1px solid #d7dde6;border-radius:8px;padding:8px;font:inherit">' + H(r.dx) + '</textarea></label>' +
+      '</div>';
+    var gab = EX.mostrar && g ? '<div class="answer show" style="background:#eaf7f0;border:1px solid #bde5cf;border-radius:12px;padding:14px;margin-top:12px"><h3 style="margin:0 0 8px;color:#176b45">Gabarito</h3>' +
+      '<div><b>Órgano:</b> ' + H(g.o) + '</div><div><b>Proceso:</b> ' + H(g.p) + '</div><div><b>Alteraciones:</b> ' + H(g.alt) + '</div><div><b>Diagnóstico:</b> ' + H(g.dx) + '</div></div>' : '';
+    box.innerHTML = '<section class="sxFlashStudy">' + chips +
+      '<header class="sxFlashHeader"><div><span class="eyebrow">EXERCÍCIOS</span><h2>' + H(deck.nome || 'Laminário') + '</h2></div><span class="sxFlashCount">' + (EX.i + 1) + ' / ' + EX.fila.length + '</span></header>' +
+      '<div class="sxFlashProgress"><i style="width:' + (100 * (EX.i + 1) / Math.max(1, EX.fila.length)) + '%"></i></div>' +
+      '<div class="glass sxCard">' + img +
+      '<div class="sxDeckRow"><span class="pill green">' + H(c.t || '') + '</span></div>' +
+      '<p class="sxQ">' + H(c.q || 'Observe a lâmina e responda:') + '</p>' +
+      fields +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">' +
+      '<button class="btn primary" data-ex-corrigir>Corrigir</button>' +
+      '<button class="btn" data-ex-ocultar>Ocultar gabarito</button>' +
+      '<button class="btn" data-ex-limpar>Limpar</button>' +
+      '</div>' + gab + '</div>' +
+      '<nav class="sxFlashNav"><button class="btn" data-ex-move="-1" ' + (EX.i === 0 ? 'disabled' : '') + '>← Anterior</button><button class="btn" data-ex-move="1">Próxima →</button></nav>' +
+      '</section>';
+    qsa('[data-ex-deck]').forEach(function (b) { b.onclick = function () { EX.key = b.getAttribute('data-ex-deck'); EX.fila = []; EX.mostrar = false; W.renderExercicios(); }; });
+    qsa('[data-ex-f]').forEach(function (ta) { ta.oninput = function () { var f = ta.getAttribute('data-ex-f'); if (!EX.respostas[rid]) EX.respostas[rid] = { o: '', p: '', alt: '', dx: '' }; EX.respostas[rid][f] = ta.value; }; });
+    var btnC = box.querySelector('[data-ex-corrigir]'); if (btnC) btnC.onclick = function () { EX.mostrar = true; W.renderExercicios(); };
+    var btnO = box.querySelector('[data-ex-ocultar]'); if (btnO) btnO.onclick = function () { EX.mostrar = false; W.renderExercicios(); };
+    var btnL = box.querySelector('[data-ex-limpar]'); if (btnL) btnL.onclick = function () { EX.respostas[rid] = { o: '', p: '', alt: '', dx: '' }; EX.mostrar = false; W.renderExercicios(); };
+    qsa('[data-ex-move]').forEach(function (b) { b.onclick = function () { var d = +b.getAttribute('data-ex-move'); EX.i = Math.max(0, Math.min(EX.fila.length - 1, EX.i + d)); EX.mostrar = false; W.renderExercicios(); }; });
+  };
+
   W.SinusApp = { S: S, salvarPrefs: salvarPrefs, sair: sair, montarDados: montarDados, abrirPersonalizacao: abrirPersonalizacao, definirIdioma: definirIdioma, aplicarTema: aplicarTema };
   if (studyEmbedded && W.SINUS_DEMO) backend.signIn();
 })();
