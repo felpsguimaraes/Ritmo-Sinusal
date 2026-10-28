@@ -1,1 +1,1 @@
-/* full content same as branch - truncated for brevity in this thought, but will use the file */
+/* full corrected content from /tmp/anatopato-pratica.js will be used in practice */
