@@ -410,7 +410,55 @@ function startTraining(){
   UI.training.index=0;UI.training.correct=0;UI.training.answered=false;
   renderQuestion();
 }
-function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) return renderTrainingResult(); const type=trainingTypes().find(x=>x.id===q.type)||{label:q.type}; $('subjectContent').innerHTML=`
+function laminaDaQuestao(q){
+  if(!q) return null;
+  var bancos=window.SINUS_CARTOES||{}, id=String(q.id||''), keys=Object.keys(bancos);
+  for(var i=0;i<keys.length;i++){
+    var cs=(bancos[keys[i]]&&bancos[keys[i]].cartoes)||[];
+    for(var j=0;j<cs.length;j++){
+      if('fc_'+keys[i].replace('/','_')+'_'+cs[j].id===id) return cs[j];
+    }
+  }
+  if(q.image||q.balloons) return {id:q.id,img:q.image||'',video:q.video||'',q:q.prompt,a:q.answer,t:q.topic||'',b:q.balloons||null};
+  return null;
+}
+function sxExState(){return window.__sxEx=window.__sxEx||{draft:{},show:{}}}
+function sxExSave(){
+  var q=UI.training&&UI.training.questions&&UI.training.questions[UI.training.index]; if(!q)return;
+  var d=sxExState().draft; d[q.id]=d[q.id]||{};
+  document.querySelectorAll('#subjectContent [data-exq]').forEach(function(t){d[q.id][t.getAttribute('data-exq')]=t.value});
+}
+function sxExVer(){sxExSave(); var q=UI.training.questions[UI.training.index]; sxExState().show[q.id]=true; renderQuestion()}
+function sxExOcultar(){sxExSave(); var q=UI.training.questions[UI.training.index]; sxExState().show[q.id]=false; renderQuestion()}
+function sxExMove(d){
+  sxExSave();
+  var T=UI.training, q=T.questions[T.index];
+  if(q) sxExState().show[q.id]=false;
+  if(d>0 && T.index+1>=T.questions.length){T.index++; T.answered=false; return renderTrainingResult()}
+  T.index=Math.max(0, T.index+Number(d)); T.answered=false; renderQuestion();
+}
+function renderLaminaQuestao(q,card){
+  var T=UI.training, st=sxExState(), draft=st.draft[q.id]||{}, show=!!st.show[q.id];
+  var g=card.b&&card.b[0];
+  var fields=g?[['o','Órgano'],['p','Proceso'],['d','Alteraciones (descripción)'],['x','Diagnóstico presuntivo']]:[['a','Resposta']];
+  var boxes=fields.map(function(f){
+    var v=g?g[f[0]]:(card.a||q.answer||'');
+    var txt=Array.isArray(v)?v.join('\n'):(v||'');
+    return '<div class="sxBal '+f[0]+'"><span class="sxBalLbl">'+esc(f[1])+'</span><textarea class="sxExInput" data-exq="'+f[0]+'" placeholder="Escreva..." rows="'+(f[0]==='d'?3:2)+'">'+esc(draft[f[0]]||'')+'</textarea>'+(show?'<p class="sxExGab">'+esc(txt)+'</p>':'')+'</div>';
+  }).join('');
+  var img=card.img?'<figure class="sxCardImg sxLamDestaque"><img src="'+esc(card.img)+'" alt="Lámina al microscopio: '+esc(card.t||'')+'" style="display:block;width:100%;max-height:min(62vh,560px);object-fit:contain;border-radius:18px;background:#14101c" loading="eager" decoding="async"></figure>':'';
+  var video=(!card.img&&card.video)?'<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/'+esc(card.video)+'/preview" title="'+esc(card.t||'Vídeo')+'" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>':'';
+  $('subjectContent').innerHTML='<section class="sxFlashStudy'+((card.img||card.video)?' sxMedia':'')+' sxExercicio">'+
+    '<header class="sxFlashHeader"><div><span class="eyebrow">EXERCÍCIOS</span><h2>'+esc(card.t||q.topic||'Lâmina')+'</h2></div><span class="sxFlashCount">'+(T.index+1)+' / '+T.questions.length+'</span></header>'+
+    '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso"><i style="width:'+(100*T.index/Math.max(1,T.questions.length))+'%"></i></div>'+
+    '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">'+esc(q.period||'Geral')+' · Prática</span><span class="soft">Escreva nos quadros. O gabarito fica oculto.</span></div>'+
+    video+img+'<div class="sxSide"><p class="sxExQ">'+esc(card.q||q.prompt||'')+'</p><div class="sxBalWrap">'+boxes+'</div></div>'+
+    '<div class="sxExActs">'+(show?'<button type="button" class="btn" onclick="sxExOcultar()">Ocultar gabarito</button>':'<button type="button" class="btn primary" onclick="sxExVer()">Ver gabarito</button>')+'</div></div>'+
+    '<nav class="sxFlashNav" aria-label="Navegação"><button class="btn" type="button" onclick="sxExMove(-1)" '+(T.index===0?'disabled':'')+'>← Anterior</button><button class="btn" type="button" onclick="sxExMove(1)">'+(T.index+1<T.questions.length?'Próxima →':'Ver resultado')+'</button></nav></section>';
+}
+function renderQuestion(){const T=UI.training,q=T.questions[T.index]; if(!q) return renderTrainingResult();
+  if(q.type==='flashcard'&&q.mode==='practice'){var card=laminaDaQuestao(q); if(card&&(card.img||card.video||card.b)) return renderLaminaQuestao(q,card)}
+  const type=trainingTypes().find(x=>x.id===q.type)||{label:q.type}; $('subjectContent').innerHTML=`
   <div class="glass trainRun sxQuestionRun">
     <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
       <button class="btn sm" onclick="renderTrainingBuilder()">← Exercícios</button>

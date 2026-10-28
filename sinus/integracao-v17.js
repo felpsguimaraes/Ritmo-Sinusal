@@ -353,7 +353,7 @@
       var slug = key.split('/')[0], deck = DECKS[key], nome = NOMES[slug];
       if (!nome) return;
       (deck.cartoes || []).forEach(function (c) {
-        qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: (deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: null, active: true, deck: key, topic: c.t });
+        qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: (deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: c.img || null, video: c.video || null, balloons: c.b || null, active: true, deck: key, topic: c.t });
       });
     });
     return qs;
