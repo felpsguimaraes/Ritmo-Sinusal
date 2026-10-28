@@ -249,6 +249,16 @@ html[data-theme="dark"] .sxFlashStudy .sxBal.o{--bal-bg:#1f3d2e;--bal-b:#3d6b52;
 .sxFlashStudy.sxMedia .sxBalFonte{font-size:max(9px,1.8cqh);margin-top:.2cqh}
 .sxFlashStudy.sxMedia .sxBalTitle{font-size:max(9px,1.8cqh);margin:0}
 .sxFlashStudy.sxMedia .sxGrades{grid-column:1/-1}
+.sxFlashStudy.sxExercicio .sxExQ{margin:0 0 8px;font-size:15px;font-weight:650;line-height:1.35}
+.sxFlashStudy.sxExercicio .sxExInput{display:block;width:100%;box-sizing:border-box;border:0;background:transparent;color:inherit;font:inherit;font-weight:650;line-height:1.35;resize:vertical;outline:none;padding:0;min-height:36px}
+.sxFlashStudy.sxExercicio .sxBal.d .sxExInput{min-height:68px}
+.sxFlashStudy.sxExercicio .sxExGab{margin:8px 0 0;padding-top:7px;border-top:1px dashed color-mix(in srgb,currentColor 40%,transparent);font-size:14px;font-weight:700;line-height:1.35;white-space:pre-line}
+.sxFlashStudy.sxExercicio .sxExActs{display:flex;justify-content:flex-end;gap:8px}
+.sxFlashStudy.sxMedia.sxExercicio .sxExActs{grid-column:1/-1}
+.sxFlashStudy.sxMedia.sxExercicio .sxExQ{font-size:clamp(12px,2.6cqh,15px);margin:0}
+.sxFlashStudy.sxMedia.sxExercicio .sxExInput{min-height:28px;font-size:clamp(12px,3cqh,16px)}
+.sxFlashStudy.sxMedia.sxExercicio .sxBal.d .sxExInput{min-height:46px}
+.sxFlashStudy.sxMedia.sxExercicio .sxExGab{font-size:clamp(11px,2.8cqh,15px)}
 }
 .sxFlashStudy .sxParciais{margin:0 0 14px}.sxFlashStudy .sxParcialLbl{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#486356;margin:0 0 8px}
 .sxFlashStudy .sxParcialBtns{display:flex;flex-wrap:wrap;gap:8px}

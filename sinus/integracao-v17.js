@@ -599,13 +599,14 @@
   W.sxTreinoProg = function (k) { return lerLocal(k) };
   function abrirDeck(k) {
     if (CART.key === k) return;
+    var rascunho = CART.rascunho || {};
     PROG = lerLocal(k);
-    CART = { key: k, deck: DECKS[k], fila: montarFila(ativos(k)), i: 0, mostrar: false };
+    CART = { key: k, deck: DECKS[k], fila: montarFila(ativos(k)), i: 0, mostrar: false, rascunho: rascunho };
     if (S.uid) docProg(k).get().then(function (snap) {
       if (CART.key !== k || !snap.exists || !snap.data().prog) return;
       PROG = Object.assign({}, PROG, snap.data().prog); gravarLocal(k, PROG);
       CART.fila = montarFila(ativos(CART.key)); CART.i = 0; CART.mostrar = false;
-      if ((UI.tab === 'training' && UI.trainingPane === 'flashcards') || UI.tab === 'cartoes') renderCartoes();
+      if ((UI.tab === 'training' && (UI.trainingPane === 'flashcards' || W.SINUS_EXERCICIO_LAMINA)) || UI.tab === 'cartoes') renderCartoes();
     }).catch(function () {});
   }
   // ---------------- mapas guiados da matéria (mapas, fluxogramas e tabelas que o aluno completa)
@@ -622,7 +623,19 @@
     var modo = UI.mode === 'practice' ? 'pratica' : 'teoria';
     box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
-  /* resposta em balões: um para cada pergunta da prova prática (ÓRGANO, PROCESO, DESCRIPCIÓN, DX) */
+  function camposExercicio(c) {
+    if (!CART.rascunho) CART.rascunho = {};
+    var r = CART.rascunho[c.id] || {};
+    var g = c.b && c.b[0];
+    var L = [['o', 'Órgano'], ['p', 'Proceso'], ['d', 'Alteraciones (descripción)'], ['x', 'Diagnóstico presuntivo']];
+    if (!g) {
+      return '<div class="sxBalWrap"><div class="sxBal o"><span class="sxBalLbl">Resposta</span><textarea class="sxExInput" data-ex-f="a" placeholder="Escreva sua resposta...">' + H(r.a || '') + '</textarea>' + (CART.mostrar ? '<p class="sxExGab">' + H(c.a || '') + '</p>' : '') + '</div></div>';
+    }
+    return '<div class="sxBalWrap">' + L.map(function (l) {
+      var v = g[l[0]], txt = Array.isArray(v) ? v.join('\n') : (v || '');
+      return '<div class="sxBal ' + l[0] + '"><span class="sxBalLbl">' + l[1] + '</span><textarea class="sxExInput" data-ex-f="' + l[0] + '" placeholder="Escreva..." rows="' + (l[0] === 'd' ? '3' : '1') + '">' + H(r[l[0]] || '') + '</textarea>' + (CART.mostrar ? '<p class="sxExGab">' + H(txt) + '</p>' : '') + '</div>';
+    }).join('') + '</div>';
+  }
   function baloes(c) {
     var L = [['o', 'Órgano'], ['p', 'Proceso'], ['d', 'Alteraciones (descripción)'], ['x', 'Diagnóstico presuntivo']];
     var html = c.b.map(function (g) {
@@ -644,7 +657,10 @@
     var k = ESCOLHA[slug] && ks.indexOf(ESCOLHA[slug]) >= 0 ? ESCOLHA[slug] : (ks.filter(function (x) { return DECKS[x].padrao })[0] || (ks.indexOf(deckPadrao(slug)) >= 0 ? deckPadrao(slug) : ks[0]));
     abrirDeck(k);
     var deck = CART.deck, c = CART.fila[CART.i], lista = ativos(CART.key), total = lista.length;
-    var laminario = area === 'pratica';
+    var exercicio = !!(W.SINUS_EXERCICIO_LAMINA && area === 'pratica');
+    var laminario = area === 'pratica' && !exercicio;
+    if (exercicio && !CART._exOn) { CART.mostrar = false; CART._exOn = true; }
+    if (!exercicio) CART._exOn = false;
     if (laminario) CART.mostrar = true;
     var dom = lista.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
     var temParcial = ks.some(function (x) { return DECKS[x].curto });
@@ -652,16 +668,22 @@
     var gs = [], gn = {};
     deck.cartoes.forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
     if (gs.length > 1) chips += '<div class="sxGrupos" aria-label="Assunto"><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + deck.cartoes.length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
-    box.innerHTML = '<section class="sxFlashStudy' + (c && (c.img || c.video) ? ' sxMedia' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">' + (laminario ? 'LAMINÁRIO' : 'FLASHCARDS') + '</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
+    var midia = !!(c && (c.img || c.video));
+    var destaque = laminario || exercicio;
+    var pergunta = '<p class="sxQ' + (midia ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>';
+    var resposta = (c && c.b) ? baloes(c) : '<div class="sxA"><b>Resposta</b><p>' + H(c ? c.a : '') + '</p><small>' + H((c && c.x) || '') + '</small></div>';
+    var lado = exercicio
+      ? '<p class="sxExQ">' + H(c ? c.q : '') + '</p>' + (c ? camposExercicio(c) : '')
+      : pergunta + (CART.mostrar ? resposta : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>');
+    var acaoEx = exercicio ? '<div class="sxExActs">' + (CART.mostrar ? '<button type="button" class="btn" data-sx-ocultar>Ocultar gabarito</button>' : '<button type="button" class="btn primary" data-sx-virar>Ver gabarito</button>') + '</div>' : '';
+    box.innerHTML = '<section class="sxFlashStudy' + (midia ? ' sxMedia' : '') + (exercicio ? ' sxExercicio' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">' + (exercicio ? 'EXERCÍCIOS' : laminario ? 'LAMINÁRIO' : 'FLASHCARDS') + '</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
-      '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (laminario ? 'Imagem e resposta' : CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
-      (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg' + (laminario ? ' sxLamDestaque' : '') + '"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"' + (laminario ? ' data-laminario-zoom' : '') + '></figure>' : '') + '<div class="sxSide"><p class="sxQ' + (c && (c.img || c.video) ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>' +
-      (CART.mostrar ? (c.b ? baloes(c) : '<div class="sxA"><b>Resposta</b><p>' + H(c.a) + '</p><small>' + H(c.x || '') + '</small></div>')
-        : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>') + '</div>' +
-      (CART.mostrar && c && c.k && c.k.t ? '<aside class="sxComent"><h4>Comentário da lámina</h4>' + sxRico(c.k.t) + sxPorqueErrei(c.k.e) + (c.k.f ? '<div class="sxComentFonte"><span>Fonte</span><em>' + H(c.k.f) + '</em></div>' : '') + '</aside>' : '') +
-      (!laminario && CART.mostrar ? '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>' : '') + '</div>' +
-      '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">' + (laminario ? 'Próxima →' : 'Pular →') + '</button></nav>' +
-      '<footer class="sxFlashFooter">' + (laminario ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>') + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';
+      '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (exercicio ? 'Escreva nos quadros. O gabarito fica oculto.' : laminario ? 'Imagem e resposta' : CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
+      (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg' + (destaque ? ' sxLamDestaque' : '') + '"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"' + (destaque ? ' data-laminario-zoom' : '') + '></figure>' : '') + '<div class="sxSide">' + lado + '</div>' + acaoEx +
+      (CART.mostrar && !exercicio && c && c.k && c.k.t ? '<aside class="sxComent"><h4>Comentário da lámina</h4>' + sxRico(c.k.t) + sxPorqueErrei(c.k.e) + (c.k.f ? '<div class="sxComentFonte"><span>Fonte</span><em>' + H(c.k.f) + '</em></div>' : '') + '</aside>' : '') +
+      (!laminario && !exercicio && CART.mostrar ? '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>' : '') + '</div>' +
+      '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">' + (laminario || exercicio ? 'Próxima →' : 'Pular →') + '</button></nav>' +
+      '<footer class="sxFlashFooter">' + (laminario || exercicio ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>') + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';
   }
   function gravarGrau(g) {
     var c = CART.fila[CART.i]; if (!c) return;
@@ -835,7 +857,7 @@
   };
 
   D.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-grupo],[data-sx-virar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
+    var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-grupo],[data-sx-virar],[data-sx-ocultar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
     if (!t) return;
     if (t.id === 'sxEntrar') return entrar();
     if (t.hasAttribute('data-sx-tema')) return alternarTema();
@@ -858,6 +880,7 @@
     if (t.hasAttribute('data-sx-grupo')) { GRUPO[CART.key] = t.getAttribute('data-sx-grupo'); CART.fila = montarFila(ativos(CART.key)); CART.i = 0; CART.mostrar = false; return renderCartoes() }
     if (t.hasAttribute('data-sx-deck')) { var s = subjectData(); ESCOLHA[s.slug] = t.getAttribute('data-sx-deck'); CART.key = ''; return renderCartoes() }
     if (t.hasAttribute('data-sx-virar')) { CART.mostrar = true; return renderCartoes() }
+    if (t.hasAttribute('data-sx-ocultar')) { CART.mostrar = false; return renderCartoes() }
     if (t.hasAttribute('data-sx-card-move')) { CART.i = (CART.i + Number(t.getAttribute('data-sx-card-move')) + CART.fila.length) % CART.fila.length; CART.mostrar = false; return renderCartoes() }
     if (t.hasAttribute('data-sx-grau')) return gravarGrau(t.getAttribute('data-sx-grau'));
     if (t.hasAttribute('data-sx-instalar')) { if (deferredInstall) { deferredInstall.prompt(); deferredInstall.userChoice.then(function (r) { if (r && r.outcome === 'accepted') P.instalou = true; deferredInstall = null; renderOnb() }) } return }
@@ -883,6 +906,14 @@
   });
   D.addEventListener('input', function (e) {
     var t = e.target;
+    if (t && t.matches && t.matches('[data-ex-f]')) {
+      var card = CART.fila && CART.fila[CART.i];
+      if (!card) return;
+      if (!CART.rascunho) CART.rascunho = {};
+      if (!CART.rascunho[card.id]) CART.rascunho[card.id] = {};
+      CART.rascunho[card.id][t.getAttribute('data-ex-f')] = t.value;
+      return;
+    }
     if (t.matches && t.matches('[data-sx-libq]')) { LIB.q = t.value; var pos = t.selectionStart; renderLibrary(); var n = D.querySelector('[data-sx-libq]'); if (n) { n.focus(); try { n.setSelectionRange(pos, pos) } catch (_) {} } }
   });
 

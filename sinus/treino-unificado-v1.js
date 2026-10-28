@@ -71,6 +71,13 @@
     else if(tab==='training'&&UI.tab!=='training')UI.trainingPane='exercises';
     return originalSetTab(tab);
   };
+  function laminaExercicio(){
+    if(UI.mode!=='practice')return false;
+    var s=(typeof DB!=='undefined'&&DB.subjects)?DB.subjects[UI.subject]:null;
+    if(s&&s.slug==='anatopato')return true;
+    var n=String(UI.subject||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    return /anatom/.test(n)&&/patolog/.test(n);
+  }
   W.renderSubject=function(){
     if(!UI.subject)return;
     if(['review','cartoes','mapas'].indexOf(UI.tab)>=0){
@@ -78,7 +85,9 @@
       UI.tab='training';
     }
     var selected=UI.tab,mode=pane();
-    if(selected==='training'&&mode==='flashcards'){
+    var exLam=selected==='training'&&mode==='exercises'&&laminaExercicio();
+    W.SINUS_EXERCICIO_LAMINA=!!exLam;
+    if(selected==='training'&&(mode==='flashcards'||exLam)){
       UI.tab='cartoes';
       try{originalRender()}finally{UI.tab='training'}
     }else{
