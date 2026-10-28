@@ -192,15 +192,14 @@
         ['Áreas de calcificación distrófica', 'calcific']
       ],
       dx: ['Aterosclerosis', 'ateroscler|ateroma'] },
-    { id: 'colesterolosis', g: 'colesterolosis', nome: 'Colecistitis crónica con colesterolosis', img: FT.colesterolosis, gab: [G('1_x6kD1Hzz7o_CB4p7gMB3Vb7YhNQbsUn')],
-      organo: ORG.vesicula, proceso: ['Inflamación crónica - Acúmulos intracelulares', 'inflama;cronic;acumul'],
+    { id: 'colesterolosis', g: 'colesterolosis', nome: 'Colesterolosis', img: FT.colesterolosis, gab: [G('1_x6kD1Hzz7o_CB4p7gMB3Vb7YhNQbsUn')],
+      organo: ORG.vesicula, proceso: ACUM,
       desc: [
-        ['Proceso inflamatorio crónico con presencia de linfocitos aislados y en nidos', 'linfocit|nidos|ninhos'],
-        ['Hipertrofia de la capa muscular con acentuación de los senos de Rokitansky-Aschoff', 'hipertrof|rokitansky|aschoff|senos'],
-        ['Macrófagos espumosos en la lámina propia', 'espumos|lamina propia']
+        ['Macrófagos espumosos cargados de colesterol', 'espumos'],
+        ['En la lámina propia', 'lamina propia']
       ],
-      obs: 'Fuente docente (Clase 4): Colecistitis Crónica / Colesterolosis. Descripción literal de la profesora.',
-      dx: ['Colecistitis crónica / Colesterolosis', 'colecistit;cronic;colesterolos'] }
+      obs: 'En el pizarrón de temas de la P2: «V. biliar → colesterolosis / colecistitis crónica».',
+      dx: ['Colesterolosis', 'colesterolos'] }
   ];
 
   /* ───────── Laminario completo (tabla corregida, 25 láminas) ───────── */
@@ -361,9 +360,9 @@
     ['Folículos tiroideos atróficos y residuales', 'folicul;atrofi'],
     ['Áreas de fibrosis', 'fibros']], ['Inflamación crónica', 'inflama;cronic'], ['Tiroiditis de Hashimoto', 'hashimoto']);
   var P2CIRR = p2Referencia('t13', [
-    ['Parénquima hepático con histoarquitectura alterada y reemplazada por nódulos regenerativos, separados por tabiques de tejido conectivo', 'nodul;regener;tabiqu|fibros|histoarquit'],
+    ['Histoarquitectura alterada con nódulos regenerativos separados por tabiques de tejido conectivo', 'nodul;regener;tabiqu|fibros'],
     ['Hepatocitos con vacuolas lipídicas', 'vacuol|lipid'],
-    ['Infiltrado inflamatorio crónico sobreagregado', 'inflama;cronic']], ['Inflamatorio crónico / Acúmulos intracelulares', 'inflama;cronic;acumul'], ['Cirrosis hepática / Esteatosis hepática', 'cirros;esteatos']);
+    ['Infiltrado inflamatorio crónico sobreagregado', 'inflama;cronic']], ['Inflamación crónica y acúmulos intracelulares', 'inflama;cronic;acumul'], ['Cirrosis hepática con esteatosis asociada', 'cirros;esteatos']);
   var P2Q = ['iam', 'tbc', 'aterosclerosis', 'colesterolosis', 'esteatosis', 'melanoma', 'apendicitis', 'pielonefritis'].map(function (id) { return byId(P2, id); })
     .concat([P2HASH, P2CIRR]);
   /* P2 · una lámina por foto (carpeta LAMINARIO P2 del Drive de la turma, 133 fotos rotuladas, + 6 fotos enviadas por el alumno):
@@ -668,4 +667,3 @@
     TEO_CASOS
   ));
 })();
-
