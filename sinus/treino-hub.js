@@ -106,6 +106,7 @@
     if(d){
       var x=stat(ST.k,ST.g),prat=d.area==='pratica';
       h+='<button class="thMode full" data-th-modo="cartoes"><i>'+(prat?'🔬':'🗂')+'</i><span><b>'+(prat?'Laminário':'Flashcards')+'</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
+      if(prat) h+='<button class="thMode full" data-th-modo="exercicios"><i>✏️</i><span><b>Exercícios</b><small>escreva antes de ver o gabarito</small></span></button>';
     }
     h+='<div class="thGrid">';
     h+='<button class="thMode" data-th-modo="exercises"><i>❓</i><b>Questões</b><small>'+(q?q+' disponíveis':'da matéria')+'</small></button>';
@@ -137,6 +138,11 @@
       if(modo==='estudar')return W.renderSubject();
       if(modo==='cartoes'){
         if(W.sxTreinoAbrir)W.sxTreinoAbrir(k,g);
+        return W.setTab('cartoes');
+      }
+      if(modo==='exercicios'){
+        if(W.sxTreinoAbrir)W.sxTreinoAbrir(k,g);
+        if(W.renderExercicios) return W.renderExercicios();
         return W.setTab('cartoes');
       }
       if(modo==='mindmaps')return W.setTab('mapas');
