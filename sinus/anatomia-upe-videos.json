@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-29T16:03:02Z",
+  "updatedAt": "2026-10-30T15:51:59Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -107,7 +107,7 @@
     },
     {
       "id": "1Ubtg0UOzRg",
-      "title": "Tronco celiaco",
+      "title": "Celiac Trunk",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=1Ubtg0UOzRg",
@@ -177,7 +177,7 @@
     },
     {
       "id": "CsMUNIslmeU",
-      "title": "CORAZÓN - Configuración Interna - Aurícula Derecha",
+      "title": "HEART - Internal Configuration - Right Atrium",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=CsMUNIslmeU",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "HEART - External Configuration - Part 1",
+      "title": "CORAZÓN - Configuración Externa - Parte 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -227,7 +227,7 @@
     },
     {
       "id": "BllOA4xplp8",
-      "title": "CEREBRO 2da Parte",
+      "title": "BRAIN Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=BllOA4xplp8",
@@ -257,7 +257,7 @@
     },
     {
       "id": "81SOI7dXwkQ",
-      "title": "BULBO RAQUÍDEO",
+      "title": "MEDULLA OBLONGATA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -267,7 +267,7 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "MÉDULA ESPINAL",
+      "title": "SPINAL CORD",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
@@ -307,7 +307,7 @@
     },
     {
       "id": "cU6MngfQ3rQ",
-      "title": "MIEMBRO SUPERIOR PARTE 2 MÚSCULOS DEL BRAZO",
+      "title": "UPPER LIMB PART 2 ARM MUSCLES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cU6MngfQ3rQ",
@@ -788,7 +788,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 42,
+      "newScan": 41,
       "total": 42
     },
     "anatomiaupe2188": {
