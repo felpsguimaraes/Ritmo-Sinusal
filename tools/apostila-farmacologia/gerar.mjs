@@ -79,7 +79,7 @@ ${src('estilo.css')}
 <div class="wrap">
 <div class="brandbar">${LOGO}<a class="rt" href="/" style="text-decoration:none">← Voltar ao Sinus</a></div>
 <header class="top">
-<div class="kicker">Farmacología I · UCP · P2</div>
+<div class="kicker">Farmacología I · UCP · P2 · <span style="color:#10352a">FELPS ©</span></div>
 <h1>Apostila de farmacologia</h1>
 <p class="lede">SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides. Explicação em português com os termos em espanhol, esquemas interativos e exercícios que corrigem na hora.</p>
 <div class="progress"><i id="progbar"></i></div>
@@ -109,7 +109,7 @@ ${flash}
 ${consulta}
 </div>
 </main>
-<footer class="pe">${LOGO}<span>Seu estudo. Seu tempo. Seu ritmo.<br>Autoria: Felipe Guimarães de Souza · SINUS</span></footer>
+<footer class="pe">${LOGO}<span>Seu estudo. Seu tempo. Seu ritmo.<br><b>FELPS ©</b> 2026 · Felipe Guimarães de Souza · Todos os direitos reservados</span></footer>
 </div>
 <script>
 ${src('mapas.js')}
