@@ -568,13 +568,20 @@
       '<button class="btn sm" onclick="setTab(\'' + (UI.mode === 'practice' ? 'laminas' : 'slides') + '\')">' + (UI.mode === 'practice' ? 'Lâminas' : 'Slides') + '</button></div></div>');
   };
 
+  /* apostilas do Sinus por matéria (vale para todas as turmas do período) */
+  var APOSTILAS = {
+    anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino' },
+    farmacologia: { ler: '/aulas/apostila-farmacologia/', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
+      extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (91 cartões, com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
+  };
   function renderApostilaMateria() {
-    var s = subjectData(), ap = s && s.slug === 'anatopato';
-    $id('subjectContent').innerHTML = '<p class="soft" style="margin:0 0 12px;font-size:12.5px">A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p><div class="sxApost">' +
-      '<div class="glass"><span class="eyebrow">Apostila · para ler</span><h3>Ler na tela</h3><p>A teoria toda em português com os termos em espanhol, o que caiu em cada prova, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
-      '<div class="heroActions">' + (ap ? '<a class="btn primary sm" href="/aulas/lesion/apostila/">Abrir a apostila</a><a class="btn sm" href="/aulas/lesion/#/pdf">Versão em PDF</a>' : '<span class="btn sm" style="opacity:.6;cursor:default">Em preparação</span>') + '</div></div>' +
+    var s = subjectData(), A = s && APOSTILAS[s.slug], off = '<span class="btn sm" style="opacity:.6;cursor:default">Em preparação</span>';
+    $id('subjectContent').innerHTML = '<p class="soft" style="margin:0 0 12px;font-size:12.5px">' + (A && A.titulo ? H(A.titulo) + ' · ' : '') + 'A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p><div class="sxApost">' +
+      '<div class="glass"><span class="eyebrow">Apostila · para ler</span><h3>Ler na tela</h3><p>A teoria toda em português com os termos em espanhol, esquemas interativos, mapas para completar, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
+      '<div class="heroActions">' + (A ? '<a class="btn primary sm" href="' + A.ler + '">Abrir a apostila</a>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '">Versão em PDF</a>' : '') : off) + '</div></div>' +
+      (A && A.extra ? '<div class="glass"><span class="eyebrow">Exercícios · na matéria</span><h3>Onde praticar</h3><p>' + A.extra + '</p></div>' :
       '<div class="glass"><span class="eyebrow">Apostila · em 3D</span><h3>Ver em 3D</h3><p>Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
-      '<div class="heroActions">' + (ap ? '<a class="btn primary sm" href="/aulas/lesion/#/3d">Abrir em 3D</a><a class="btn sm" href="/aulas/lesion/#/treino">Treino para prova</a>' : '<span class="btn sm" style="opacity:.6;cursor:default">Em preparação</span>') + '</div></div></div>';
+      '<div class="heroActions">' + (A && A.d3 ? '<a class="btn primary sm" href="' + A.d3 + '">Abrir em 3D</a><a class="btn sm" href="' + A.treino + '">Treino para prova</a>' : off) + '</div></div>') + '</div>';
   }
 
   // ---------------- flashcards (cartões do Sinus, com progresso na conta)

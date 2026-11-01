@@ -29,6 +29,16 @@ O aplicativo atual é publicado em um ambiente com servidor, banco e arquivos pr
 
 As três aulas e seus PDFs/imagens permanecem nos caminhos originais.
 
+## Apostila SINUS · Farmacologia P2
+
+Para todas as turmas do 5º período (A a G), na matéria Farmacología I:
+
+- **Apostila** (`aulas/apostila-farmacologia/`): 34 capítulos das Clases 6 a 9 com esquemas interativos, mapas para completar, exercícios e flashcards. A aba Apostila da matéria leva até ela (`APOSTILAS` em `sinus/integracao-v17.js`).
+- **Flashcards**: baralho `farmacologia/gimenez` em `aulas/flashcards/cartoes.js` (91 cartões, 23 de resposta aberta, incluindo as nove perguntas da Clase 9). As turmas de outros docentes também o recebem, porque é o único baralho da matéria.
+- **Mapas guiados**: 33 mapas (níveis Guiado e Desafío) e as questões no nível Prova, em `mapas/dados/farmacologia-apostila.js`.
+
+Esses arquivos são gerados por `materiais/farmacologia-p2/integracao-sinus/gerar.mjs` (repositório Biomaster-Academy). Para atualizar, edite a fonte e rode o gerador; não edite os arquivos gerados à mão.
+
 ## Administração
 
 A entrada antiga `aulas/painel.html` encaminha ao painel atual em `https://meusinus.pages.dev/admin/control/`. A ativação do backend está documentada em [admin/control/README.md](admin/control/README.md).
@@ -45,7 +55,7 @@ Conteúdo do 5º semestre, montado a partir dos slides das aulas no Drive da tur
 | Matéria | Docente | Teoria | Prática |
 | --- | --- | --- | --- |
 | Anatomía Patológica I (`anatopato`) | Dra. Eliana Chamorro Krauer; prática: Dra. Alicia Gonzalez | 15 mapas das aulas 1 a 7, casos e simulado | láminas da P1, da P2 e do laminário (níveis 1 e 2) e simulacro; 10 mapas das aulas práticas 1 a 4 e do quadro da apendicite; casos de lâmina; treinos do Laminario total corregido (20 nov, pasta da turma E): mapas por processo e de mesmo órgão, 4 quadros por bloco, quiz pela foto, quiz pela descrição e simulacro só do laminário, numa aba própria (Nível 4, Laminario): um exercício por lâmina, com todas as fotos do PDF (`mapas/img/laminario/lt-NN-k.jpg`, incluindo as do porta-objeto com a etiqueta), e um filtro por órgão para o aluno escolher o que estudar |
-| Farmacología I (`farmacologia`) | Dr. Cristhiam Giménez | 35 mapas das aulas 1, 1.2 (formas farmacêuticas) e 2 a 9, casos e simulado | — |
+| Farmacología I (`farmacologia`) | Dr. Cristhiam Giménez | 35 mapas das aulas 1, 1.2 (formas farmacêuticas) e 2 a 9, casos e simulado; mais 33 mapas e 7 blocos de questões (56, múltipla escolha e V/F) da **Apostila SINUS P2** (`dados/farmacologia-apostila.js`) | — |
 | Fisiopatología I (`fisiopatologia`) | Dr. Kevin Feijó | 45 mapas das unidades 0 a 7 e anemias, casos de anemia e de choque, simulado | — |
 | Imagenología (`imagenologia`) | Dr. Kevin Feijó | 31 mapas das aulas 00 a 5.0, TC, RM e TCE, casos e simulado | — |
 | Medicina de la Familia (`familia`) | Dra. Loren Noguera | 39 mapas das aulas 1, 2 e 4 a 10, quatro exercícios de leitura de familiograma com a figura da lâmina, cálculos de APGAR, Holmes e crescimento, simulado | — |

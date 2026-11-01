@@ -630,3 +630,741 @@ window.SINUS_CARTOES["anatopato/p2-referencias"] = {
   p2.curto = 'Laminário';
   p2.nome = 'Laminário P2 · 143 lâminas';
 })();
+/* >>> farmacologia/gimenez · gerado por gerar.mjs (Apostila SINUS P2) */
+window.SINUS_CARTOES = window.SINUS_CARTOES || {};
+window.SINUS_CARTOES["farmacologia/gimenez"] = {
+ "nome": "Dr. Cristhiam Giménez · Apostila P2",
+ "fonte": "Apostila SINUS · Farmacologia P2 (Clases 6 a 9)",
+ "area": "teoria",
+ "cartoes": [
+  {
+   "id": "ap-m1-1",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual é o neurotransmissor das fibras pré-ganglionares de simpático e parassimpático?",
+   "a": "Acetilcolina (ACh), que atua em receptores nicotínicos neuronais (Nn) no gânglio.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-2",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual é a origem toracolombar e a craneossacra?",
+   "a": "Simpático: T1–L2. Parassimpático: III, VII, IX, X e S2–S4.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-3",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual a exceção do circuito simpático?",
+   "a": "Glândulas sudoríparas écrinas: pós-ganglionar libera ACh e age em receptor muscarínico.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-4",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual enzima sintetiza a ACh?",
+   "a": "Colina acetiltransferase (ChAT), a partir de colina + acetil-CoA.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-5",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual enzima degrada a ACh na fenda sináptica?",
+   "a": "Acetilcolinesterase (AChE): ACh → colina + acetato.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-6",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "O que o hemicolínio faz?",
+   "a": "Reduz a captação de colina, diminuindo a síntese de ACh.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-7",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual o efeito da toxina botulínica?",
+   "a": "Impede a exocitose (liberação) de ACh.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-8",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Qual é o mecanismo do receptor M2?",
+   "a": "Acoplado a Gi: reduz AMPc. No coração: freio cardíaco, menor FC e condução AV.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-9",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Receptores nicotínicos são canais iônicos ou acoplados a proteína G?",
+   "a": "Canais iônicos: a ligação de ACh abre o canal e causa despolarização rápida.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m1-10",
+   "g": "SNA e receptores",
+   "t": "Clase 6 · SNA e receptores",
+   "q": "Quais são as vias dos receptores M1, M3 e M5?",
+   "a": "Gq → fosfolipase C → IP3 e DAG → aumento de Ca²⁺ intracelular.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-1",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Qual é o agonista direto resistente à AChE, seletivo para M3 em bexiga?",
+   "a": "Betanecol (éster carbâmico). Não cruza a BHE.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-2",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Qual é a diferença entre neostigmina e fisostigmina?",
+   "a": "Neostigmina: quaternária, não atravessa a BHE (ação periférica). Fisostigmina: terciária, atravessa a BHE.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-3",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Para que serve a piridostigmina na miastenia?",
+   "a": "Aumenta a ACh disponível na placa motora. Trata sintomas; não elimina a autoimunidade.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-4",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Qual é o tripé do tratamento da intoxicação por organofosforados?",
+   "a": "1) Suporte e descontaminação; 2) atropina (antagonizar M); 3) oximas (pralidoxima) para reativar AChE, dependendo do caso.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-5",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Por que a atropina não corrige a fraqueza nicotínica?",
+   "a": "Ela bloqueia muscarínicos. Não reativa AChE nem repõe ACh; o Nm continua com excesso de ACh.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-6",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "O que é o envelhecimento da AChE?",
+   "a": "Perda de um grupo alquil do complexo fosforilado. Torna a inibição permanente e reduz a reativação por oximas.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-7",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Quais são as aminas terciárias antimuscarínicas que cruzam a BHE?",
+   "a": "Atropina, escopolamina, oxibutinina e biperideno (alguns são lipossolúveis e centrais).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-8",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Qual a síndrome cardinal do excesso antimuscarínico?",
+   "a": "Boca seca, midríase, pele seca e quente, taquicardia, retenção urinária e íleo, delírio nos casos graves.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-9",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Qual é o \"DUMBBELSS\" dos efeitos muscarínicos?",
+   "a": "Diarreia, Urinária, Miose, Bronquiolar/broncoespasmo, Bradicardia, Emese, Lacrimejamento, Salivação, Sudorese.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-10",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Fisostigmina é antídoto universal da síndrome anticolinérgica?",
+   "a": "Não. Uso selecionado. Em suspeita de tricíclicos ou alteração de condução, exige avaliação especializada.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-1",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual enzima converte NA em adrenalina na medula suprarrenal?",
+   "a": "Feniletanolamina N-metiltransferase (PNMT).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-2",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Onde ocorre a conversão dopamina → noradrenalina?",
+   "a": "Dentro da vesícula sináptica, pela dopamina β-hidroxilase (DBH).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-3",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "O que a reserpina faz e por que o efeito é lento?",
+   "a": "Bloqueia o transportador vesicular de monoaminas e esgota os estoques de NA, dopamina e serotonina. Início lento.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-4",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual o efeito de um agonista α2 pré-sináptico?",
+   "a": "Feedback negativo: reduz a liberação adicional de noradrenalina.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-5",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual o mecanismo da cocaína?",
+   "a": "Inibe a recaptação de monoaminas (NET). Não é inibição da MAO.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-6",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual o mecanismo da anfetamina e da tiramina?",
+   "a": "Aumentam a liberação de monoaminas (dopamina e NA). Agonistas indiretos de liberação.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-7",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Por que a clonidina não deve ser suspensa de repente?",
+   "a": "Reduz o comando simpático central; a retirada abrupta causa hiperatividade simpática e hipertensão de rebote.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-8",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Em que dose a dopamina ativa D1 renal?",
+   "a": "Doses baixas: vasodilatação renal e esplâncnica. Doses médias: β1. Doses altas: α1.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-9",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Por que a adrenalina pode baixar a pressão após fenoxibenzamina?",
+   "a": "Reversão da epinefrina: α1 bloqueado, β2 vasodilatador permanece. A pressão pode cair.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-10",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual o uso do esmolol?",
+   "a": "β1 seletivo, ultracurto, IV, para ajuste rápido em emergências.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-1",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Qual é a enzima inibida pelos AINEs?",
+   "a": "Ciclo-oxigenase (COX-1 e COX-2).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-2",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "O que são os \"4 A\" dos AINEs?",
+   "a": "Antipirético, analgésico, anti-inflamatório e antiagregante plaquetário. Não são iguais para todos os fármacos.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-3",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Qual o papel do PGE2 e PGI2 no estômago?",
+   "a": "Citoproteção: aumentam muco e bicarbonato e reduzem a secreção ácida. Via COX-1.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-4",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Por que o AAS tem efeito antiagregante prolongado?",
+   "a": "Acetilação irreversível da COX-1. Plaquetas são anucleadas e não repõem a enzima (7 a 10 dias).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-5",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "O que é o efeito \"teto\" dos AINEs?",
+   "a": "Aumentar a dose além de certo ponto não aumenta a analgesia; o risco segue crescendo.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-6",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Qual o risco específico importante da dipirona?",
+   "a": "Agranulocitose. Também hipersensibilidade e hipotensão em certos contextos.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-7",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Qual o mecanismo da toxicidade do paracetamol?",
+   "a": "Metabólito NAPQI, normalmente neutralizado por glutationa. Em excesso: necrose hepática centrolobular.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-8",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Qual o papel da NAC?",
+   "a": "Repõe glutationa e neutraliza o NAPQI. O benefício é maior quando iniciado cedo.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-9",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Por que o AAS causa alcalose respiratória inicial?",
+   "a": "Estimula o centro respiratório bulbar: hiperventilação → queda de CO₂ → alcalose respiratória.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m4-10",
+   "g": "AINEs",
+   "t": "Clase 8 · AINEs",
+   "q": "Qual o coxib retirado do mercado por risco cardiovascular?",
+   "a": "Rofecoxibe (referência histórica, não opção atual).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-1",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Qual é o receptor opioide ligado à depressão respiratória?",
+   "a": "μ, especialmente o subtipo μ2.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-2",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Qual é a diferença entre opiáceo e opioide?",
+   "a": "Opiáceo: derivado do ópio (morfina, codeína). Opioide: qualquer substância com ação tipo morfina, incluindo sintéticos e endógenos.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-3",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Quais são as três famílias de peptídeos opioides endógenos?",
+   "a": "Encefalinas, endorfinas e dinorfinas.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-4",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "O que é a escada analgésica da OMS?",
+   "a": "Degrau 1: AINEs/paracetamol ± adjuvantes. Degrau 2: opioides fracos. Degrau 3: opioides fortes. Degrau 4: técnicas intervencionistas.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-5",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Qual a diferença entre agonista puro e parcial?",
+   "a": "Puro: alta atividade intrínseca (morfina). Parcial: menor atividade intrínseca (buprenorfina).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-6",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "O que faz a naloxona?",
+   "a": "Antagonista puro de receptores opioides. Reverte intoxicação e depressão respiratória.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-7",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Qual a ação presináptica dos opioides?",
+   "a": "Reduz a entrada de Ca²⁺ e a liberação de transmissores excitatórios.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-8",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Qual a ação pós-sináptica dos opioides?",
+   "a": "Aumenta a condutância de K⁺ e causa hiperpolarização.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-9",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Qual o risco do tramadol?",
+   "a": "Convulsões e síndrome serotoninérgica, sobretudo com outros serotoninérgicos. Contraindicado em epilepsia não controlada.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m5-10",
+   "g": "Opioides",
+   "t": "Clase 8 · Opioides",
+   "q": "Por que a constipação é efeito característico dos opioides?",
+   "a": "Reduzem a propulsão intestinal e aumentam o tônus do esfíncter de Oddi.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-1",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Quais são os dois grupos principais de corticoides?",
+   "a": "Glicocorticoides (cortisol, prednisona, dexametasona) e mineralocorticoides (aldosterona, fludrocortisona).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-2",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Quais zonas da suprarrenal produzem aldosterona e cortisol?",
+   "a": "Glomerulosa: aldosterona. Fasciculada: cortisol. Reticular: andrógenos.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-3",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Qual é o eixo de regulação do cortisol?",
+   "a": "CRH (hipotálamo) → ACTH (hipófise) → cortisol. Retroalimentação negativa sobre hipotálamo e hipófise.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-4",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Quais são os pró-fármacos corticoides?",
+   "a": "Cortisona (→ cortisol) e prednisona (→ prednisolona), que precisam de conversão hepática.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-5",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Qual corticoide é de primeira escolha em crianças?",
+   "a": "Deflazacorte, por menor impacto sobre crescimento e osso.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-6",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Qual o mecanismo genômico dos glicocorticoides?",
+   "a": "Ligação ao GR, translocação ao núcleo, ligação ao GRE. Induz lipocortina (inibe PLA2) e reduz NF-κB, COX-2 e citocinas.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-7",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Por que o corticoide não substitui adrenalina na anafilaxia?",
+   "a": "Não reproduz a resposta imediata. A adrenalina intramuscular é a primeira linha.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-8",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Qual o risco de suspender bruscamente um tratamento crônico?",
+   "a": "Insuficiência suprarrenal aguda, porque o eixo HHA fica suprimido e o cortisol endógeno não repõe.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-9",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "Qual é o efeito metabólico dos glicocorticoides sobre a glicose?",
+   "a": "Gliconeogênese hepática aumentada e captação periférica reduzida: hiperglicemia e resistência à insulina.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m6-10",
+   "g": "Corticoides",
+   "t": "Clase 9 · Corticoides",
+   "q": "O que é a síndrome de Cushing iatrogênica?",
+   "a": "Excesso de ação glicocorticoide exógena. Sinais: face em lua cheia, obesidade central, giba, estrias violáceas.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-1",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "A ACh age apenas no parassimpático?",
+   "a": "Não. Atua também em gânglios autonômicos (Nn) e na junção neuromuscular (Nm).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-2",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "Por que a atropina acelera o coração?",
+   "a": "Bloqueia M2 cardíaco e remove o freio vagal. Em doses muito baixas, pode causar bradicardia paradoxal transitória.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-3",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "O que é \"agonista\" de receptor?",
+   "a": "Um fármaco que ativa o receptor. Não significa aumento obrigatório da função do órgão.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-4",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "Qual o raciocínio para a reversão de adrenalina?",
+   "a": "α bloqueado + β2 vasodilatador permanecendo = pressão que cai, em vez de subir.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-5",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "Qual a diferença entre dor aguda e crônica?",
+   "a": "Aguda: limitada no tempo, pouco componente psicológico. Crônica: prolongada, forte componente psicossocial.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-6",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "Em que casos AINEs e corticoides combinados aumentam o risco digestivo?",
+   "a": "Somam agressões à mucosa gástrica. Aumentam risco de úlcera e sangramento.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-7",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "Que elo registrar quando errar uma questão de mecanismo?",
+   "a": "O elo que falhou: receptor, mecanismo, órgão, indicação ou reação adversa. Releia esse elo e explique sem olhar.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m7-8",
+   "g": "Integração",
+   "t": "Clases 6 a 9 · Integração",
+   "q": "Como separar mg e µg ao ler doses de corticoides inalados?",
+   "a": "Mg e µg diferem por um fator de mil. Confira a unidade antes de qualquer conclusão.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-ab-m1-1",
+   "g": "Respostas abertas",
+   "t": "Clase 6 · resposta aberta",
+   "q": "Explique, em uma frase, por que a atropina pode acelerar o coração e, ao mesmo tempo, secar a boca.",
+   "a": "Ela bloqueia receptores muscarínicos. No coração, retira o freio vagal (M2), por isso há taquicardia. Nas glândulas, reduz a resposta secretora (M3), por isso há boca seca.",
+   "x": "Responda em voz alta antes de virar. Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-m2-1",
+   "g": "Respostas abertas",
+   "t": "Clase 6 · resposta aberta",
+   "q": "Como diferenciar excesso colinérgico de bloqueio antimuscarínico pelo quadro (pupila, pele e secreções)?",
+   "a": "Excesso colinérgico: miose, sudorese e secreções abundantes. Bloqueio antimuscarínico: midríase, pele e boca secas, e retenção urinária. Note que o quadro deve ser lido em conjunto, não só pela pupila.",
+   "x": "Responda em voz alta antes de virar. Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-m3-1",
+   "g": "Respostas abertas",
+   "t": "Clase 7 · resposta aberta",
+   "q": "Explique por que um β2 e um β1 usam Gs, mas não produzem a mesma resposta no coração e no bronquíolo.",
+   "a": "O segundo mensageiro (AMPc) é o mesmo, mas o tecido determina a resposta. No coração, o AMPc favorece entrada de Ca²⁺ e aumenta trabalho. No músculo liso bronquial, favorece relaxamento.",
+   "x": "Responda em voz alta antes de virar. Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-m4-1",
+   "g": "Respostas abertas",
+   "t": "Clase 8 · resposta aberta",
+   "q": "Explique febre e dor separadamente, mostrando o mecanismo de cada efeito de um AINE.",
+   "a": "Febre: a PGE2 hipotalâmica eleva o ponto de ajuste térmico; o AINE reduz essa sinalização e a temperatura cai. Dor: a PGE2 sensibiliza nociceptores; o AINE reduz a sensibilização, mas não zera a dor. Uma pessoa sem febre não precisa de queda de temperatura.",
+   "x": "Responda em voz alta antes de virar. Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-m5-1",
+   "g": "Respostas abertas",
+   "t": "Clase 8 · resposta aberta",
+   "q": "Explique as duas membranas que a ativação opioide modifica: presináptica e pós-sináptica.",
+   "a": "Presináptica: menor entrada de Ca²⁺ reduz a liberação de transmissores excitatórios. Pós-sináptica: maior condutância de K⁺ leva à hiperpolarização e à menor excitabilidade.",
+   "x": "Responda em voz alta antes de virar. Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-m6-1",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · resposta aberta",
+   "q": "Por que não se deve suspender bruscamente um tratamento crônico com corticoide?",
+   "a": "O uso exógeno suprime o eixo hipotálamo-hipófise-suprarrenal. Sem ACTH, a produção endógena de cortisol fica insuficiente, e a retirada abrupta pode causar insuficiência suprarrenal aguda.",
+   "x": "Responda em voz alta antes de virar. Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-1",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Um fármaco aumenta ACh na sinapse. Ele age só no parassimpático?",
+   "a": "Não. ACh também participa de gânglios autonômicos e da junção neuromuscular. Um anticolinesterásico pode intensificar respostas muscarínicas e nicotínicas; alguns chegam ao SNC.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-2",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Por que a atropina pode acelerar o coração e secar a boca?",
+   "a": "Ela bloqueia receptores muscarínicos. No coração retira o freio vagal, sobretudo M2; nas glândulas reduz a resposta secretora.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-3",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Por que a clonidina reduz pressão sendo agonista adrenérgico?",
+   "a": "Ativa α2 em circuitos centrais inibitórios, reduzindo a saída simpática. Agonismo descreve ativação do receptor, não a direção final da pressão.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-4",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Por que bloquear β2 pode piorar broncoespasmo?",
+   "a": "β2 participa do relaxamento do músculo liso brônquico. Seu bloqueio reduz esse mecanismo broncodilatador em pessoas suscetíveis.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-5",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Como um AINE pode aliviar dor e prejudicar o rim?",
+   "a": "A redução de prostaglandinas diminui a sensibilização dolorosa, mas pode retirar a vasodilatação compensatória que sustenta a perfusão renal.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-6",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Paracetamol é antiinflamatório como diclofenaco?",
+   "a": "Não. Tem efeito analgésico e antipirético, com pouca ação antiinflamatória periférica. Seu risco característico em excesso é hepatotoxicidade.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-7",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Por que o opioide reduz liberação de neurotransmissor?",
+   "a": "A ativação presináptica reduz entrada de Ca²⁺; a ativação postsináptica favorece hiperpolarização por K⁺. Ambas diminuem a transmissão excitatória.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-treino-8",
+   "g": "Respostas abertas",
+   "t": "Clases 6 a 9 · treino de mecanismos",
+   "q": "Como Cushing iatrogênico e supressão do eixo coexistem?",
+   "a": "O medicamento produz excesso de ação glicocorticoide, enquanto a retroalimentação negativa reduz CRH/ACTH e a produção endógena.",
+   "x": "Treino de mecanismos da Apostila SINUS P2."
+  },
+  {
+   "id": "ap-ab-c9-1",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Qué son los corticoides?",
+   "a": "São hormônios esteroides da corteza suprarrenal e fármacos sintéticos que reproduzem suas ações. Incluem glicocorticoides e mineralocorticoides.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-2",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Cómo se clasifican los corticoides?",
+   "a": "Pela ação predominante: glicocorticoides (cortisol, prednisona, dexametasona) e mineralocorticoides (aldosterona, fludrocortisona). Também é útil comparar potência, duração biológica e atividade mineralocorticoide.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-3",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Cuál es la función principal de los glucocorticoides?",
+   "a": "Participam da regulação metabólica (carboidratos, proteínas e lipídios) e da resposta ao estresse; em uso farmacológico, têm potente efeito antiinflamatório e imunossupressor.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-4",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Cuál es la función de los mineralocorticoides?",
+   "a": "Regulam o equilíbrio hidroeletrolítico: reabsorção de sódio e água e excreção de potássio e H⁺, especialmente no néfron distal, aumentando volume intravascular e pressão arterial.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-5",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Cuál es el mecanismo de acción de los corticoides?",
+   "a": "Ligam-se a receptores intracelulares (GR citoplasmático), translocam-se ao núcleo e modificam a expressão gênica: inibem NF-κB, COX-2 e citocinas e induzem lipocortina, que inibe a fosfolipase A2. Há também mecanismos não genômicos; a resposta não é idêntica à inibição direta de COX pelos AINEs.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-6",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Qué efectos tienen sobre el sistema inmunológico?",
+   "a": "Imunossupressão: reduzem mediadores e funções leucocitárias (macrófagos, citocinas IL-1, IL-2, IL-6, TNF-α) e induzem apoptose de linfócitos. Isso controla inflamação, mas aumenta a suscetibilidade a infecções.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-7",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Cuáles son los efectos adversos de los corticoides?",
+   "a": "Aumento de peso, hiperglicemia, Cushing iatrogênico, osteoporose, miopatia, hipertensão, alcalose hipocalêmica, alterações de humor/sono, infecções, catarata, glaucoma, úlcera péptica e supressão do eixo; a retenção hidrossalina varia conforme o fármaco.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-8",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Qué es el síndrome de Cushing iatrogénico?",
+   "a": "É o conjunto de manifestações (face em lua cheia, obesidade central, giba dorsal, estrias violáceas) causado pelo excesso de ação glicocorticoide administrada como medicamento.",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "ap-ab-c9-9",
+   "g": "Respostas abertas",
+   "t": "Clase 9 · questionário da aula",
+   "q": "¿Por qué no se deben suspender bruscamente los corticoides?",
+   "a": "Após exposição prolongada, o eixo hipotálamo–hipófise–suprarrenal fica suprimido e a produção endógena de cortisol pode estar insuficiente: a retirada abrupta pode causar insuficiência suprarrenal aguda. Tratamentos curtos (&lt; 3–4 semanas) nem sempre exigem desmame (R12).",
+   "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  }
+ ]
+};
+/* <<< farmacologia/gimenez */
