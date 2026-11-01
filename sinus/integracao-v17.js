@@ -525,7 +525,7 @@
       renderResourceCategory(v11List('slides').length ? 'slides' : 'pratica');
     } else if (t === 'mapas' || t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
       v11SubjectHeader();
-      if (t === 'apostila') { if(v11List('apostila').length) renderResourceCategory('apostila'); else renderApostilaMateria(); }
+      if (t === 'apostila') { if(v11List('apostila').length) { renderResourceCategory('apostila'); garantirApostila(); } else renderApostilaMateria(); }
       else if (t === 'cartoes') renderCartoes();
       else if (t === 'mapas') renderMapasMateria();
       else renderResourceCategory(t);
@@ -574,10 +574,42 @@
     farmacologia: { ler: '/aulas/apostila-farmacologia/', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
       extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
   };
+  /* cartão «Apostila SINUS» no topo da aba Resumo / Apostila (mesmo quando a matéria tem resumos do Drive) */
+  function apostilaDestaque(A) {
+    return '<div class="glass" data-sx-apostila style="padding:18px 20px;border-radius:18px;margin:0 0 14px;border:1.5px solid rgba(22,110,91,.28)">' +
+      '<span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span>' +
+      '<h3 style="margin:4px 0 6px">Ler a apostila completa</h3>' +
+      '<p class="soft" style="font-size:12.5px;line-height:1.6;margin:0 0 10px">Teoria em português com os termos em espanhol, esquemas interativos, mapas mentais para completar, exercícios e flashcards. Marque «Já estudei» e acompanhe seu progresso.</p>' +
+      '<div class="heroActions"><a class="btn primary sm" href="' + A.ler + '">Abrir a apostila</a>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '">Versão em PDF</a>' : '') +
+      '<button type="button" class="btn sm" onclick="setTab(\'cartoes\')">Flashcards</button><button type="button" class="btn sm" onclick="setTab(\'mapas\')">Mapas guiados</button></div></div>';
+  }
+  function garantirApostila() {
+    var box = $id('subjectContent'), s = subjectData(), A = s && APOSTILAS[s.slug];
+    if (!box || !A || UI.tab !== 'apostila') return;
+    var gal = box.querySelector('.sxMG'), card = box.querySelector('[data-sx-apostila]');
+    var bloco = card ? (card.closest('.sxApost') || card) : null;
+    if (!bloco) {
+      var tmp = D.createElement('div'); tmp.innerHTML = apostilaDestaque(A); bloco = tmp.firstChild;
+      var ref = box.querySelector('.sxStudyExtras');
+      if (gal) gal.parentNode.insertBefore(bloco, gal); else if (ref) ref.parentNode.insertBefore(bloco, ref.nextSibling); else box.insertBefore(bloco, box.firstChild);
+      return;
+    }
+    /* a galeria «Resumos e apostilas» é montada depois: a apostila SINUS fica sempre acima dela */
+    if (gal && (gal.compareDocumentPosition(bloco) & 4)) gal.parentNode.insertBefore(bloco, gal);
+  }
+  W.sxGarantirApostila = garantirApostila;
+  (function vigiar() {
+    var alvo = null, mo = null;
+    setInterval(function () {
+      var box = $id('subjectContent');
+      if (box && box !== alvo && W.MutationObserver) { if (mo) mo.disconnect(); alvo = box; mo = new MutationObserver(function () { garantirApostila(); }); mo.observe(box, { childList: true, subtree: true }); }
+      garantirApostila();
+    }, 800);
+  })();
   function renderApostilaMateria() {
     var s = subjectData(), A = s && APOSTILAS[s.slug], off = '<span class="btn sm" style="opacity:.6;cursor:default">Em preparação</span>';
     $id('subjectContent').innerHTML = '<p class="soft" style="margin:0 0 12px;font-size:12.5px">' + (A && A.titulo ? H(A.titulo) + ' · ' : '') + 'A mesma matéria, de dois jeitos. Escolha como prefere estudar agora.</p><div class="sxApost">' +
-      '<div class="glass"><span class="eyebrow">Apostila · para ler</span><h3>Ler na tela</h3><p>A teoria toda em português com os termos em espanhol, esquemas interativos, mapas para completar, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
+      '<div class="glass" data-sx-apostila><span class="eyebrow">Apostila · para ler</span><h3>Ler na tela</h3><p>A teoria toda em português com os termos em espanhol, esquemas interativos, mapas para completar, os exercícios um por vez e os flashcards. Abre rápido e acompanha o seu progresso.</p>' +
       '<div class="heroActions">' + (A ? '<a class="btn primary sm" href="' + A.ler + '">Abrir a apostila</a>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '">Versão em PDF</a>' : '') : off) + '</div></div>' +
       (A && A.extra ? '<div class="glass"><span class="eyebrow">Exercícios · na matéria</span><h3>Onde praticar</h3><p>' + A.extra + '</p></div>' :
       '<div class="glass"><span class="eyebrow">Apostila · em 3D</span><h3>Ver em 3D</h3><p>Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
@@ -791,7 +823,10 @@
       '<div class="glass sxBlock"><span class="eyebrow">Anatomía Patológica I · Lesión celular</span><h3>Necrosis, apoptosis y acumulaciones</h3>' +
       '<p class="soft" style="font-size:12.5px;line-height:1.65">A teoria em português com os termos em espanhol, o que caiu em cada prova, exercícios e flashcards. Também em 3D, com as lâminas.</p>' +
       '<div class="heroActions"><a class="btn primary sm" href="/aulas/lesion/apostila/">Ler na tela</a><a class="btn sm" href="/aulas/lesion/#/pdf">Versão em PDF</a><a class="btn sm" href="/aulas/lesion/#/3d">Ver em 3D</a><a class="btn sm" href="/aulas/lesion/#/treino">Treino para prova</a></div></div>' +
-      '<div class="glass sxBlock"><span class="eyebrow">Próximas apostilas</span><p class="soft" style="font-size:12.5px;margin-top:6px">Semiología, Farmacología, Fisiopatología, Imagenología e Medicina de la Familia estão em preparação.</p></div>' +
+      '<div class="glass sxBlock"><span class="eyebrow">Farmacología I · P2 (Clases 6 a 9)</span><h3>SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides</h3>' +
+      '<p class="soft" style="font-size:12.5px;line-height:1.65">Esquemas interativos, mapas mentais para completar, exercícios e flashcards, com os resumos manuscritos integrados.</p>' +
+      '<div class="heroActions"><a class="btn primary sm" href="/aulas/apostila-farmacologia/">Ler na tela</a></div></div>' +
+      '<div class="glass sxBlock"><span class="eyebrow">Próximas apostilas</span><p class="soft" style="font-size:12.5px;margin-top:6px">Semiología, Fisiopatología, Imagenología e Medicina de la Familia estão em preparação.</p></div>' +
       '<div class="glass adminBlock"><input id="apostSearch" oninput="filterApostilas()" placeholder="Buscar pelo título, matéria ou tipo..."><div id="apostList"></div></div>';
     filterApostilas();
   };
