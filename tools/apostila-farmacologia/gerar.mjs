@@ -46,7 +46,6 @@ function cartao(sec, { check = true, modTitulo = '' } = {}) {
   const eyebrow = strip((sec.match(/<span class="eyebrow">([\s\S]*?)<\/span>/) || [, ''])[1]);
   let inner = sec.replace(/^<section[^>]*>/, '').replace(/<\/section>\s*$/, '')
     .replace(/<span class="eyebrow">[\s\S]*?<\/span>\s*/, '').replace(/<h1 class="h1">[\s\S]*?<\/h1>\s*/, '');
-  if (num && MAPAS.find((x) => x.id === num)) inner += `<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="${num}"></div></div></details>`;
   const head = `<div class="head"><div><span class="num">${num ? num + ' · ' : ''}${modTitulo || eyebrow}</span><h3>${titulo}</h3></div>${check && num ? `<label class="check"><input type="checkbox" data-lido="${num}"> Já estudei</label>` : ''}</div>`;
   return { id, num, titulo, html: `<article class="cap" id="${id}"${num ? ` data-cap="${num}"` : ''}>${head}${inner}</article>\n` };
 }
@@ -57,8 +56,6 @@ for (const m of MODULOS) {
   totalCaps += caps.length;
   toc += caps.map((c) => `<a href="#${c.id}" data-toc="${c.num}">${c.num}. ${c.titulo}</a>`).join('');
   apostila += `<section class="grupo" id="mod${m.n}"><div class="grupo-h"><h2>${m.titulo}</h2><span class="mini">${caps.length} capítulos · ${m.aula}</span></div>${caps.map((c) => c.html).join('')}</section>\n`;
-  exerc += `<section class="grupo" id="ex${m.n}"><div class="grupo-h"><h2>${m.titulo}</h2><span class="mini">${Q[m.q].length} questões</span></div><div class="quiz ex" data-quiz="${m.q}"></div></section>\n`;
-  flash += `<section class="grupo" id="fc${m.n}"><div class="grupo-h"><h2>${m.titulo}</h2><span class="mini">${C[m.q].length} cartões</span></div><div class="deck" data-deck="${m.q}"></div></section>\n`;
 }
 const consulta = [...src('apendice.html').matchAll(/<section class="pg cap" id="[^"]+">[\s\S]*?<\/section>/g)].map((x) => cartao(x[0], { check: false }).html).join('');
 
@@ -68,7 +65,7 @@ const html = `<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Apostila de farmacologia · P2 · SINUS</title>
-<meta name="description" content="Apostila SINUS de Farmacología I · P2: SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides, com esquemas interativos, mapas mentais, exercícios e flashcards.">
+<meta name="description" content="Apostila SINUS de Farmacología I · P2: SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides, com esquemas interativos. Exercícios, flashcards e mapas mentais no Treino da matéria.">
 <meta name="theme-color" content="#155B48">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
@@ -81,29 +78,20 @@ ${src('estilo.css')}
 <header class="top">
 <div class="kicker">Farmacología I · UCP · P2 · <span style="color:#10352a">FELPS ©</span></div>
 <h1>Apostila de farmacologia</h1>
-<p class="lede">SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides. Explicação em português com os termos em espanhol, esquemas interativos e exercícios que corrigem na hora.</p>
+<p class="lede">SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides. Explicação em português com os termos em espanhol, esquemas interativos e destaques do que cai na prova.</p>
 <div class="progress"><i id="progbar"></i></div>
 <div class="mini" id="progtxt">Capítulos lidos: 0 de ${totalCaps}</div>
 </header>
 <nav class="tabs" role="tablist">
 <button role="tab" data-tab="apostila" aria-selected="true">Apostila</button>
-<button role="tab" data-tab="exercicios" aria-selected="false">Exercícios <span class="mini">${NQ}</span></button>
-<button role="tab" data-tab="flashcards" aria-selected="false">Flashcards <span class="mini">${NC}</span></button>
 <button role="tab" data-tab="consulta" aria-selected="false">Consulta</button>
 </nav>
 <main>
 <div data-pane="apostila">
 <div class="howto glass">${LEG}</div>
+<div class="box" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><span class="lb">Pratique no Treino da matéria</span><p>Exercícios, flashcards e mapas mentais desta apostila ficam no <b>Treino</b> de Farmacología I.</p></div><a class="btn" href="/?sxAbrir=farmacologia&amp;sxAba=training" style="text-decoration:none">Praticar no Treino →</a></div>
 <nav class="toc" aria-label="Capítulos">${toc}</nav>
 ${apostila}
-</div>
-<div data-pane="exercicios" hidden>
-<p class="lede">Responda sem consultar. A correção e a justificativa aparecem na hora.</p>
-${exerc}
-</div>
-<div data-pane="flashcards" hidden>
-<p class="lede">Toque no cartão para virar. «Sei» tira da pilha; «Revisar de novo» manda para o fim.</p>
-${flash}
 </div>
 <div data-pane="consulta" hidden>
 ${consulta}
@@ -112,9 +100,6 @@ ${consulta}
 <footer class="pe">${LOGO}<span>Seu estudo. Seu tempo. Seu ritmo.<br><b>FELPS ©</b> 2026 · Felipe Guimarães de Souza · Todos os direitos reservados</span></footer>
 </div>
 <script>
-${src('mapas.js')}
-${src('questoes.js')}
-${src('cartoes.js')}
 ${src('app.js')}
 </script>
 </body>
@@ -127,20 +112,20 @@ writeFileSync(join(ROOT, 'aulas/apostila-farmacologia/index.html'), html);
 const MODS = { m1: ['Clase 6', 'SNA e receptores', [6, 5, 41]], m2: ['Clase 6', 'Fármacos colinérgicos', [6, 42, 110]], m3: ['Clase 7', 'Fármacos adrenérgicos', [7, 4, 65]], m4: ['Clase 8', 'AINEs e analgésicos', [8, 3, 36]], m5: ['Clase 8', 'Dor e opioides', [8, 38, 72]], m6: ['Clase 9', 'Corticoides', [9, 5, 46]], m7: ['Clases 6 a 9', 'Integração', null] };
 const FONTE = 'Apostila SINUS · Farmacologia P2 (Clases 6–9) · autoria Felipe Guimarães de Souza';
 const mods = MAPAS_GUIADOS.map((m) => ({ id: 'ap_' + m.id, clase: m.clase, titulo: 'Apostila · ' + m.titulo, tipo: 'mapa', sl: [m.sl], centro: m.centro, sub: m.sub || 'Apostila SINUS P2', fuente: FONTE, ramas: m.ramas.map((r) => ({ t: r.t, hojas: r.hojas })) }));
-const L = 'abcd';
+const blocos = [];
 for (const [k, lista] of Object.entries(Q)) {
-  const [clase, nome, sl] = MODS[k];
-  const casos = lista.filter((q) => q.tipo !== 'ab').map((q) => {
-    if (q.tipo === 'vf') { const ops = ['a) Verdadeiro', 'b) Falso'], r = q.r ? 0 : 1; return [q.q, 'Verdadeiro ou falso?', ops[r], L[r], q.ex, ops]; }
-    const ops = q.ops.map((o, i) => L[i] + ') ' + o); return [q.q, 'Escolha a alternativa correta.', ops[q.r], L[q.r], q.ex, ops];
-  });
-  const mod = { id: 'ap_q_' + k, clase, titulo: 'Apostila · Questões: ' + nome, tipo: 'casos', resumen: 'Múltipla escolha e verdadeiro ou falso, com justificativa.', fuente: FONTE, casos };
-  if (sl) mod.sl = [sl];
-  mods.push(mod);
+  const [clase, nome] = MODS[k];
+  const qs = lista.filter((q) => q.tipo !== 'ab').map((q) => q.tipo === 'vf' ? { q: q.q, ops: ['Verdadeiro', 'Falso'], r: q.r ? 0 : 1, ex: q.ex } : { q: q.q, ops: q.ops, r: q.r, ex: q.ex });
+  blocos.push({ id: k, titulo: nome, clase, questoes: qs });
 }
+writeFileSync(join(ROOT, 'aulas/apostila-farmacologia/exercicios.js'), `/* Sinus · Exercícios da Apostila Farmacología I · P2 (aba Treino → Exercícios).
+   Gerado por tools/apostila-farmacologia/gerar.mjs. Não editar à mão. */
+window.SINUS_EXERCICIOS_APOSTILA = window.SINUS_EXERCICIOS_APOSTILA || {};
+window.SINUS_EXERCICIOS_APOSTILA.farmacologia = ${JSON.stringify({ titulo: 'Apostila SINUS · Farmacología P2 (Clases 6 a 9)', blocos }, null, 1)};
+`);
 writeFileSync(join(ROOT, 'mapas/dados/farmacologia-apostila.js'), `/* Sinus · Mapas guiados · Farmacología I · APOSTILA SINUS P2 (Clases 6 a 9)
    Complemento de farmacologia.js: ${MAPAS_GUIADOS.length} mapas da apostila (níveis Guiado e Desafío) e
-   ${Object.keys(Q).length} blocos de questões de múltipla escolha e V/F (nível Prova).
+   As questões da apostila ficam no Treino → Exercícios (aulas/apostila-farmacologia/exercicios.js).
    Gerado por tools/apostila-farmacologia/gerar.mjs. Não editar à mão. */
 (function () {
   var F = window.SINUS_MAPAS && window.SINUS_MAPAS.farmacologia;
@@ -169,4 +154,4 @@ const a = cs.indexOf(INI), b = cs.indexOf(FIM);
 cs = a >= 0 ? cs.slice(0, a) + bloco + cs.slice(b + FIM.length + 1) : cs.replace(/\s*$/, '\n') + bloco;
 writeFileSync(cfile, cs);
 
-console.log(`apostila: ${totalCaps} capítulos · ${(html.length / 1024).toFixed(0)} KB | mapas guiados: ${MAPAS_GUIADOS.length} + ${Object.keys(Q).length} blocos de questões | flashcards: ${cards.length} (${cards.filter((c) => c.g === 'Respostas abertas').length} abertas)`);
+console.log(`apostila: ${totalCaps} capítulos · ${(html.length / 1024).toFixed(0)} KB | mapas guiados: ${MAPAS_GUIADOS.length} | exercícios: ${blocos.reduce((n, b) => n + b.questoes.length, 0)} | flashcards: ${cards.length} (${cards.filter((c) => c.g === 'Respostas abertas').length} abertas)`);

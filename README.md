@@ -31,11 +31,13 @@ As três aulas e seus PDFs/imagens permanecem nos caminhos originais.
 
 ## Apostila SINUS · Farmacologia P2
 
-Para todas as turmas do 5º período (A a G), na matéria Farmacología I:
+Para todas as turmas do 5º período (A a G), na matéria Farmacología I. A apostila é só leitura; a prática fica no Treino da matéria:
 
-- **Apostila** (`aulas/apostila-farmacologia/`): 34 capítulos das Clases 6 a 9 com esquemas interativos, mapas para completar, exercícios e flashcards. A aba Apostila da matéria leva até ela (`APOSTILAS` em `sinus/integracao-v17.js`).
-- **Flashcards**: baralho `farmacologia/gimenez` em `aulas/flashcards/cartoes.js` (101 cartões, 23 de resposta aberta, incluindo as nove perguntas da Clase 9). As turmas de outros docentes também o recebem, porque é o único baralho da matéria.
-- **Mapas guiados**: 33 mapas (níveis Guiado e Desafío) e as questões no nível Prova, em `mapas/dados/farmacologia-apostila.js`.
+- **Resumo / Apostila** (e visão geral de teoria): cartão «Apostila SINUS» acima dos resumos do Drive, abrindo `aulas/apostila-farmacologia/` (34 capítulos, Clases 6 a 9). Configuração em `APOSTILAS` (`sinus/integracao-v17.js`).
+- **Treino → Exercícios**: 56 questões de múltipla escolha e V/F por módulo, com correção e placar (`aulas/apostila-farmacologia/exercicios.js`, `SINUS_EXERCICIOS_APOSTILA`).
+- **Treino → Flashcards**: baralho `farmacologia/gimenez` em `aulas/flashcards/cartoes.js` (101 cartões, 23 de resposta aberta). As turmas de outros docentes também o recebem, porque é o único baralho da matéria.
+- **Treino → Mapas mentais**: as matérias com mapas guiados mostram os mapas para completar (`/mapas/?s=<matéria>`); em Farmacología, 35 da matéria + 33 da apostila (`mapas/dados/farmacologia-apostila.js`).
+- Link direto: `/?sxAbrir=farmacologia&sxAba=training` abre o Treino da matéria depois da entrada.
 
 A fonte fica em `tools/apostila-farmacologia/` (capítulos em `src/capitulos/`, dados, mapas guiados e a marca). Para atualizar, edite a fonte e rode `node tools/apostila-farmacologia/gerar.mjs` e depois `node tools/testar-mapas.js`; não edite os arquivos gerados à mão. Os capítulos 09 a 18 incorporam os 7 resumos manuscritos do autor (anticolinérgicos e adrenérgicos).
 

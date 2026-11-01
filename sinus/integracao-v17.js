@@ -663,6 +663,68 @@
     var modo = UI.mode === 'practice' ? 'pratica' : 'teoria';
     box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
+  /* Treino → Mapas mentais: os mapas guiados da matéria (quando existem para o modo atual) */
+  W.sxTemMapasGuiados = function () { var s = subjectData(), m = s && MAPAS_MATERIAS[s.slug]; return !!(m && m[UI.mode === 'practice' ? 'pratica' : 'teoria']) };
+  W.sxRenderMapasGuiados = function () { renderMapasMateria() };
+
+  /* Treino → Exercícios: questões das apostilas SINUS (múltipla escolha e V/F, correção na hora) */
+  function exApostila() { var s = subjectData(); return s && (W.SINUS_EXERCICIOS_APOSTILA || {})[s.slug] ? { slug: s.slug, d: W.SINUS_EXERCICIOS_APOSTILA[s.slug] } : null }
+  function exLer(slug) { try { return JSON.parse(localStorage.getItem('sinus_ex_apostila_' + slug) || '{}') } catch (e) { return {} } }
+  function exGravar(slug, o) { try { localStorage.setItem('sinus_ex_apostila_' + slug, JSON.stringify(o)) } catch (e) {} }
+  var EXA = {};
+  function exHtml(x) {
+    var st = exLer(x.slug), bl = x.d.blocos, cur = EXA[x.slug] || bl[0].id, b = bl.filter(function (y) { return y.id === cur })[0] || bl[0];
+    var tot = 0, feitas = 0, certas = 0;
+    bl.forEach(function (y) { y.questoes.forEach(function (q, i) { tot++; var a = st[y.id + '.' + i]; if (a != null) { feitas++; if (a === q.r) certas++ } }) });
+    var L = 'ABCD';
+    return '<section class="glass" data-sx-ex-apostila style="padding:18px 20px;border-radius:18px;margin:0 0 14px">' +
+      '<span class="eyebrow">Exercícios · ' + H(x.d.titulo) + '</span>' +
+      '<div style="display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 12px;font-size:12.5px"><span><b style="font-size:20px">' + certas + '</b> acertos</span><span><b style="font-size:20px">' + feitas + '/' + tot + '</b> respondidas</span><span><b style="font-size:20px">' + (feitas - certas) + '</b> para revisar</span><button type="button" class="btn sm" data-sx-exa-zerar style="margin-left:auto">Refazer</button></div>' +
+      '<div class="sxExaChips" role="group" aria-label="Módulo" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">' + bl.map(function (y) { return '<button type="button" class="btn sm ' + (y.id === b.id ? 'primary' : '') + '" data-sx-exa-bloco="' + y.id + '">' + H(y.titulo) + '</button>' }).join('') + '</div>' +
+      b.questoes.map(function (q, i) {
+        var k = b.id + '.' + i, a = st[k], feita = a != null;
+        return '<div style="border:1px solid rgba(17,40,30,.12);border-radius:14px;padding:12px 14px;margin:0 0 10px;background:#fff">' +
+          '<small class="soft">' + H(b.clase) + ' · Questão ' + (i + 1) + '</small><p style="font-weight:600;margin:4px 0 8px">' + H(q.q) + '</p>' +
+          q.ops.map(function (o, j) {
+            var cor = feita ? (j === q.r ? 'background:#e1f3e8;border-color:#1e7d4f' : (j === a ? 'background:#fbe6e3;border-color:#a3261c' : '')) : '';
+            return '<button type="button" ' + (feita ? 'disabled ' : '') + 'data-sx-exa="' + k + '" data-sx-exa-op="' + j + '" style="display:flex;gap:10px;width:100%;text-align:left;border:1px solid rgba(17,40,30,.14);border-radius:10px;padding:8px 11px;margin:0 0 6px;background:#fff;font:inherit;cursor:' + (feita ? 'default' : 'pointer') + ';' + cor + '"><b style="color:#176e5b">' + (q.ops.length === 2 ? (j ? 'F' : 'V') : L[j]) + '</b><span>' + H(o) + '</span></button>';
+          }).join('') +
+          (feita ? '<p style="margin:8px 0 0;font-size:13px;border-radius:10px;padding:8px 10px;background:' + (a === q.r ? '#e1f3e8' : '#fbe6e3') + '"><b>' + (a === q.r ? 'Correto. ' : 'Resposta: ' + (q.ops.length === 2 ? (q.r ? 'Falso' : 'Verdadeiro') : L[q.r]) + '. ') + '</b>' + H(q.ex) + '</p>' : '') + '</div>';
+      }).join('') + '</section>';
+  }
+  function garantirExercicios() {
+    var root = $id('subjectContent'), x = exApostila();
+    if (!root || !x || UI.tab !== 'training' || (UI.trainingPane || 'exercises') !== 'exercises' || root.querySelector('[data-sx-ex-apostila]')) return;
+    var nav = root.querySelector('.sxUnifiedTrainNav');
+    if (nav) nav.insertAdjacentHTML('afterend', exHtml(x)); else root.insertAdjacentHTML('afterbegin', exHtml(x));
+  }
+  function exRedesenhar() { var el = D.querySelector('[data-sx-ex-apostila]'), x = exApostila(); if (el && x) el.outerHTML = exHtml(x) }
+  D.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-sx-exa],[data-sx-exa-bloco],[data-sx-exa-zerar]'), x = exApostila(); if (!t || !x) return;
+    if (t.dataset.sxExaBloco) EXA[x.slug] = t.dataset.sxExaBloco;
+    else if ('sxExaZerar' in t.dataset) exGravar(x.slug, {});
+    else { var st = exLer(x.slug); if (st[t.dataset.sxExa] == null) { st[t.dataset.sxExa] = +t.dataset.sxExaOp; exGravar(x.slug, st) } }
+    exRedesenhar();
+  });
+  setInterval(garantirExercicios, 700);
+
+  /* link direto da apostila: /?sxAbrir=<slug>&sxAba=<aba> abre a matéria na aba pedida depois da entrada */
+  (function abrirPorLink() {
+    var q; try { q = new URLSearchParams(location.search) } catch (e) { return }
+    var slug = q.get('sxAbrir'), aba = q.get('sxAba') || 'apostila'; if (!slug) return;
+    var tentativas = 0, it = setInterval(function () {
+      if (++tentativas > 60) { clearInterval(it); return }
+      var nome = Object.keys((W.DB && DB.subjects) || {}).filter(function (n) { return DB.subjects[n].slug === slug })[0];
+      if (!nome || typeof W.openSubject !== 'function') return;
+      W.openSubject(nome);
+      if (UI.subject !== nome) return;
+      clearInterval(it);
+      if (aba === 'training') UI.trainingPane = q.get('sxPainel') || 'exercises';
+      if (aba !== 'overview' && W.setTab) W.setTab(aba);
+      try { history.replaceState(null, '', location.pathname + location.hash) } catch (e) {}
+    }, 500);
+  })();
+
   function camposExercicio(c) {
     if (!CART.rascunho) CART.rascunho = {};
     var r = CART.rascunho[c.id] || {};

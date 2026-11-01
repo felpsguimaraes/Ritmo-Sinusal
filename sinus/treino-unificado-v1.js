@@ -18,6 +18,8 @@
   function mindmaps(){
     var root=host(),subject=(DB.subjects||{})[UI.subject]||{},qbank=((DB.training||{}).questions||[]);
     if(!root)return;
+    /* matérias com mapas guiados: o painel mostra os mapas para completar (Guiado, Desafío e Prova) */
+    if(typeof W.sxTemMapasGuiados==='function'&&W.sxTemMapasGuiados()){W.sxRenderMapasGuiados();nav();return;}
     var groups={P1:[],P2:[],Final:[],Geral:[]},seen=new Set();
     function add(item){
       var tag=String(item.period||'Geral'),id=/^P1$/i.test(tag)?'P1':/^P2$/i.test(tag)?'P2':/^Final$/i.test(tag)?'Final':'Geral';

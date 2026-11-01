@@ -91,7 +91,7 @@ function prog(){var caps=document.querySelectorAll('[data-cap]'),n=0;
  Object.keys(C).forEach(function(k){tot+=C[k].length;ok+=S.fc[k]&&S.fc[k].known?S.fc[k].known.length:0});
  var b=document.getElementById('progbar'),t=document.getElementById('progtxt');
  if(b)b.style.width=(caps.length?Math.round(n/caps.length*100):0)+'%';
- if(t)t.textContent='Capítulos lidos: '+n+' de '+caps.length+' · '+(tot?Math.round(ok/tot*100):0)+'% dos exercícios e flashcards praticados'}
+ if(t)t.textContent='Capítulos lidos: '+n+' de '+caps.length+(tot?' · '+Math.round(ok/tot*100)+'% dos exercícios e flashcards praticados':'')}
 
 /* ---------------- abas ---------------- */
 function tab(name){document.querySelectorAll('[data-tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===name?'true':'false')});
