@@ -571,7 +571,7 @@
   /* apostilas do Sinus por matéria (vale para todas as turmas do período) */
   var APOSTILAS = {
     anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino' },
-    farmacologia: { ler: '/aulas/apostila-farmacologia/', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
+    farmacologia: { ler: '/aulas/apostila-farmacologia/', pdf: '/aulas/apostila-farmacologia/apostila-farmacologia-p2.pdf', gabarito: '/aulas/apostila-farmacologia/exercicios-respondidos-p2.pdf', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
       extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
   };
   /* cartão «Apostila SINUS» no topo da aba Resumo / Apostila (mesmo quando a matéria tem resumos do Drive) */
@@ -590,7 +590,7 @@
     return '<section class="glass" data-sx-apostila="embutida" style="padding:0;border-radius:18px;margin:0 0 14px;overflow:hidden;border:1.5px solid rgba(22,110,91,.28)">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid rgba(17,40,30,.08)">' +
       '<div><span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span></div>' +
-      '<div class="heroActions" style="margin:0"><button type="button" class="btn sm" data-sx-ir="training">Exercícios</button><button type="button" class="btn sm" data-sx-ir="cartoes">Flashcards</button><button type="button" class="btn sm" data-sx-ir="mapas">Mapas mentais</button><a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
+      '<div class="heroActions" style="margin:0"><button type="button" class="btn sm" data-sx-ir="training">Exercícios</button><button type="button" class="btn sm" data-sx-ir="cartoes">Flashcards</button><button type="button" class="btn sm" data-sx-ir="mapas">Mapas mentais</button>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '" target="_blank" rel="noopener">PDF</a>' : '') + (A.gabarito ? '<a class="btn sm" href="' + A.gabarito + '" target="_blank" rel="noopener">Gabarito PDF</a>' : '') + '<a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
       '<iframe src="' + src + '" title="Apostila ' + H(A.titulo || '') + '" loading="lazy" style="display:block;width:100%;height:calc(100vh - 140px);min-height:560px;border:0;background:#f1f8f4"></iframe></section>';
   }
   function garantirApostila() {

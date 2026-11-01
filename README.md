@@ -41,6 +41,8 @@ Para todas as turmas do 5º período (A a G), na matéria Farmacología I. A apo
 
 A fonte fica em `tools/apostila-farmacologia/` (capítulos em `src/capitulos/`, dados, mapas guiados e a marca). Para atualizar, edite a fonte e rode `node tools/apostila-farmacologia/gerar.mjs` e depois `node tools/testar-mapas.js`; não edite os arquivos gerados à mão. Os capítulos 09 a 18 incorporam os 7 resumos manuscritos do autor (anticolinérgicos e adrenérgicos).
 
+PDFs: `node tools/apostila-farmacologia/gerar-pdf.mjs` gera `apostila-farmacologia-p2.pdf` (sem exercícios, com convite ao Treino e QR) e `node tools/apostila-farmacologia/gerar-gabarito.mjs` gera `exercicios-respondidos-p2.pdf` (questões, respostas abertas, flashcards e mapas preenchidos). Os botões «PDF» e «Gabarito PDF» aparecem no cabeçalho da apostila embutida.
+
 ## Administração
 
 A entrada antiga `aulas/painel.html` encaminha ao painel atual em `https://meusinus.pages.dev/admin/control/`. A ativação do backend está documentada em [admin/control/README.md](admin/control/README.md).
