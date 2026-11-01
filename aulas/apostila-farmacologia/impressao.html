@@ -289,6 +289,19 @@ body.embed header.top h1{font-size:clamp(24px,4vw,34px)}
 body.embed .lede{font-size:15.5px}
 table.t td,table.t th{overflow-wrap:anywhere}.cap{overflow-wrap:break-word}
 
+/* celular: tabelas viram cartões empilhados (rótulo em cima, valor embaixo) */
+@media (max-width:640px){
+  table.t thead{display:none}
+  table.t,table.t tbody,table.t tr,table.t td{display:block;width:100%}
+  table.t{margin:6px 0 12px}
+  table.t tr{border:1px solid var(--line);border-radius:14px;margin:0 0 10px;background:#fff;overflow:hidden}
+  table.t tbody tr:nth-child(even) td{background:none}
+  table.t td{border:0;padding:7px 12px;font-size:14px;line-height:1.5}
+  table.t td+td{border-top:1px solid var(--line2,#eef3f0)}
+  table.t td::before{content:attr(data-label);display:block;font:800 10.5px/1.2 var(--f);letter-spacing:.07em;text-transform:uppercase;color:var(--acc);margin-bottom:2px}
+  table.t td:empty{display:none}
+}
+
 
 @page{size:A4;margin:20mm 14mm 18mm 14mm}
 html,body{background:#fff!important}
@@ -358,14 +371,14 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Característica</th><th>Simpático (adrenérgico)</th><th>Parassimpático (colinérgico)</th></tr></thead>
 <tbody>
-<tr><td><b>Origem anatômica</b></td><td>Toracolombar: medula espinhal de T1 a L2</td><td>Craniossacra: III (oculomotor), VII (facial), IX (glossofaríngeo), X (vago) e S2–S4</td></tr>
-<tr><td><b>Fibra pré-ganglionar</b></td><td>Geralmente curta</td><td>Geralmente longa</td></tr>
-<tr><td><b>Fibra pós-ganglionar</b></td><td>Geralmente longa</td><td>Geralmente curta</td></tr>
-<tr><td><b>Gânglios</b></td><td>Cadeia paravertebral (GCS, GCM, GCI) e pré-vertebrais (celíaco, mesentéricos, aórtico-renal): afastados do órgão</td><td>Ciliar, pterigopalatino, submandibular, ótico e plexos viscerais: próximos ou dentro do órgão</td></tr>
-<tr><td><b>Neurotransmissor pré-ganglionar</b></td><td>Acetilcolina em receptor nicotínico neuronal (Nn)</td><td>Acetilcolina em receptor nicotínico neuronal (Nn)</td></tr>
-<tr><td><b>Neurotransmissor pós-ganglionar</b></td><td>Principalmente noradrenalina (α ou β, conforme o tecido)</td><td>Acetilcolina em receptor muscarínico (M1 a M5)</td></tr>
-<tr><td><b>Distribuição</b></td><td>Ampla e difusa: prepara todo o organismo para alerta</td><td>Mais localizada e específica por órgão</td></tr>
-<tr><td><b>Resposta típica no coração</b></td><td>Aumenta frequência e força</td><td>Diminui frequência e condução</td></tr>
+<tr><td data-label="Característica"><b>Origem anatômica</b></td><td data-label="Simpático (adrenérgico)">Toracolombar: medula espinhal de T1 a L2</td><td data-label="Parassimpático (colinérgico)">Craniossacra: III (oculomotor), VII (facial), IX (glossofaríngeo), X (vago) e S2–S4</td></tr>
+<tr><td data-label="Característica"><b>Fibra pré-ganglionar</b></td><td data-label="Simpático (adrenérgico)">Geralmente curta</td><td data-label="Parassimpático (colinérgico)">Geralmente longa</td></tr>
+<tr><td data-label="Característica"><b>Fibra pós-ganglionar</b></td><td data-label="Simpático (adrenérgico)">Geralmente longa</td><td data-label="Parassimpático (colinérgico)">Geralmente curta</td></tr>
+<tr><td data-label="Característica"><b>Gânglios</b></td><td data-label="Simpático (adrenérgico)">Cadeia paravertebral (GCS, GCM, GCI) e pré-vertebrais (celíaco, mesentéricos, aórtico-renal): afastados do órgão</td><td data-label="Parassimpático (colinérgico)">Ciliar, pterigopalatino, submandibular, ótico e plexos viscerais: próximos ou dentro do órgão</td></tr>
+<tr><td data-label="Característica"><b>Neurotransmissor pré-ganglionar</b></td><td data-label="Simpático (adrenérgico)">Acetilcolina em receptor nicotínico neuronal (Nn)</td><td data-label="Parassimpático (colinérgico)">Acetilcolina em receptor nicotínico neuronal (Nn)</td></tr>
+<tr><td data-label="Característica"><b>Neurotransmissor pós-ganglionar</b></td><td data-label="Simpático (adrenérgico)">Principalmente noradrenalina (α ou β, conforme o tecido)</td><td data-label="Parassimpático (colinérgico)">Acetilcolina em receptor muscarínico (M1 a M5)</td></tr>
+<tr><td data-label="Característica"><b>Distribuição</b></td><td data-label="Simpático (adrenérgico)">Ampla e difusa: prepara todo o organismo para alerta</td><td data-label="Parassimpático (colinérgico)">Mais localizada e específica por órgão</td></tr>
+<tr><td data-label="Característica"><b>Resposta típica no coração</b></td><td data-label="Simpático (adrenérgico)">Aumenta frequência e força</td><td data-label="Parassimpático (colinérgico)">Diminui frequência e condução</td></tr>
 </tbody></table></div>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>A via autonômica geralmente usa <b>dois neurônios</b>: o primeiro sai do SNC e termina no gânglio; o segundo segue do gânglio até o órgão. Na via somática para músculo esquelético, <b>um único</b> neurônio motor vai do SNC até a união neuromuscular. Essa diferença explica por que a placa motora é bem definida e a sinapse autonômica é difusa.</p></div>
@@ -436,12 +449,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Local da transmissão</th><th>Neurotransmissor</th><th>Receptor</th></tr></thead>
 <tbody>
-<tr><td>Todos os gânglios autonômicos</td><td>Acetilcolina</td><td>Nicotínico neuronal (Nn)</td></tr>
-<tr><td>Órgãos efetores parassimpáticos</td><td>Acetilcolina</td><td>Muscarínico</td></tr>
-<tr><td>Maioria das terminações simpáticas</td><td>Noradrenalina</td><td>α ou β, conforme o tecido</td></tr>
-<tr><td>Glândulas sudoríparas écrinas</td><td>Acetilcolina, apesar da via simpática</td><td>Muscarínico</td></tr>
-<tr><td>Medula suprarrenal</td><td>Acetilcolina na célula cromafim (fibra pré-ganglionar libera ACh direto na célula)</td><td>Nicotínico; liberação hormonal de catecolaminas (~80% adrenalina e ~20% noradrenalina)</td></tr>
-<tr><td>Junção neuromuscular</td><td>Acetilcolina</td><td>Nicotínico muscular (Nm)</td></tr>
+<tr><td data-label="Local da transmissão">Todos os gânglios autonômicos</td><td data-label="Neurotransmissor">Acetilcolina</td><td data-label="Receptor">Nicotínico neuronal (Nn)</td></tr>
+<tr><td data-label="Local da transmissão">Órgãos efetores parassimpáticos</td><td data-label="Neurotransmissor">Acetilcolina</td><td data-label="Receptor">Muscarínico</td></tr>
+<tr><td data-label="Local da transmissão">Maioria das terminações simpáticas</td><td data-label="Neurotransmissor">Noradrenalina</td><td data-label="Receptor">α ou β, conforme o tecido</td></tr>
+<tr><td data-label="Local da transmissão">Glândulas sudoríparas écrinas</td><td data-label="Neurotransmissor">Acetilcolina, apesar da via simpática</td><td data-label="Receptor">Muscarínico</td></tr>
+<tr><td data-label="Local da transmissão">Medula suprarrenal</td><td data-label="Neurotransmissor">Acetilcolina na célula cromafim (fibra pré-ganglionar libera ACh direto na célula)</td><td data-label="Receptor">Nicotínico; liberação hormonal de catecolaminas (~80% adrenalina e ~20% noradrenalina)</td></tr>
+<tr><td data-label="Local da transmissão">Junção neuromuscular</td><td data-label="Neurotransmissor">Acetilcolina</td><td data-label="Receptor">Nicotínico muscular (Nm)</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">«Colinérgico» não é sinônimo de «parassimpático»</mark>. A transmissão ganglionar simpática também é colinérgica. Nas glândulas sudoríparas, a exceção continua até o órgão efetor.</p></div>
@@ -490,10 +503,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Termo do slide</th><th>Como entender</th></tr></thead>
 <tbody>
-<tr><td>Cotransmissão</td><td>A mesma neurona pode liberar mais de um mensageiro</td></tr>
-<tr><td>Receptor postsináptico</td><td>Executa a resposta na célula que recebe o sinal</td></tr>
-<tr><td>Autorreceptor presináptico</td><td>Reconhece o transmissor da própria neurona e frequentemente reduz sua liberação</td></tr>
-<tr><td>Heterorreceptor</td><td>Responde a outro mensageiro e pode facilitar ou inibir a liberação</td></tr>
+<tr><td data-label="Termo do slide">Cotransmissão</td><td data-label="Como entender">A mesma neurona pode liberar mais de um mensageiro</td></tr>
+<tr><td data-label="Termo do slide">Receptor postsináptico</td><td data-label="Como entender">Executa a resposta na célula que recebe o sinal</td></tr>
+<tr><td data-label="Termo do slide">Autorreceptor presináptico</td><td data-label="Como entender">Reconhece o transmissor da própria neurona e frequentemente reduz sua liberação</td></tr>
+<tr><td data-label="Termo do slide">Heterorreceptor</td><td data-label="Como entender">Responde a outro mensageiro e pode facilitar ou inibir a liberação</td></tr>
 </tbody></table></div>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Um agonista aciona o receptor; um antagonista impede sua ativação; um fármaco que inibe a degradação aumenta a quantidade de neurotransmissor disponível. As três estratégias podem modificar o mesmo órgão, mas atuam em etapas diferentes.</p></div>
@@ -521,10 +534,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Termo</th><th>Em uma linha</th></tr></thead>
 <tbody>
-<tr><td>Cotransmissão</td><td>Um neurônio, vários mensageiros</td></tr>
-<tr><td>Receptor pós-sináptico</td><td>Executa a resposta</td></tr>
-<tr><td>Autorreceptor pré-sináptico</td><td>Reconhece o próprio transmissor; costuma frear a liberação</td></tr>
-<tr><td>Heterorreceptor</td><td>Responde a outro mensageiro; facilita ou inibe</td></tr>
+<tr><td data-label="Termo">Cotransmissão</td><td data-label="Em uma linha">Um neurônio, vários mensageiros</td></tr>
+<tr><td data-label="Termo">Receptor pós-sináptico</td><td data-label="Em uma linha">Executa a resposta</td></tr>
+<tr><td data-label="Termo">Autorreceptor pré-sináptico</td><td data-label="Em uma linha">Reconhece o próprio transmissor; costuma frear a liberação</td></tr>
+<tr><td data-label="Termo">Heterorreceptor</td><td data-label="Em uma linha">Responde a outro mensageiro; facilita ou inibe</td></tr>
 </tbody></table></div>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Agonista aciona · antagonista bloqueia · inibidor da degradação aumenta o transmissor. Bloquear síntese ou liberação dá <mark class="my"><b>menor transmissão mesmo com receptor intacto</b></mark>.</p></div>
@@ -537,13 +550,13 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Receptor</th><th>Estrutura e via</th><th>Localização de destaque</th><th>Efeito que organiza o estudo</th></tr></thead>
 <tbody>
-<tr><td><b>Nn</b></td><td>Canal iônico pentamérico (5 subunidades); entrada de Na⁺ e K⁺</td><td>Gânglios, medula suprarrenal e SNC</td><td>Transmissão ganglionar e liberação de catecolaminas</td></tr>
-<tr><td><b>Nm</b></td><td>Canal iônico; ação rápida e curta duração</td><td>Placa motora</td><td>Despolarização e contração do músculo esquelético</td></tr>
-<tr><td><b>M1</b></td><td>Gq → fosfolipase C → IP3 e DAG</td><td>Neurônios, gânglios e controle gástrico; células parietais</td><td>Facilitação neuronal, secreção ácida gástrica, memória</td></tr>
-<tr><td><b>M2</b></td><td>Gi → ↓ AMPc, abertura de K⁺</td><td>Nodos SA e AV, átrios; terminais pré-sinápticos</td><td>Menor frequência e menor velocidade de condução</td></tr>
-<tr><td><b>M3</b></td><td>Gq → IP3/DAG → ↑ Ca²⁺ e PKC</td><td>Glândulas, músculo liso e endotélio; íris e músculo ciliar</td><td>Secreções; contração de vários músculos lisos; miose; vasodilatação endotelial</td></tr>
-<tr><td><b>M4</b></td><td>Gi → ↓ AMPc</td><td>SNC, pulmão e pâncreas</td><td>Modulação neuronal e pré-sináptica</td></tr>
-<tr><td><b>M5</b></td><td>Gq → IP3/DAG → ↑ Ca²⁺</td><td>SNC (substância negra), vasos cerebrais, salivação e músculo ciliar</td><td>Regulação dopaminérgica, vasodilatação cerebral, salivação e acomodação</td></tr>
+<tr><td data-label="Receptor"><b>Nn</b></td><td data-label="Estrutura e via">Canal iônico pentamérico (5 subunidades); entrada de Na⁺ e K⁺</td><td data-label="Localização de destaque">Gânglios, medula suprarrenal e SNC</td><td data-label="Efeito que organiza o estudo">Transmissão ganglionar e liberação de catecolaminas</td></tr>
+<tr><td data-label="Receptor"><b>Nm</b></td><td data-label="Estrutura e via">Canal iônico; ação rápida e curta duração</td><td data-label="Localização de destaque">Placa motora</td><td data-label="Efeito que organiza o estudo">Despolarização e contração do músculo esquelético</td></tr>
+<tr><td data-label="Receptor"><b>M1</b></td><td data-label="Estrutura e via">Gq → fosfolipase C → IP3 e DAG</td><td data-label="Localização de destaque">Neurônios, gânglios e controle gástrico; células parietais</td><td data-label="Efeito que organiza o estudo">Facilitação neuronal, secreção ácida gástrica, memória</td></tr>
+<tr><td data-label="Receptor"><b>M2</b></td><td data-label="Estrutura e via">Gi → ↓ AMPc, abertura de K⁺</td><td data-label="Localização de destaque">Nodos SA e AV, átrios; terminais pré-sinápticos</td><td data-label="Efeito que organiza o estudo">Menor frequência e menor velocidade de condução</td></tr>
+<tr><td data-label="Receptor"><b>M3</b></td><td data-label="Estrutura e via">Gq → IP3/DAG → ↑ Ca²⁺ e PKC</td><td data-label="Localização de destaque">Glândulas, músculo liso e endotélio; íris e músculo ciliar</td><td data-label="Efeito que organiza o estudo">Secreções; contração de vários músculos lisos; miose; vasodilatação endotelial</td></tr>
+<tr><td data-label="Receptor"><b>M4</b></td><td data-label="Estrutura e via">Gi → ↓ AMPc</td><td data-label="Localização de destaque">SNC, pulmão e pâncreas</td><td data-label="Efeito que organiza o estudo">Modulação neuronal e pré-sináptica</td></tr>
+<tr><td data-label="Receptor"><b>M5</b></td><td data-label="Estrutura e via">Gq → IP3/DAG → ↑ Ca²⁺</td><td data-label="Localização de destaque">SNC (substância negra), vasos cerebrais, salivação e músculo ciliar</td><td data-label="Efeito que organiza o estudo">Regulação dopaminérgica, vasodilatação cerebral, salivação e acomodação</td></tr>
 </tbody></table></div>
 
 <p><mark class="my">A regra «ímpares Gq, pares Gi» organiza os subtipos muscarínicos</mark>: M1, M3 e M5 são ímpares (Gq); M2 e M4 são pares (Gi). Na via <b>Gq</b>, a <b>fosfolipase C</b> gera <b>IP3</b> e <b>DAG</b>, elevando a sinalização por Ca²⁺. Na via <b>Gi</b>, há redução de <b>AMPc</b>; no coração, outros efeitos sobre canais também favorecem menor excitabilidade.</p>
@@ -579,11 +592,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Ponto central do mecanismo</th><th>Relação com o uso apresentado</th></tr></thead>
 <tbody>
-<tr><td>Acetilcolina</td><td>Ativação muscarínica e nicotínica; rápida degradação</td><td>Miose em cirurgia ocular</td></tr>
-<tr><td>Betanecol</td><td>Ação predominantemente muscarínica (M3); resistente à AChE; não cruza a BHE</td><td>Contrai o detrusor e aumenta motilidade; retenção urinária não obstrutiva; íleo</td></tr>
-<tr><td>Carbacol</td><td>Ativa receptores M e N</td><td>Miose e glaucoma (uso oftálmico)</td></tr>
-<tr><td>Pilocarpina</td><td>Agonista muscarínico; alcaloide natural</td><td>Miose, drenagem do humor aquoso e aumento de saliva</td></tr>
-<tr><td>Metacolina</td><td>Efeito muscarínico brônquico</td><td>Prova de provocação brônquica em ambiente controlado</td></tr>
+<tr><td data-label="Fármaco">Acetilcolina</td><td data-label="Ponto central do mecanismo">Ativação muscarínica e nicotínica; rápida degradação</td><td data-label="Relação com o uso apresentado">Miose em cirurgia ocular</td></tr>
+<tr><td data-label="Fármaco">Betanecol</td><td data-label="Ponto central do mecanismo">Ação predominantemente muscarínica (M3); resistente à AChE; não cruza a BHE</td><td data-label="Relação com o uso apresentado">Contrai o detrusor e aumenta motilidade; retenção urinária não obstrutiva; íleo</td></tr>
+<tr><td data-label="Fármaco">Carbacol</td><td data-label="Ponto central do mecanismo">Ativa receptores M e N</td><td data-label="Relação com o uso apresentado">Miose e glaucoma (uso oftálmico)</td></tr>
+<tr><td data-label="Fármaco">Pilocarpina</td><td data-label="Ponto central do mecanismo">Agonista muscarínico; alcaloide natural</td><td data-label="Relação com o uso apresentado">Miose, drenagem do humor aquoso e aumento de saliva</td></tr>
+<tr><td data-label="Fármaco">Metacolina</td><td data-label="Ponto central do mecanismo">Efeito muscarínico brônquico</td><td data-label="Relação com o uso apresentado">Prova de provocação brônquica em ambiente controlado</td></tr>
 </tbody></table></div>
 
 <p>O efeito terapêutico vem da função normal estimulada. Para facilitar a <b>micção</b>, é útil contrair o <b>músculo detrusor</b>; para reduzir <b>pressão intraocular</b>, a <b>miose</b> e a contração do <b>músculo ciliar</b> podem facilitar a saída de <b>humor aquoso</b>.</p>
@@ -635,12 +648,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Grupo / exemplo</th><th>Característica</th><th>Associação importante</th></tr></thead>
 <tbody>
-<tr><td>Edrofônio</td><td>Álcool simples; inibição reversível e muito breve; quaternário, não cruza a BHE</td><td>Teste histórico para miastenia gravis; hoje uso limitado. Diagnóstico e reversão de bloqueio neuromuscular</td></tr>
-<tr><td>Neostigmina</td><td>Carbamato quaternário; ação periférica</td><td>Reversão de bloqueio neuromuscular não despolarizante; miastenia; íleo paralítico</td></tr>
-<tr><td>Piridostigmina</td><td>Carbamato quaternário; ação periférica mais prolongada</td><td>Controle sintomático de miastenia gravis</td></tr>
-<tr><td>Fisostigmina</td><td>Amina terciária; chega ao SNC</td><td>Uso selecionado em síndrome antimuscarínica</td></tr>
-<tr><td>Donepezila, rivastigmina, galantamina</td><td>Ação colinérgica central</td><td>Tratamento sintomático de demências selecionadas</td></tr>
-<tr><td>Organofosforados</td><td>Fosforilação da enzima; pode ocorrer envelhecimento</td><td>Toxicidade muscarínica, nicotínica e central</td></tr>
+<tr><td data-label="Grupo / exemplo">Edrofônio</td><td data-label="Característica">Álcool simples; inibição reversível e muito breve; quaternário, não cruza a BHE</td><td data-label="Associação importante">Teste histórico para miastenia gravis; hoje uso limitado. Diagnóstico e reversão de bloqueio neuromuscular</td></tr>
+<tr><td data-label="Grupo / exemplo">Neostigmina</td><td data-label="Característica">Carbamato quaternário; ação periférica</td><td data-label="Associação importante">Reversão de bloqueio neuromuscular não despolarizante; miastenia; íleo paralítico</td></tr>
+<tr><td data-label="Grupo / exemplo">Piridostigmina</td><td data-label="Característica">Carbamato quaternário; ação periférica mais prolongada</td><td data-label="Associação importante">Controle sintomático de miastenia gravis</td></tr>
+<tr><td data-label="Grupo / exemplo">Fisostigmina</td><td data-label="Característica">Amina terciária; chega ao SNC</td><td data-label="Associação importante">Uso selecionado em síndrome antimuscarínica</td></tr>
+<tr><td data-label="Grupo / exemplo">Donepezila, rivastigmina, galantamina</td><td data-label="Característica">Ação colinérgica central</td><td data-label="Associação importante">Tratamento sintomático de demências selecionadas</td></tr>
+<tr><td data-label="Grupo / exemplo">Organofosforados</td><td data-label="Característica">Fosforilação da enzima; pode ocorrer envelhecimento</td><td data-label="Associação importante">Toxicidade muscarínica, nicotínica e central</td></tr>
 </tbody></table></div>
 
 <p>A aula diferencia três classes: <b>álcoois simples</b> (edrofônio), <b>derivados carbâmicos</b> (neostigmina, piridostigmina, fisostigmina, donepezila, rivastigmina, galantamina) e <b>organofosforados</b>. Os carbamatos formam uma ligação que demora mais para ser hidrolisada que a ligação normal da ACh. Nos organofosforados, o <b>envelhecimento</b> estabiliza o complexo e dificulta ou impede a reativação por <b>oximas</b>.</p>
@@ -681,11 +694,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Aplicação</th><th>Raciocínio farmacológico</th></tr></thead>
 <tbody>
-<tr><td>Miastenia gravis</td><td>Melhorar a transmissão muscular ainda possível</td></tr>
-<tr><td>Íleo paralítico / atonia vesical (selecionados)</td><td>Estimular motilidade ou detrusor, após excluir obstrução mecânica</td></tr>
-<tr><td>Alzheimer</td><td>Aumentar sinalização colinérgica cerebral remanescente</td></tr>
-<tr><td>Glaucoma / cirurgia ocular</td><td>Modificar pupila, músculo ciliar e drenagem</td></tr>
-<tr><td>Síndrome antimuscarínica (selecionados)</td><td>Aumentar ACh para competir com o antagonista</td></tr>
+<tr><td data-label="Aplicação">Miastenia gravis</td><td data-label="Raciocínio farmacológico">Melhorar a transmissão muscular ainda possível</td></tr>
+<tr><td data-label="Aplicação">Íleo paralítico / atonia vesical (selecionados)</td><td data-label="Raciocínio farmacológico">Estimular motilidade ou detrusor, após excluir obstrução mecânica</td></tr>
+<tr><td data-label="Aplicação">Alzheimer</td><td data-label="Raciocínio farmacológico">Aumentar sinalização colinérgica cerebral remanescente</td></tr>
+<tr><td data-label="Aplicação">Glaucoma / cirurgia ocular</td><td data-label="Raciocínio farmacológico">Modificar pupila, músculo ciliar e drenagem</td></tr>
+<tr><td data-label="Aplicação">Síndrome antimuscarínica (selecionados)</td><td data-label="Raciocínio farmacológico">Aumentar ACh para competir com o antagonista</td></tr>
 </tbody></table></div>
 
 <p><b>Donepezila</b>, <b>rivastigmina</b> e <b>galantamina</b> podem oferecer benefício cognitivo ou funcional sintomático. <mark class="mr">Isso não equivale a regenerar neurônios ou curar a <b>doença de Alzheimer</b>.</mark> Náuseas, perda de peso, <b>bradicardia</b> e <b>síncope</b> precisam ser ligados à intensificação colinérgica.</p>
@@ -719,9 +732,9 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Componente</th><th>Manifestações que ajudam a reconhecer</th></tr></thead>
 <tbody>
-<tr><td><b>Muscarínico</b></td><td>Miose, sialorreia, sudorese, broncorreia, broncoespasmo, diarreia e bradicardia. Use a mnemônica <b>DUMBBELSS</b>: Diarreia, Urinária, Miose, Broncorreia/broncoespasmo, Bradicardia, Emese, Lacrimejamento, Salivação, Sudorese</td></tr>
-<tr><td><b>Nicotínico</b></td><td>Fasciculações, fraqueza e paralisia dos músculos respiratórios (inclusive diafragma)</td></tr>
-<tr><td><b>Central</b></td><td>Agitação, confusão, ataxia, convulsões, depressão respiratória e coma</td></tr>
+<tr><td data-label="Componente"><b>Muscarínico</b></td><td data-label="Manifestações que ajudam a reconhecer">Miose, sialorreia, sudorese, broncorreia, broncoespasmo, diarreia e bradicardia. Use a mnemônica <b>DUMBBELSS</b>: Diarreia, Urinária, Miose, Broncorreia/broncoespasmo, Bradicardia, Emese, Lacrimejamento, Salivação, Sudorese</td></tr>
+<tr><td data-label="Componente"><b>Nicotínico</b></td><td data-label="Manifestações que ajudam a reconhecer">Fasciculações, fraqueza e paralisia dos músculos respiratórios (inclusive diafragma)</td></tr>
+<tr><td data-label="Componente"><b>Central</b></td><td data-label="Manifestações que ajudam a reconhecer">Agitação, confusão, ataxia, convulsões, depressão respiratória e coma</td></tr>
 </tbody></table></div>
 
 <p>A ameaça respiratória pode combinar secreções, obstrução brônquica, depressão central e fraqueza muscular. <mark class="mr"><b>Não basta observar a pupila</b></mark>: é necessário interpretar o conjunto.</p>
@@ -768,12 +781,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Órgão / receptor</th><th>Ao bloquear a ação muscarínica</th><th>Consequência</th></tr></thead>
 <tbody>
-<tr><td>Coração, sobretudo M2</td><td>Retira parte do freio vagal</td><td>Taquicardia e maior condução AV</td></tr>
-<tr><td>Olho, M3</td><td>Relaxa esfíncter pupilar e músculo ciliar</td><td>Midríase e cicloplegia</td></tr>
-<tr><td>Glândulas</td><td>Reduz secreções</td><td>Boca seca, olhos secos, menor sudorese</td></tr>
-<tr><td>Brônquios, M3</td><td>Reduz tônus contrátil e secreções</td><td>Broncodilatação</td></tr>
-<tr><td>Intestino</td><td>Reduz motilidade</td><td>Constipação; em excesso, íleo</td></tr>
-<tr><td>Bexiga</td><td>Reduz contração do detrusor</td><td>Retenção urinária</td></tr>
+<tr><td data-label="Órgão / receptor">Coração, sobretudo M2</td><td data-label="Ao bloquear a ação muscarínica">Retira parte do freio vagal</td><td data-label="Consequência">Taquicardia e maior condução AV</td></tr>
+<tr><td data-label="Órgão / receptor">Olho, M3</td><td data-label="Ao bloquear a ação muscarínica">Relaxa esfíncter pupilar e músculo ciliar</td><td data-label="Consequência">Midríase e cicloplegia</td></tr>
+<tr><td data-label="Órgão / receptor">Glândulas</td><td data-label="Ao bloquear a ação muscarínica">Reduz secreções</td><td data-label="Consequência">Boca seca, olhos secos, menor sudorese</td></tr>
+<tr><td data-label="Órgão / receptor">Brônquios, M3</td><td data-label="Ao bloquear a ação muscarínica">Reduz tônus contrátil e secreções</td><td data-label="Consequência">Broncodilatação</td></tr>
+<tr><td data-label="Órgão / receptor">Intestino</td><td data-label="Ao bloquear a ação muscarínica">Reduz motilidade</td><td data-label="Consequência">Constipação; em excesso, íleo</td></tr>
+<tr><td data-label="Órgão / receptor">Bexiga</td><td data-label="Ao bloquear a ação muscarínica">Reduz contração do detrusor</td><td data-label="Consequência">Retenção urinária</td></tr>
 </tbody></table></div>
 
 <p>A <b>midríase</b> é dilatação pupilar; a <b>cicloplegia</b> é perda de acomodação por bloqueio do músculo ciliar. São fenômenos diferentes, embora possam aparecer juntos. Nos olhos predispostos ao <b>ângulo fechado</b>, a midríase pode precipitar elevação da <b>pressão intraocular</b>.</p>
@@ -855,13 +868,13 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Uso / órgão</th><th>Fármacos presentes nas aulas</th><th>Distinção útil</th></tr></thead>
 <tbody>
-<tr><td>Respiratório</td><td>Ipratrópio; tiotrópio</td><td>SAMA: ação curta; LAMA: ação longa</td></tr>
-<tr><td>Olho</td><td>Tropicamida; homatropina; atropina</td><td>Midríase / cicloplegia com duração diferente</td></tr>
-<tr><td>Trato gastrointestinal</td><td>Diciclomina; butilbromuro de hioscina</td><td>Ação antiespasmódica; moléculas diferentes</td></tr>
-<tr><td>Bexiga hiperativa</td><td>Oxibutinina, tolterodina, trospio, solifenacina, darifenacina</td><td>Reduzem contrações involuntárias do detrusor</td></tr>
-<tr><td>SNC / Parkinson</td><td>Benzotropina; triexifenidila</td><td>Reduzem desequilíbrio colinérgico em situações selecionadas</td></tr>
-<tr><td>Secreções perioperatórias</td><td>Glicopirrolato; atropina</td><td>Não confundir redução de secreção com anestesia</td></tr>
-<tr><td>Uso gástrico histórico</td><td>Pirenzepina; telenzepina</td><td>Preferência M1; uso hoje limitado</td></tr>
+<tr><td data-label="Uso / órgão">Respiratório</td><td data-label="Fármacos presentes nas aulas">Ipratrópio; tiotrópio</td><td data-label="Distinção útil">SAMA: ação curta; LAMA: ação longa</td></tr>
+<tr><td data-label="Uso / órgão">Olho</td><td data-label="Fármacos presentes nas aulas">Tropicamida; homatropina; atropina</td><td data-label="Distinção útil">Midríase / cicloplegia com duração diferente</td></tr>
+<tr><td data-label="Uso / órgão">Trato gastrointestinal</td><td data-label="Fármacos presentes nas aulas">Diciclomina; butilbromuro de hioscina</td><td data-label="Distinção útil">Ação antiespasmódica; moléculas diferentes</td></tr>
+<tr><td data-label="Uso / órgão">Bexiga hiperativa</td><td data-label="Fármacos presentes nas aulas">Oxibutinina, tolterodina, trospio, solifenacina, darifenacina</td><td data-label="Distinção útil">Reduzem contrações involuntárias do detrusor</td></tr>
+<tr><td data-label="Uso / órgão">SNC / Parkinson</td><td data-label="Fármacos presentes nas aulas">Benzotropina; triexifenidila</td><td data-label="Distinção útil">Reduzem desequilíbrio colinérgico em situações selecionadas</td></tr>
+<tr><td data-label="Uso / órgão">Secreções perioperatórias</td><td data-label="Fármacos presentes nas aulas">Glicopirrolato; atropina</td><td data-label="Distinção útil">Não confundir redução de secreção com anestesia</td></tr>
+<tr><td data-label="Uso / órgão">Uso gástrico histórico</td><td data-label="Fármacos presentes nas aulas">Pirenzepina; telenzepina</td><td data-label="Distinção útil">Preferência M1; uso hoje limitado</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>A foto coloca <b>diciclomina</b> e <b>hiosciamina</b> sob «aminas cuaternarias». <mark class="mr">Essa classificação não deve ser memorizada: são <b>aminas terciárias</b>.</mark> O <b>butilbromuro de hioscina</b> é derivado <b>quaternário</b>; não é sinônimo farmacocinético de escopolamina. A estrutura da diciclomina pode ser conferida na referência R1.</p></div>
@@ -982,11 +995,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Comparação</th><th>Excesso colinérgico</th><th>Bloqueio antimuscarínico</th></tr></thead>
 <tbody>
-<tr><td>Pupila</td><td>Miose, em geral</td><td>Midríase</td></tr>
-<tr><td>Pele / secreções</td><td>Sudorese e secreções abundantes</td><td>Pele e boca secas</td></tr>
-<tr><td>Intestino</td><td>Cólicas e diarreia</td><td>Constipação / íleo</td></tr>
-<tr><td>Bexiga</td><td>Contração / micção</td><td>Retenção urinária</td></tr>
-<tr><td>Músculo esquelético</td><td>Pode haver fasciculações e fraqueza</td><td>Não é efeito típico do bloqueio muscarínico puro</td></tr>
+<tr><td data-label="Comparação">Pupila</td><td data-label="Excesso colinérgico">Miose, em geral</td><td data-label="Bloqueio antimuscarínico">Midríase</td></tr>
+<tr><td data-label="Comparação">Pele / secreções</td><td data-label="Excesso colinérgico">Sudorese e secreções abundantes</td><td data-label="Bloqueio antimuscarínico">Pele e boca secas</td></tr>
+<tr><td data-label="Comparação">Intestino</td><td data-label="Excesso colinérgico">Cólicas e diarreia</td><td data-label="Bloqueio antimuscarínico">Constipação / íleo</td></tr>
+<tr><td data-label="Comparação">Bexiga</td><td data-label="Excesso colinérgico">Contração / micção</td><td data-label="Bloqueio antimuscarínico">Retenção urinária</td></tr>
+<tr><td data-label="Comparação">Músculo esquelético</td><td data-label="Excesso colinérgico">Pode haver fasciculações e fraqueza</td><td data-label="Bloqueio antimuscarínico">Não é efeito típico do bloqueio muscarínico puro</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">A <b>fisostigmina</b> não é antídoto universal</mark> para qualquer intoxicação com sinais anticolinérgicos, nem deve ser usada como teste simples de confirmação. Em suspeita de toxicidade por tricíclicos ou alterações de condução, a escolha requer avaliação especializada e monitorização (referência R3).</p></div>
@@ -1059,11 +1072,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Etapa</th><th>O que acontece</th><th>Relação farmacológica</th></tr></thead>
 <tbody>
-<tr><td><b>1. Síntese</b></td><td>Tirosina → L-DOPA → dopamina → noradrenalina (4 enzimas)</td><td>Inibidores da tirosina hidroxilase reduzem a produção</td></tr>
-<tr><td><b>2. Armazenamento vesicular</b></td><td>Transportador vesicular de aminas. Reserva imediata e reserva armazenada</td><td><b>Reserpina</b> bloqueia irreversivelmente o transportador; início lento e efeito prolongado</td></tr>
-<tr><td><b>3. Liberação</b></td><td>Entrada de Ca²⁺ → fusão da vesícula → exocitose na fenda</td><td><b>Guanetidina</b> bloqueia a liberação; <b>anfetamina</b> e <b>tiramina</b> aumentam a disponibilidade</td></tr>
-<tr><td><b>4. Ligação ao receptor</b></td><td>α, β pós-sinápticos; α2 pré-sináptico (feedback negativo)</td><td>Agonistas e antagonistas agem aqui</td></tr>
-<tr><td><b>5. Eliminação</b></td><td>Recaptação neuronal (NET), MAO intraneuronal e COMT no espaço sináptico</td><td><b>Cocaína</b> e antidepressivos tricíclicos inibem a recaptação; IMAO inibe a MAO</td></tr>
+<tr><td data-label="Etapa"><b>1. Síntese</b></td><td data-label="O que acontece">Tirosina → L-DOPA → dopamina → noradrenalina (4 enzimas)</td><td data-label="Relação farmacológica">Inibidores da tirosina hidroxilase reduzem a produção</td></tr>
+<tr><td data-label="Etapa"><b>2. Armazenamento vesicular</b></td><td data-label="O que acontece">Transportador vesicular de aminas. Reserva imediata e reserva armazenada</td><td data-label="Relação farmacológica"><b>Reserpina</b> bloqueia irreversivelmente o transportador; início lento e efeito prolongado</td></tr>
+<tr><td data-label="Etapa"><b>3. Liberação</b></td><td data-label="O que acontece">Entrada de Ca²⁺ → fusão da vesícula → exocitose na fenda</td><td data-label="Relação farmacológica"><b>Guanetidina</b> bloqueia a liberação; <b>anfetamina</b> e <b>tiramina</b> aumentam a disponibilidade</td></tr>
+<tr><td data-label="Etapa"><b>4. Ligação ao receptor</b></td><td data-label="O que acontece">α, β pós-sinápticos; α2 pré-sináptico (feedback negativo)</td><td data-label="Relação farmacológica">Agonistas e antagonistas agem aqui</td></tr>
+<tr><td data-label="Etapa"><b>5. Eliminação</b></td><td data-label="O que acontece">Recaptação neuronal (NET), MAO intraneuronal e COMT no espaço sináptico</td><td data-label="Relação farmacológica"><b>Cocaína</b> e antidepressivos tricíclicos inibem a recaptação; IMAO inibe a MAO</td></tr>
 </tbody></table></div>
 
 <p>As <b>catecolaminas</b> (adrenalina, noradrenalina, isoproterenol, dopamina, dobutamina) possuem o grupo 3,4-di-hidroxibenzeno (<b>catecol</b>). Apresentam: (1) <b>alta potência direta</b> em α/β; (2) <b>inativação rápida</b> por COMT (pós-sináptica/intestino) e MAO (intraneuronal/intestino/fígado), <mark class="my">por isso são <b>ineficazes por via oral</b></mark> e de curta duração parenteral; (3) <b>má penetração no SNC</b> (são polares).</p>
@@ -1071,11 +1084,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Propriedade</th><th>Catecolaminas</th><th>Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)</th></tr></thead>
 <tbody>
-<tr><td>Estrutura</td><td>Grupo catecol (hidroxilas)</td><td>Sem as hidroxilas catecólicas</td></tr>
-<tr><td>Metabolismo</td><td>COMT e MAO; inativação rápida</td><td>Não são inativadas pela COMT; substratos mais fracos da MAO</td></tr>
-<tr><td>Meia-vida</td><td>Curta</td><td><b>Prolongada</b></td></tr>
-<tr><td>Via oral</td><td>Ineficaz</td><td><b>Eficaz</b></td></tr>
-<tr><td>SNC</td><td>Má penetração</td><td><b>Maior lipossolubilidade</b> e acesso ao SNC</td></tr>
+<tr><td data-label="Propriedade">Estrutura</td><td data-label="Catecolaminas">Grupo catecol (hidroxilas)</td><td data-label="Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)">Sem as hidroxilas catecólicas</td></tr>
+<tr><td data-label="Propriedade">Metabolismo</td><td data-label="Catecolaminas">COMT e MAO; inativação rápida</td><td data-label="Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)">Não são inativadas pela COMT; substratos mais fracos da MAO</td></tr>
+<tr><td data-label="Propriedade">Meia-vida</td><td data-label="Catecolaminas">Curta</td><td data-label="Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)"><b>Prolongada</b></td></tr>
+<tr><td data-label="Propriedade">Via oral</td><td data-label="Catecolaminas">Ineficaz</td><td data-label="Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)"><b>Eficaz</b></td></tr>
+<tr><td data-label="Propriedade">SNC</td><td data-label="Catecolaminas">Má penetração</td><td data-label="Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)"><b>Maior lipossolubilidade</b> e acesso ao SNC</td></tr>
 </tbody></table></div>
 
 <h3 class="sub">Comportamento frente ao pré-tratamento com reserpina ou guanetidina (depleção de NE)</h3>
@@ -1150,11 +1163,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Receptor</th><th>Proteína G e 2º mensageiro</th><th>Efeito organizador</th><th>Exemplo de associação</th></tr></thead>
 <tbody>
-<tr><td><b>α1</b></td><td>Gq → fosfolipase C → IP3 e DAG → ↑ Ca²⁺</td><td>Contração do músculo liso vascular (↑ RVP e PA), radial da íris (midríase), esfíncteres uretral e anal (micção e ↓ defecação), ejaculação</td><td>Vasoconstrição; midríase</td></tr>
-<tr><td><b>α2</b></td><td>Gi → ↓ AMPc</td><td>Autorreceptor pré-sináptico (feedback negativo ↓ NA e ACh); terminais simpáticos centrais; células β pancreáticas (↓ insulina)</td><td>Clonidina; menor liberação de NA</td></tr>
-<tr><td><b>β1</b></td><td>Gs → ↑ AMPc</td><td>Coração: cronotropismo (↑ FC), inotropismo (↑ força), condução AV; células justaglomerulares (↑ renina)</td><td>Dobutamina; liberação de renina</td></tr>
-<tr><td><b>β2</b></td><td>Gs → ↑ AMPc</td><td>Vasodilatação em músculo esquelético e fígado; broncodilatação potente; relaxamento uterino; ↑ glicogenólise e glicemia</td><td>Salbutamol; relaxamento brônquico</td></tr>
-<tr><td><b>β3</b></td><td>Gs → ↑ AMPc</td><td>Tecido adiposo (↑ lipólise) e bexiga (relaxamento do detrusor)</td><td>Mirabegron; bexiga hiperativa</td></tr>
+<tr><td data-label="Receptor"><b>α1</b></td><td data-label="Proteína G e 2º mensageiro">Gq → fosfolipase C → IP3 e DAG → ↑ Ca²⁺</td><td data-label="Efeito organizador">Contração do músculo liso vascular (↑ RVP e PA), radial da íris (midríase), esfíncteres uretral e anal (micção e ↓ defecação), ejaculação</td><td data-label="Exemplo de associação">Vasoconstrição; midríase</td></tr>
+<tr><td data-label="Receptor"><b>α2</b></td><td data-label="Proteína G e 2º mensageiro">Gi → ↓ AMPc</td><td data-label="Efeito organizador">Autorreceptor pré-sináptico (feedback negativo ↓ NA e ACh); terminais simpáticos centrais; células β pancreáticas (↓ insulina)</td><td data-label="Exemplo de associação">Clonidina; menor liberação de NA</td></tr>
+<tr><td data-label="Receptor"><b>β1</b></td><td data-label="Proteína G e 2º mensageiro">Gs → ↑ AMPc</td><td data-label="Efeito organizador">Coração: cronotropismo (↑ FC), inotropismo (↑ força), condução AV; células justaglomerulares (↑ renina)</td><td data-label="Exemplo de associação">Dobutamina; liberação de renina</td></tr>
+<tr><td data-label="Receptor"><b>β2</b></td><td data-label="Proteína G e 2º mensageiro">Gs → ↑ AMPc</td><td data-label="Efeito organizador">Vasodilatação em músculo esquelético e fígado; broncodilatação potente; relaxamento uterino; ↑ glicogenólise e glicemia</td><td data-label="Exemplo de associação">Salbutamol; relaxamento brônquico</td></tr>
+<tr><td data-label="Receptor"><b>β3</b></td><td data-label="Proteína G e 2º mensageiro">Gs → ↑ AMPc</td><td data-label="Efeito organizador">Tecido adiposo (↑ lipólise) e bexiga (relaxamento do detrusor)</td><td data-label="Exemplo de associação">Mirabegron; bexiga hiperativa</td></tr>
 </tbody></table></div>
 
 <p><b>Ordem de potência:</b> nos receptores α, <b>epinefrina ≥ norepinefrina ≫ isoproterenol</b>. Nos receptores β, <b>isoproterenol &gt; epinefrina ≥ norepinefrina</b>; em <b>β1</b> epinefrina e noradrenalina têm efeito semelhante, mas em <b>β2</b> a epinefrina é muito mais potente. <mark class="mr">Por isso a noradrenalina não serve para broncoespasmo ou anafilaxia.</mark></p>
@@ -1226,11 +1239,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Alvo / ação principal</th><th>Efeito para recordar</th></tr></thead>
 <tbody>
-<tr><td>Fenilefrina</td><td>α1 periférico</td><td>Vasoconstrição; midríase sem bloqueio muscarínico. Induz bradicardia reflexa vagal</td></tr>
-<tr><td>Midodrina</td><td>Ação α1 por metabólito ativo</td><td>Elevação do tônus vascular</td></tr>
-<tr><td>Oximetazolina</td><td>Agonismo α1 e α2 na mucosa nasal</td><td>Descongestão; risco de rebote. Não usar por mais de 3 dias</td></tr>
-<tr><td>Clonidina / guanfacina</td><td>α2 central</td><td>Diminui saída simpática</td></tr>
-<tr><td>Alfametildopa</td><td>Pró-fármaco → α-metilnoradrenalina (falso neurotransmissor que ativa α2 central)</td><td>Reduz atividade simpática; <mark class="my">1ª escolha na hipertensão da gravidez (pré-eclâmpsia)</mark></td></tr>
+<tr><td data-label="Fármaco">Fenilefrina</td><td data-label="Alvo / ação principal">α1 periférico</td><td data-label="Efeito para recordar">Vasoconstrição; midríase sem bloqueio muscarínico. Induz bradicardia reflexa vagal</td></tr>
+<tr><td data-label="Fármaco">Midodrina</td><td data-label="Alvo / ação principal">Ação α1 por metabólito ativo</td><td data-label="Efeito para recordar">Elevação do tônus vascular</td></tr>
+<tr><td data-label="Fármaco">Oximetazolina</td><td data-label="Alvo / ação principal">Agonismo α1 e α2 na mucosa nasal</td><td data-label="Efeito para recordar">Descongestão; risco de rebote. Não usar por mais de 3 dias</td></tr>
+<tr><td data-label="Fármaco">Clonidina / guanfacina</td><td data-label="Alvo / ação principal">α2 central</td><td data-label="Efeito para recordar">Diminui saída simpática</td></tr>
+<tr><td data-label="Fármaco">Alfametildopa</td><td data-label="Alvo / ação principal">Pró-fármaco → α-metilnoradrenalina (falso neurotransmissor que ativa α2 central)</td><td data-label="Efeito para recordar">Reduz atividade simpática; <mark class="my">1ª escolha na hipertensão da gravidez (pré-eclâmpsia)</mark></td></tr>
 </tbody></table></div>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Um agonista adrenérgico pode reduzir pressão. A clonidina ativa um receptor inibitório em circuitos centrais e diminui o comando simpático aos órgãos. <mark class="my">«Agonista» significa ativar o receptor, não aumentar obrigatoriamente a função do órgão.</mark></p></div>
@@ -1295,12 +1308,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Receptores / efeito predominante</th><th>Ações, indicações e precauções</th></tr></thead>
 <tbody>
-<tr><td><b>Adrenalina</b></td><td>α1, α2, β1, β2, β3. Dose baixa → β2 (vasodilatação); dose alta → α1 (vasoconstrição)</td><td>↑ FC e contratilidade (β1); ↑ renina; broncodilatação potente; mastócitos (inibe liberação de histamina); hiperglicemia. <b>Usos:</b> <mark class="my">choque anafilático (fármaco de escolha; via IM na face anterolateral da coxa)</mark>, parada cardíaca (IV), broncoespasmo agudo (SC/inalatória), anestésicos locais (1:100.000). Adversos: ansiedade, tremor, edema pulmonar, arritmias</td></tr>
-<tr><td><b>Noradrenalina</b></td><td>α1, α2, β1 (fraca β2)</td><td>Vasoconstrição intensa; ativa barorreceptores → bradicardia reflexa (mascara o efeito cronotrópico de β1, mas mantém o inotropismo). <b>Usos:</b> choque séptico/distributivo (infusão IV contínua). Não serve para asma ou anafilaxia. <b>Adversos:</b> <mark class="mr">necrose tecidual por extravasamento</mark>; antídoto: fentolamina local</td></tr>
-<tr><td><b>Isoproterenol</b></td><td>β1 e β2 não seletivo</td><td>↑ FC e contratilidade; vasodilatação e broncodilatação potente. Rara vez usado hoje pela falta de seletividade</td></tr>
-<tr><td><b>Dopamina</b></td><td>Dose-dependente: D1/D2 (baixa) → β1 (média) → α1 (alta)</td><td>Doses baixas: vasodilatação renal e esplâncnica. Médias: inotropismo e débito cardíaco. Altas: vasoconstrição. <b>Usos:</b> choque cardiogênico e séptico; IC grave; bradicardia refratária (infusão contínua)</td></tr>
-<tr><td><b>Dobutamina</b></td><td>Agonista seletivo β1</td><td>↑ FC e débito com poucos efeitos vasculares; menor aumento do consumo miocárdico de O₂. Usada na insuficiência cardíaca aguda e no pós-cirurgia cardíaca. <b>Cuidado:</b> na fibrilação atrial pode aumentar a condução AV</td></tr>
-<tr><td><b>Fenilefrina</b> (e midodrina)</td><td>Agonista direto seletivo α1</td><td>Vasoconstritor; útil na taquicardia supraventricular paroxística, hipotensão cirúrgica e colírio midriático</td></tr>
+<tr><td data-label="Fármaco"><b>Adrenalina</b></td><td data-label="Receptores / efeito predominante">α1, α2, β1, β2, β3. Dose baixa → β2 (vasodilatação); dose alta → α1 (vasoconstrição)</td><td data-label="Ações, indicações e precauções">↑ FC e contratilidade (β1); ↑ renina; broncodilatação potente; mastócitos (inibe liberação de histamina); hiperglicemia. <b>Usos:</b> <mark class="my">choque anafilático (fármaco de escolha; via IM na face anterolateral da coxa)</mark>, parada cardíaca (IV), broncoespasmo agudo (SC/inalatória), anestésicos locais (1:100.000). Adversos: ansiedade, tremor, edema pulmonar, arritmias</td></tr>
+<tr><td data-label="Fármaco"><b>Noradrenalina</b></td><td data-label="Receptores / efeito predominante">α1, α2, β1 (fraca β2)</td><td data-label="Ações, indicações e precauções">Vasoconstrição intensa; ativa barorreceptores → bradicardia reflexa (mascara o efeito cronotrópico de β1, mas mantém o inotropismo). <b>Usos:</b> choque séptico/distributivo (infusão IV contínua). Não serve para asma ou anafilaxia. <b>Adversos:</b> <mark class="mr">necrose tecidual por extravasamento</mark>; antídoto: fentolamina local</td></tr>
+<tr><td data-label="Fármaco"><b>Isoproterenol</b></td><td data-label="Receptores / efeito predominante">β1 e β2 não seletivo</td><td data-label="Ações, indicações e precauções">↑ FC e contratilidade; vasodilatação e broncodilatação potente. Rara vez usado hoje pela falta de seletividade</td></tr>
+<tr><td data-label="Fármaco"><b>Dopamina</b></td><td data-label="Receptores / efeito predominante">Dose-dependente: D1/D2 (baixa) → β1 (média) → α1 (alta)</td><td data-label="Ações, indicações e precauções">Doses baixas: vasodilatação renal e esplâncnica. Médias: inotropismo e débito cardíaco. Altas: vasoconstrição. <b>Usos:</b> choque cardiogênico e séptico; IC grave; bradicardia refratária (infusão contínua)</td></tr>
+<tr><td data-label="Fármaco"><b>Dobutamina</b></td><td data-label="Receptores / efeito predominante">Agonista seletivo β1</td><td data-label="Ações, indicações e precauções">↑ FC e débito com poucos efeitos vasculares; menor aumento do consumo miocárdico de O₂. Usada na insuficiência cardíaca aguda e no pós-cirurgia cardíaca. <b>Cuidado:</b> na fibrilação atrial pode aumentar a condução AV</td></tr>
+<tr><td data-label="Fármaco"><b>Fenilefrina</b> (e midodrina)</td><td data-label="Receptores / efeito predominante">Agonista direto seletivo α1</td><td data-label="Ações, indicações e precauções">Vasoconstritor; útil na taquicardia supraventricular paroxística, hipotensão cirúrgica e colírio midriático</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>A descrição de vasodilatação renal por dopamina não significa indicação de «dopamina renal» para prevenir insuficiência renal. E a lista conjunta de indicações na foto não deve ser aplicada a todos os fármacos do quadro.</p></div>
@@ -1373,10 +1386,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Ação</th><th>Exemplos</th><th>Como aumenta a resposta simpática</th></tr></thead>
 <tbody>
-<tr><td>Direta</td><td>Fenilefrina, salbutamol</td><td>Liga-se ao receptor</td></tr>
-<tr><td>Indireta por liberação</td><td>Anfetamina, tiramina</td><td>Aumenta disponibilidade de catecolaminas</td></tr>
-<tr><td>Indireta por recaptação</td><td>Cocaína</td><td>Prolonga a presença de monoaminas fora da neurona</td></tr>
-<tr><td>Mista</td><td>Efedrina, pseudoefedrina</td><td>Combina mecanismos diretos e indiretos</td></tr>
+<tr><td data-label="Ação">Direta</td><td data-label="Exemplos">Fenilefrina, salbutamol</td><td data-label="Como aumenta a resposta simpática">Liga-se ao receptor</td></tr>
+<tr><td data-label="Ação">Indireta por liberação</td><td data-label="Exemplos">Anfetamina, tiramina</td><td data-label="Como aumenta a resposta simpática">Aumenta disponibilidade de catecolaminas</td></tr>
+<tr><td data-label="Ação">Indireta por recaptação</td><td data-label="Exemplos">Cocaína</td><td data-label="Como aumenta a resposta simpática">Prolonga a presença de monoaminas fora da neurona</td></tr>
+<tr><td data-label="Ação">Mista</td><td data-label="Exemplos">Efedrina, pseudoefedrina</td><td data-label="Como aumenta a resposta simpática">Combina mecanismos diretos e indiretos</td></tr>
 </tbody></table></div>
 
 <p>A <b>efedrina</b> e a <b>pseudoefedrina</b> não devem herdar uma única indicação apenas porque ocupam a mesma linha de um resumo. A pseudoefedrina se associa sobretudo à descongestão; a efedrina também aparece no contexto de <b>hipotensão perioperatória</b>.</p>
@@ -1448,11 +1461,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Grupo</th><th>Exemplos</th><th>Característica</th></tr></thead>
 <tbody>
-<tr><td>α1 e α2; bloqueio prolongado</td><td>Fenoxibenzamina (não competitiva, irreversível)</td><td>Ligação covalente; contexto de feocromocitoma. Usos: pré-operatório do feocromocitoma e prevenção de necrose por extravasamento. Não usar na HAS essencial pela taquicardia reflexa</td></tr>
-<tr><td>α1 e α2; competitivo</td><td>Fentolamina (dura ~4 h após injeção)</td><td>Ação mais breve; crises específicas e extravasamento de noradrenalina; reação ao queijo/tiramina em usuários de IMAO; crise hipertensiva por retirada de clonidina</td></tr>
-<tr><td>α1 seletivo</td><td>Prazosina, terazosina, doxazosina</td><td>Efeito vascular; hipotensão ortostática. Doxazosina tem maior duração e excreção fecal</td></tr>
-<tr><td>Uroseletivos (α1A)</td><td>Tansulosina, alfuzosina, silodosina</td><td>Relaxamento da próstata e do colo vesical (HPB); pouco efeito hipotensor</td></tr>
-<tr><td>α2 seletivo competitivo</td><td>Ioimbina (yohimbina)</td><td>Aumenta saída simpática; utilidade limitada e não recomendada por falta de eficácia demonstrada</td></tr>
+<tr><td data-label="Grupo">α1 e α2; bloqueio prolongado</td><td data-label="Exemplos">Fenoxibenzamina (não competitiva, irreversível)</td><td data-label="Característica">Ligação covalente; contexto de feocromocitoma. Usos: pré-operatório do feocromocitoma e prevenção de necrose por extravasamento. Não usar na HAS essencial pela taquicardia reflexa</td></tr>
+<tr><td data-label="Grupo">α1 e α2; competitivo</td><td data-label="Exemplos">Fentolamina (dura ~4 h após injeção)</td><td data-label="Característica">Ação mais breve; crises específicas e extravasamento de noradrenalina; reação ao queijo/tiramina em usuários de IMAO; crise hipertensiva por retirada de clonidina</td></tr>
+<tr><td data-label="Grupo">α1 seletivo</td><td data-label="Exemplos">Prazosina, terazosina, doxazosina</td><td data-label="Característica">Efeito vascular; hipotensão ortostática. Doxazosina tem maior duração e excreção fecal</td></tr>
+<tr><td data-label="Grupo">Uroseletivos (α1A)</td><td data-label="Exemplos">Tansulosina, alfuzosina, silodosina</td><td data-label="Característica">Relaxamento da próstata e do colo vesical (HPB); pouco efeito hipotensor</td></tr>
+<tr><td data-label="Grupo">α2 seletivo competitivo</td><td data-label="Exemplos">Ioimbina (yohimbina)</td><td data-label="Característica">Aumenta saída simpática; utilidade limitada e não recomendada por falta de eficácia demonstrada</td></tr>
 </tbody></table></div>
 
 <p><mark class="my">A <b>reversão de epinefrina</b> é um exercício clássico.</mark> Com α bloqueado, a vasoconstrição da adrenalina fica reduzida, enquanto a vasodilatação β2 permanece. A pressão arterial pode então tornar-se depressora. A noradrenalina não apresenta a mesma reversão típica porque tem pouca ação β2 vascular.</p>
@@ -1528,12 +1541,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Perfil</th><th>Exemplos</th><th>Diferencial</th></tr></thead>
 <tbody>
-<tr><td>Não seletivo β1/β2</td><td>Propranolol, nadolol, timolol</td><td>Risco de broncoespasmo; timolol tópico reduz humor aquoso</td></tr>
-<tr><td>Predominantemente β1</td><td>Atenolol, bisoprolol, metoprolol, betaxolol</td><td>Seletividade relativa, menor em doses altas</td></tr>
-<tr><td>β1 de duração muito curta</td><td>Esmolol</td><td>Uso intravenoso; ajuste rápido</td></tr>
-<tr><td>β1 com vasodilatação</td><td>Nebivolol</td><td>Participação de óxido nítrico</td></tr>
-<tr><td>Atividade simpaticomimética intrínseca (ASI)</td><td>Acebutolol, pindolol</td><td>Agonismo parcial; não equivalem ao bloqueio puro</td></tr>
-<tr><td>β1/β2 + α1</td><td>Carvedilol, labetalol</td><td>Redução do trabalho cardíaco com vasodilatação</td></tr>
+<tr><td data-label="Perfil">Não seletivo β1/β2</td><td data-label="Exemplos">Propranolol, nadolol, timolol</td><td data-label="Diferencial">Risco de broncoespasmo; timolol tópico reduz humor aquoso</td></tr>
+<tr><td data-label="Perfil">Predominantemente β1</td><td data-label="Exemplos">Atenolol, bisoprolol, metoprolol, betaxolol</td><td data-label="Diferencial">Seletividade relativa, menor em doses altas</td></tr>
+<tr><td data-label="Perfil">β1 de duração muito curta</td><td data-label="Exemplos">Esmolol</td><td data-label="Diferencial">Uso intravenoso; ajuste rápido</td></tr>
+<tr><td data-label="Perfil">β1 com vasodilatação</td><td data-label="Exemplos">Nebivolol</td><td data-label="Diferencial">Participação de óxido nítrico</td></tr>
+<tr><td data-label="Perfil">Atividade simpaticomimética intrínseca (ASI)</td><td data-label="Exemplos">Acebutolol, pindolol</td><td data-label="Diferencial">Agonismo parcial; não equivalem ao bloqueio puro</td></tr>
+<tr><td data-label="Perfil">β1/β2 + α1</td><td data-label="Exemplos">Carvedilol, labetalol</td><td data-label="Diferencial">Redução do trabalho cardíaco com vasodilatação</td></tr>
 </tbody></table></div>
 
 <p><b>Propranolol</b> aparece em angina, controle de manifestações do <b>hipertireoidismo</b> e prevenção de <b>enxaqueca</b>. Prevenção não é tratamento de uma crise de enxaqueca em curso. <b>Timolol</b> reduz produção de humor aquoso, enquanto a pilocarpina favorece drenagem: mecanismos distintos para a mesma variável final.</p>
@@ -1630,12 +1643,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Sistema / órgão</th><th>Mediador eicosanoide</th><th>Função fisiológica e consequência da inibição pelos AINEs</th></tr></thead>
 <tbody>
-<tr><td><b>Cardiovascular e plaquetas</b></td><td>PGI2 vs TXA2; PGE2 e PGI2</td><td><b>PGI2</b> (endotélio): vasodilatador e antiagregante. <b>TXA2</b> (plaquetas, via COX-1): vasoconstritor e pró-agregante. <mark class="mr">O bloqueio seletivo da COX-2 pelos coxibs reduz PGI2 endotelial sem inibir o TXA2 plaquetário → <b>risco trombótico/IAM/AVC</b></mark>. PGE2 e PGI2 perinatais mantêm <b>aberto o canal arterial</b> (AINEs como indometacina promovem seu fechamento)</td></tr>
-<tr><td><b>Rim</b></td><td>PGE2 e PGI2 vs TXA2</td><td>PGs vasodilatadoras aumentam o fluxo sanguíneo renal, a TFG, a diurese e a natriurese. A inibição causa vasoconstrição renal, retenção de Na⁺/água e perda do efeito anti-hipertensivo; risco em IC, cirrose/ascite e DRC</td></tr>
-<tr><td><b>Trato gastrointestinal</b></td><td>PGE2 e PGI2 (via COX-1)</td><td><b>Citoproteção gástrica:</b> ↑ muco e bicarbonato e ↓ secreção de HCl. A inibição causa dispepsia, gastrite e úlceras gastroduodenais</td></tr>
-<tr><td><b>Respiratório e leucócitos</b></td><td>PGF2α, TXA2 e leucotrienos</td><td>PGF2α e TXA2 são broncoconstritores. Leucotrienos: potente broncoespasmo, ↑ muco, ↑ permeabilidade vascular e quimiotaxia de neutrófilos. Ao bloquear a COX, o AA pode ser desviado para a LOX, precipitando <b>broncoespasmo induzido por AAS</b></td></tr>
-<tr><td><b>SNC, dor e inflamação</b></td><td>PGE2, PGI2 e PGD2</td><td><b>PGE2 no hipotálamo</b> eleva o ponto de ajuste térmico (<b>febre</b>). <b>PGE2 e PGI2 nos nociceptores</b> diminuem o limiar da dor (hiperalgesia) e potencializam bradicinina e histamina. PGD2 induz o sono</td></tr>
-<tr><td><b>Reprodutor feminino</b></td><td>PGE2 e PGF2α</td><td>Estimulam a contração do miométrio: causam <b>dismenorreia</b> e participam do trabalho de parto. AINEs aliviam dismenorreia e podem prolongar a gestação</td></tr>
+<tr><td data-label="Sistema / órgão"><b>Cardiovascular e plaquetas</b></td><td data-label="Mediador eicosanoide">PGI2 vs TXA2; PGE2 e PGI2</td><td data-label="Função fisiológica e consequência da inibição pelos AINEs"><b>PGI2</b> (endotélio): vasodilatador e antiagregante. <b>TXA2</b> (plaquetas, via COX-1): vasoconstritor e pró-agregante. <mark class="mr">O bloqueio seletivo da COX-2 pelos coxibs reduz PGI2 endotelial sem inibir o TXA2 plaquetário → <b>risco trombótico/IAM/AVC</b></mark>. PGE2 e PGI2 perinatais mantêm <b>aberto o canal arterial</b> (AINEs como indometacina promovem seu fechamento)</td></tr>
+<tr><td data-label="Sistema / órgão"><b>Rim</b></td><td data-label="Mediador eicosanoide">PGE2 e PGI2 vs TXA2</td><td data-label="Função fisiológica e consequência da inibição pelos AINEs">PGs vasodilatadoras aumentam o fluxo sanguíneo renal, a TFG, a diurese e a natriurese. A inibição causa vasoconstrição renal, retenção de Na⁺/água e perda do efeito anti-hipertensivo; risco em IC, cirrose/ascite e DRC</td></tr>
+<tr><td data-label="Sistema / órgão"><b>Trato gastrointestinal</b></td><td data-label="Mediador eicosanoide">PGE2 e PGI2 (via COX-1)</td><td data-label="Função fisiológica e consequência da inibição pelos AINEs"><b>Citoproteção gástrica:</b> ↑ muco e bicarbonato e ↓ secreção de HCl. A inibição causa dispepsia, gastrite e úlceras gastroduodenais</td></tr>
+<tr><td data-label="Sistema / órgão"><b>Respiratório e leucócitos</b></td><td data-label="Mediador eicosanoide">PGF2α, TXA2 e leucotrienos</td><td data-label="Função fisiológica e consequência da inibição pelos AINEs">PGF2α e TXA2 são broncoconstritores. Leucotrienos: potente broncoespasmo, ↑ muco, ↑ permeabilidade vascular e quimiotaxia de neutrófilos. Ao bloquear a COX, o AA pode ser desviado para a LOX, precipitando <b>broncoespasmo induzido por AAS</b></td></tr>
+<tr><td data-label="Sistema / órgão"><b>SNC, dor e inflamação</b></td><td data-label="Mediador eicosanoide">PGE2, PGI2 e PGD2</td><td data-label="Função fisiológica e consequência da inibição pelos AINEs"><b>PGE2 no hipotálamo</b> eleva o ponto de ajuste térmico (<b>febre</b>). <b>PGE2 e PGI2 nos nociceptores</b> diminuem o limiar da dor (hiperalgesia) e potencializam bradicinina e histamina. PGD2 induz o sono</td></tr>
+<tr><td data-label="Sistema / órgão"><b>Reprodutor feminino</b></td><td data-label="Mediador eicosanoide">PGE2 e PGF2α</td><td data-label="Função fisiológica e consequência da inibição pelos AINEs">Estimulam a contração do miométrio: causam <b>dismenorreia</b> e participam do trabalho de parto. AINEs aliviam dismenorreia e podem prolongar a gestação</td></tr>
 </tbody></table></div>
 
 <p>As prostaglandinas também participam da perfusão renal, da fisiologia uterina e da manutenção fetal do <b>conduto arterioso</b>. Portanto, não são apenas substâncias que provocam inflamação: exercem funções de proteção e regulação.</p>
@@ -1667,13 +1680,13 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Órgão</th><th>Mediador</th><th>Ao inibir com AINE</th></tr></thead>
 <tbody>
-<tr><td><b>Estômago</b></td><td>PGE2, PGI2</td><td>↓ muco e HCO₃⁻, ↑ HCl → úlcera</td></tr>
-<tr><td><b>Rim</b></td><td>PGE2, PGI2</td><td>↓ fluxo e TFG, retém Na⁺/água, ↓ efeito anti-hipertensivo</td></tr>
-<tr><td><b>Plaqueta × endotélio</b></td><td>TXA2 × PGI2</td><td><mark class="mr">Coxib ↓ PGI2 sem ↓ TXA2 → <b>risco trombótico/IAM/AVC</b></mark></td></tr>
-<tr><td><b>Brônquio</b></td><td>Leucotrienos</td><td>AA desviado para LOX → asma por AAS</td></tr>
-<tr><td><b>Hipotálamo / nociceptor</b></td><td>PGE2</td><td>↓ febre · ↓ hiperalgesia</td></tr>
-<tr><td><b>Útero</b></td><td>PGE2, PGF2α</td><td>Alivia dismenorreia</td></tr>
-<tr><td><b>Feto</b></td><td>PGE2</td><td>Fecha o canal arterial (indometacina)</td></tr>
+<tr><td data-label="Órgão"><b>Estômago</b></td><td data-label="Mediador">PGE2, PGI2</td><td data-label="Ao inibir com AINE">↓ muco e HCO₃⁻, ↑ HCl → úlcera</td></tr>
+<tr><td data-label="Órgão"><b>Rim</b></td><td data-label="Mediador">PGE2, PGI2</td><td data-label="Ao inibir com AINE">↓ fluxo e TFG, retém Na⁺/água, ↓ efeito anti-hipertensivo</td></tr>
+<tr><td data-label="Órgão"><b>Plaqueta × endotélio</b></td><td data-label="Mediador">TXA2 × PGI2</td><td data-label="Ao inibir com AINE"><mark class="mr">Coxib ↓ PGI2 sem ↓ TXA2 → <b>risco trombótico/IAM/AVC</b></mark></td></tr>
+<tr><td data-label="Órgão"><b>Brônquio</b></td><td data-label="Mediador">Leucotrienos</td><td data-label="Ao inibir com AINE">AA desviado para LOX → asma por AAS</td></tr>
+<tr><td data-label="Órgão"><b>Hipotálamo / nociceptor</b></td><td data-label="Mediador">PGE2</td><td data-label="Ao inibir com AINE">↓ febre · ↓ hiperalgesia</td></tr>
+<tr><td data-label="Órgão"><b>Útero</b></td><td data-label="Mediador">PGE2, PGF2α</td><td data-label="Ao inibir com AINE">Alivia dismenorreia</td></tr>
+<tr><td data-label="Órgão"><b>Feto</b></td><td data-label="Mediador">PGE2</td><td data-label="Ao inibir com AINE">Fecha o canal arterial (indometacina)</td></tr>
 </tbody></table></div>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los AINEs inhiben ciclooxigenasas y disminuyen la síntesis de prostanoides; no bloquean directamente toda la vía de los leucotrienos».</p></div>
@@ -1686,10 +1699,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Efeito</th><th>Explicação em português</th></tr></thead>
 <tbody>
-<tr><td><b>Analgésico</b></td><td>Diminui mediadores que sensibilizam nociceptores; reduz a amplificação inflamatória da dor</td></tr>
-<tr><td><b>Antipirético</b></td><td>Reduz sinalização por prostaglandinas associada à elevação do ajuste térmico hipotalâmico</td></tr>
-<tr><td><b>Antiinflamatório</b></td><td>Reduz parte da produção de mediadores inflamatórios</td></tr>
-<tr><td><b>Antiagregante</b></td><td>Depende do efeito sobre TXA2 e plaquetas; é particularmente importante para o AAS</td></tr>
+<tr><td data-label="Efeito"><b>Analgésico</b></td><td data-label="Explicação em português">Diminui mediadores que sensibilizam nociceptores; reduz a amplificação inflamatória da dor</td></tr>
+<tr><td data-label="Efeito"><b>Antipirético</b></td><td data-label="Explicação em português">Reduz sinalização por prostaglandinas associada à elevação do ajuste térmico hipotalâmico</td></tr>
+<tr><td data-label="Efeito"><b>Antiinflamatório</b></td><td data-label="Explicação em português">Reduz parte da produção de mediadores inflamatórios</td></tr>
+<tr><td data-label="Efeito"><b>Antiagregante</b></td><td data-label="Explicação em português">Depende do efeito sobre TXA2 e plaquetas; é particularmente importante para o AAS</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>A regra «4 A» é um ponto de partida, não uma propriedade idêntica de todos os fármacos. <mark class="mr"><b>Paracetamol</b> tem fraca ação antiinflamatória periférica e não é antiagregante clínico</mark>. <b>Coxibs</b> não reproduzem o efeito antiagregante duradouro do AAS.</p></div>
@@ -1745,12 +1758,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Local / associação</th><th>Raciocínio</th><th>Resultado possível</th></tr></thead>
 <tbody>
-<tr><td>Mucosa gastrointestinal</td><td>Menor proteção por PG</td><td>Úlcera, sangramento ou perfuração</td></tr>
-<tr><td>Rim</td><td>Menor vasodilatação compensatória</td><td>Redução de filtração glomerular; retenção de sódio e água</td></tr>
-<tr><td>Circulação</td><td>Desequilíbrio vascular e retenção hidrossalina</td><td>Piora de pressão, edema e risco cardiovascular</td></tr>
-<tr><td>Anticoagulantes</td><td>Soma de fatores hemorrágicos</td><td>Maior risco de sangramento</td></tr>
-<tr><td>Corticoides + AINE</td><td>Soma de agressões à mucosa</td><td>Maior risco gastrointestinal</td></tr>
-<tr><td>Lítio ou metotrexato</td><td>Alteração de eliminação e interações específicas</td><td>Possível toxicidade</td></tr>
+<tr><td data-label="Local / associação">Mucosa gastrointestinal</td><td data-label="Raciocínio">Menor proteção por PG</td><td data-label="Resultado possível">Úlcera, sangramento ou perfuração</td></tr>
+<tr><td data-label="Local / associação">Rim</td><td data-label="Raciocínio">Menor vasodilatação compensatória</td><td data-label="Resultado possível">Redução de filtração glomerular; retenção de sódio e água</td></tr>
+<tr><td data-label="Local / associação">Circulação</td><td data-label="Raciocínio">Desequilíbrio vascular e retenção hidrossalina</td><td data-label="Resultado possível">Piora de pressão, edema e risco cardiovascular</td></tr>
+<tr><td data-label="Local / associação">Anticoagulantes</td><td data-label="Raciocínio">Soma de fatores hemorrágicos</td><td data-label="Resultado possível">Maior risco de sangramento</td></tr>
+<tr><td data-label="Local / associação">Corticoides + AINE</td><td data-label="Raciocínio">Soma de agressões à mucosa</td><td data-label="Resultado possível">Maior risco gastrointestinal</td></tr>
+<tr><td data-label="Local / associação">Lítio ou metotrexato</td><td data-label="Raciocínio">Alteração de eliminação e interações específicas</td><td data-label="Resultado possível">Possível toxicidade</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>O risco cardiovascular não pertence exclusivamente aos coxibs. <mark class="mr"><b>AINEs não aspirínicos também podem elevar risco de infarto e AVC</b></mark>, inclusive no início do uso; dose e duração influenciam esse risco (referência R5).</p></div>
@@ -1775,10 +1788,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Associação</th><th>Resultado</th></tr></thead>
 <tbody>
-<tr><td>+ Anticoagulante</td><td>↑ sangramento</td></tr>
-<tr><td>+ Corticoide</td><td>↑ risco gastrointestinal</td></tr>
-<tr><td>+ Lítio / metotrexato</td><td>Toxicidade</td></tr>
-<tr><td>+ Diurético + IECA</td><td>Lesão renal</td></tr>
+<tr><td data-label="Associação">+ Anticoagulante</td><td data-label="Resultado">↑ sangramento</td></tr>
+<tr><td data-label="Associação">+ Corticoide</td><td data-label="Resultado">↑ risco gastrointestinal</td></tr>
+<tr><td data-label="Associação">+ Lítio / metotrexato</td><td data-label="Resultado">Toxicidade</td></tr>
+<tr><td data-label="Associação">+ Diurético + IECA</td><td data-label="Resultado">Lesão renal</td></tr>
 </tbody></table></div>
 
 <p><mark class="my">Alívio da dor não informa a perfusão renal.</mark></p>
@@ -1795,11 +1808,11 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Achado</th><th>Relação com o salicilato</th></tr></thead>
 <tbody>
-<tr><td>Zumbido / hipoacusia</td><td>Sinais que podem acompanhar salicilismo</td></tr>
-<tr><td>Hiperventilação inicial</td><td>Estímulo do centro respiratório</td></tr>
-<tr><td>Alcalose respiratória</td><td>Redução de CO₂ pela hiperventilação</td></tr>
-<tr><td>Acidose metabólica</td><td>Alterações metabólicas e acúmulo de ácidos</td></tr>
-<tr><td>Hipertermia</td><td>Desacoplamento da fosforilação oxidativa</td></tr>
+<tr><td data-label="Achado">Zumbido / hipoacusia</td><td data-label="Relação com o salicilato">Sinais que podem acompanhar salicilismo</td></tr>
+<tr><td data-label="Achado">Hiperventilação inicial</td><td data-label="Relação com o salicilato">Estímulo do centro respiratório</td></tr>
+<tr><td data-label="Achado">Alcalose respiratória</td><td data-label="Relação com o salicilato">Redução de CO₂ pela hiperventilação</td></tr>
+<tr><td data-label="Achado">Acidose metabólica</td><td data-label="Relação com o salicilato">Alterações metabólicas e acúmulo de ácidos</td></tr>
+<tr><td data-label="Achado">Hipertermia</td><td data-label="Relação com o salicilato">Desacoplamento da fosforilação oxidativa</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>A página 21 relaciona <b>alcalose respiratória</b> à depressão do centro respiratório. <mark class="my">O mecanismo inicial é estímulo respiratório com hiperventilação.</mark> Em intoxicação, pode coexistir <b>acidose metabólica</b>; não reduza todo quadro a «acidose mista».</p></div>
@@ -1846,13 +1859,13 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Família</th><th>Fármacos citados</th><th>Ponto de comparação</th></tr></thead>
 <tbody>
-<tr><td>Derivados do ácido propiônico</td><td>Ibuprofeno, naproxeno, cetoprofeno</td><td>Analgesia / inflamação; naproxeno tem duração mais longa (t½ ~14 h) que ibuprofeno</td></tr>
-<tr><td>Fenamatos</td><td>Ácido mefenâmico</td><td>Dor e dismenorreia; mantém riscos da classe</td></tr>
-<tr><td>Derivados do ácido acético</td><td>Indometacina</td><td>Potente inibição de PG; ligação com fechamento do canal arterial</td></tr>
-<tr><td>Derivados relacionados</td><td>Cetorolaco</td><td>Predomínio analgésico; uso sistêmico breve (máx. 5 dias)</td></tr>
-<tr><td>Derivado do ácido acético</td><td>Diclofenaco</td><td>Efeito antiinflamatório; atenção ao risco cardiovascular e hepático</td></tr>
-<tr><td>Oxicams</td><td>Meloxicam, piroxicam</td><td>Duração prolongada; meloxicam tem preferência relativa por COX-2</td></tr>
-<tr><td>Coxibs</td><td>Celecoxibe, etoricoxibe</td><td>Seletividade COX-2; não eliminam risco renal/cardiovascular</td></tr>
+<tr><td data-label="Família">Derivados do ácido propiônico</td><td data-label="Fármacos citados">Ibuprofeno, naproxeno, cetoprofeno</td><td data-label="Ponto de comparação">Analgesia / inflamação; naproxeno tem duração mais longa (t½ ~14 h) que ibuprofeno</td></tr>
+<tr><td data-label="Família">Fenamatos</td><td data-label="Fármacos citados">Ácido mefenâmico</td><td data-label="Ponto de comparação">Dor e dismenorreia; mantém riscos da classe</td></tr>
+<tr><td data-label="Família">Derivados do ácido acético</td><td data-label="Fármacos citados">Indometacina</td><td data-label="Ponto de comparação">Potente inibição de PG; ligação com fechamento do canal arterial</td></tr>
+<tr><td data-label="Família">Derivados relacionados</td><td data-label="Fármacos citados">Cetorolaco</td><td data-label="Ponto de comparação">Predomínio analgésico; uso sistêmico breve (máx. 5 dias)</td></tr>
+<tr><td data-label="Família">Derivado do ácido acético</td><td data-label="Fármacos citados">Diclofenaco</td><td data-label="Ponto de comparação">Efeito antiinflamatório; atenção ao risco cardiovascular e hepático</td></tr>
+<tr><td data-label="Família">Oxicams</td><td data-label="Fármacos citados">Meloxicam, piroxicam</td><td data-label="Ponto de comparação">Duração prolongada; meloxicam tem preferência relativa por COX-2</td></tr>
+<tr><td data-label="Família">Coxibs</td><td data-label="Fármacos citados">Celecoxibe, etoricoxibe</td><td data-label="Ponto de comparação">Seletividade COX-2; não eliminam risco renal/cardiovascular</td></tr>
 </tbody></table></div>
 
 <p>A <b>indometacina</b> pode favorecer fechamento do <b>conduto arterioso</b> porque diminui prostaglandinas que ajudam a mantê-lo aberto. Essa ação é uma aplicação específica, não uma indicação genérica para qualquer paciente.</p>
@@ -1892,8 +1905,8 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Efeito de destaque</th><th>Toxicidade que diferencia</th></tr></thead>
 <tbody>
-<tr><td>Paracetamol</td><td>Analgesia e antipirese</td><td>Hepatotoxicidade em superexposição e situações de maior risco</td></tr>
-<tr><td>Dipirona / metamizol</td><td>Analgesia, antipirese e ação espasmolítica</td><td>Agranulocitose, reações de hipersensibilidade e hipotensão em certos contextos</td></tr>
+<tr><td data-label="Fármaco">Paracetamol</td><td data-label="Efeito de destaque">Analgesia e antipirese</td><td data-label="Toxicidade que diferencia">Hepatotoxicidade em superexposição e situações de maior risco</td></tr>
+<tr><td data-label="Fármaco">Dipirona / metamizol</td><td data-label="Efeito de destaque">Analgesia, antipirese e ação espasmolítica</td><td data-label="Toxicidade que diferencia">Agranulocitose, reações de hipersensibilidade e hipotensão em certos contextos</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>A aula destaca benefício da NAC entre 16–24 horas, mas <mark class="mr"><b>não se deve esperar esse intervalo</b></mark>. O benefício preventivo é maior quando o tratamento indicado começa cedo, especialmente nas primeiras oito horas. A decisão utiliza tempo de ingestão, níveis e contexto clínico (referência R9).</p></div>
@@ -1954,21 +1967,21 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Classificação</th><th>Como compreender</th></tr></thead>
 <tbody>
-<tr><td>Aguda / crônica</td><td>Aguda: limitada no tempo, escasso componente psicológico (perfuração de víscera, fratura). Crônica: persistente, forte componente psicológico (dor oncológica)</td></tr>
-<tr><td>Nociceptiva somática</td><td>Ativação de nociceptores em tecidos somáticos; responde muito bem a opioides</td></tr>
-<tr><td>Nociceptiva visceral</td><td>Origem em vísceras; pode ser mal localizada ou referida</td></tr>
-<tr><td>Neuropática</td><td>Lesão ou doença do sistema somatossensorial; queimação/choque, parestesias, hiperalgesia e alodinia; pouco responsiva a opioides isolados</td></tr>
-<tr><td>Componente psicossocial (psicogênica)</td><td>Modula toda experiência dolorosa; não torna a dor imaginária</td></tr>
+<tr><td data-label="Classificação">Aguda / crônica</td><td data-label="Como compreender">Aguda: limitada no tempo, escasso componente psicológico (perfuração de víscera, fratura). Crônica: persistente, forte componente psicológico (dor oncológica)</td></tr>
+<tr><td data-label="Classificação">Nociceptiva somática</td><td data-label="Como compreender">Ativação de nociceptores em tecidos somáticos; responde muito bem a opioides</td></tr>
+<tr><td data-label="Classificação">Nociceptiva visceral</td><td data-label="Como compreender">Origem em vísceras; pode ser mal localizada ou referida</td></tr>
+<tr><td data-label="Classificação">Neuropática</td><td data-label="Como compreender">Lesão ou doença do sistema somatossensorial; queimação/choque, parestesias, hiperalgesia e alodinia; pouco responsiva a opioides isolados</td></tr>
+<tr><td data-label="Classificação">Componente psicossocial (psicogênica)</td><td data-label="Como compreender">Modula toda experiência dolorosa; não torna a dor imaginária</td></tr>
 </tbody></table></div>
 
 <p>A aula apresenta a <b>escada analgésica da OMS</b>: não opioides, opioides de menor potência e opioides de maior potência, com medidas adjuvantes conforme o caso. É um modelo didático histórico, especialmente ligado à dor oncológica, e não uma obrigação de subir todos os degraus em qualquer situação.</p>
 <div class="tw"><table class="t">
 <thead><tr><th>Degrau</th><th>Dor</th><th>Abordagem</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>Leve</td><td>AINEs / paracetamol ± coadjuvantes</td></tr>
-<tr><td>2</td><td>Moderada</td><td>Opioides fracos (codeína, tramadol, hidrocodona) ± AINEs/coadjuvantes</td></tr>
-<tr><td>3</td><td>Severa</td><td>Opioides fortes (morfina, fentanil, metadona, oxicodona) ± AINEs/coadjuvantes</td></tr>
-<tr><td>4</td><td>Refratária</td><td>Técnicas intervencionistas (PCA, bloqueios centrais/periféricos)</td></tr>
+<tr><td data-label="Degrau">1</td><td data-label="Dor">Leve</td><td data-label="Abordagem">AINEs / paracetamol ± coadjuvantes</td></tr>
+<tr><td data-label="Degrau">2</td><td data-label="Dor">Moderada</td><td data-label="Abordagem">Opioides fracos (codeína, tramadol, hidrocodona) ± AINEs/coadjuvantes</td></tr>
+<tr><td data-label="Degrau">3</td><td data-label="Dor">Severa</td><td data-label="Abordagem">Opioides fortes (morfina, fentanil, metadona, oxicodona) ± AINEs/coadjuvantes</td></tr>
+<tr><td data-label="Degrau">4</td><td data-label="Dor">Refratária</td><td data-label="Abordagem">Técnicas intervencionistas (PCA, bloqueios centrais/periféricos)</td></tr>
 </tbody></table></div>
 <p><mark class="my">Na dor crônica, sobe-se a escada; na dor aguda intensa, desce-se a escada.</mark></p>
 
@@ -2027,18 +2040,18 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Receptor</th><th>Localização e afinidade endógena</th><th>Associação didática</th></tr></thead>
 <tbody>
-<tr><td><b>μ (MOR)</b></td><td>PAG, tálamo médio; endorfinas &gt; encefalinas &gt; dinorfinas</td><td>μ1: analgesia supraespinhal e euforia. μ2: depressão respiratória, bradicardia, constipação, sedação e dependência física</td></tr>
-<tr><td><b>δ (DOR)</b></td><td>Sistema límbico e trato gastrointestinal; encefalinas &gt; endorfinas</td><td>Modulação de analgesia, depressão respiratória e respostas afetivas</td></tr>
-<tr><td><b>κ (KOR)</b></td><td>Córtex profundo, tálamo, núcleo de Edinger-Westphal; dinorfinas ≫ demais</td><td>Analgesia e sedação; miose puntiforme; diurese (inibe ADH); disforia (efeitos psicotomiméticos)</td></tr>
+<tr><td data-label="Receptor"><b>μ (MOR)</b></td><td data-label="Localização e afinidade endógena">PAG, tálamo médio; endorfinas &gt; encefalinas &gt; dinorfinas</td><td data-label="Associação didática">μ1: analgesia supraespinhal e euforia. μ2: depressão respiratória, bradicardia, constipação, sedação e dependência física</td></tr>
+<tr><td data-label="Receptor"><b>δ (DOR)</b></td><td data-label="Localização e afinidade endógena">Sistema límbico e trato gastrointestinal; encefalinas &gt; endorfinas</td><td data-label="Associação didática">Modulação de analgesia, depressão respiratória e respostas afetivas</td></tr>
+<tr><td data-label="Receptor"><b>κ (KOR)</b></td><td data-label="Localização e afinidade endógena">Córtex profundo, tálamo, núcleo de Edinger-Westphal; dinorfinas ≫ demais</td><td data-label="Associação didática">Analgesia e sedação; miose puntiforme; diurese (inibe ADH); disforia (efeitos psicotomiméticos)</td></tr>
 </tbody></table></div>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Atividade no receptor</th><th>Exemplos da aula</th></tr></thead>
 <tbody>
-<tr><td>Agonistas puros (totais)</td><td>Morfina, fentanil, oxicodona, metadona, meperidina, hidromorfona, heroína</td></tr>
-<tr><td>Agonista parcial</td><td>Buprenorfina (menor atividade intrínseca em μ; com um agonista puro, atua como antagonista competitivo e pode precipitar abstinência)</td></tr>
-<tr><td>Agonistas-antagonistas</td><td>Nalbufina, butorfanol, pentazocina (ativam κ, bloqueiam μ)</td></tr>
-<tr><td>Antagonistas</td><td>Naloxona (IV, reverte intoxicação aguda) e naltrexona (oral, longa duração)</td></tr>
+<tr><td data-label="Atividade no receptor">Agonistas puros (totais)</td><td data-label="Exemplos da aula">Morfina, fentanil, oxicodona, metadona, meperidina, hidromorfona, heroína</td></tr>
+<tr><td data-label="Atividade no receptor">Agonista parcial</td><td data-label="Exemplos da aula">Buprenorfina (menor atividade intrínseca em μ; com um agonista puro, atua como antagonista competitivo e pode precipitar abstinência)</td></tr>
+<tr><td data-label="Atividade no receptor">Agonistas-antagonistas</td><td data-label="Exemplos da aula">Nalbufina, butorfanol, pentazocina (ativam κ, bloqueiam μ)</td></tr>
+<tr><td data-label="Atividade no receptor">Antagonistas</td><td data-label="Exemplos da aula">Naloxona (IV, reverte intoxicação aguda) e naltrexona (oral, longa duração)</td></tr>
 </tbody></table></div>
 
 <p><b>Segundo a origem:</b> naturais (morfina, codeína, papaverina); semissintéticos (heroína, oxicodona, oximorfona, hidromorfona, hidrocodona, buprenorfina); sintéticos (fentanil, remifentanil, meperidina, metadona, tramadol). <b>Segundo a potência:</b> menores (codeína, tramadol, hidrocodona) e maiores (morfina, fentanil, metadona, oxicodona).</p>
@@ -2094,12 +2107,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Característica para comparar</th></tr></thead>
 <tbody>
-<tr><td>Codeína</td><td>Opiáceo fraco com efeitos analgésico e antitussígeno central; metabolismo influencia a resposta</td></tr>
-<tr><td>Tramadol</td><td>Ação opioide e inibição de recaptação de noradrenalina/serotonina; útil em dor neuropática; contraindicado em epilepsia não controlada</td></tr>
-<tr><td>Hidrocodona</td><td>Opioide oral; apresentações podem conter outros analgésicos; prurido, sonolência e constipação</td></tr>
-<tr><td>Morfina</td><td>Agonista de referência (dor no IAM, pós-cirúrgica, trauma, oncológica); metabólito ativo M6G acumula na falência renal; contraindicada na depressão respiratória aguda e pancreatite aguda</td></tr>
-<tr><td>Fentanil</td><td>Agonista sintético puro, 80 a 100 vezes mais potente que a morfina; alta lipossolubilidade; apresentações não são intercambiáveis</td></tr>
-<tr><td>Oxicodona</td><td>Agonista opioide oral potente; alto potencial de dependência e depressão respiratória; contraindicado em TCE (retenção de CO₂ → ↑ pressão intracraniana)</td></tr>
+<tr><td data-label="Fármaco">Codeína</td><td data-label="Característica para comparar">Opiáceo fraco com efeitos analgésico e antitussígeno central; metabolismo influencia a resposta</td></tr>
+<tr><td data-label="Fármaco">Tramadol</td><td data-label="Característica para comparar">Ação opioide e inibição de recaptação de noradrenalina/serotonina; útil em dor neuropática; contraindicado em epilepsia não controlada</td></tr>
+<tr><td data-label="Fármaco">Hidrocodona</td><td data-label="Característica para comparar">Opioide oral; apresentações podem conter outros analgésicos; prurido, sonolência e constipação</td></tr>
+<tr><td data-label="Fármaco">Morfina</td><td data-label="Característica para comparar">Agonista de referência (dor no IAM, pós-cirúrgica, trauma, oncológica); metabólito ativo M6G acumula na falência renal; contraindicada na depressão respiratória aguda e pancreatite aguda</td></tr>
+<tr><td data-label="Fármaco">Fentanil</td><td data-label="Característica para comparar">Agonista sintético puro, 80 a 100 vezes mais potente que a morfina; alta lipossolubilidade; apresentações não são intercambiáveis</td></tr>
+<tr><td data-label="Fármaco">Oxicodona</td><td data-label="Característica para comparar">Agonista opioide oral potente; alto potencial de dependência e depressão respiratória; contraindicado em TCE (retenção de CO₂ → ↑ pressão intracraniana)</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>Tramadol pode causar <b>convulsões</b> e <b>síndrome serotoninérgica</b>, especialmente com interações serotoninérgicas ou metabólicas. CYP2D6 influencia a formação de seu metabólito ativo. <mark class="mr">«Opioide menor» não significa ausência de toxicidade grave</mark> (referência R7).</p></div>
@@ -2145,10 +2158,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Região</th><th>Produto predominante</th><th>Controle relevante</th></tr></thead>
 <tbody>
-<tr><td>Zona glomerulosa (externa)</td><td>Aldosterona (mineralocorticoide)</td><td>Sistema renina–angiotensina (angiotensina II via AT1) e hipercalemia. Promove reabsorção de Na⁺ e água e excreção de K⁺ e H⁺</td></tr>
-<tr><td>Zona fasciculada (média)</td><td>Cortisol (glicocorticoide)</td><td>Eixo hipotálamo–hipófise–suprarrenal: CRH → ACTH → cortisol</td></tr>
-<tr><td>Zona reticular (interna)</td><td>Andrógenos suprarrenais (DHEA e androstenediona)</td><td>ACTH e contexto fisiológico (adrenarca/puberdade)</td></tr>
-<tr><td>Medula suprarrenal</td><td>Catecolaminas (adrenalina e noradrenalina)</td><td>Estímulo simpático; <mark class="mr"><b>não é córtex</b></mark></td></tr>
+<tr><td data-label="Região">Zona glomerulosa (externa)</td><td data-label="Produto predominante">Aldosterona (mineralocorticoide)</td><td data-label="Controle relevante">Sistema renina–angiotensina (angiotensina II via AT1) e hipercalemia. Promove reabsorção de Na⁺ e água e excreção de K⁺ e H⁺</td></tr>
+<tr><td data-label="Região">Zona fasciculada (média)</td><td data-label="Produto predominante">Cortisol (glicocorticoide)</td><td data-label="Controle relevante">Eixo hipotálamo–hipófise–suprarrenal: CRH → ACTH → cortisol</td></tr>
+<tr><td data-label="Região">Zona reticular (interna)</td><td data-label="Produto predominante">Andrógenos suprarrenais (DHEA e androstenediona)</td><td data-label="Controle relevante">ACTH e contexto fisiológico (adrenarca/puberdade)</td></tr>
+<tr><td data-label="Região">Medula suprarrenal</td><td data-label="Produto predominante">Catecolaminas (adrenalina e noradrenalina)</td><td data-label="Controle relevante">Estímulo simpático; <mark class="mr"><b>não é córtex</b></mark></td></tr>
 </tbody></table></div>
 
 <h3 class="sub">Três níveis de regulação do cortisol</h3>
@@ -2208,10 +2221,10 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Comparação</th><th>AINEs</th><th>Glicocorticoides</th></tr></thead>
 <tbody>
-<tr><td>Alvo didático central</td><td>Ciclo-oxigenases</td><td>Receptor intracelular e expressão gênica</td></tr>
-<tr><td>Mediadores</td><td>Reduzem prostanoides</td><td>Modulam várias vias (PG, leucotrienos) e citocinas</td></tr>
-<tr><td>Leucócitos</td><td>Efeito menos amplo</td><td>Maior supressão de funções inflamatórias/imunes; apoptose de linfócitos</td></tr>
-<tr><td>Consequência</td><td>Analgesia / antipirese / ação antiinflamatória</td><td>Potente ação antiinflamatória e imunossupressora</td></tr>
+<tr><td data-label="Comparação">Alvo didático central</td><td data-label="AINEs">Ciclo-oxigenases</td><td data-label="Glicocorticoides">Receptor intracelular e expressão gênica</td></tr>
+<tr><td data-label="Comparação">Mediadores</td><td data-label="AINEs">Reduzem prostanoides</td><td data-label="Glicocorticoides">Modulam várias vias (PG, leucotrienos) e citocinas</td></tr>
+<tr><td data-label="Comparação">Leucócitos</td><td data-label="AINEs">Efeito menos amplo</td><td data-label="Glicocorticoides">Maior supressão de funções inflamatórias/imunes; apoptose de linfócitos</td></tr>
+<tr><td data-label="Comparação">Consequência</td><td data-label="AINEs">Analgesia / antipirese / ação antiinflamatória</td><td data-label="Glicocorticoides">Potente ação antiinflamatória e imunossupressora</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Dizer que o corticoide «bloqueia diretamente a PLA2» é uma simplificação.</mark> O mecanismo envolve regulação de proteínas e genes. Da mesma forma, a redução de IL-2 não deve ser explicada apenas como consequência de diminuir prostaglandinas.</p></div>
@@ -2251,16 +2264,16 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Duração / grupo</th><th>Fármaco</th><th>Potência glico</th><th>Potência mineralo</th><th>Dose equivalente</th><th>Meia-vida plasmática</th></tr></thead>
 <tbody>
-<tr><td>Curta (8–12 h)</td><td>Cortisol / hidrocortisona (ativa)</td><td>0,8–1</td><td>0,8–1</td><td>20–25 mg</td><td>80–120 min</td></tr>
-<tr><td>Curta (8–12 h)</td><td>Cortisona (pró-fármaco)</td><td>0,8–1</td><td>0,8–1</td><td>20–25 mg</td><td>80–120 min</td></tr>
-<tr><td>Intermediária (12–36 h)</td><td>Prednisolona (ativa)</td><td>4</td><td>0,25</td><td>5 mg</td><td>120–200 min</td></tr>
-<tr><td>Intermediária</td><td>Prednisona (pró-fármaco)</td><td>4</td><td>0,25</td><td>5 mg</td><td>130–300 min</td></tr>
-<tr><td>Intermediária</td><td>Metilprednisolona (e meprednisona)</td><td>5</td><td>&lt; 0,01</td><td>4 mg</td><td>130–180 min</td></tr>
-<tr><td>Intermediária</td><td>Deflazacorte (1ª escolha em crianças)</td><td>5</td><td>&lt; 0,01</td><td>4–6 mg</td><td>130–180 min</td></tr>
-<tr><td>Intermediária</td><td>Triancinolona</td><td>5</td><td>0</td><td>4 mg</td><td>120–180 min</td></tr>
-<tr><td>Prolongada (&gt; 36 h)</td><td>Betametasona (e parametasona)</td><td>30–40</td><td>&lt; 0,01</td><td>0,75 mg</td><td>130–330 min</td></tr>
-<tr><td>Prolongada (&gt; 36 h)</td><td>Dexametasona</td><td>25</td><td>&lt; 0,01</td><td>0,6–0,75 mg</td><td>150–270 min</td></tr>
-<tr><td>Mineralocorticoide</td><td>Fludrocortisona</td><td>~10</td><td>125–150</td><td>0,05–0,1 mg/dia</td><td>—</td></tr>
+<tr><td data-label="Duração / grupo">Curta (8–12 h)</td><td data-label="Fármaco">Cortisol / hidrocortisona (ativa)</td><td data-label="Potência glico">0,8–1</td><td data-label="Potência mineralo">0,8–1</td><td data-label="Dose equivalente">20–25 mg</td><td data-label="Meia-vida plasmática">80–120 min</td></tr>
+<tr><td data-label="Duração / grupo">Curta (8–12 h)</td><td data-label="Fármaco">Cortisona (pró-fármaco)</td><td data-label="Potência glico">0,8–1</td><td data-label="Potência mineralo">0,8–1</td><td data-label="Dose equivalente">20–25 mg</td><td data-label="Meia-vida plasmática">80–120 min</td></tr>
+<tr><td data-label="Duração / grupo">Intermediária (12–36 h)</td><td data-label="Fármaco">Prednisolona (ativa)</td><td data-label="Potência glico">4</td><td data-label="Potência mineralo">0,25</td><td data-label="Dose equivalente">5 mg</td><td data-label="Meia-vida plasmática">120–200 min</td></tr>
+<tr><td data-label="Duração / grupo">Intermediária</td><td data-label="Fármaco">Prednisona (pró-fármaco)</td><td data-label="Potência glico">4</td><td data-label="Potência mineralo">0,25</td><td data-label="Dose equivalente">5 mg</td><td data-label="Meia-vida plasmática">130–300 min</td></tr>
+<tr><td data-label="Duração / grupo">Intermediária</td><td data-label="Fármaco">Metilprednisolona (e meprednisona)</td><td data-label="Potência glico">5</td><td data-label="Potência mineralo">&lt; 0,01</td><td data-label="Dose equivalente">4 mg</td><td data-label="Meia-vida plasmática">130–180 min</td></tr>
+<tr><td data-label="Duração / grupo">Intermediária</td><td data-label="Fármaco">Deflazacorte (1ª escolha em crianças)</td><td data-label="Potência glico">5</td><td data-label="Potência mineralo">&lt; 0,01</td><td data-label="Dose equivalente">4–6 mg</td><td data-label="Meia-vida plasmática">130–180 min</td></tr>
+<tr><td data-label="Duração / grupo">Intermediária</td><td data-label="Fármaco">Triancinolona</td><td data-label="Potência glico">5</td><td data-label="Potência mineralo">0</td><td data-label="Dose equivalente">4 mg</td><td data-label="Meia-vida plasmática">120–180 min</td></tr>
+<tr><td data-label="Duração / grupo">Prolongada (&gt; 36 h)</td><td data-label="Fármaco">Betametasona (e parametasona)</td><td data-label="Potência glico">30–40</td><td data-label="Potência mineralo">&lt; 0,01</td><td data-label="Dose equivalente">0,75 mg</td><td data-label="Meia-vida plasmática">130–330 min</td></tr>
+<tr><td data-label="Duração / grupo">Prolongada (&gt; 36 h)</td><td data-label="Fármaco">Dexametasona</td><td data-label="Potência glico">25</td><td data-label="Potência mineralo">&lt; 0,01</td><td data-label="Dose equivalente">0,6–0,75 mg</td><td data-label="Meia-vida plasmática">150–270 min</td></tr>
+<tr><td data-label="Duração / grupo">Mineralocorticoide</td><td data-label="Fármaco">Fludrocortisona</td><td data-label="Potência glico">~10</td><td data-label="Potência mineralo">125–150</td><td data-label="Dose equivalente">0,05–0,1 mg/dia</td><td data-label="Meia-vida plasmática">—</td></tr>
 </tbody></table></div>
 
 <p><mark class="my"><b>Prednisona</b> precisa ser convertida em <b>prednisolona</b>; <b>cortisona</b>, em cortisol.</mark> O fígado participa dessas conversões. Disfunção hepática exige avaliação da escolha (preferir diretamente prednisolona ou hidrocortisona), mas a frase «nunca podem ser usados em qualquer insuficiência hepática» é ampla demais.</p>
@@ -2303,14 +2316,14 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Mecanismo</th><th>Consequência possível</th></tr></thead>
 <tbody>
-<tr><td>↑ gliconeogênese e síntese hepática de glicogênio; ação permissiva sobre glucagon e catecolaminas; ↓ captação periférica de glicose</td><td>Hiperglicemia; resistência à insulina (diabetes esteroide)</td></tr>
-<tr><td>Inibe síntese proteica e aumenta catabolismo muscular</td><td>Fraqueza, miopatia proximal, pele frágil, estrias e atraso na cicatrização</td></tr>
-<tr><td>Lipólise nas extremidades e redistribuição centrípeta da gordura</td><td>Gordura central, face em lua cheia e depósito dorsocervical (giba)</td></tr>
-<tr><td>↓ absorção intestinal e ↑ excreção renal de Ca²⁺; ↑ reabsorção osteoclástica e ↓ formação osteoblástica</td><td>Osteoporose, fraturas e necrose asséptica; inibe GH (supressão do crescimento), TSH e gonadotrofinas</td></tr>
-<tr><td>Atividade mineralocorticoide variável: ↑ reabsorção de Na⁺ e água, ↑ excreção de K⁺ e H⁺</td><td>Retenção hidrossalina, edema, hipertensão e alcalose hipocalêmica</td></tr>
-<tr><td>Supressão imune</td><td>Maior suscetibilidade a infecções (tuberculose, candidíase orofaríngea) e reativação em certos contextos</td></tr>
-<tr><td>Efeitos no SNC</td><td>Insônia, ansiedade, euforia, depressão e, ocasionalmente, surto psicótico; reduz edema cerebral vasogênico</td></tr>
-<tr><td>Efeitos oculares e digestivos</td><td>Catarata subcapsular posterior e glaucoma; úlcera péptica e pancreatite</td></tr>
+<tr><td data-label="Mecanismo">↑ gliconeogênese e síntese hepática de glicogênio; ação permissiva sobre glucagon e catecolaminas; ↓ captação periférica de glicose</td><td data-label="Consequência possível">Hiperglicemia; resistência à insulina (diabetes esteroide)</td></tr>
+<tr><td data-label="Mecanismo">Inibe síntese proteica e aumenta catabolismo muscular</td><td data-label="Consequência possível">Fraqueza, miopatia proximal, pele frágil, estrias e atraso na cicatrização</td></tr>
+<tr><td data-label="Mecanismo">Lipólise nas extremidades e redistribuição centrípeta da gordura</td><td data-label="Consequência possível">Gordura central, face em lua cheia e depósito dorsocervical (giba)</td></tr>
+<tr><td data-label="Mecanismo">↓ absorção intestinal e ↑ excreção renal de Ca²⁺; ↑ reabsorção osteoclástica e ↓ formação osteoblástica</td><td data-label="Consequência possível">Osteoporose, fraturas e necrose asséptica; inibe GH (supressão do crescimento), TSH e gonadotrofinas</td></tr>
+<tr><td data-label="Mecanismo">Atividade mineralocorticoide variável: ↑ reabsorção de Na⁺ e água, ↑ excreção de K⁺ e H⁺</td><td data-label="Consequência possível">Retenção hidrossalina, edema, hipertensão e alcalose hipocalêmica</td></tr>
+<tr><td data-label="Mecanismo">Supressão imune</td><td data-label="Consequência possível">Maior suscetibilidade a infecções (tuberculose, candidíase orofaríngea) e reativação em certos contextos</td></tr>
+<tr><td data-label="Mecanismo">Efeitos no SNC</td><td data-label="Consequência possível">Insônia, ansiedade, euforia, depressão e, ocasionalmente, surto psicótico; reduz edema cerebral vasogênico</td></tr>
+<tr><td data-label="Mecanismo">Efeitos oculares e digestivos</td><td data-label="Consequência possível">Catarata subcapsular posterior e glaucoma; úlcera péptica e pancreatite</td></tr>
 </tbody></table></div>
 
 <p>A lipólise e o aumento de gordura central não são uma contradição simples: há mobilização de substratos, alterações hormonais e redistribuição ao longo do tempo. O resultado crônico é diferente de uma resposta metabólica aguda isolada.</p>
@@ -2348,15 +2361,15 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Contexto da aula</th><th>Objetivo farmacológico</th><th>Referência citada na aula (conferir diretriz vigente)</th></tr></thead>
 <tbody>
-<tr><td>Insuficiência suprarrenal crônica / hiperplasia suprarrenal congênita</td><td>Repor ação hormonal ausente</td><td>Hidrocortisona 20–30 mg/dia VO, 2/3 pela manhã e 1/3 à tarde (imita o ritmo circadiano) + fludrocortisona 0,05–0,1 mg/dia</td></tr>
-<tr><td>Insuficiência suprarrenal aguda</td><td>Repor cortisol com urgência</td><td>Hidrocortisona IV em bolus (100 mg) + manutenção e soro fisiológico</td></tr>
-<tr><td>Asma e exacerbações respiratórias</td><td>Reduzir inflamação; distinguir manutenção de episódio agudo</td><td>Corticoide inalado na manutenção (budesonida em µg/dia); corticoide sistêmico em exacerbações; DPOC: inalado + LABA</td></tr>
-<tr><td>Doenças reumáticas e autoimunes</td><td>Controlar inflamação conforme doença e gravidade</td><td>Artrite reumatoide: dose mínima eficaz</td></tr>
-<tr><td>Colite ulcerativa / doença de Crohn</td><td>Induzir controle de episódios selecionados; não é manutenção universal</td><td>Surtos moderados/graves com desmame gradual</td></tr>
-<tr><td>Transplante</td><td>Integrar imunossupressão combinada</td><td>Doses altas pré e baixas pós-transplante + imunossupressor</td></tr>
-<tr><td>Doenças cutâneas e oculares</td><td>Preferir exposição local quando adequada ao diagnóstico</td><td>Câmara anterior: colírio; câmara posterior/nervo óptico: via sistêmica</td></tr>
-<tr><td>Situações hematológicas</td><td>Indicação depende do mecanismo da doença</td><td>Anemia hemolítica autoimune, PTI, leucemias</td></tr>
-<tr><td>Maturação pulmonar fetal</td><td>Acelerar maturação em risco de parto prematuro</td><td>Betametasona ou dexametasona IM na gestante</td></tr>
+<tr><td data-label="Contexto da aula">Insuficiência suprarrenal crônica / hiperplasia suprarrenal congênita</td><td data-label="Objetivo farmacológico">Repor ação hormonal ausente</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Hidrocortisona 20–30 mg/dia VO, 2/3 pela manhã e 1/3 à tarde (imita o ritmo circadiano) + fludrocortisona 0,05–0,1 mg/dia</td></tr>
+<tr><td data-label="Contexto da aula">Insuficiência suprarrenal aguda</td><td data-label="Objetivo farmacológico">Repor cortisol com urgência</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Hidrocortisona IV em bolus (100 mg) + manutenção e soro fisiológico</td></tr>
+<tr><td data-label="Contexto da aula">Asma e exacerbações respiratórias</td><td data-label="Objetivo farmacológico">Reduzir inflamação; distinguir manutenção de episódio agudo</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Corticoide inalado na manutenção (budesonida em µg/dia); corticoide sistêmico em exacerbações; DPOC: inalado + LABA</td></tr>
+<tr><td data-label="Contexto da aula">Doenças reumáticas e autoimunes</td><td data-label="Objetivo farmacológico">Controlar inflamação conforme doença e gravidade</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Artrite reumatoide: dose mínima eficaz</td></tr>
+<tr><td data-label="Contexto da aula">Colite ulcerativa / doença de Crohn</td><td data-label="Objetivo farmacológico">Induzir controle de episódios selecionados; não é manutenção universal</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Surtos moderados/graves com desmame gradual</td></tr>
+<tr><td data-label="Contexto da aula">Transplante</td><td data-label="Objetivo farmacológico">Integrar imunossupressão combinada</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Doses altas pré e baixas pós-transplante + imunossupressor</td></tr>
+<tr><td data-label="Contexto da aula">Doenças cutâneas e oculares</td><td data-label="Objetivo farmacológico">Preferir exposição local quando adequada ao diagnóstico</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Câmara anterior: colírio; câmara posterior/nervo óptico: via sistêmica</td></tr>
+<tr><td data-label="Contexto da aula">Situações hematológicas</td><td data-label="Objetivo farmacológico">Indicação depende do mecanismo da doença</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Anemia hemolítica autoimune, PTI, leucemias</td></tr>
+<tr><td data-label="Contexto da aula">Maturação pulmonar fetal</td><td data-label="Objetivo farmacológico">Acelerar maturação em risco de parto prematuro</td><td data-label="Referência citada na aula (conferir diretriz vigente)">Betametasona ou dexametasona IM na gestante</td></tr>
 </tbody></table></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Corticoide <b>não substitui adrenalina na anafilaxia</b></mark>, e seu uso rotineiro para tratar a reação aguda não é recomendado pela diretriz consultada (R8). As doses inaladas da página 39 também precisam de conferência de unidade: <mark class="mr"><b>mg e µg diferem por um fator de mil</b></mark>.</p></div>
@@ -2454,24 +2467,24 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Apresentação / dose de referência</th><th>Cinética e observações</th></tr></thead>
 <tbody>
-<tr><td>Acetilcolina</td><td>Solução oftálmica intraocular 1%</td><td>Hidrolisada instantaneamente pela AChE; miose em cirurgia</td></tr>
-<tr><td>Pilocarpina</td><td>Colírio 1–4%, 1 gota a cada 6–8 h; oral 5 mg a cada 8 h (máx. 30 mg/dia)</td><td>Início 10–30 min; t½ 0,8–1,5 h. Glaucoma; crise de ângulo fechado; xerostomia; Sjögren</td></tr>
-<tr><td>Betanecol</td><td>Oral 10–50 mg 3–4×/dia; SC 2,5–5 mg</td><td>Início 30–90 min; duração 2–3 h. Íleo e retenção urinária sem obstrução</td></tr>
-<tr><td>Carbacol</td><td>Colírio 0,75–3%; intracameral 0,01%</td><td>Início 5–15 min; duração 1–2 h</td></tr>
-<tr><td>Metacolina</td><td>Nebulização 0,0625–16 mg/mL conforme protocolo</td><td>Teste de provocação brônquica</td></tr>
-<tr><td>Edrofônio</td><td>2 mg IV, seguido de 8 mg se não houver resposta</td><td>Início 30–60 s; duração 2–4 min (até 10–20)</td></tr>
-<tr><td>Neostigmina</td><td>VO 15–30 mg a cada 3–4 h; parenteral 0,5–2 mg IV/IM (0,03–0,07 mg/kg na reversão de BNM)</td><td>Início 10–20 min; duração 2–4 h</td></tr>
-<tr><td>Piridostigmina</td><td>VO 30–60 mg a cada 4–6 h</td><td>Duração 3–6 h. 60 mg piridostigmina ≈ 15 mg neostigmina</td></tr>
-<tr><td>Fisostigmina</td><td>IV lenta: adultos 0,5–2 mg (até 1–4 mg); crianças 0,5 mg</td><td>Duração 30 min a 2 h; ver precisão R3</td></tr>
-<tr><td>Donepezila / rivastigmina / galantamina</td><td>5–10 mg/dia · 1,5–6 mg 12/12 h ou adesivo · 8–24 mg/dia</td><td>t½ 70 h · 1,5 h · 7 h. Podem associar memantina</td></tr>
-<tr><td>Atropina</td><td>Bradicardia/bloqueio AV: 0,5–1 mg IV a cada 3–5 min (máx. 3 mg); organofosforados 2–4 mg IV repetidos; colírio 0,5–1%</td><td>Ligação proteica ~50%; t½ 2,5 h; excreção renal</td></tr>
-<tr><td>Escopolamina</td><td>Adesivo 1,5 mg a cada 72 h (cinetose); VO/IM 0,3–0,6 mg</td><td>Penetra intensamente na BHE</td></tr>
-<tr><td>Biperideno / triexifenidila</td><td>2 mg VO 2–4×/dia (distonia aguda 2–5 mg IM/IV) · 1–15 mg/dia</td><td>Parkinson e sintomas extrapiramidais</td></tr>
-<tr><td>Tropicamida / ciclopentolato</td><td>Colírio 0,5–1% / 0,5–2%</td><td>Duração 4–6 h / 18–24 h</td></tr>
-<tr><td>Oxibutinina / tolterodina</td><td>5 mg 2–3×/dia ou adesivo / 2 mg 12/12 h</td><td>Cognição em idosos / QT</td></tr>
-<tr><td>Darifenacina / solifenacina / trospio</td><td>7,5–15 mg/dia / 5–10 mg/dia / 20 mg 12/12 h</td><td>Seletivos M3 / quaternário</td></tr>
-<tr><td>Butilbrometo de hioscina</td><td>10–20 mg VO/IM/IV a cada 6–8 h</td><td>Quaternário; cólicas e dismenorreia</td></tr>
-<tr><td>Ipratrópio / tiotrópio</td><td>2 inalações (17–20 µg) a cada 6 h / 18 µg 1×/dia</td><td>SAMA / LAMA; DPOC e asma</td></tr>
+<tr><td data-label="Fármaco">Acetilcolina</td><td data-label="Apresentação / dose de referência">Solução oftálmica intraocular 1%</td><td data-label="Cinética e observações">Hidrolisada instantaneamente pela AChE; miose em cirurgia</td></tr>
+<tr><td data-label="Fármaco">Pilocarpina</td><td data-label="Apresentação / dose de referência">Colírio 1–4%, 1 gota a cada 6–8 h; oral 5 mg a cada 8 h (máx. 30 mg/dia)</td><td data-label="Cinética e observações">Início 10–30 min; t½ 0,8–1,5 h. Glaucoma; crise de ângulo fechado; xerostomia; Sjögren</td></tr>
+<tr><td data-label="Fármaco">Betanecol</td><td data-label="Apresentação / dose de referência">Oral 10–50 mg 3–4×/dia; SC 2,5–5 mg</td><td data-label="Cinética e observações">Início 30–90 min; duração 2–3 h. Íleo e retenção urinária sem obstrução</td></tr>
+<tr><td data-label="Fármaco">Carbacol</td><td data-label="Apresentação / dose de referência">Colírio 0,75–3%; intracameral 0,01%</td><td data-label="Cinética e observações">Início 5–15 min; duração 1–2 h</td></tr>
+<tr><td data-label="Fármaco">Metacolina</td><td data-label="Apresentação / dose de referência">Nebulização 0,0625–16 mg/mL conforme protocolo</td><td data-label="Cinética e observações">Teste de provocação brônquica</td></tr>
+<tr><td data-label="Fármaco">Edrofônio</td><td data-label="Apresentação / dose de referência">2 mg IV, seguido de 8 mg se não houver resposta</td><td data-label="Cinética e observações">Início 30–60 s; duração 2–4 min (até 10–20)</td></tr>
+<tr><td data-label="Fármaco">Neostigmina</td><td data-label="Apresentação / dose de referência">VO 15–30 mg a cada 3–4 h; parenteral 0,5–2 mg IV/IM (0,03–0,07 mg/kg na reversão de BNM)</td><td data-label="Cinética e observações">Início 10–20 min; duração 2–4 h</td></tr>
+<tr><td data-label="Fármaco">Piridostigmina</td><td data-label="Apresentação / dose de referência">VO 30–60 mg a cada 4–6 h</td><td data-label="Cinética e observações">Duração 3–6 h. 60 mg piridostigmina ≈ 15 mg neostigmina</td></tr>
+<tr><td data-label="Fármaco">Fisostigmina</td><td data-label="Apresentação / dose de referência">IV lenta: adultos 0,5–2 mg (até 1–4 mg); crianças 0,5 mg</td><td data-label="Cinética e observações">Duração 30 min a 2 h; ver precisão R3</td></tr>
+<tr><td data-label="Fármaco">Donepezila / rivastigmina / galantamina</td><td data-label="Apresentação / dose de referência">5–10 mg/dia · 1,5–6 mg 12/12 h ou adesivo · 8–24 mg/dia</td><td data-label="Cinética e observações">t½ 70 h · 1,5 h · 7 h. Podem associar memantina</td></tr>
+<tr><td data-label="Fármaco">Atropina</td><td data-label="Apresentação / dose de referência">Bradicardia/bloqueio AV: 0,5–1 mg IV a cada 3–5 min (máx. 3 mg); organofosforados 2–4 mg IV repetidos; colírio 0,5–1%</td><td data-label="Cinética e observações">Ligação proteica ~50%; t½ 2,5 h; excreção renal</td></tr>
+<tr><td data-label="Fármaco">Escopolamina</td><td data-label="Apresentação / dose de referência">Adesivo 1,5 mg a cada 72 h (cinetose); VO/IM 0,3–0,6 mg</td><td data-label="Cinética e observações">Penetra intensamente na BHE</td></tr>
+<tr><td data-label="Fármaco">Biperideno / triexifenidila</td><td data-label="Apresentação / dose de referência">2 mg VO 2–4×/dia (distonia aguda 2–5 mg IM/IV) · 1–15 mg/dia</td><td data-label="Cinética e observações">Parkinson e sintomas extrapiramidais</td></tr>
+<tr><td data-label="Fármaco">Tropicamida / ciclopentolato</td><td data-label="Apresentação / dose de referência">Colírio 0,5–1% / 0,5–2%</td><td data-label="Cinética e observações">Duração 4–6 h / 18–24 h</td></tr>
+<tr><td data-label="Fármaco">Oxibutinina / tolterodina</td><td data-label="Apresentação / dose de referência">5 mg 2–3×/dia ou adesivo / 2 mg 12/12 h</td><td data-label="Cinética e observações">Cognição em idosos / QT</td></tr>
+<tr><td data-label="Fármaco">Darifenacina / solifenacina / trospio</td><td data-label="Apresentação / dose de referência">7,5–15 mg/dia / 5–10 mg/dia / 20 mg 12/12 h</td><td data-label="Cinética e observações">Seletivos M3 / quaternário</td></tr>
+<tr><td data-label="Fármaco">Butilbrometo de hioscina</td><td data-label="Apresentação / dose de referência">10–20 mg VO/IM/IV a cada 6–8 h</td><td data-label="Cinética e observações">Quaternário; cólicas e dismenorreia</td></tr>
+<tr><td data-label="Fármaco">Ipratrópio / tiotrópio</td><td data-label="Apresentação / dose de referência">2 inalações (17–20 µg) a cada 6 h / 18 µg 1×/dia</td><td data-label="Cinética e observações">SAMA / LAMA; DPOC e asma</td></tr>
 </tbody></table></div>
 
 <div class="exp"><p>Como ler a tabela: os <b>colírios</b> (pilocarpina, carbacol, tropicamida) agem por minutos a horas, enquanto a atropina tópica dura dias, por isso não serve para exame de rotina. A diferença de duração entre <b>neostigmina</b> e <b>piridostigmina</b> explica a preferência pela segunda na miastenia. A dose de <b>atropina</b> na bradicardia é limitada (bloqueio vagal completo com cerca de 3 mg), enquanto no organofosforado não há teto fixo: titula-se até secar as secreções.</p></div>
@@ -2479,14 +2492,14 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Dose / via de referência</th><th>Observação</th></tr></thead>
 <tbody>
-<tr><td>Adrenalina</td><td>Anafilaxia: IM na face anterolateral da coxa; parada: IV; anestésico local 1:100.000</td><td>Primeira linha na anafilaxia (R8)</td></tr>
-<tr><td>Noradrenalina</td><td>Infusão IV contínua</td><td>Extravasamento: fentolamina local</td></tr>
-<tr><td>Dopamina / dobutamina</td><td>Infusão contínua, dose-dependente</td><td>Baixa D1 · média β1 · alta α1 / β1 seletiva</td></tr>
-<tr><td>Salbutamol</td><td>Aerossol 100 µg/dose: adultos 2 inalações a cada 8 h; crianças &gt;10 anos 1 inalação a cada 8 h</td><td>SABA; tremor, taquicardia</td></tr>
-<tr><td>Salmeterol</td><td>Adultos 100 µg a cada 12 h; crianças &gt;4 anos 50 µg a cada 12 h</td><td>LABA; nunca monoterapia na asma (R4)</td></tr>
-<tr><td>Mirabegron</td><td>Oral</td><td>Evitar na HAS não controlada; ↑ digoxina; inibe CYP2D6</td></tr>
-<tr><td>Oximetazolina</td><td>Spray nasal</td><td>Máximo 3 dias (rinite medicamentosa)</td></tr>
-<tr><td>Alfametildopa</td><td>Oral (absorção ~50%)</td><td>1ª escolha na HAS da gravidez</td></tr>
+<tr><td data-label="Fármaco">Adrenalina</td><td data-label="Dose / via de referência">Anafilaxia: IM na face anterolateral da coxa; parada: IV; anestésico local 1:100.000</td><td data-label="Observação">Primeira linha na anafilaxia (R8)</td></tr>
+<tr><td data-label="Fármaco">Noradrenalina</td><td data-label="Dose / via de referência">Infusão IV contínua</td><td data-label="Observação">Extravasamento: fentolamina local</td></tr>
+<tr><td data-label="Fármaco">Dopamina / dobutamina</td><td data-label="Dose / via de referência">Infusão contínua, dose-dependente</td><td data-label="Observação">Baixa D1 · média β1 · alta α1 / β1 seletiva</td></tr>
+<tr><td data-label="Fármaco">Salbutamol</td><td data-label="Dose / via de referência">Aerossol 100 µg/dose: adultos 2 inalações a cada 8 h; crianças &gt;10 anos 1 inalação a cada 8 h</td><td data-label="Observação">SABA; tremor, taquicardia</td></tr>
+<tr><td data-label="Fármaco">Salmeterol</td><td data-label="Dose / via de referência">Adultos 100 µg a cada 12 h; crianças &gt;4 anos 50 µg a cada 12 h</td><td data-label="Observação">LABA; nunca monoterapia na asma (R4)</td></tr>
+<tr><td data-label="Fármaco">Mirabegron</td><td data-label="Dose / via de referência">Oral</td><td data-label="Observação">Evitar na HAS não controlada; ↑ digoxina; inibe CYP2D6</td></tr>
+<tr><td data-label="Fármaco">Oximetazolina</td><td data-label="Dose / via de referência">Spray nasal</td><td data-label="Observação">Máximo 3 dias (rinite medicamentosa)</td></tr>
+<tr><td data-label="Fármaco">Alfametildopa</td><td data-label="Dose / via de referência">Oral (absorção ~50%)</td><td data-label="Observação">1ª escolha na HAS da gravidez</td></tr>
 </tbody></table></div>
 
 <div class="exp"><p>As doses dos adrenérgicos mostram a relação entre via e objetivo: a adrenalina IM na anafilaxia é dose única repetível, enquanto noradrenalina, dopamina e dobutamina são <b>infusões contínuas</b> em µg/kg/min, ajustadas pela resposta hemodinâmica, porque as catecolaminas duram minutos.</p></div>
@@ -2494,17 +2507,17 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Dose de referência</th><th>Observação</th></tr></thead>
 <tbody>
-<tr><td>AAS</td><td>Antiagregante: ataque 325 mg, manutenção 70–120 mg/dia (100 mg). Analgésico/antiinflamatório: 325–650 mg a cada 4–6 h</td><td>Reye; suspensão pré-operatória conforme risco</td></tr>
-<tr><td>Ibuprofeno</td><td>400 mg a cada 4–6 h</td><td>4 A</td></tr>
-<tr><td>Naproxeno</td><td>250 mg a cada 6 h ou 500 mg a cada 12 h</td><td>t½ ~14 h; líquido sinovial</td></tr>
-<tr><td>Ácido mefenâmico</td><td>500 mg a cada 8–12 h ou 250 mg a cada 6 h</td><td>Dismenorreia</td></tr>
-<tr><td>Indometacina</td><td>Canal arterial: 0,1–0,2 mg/kg a cada 12 h por 3 doses</td><td>Efeitos no SNC e hematológicos</td></tr>
-<tr><td>Cetorolaco</td><td>VO 5–30 mg/dia; IM 30–60 mg/dia; IV 15–30 mg/dia</td><td>Máximo 5 dias (rim, sangramento)</td></tr>
-<tr><td>Diclofenaco</td><td>50 mg a cada 8 h ou 75 mg a cada 12 h</td><td>Sem ação antiagregante; hepatotoxicidade; IAM</td></tr>
-<tr><td>Meloxicam</td><td>7,5–15 mg/dia</td><td>Preferência relativa COX-2</td></tr>
-<tr><td>Celecoxibe</td><td>100–200 mg/dia</td><td>Risco tromboembólico</td></tr>
-<tr><td>Metamizol (dipirona)</td><td>500–1.000 mg por dose</td><td>Agranulocitose (R11)</td></tr>
-<tr><td>Paracetamol</td><td>325 mg a 1 g a cada 6–8 h; máximo 4 g/dia</td><td>Somar todas as apresentações (R6)</td></tr>
+<tr><td data-label="Fármaco">AAS</td><td data-label="Dose de referência">Antiagregante: ataque 325 mg, manutenção 70–120 mg/dia (100 mg). Analgésico/antiinflamatório: 325–650 mg a cada 4–6 h</td><td data-label="Observação">Reye; suspensão pré-operatória conforme risco</td></tr>
+<tr><td data-label="Fármaco">Ibuprofeno</td><td data-label="Dose de referência">400 mg a cada 4–6 h</td><td data-label="Observação">4 A</td></tr>
+<tr><td data-label="Fármaco">Naproxeno</td><td data-label="Dose de referência">250 mg a cada 6 h ou 500 mg a cada 12 h</td><td data-label="Observação">t½ ~14 h; líquido sinovial</td></tr>
+<tr><td data-label="Fármaco">Ácido mefenâmico</td><td data-label="Dose de referência">500 mg a cada 8–12 h ou 250 mg a cada 6 h</td><td data-label="Observação">Dismenorreia</td></tr>
+<tr><td data-label="Fármaco">Indometacina</td><td data-label="Dose de referência">Canal arterial: 0,1–0,2 mg/kg a cada 12 h por 3 doses</td><td data-label="Observação">Efeitos no SNC e hematológicos</td></tr>
+<tr><td data-label="Fármaco">Cetorolaco</td><td data-label="Dose de referência">VO 5–30 mg/dia; IM 30–60 mg/dia; IV 15–30 mg/dia</td><td data-label="Observação">Máximo 5 dias (rim, sangramento)</td></tr>
+<tr><td data-label="Fármaco">Diclofenaco</td><td data-label="Dose de referência">50 mg a cada 8 h ou 75 mg a cada 12 h</td><td data-label="Observação">Sem ação antiagregante; hepatotoxicidade; IAM</td></tr>
+<tr><td data-label="Fármaco">Meloxicam</td><td data-label="Dose de referência">7,5–15 mg/dia</td><td data-label="Observação">Preferência relativa COX-2</td></tr>
+<tr><td data-label="Fármaco">Celecoxibe</td><td data-label="Dose de referência">100–200 mg/dia</td><td data-label="Observação">Risco tromboembólico</td></tr>
+<tr><td data-label="Fármaco">Metamizol (dipirona)</td><td data-label="Dose de referência">500–1.000 mg por dose</td><td data-label="Observação">Agranulocitose (R11)</td></tr>
+<tr><td data-label="Fármaco">Paracetamol</td><td data-label="Dose de referência">325 mg a 1 g a cada 6–8 h; máximo 4 g/dia</td><td data-label="Observação">Somar todas as apresentações (R6)</td></tr>
 </tbody></table></div>
 
 <div class="exp"><p>Nos AINEs e analgésicos, observe as <b>doses máximas diárias</b> e a duração máxima (cetorolaco, 5 dias): elas existem por causa do efeito teto e da toxicidade, não por perda de efeito. No paracetamol, a soma de todas as fontes (inclusive antigripais) não deve passar do limite diário.</p></div>
@@ -2512,12 +2525,12 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Apresentações citadas</th><th>Observação</th></tr></thead>
 <tbody>
-<tr><td>Codeína</td><td>Sol. oral 10 mg/5 mL</td><td>Antitussígeno; depressão respiratória nas primeiras 24–72 h</td></tr>
-<tr><td>Tramadol</td><td>Cáps. 50 e 100 mg; amp. 50 mg/mL e 100 mg/2 mL (VO, IM, IV)</td><td>Convulsões, serotoninérgico (R7)</td></tr>
-<tr><td>Hidrocodona</td><td>Comp. 5 a 60 mg, xarope</td><td>Prurido, sonolência, constipação</td></tr>
-<tr><td>Morfina</td><td>Amp. 10 e 20 mg/mL; comp. 10 mg (VO, IM, IV, peridural)</td><td>M6G acumula na insuficiência renal</td></tr>
-<tr><td>Fentanil</td><td>Adesivo 12–100 µg/h; sublingual 50–800 µg; amp. 50–100 µg/kg</td><td>80–100× morfina</td></tr>
-<tr><td>Oxicodona</td><td>Comp. 10 a 80 mg; cáps. 5–15 mg</td><td>Contraindicada em TCE</td></tr>
+<tr><td data-label="Fármaco">Codeína</td><td data-label="Apresentações citadas">Sol. oral 10 mg/5 mL</td><td data-label="Observação">Antitussígeno; depressão respiratória nas primeiras 24–72 h</td></tr>
+<tr><td data-label="Fármaco">Tramadol</td><td data-label="Apresentações citadas">Cáps. 50 e 100 mg; amp. 50 mg/mL e 100 mg/2 mL (VO, IM, IV)</td><td data-label="Observação">Convulsões, serotoninérgico (R7)</td></tr>
+<tr><td data-label="Fármaco">Hidrocodona</td><td data-label="Apresentações citadas">Comp. 5 a 60 mg, xarope</td><td data-label="Observação">Prurido, sonolência, constipação</td></tr>
+<tr><td data-label="Fármaco">Morfina</td><td data-label="Apresentações citadas">Amp. 10 e 20 mg/mL; comp. 10 mg (VO, IM, IV, peridural)</td><td data-label="Observação">M6G acumula na insuficiência renal</td></tr>
+<tr><td data-label="Fármaco">Fentanil</td><td data-label="Apresentações citadas">Adesivo 12–100 µg/h; sublingual 50–800 µg; amp. 50–100 µg/kg</td><td data-label="Observação">80–100× morfina</td></tr>
+<tr><td data-label="Fármaco">Oxicodona</td><td data-label="Apresentações citadas">Comp. 10 a 80 mg; cáps. 5–15 mg</td><td data-label="Observação">Contraindicada em TCE</td></tr>
 </tbody></table></div>
 <div class="exp"><p>Nos opioides, as doses equianalgésicas permitem trocar um fármaco por outro, mas a troca é feita com redução de dose, porque a tolerância cruzada é incompleta. Todas as doses desta seção são de referência didática: na prática, confira a bula e a diretriz vigente.</p></div>
 </article>
@@ -2530,15 +2543,15 @@ mark,.c1,.c2,.c3,.c4,.c5,.tree .root,.cmp .cd h4,.box,.ad,table.t thead th{-webk
 <div class="tw"><table class="t">
 <thead><tr><th>Tema</th><th>Formulação frequente (imprecisa)</th><th>Versão correta</th></tr></thead>
 <tbody>
-<tr><td>Janela da pralidoxima</td><td>«Só atua nas primeiras 24 a 48 h»</td><td>Depende do organofosforado e do envelhecimento; sem janela universal (R2)</td></tr>
-<tr><td>Via da adrenalina na anafilaxia</td><td>«SC/IM/IV»</td><td>IM como via inicial de referência (R8)</td></tr>
-<tr><td>Retirada de corticoides</td><td>«Jamais suspender bruscamente»</td><td>Vale para exposição prolongada; cursos &lt; 3–4 semanas nem sempre exigem desmame (R12)</td></tr>
-<tr><td>Fisostigmina</td><td>Antídoto de eleição na intoxicação atropínica</td><td>Uso selecionado; cautela com tricíclicos e alterações de condução (R3)</td></tr>
-<tr><td>NAC no paracetamol</td><td>«Máxima eficácia nas primeiras 8–16/24 h»</td><td>Iniciar cedo; benefício maior nas primeiras 8 h (R9)</td></tr>
-<tr><td>Diciclomina / hiosciamina</td><td>(slide) «aminas cuaternarias»</td><td>Aminas terciárias; butilbrometo de hioscina é quaternário (R1)</td></tr>
-<tr><td>Rofecoxibe</td><td>Listado entre os coxibs</td><td>Referência histórica; retirado do mercado (R10)</td></tr>
-<tr><td>Receptor α1</td><td>(resumo manuscrito, folha ②) «contração do músculo liso (vasodilatação)»</td><td>α1 contrai o músculo liso vascular: <b>vasoconstrição</b></td></tr>
-<tr><td>Anfetamina, cocaína e tiramina</td><td>(resumo manuscrito) inibição de MAO e COMT</td><td>Liberação (anfetamina, tiramina) × recaptação (cocaína)</td></tr>
+<tr><td data-label="Tema">Janela da pralidoxima</td><td data-label="Formulação frequente (imprecisa)">«Só atua nas primeiras 24 a 48 h»</td><td data-label="Versão correta">Depende do organofosforado e do envelhecimento; sem janela universal (R2)</td></tr>
+<tr><td data-label="Tema">Via da adrenalina na anafilaxia</td><td data-label="Formulação frequente (imprecisa)">«SC/IM/IV»</td><td data-label="Versão correta">IM como via inicial de referência (R8)</td></tr>
+<tr><td data-label="Tema">Retirada de corticoides</td><td data-label="Formulação frequente (imprecisa)">«Jamais suspender bruscamente»</td><td data-label="Versão correta">Vale para exposição prolongada; cursos &lt; 3–4 semanas nem sempre exigem desmame (R12)</td></tr>
+<tr><td data-label="Tema">Fisostigmina</td><td data-label="Formulação frequente (imprecisa)">Antídoto de eleição na intoxicação atropínica</td><td data-label="Versão correta">Uso selecionado; cautela com tricíclicos e alterações de condução (R3)</td></tr>
+<tr><td data-label="Tema">NAC no paracetamol</td><td data-label="Formulação frequente (imprecisa)">«Máxima eficácia nas primeiras 8–16/24 h»</td><td data-label="Versão correta">Iniciar cedo; benefício maior nas primeiras 8 h (R9)</td></tr>
+<tr><td data-label="Tema">Diciclomina / hiosciamina</td><td data-label="Formulação frequente (imprecisa)">(slide) «aminas cuaternarias»</td><td data-label="Versão correta">Aminas terciárias; butilbrometo de hioscina é quaternário (R1)</td></tr>
+<tr><td data-label="Tema">Rofecoxibe</td><td data-label="Formulação frequente (imprecisa)">Listado entre os coxibs</td><td data-label="Versão correta">Referência histórica; retirado do mercado (R10)</td></tr>
+<tr><td data-label="Tema">Receptor α1</td><td data-label="Formulação frequente (imprecisa)">(resumo manuscrito, folha ②) «contração do músculo liso (vasodilatação)»</td><td data-label="Versão correta">α1 contrai o músculo liso vascular: <b>vasoconstrição</b></td></tr>
+<tr><td data-label="Tema">Anfetamina, cocaína e tiramina</td><td data-label="Formulação frequente (imprecisa)">(resumo manuscrito) inibição de MAO e COMT</td><td data-label="Versão correta">Liberação (anfetamina, tiramina) × recaptação (cocaína)</td></tr>
 </tbody></table></div>
 
 

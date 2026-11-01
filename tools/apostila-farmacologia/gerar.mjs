@@ -78,6 +78,14 @@ function cartao(sec, { check = true, modTitulo = '' } = {}) {
   return { id, num, titulo, html: `<article class="cap" id="${id}"${num ? ` data-cap="${num}"` : ''}>${head}${inner}</article>\n` };
 }
 
+/* tabelas da apostila viram cartões no celular: cada célula recebe o nome da coluna (data-label) */
+const rotulos = (h) => h.replace(/<table class="t">([\s\S]*?)<\/table>/g, (t, corpo) => {
+  const cab = [...(corpo.match(/<thead>[\s\S]*?<\/thead>/) || [''])[0].matchAll(/<th>([\s\S]*?)<\/th>/g)].map((m) => m[1].replace(/<[^>]+>/g, '').trim());
+  return '<table class="t">' + corpo.replace(/<tbody>([\s\S]*?)<\/tbody>/, (b, linhas) => '<tbody>' + linhas.replace(/<tr>([\s\S]*?)<\/tr>/g, (r, celulas) => {
+    let i = 0;
+    return '<tr>' + celulas.replace(/<td(\s[^>]*)?>/g, (m, attrs) => `<td${attrs || ''} data-label="${(cab[i++] || '').replace(/"/g, '&quot;')}">`) + '</tr>';
+  }) + '</tbody>') + '</table>';
+});
 let apostila = '', exerc = '', flash = '', toc = '', totalCaps = 0;
 for (const m of MODULOS) {
   const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => cartao(completar(x[0]), { modTitulo: m.titulo }));
@@ -119,10 +127,10 @@ ${src('estilo.css')}
 <div class="howto glass">${LEG}</div>
 <div class="box" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap"><div><span class="lb">Pratique no Treino da matéria</span><p>Exercícios, flashcards e mapas mentais desta apostila ficam no <b>Treino</b> de Farmacología I.</p></div><a class="btn" href="/?sxAbrir=farmacologia&amp;sxAba=training" style="text-decoration:none">Praticar no Treino →</a></div>
 <nav class="toc" aria-label="Capítulos">${toc}</nav>
-${apostila}
+${rotulos(apostila)}
 </div>
 <div data-pane="consulta" hidden>
-${consulta}
+${rotulos(consulta)}
 </div>
 </main>
 <footer class="pe">${LOGO}<span>Seu estudo. Seu tempo. Seu ritmo.<br><b>FELPS ©</b> 2026 · Felipe Guimarães de Souza · Todos os direitos reservados</span></footer>
