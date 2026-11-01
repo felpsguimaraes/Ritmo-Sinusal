@@ -39,7 +39,7 @@ Para todas as turmas do 5º período (A a G), na matéria Farmacología I. A apo
 - **Treino → Mapas mentais**: as matérias com mapas guiados mostram os mapas para completar (`/mapas/?s=<matéria>`); em Farmacología, 35 da matéria + 33 da apostila (`mapas/dados/farmacologia-apostila.js`).
 - Link direto: `/?sxAbrir=farmacologia&sxAba=training` abre o Treino da matéria depois da entrada.
 
-A fonte fica em `tools/apostila-farmacologia/` (capítulos em `src/capitulos/`, dados, mapas guiados e a marca). Para atualizar, edite a fonte e rode `node tools/apostila-farmacologia/gerar.mjs` e depois `node tools/testar-mapas.js`; não edite os arquivos gerados à mão. Os capítulos 09 a 18 incorporam os 7 resumos manuscritos do autor (anticolinérgicos e adrenérgicos).
+A fonte fica em `tools/apostila-farmacologia/` (capítulos em `src/capitulos/`, dados, mapas guiados e a marca). Para atualizar, edite a fonte e rode `node tools/apostila-farmacologia/gerar.mjs` e depois `node tools/testar-mapas.js`; não edite os arquivos gerados à mão. Os capítulos 09 a 18 incorporam os 7 resumos manuscritos do autor (anticolinérgicos e adrenérgicos). Os textos explicativos de cada seção ficam em `src/explicacoes.js` (âncora → texto) e entram logo após o esquema correspondente.
 
 PDFs: `node tools/apostila-farmacologia/gerar-pdf.mjs` gera `apostila-farmacologia-p2.pdf` (sem exercícios, com convite ao Treino e QR) e `node tools/apostila-farmacologia/gerar-gabarito.mjs` gera `exercicios-respondidos-p2.pdf` (questões, respostas abertas, flashcards e mapas preenchidos). Os botões «PDF» e «Gabarito PDF» aparecem no cabeçalho da apostila embutida.
 

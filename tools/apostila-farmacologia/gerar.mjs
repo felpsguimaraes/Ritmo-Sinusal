@@ -20,7 +20,20 @@ const MAPAS_GUIADOS = require('./mapas-guiados.js');
 
 const ctx = { window: {} }; vm.createContext(ctx);
 ['mapas.js', 'questoes.js', 'cartoes.js', 'explicacoes.js'].forEach((f) => vm.runInContext(src(f), ctx));
-const EXP = ctx.window.SINUS_EXPLICACOES || {};
+const EXP = ctx.window.SINUS_EXPLICACOES || {}, EXP_AP = ctx.window.SINUS_EXPLICACOES_APENDICE || {};
+let NEXP = 0;
+/* insere os textos explicativos antes de cada âncora (ou no fim do capítulo) */
+function explicar(sec, tabela) {
+  const id = sec.match(/id="([^"]+)"/)[1];
+  for (const [ancora, html] of tabela[id] || []) {
+    const bloco = `<div class="exp">${html}</div>\n`;
+    if (ancora === 'FIM') { sec = sec.replace(/<\/section>\s*$/, bloco + '</section>'); NEXP++; continue; }
+    const i = sec.indexOf(ancora);
+    if (i < 0) throw new Error(`explicação ${id}: âncora não encontrada: ${ancora.slice(0, 50)}`);
+    sec = sec.slice(0, i) + bloco + sec.slice(i); NEXP++;
+  }
+  return sec;
+}
 const MAPAS = ctx.window.SINUS_MAPAS, Q = ctx.window.SINUS_QUESTOES, C = ctx.window.SINUS_CARTOES;
 const strip = (h) => h.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
@@ -53,12 +66,12 @@ function cartao(sec, { check = true, modTitulo = '' } = {}) {
 
 let apostila = '', exerc = '', flash = '', toc = '', totalCaps = 0;
 for (const m of MODULOS) {
-  const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => { const id = x[0].match(/id="(cap\d\d)"/)[1]; const sec = EXP[id] ? x[0].replace(/<\/section>\s*$/, `<div class="box exp"><span class="lb">Explicação completa</span>${EXP[id]}</div>\n</section>`) : x[0]; return cartao(sec, { modTitulo: m.titulo }); });
+  const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => cartao(explicar(x[0], EXP), { modTitulo: m.titulo }));
   totalCaps += caps.length;
   toc += caps.map((c) => `<a href="#${c.id}" data-toc="${c.num}">${c.num}. ${c.titulo}</a>`).join('');
   apostila += `<section class="grupo" id="mod${m.n}"><div class="grupo-h"><h2>${m.titulo}</h2><span class="mini">${caps.length} capítulos · ${m.aula}</span></div>${caps.map((c) => c.html).join('')}</section>\n`;
 }
-const consulta = [...src('apendice.html').matchAll(/<section class="pg cap" id="[^"]+">[\s\S]*?<\/section>/g)].map((x) => cartao(x[0], { check: false }).html).join('');
+const consulta = [...src('apendice.html').matchAll(/<section class="pg cap" id="[^"]+">[\s\S]*?<\/section>/g)].map((x) => cartao(explicar(x[0], EXP_AP), { check: false }).html).join('');
 
 const html = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -155,4 +168,4 @@ const a = cs.indexOf(INI), b = cs.indexOf(FIM);
 cs = a >= 0 ? cs.slice(0, a) + bloco + cs.slice(b + FIM.length + 1) : cs.replace(/\s*$/, '\n') + bloco;
 writeFileSync(cfile, cs);
 
-console.log(`apostila: ${totalCaps} capítulos · ${(html.length / 1024).toFixed(0)} KB | mapas guiados: ${MAPAS_GUIADOS.length} | exercícios: ${blocos.reduce((n, b) => n + b.questoes.length, 0)} | flashcards: ${cards.length} (${cards.filter((c) => c.g === 'Respostas abertas').length} abertas)`);
+console.log(`explicações: ${NEXP} blocos | apostila: ${totalCaps} capítulos · ${(html.length / 1024).toFixed(0)} KB | mapas guiados: ${MAPAS_GUIADOS.length} | exercícios: ${blocos.reduce((n, b) => n + b.questoes.length, 0)} | flashcards: ${cards.length} (${cards.filter((c) => c.g === 'Respostas abertas').length} abertas)`);

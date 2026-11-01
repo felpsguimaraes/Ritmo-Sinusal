@@ -85,9 +85,8 @@ table.t tr{break-inside:avoid}
 .box p{font-size:16px;margin:.2em 0}
 .box.warn{background:var(--warn-soft);border-left:4px solid var(--warn)}
 .box.warn .lb{color:var(--warn)}
-.box.exp{background:#fff;border:1px solid #d6e4dc;border-left:4px solid var(--acc,#176e5b);padding:15px 18px}
-.box.exp .lb{color:var(--acc,#176e5b);text-transform:uppercase;font-size:12px;letter-spacing:.08em}
-.box.exp p{font-size:15.5px;line-height:1.65;margin:.45em 0;text-align:justify;hyphens:auto}
+.exp{margin:12px 0 14px;padding:2px 0 2px 14px;border-left:3px solid #9cc9b8}
+.exp p{font-size:15.5px;line-height:1.68;margin:.4em 0;color:#24332c;text-align:justify;hyphens:auto}
 .box.es{background:var(--info-soft);border-left:4px solid var(--info)}
 .box.es .lb{color:var(--info)}
 

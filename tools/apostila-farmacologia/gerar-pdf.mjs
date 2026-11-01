@@ -81,7 +81,7 @@ body::before{display:none!important}
 .cap p{font-size:13.5px}
 .flow,.tree,.cmp,.box,table.t tr,.ad,.st,.br,.cd{break-inside:avoid}
 .tw{break-inside:auto;overflow:visible}
-.box.exp{break-inside:auto!important}.box.exp p{font-size:13px;line-height:1.55;orphans:3;widows:3}
+.exp{break-inside:auto}.exp p{font-size:13px;line-height:1.55;orphans:3;widows:3}
 h3.sub,.grupo-h{break-after:avoid}
 section.grupo{break-before:page;margin-top:0}
 .dt{display:block!important}.has{padding-right:12px!important}.has:after{display:none!important}
