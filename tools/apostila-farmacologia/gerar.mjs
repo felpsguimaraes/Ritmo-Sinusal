@@ -29,11 +29,10 @@ const lerBlocos = (arq, attr) => Object.fromEntries(src(arq).split(`<div ${attr}
   return [id, corpo.slice(0, -6).trim()];
 }));
 const AULA = lerBlocos('texto-aula.html', 'data-aula'), FOLHA = lerBlocos('folhas-manuscritas.html', 'data-folha');
-const ATLAS = src('folhas-manuscritas.html').match(/<section class="pg cap" id="atlas">[\s\S]*?<\/section>/)[0]
-  .replace(/(<div class="meta">[\s\S]*?<\/div>)/, '$1<div class="vdx">').replace(/<\/section>$/, '</div></section>');
 function completar(sec) {
   const id = sec.match(/id="(cap\d\d)"/)[1];
-  if (AULA[id]) sec = sec.replace(/(<div class="meta">[\s\S]*?<\/div>)/, `$1\n<div class="aula"><div class="aula-h">Texto da aula</div>\n${AULA[id]}\n</div>\n<div class="aula-h esq">Em esquema · explicação · destaques</div>\n`);
+  if (EXP[id]) NEXP++;
+  if (AULA[id]) sec = sec.replace(/(<div class="meta">[\s\S]*?<\/div>)/, `$1\n<div class="aula"><div class="aula-h">Texto da aula</div>\n${AULA[id]}\n${EXP[id] ? `<div class="exp"><div class="aula-h">Complemento · além da aula</div>${EXP[id]}</div>` : ''}</div>\n<div class="aula-h esq">Em esquema · revisão visual</div>\n`);
   if (FOLHA[id]) sec = sec.replace(/<\/section>\s*$/, `<div class="vdx folha">${FOLHA[id]}</div>\n</section>`);
   return sec;
 }
@@ -81,13 +80,12 @@ function cartao(sec, { check = true, modTitulo = '' } = {}) {
 
 let apostila = '', exerc = '', flash = '', toc = '', totalCaps = 0;
 for (const m of MODULOS) {
-  const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => cartao(completar(explicar(x[0], EXP)), { modTitulo: m.titulo }));
+  const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => cartao(completar(x[0]), { modTitulo: m.titulo }));
   totalCaps += caps.length;
   toc += caps.map((c) => `<a href="#${c.id}" data-toc="${c.num}">${c.num}. ${c.titulo}</a>`).join('');
   apostila += `<section class="grupo" id="mod${m.n}"><div class="grupo-h"><h2>${m.titulo}</h2><span class="mini">${caps.length} capítulos · ${m.aula}</span></div>${caps.map((c) => c.html).join('')}</section>\n`;
 }
 const consulta = [...src('apendice.html').matchAll(/<section class="pg cap" id="[^"]+">[\s\S]*?<\/section>/g)].map((x) => cartao(explicar(x[0], EXP_AP), { check: false }).html).join('')
-const consultaAtlas = cartao(ATLAS, { check: false }).html;
 
 const html = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -124,7 +122,7 @@ ${src('estilo.css')}
 ${apostila}
 </div>
 <div data-pane="consulta" hidden>
-${consultaAtlas}${consulta}
+${consulta}
 </div>
 </main>
 <footer class="pe">${LOGO}<span>Seu estudo. Seu tempo. Seu ritmo.<br><b>FELPS ©</b> 2026 · Felipe Guimarães de Souza · Todos os direitos reservados</span></footer>
