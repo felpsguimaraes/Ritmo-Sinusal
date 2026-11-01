@@ -621,6 +621,10 @@
   var LW = 250, LH = 92, LG = 10, BG = 28, BW = 150, BH = 58, CW = 184, CH = 74;
   var X = { leafL: 10, brL: 320, cen: 578, brR: 870, leafR: 1080 }, CWID = 1340;
   var MOBILE_W = 720;
+  /* lista (layout de celular) sempre que o mapa não couber na tela nem reduzido ao mínimo legível (62%):
+     celular, celular deitado, iPad em pé e janelas estreitas; o mapa radial fica para telas largas */
+  var MIN_ESCALA = 0.62;
+  function usarLista() { return window.innerWidth < Math.max(MOBILE_W, Math.ceil(CWID * MIN_ESCALA) + 70); }
   function buildMapList(mod, board) {
     var box = el('div', { class: 'mlist' });
     box.appendChild(el('div', { class: 'mcenter' }, '<b>' + esc(mod.centro) + '</b>' + (mod.sub ? '<span>' + esc(mod.sub) + '</span>' : '')));
@@ -644,7 +648,7 @@
     };
   }
   function buildMap(mod, board) {
-    if (window.innerWidth < MOBILE_W) { mod._mobile = true; return buildMapList(mod, board); }
+    if (usarLista()) { mod._mobile = true; return buildMapList(mod, board); }
     mod._mobile = false;
     var tree = mod._tree, sums = tree.map(function (b) { return b.leaves.length; });
     var total = sums.reduce(function (a, b) { return a + b; }, 0);
@@ -688,7 +692,7 @@
     wrap.appendChild(stage); board.appendChild(wrap);
     fitFns.push(function () {
       var avail = board.clientWidth - 2;
-      var s = Math.max(0.62, Math.min(1, avail / CWID));
+      var s = Math.max(MIN_ESCALA, Math.min(1, avail / CWID));
       stage.style.transform = 'scale(' + s + ')';
       wrap.style.width = CWID * s + 'px'; wrap.style.height = H * s + 'px';
       /* ramo com nome longo (ex.: "Inflamación crónica granulomatosa"): a caixa cresce para os dois lados e continua centrada na ligação */
@@ -1441,7 +1445,7 @@
 
   function fitAll() { fitFns.forEach(function (f) { f(); }); if (cur && cur._counts) cur._counts(); notifyHeight(); }
   window.addEventListener('resize', function () {
-    if (cur && cur.tipo === 'mapa' && (window.innerWidth < MOBILE_W) !== !!cur._mobile) { var y = window.scrollY; openMod(cur); window.scrollTo(0, y); return; }
+    if (cur && cur.tipo === 'mapa' && usarLista() !== !!cur._mobile) { var y = window.scrollY; openMod(cur); window.scrollTo(0, y); return; }
     fitAll();
   });
   /* ---------- avisa o painel da altura (quando embutido) ---------- */

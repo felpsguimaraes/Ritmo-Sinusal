@@ -293,3 +293,8 @@ html[data-theme="dark"] .sxExplica strong,html[data-theme="dark"] .sxComent stro
 .sxPorque h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c0623a;margin:0 0 4px}
 .sxPorque p{font-size:13px;line-height:1.55;margin:0 0 .5em}.sxPorque p:last-child{margin:0}
 html[data-theme="dark"] .sxPorque{background:#2a1c16}
+/* matéria: a coluna nunca passa da tela (celular, iPad, computador) — conteúdo largo rola dentro do próprio bloco */
+#subjectContent{grid-template-columns:minmax(0,1fr)}
+#subjectContent>*,.sxAcademicOrdered,.sxAcademicOrdered>*{min-width:0;max-width:100%}
+.sxFlashStudy{min-width:0;width:100%}
+.sxFlashStudy .sxGrupos{flex-wrap:wrap;overflow:visible}
