@@ -235,6 +235,13 @@ footer.pe svg{height:28px;width:auto}
 }
 @page{size:A4;margin:16mm 14mm}
 
+/* ---------- modo embutido no app SINUS (?embed=1) ---------- */
+body.embed{padding:0 12px 24px}
+body.embed .brandbar,body.embed footer.pe{display:none}
+body.embed header.top{padding-top:8px}
+body.embed header.top h1{font-size:clamp(24px,4vw,34px)}
+body.embed .lede{font-size:15.5px}
+
 </style>
 </head>
 <body>
@@ -1416,6 +1423,11 @@ document.querySelectorAll('.quiz').forEach(drawQuiz);
 document.querySelectorAll('.deck').forEach(drawDeck);
 prog();
 if(location.hash)goTo(location.hash.slice(1));
+/* embutida no app: sem cabeçalho próprio; «Praticar no Treino» troca a aba do app sem recarregar */
+var EMB=/[?&]embed=1/.test(location.search)&&window.parent!==window;
+if(EMB){document.body.classList.add('embed');
+ document.addEventListener('click',function(e){var a=e.target.closest('a[href^="/?sxAbrir"]');if(!a)return;e.preventDefault();try{window.parent.postMessage({sinus:'abrirTreino'},location.origin)}catch(x){}},true);
+ document.querySelectorAll('a[href="/"]').forEach(function(a){a.target='_top'});}
 })();
 
 </script>

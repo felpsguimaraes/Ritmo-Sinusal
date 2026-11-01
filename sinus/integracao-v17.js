@@ -525,7 +525,7 @@
       renderResourceCategory(v11List('slides').length ? 'slides' : 'pratica');
     } else if (t === 'mapas' || t === 'apostila' || t === 'cartoes' || t === 'fotos' || t === 'macro') {
       v11SubjectHeader();
-      if (t === 'apostila') { if(v11List('apostila').length) { renderResourceCategory('apostila'); garantirApostila(); } else renderApostilaMateria(); }
+      if (t === 'apostila') { var sA = subjectData(); if (sA && APOSTILAS[sA.slug] && APOSTILAS[sA.slug].titulo) { renderResourceCategory('apostila'); garantirApostila(); } else if(v11List('apostila').length) { renderResourceCategory('apostila'); garantirApostila(); } else renderApostilaMateria(); }
       else if (t === 'cartoes') renderCartoes();
       else if (t === 'mapas') renderMapasMateria();
       else renderResourceCategory(t);
@@ -575,22 +575,33 @@
       extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
   };
   /* cartão «Apostila SINUS» no topo da aba Resumo / Apostila (mesmo quando a matéria tem resumos do Drive) */
+  /* visão geral: cartão que leva à aba Resumo / Apostila (dentro do app) */
   function apostilaDestaque(A) {
-    return '<div class="glass" data-sx-apostila style="padding:18px 20px;border-radius:18px;margin:0 0 14px;border:1.5px solid rgba(22,110,91,.28)">' +
+    return '<div class="glass" data-sx-apostila="cartao" style="padding:18px 20px;border-radius:18px;margin:0 0 14px;border:1.5px solid rgba(22,110,91,.28)">' +
       '<span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span>' +
       '<h3 style="margin:4px 0 6px">Ler a apostila completa</h3>' +
-      '<p class="soft" style="font-size:12.5px;line-height:1.6;margin:0 0 10px">Teoria em português com os termos em espanhol, esquemas interativos, mapas mentais para completar, exercícios e flashcards. Marque «Já estudei» e acompanhe seu progresso.</p>' +
-      '<div class="heroActions"><a class="btn primary sm" href="' + A.ler + '">Abrir a apostila</a>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '">Versão em PDF</a>' : '') +
-      '<button type="button" class="btn sm" onclick="setTab(\'cartoes\')">Flashcards</button><button type="button" class="btn sm" onclick="setTab(\'mapas\')">Mapas guiados</button></div></div>';
+      '<p class="soft" style="font-size:12.5px;line-height:1.6;margin:0 0 10px">Teoria em português com os termos em espanhol, esquemas interativos e destaques do que cai na prova. Marque «Já estudei» e acompanhe seu progresso.</p>' +
+      '<div class="heroActions"><button type="button" class="btn primary sm" onclick="setTab(\'apostila\')">Abrir a apostila</button>' +
+      '<button type="button" class="btn sm" onclick="UI.trainingPane=\'exercises\';setTab(\'training\')">Exercícios</button><button type="button" class="btn sm" onclick="setTab(\'cartoes\')">Flashcards</button><button type="button" class="btn sm" onclick="setTab(\'mapas\')">Mapas mentais</button></div></div>';
+  }
+  /* aba Resumo / Apostila: a apostila embutida no próprio app */
+  function apostilaEmbutida(A) {
+    var src = A.ler + (A.ler.indexOf('?') >= 0 ? '&' : '?') + 'embed=1';
+    return '<section class="glass" data-sx-apostila="embutida" style="padding:0;border-radius:18px;margin:0 0 14px;overflow:hidden;border:1.5px solid rgba(22,110,91,.28)">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid rgba(17,40,30,.08)">' +
+      '<div><span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span></div>' +
+      '<div class="heroActions" style="margin:0"><button type="button" class="btn sm" data-sx-ir="training">Exercícios</button><button type="button" class="btn sm" data-sx-ir="cartoes">Flashcards</button><button type="button" class="btn sm" data-sx-ir="mapas">Mapas mentais</button><a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
+      '<iframe src="' + src + '" title="Apostila ' + H(A.titulo || '') + '" loading="lazy" style="display:block;width:100%;height:calc(100vh - 140px);min-height:560px;border:0;background:#f1f8f4"></iframe></section>';
   }
   function garantirApostila() {
     var box = $id('subjectContent'), s = subjectData(), A = s && APOSTILAS[s.slug];
-    /* a visão geral de teoria aparece com «Resumo / Apostila» destacado: a apostila entra nas duas */
     if (!box || !A || !(UI.tab === 'apostila' || (UI.tab === 'overview' && UI.mode === 'theory'))) return;
-    var gal = box.querySelector('.sxMG'), card = box.querySelector('[data-sx-apostila]');
-    var bloco = card ? (card.closest('.sxApost') || card) : null;
+    var tipo = 'embutida'; /* visão geral de teoria e aba Resumo / Apostila: a apostila aparece embutida no app */
+    var gal = box.querySelector('.sxMG'), atual = box.querySelector('[data-sx-apostila]');
+    if (atual && atual.getAttribute('data-sx-apostila') !== tipo) { (atual.closest('.sxApost') || atual).remove(); atual = null; }
+    var bloco = atual ? (atual.closest('.sxApost') || atual) : null;
     if (!bloco) {
-      var tmp = D.createElement('div'); tmp.innerHTML = apostilaDestaque(A); bloco = tmp.firstChild;
+      var tmp = D.createElement('div'); tmp.innerHTML = tipo === 'embutida' ? apostilaEmbutida(A) : apostilaDestaque(A); bloco = tmp.firstChild;
       var ref = box.querySelector('.sxStudyExtras');
       if (gal) gal.parentNode.insertBefore(bloco, gal); else if (ref) ref.parentNode.insertBefore(bloco, ref.nextSibling); else box.insertBefore(bloco, box.firstChild);
       return;
@@ -598,6 +609,18 @@
     /* a galeria «Resumos e apostilas» é montada depois: a apostila SINUS fica sempre acima dela */
     if (gal && (gal.compareDocumentPosition(bloco) & 4)) gal.parentNode.insertBefore(bloco, gal);
   }
+  function irPara(aba) {
+    if (aba === 'training') UI.trainingPane = 'exercises';
+    if (W.setTab) W.setTab(aba);
+    var alvo = aba === 'cartoes' || aba === 'mapas' ? 'training' : aba;
+    if (UI.tab !== alvo) { if (aba === 'cartoes') UI.trainingPane = 'flashcards'; if (aba === 'mapas') UI.trainingPane = 'mindmaps'; UI.tab = alvo; W.renderSubject(); }
+    W.scrollTo(0, 0);
+  }
+  D.addEventListener('click', function (e) { var b = e.target.closest('[data-sx-ir]'); if (b) { e.preventDefault(); irPara(b.getAttribute('data-sx-ir')); } });
+  W.addEventListener('message', function (e) {
+    if (e.origin !== location.origin || !e.data || e.data.sinus !== 'abrirTreino') return;
+    irPara('training');
+  });
   W.sxGarantirApostila = garantirApostila;
   (function vigiar() {
     var alvo = null, mo = null;

@@ -123,4 +123,9 @@ document.querySelectorAll('.quiz').forEach(drawQuiz);
 document.querySelectorAll('.deck').forEach(drawDeck);
 prog();
 if(location.hash)goTo(location.hash.slice(1));
+/* embutida no app: sem cabeçalho próprio; «Praticar no Treino» troca a aba do app sem recarregar */
+var EMB=/[?&]embed=1/.test(location.search)&&window.parent!==window;
+if(EMB){document.body.classList.add('embed');
+ document.addEventListener('click',function(e){var a=e.target.closest('a[href^="/?sxAbrir"]');if(!a)return;e.preventDefault();try{window.parent.postMessage({sinus:'abrirTreino'},location.origin)}catch(x){}},true);
+ document.querySelectorAll('a[href="/"]').forEach(function(a){a.target='_top'});}
 })();
