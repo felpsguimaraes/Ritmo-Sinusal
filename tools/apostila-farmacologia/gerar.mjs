@@ -19,7 +19,8 @@ const require = createRequire(import.meta.url);
 const MAPAS_GUIADOS = require('./mapas-guiados.js');
 
 const ctx = { window: {} }; vm.createContext(ctx);
-['mapas.js', 'questoes.js', 'cartoes.js'].forEach((f) => vm.runInContext(src(f), ctx));
+['mapas.js', 'questoes.js', 'cartoes.js', 'explicacoes.js'].forEach((f) => vm.runInContext(src(f), ctx));
+const EXP = ctx.window.SINUS_EXPLICACOES || {};
 const MAPAS = ctx.window.SINUS_MAPAS, Q = ctx.window.SINUS_QUESTOES, C = ctx.window.SINUS_CARTOES;
 const strip = (h) => h.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 
@@ -52,7 +53,7 @@ function cartao(sec, { check = true, modTitulo = '' } = {}) {
 
 let apostila = '', exerc = '', flash = '', toc = '', totalCaps = 0;
 for (const m of MODULOS) {
-  const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => cartao(x[0], { modTitulo: m.titulo }));
+  const caps = [...src(join('capitulos', m.file)).matchAll(/<section class="pg cap" id="cap\d\d">[\s\S]*?<\/section>/g)].map((x) => { const id = x[0].match(/id="(cap\d\d)"/)[1]; const sec = EXP[id] ? x[0].replace(/<\/section>\s*$/, `<div class="box exp"><span class="lb">Explicação completa</span>${EXP[id]}</div>\n</section>`) : x[0]; return cartao(sec, { modTitulo: m.titulo }); });
   totalCaps += caps.length;
   toc += caps.map((c) => `<a href="#${c.id}" data-toc="${c.num}">${c.num}. ${c.titulo}</a>`).join('');
   apostila += `<section class="grupo" id="mod${m.n}"><div class="grupo-h"><h2>${m.titulo}</h2><span class="mini">${caps.length} capítulos · ${m.aula}</span></div>${caps.map((c) => c.html).join('')}</section>\n`;
