@@ -14,3 +14,5 @@
 .review-block{margin-bottom:26px}.review-block h3{font-size:15px;margin:0 0 10px}
 @media(max-width:780px){.filter.filter-toggle{min-width:calc(50% - 9px)}.filter-toggle .btn{width:100%}.adv-filters .filter{min-width:calc(50% - 9px)}.action-row .main-action{max-width:none}.kbd-hint{display:none}.source-row .btn.icon{font-size:16px;padding:0 10px}}
 @media(max-width:380px){.filter.filter-toggle{min-width:100%}}
+/* enunciado justificado (linhas do PDF já unidas em reflow()) */
+.question-prompt{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
