@@ -16,3 +16,40 @@
 @media(max-width:380px){.filter.filter-toggle{min-width:100%}}
 /* enunciado justificado (linhas do PDF já unidas em reflow()) */
 .question-prompt{text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+/* v3.2 · design de leitura */
+:root{--ink:#16251f;--read:#1f2d28}
+.question-card{padding:30px 36px 26px;border-radius:18px}
+.question-head{align-items:center}.qh-left,.qh-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.q-num{font-size:20px;font-weight:780;letter-spacing:-.4px;color:var(--ink)}
+.q-pos{font-size:12px;font-weight:650;color:var(--muted);font-variant-numeric:tabular-nums}
+.tag.ok{background:#e6f4ec;color:#11684b}
+.tag.warn{background:transparent;color:#9a6a24;padding-left:0;padding-right:0;font-weight:650}
+.tag.warn:before{content:'';width:7px;height:7px;border-radius:50%;background:#d9a344;margin-right:6px}
+.metadata{margin-top:6px;font-size:12px}
+.progress{height:3px;margin:16px 0 4px;background:#eef3f0}
+.question-prompt{white-space:normal;font-size:17px;line-height:1.72;font-weight:400;color:var(--read);margin:22px 0 24px;max-width:78ch;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.question-prompt p{margin:0 0 .8em}
+.question-prompt p.line{margin:0;text-align:left}
+.question-prompt p.line+p:not(.line){margin-top:.8em}
+.question-prompt p.ask{margin:1.1em 0 0;padding-top:1em;border-top:1px solid var(--line);font-weight:650;color:var(--ink);text-align:left}
+.options{gap:10px;max-width:78ch}
+.option{align-items:center;gap:14px;padding:14px 16px;border-radius:14px;border-color:#e1e9e4;font-size:15.5px;line-height:1.5;white-space:normal;transition:border-color .15s,background .15s}
+.option:hover{border-color:#b9d6c6;background:#fbfdfc}
+.letter{width:32px;height:32px;flex:0 0 32px;border-radius:50%;background:#fff;border:1.5px solid #cfdcd4;color:#4f6a5f;font-size:13px}
+.option.selected{background:#f0f8f3;border-color:var(--green);box-shadow:none}
+.option.selected .letter{border-color:var(--green)}
+.source-row{margin-top:20px;padding-top:14px}
+.action-row{margin-top:16px}
+.assistant-panel{top:16px}
+.panel-body{min-height:0;padding:20px 22px}
+.side-hint{margin:0 0 10px;font-size:13px!important;color:#3f5a4f!important;line-height:1.6!important}.side-hint.muted{color:var(--muted)!important;font-size:12px!important}
+/* dentro do SINUS: sem cabeçalhos duplicados, fundo do app */
+html.embedded body{background:transparent}
+html.embedded header,html.embedded .heading .eyebrow,html.embedded .heading h1,html.embedded .footer{display:none}
+html.embedded .shell{padding:4px 2px 70px}
+html.embedded .heading{margin:0 0 10px}html.embedded .statline{margin:0}
+html.embedded .filters{background:#fff}
+@media(max-width:780px){.question-card{padding:20px 18px}.q-num{font-size:18px}.question-prompt{font-size:16px;line-height:1.68}.option{font-size:15px;padding:12px 13px}.letter{width:28px;height:28px;flex-basis:28px}.question-head{gap:6px}}
+.question-prompt,.options{max-width:none}
+.question-prompt{hyphenate-limit-chars:6 3 3}
+.btn.icon svg{display:block}
