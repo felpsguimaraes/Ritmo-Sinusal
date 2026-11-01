@@ -87,6 +87,50 @@ table.t tr{break-inside:avoid}
 .box.warn .lb{color:var(--warn)}
 .exp{margin:12px 0 14px;padding:2px 0 2px 14px;border-left:3px solid #9cc9b8}
 .exp p{font-size:15.5px;line-height:1.68;margin:.4em 0;color:#24332c;text-align:justify;hyphens:auto}
+/* ---------- texto da aula (edição completa) ---------- */
+.aula{margin:6px 0 16px;padding:14px 18px 8px;border-radius:18px;background:#fbfdfc;border:1px solid #e3ece7}
+.aula-h{font:800 11.5px/1.2 var(--f);letter-spacing:.09em;text-transform:uppercase;color:var(--acc);margin:0 0 8px}
+.aula-h.esq{margin:18px 0 6px;padding-top:12px;border-top:2px dashed #d6e4dc}
+.aula p{font-size:15.5px;line-height:1.65}
+.aula .lead{font-size:16.5px}
+/* ---------- esquemas das 7 folhas manuscritas ---------- */
+.vdx{--g9:#1c3a2f;--g7:#2a7a52;--mint:#e8f3ec;--mint2:#f3f9f5;--line:#d6e4dc;--mut:#6b7770;--blue:#3d6f8c;--purp:#6d5a9a;--brown:#9a6f3a;--bad:#a6442f}
+.vdx.folha{margin-top:18px}
+.vd-subblock{border-top:2px dashed var(--line);padding-top:14px}
+.vd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:14px 0}
+.vd-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;break-inside:avoid}
+.vd-card.g{border-top:4px solid var(--g7);background:linear-gradient(180deg,var(--mint2) 0%,#fff 45%)}
+.vd-card.b{border-top:4px solid var(--blue);background:linear-gradient(180deg,#f1f6f9 0%,#fff 45%)}
+.vd-card.p{border-top:4px solid var(--purp);background:linear-gradient(180deg,#f5f3fa 0%,#fff 45%)}
+.vd-card.w{border-top:4px solid var(--brown);background:linear-gradient(180deg,#fbf7f0 0%,#fff 45%)}
+.vd-card.r{border-top:4px solid var(--bad);background:linear-gradient(180deg,#fbeeea 0%,#fff 45%)}
+.vd-badge{display:inline-flex;font:800 10.5px/1 var(--f);letter-spacing:.07em;text-transform:uppercase;padding:4px 9px;border-radius:999px;margin-bottom:8px}
+.vd-badge.g{background:var(--mint);color:var(--g9)}.vd-badge.b{background:#dcebf2;color:#234b61}.vd-badge.p{background:#e6e0f2;color:#46366b}.vd-badge.w{background:#f5e8d3;color:#6e4b1f}.vd-badge.r{background:#f9d8d0;color:#7a1f12}
+.vd-title{font:800 15px/1.25 var(--f);color:var(--g9);margin-bottom:6px}
+.vd-sub{font:600 12.5px/1.4 var(--f);color:var(--mut);margin-bottom:8px}
+.vd-list{margin:0;padding-left:18px;font-size:14px;line-height:1.55}.vd-list li{margin-bottom:4px}
+.vd-card p{font-size:14px!important;line-height:1.55}
+.vd-pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.vd-pill{font:700 12px/1.25 var(--f);padding:5px 9px;border-radius:7px;background:var(--mint);color:var(--g9);border:1px solid var(--line)}
+.vd-pill.err{background:#ffd6cf;color:#7a1f12;border-color:#f0b5aa}.vd-pill.warn{background:#fff0a6;color:#5c4500;border-color:#e6cf65}
+.vd-flow{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.vd-step{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;break-inside:avoid}
+.vd-step .num{width:34px;height:34px;border-radius:50%;background:var(--g7);color:#fff;font:800 14px var(--f);display:grid;place-items:center}
+.vd-step .enz{font:700 11.5px var(--f);padding:4px 10px;border-radius:999px;background:var(--mint);color:var(--g9);border:1px solid var(--line)}
+.vd-arrow{text-align:center;color:var(--g7);font:800 14px var(--f);line-height:1;margin:-2px 0}
+.vd-brace-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin:10px 0}
+.vd-brace-table td{vertical-align:middle;padding:10px 12px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:14px;line-height:1.5}
+.vd-brace-table td:first-child{border-left:4px solid var(--g7);border-radius:10px 0 0 10px;font-weight:800;color:var(--g9);width:24%;background:var(--mint2)}
+.vd-brace-table td.b-col{border-left-color:var(--blue);background:#f1f6f9}.vd-brace-table td.p-col{border-left-color:var(--purp);background:#f5f3fa}
+.vd-brace-table td.w-col{border-left-color:var(--brown);background:#fbf7f0}.vd-brace-table td.r-col{border-left-color:var(--bad);background:#fbeeea}.vd-brace-table td.g-col{border-left-color:var(--g7);background:var(--mint2)}
+.vd-brace-table td:last-child{border-right:1px solid var(--line);border-radius:0 10px 10px 0}
+.vd-brace-table tr{break-inside:avoid}
+.vd-svg-box{border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px;margin:12px 0;overflow-x:auto;break-inside:avoid}
+.vd-svg-box svg{width:100%;height:auto;display:block;min-width:660px}
+.vd-svg-box svg text{font-family:Arial,"Liberation Sans",Helvetica,sans-serif;letter-spacing:-.015em}
+.vdx .eyebrow{display:block;font:700 11px/1.2 var(--f);letter-spacing:.09em;text-transform:uppercase;color:var(--g7);margin-bottom:6px}
+.vdx h3.sub{margin-top:2px}
+@media (max-width:640px){.vd-step{grid-template-columns:34px 1fr}.vd-step .enz{grid-column:2;justify-self:start}.vd-brace-table td{display:block;width:auto!important;border-radius:10px!important;border:1px solid var(--line)!important}.vd-brace-table td:first-child{border-left:4px solid var(--g7)!important}}
 .box.es{background:var(--info-soft);border-left:4px solid var(--info)}
 .box.es .lb{color:var(--info)}
 
