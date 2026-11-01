@@ -591,7 +591,7 @@
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid rgba(17,40,30,.08)">' +
       '<div><span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span></div>' +
       '<div class="heroActions" style="margin:0"><button type="button" class="btn sm" data-sx-ir="training">Exercícios</button><button type="button" class="btn sm" data-sx-ir="cartoes">Flashcards</button><button type="button" class="btn sm" data-sx-ir="mapas">Mapas mentais</button>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '" target="_blank" rel="noopener">PDF</a>' : '') + (A.gabarito ? '<a class="btn sm" href="' + A.gabarito + '" target="_blank" rel="noopener">Gabarito PDF</a>' : '') + '<a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
-      '<iframe src="' + src + '" title="Apostila ' + H(A.titulo || '') + '" loading="lazy" style="display:block;width:1px;min-width:100%;max-width:100%;height:calc(100vh - 140px);min-height:560px;border:0;background:#f1f8f4"></iframe></section>';
+      '<iframe src="' + src + '" title="Apostila ' + H(A.titulo || '') + '" loading="lazy" style="display:block;width:100%;max-width:100%;height:calc(100vh - 140px);min-height:560px;border:0;background:#f1f8f4"></iframe></section>';
   }
   function garantirApostila() {
     var box = $id('subjectContent'), s = subjectData(), A = s && APOSTILAS[s.slug];
@@ -684,7 +684,7 @@
     if (!slug || !MAPAS_MATERIAS[slug]) { box.innerHTML = emptyBox('Os mapas guiados desta matéria ainda não foram feitos.', 'Enquanto isso, use o Treino, os Flashcards e a Revisão e progresso.'); return }
     /* a chave Teoria/Prática da matéria decide o que o quadro mostra (na prática: láminas e exame físico) */
     var modo = UI.mode === 'practice' ? 'pratica' : 'teoria';
-    box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:1px;min-width:100%;max-width:100%;height:760px;border:0;background:transparent"></iframe></div>';
+    box.innerHTML = '<div class="sxMapasStage"><iframe id="sinusMapasFrame" title="Mapas guiados · ' + H(s.name || s.nome || slug) + '" src="/mapas/?s=' + encodeURIComponent(slug) + '&modo=' + modo + '" style="display:block;width:100%;max-width:100%;height:760px;border:0;background:transparent"></iframe></div>';
   }
   /* Treino → Mapas mentais: os mapas guiados da matéria (quando existem para o modo atual) */
   W.sxTemMapasGuiados = function () { var s = subjectData(), m = s && MAPAS_MATERIAS[s.slug]; return !!(m && m[UI.mode === 'practice' ? 'pratica' : 'teoria']) };
