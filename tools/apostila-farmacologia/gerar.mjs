@@ -10,6 +10,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import vm from 'node:vm';
+import { toCards, toBlocos } from './quadros.mjs';
+
+const QUADROS = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'src', 'quadros-prof.json'), 'utf8'));
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
@@ -154,6 +157,7 @@ for (const [k, lista] of Object.entries(Q)) {
   const qs = lista.filter((q) => q.tipo !== 'ab').map((q) => q.tipo === 'vf' ? { q: q.q, ops: ['Verdadeiro', 'Falso'], r: q.r ? 0 : 1, ex: q.ex } : { q: q.q, ops: q.ops, r: q.r, ex: q.ex });
   blocos.push({ id: k, titulo: nome, clase, questoes: qs });
 }
+toBlocos(QUADROS).forEach((b) => blocos.push(b)); /* questões dos quadros do professor (MC e V/F) */
 writeFileSync(join(ROOT, 'aulas/apostila-farmacologia/exercicios.js'), `/* Sinus · Exercícios da Apostila Farmacología I · P2 (aba Treino → Exercícios).
    Gerado por tools/apostila-farmacologia/gerar.mjs. Não editar à mão. */
 window.SINUS_EXERCICIOS_APOSTILA = window.SINUS_EXERCICIOS_APOSTILA || {};
@@ -181,6 +185,7 @@ for (const [k, lista] of Object.entries(Q)) lista.filter((q) => q.tipo === 'ab')
   const c9 = i >= 8;
   cards.push({ id: 'ap-ab-' + (c9 ? 'c9-' + (i - 7) : 'treino-' + (i + 1)), g: 'Respostas abertas', t: c9 ? 'Clase 9 · questionário da aula' : 'Clases 6 a 9 · treino de mecanismos', q: strip(m[1]), a: strip(m[2]), x: c9 ? 'Pergunta oficial da Clase 9 (páginas 44 e 46).' : 'Treino de mecanismos da Apostila SINUS P2.' });
 });
+toCards(QUADROS).forEach((c) => cards.push(c)); /* questões dos quadros do professor (todos os tipos, como cartões) */
 const deck = { nome: 'Dr. Cristhiam Giménez · Apostila P2', fonte: 'Apostila SINUS · Farmacologia P2 (Clases 6 a 9)', area: 'teoria', cartoes: cards };
 const INI = '/* >>> farmacologia/gimenez · gerado por gerar.mjs (Apostila SINUS P2) */', FIM = '/* <<< farmacologia/gimenez */';
 const cfile = join(ROOT, 'aulas/flashcards/cartoes.js');

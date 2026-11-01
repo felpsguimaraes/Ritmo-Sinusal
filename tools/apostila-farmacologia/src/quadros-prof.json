@@ -1,0 +1,1845 @@
+[
+ {
+  "id": "SIN-FARM-P2-A01",
+  "tipo": "multipla_escolha",
+  "tema": "Feocromocitoma · β-bloqueador isolado",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com feocromocitoma em crise hipertensiva recebe propranolol isolado e a pressão sobe ainda mais. Qual explicação mecanística é a mais adequada?",
+  "opcoes": {
+   "a": "O propranolol bloqueia receptores α1 e provoca vasodilatação com rebote posterior.",
+   "b": "O propranolol aumenta a liberação de noradrenalina pelo tumor por ação simpaticomimética indireta.",
+   "c": "Ao bloquear β2 vasculares, retira a vasodilatação que se opunha ao efeito α1 do excesso de catecolaminas, deixando a vasoconstricción sem oposição.",
+   "d": "O propranolol é agonista parcial β1 e eleva a frequência cardíaca."
+  },
+  "resposta": "c",
+  "justificativa": "Nos feocromocitomas o bloqueio α (fenoxibenzamina, fentolamina) vem primeiro. O β-bloqueador isolado remove o componente β2 vasodilatador e deixa o α1 agir livremente. O propranolol não tem atividade simpaticomimética intrínseca.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A02",
+  "tipo": "multipla_escolha",
+  "tema": "α-bloqueadores · taquicardia reflexa",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Dois pacientes hipertensos recebem fentolamina e prazosina. Por que a taquicardia reflexa tende a ser mais intensa com a fentolamina?",
+  "opcoes": {
+   "a": "A fentolamina é α2-agonista e estimula o centro vasomotor.",
+   "b": "A prazosina bloqueia também β1, o que atenua a taquicardia.",
+   "c": "A fentolamina tem ligação irreversível e aumenta o débito cardíaco diretamente.",
+   "d": "A fentolamina bloqueia também α2 pré-sinápticos, perde-se o feedback negativo, aumenta a liberação de noradrenalina sobre β1 cardíacos e isso soma-se ao barorreflexo."
+  },
+  "resposta": "d",
+  "justificativa": "Antagonistas α1 e α2 (fentolamina, fenoxibenzamina) somam o reflexo barorreceptor ao aumento de liberação de noradrenalina por perda do autorreceptor α2. A prazosina (α1 seletivo) também causa taquicardia reflexa, sem esse componente extra. A fentolamina é competitiva e de ação breve.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A03",
+  "tipo": "multipla_escolha",
+  "tema": "Extravasação de noradrenalina",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Durante infusão periférica de noradrenalina ocorre extravasação com palidez local e risco de necrose dérmica. Qual conduta farmacológica é conceitualmente a mais adequada?",
+  "opcoes": {
+   "a": "Fenoxibenzamina por via oral, pela ligação irreversível e efeito duradouro.",
+   "b": "Propranolol, pois a necrose decorre de vasoconstricción mediada por β2.",
+   "c": "Tamsulosina, por ter preferência funcional pela musculatura lisa vascular.",
+   "d": "Fentolamina, antagonista α competitivo de ação breve, para reverter a vasoconstricção local."
+  },
+  "resposta": "d",
+  "justificativa": "As anotações listam a necrose dérmica por extravasación de noradrenalina entre as indicações da fentolamina; a apostila a descreve como competitiva, de ação mais breve, usada em crises específicas. A fenoxibenzamina é irreversível e associada ao feocromocitoma.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A04",
+  "tipo": "multipla_escolha",
+  "tema": "Noradrenalina · barorreflexo",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "No choque séptico, a noradrenalina eleva a pressão arterial, mas a frequência cardíaca pode não aumentar e até cair, apesar de a noradrenalina ser agonista β1. Qual é a melhor explicação?",
+  "opcoes": {
+   "a": "A noradrenalina ativa receptores muscarínicos M2 no nó sinoatrial.",
+   "b": "A elevação pressórica mediada por α1 ativa barorreceptores, e o reflexo vagal supera o efeito β1 direto.",
+   "c": "A noradrenalina bloqueia canais de cálcio no nó sinoatrial.",
+   "d": "Ela é agonista β2 seletivo e vasodilata, reduzindo o retorno venoso."
+  },
+  "resposta": "b",
+  "justificativa": "Alta afinidade por α (como nas anotações) significa aumento de resistência vascular e pressão. O barorreflexo, com ativação vagal, pode compensar ou superar o efeito β1 direto sobre o coração.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A05",
+  "tipo": "multipla_escolha",
+  "tema": "Catecolaminas · choque e bradicardia",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Associe cada situação ao fármaco com melhor racional: (I) choque séptico com vasodilatação; (II) baixo débito com choque cardiogênico selecionado; (III) bradicardia ou distúrbio de condução selecionado.",
+  "opcoes": {
+   "a": "I dobutamina; II noradrenalina; III isoproterenol",
+   "b": "I isoproterenol; II noradrenalina; III dobutamina",
+   "c": "I noradrenalina; II dobutamina; III isoproterenol",
+   "d": "I dobutamina; II isoproterenol; III noradrenalina"
+  },
+  "resposta": "c",
+  "justificativa": "Noradrenalina aumenta resistência vascular (choque com vasodilatação); dobutamina aumenta a força contrátil (baixo débito, choque cardiogênico); isoproterenol (β1 e β2, sem α) é usado em bradicardia e distúrbios de condução.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A06",
+  "tipo": "multipla_escolha",
+  "tema": "Anafilaxia · adrenalina",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Por que a adrenalina, e não o salbutamol, é a primeira escolha na anafilaxia grave?",
+  "opcoes": {
+   "a": "Porque o salbutamol não relaxa o músculo liso bronquial.",
+   "b": "Porque a adrenalina combina α1 (vasoconstricción e correção da hipotensão), β1 (efeito cardíaco) e β2 (broncodilatación), enquanto o salbutamol atua essencialmente em β2.",
+   "c": "Porque a adrenalina é exclusivamente α2 e reduz a liberação de mediadores.",
+   "d": "Porque o salbutamol é agonista α1 e agravaria a hipotensão."
+  },
+  "resposta": "b",
+  "justificativa": "A anafilaxia combina colapso vascular, edema, broncoespasmo e comprometimento cardíaco; só um agonista de amplo espectro cobre todos. Mapa da apostila: \"Anafilaxia: adrenalina primeiro\".",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A07",
+  "tipo": "multipla_escolha",
+  "tema": "Oximetazolina · rebote",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente usa oximetazolina nasal há três semanas e, ao suspender de golpe, a congestão piora. Qual é a interpretação correta?",
+  "opcoes": {
+   "a": "É efeito de rebote do uso prolongado de vasoconstritor α tópico, o risco já descrito para o descongestionante.",
+   "b": "É sinal de alergia imediata ao fármaco, e os α-agonistas devem ser substituídos por β-bloqueadores.",
+   "c": "É falha do receptor α2 central, que passou a aumentar a saída simpática.",
+   "d": "É efeito antimuscarínico, que causa secura e posterior hipersecreção."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila destaca descongestão com risco de rebote; as anotações listam congestão de rebote ao suspender de golpe. Uso repetido de vasoconstritor tópico gera dessensibilização e vasodilatação compensatória.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A08",
+  "tipo": "multipla_escolha",
+  "tema": "Midriasis × cicloplejía",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Um oftalmologista precisa de midriasis sem perda de acomodação. Qual afirmação é correta?",
+  "opcoes": {
+   "a": "A fenilefrina contrai o músculo dilatador radial da íris (α1) e produz midriasis sem bloqueio muscarínico, ao contrário da tropicamida e da atropina, que bloqueiam o esfíncter e o músculo ciliar e causam também cicloplejía.",
+   "b": "A atropina produz midriasis por α1 e preserva a acomodação.",
+   "c": "A tropicamida é agonista muscarínico e contrai o músculo ciliar.",
+   "d": "Midriasis e cicloplejía são o mesmo fenômeno e sempre aparecem juntos com qualquer midriático."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila distingue midriasis (dilatação pupilar) de cicloplejía (perda de acomodação por bloqueio do ciliar). A fenilefrina é citada como midriasis sem bloqueio muscarínico. Em olhos predispostos ao cierre angular, qualquer midriasis pode elevar a pressão intraocular.",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A09",
+  "tipo": "multipla_escolha",
+  "tema": "IMAO e tiramina",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente em uso de IMAO ingere queijo curado e desenvolve crise hipertensiva. Qual é o mecanismo?",
+  "opcoes": {
+   "a": "A tiramina é antagonista α1 e causa vasodilatação com rebote.",
+   "b": "O IMAO bloqueia a recaptação de noradrenalina e a tiramina potencializa esse bloqueio.",
+   "c": "Sem MAO funcional, a tiramina ingerida escapa da degradação e chega às terminações, deslocando noradrenalina e liberando-a em excesso (agonista indireto).",
+   "d": "A tiramina inibe a COMT e eleva o ácido vanilmandélico."
+  },
+  "resposta": "c",
+  "justificativa": "A tiramina é substrato da MAO. Com a enzima inibida, aumenta sua disponibilidade sistêmica e, como agonista indireto, amplia a disponibilidade de noradrenalina: vasoconstricción e crise hipertensiva.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A10",
+  "tipo": "multipla_escolha",
+  "tema": "Agonistas indiretos · precisão",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "A anotação diz que os agonistas indiretos (anfetamina, cocaína, tiramina) \"evitam a degradação da noradrenalina ao inibir a MAO e a COMT\". Comparando com a apostila, qual descrição é mais precisa?",
+  "opcoes": {
+   "a": "A anotação está completa; os três fármacos são inibidores de MAO e COMT.",
+   "b": "Anfetamina e tiramina aumentam a disponibilidade/liberação de noradrenalina e a cocaína inibe a recaptação; a inibição da MAO é o mecanismo dos IMAO, não o desses agonistas.",
+   "c": "Os três bloqueiam o receptor α2 pré-sináptico.",
+   "d": "Todos agem como agonistas diretos de β1."
+  },
+  "resposta": "b",
+  "justificativa": "A apostila organiza a sinapse em etapas: armazenamento (reserpina), liberação (anfetamina, tiramina), recaptação (cocaína) e degradação (IMAO). Em prova, descreva o ponto de ação de cada fármaco.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A11",
+  "tipo": "multipla_escolha",
+  "tema": "Clonidina e alfametildopa",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Sobre clonidina e alfametildopa, qual afirmação é correta?",
+  "opcoes": {
+   "a": "Ambas ativam α1 (Gq) vascular e aumentam a resistência periférica.",
+   "b": "A clonidina é antagonista α2 e a alfametildopa é antagonista β1.",
+   "c": "Atuam em receptores α2 (Gi): a clonidina age centralmente e a alfametildopa forma um metabólito de ação central; ambas reduzem a saída simpática, e a alfametildopa foi lembrada em contexto obstétrico.",
+   "d": "Aumentam a saída simpática central e causam taquicardia reflexa."
+  },
+  "resposta": "c",
+  "justificativa": "As anotações listam clonidina e alfametildopa entre os α2-agonistas (hipertensão, TDAH; hipertensão na gravidez). α2 é Gi: menor liberação de noradrenalina e menor saída simpática central.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A12",
+  "tipo": "multipla_escolha",
+  "tema": "β-bloqueador tópico · glaucoma e asma",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com glaucoma de ângulo aberto e asma leve precisa de β-bloqueador tópico. Qual escolha é conceitualmente mais adequada, e com que ressalva?",
+  "opcoes": {
+   "a": "Timolol, pois sendo não seletivo evita qualquer risco respiratório.",
+   "b": "Nadolol, pois tem ação ultracurta.",
+   "c": "Pindolol, por ser β2-agonista puro.",
+   "d": "Betaxolol, predominantemente β1, com a ressalva de que a seletividade é relativa e o uso exige cautela em asma."
+  },
+  "resposta": "d",
+  "justificativa": "A apostila alerta para o broncoespasmo dos não seletivos (timolol tópico reduz humor acuoso, mas pode ter efeito sistêmico). O betaxolol está entre os predominantemente β1, e a seletividade é relativa. As anotações registram asma como contraindicação dos não seletivos.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A13",
+  "tipo": "multipla_escolha",
+  "tema": "Seletividade β1 dose-dependente",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente em uso de atenolol em dose alta apresenta sibilância. Qual é a explicação mais coerente?",
+  "opcoes": {
+   "a": "O atenolol é agonista β2 e causa broncoconstrição por Gs.",
+   "b": "A seletividade β1 é relativa e diminui em doses altas, com bloqueio β2 bronquial e risco de broncoespasmo.",
+   "c": "O atenolol bloqueia receptores muscarínicos nos bronquíolos.",
+   "d": "A sibilância indica que o fármaco passou a bloquear α1."
+  },
+  "resposta": "b",
+  "justificativa": "A apostila descreve os predominantemente β1 (atenolol, bisoprolol, metoprolol, betaxolol) como de seletividade relativa, menor em doses altas. O β2 bronquial medeia relaxamento; bloqueá-lo favorece broncoespasmo.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A14",
+  "tipo": "multipla_escolha",
+  "tema": "β-bloqueadores · vasodilatação adicional",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Qual associação entre β-bloqueador e mecanismo adicional de vasodilatação está correta?",
+  "opcoes": {
+   "a": "Carvedilol e labetalol: bloqueio α1 associado ao bloqueio β; nebivolol: participação do óxido nítrico.",
+   "b": "Carvedilol: óxido nítrico; nebivolol: bloqueio α1.",
+   "c": "Esmolol e nebivolol: agonismo β2 vascular.",
+   "d": "Propranolol e timolol: bloqueio α1 e liberação de óxido nítrico."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila separa \"β1/β2 + α1\" (carvedilol, labetalol) de \"β1 com vasodilatação\" (nebivolol: óxido nítrico). Nas anotações, carvedilol e labetalol são antagonistas mistos α e β, com hipotensión ortostática entre as RAM.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A15",
+  "tipo": "multipla_escolha",
+  "tema": "Antimuscarínicos · BHE",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Idoso de 78 anos, com leve declínio cognitivo, tem bexiga hiperativa. Para reduzir o risco de efeitos centrais, qual antimuscarínico é o racional mais adequado?",
+  "opcoes": {
+   "a": "Oxibutinina, por ser amina terciária lipofílica.",
+   "b": "Trospio, amina quaternária hidrofílica que não atravessa a barreira hematoencefálica.",
+   "c": "Tolterodina, pelo mesmo motivo da oxibutinina.",
+   "d": "Benztropina, pois reduz o desequilíbrio colinérgico no SNC."
+  },
+  "resposta": "b",
+  "justificativa": "Segundo as anotações, aminas terciárias (oxibutinina, tolterodina, solifenacina, benztropina) atravessam a BHE por serem lipofílicas; as quaternárias (trospio, glicopirrolato, ipratrópio, tiotrópio) não. A passagem pela BHE explica delirium, ansiedade e convulsões.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A16",
+  "tipo": "multipla_escolha",
+  "tema": "Intoxicação antimuscarínica · antídoto",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com intoxicação por antimuscarínico apresenta boca seca, pele quente e seca, midriasis, retención urinaria e delirium. Por que a fisostigmina, e não a neostigmina, é a escolha conceitual para os sintomas centrais?",
+  "opcoes": {
+   "a": "A fisostigmina é antagonista muscarínico de ação central.",
+   "b": "A neostigmina é agonista nicotínico direto e piora o delirium.",
+   "c": "A fisostigmina é amina terciária e atinge o SNC, enquanto a neostigmina é de ação periférica por ser amônio quaternário; ambas elevam a ACh por inibir a colinesterase.",
+   "d": "A neostigmina é irreversível e a fisostigmina é um inibidor competitivo da ACh."
+  },
+  "resposta": "c",
+  "justificativa": "A anotação do professor registra a fisostigmina como antídoto. A apostila a descreve como amina terciária que chega ao SNC, de uso selecionado, e a neostigmina como periférica (amônio quaternário). Aumentar a ACh permite competir com o antagonista.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A17",
+  "tipo": "multipla_escolha",
+  "tema": "Organofosforados · atropina",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Na intoxicação grave por organofosforado, a atropina reverte qual conjunto de manifestações?",
+  "opcoes": {
+   "a": "Fasciculaciones, fraqueza e paralisia de músculos respiratórios.",
+   "b": "Apenas a alteração de consciência e as convulsões.",
+   "c": "Miosis, sialorrea, broncorrea, broncoespasmo, diarrea e bradicardia, mas não a paralisia nicotínica da placa motora.",
+   "d": "Todos os componentes muscarínicos, nicotínicos e centrais, igualmente."
+  },
+  "resposta": "c",
+  "justificativa": "A atropina bloqueia receptores muscarínicos. Fraqueza e paralisia dependem de receptores nicotínicos musculares (Nm), que ela não bloqueia. Por isso a apostila separa os componentes em muscarínico, nicotínico e central, e cita o envejecimiento da enzima fosforilada.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A18",
+  "tipo": "multipla_escolha",
+  "tema": "Escopolamina × butilbromuro",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Sobre escopolamina (hioscina) e butilbromuro de hioscina, qual afirmação é correta?",
+  "opcoes": {
+   "a": "Ambos atravessam bem a BHE e têm o mesmo perfil central.",
+   "b": "Ambos são quaternários e por isso não têm qualquer efeito antimuscarínico.",
+   "c": "A escopolamina é alcaloide natural com ação central (inclui efeito antiemético), enquanto o butilbromuro, quaternário hidrofílico, é usado como antiespasmódico em cólicas intestinais e colon irritable.",
+   "d": "O butilbromuro é a escopolamina em nova apresentação, mas com ação adrenérgica."
+  },
+  "resposta": "c",
+  "justificativa": "As anotações mostram os dois lados: escopolamina com efeito antiemético; butilbromuro de hioscina indicado em cólicas intestinais, colon irritable e diarrea severa, no grupo das aminas quaternárias. Apostila: moléculas diferentes, mesmo propósito antiespasmódico.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A19",
+  "tipo": "multipla_escolha",
+  "tema": "Glaucoma e cirurgia ocular",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "Sobre fármacos usados em glaucoma e cirurgia ocular, qual afirmação é correta?",
+  "opcoes": {
+   "a": "Pilocarpina (agonista muscarínico) causa miosis e favorece a drenagem do humor acuoso; timolol reduz a produção de humor acuoso; atropina e outros midriáticos são contraindicados em predisposição a ângulo fechado.",
+   "b": "Atropina é a primeira escolha em glaucoma de ângulo fechado.",
+   "c": "Timolol é agonista β2 e aumenta a produção de humor acuoso.",
+   "d": "Pilocarpina é antagonista muscarínico e causa midriasis."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila cita a pilocarpina (miosis, drenagem do humor acuoso, saliva) e o timolol tópico (reduz humor acuoso). As anotações listam o glaucoma como contraindicação dos antimuscarínicos, pelo aumento da pressão intraocular.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-A20",
+  "tipo": "multipla_escolha",
+  "tema": "Atropina × agonista β1 no coração",
+  "fonte": "Anotações do professor + Apostila SINUS",
+  "dificuldade": "avançado",
+  "enunciado": "A atropina e um agonista β1 podem aumentar a frequência cardíaca. Qual afirmação descreve corretamente a diferença de mecanismo?",
+  "opcoes": {
+   "a": "Ambos ativam Gs e aumentam o AMPc diretamente.",
+   "b": "A atropina é agonista α1 e o agonista β1 é antagonista M2.",
+   "c": "Ambos agem exclusivamente no sistema nervoso central.",
+   "d": "A atropina bloqueia M2 (Gi) e retira o freio vagal, enquanto o agonista β1 ativa receptores acoplados a Gs, com aumento de frequência, força e condução."
+  },
+  "resposta": "d",
+  "justificativa": "A apostila descreve M2 como Gi nos nodos SA e AV (menor frequência e condução) e β1 como Gs (maior frequência, força e condução). Um efeito parte de retirar o freio vagal; o outro estimula diretamente o coração.",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B001",
+  "tipo": "caso_clinico",
+  "tema": "Farmacocinética · profármaco",
+  "fonte": "Quadro do professor · caso clínico (codeína)",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente do sexo feminino, 37 años, com dolor en epigastrio de intensidad moderada. Indica-se um analgésico opioide em comprimido (codeína). Horas depois, apresenta somnolencia e náuseas. Descobre-se que ela possui uma enzima que lhe confere metabolismo rápido.",
+  "subperguntas": [
+   {
+    "p": "1) Qual é o fármaco e qual a sua natureza farmacológica?",
+    "r": "Codeína: analgésico opioide, agonista de receptores opioides, que atua como profármaco (precisa ser metabolizada para a forma ativa, a morfina)."
+   },
+   {
+    "p": "2) Qual é a forma de presentación do medicamento?",
+    "r": "Forma sólida: comprimido."
+   },
+   {
+    "p": "3) Qual é a via de administración e quais características dela são relevantes?",
+    "r": "Via oral. Depende de absorção no tracto gastrointestinal e de passagem pelo fígado antes da circulação sistêmica, o que torna o metabolismo hepático determinante para o efeito."
+   },
+   {
+    "p": "4) Onde ocorre o metabolismo e qual enzima é afetada?",
+    "r": "No hígado, pelo sistema do citocromo P450 (CYP450, principal enzima do metabolismo); para a codeína, a conversão em morfina depende sobretudo da isoforma CYP2D6."
+   },
+   {
+    "p": "5) Como o metabolismo rápido explica a somnolencia e as náuseas?",
+    "r": "Mais codeína é convertida em morfina em menos tempo, o que aumenta o efeito opioide no SNC (sedação, náusea e, nos casos graves, depressión respiratoria)."
+   }
+  ],
+  "nota": "No quadro, a palavra \"lento\" foi substituída por \"rápido\" no enunciado. O raciocínio de profármaco só explica a toxicidade com metabolismo rápido.",
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B002",
+  "tipo": "multipla_escolha",
+  "tema": "Farmacocinética · profármaco",
+  "fonte": "Quadro do professor · caso clínico (codeína)",
+  "dificuldade": "avançado",
+  "enunciado": "No caso da codeína, o quadro inicialmente registrava \"metabolismo lento\" e foi corrigido para \"metabolismo rápido\". Qual leitura é coerente com somnolencia e náuseas após o comprimido?",
+  "opcoes": {
+   "a": "Metabolismo lento: acumula codeína inalterada, que é a forma mais potente.",
+   "b": "Metabolismo rápido: maior e mais rápida conversão em morfina, com efeito opioide exagerado.",
+   "c": "Metabolismo lento: a morfina se forma em excesso por via alternativa.",
+   "d": "Qualquer velocidade de metabolismo produz o mesmo efeito, pois a codeína não depende de enzimas."
+  },
+  "resposta": "b",
+  "justificativa": "Em um profármaco, a enzima gera a forma ativa. Metabolismo rápido aumenta a formação de morfina e a toxicidade (sedação, náusea). Metabolismo lento tenderia a falha analgésica por pouca morfina.",
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B003",
+  "tipo": "verdadeiro_falso",
+  "tema": "Farmacocinética · profármaco",
+  "fonte": "Quadro do professor · caso clínico (codeína)",
+  "dificuldade": "intermediário",
+  "afirmacoes": [
+   {
+    "a": "Em um metabolizador lento da enzima que ativa a codeína, espera-se menor analgesia por menor formação de morfina.",
+    "r": true,
+    "j": "Menos conversão em forma ativa significa menos efeito analgésico."
+   },
+   {
+    "a": "Como a codeína é profármaco, o metabolismo rápido sempre reduz o seu efeito.",
+    "r": false,
+    "j": "Em profármacos, metabolismo rápido aumenta a formação do metabólito ativo; reduziria o efeito só em fármacos ativos que são inativados pelo fígado."
+   },
+   {
+    "a": "O metabolismo hepático da codeína ocorre predominantemente pelo sistema CYP450.",
+    "r": true,
+    "j": "O quadro destaca o CYP450 como principal enzima do metabolismo."
+   }
+  ],
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B004",
+  "tipo": "multipla_escolha",
+  "tema": "Dor epigástrica e AINEs",
+  "fonte": "Quadro (caso) + Apostila SINUS §21",
+  "dificuldade": "avançado",
+  "enunciado": "Na paciente com dolor en epigastrio, por que o uso de AINE exigiria especial cautela conceitual, segundo a apostila?",
+  "opcoes": {
+   "a": "AINEs aumentam a produção de PG, que irrita a mucosa gástrica.",
+   "b": "AINEs reduzem a proteção da mucosa mediada por prostaglandinas, com risco de úlcera, sangramento ou perfuração.",
+   "c": "AINEs bloqueiam receptores muscarínicos gástricos, causando retenção de secreção.",
+   "d": "AINEs estimulam diretamente receptores opioides μ no estômago."
+  },
+  "resposta": "b",
+  "justificativa": "Menor proteção por PG na mucosa gastrointestinal: úlcera, sangramento ou perfuração (apostila §21).",
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B005",
+  "tipo": "associacao",
+  "tema": "Semiologia · regiões abdominais",
+  "fonte": "Quadro do professor (esquema 3x3 do abdome)",
+  "dificuldade": "básico",
+  "enunciado": "Associe cada região abdominal à sua posição no esquema de nove regiões.",
+  "pares": [
+   [
+    "Epigastrio",
+    "Linha superior, central"
+   ],
+   [
+    "Hipogastrio",
+    "Linha inferior, central"
+   ],
+   [
+    "Flanco derecho",
+    "Linha média, lateral direita"
+   ],
+   [
+    "Mesogastrio (periumbilical)",
+    "Linha média, central"
+   ],
+   [
+    "Fosa ilíaca derecha (FID)",
+    "Linha inferior, lateral direita"
+   ],
+   [
+    "Fosa ilíaca izquierda (FII)",
+    "Linha inferior, lateral esquerda"
+   ]
+  ],
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B006",
+  "tipo": "discursiva",
+  "tema": "Farmacocinética · profármaco",
+  "fonte": "Quadro do professor · caso clínico (codeína)",
+  "dificuldade": "avançado",
+  "enunciado": "Explique, em espanhol e em até cinco linhas, por que a velocidade de metabolismo hepático muda o efeito da codeína, usando o conceito de profármaco.",
+  "modelo_resposta": "La codeína es un profármaco opioide: necesita ser metabolizada en el hígado por enzimas del citocromo P450 (CYP2D6) para formar morfina, que es la responsable principal de la analgesia. En un metabolizador rápido se forma más morfina y con mayor rapidez, por lo que aparecen somnolencia, náuseas y riesgo de depresión respiratoria. En un metabolizador lento se forma poca morfina y la analgesia puede ser insuficiente.",
+  "criterios": [
+   "Define profármaco",
+   "Cita hígado e CYP450/CYP2D6",
+   "Relaciona rápido com toxicidade e lento com falha analgésica"
+  ],
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B007",
+  "tipo": "associacao",
+  "tema": "Agonistas colinérgicos · classificação",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o fármaco ao grupo em que o professor o classificou.",
+  "pares": [
+   [
+    "Pilocarpina, betanecol, carbacol, metacolina",
+    "Agonistas colinérgicos de ação direta"
+   ],
+   [
+    "Ecotiofato, paratión, malatión",
+    "Indiretos irreversíveis"
+   ],
+   [
+    "Edrofonio",
+    "Indireto reversível de ação curta"
+   ],
+   [
+    "Neostigmina, piridostigmina, fisostigmina",
+    "Indiretos reversíveis de ação intermediária"
+   ],
+   [
+    "Donepezilo, rivastigmina, galantamina",
+    "Indiretos reversíveis usados na enfermedad de Alzheimer"
+   ]
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B008",
+  "tipo": "multipla_escolha",
+  "tema": "Agonistas colinérgicos · mecanismo",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §06 e §08",
+  "dificuldade": "avançado",
+  "enunciado": "Por que a toxicidade dos organofosforados (ecotiofato, paratión, malatión) persiste mais que a de um inibidor reversível como a neostigmina?",
+  "opcoes": {
+   "a": "Porque fosforilam a acetilcolinesterase, e a enzima pode sofrer envejecimiento, o que dificulta a sua recuperação.",
+   "b": "Porque são agonistas nicotínicos diretos de ação prolongada.",
+   "c": "Porque bloqueiam a recaptação de colina no terminal.",
+   "d": "Porque ativam o receptor M2 e reduzem a liberação de acetilcolina."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila descreve fosforilação da enzima e envejecimiento, com toxicidade muscarínica, nicotínica e central.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B009",
+  "tipo": "ordenacao",
+  "tema": "Sinapse colinérgica · síntese e liberação",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse",
+  "dificuldade": "avançado",
+  "enunciado": "Coloque na ordem as etapas da síntese e liberação da acetilcolina desenhadas no quadro.",
+  "itens_na_ordem": [
+   "A colina entra no terminal nervioso por um transportador dependente de Na⁺",
+   "Colina + acetil-CoA formam acetilcolina pela colina acetiltransferasa",
+   "A acetilcolina é armazenada em vesículas",
+   "A despolarização abre canais de Ca²⁺ dependentes de voltagem",
+   "As vesículas liberam a acetilcolina na fenda sináptica",
+   "A acetilcolina atua em receptores nicotínicos ou muscarínicos",
+   "A acetilcolinesterasa hidrolisa a acetilcolina e a colina é recaptada"
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B010",
+  "tipo": "multipla_escolha",
+  "tema": "Sinapse colinérgica · feedback",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §03",
+  "dificuldade": "avançado",
+  "enunciado": "No desenho da sinapse colinérgica, o professor indicou \"receptor M2\" com a seta de \"feedback negativo\" no terminal pré-sináptico. Qual é a interpretação correta?",
+  "opcoes": {
+   "a": "É um heterorreceptor Gs que aumenta a liberação de acetilcolina.",
+   "b": "É um autorreceptor acoplado a Gi que reconhece a própria acetilcolina e reduz a sua liberação.",
+   "c": "É um receptor nicotínico que fecha os canais de Ca²⁺.",
+   "d": "É a acetilcolinesterase ancorada à membrana pré-sináptica."
+  },
+  "resposta": "b",
+  "justificativa": "A apostila define autorreceptor pré-sináptico como o que reconhece o transmissor da própria neurona e frequentemente reduz a sua liberação; M2 é Gi.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B011",
+  "tipo": "associacao",
+  "tema": "Receptores colinérgicos · proteína G",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse / Quadro dos receptores (foto)",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o receptor à classe/proteína G.",
+  "pares": [
+   [
+    "M1, M3, M5",
+    "Gq (ativadores)"
+   ],
+   [
+    "M2, M4",
+    "Gi (inibidores)"
+   ],
+   [
+    "Nicotínico neuronal (Nn)",
+    "Canal iônico (receptor ionotrópico)"
+   ],
+   [
+    "Nicotínico muscular (Nm)",
+    "Canal iônico (receptor ionotrópico)"
+   ]
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B012",
+  "tipo": "verdadeiro_falso",
+  "tema": "Receptores colinérgicos",
+  "fonte": "Quadro + Apostila SINUS §04",
+  "dificuldade": "avançado",
+  "afirmacoes": [
+   {
+    "a": "Os receptores nicotínicos pertencem à família de receptores acoplados à proteína G.",
+    "r": false,
+    "j": "São receptores iônicos (canais); só os muscarínicos são acoplados a proteína G."
+   },
+   {
+    "a": "M2 está associado à redução de frequência e velocidade de condução nos nodos SA e AV.",
+    "r": true,
+    "j": "M2 (Gi) nos nodos SA e AV: menor frequência e menor velocidade de condução."
+   },
+   {
+    "a": "M3 (Gq) participa de secreções glandulares, contração de músculo liso e vasodilatação endotelial.",
+    "r": true,
+    "j": "Descrição da apostila para M3."
+   },
+   {
+    "a": "M1, M3 e M5 compartilham a via Gi.",
+    "r": false,
+    "j": "M1, M3 e M5 são Gq; M2 e M4 são Gi."
+   }
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B013",
+  "tipo": "multipla_escolha",
+  "tema": "Agonistas colinérgicos · aplicação",
+  "fonte": "Quadro + Apostila SINUS §05 e §07",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com retención urinaria. Antes de considerar um agonista muscarínico como o betanecol, qual condição precisa ser excluída?",
+  "opcoes": {
+   "a": "Obstrução mecânica, pois contrair o detrusor contra uma obstrução é inadequado e perigoso.",
+   "b": "Taquicardia sinusal, pois o betanecol é β1-agonista.",
+   "c": "Deficiência de colina, pois a síntese de ACh estaria bloqueada.",
+   "d": "Alergia a salicilatos."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila lista o betanecol para retención urinaria não obstrutiva; é preciso excluir obstrução mecânica.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B014",
+  "tipo": "completar",
+  "tema": "Colinérgicos · síntese",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse",
+  "dificuldade": "intermediário",
+  "texto": "A acetilcolina é sintetizada a partir de ___ e acetil-CoA pela enzima ___, e é degradada na fenda pela ___.",
+  "lacunas": [
+   "colina",
+   "colina acetiltransferasa",
+   "acetilcolinesterasa"
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B015",
+  "tipo": "discursiva",
+  "tema": "Inibidores da colinesterase",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §06",
+  "dificuldade": "avançado",
+  "enunciado": "Diferencie, em português com termos em espanhol, inibidores reversíveis e irreversíveis da colinesterase, citando um exemplo do quadro para cada grupo e uma aplicação clínica de um reversível.",
+  "modelo_resposta": "Reversibles inhiben temporalmente la acetilcolinesterasa (edrofonio de acción corta; neostigmina, piridostigmina y fisostigmina de acción intermedia; donepezilo, rivastigmina y galantamina en Alzheimer). Irreversibles, como ecotiofato, paratión y malatión, fosforilan la enzima y pueden provocar envejecimiento. Aplicación: piridostigmina en miastenia gravis, para mejorar la transmisión neuromuscular.",
+  "criterios": [
+   "Distingue duração/ligação à enzima",
+   "Cita exemplos corretos",
+   "Aplicação clínica coerente"
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B016",
+  "tipo": "multipla_escolha",
+  "tema": "Alzheimer · inibidores centrais",
+  "fonte": "Quadro + Apostila SINUS §06 e §07",
+  "dificuldade": "avançado",
+  "enunciado": "Donepezilo, rivastigmina e galantamina são usados na enfermedad de Alzheimer. Qual raciocínio e qual cuidado estão corretos?",
+  "opcoes": {
+   "a": "Aumentam a ACh central remanescente (benefício sintomático); náuseas, bradicardia e síncope exigem atenção pela intensificação colinérgica.",
+   "b": "Regeneram neurônios colinérgicos e curam a doença.",
+   "c": "Bloqueiam receptores M1 e por isso aumentam a ACh.",
+   "d": "São agonistas nicotínicos diretos e causam taquicardia."
+  },
+  "resposta": "a",
+  "justificativa": "Tratamento sintomático por aumento da sinalização colinérgica; a apostila alerta que não regeneram neuronas nem curam, e que bradicardia e síncope devem ser ligadas à intensificação colinérgica.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B017",
+  "tipo": "ordenacao",
+  "tema": "Síntese de catecolaminas",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores",
+  "dificuldade": "avançado",
+  "enunciado": "Ordene as etapas da síntese de catecolaminas esquematizadas no quadro.",
+  "itens_na_ordem": [
+   "Tirosina entra no terminal pelo transportador (com Na⁺)",
+   "Tirosina → L-DOPA (tirosina hidroxilasa)",
+   "L-DOPA → dopamina (DOPA descarboxilasa)",
+   "Dopamina → noradrenalina, nas vesículas (dopamina β-hidroxilasa)",
+   "Noradrenalina → adrenalina (feniletanolamina N-metiltransferasa, na medula suprarrenal)"
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B018",
+  "tipo": "associacao",
+  "tema": "Síntese de catecolaminas · enzimas",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe a enzima à reação que ela catalisa.",
+  "pares": [
+   [
+    "Tirosina hidroxilasa",
+    "Tirosina → L-DOPA"
+   ],
+   [
+    "DOPA descarboxilasa",
+    "L-DOPA → dopamina"
+   ],
+   [
+    "Dopamina β-hidroxilasa",
+    "Dopamina → noradrenalina"
+   ],
+   [
+    "Feniletanolamina N-metiltransferasa",
+    "Noradrenalina → adrenalina"
+   ]
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B019",
+  "tipo": "associacao",
+  "tema": "Adrenoceptores · proteína G",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + Apostila SINUS §13",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o adrenoceptor à proteína G e ao efeito geral descrito pelo professor.",
+  "pares": [
+   [
+    "α1",
+    "Gq: ativador"
+   ],
+   [
+    "α2",
+    "Gi: inibidor"
+   ],
+   [
+    "β1",
+    "Gs: estimulador"
+   ],
+   [
+    "β2",
+    "Gs: estimulador"
+   ],
+   [
+    "β3",
+    "Gs: estimulador"
+   ]
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B020",
+  "tipo": "multipla_escolha",
+  "tema": "Metabolismo da noradrenalina",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + anotações do professor",
+  "dificuldade": "avançado",
+  "enunciado": "Quais enzimas degradam a noradrenalina e qual é o metabólito final comum citado?",
+  "opcoes": {
+   "a": "MAO (intraneuronal, mitocondrial) e COMT (na fenda), com formação de ácido vanilmandélico.",
+   "b": "Acetilcolinesterase e butirilcolinesterase, com formação de colina.",
+   "c": "Tirosina hidroxilasa e DOPA descarboxilasa, com formação de L-DOPA.",
+   "d": "CYP2D6 e CYP3A4, com formação de morfina."
+  },
+  "resposta": "a",
+  "justificativa": "As anotações indicam que a MAO degrada a NA dentro da neurona e a COMT, no espaço sináptico; o resultado final é o ácido vanilmandélico.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B021",
+  "tipo": "verdadeiro_falso",
+  "tema": "Sinapse noradrenérgica",
+  "fonte": "Anotações do professor + Apostila SINUS §12",
+  "dificuldade": "avançado",
+  "afirmacoes": [
+   {
+    "a": "A ligação da NA ao receptor α2 pré-sináptico produz feedback negativo direto.",
+    "r": true,
+    "j": "α2 (Gi) reduz a liberação de noradrenalina."
+   },
+   {
+    "a": "A angiotensina II atua como feedback negativo direto sobre a liberação de noradrenalina.",
+    "r": false,
+    "j": "As anotações a descrevem como feedback negativo indireto; o direto é pelo α2."
+   },
+   {
+    "a": "A reserpina bloqueia o transporte de monoaminas para as vesículas.",
+    "r": true,
+    "j": "Etapa de armazenamento vesicular (apostila §12)."
+   },
+   {
+    "a": "A cocaína inibe a recaptação de monoaminas.",
+    "r": true,
+    "j": "Etapa de recaptação (apostila §12)."
+   }
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B022",
+  "tipo": "completar",
+  "tema": "Adrenoceptores",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores",
+  "dificuldade": "intermediário",
+  "texto": "O receptor α1 acopla-se a ___ (ativador), o α2 a ___ (inibidor) e os receptores β1, β2 e β3 a ___ (estimulador).",
+  "lacunas": [
+   "Gq",
+   "Gi",
+   "Gs"
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B023",
+  "tipo": "multipla_escolha",
+  "tema": "Vesículas e feniletanolamina N-metiltransferase",
+  "fonte": "Anotações do professor",
+  "dificuldade": "avançado",
+  "enunciado": "Segundo as anotações, onde a dopamina é convertida em noradrenalina e como a adrenalina se forma?",
+  "opcoes": {
+   "a": "A dopamina é convertida em NA nas vesículas; parte da NA é convertida em adrenalina pela feniletanolamina N-metiltransferasa, e a adrenalina também se acumula em vesículas.",
+   "b": "A dopamina é convertida em NA no espaço sináptico pela COMT.",
+   "c": "A adrenalina forma-se diretamente a partir da tirosina sem intermediários.",
+   "d": "A NA é convertida em adrenalina pela MAO na mitocôndria."
+  },
+  "resposta": "a",
+  "justificativa": "Conforme as notas de aula: a NA se acumula nas vesículas e, com a enzima feniletanolamina N-metiltransferasa, forma a adrenalina, que também se acumula em vesículas.",
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B024",
+  "tipo": "associacao",
+  "tema": "Sistema simpático · efeitos por órgão",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o órgão ao efeito simpático registrado no quadro.",
+  "pares": [
+   [
+    "Olho",
+    "Midriasis (contração do músculo radial)"
+   ],
+   [
+    "Coração",
+    "Aumento de FC (cronotropismo +), débito cardíaco e pressão arterial"
+   ],
+   [
+    "Bronquios",
+    "Broncodilatación e menor secreção"
+   ],
+   [
+    "Intestino",
+    "Menos peristaltismo, secreção e absorção"
+   ],
+   [
+    "Páncreas",
+    "Menos insulina e mais glucagon"
+   ],
+   [
+    "Hígado",
+    "Aumento da glicogenólise e menor fluxo biliar"
+   ],
+   [
+    "Riñón",
+    "Menos produção de orina e fluxo sanguíneo; maior liberação de renina"
+   ],
+   [
+    "Vejiga",
+    "Menor contração do detrusor e maior contração do esfínter"
+   ]
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B025",
+  "tipo": "associacao",
+  "tema": "Sistema parasimpático · efeitos por órgão",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o órgão ao efeito parassimpático registrado no quadro.",
+  "pares": [
+   [
+    "Olho",
+    "Miosis (esfíncter pupilar) e contração do músculo ciliar"
+   ],
+   [
+    "Coração",
+    "Menor FC (cronotropismo negativo) e menor PA"
+   ],
+   [
+    "Bronquios",
+    "Broncoconstricción e maior secreção"
+   ],
+   [
+    "Intestino",
+    "Maior peristaltismo, secreção e absorção"
+   ],
+   [
+    "Páncreas",
+    "Maior secreção de insulina"
+   ],
+   [
+    "Vejiga",
+    "Contração do detrusor e relaxamento do esfíncter"
+   ],
+   [
+    "Vía biliar",
+    "Contração da vesícula e relaxamento do esfíncter de Oddi"
+   ],
+   [
+    "Genitais",
+    "Erección e ingurgitamiento del clítoris"
+   ]
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B026",
+  "tipo": "verdadeiro_falso",
+  "tema": "Organização do sistema nervioso",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "intermediário",
+  "afirmacoes": [
+   {
+    "a": "O SNC inclui encéfalo e médula espinal.",
+    "r": true,
+    "j": "Organização do quadro: SNC (encéfalo e médula)."
+   },
+   {
+    "a": "O sistema nervioso somático (SNS) é voluntário e o autônomo (SNA) é involuntário.",
+    "r": true,
+    "j": "SNS: nervos espinais e pares cranianos; SNA: simpático e parassimpático."
+   },
+   {
+    "a": "O simpático tem origem craneosacra e o parassimpático, toracolumbar.",
+    "r": false,
+    "j": "O contrário: simpático toracolumbar (T1–L2) e parassimpático craneosacro."
+   },
+   {
+    "a": "A medula suprarrenal libera adrenalina e noradrenalina.",
+    "r": true,
+    "j": "Células cromafins, estimuladas por acetilcolina em receptor nicotínico (apostila §02)."
+   }
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B027",
+  "tipo": "multipla_escolha",
+  "tema": "Pupila · semiologia e SNA",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente apresenta pupila direita em midriasis e esquerda normal. Qual termo descreve o achado e qual influência autonômica gera midriasis?",
+  "opcoes": {
+   "a": "Isocoria; ativação parassimpática do esfíncter pupilar.",
+   "b": "Anisocoria; ativação simpática α1 do músculo radial (ou bloqueio muscarínico do esfíncter).",
+   "c": "Miosis bilateral; ativação muscarínica.",
+   "d": "Isocoria; bloqueio α1."
+  },
+  "resposta": "b",
+  "justificativa": "Anisocoria é a diferença de diâmetro pupilar. A midriasis resulta de contração do dilatador radial (simpático, α1) ou de relaxamento do esfíncter por bloqueio muscarínico (ex.: atropina).",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B028",
+  "tipo": "multipla_escolha",
+  "tema": "Glândulas e SNA",
+  "fonte": "Quadro + Apostila SINUS §02",
+  "dificuldade": "avançado",
+  "enunciado": "As glândulas sudoríparas ecrinas recebem via simpática, mas o neurotransmissor é diferente da maioria das terminações simpáticas. Qual é a combinação correta?",
+  "opcoes": {
+   "a": "Noradrenalina em receptor α1.",
+   "b": "Acetilcolina em receptor muscarínico.",
+   "c": "Adrenalina em receptor β2.",
+   "d": "Acetilcolina em receptor nicotínico muscular."
+  },
+  "resposta": "b",
+  "justificativa": "Apostila §02: acetilcolina, apesar da via simpática, com receptor muscarínico.",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B029",
+  "tipo": "caso_clinico",
+  "tema": "Integração autonômica · efeitos do bloqueio",
+  "fonte": "Quadro do professor · sistema nervioso autónomo + Apostila SINUS §09 e §11",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente intoxicado por antimuscarínico apresenta boca seca, pele quente e seca, midriasis, taquicardia e retención urinaria.",
+  "subperguntas": [
+   {
+    "p": "1) Qual efeito parassimpático foi bloqueado em cada achado (olho, glândulas, coração, vejiga)?",
+    "r": "Olho: perda da miosis e da contração ciliar (midriasis, cicloplejía). Glândulas: menos secreção. Coração: perda do freio vagal M2 (taquicardia). Vejiga: menor contração do detrusor (retención)."
+   },
+   {
+    "p": "2) Por que a pele fica seca se as sudoríparas ecrinas têm via simpática?",
+    "r": "Porque o transmissor delas é acetilcolina em receptor muscarínico; o antimuscarínico bloqueia a sudoración."
+   },
+   {
+    "p": "3) Qual antídoto foi citado nas anotações e por que ele alcança o SNC?",
+    "r": "Fisostigmina, por ser amina terciária que atravessa a barreira hematoencefálica e aumenta a ACh para competir com o antagonista."
+   }
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B030",
+  "tipo": "associacao",
+  "tema": "Pares cranianos · mnemônica",
+  "fonte": "Mnemônica dos pares cranianos (imagem enviada)",
+  "dificuldade": "básico",
+  "enunciado": "Pela mnemônica \"Oh, Oh, Mamá, Papá, Traigo Mini Falda, Ahora Mis Glúteos Van A Estar Helados\", associe a palavra ao par craniano.",
+  "pares": [
+   [
+    "Mamá",
+    "III · Motor ocular común (oculomotor)"
+   ],
+   [
+    "Papá",
+    "IV · Patético (troclear)"
+   ],
+   [
+    "Traigo",
+    "V · Trigémino"
+   ],
+   [
+    "Mini",
+    "VI · Motor ocular externo (abducens)"
+   ],
+   [
+    "Falda",
+    "VII · Facial"
+   ],
+   [
+    "Ahora",
+    "VIII · Auditivo (vestibulococlear)"
+   ],
+   [
+    "Glúteos",
+    "IX · Glosofaríngeo"
+   ],
+   [
+    "Van",
+    "X · Vago"
+   ],
+   [
+    "Helados",
+    "XII · Hipogloso"
+   ]
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B031",
+  "tipo": "multipla_escolha",
+  "tema": "Pares cranianos · parassimpático",
+  "fonte": "Mnemônica dos pares cranianos (imagem enviada) + Apostila SINUS §01",
+  "dificuldade": "avançado",
+  "enunciado": "Quais pares cranianos fazem parte da saída parassimpática craneosacra e quais deles têm relação com miosis e com a desaceleração cardíaca?",
+  "opcoes": {
+   "a": "III, VII, IX e X; o III participa da miosis (esfíncter pupilar) e o X (vago) da redução da frequência cardíaca.",
+   "b": "I, II, IV e VI; o II participa da miosis e o VI, da frequência cardíaca.",
+   "c": "V, VIII e XII; o V participa da miosis e o XII, do coração.",
+   "d": "Somente o X, e o III não tem componente parassimpático."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila §01 indica origem craneosacra em III, VII, IX, X e S2–S4. O oculomotor (III) leva a via pupilar parassimpática e o vago (X), a via cardíaca (M2).",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B032",
+  "tipo": "verdadeiro_falso",
+  "tema": "Pares cranianos · mnemônica",
+  "fonte": "Mnemônica dos pares cranianos (imagem enviada)",
+  "dificuldade": "básico",
+  "afirmacoes": [
+   {
+    "a": "Na mnemônica, \"Van\" corresponde ao par X (vago).",
+    "r": true,
+    "j": "X · Vago."
+   },
+   {
+    "a": "O par VII é o glosofaríngeo.",
+    "r": false,
+    "j": "VII é o facial (\"Falda\"); o glosofaríngeo é o IX (\"Glúteos\")."
+   },
+   {
+    "a": "O par XI (acessório) e o XII (hipogloso) fecham a sequência.",
+    "r": true,
+    "j": "XI Accesorio, XII Hipogloso."
+   }
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B033",
+  "tipo": "discursiva",
+  "tema": "Integração SNA · simpático × parasimpático",
+  "fonte": "Quadro do professor · sistema nervioso autónomo + Apostila SINUS §01",
+  "dificuldade": "avançado",
+  "enunciado": "Compare, em espanhol e em até seis linhas, simpático e parasimpático quanto a origem, neurotransmissor principal e efeito sobre coração, bronquios e intestino. Aponte uma exceção ao padrão.",
+  "modelo_resposta": "El simpático nace en la región toracolumbar y su neurotransmisor principal en los órganos efectores es la noradrenalina; aumenta la frecuencia cardíaca, produce broncodilatación y disminuye el peristaltismo. El parasimpático tiene origen craneosacro y usa acetilcolina; disminuye la frecuencia cardíaca, produce broncoconstricción y aumenta el peristaltismo. Excepción: las glándulas sudoríparas ecrinas reciben vía simpática pero liberan acetilcolina sobre receptores muscarínicos.",
+  "criterios": [
+   "Origem correta",
+   "Neurotransmissores",
+   "Três órgãos corretos",
+   "Exceção sudorípara"
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B034",
+  "tipo": "multipla_escolha",
+  "tema": "Antagonistas adrenérgicos · HTA",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos + anotações",
+  "dificuldade": "avançado",
+  "enunciado": "O professor listou, para HTA de 1ª línea, IECA (enalapril), ARA II (losartán), tiazídicos (hidroclorotiazida) e BCC (amlodipino). O que isso implica para antagonistas α1 e β-bloqueadores?",
+  "opcoes": {
+   "a": "Eles são a 1ª línea da HTA, pois bloqueiam a noradrenalina.",
+   "b": "Não estão entre os grupos de 1ª línea citados no quadro; as anotações dizem que os α1 tratam HTA \"pero no son de 1ª línea\", e os β-bloqueadores têm indicações específicas (angina, IC, pós-IAM, etc.).",
+   "c": "Estão contraindicados em qualquer paciente hipertenso.",
+   "d": "Substituem os tiazídicos porque têm o mesmo mecanismo."
+  },
+  "resposta": "b",
+  "justificativa": "O quadro lista as 4 classes de 1ª línea; as anotações dos α1 registram \"pero no son de 1ª línea\". O uso dos β-bloqueadores é guiado pela comorbidade.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B035",
+  "tipo": "associacao",
+  "tema": "HTA · primeira linha",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos",
+  "dificuldade": "básico",
+  "enunciado": "Associe a classe anti-hipertensiva de 1ª línea ao exemplo escrito no quadro.",
+  "pares": [
+   [
+    "IECA",
+    "Enalapril"
+   ],
+   [
+    "ARA II",
+    "Losartán"
+   ],
+   [
+    "Tiazídicos",
+    "Hidroclorotiazida"
+   ],
+   [
+    "BCC (bloqueadores de canal de cálcio)",
+    "Amlodipino"
+   ]
+  ],
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B036",
+  "tipo": "multipla_escolha",
+  "tema": "Antagonistas · vasos",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos",
+  "dificuldade": "avançado",
+  "enunciado": "No desenho do vaso, o professor marcou β2 (vasodilatação) e α1 (vasoconstricción) com setas para RVP e PA. Qual interpretação é coerente?",
+  "opcoes": {
+   "a": "O bloqueio de α1 reduz a vasoconstricción, com queda de RVP e PA; o bloqueio de β2 vascular retira a vasodilatação e tende a aumentar a RVP.",
+   "b": "O bloqueio de α1 aumenta a RVP e a PA.",
+   "c": "O bloqueio de β2 vascular causa vasodilatação e queda da PA.",
+   "d": "α1 e β2 produzem o mesmo efeito vascular, por isso são intercambiáveis."
+  },
+  "resposta": "a",
+  "justificativa": "α1 (Gq) contrai o músculo liso vascular; β2 (Gs) relaxa. Bloquear α1 reduz RVP e PA; bloquear β2 retira um mecanismo vasodilatador (relevante em crises catecolaminérgicas).",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B037",
+  "tipo": "multipla_escolha",
+  "tema": "β-bloqueadores · oferta e demanda de O₂",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos + anotações dos β-bloqueadores",
+  "dificuldade": "avançado",
+  "enunciado": "O professor desenhou uma balança \"oferta × demanda de O₂\". Qual raciocínio os β-bloqueadores usam na angina de pecho e na enfermedad de la arteria coronaria?",
+  "opcoes": {
+   "a": "Aumentam a oferta de O₂ por vasodilatação coronariana direta.",
+   "b": "Reduzem a demanda miocárdica de O₂ ao diminuir frequência e força de contração, reequilibrando a balança.",
+   "c": "Aumentam a frequência para compensar a falta de oxigênio.",
+   "d": "Substituem o oxigênio circulante."
+  },
+  "resposta": "b",
+  "justificativa": "β1 bloqueado: menor frequência, força e condução (apostila §13); menor trabalho cardíaco e menor consumo de O₂.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B038",
+  "tipo": "associacao",
+  "tema": "Antagonistas adrenérgicos · classificação",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos + anotações",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o grupo ao fármaco citado nas anotações.",
+  "pares": [
+   [
+    "α1 e α2 (não seletivos)",
+    "Fentolamina, fenoxibenzamina"
+   ],
+   [
+    "α1 seletivos",
+    "Prazosina, terazosina, tamsulosina, doxazosina"
+   ],
+   [
+    "α2 seletivo",
+    "Yohimbina"
+   ],
+   [
+    "β1 e β2 (não seletivos)",
+    "Propranolol, nadolol, timolol"
+   ],
+   [
+    "β1 seletivos",
+    "Atenolol, bisoprolol, esmolol, metoprolol, nebivolol"
+   ],
+   [
+    "Mistos α e β",
+    "Carvedilol, labetalol"
+   ]
+  ],
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B039",
+  "tipo": "multipla_escolha",
+  "tema": "α1 antagonistas · cautelas",
+  "fonte": "Anotações do professor + Apostila SINUS §17",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com hiperplasia prostática benigna (HPB) e planejamento de cirurgia de cataratas. O que as anotações destacam sobre o grupo α1 (tamsulosina, doxazosina…)?",
+  "opcoes": {
+   "a": "São indicados na HPB, por relaxarem próstata e cuello vesical, mas \"cirugía de cataratas\" aparece como contraindicação/cautela e há risco de hipotensión ortostática.",
+   "b": "São contraindicados na HPB e indicados na catarata.",
+   "c": "Causam bradicardia reflexa intensa por bloqueio β1.",
+   "d": "São a 1ª línea da HTA."
+  },
+  "resposta": "a",
+  "justificativa": "Anotações: α1 tratam HTA (não de 1ª línea) e HPB; contraindicação: cirugía de cataratas; hipotensión ortostática. Apostila: preferência funcional urinária (tamsulosina) com relaxamento da próstata e do cuello vesical.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B040",
+  "tipo": "multipla_escolha",
+  "tema": "α2 antagonista",
+  "fonte": "Anotações do professor + Apostila SINUS §17",
+  "dificuldade": "intermediário",
+  "enunciado": "Sobre a yohimbina, assinale a opção correta.",
+  "opcoes": {
+   "a": "α2-antagonista natural, aumenta a saída simpática e foi usada como estimulante sexual; a sua recomendação é limitada por falta de eficácia demonstrada.",
+   "b": "α2-agonista usado como anti-hipertensivo central.",
+   "c": "β1-seletivo de ação ultracurta.",
+   "d": "Agonista nicotínico de uso intravenoso."
+  },
+  "resposta": "a",
+  "justificativa": "Anotações: α2, natural, estimulante sexual, não recomendada por falta de eficácia. Apostila: aumenta a saída simpática; utilidade limitada.",
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B041",
+  "tipo": "caso_clinico",
+  "tema": "α1 antagonistas · HPB e HTA",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos + Apostila SINUS §17",
+  "dificuldade": "avançado",
+  "enunciado": "Homem de 66 años com hiperplasia prostática benigna e hipertensión, iniciando doxazosina. Na primeira semana refere tontura ao levantar e batimentos acelerados.",
+  "subperguntas": [
+   {
+    "p": "1) Qual é a classe e o receptor-alvo do fármaco?",
+    "r": "Antagonista α1 seletivo (Gq), com efeito vascular e urinário."
+   },
+   {
+    "p": "2) Por que ele pode melhorar o fluxo urinário?",
+    "r": "Relaxa a musculatura lisa da próstata e do cuello vesical."
+   },
+   {
+    "p": "3) Explique a tontura postural.",
+    "r": "Menos vasoconstricción α1 ao levantar: hipotensión ortostática."
+   },
+   {
+    "p": "4) Explique a taquicardia.",
+    "r": "Taquicardia reflexa (barorreflejo) por queda de PA."
+   }
+  ],
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B042",
+  "tipo": "associacao",
+  "tema": "Agonistas adrenérgicos · receptor e ação",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + anotações",
+  "dificuldade": "intermediário",
+  "enunciado": "Associe o fármaco ao seu perfil adrenérgico.",
+  "pares": [
+   [
+    "Fenilefrina, midodrina",
+    "Agonistas α1"
+   ],
+   [
+    "Clonidina, alfametildopa",
+    "Agonistas α2 (ação central)"
+   ],
+   [
+    "Dobutamina",
+    "Agonista β1"
+   ],
+   [
+    "Salbutamol, terbutalina, salmeterol",
+    "Agonistas β2"
+   ],
+   [
+    "Mirabegrón",
+    "Agonista β3"
+   ],
+   [
+    "Isoproterenol",
+    "β1 e β2 (sem α)"
+   ],
+   [
+    "Efedrina, pseudoefedrina",
+    "Ação mista"
+   ],
+   [
+    "Anfetamina, cocaína, tiramina",
+    "Ação indireta"
+   ]
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B043",
+  "tipo": "caso_clinico",
+  "tema": "Agonistas adrenérgicos · ação mista",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + Apostila SINUS §16",
+  "dificuldade": "avançado",
+  "enunciado": "Durante uma cirurgia, a paciente apresenta hipotensión inducida por anestesia. O anestesiologista usa efedrina.",
+  "subperguntas": [
+   {
+    "p": "1) Como a efedrina se classifica quanto ao mecanismo?",
+    "r": "Acción mixta: combina ação direta sobre receptores e indireta, aumentando a disponibilidade de catecolaminas."
+   },
+   {
+    "p": "2) Que receptores participam do efeito pressor?",
+    "r": "α1 (vasoconstricción) e β1 (efeito cardíaco), pelo perfil α1, α2, β1 e β2 descrito no quadro."
+   },
+   {
+    "p": "3) Qual a diferença conceitual para a fenilefrina?",
+    "r": "A fenilefrina é um agonista direto predominantemente α1, sem componente indireto relevante; a efedrina tem componente de liberação."
+   }
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B044",
+  "tipo": "caso_clinico",
+  "tema": "Anafilaxia · adrenalina",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + Apostila SINUS §15",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com urticária, edema de lábios, broncoespasmo e hipotensión poucos minutos após exposição a alérgeno. A primeira escolha é adrenalina (epinefrina).",
+  "subperguntas": [
+   {
+    "p": "1) Em quais receptores a adrenalina atua e com qual afinidade relativa?",
+    "r": "α1, α2, β1 e β2; nas anotações, mayor afinidad sobre β."
+   },
+   {
+    "p": "2) Qual efeito corrige a hipotensão? E o broncoespasmo?",
+    "r": "Vasoconstricción α1 corrige a hipotensão; β2 produz broncodilatación."
+   },
+   {
+    "p": "3) Por que um β2-agonista isolado não basta?",
+    "r": "Não corrige o colapso vascular nem o componente cardíaco; só relaxa a musculatura bronquial."
+   }
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B045",
+  "tipo": "caso_clinico",
+  "tema": "Choque séptico · noradrenalina",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + Apostila SINUS §15",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente em choque séptico, com vasodilatação e hipotensión persistente. Indica-se noradrenalina (norepinefrina).",
+  "subperguntas": [
+   {
+    "p": "1) Qual a afinidade principal da noradrenalina?",
+    "r": "Mayor afinidad sobre α (α1, α2 e β1 no esquema do quadro)."
+   },
+   {
+    "p": "2) Que efeito hemodinâmico se espera?",
+    "r": "Aumento da resistência vascular periférica e da pressão arterial."
+   },
+   {
+    "p": "3) Por que a FC pode não subir?",
+    "r": "O aumento da pressão ativa barorreceptores e o reflexo vagal compete com o efeito β1."
+   }
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B046",
+  "tipo": "multipla_escolha",
+  "tema": "Profármacos e variabilidade enzimática",
+  "fonte": "Quadro do professor · caso clínico (codeína) + Apostila SINUS §14",
+  "dificuldade": "avançado",
+  "enunciado": "Codeína, midodrina e alfametildopa compartilham, nos materiais, a ideia de metabólito ativo. Qual consequência é coerente?",
+  "opcoes": {
+   "a": "A resposta ao fármaco pode variar com a atividade enzimática que gera o metabólito ativo (ex.: CYP em hepatócitos), e isso importa tanto em metabolismo lento quanto rápido.",
+   "b": "A enzima nunca influencia o efeito de profármacos.",
+   "c": "Profármacos agem imediatamente, sem metabolismo.",
+   "d": "Apenas fármacos injetáveis podem ser profármacos."
+  },
+  "resposta": "a",
+  "justificativa": "A apostila descreve a midodrina (ação α1 por metabólito ativo) e a alfametildopa (formação de metabólito de ação central); a codeína depende de CYP2D6. A atividade enzimática modifica a magnitude do efeito.",
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B047",
+  "tipo": "ordenacao",
+  "tema": "Sinalização Gq",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + Apostila SINUS §04 e §13",
+  "dificuldade": "avançado",
+  "enunciado": "Ordene a cascata de um receptor acoplado a Gq (como α1 e M3).",
+  "itens_na_ordem": [
+   "Agonista liga-se ao receptor",
+   "Ativação da proteína Gq",
+   "Ativação da fosfolipase C",
+   "Formação de IP₃ e DAG",
+   "Aumento de Ca²⁺ intracelular",
+   "Resposta celular (ex.: contração de músculo liso)"
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B048",
+  "tipo": "completar",
+  "tema": "Sinalização Gs e Gi",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores",
+  "dificuldade": "avançado",
+  "texto": "Receptores β ativam ___, estimulando a adenilil ciclase e elevando o ___; receptores α2 e M2 ativam ___, o que ___ esse segundo mensageiro.",
+  "lacunas": [
+   "Gs",
+   "AMPc",
+   "Gi",
+   "reduz"
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B049",
+  "tipo": "associacao",
+  "tema": "Sítios de ação na sinapse colinérgica",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §03 e §04",
+  "dificuldade": "avançado",
+  "enunciado": "Associe o fármaco/toxina ao etapa da sinapse colinérgica que ele altera.",
+  "pares": [
+   [
+    "Hemicolinio",
+    "Reduz a captação de colina"
+   ],
+   [
+    "Toxina botulínica",
+    "Impede a liberação de acetilcolina"
+   ],
+   [
+    "Neostigmina / organofosforados",
+    "Inibem a degradação (acetilcolinesterase)"
+   ],
+   [
+    "Atropina",
+    "Bloqueia receptores muscarínicos"
+   ],
+   [
+    "Tubocurarina / atracúrio",
+    "Bloqueiam a transmissão neuromuscular nicotínica"
+   ]
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B050",
+  "tipo": "multipla_escolha",
+  "tema": "Pilocarpina",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §05",
+  "dificuldade": "avançado",
+  "enunciado": "Quais efeitos explicam o uso da pilocarpina?",
+  "opcoes": {
+   "a": "Agonismo muscarínico com miosis, aumento da drenagem do humor acuoso e aumento de saliva.",
+   "b": "Antagonismo muscarínico com midriasis e boca seca.",
+   "c": "Agonismo β2 com broncodilatação.",
+   "d": "Bloqueio de canais de Ca²⁺ com vasodilatação."
+  },
+  "resposta": "a",
+  "justificativa": "Apostila §05: agonista muscarínico que atravessa membranas; miosis, drenagem do humor acuoso e aumento de saliva.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B051",
+  "tipo": "multipla_escolha",
+  "tema": "Metacolina",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §05",
+  "dificuldade": "avançado",
+  "enunciado": "A metacolina tem qual papel citado na apostila?",
+  "opcoes": {
+   "a": "Prueba de provocación bronquial em ambiente controlado, pelo efeito muscarínico nos bronquios.",
+   "b": "Broncodilatador de resgate.",
+   "c": "Antídoto de organofosforados.",
+   "d": "Descongestionante nasal."
+  },
+  "resposta": "a",
+  "justificativa": "Metacolina: efeito muscarínico bronquial; usada em prueba de provocación em ambiente controlado.",
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B052",
+  "tipo": "caso_clinico",
+  "tema": "Miastenia gravis · inibidores da colinesterase",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §06 e §07",
+  "dificuldade": "avançado",
+  "enunciado": "Paciente com miastenia gravis refere fraqueza fatigável. Discutem-se edrofonio, neostigmina e piridostigmina.",
+  "subperguntas": [
+   {
+    "p": "1) Qual a base fisiopatológica da fraqueza?",
+    "r": "Transmissão comprometida na unión neuromuscular por processo autoimune (anticorpos contra receptores de ACh)."
+   },
+   {
+    "p": "2) Por que aumentar ACh ajuda?",
+    "r": "Mais ACh na sinapse ajuda a aproveitar os receptores funcionais restantes."
+   },
+   {
+    "p": "3) Qual dos três é mais associado ao controle sintomático e por quê?",
+    "r": "A piridostigmina: ação periférica mais prolongada."
+   },
+   {
+    "p": "4) Qual o papel histórico do edrofonio?",
+    "r": "Teste diagnóstico histórico, de ação muito breve, hoje com uso limitado."
+   }
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B053",
+  "tipo": "verdadeiro_falso",
+  "tema": "Inibidores da colinesterase",
+  "fonte": "Quadro do professor · agonistas colinérgicos e sinapse + Apostila SINUS §06",
+  "dificuldade": "avançado",
+  "afirmacoes": [
+   {
+    "a": "A neostigmina é amônio quaternário e age sobretudo na periferia.",
+    "r": true,
+    "j": "Apostila §06."
+   },
+   {
+    "a": "A fisostigmina, amina terciária, não chega ao SNC.",
+    "r": false,
+    "j": "Ela chega ao SNC."
+   },
+   {
+    "a": "Edrofonio é de ação intermediária, junto de neostigmina e piridostigmina.",
+    "r": false,
+    "j": "No quadro, o edrofonio é de ação curta."
+   },
+   {
+    "a": "Donepezilo, rivastigmina e galantamina têm ação colinérgica central.",
+    "r": true,
+    "j": "Tratamento sintomático de demências selecionadas."
+   }
+  ],
+  "grupo": "Colinérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B054",
+  "tipo": "caso_clinico",
+  "tema": "Caso autoral no formato do professor · piridostigmina oral",
+  "fonte": "Caso autoral no formato do professor (modelo das perguntas do professor)",
+  "dificuldade": "avançado",
+  "enunciado": "Mulher de 41 años com miastenia gravis recebe piridostigmina em comprimido, por via oral.",
+  "subperguntas": [
+   {
+    "p": "1) Qual é o fármaco e o grupo?",
+    "r": "Piridostigmina: inibidor reversível da acetilcolinesterase, ação intermediária."
+   },
+   {
+    "p": "2) Forma de presentación e via?",
+    "r": "Sólida (comprimido), via oral."
+   },
+   {
+    "p": "3) Que característica química limita efeitos centrais?",
+    "r": "É amônio quaternário, de ação periférica; não atravessa a BHE."
+   },
+   {
+    "p": "4) Que efeitos colinérgicos periféricos se esperam?",
+    "r": "Maior ACh em receptores muscarínicos: salivação, cólicas, diarrea, bradicardia, miosis."
+   }
+  ],
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B055",
+  "tipo": "caso_clinico",
+  "tema": "Caso autoral no formato do professor · salbutamol inalado",
+  "fonte": "Caso autoral no formato do professor (modelo das perguntas do professor)",
+  "dificuldade": "avançado",
+  "enunciado": "Homem de 22 años com crise de asma recebe salbutamol por inalador.",
+  "subperguntas": [
+   {
+    "p": "1) Qual o fármaco e o receptor?",
+    "r": "Salbutamol: agonista β2 (Gs)."
+   },
+   {
+    "p": "2) Forma de presentación e via?",
+    "r": "Aerossol/solução inalatória, via inalatória."
+   },
+   {
+    "p": "3) Por que a via inalatória é conveniente?",
+    "r": "Ação local rápida nos bronquios com menor exposição sistêmica."
+   },
+   {
+    "p": "4) Que efeito sistêmico pode surgir e por quê?",
+    "r": "Tremor e taquicardia, por exposição de β2 musculares e estimulação cardíaca."
+   },
+   {
+    "p": "5) O salbutamol é profármaco?",
+    "r": "Não; não depende de ativação enzimática, ao contrário da codeína."
+   }
+  ],
+  "grupo": "Casos clínicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B056",
+  "tipo": "multipla_escolha",
+  "tema": "SNA · ereção e ejaculação",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "avançado",
+  "enunciado": "Qual associação entre divisão autonômica e função sexual está registrada no quadro?",
+  "opcoes": {
+   "a": "Parassimpático: erección e ingurgitamiento del clítoris; simpático: eyaculación e contração uterina.",
+   "b": "Simpático: erección; parassimpático: eyaculación.",
+   "c": "Ambos produzem erección.",
+   "d": "Nenhuma delas é autonômica."
+  },
+  "resposta": "a",
+  "justificativa": "O quadro registra erección/ingurgitamiento no parassimpático e eyaculación/contração uterina no simpático.",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B057",
+  "tipo": "multipla_escolha",
+  "tema": "SNA · rim e renina",
+  "fonte": "Quadro do professor · sistema nervioso autónomo + Apostila SINUS §13",
+  "dificuldade": "avançado",
+  "enunciado": "No simpático, o rim apresenta menor produção de orina, menor fluxo sanguíneo, menor peristaltismo do ureter e maior liberação de renina. Qual receptor está associado à renina?",
+  "opcoes": {
+   "a": "β1 (Gs)",
+   "b": "α2 (Gi)",
+   "c": "M3 (Gq)",
+   "d": "Nn (iônico)"
+  },
+  "resposta": "a",
+  "justificativa": "Apostila §13: β1 está ligado a frequência, força e condução cardíaca e à renina.",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B058",
+  "tipo": "verdadeiro_falso",
+  "tema": "SNA · glândulas e secreções",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "avançado",
+  "afirmacoes": [
+   {
+    "a": "No simpático, as glândulas lagrimais reduzem lágrimas e a salival aumenta a espessura do muco.",
+    "r": true,
+    "j": "Registro do quadro."
+   },
+   {
+    "a": "No parassimpático, glândulas lagrimais, salivais e nasais aumentam a secreção.",
+    "r": true,
+    "j": "Registro do quadro."
+   },
+   {
+    "a": "O parassimpático contrai o músculo ciliar e produz miosis.",
+    "r": true,
+    "j": "Registro do quadro."
+   },
+   {
+    "a": "O simpático aumenta o peristaltismo, a secreção e a absorção intestinal.",
+    "r": false,
+    "j": "O simpático diminui peristaltismo, secreção e absorção."
+   }
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B059",
+  "tipo": "associacao",
+  "tema": "Pupila · terminologia",
+  "fonte": "Quadro do professor · sistema nervioso autónomo",
+  "dificuldade": "básico",
+  "enunciado": "Associe o termo ao seu significado.",
+  "pares": [
+   [
+    "Isocoria",
+    "Pupilas de tamanhos iguais"
+   ],
+   [
+    "Anisocoria",
+    "Pupilas de tamanhos diferentes"
+   ],
+   [
+    "Miosis",
+    "Constrição pupilar"
+   ],
+   [
+    "Midriasis",
+    "Dilatação pupilar"
+   ]
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B060",
+  "tipo": "multipla_escolha",
+  "tema": "Reflexo pupilar · pares cranianos",
+  "fonte": "Mnemônica dos pares cranianos (imagem enviada) + Apostila SINUS §01",
+  "dificuldade": "avançado",
+  "enunciado": "No reflexo fotomotor, qual par craniano leva a via aferente e qual leva a eferente parassimpática?",
+  "opcoes": {
+   "a": "Aferente: II (óptico); eferente parassimpática: III (oculomotor).",
+   "b": "Aferente: III; eferente: II.",
+   "c": "Aferente: V; eferente: VII.",
+   "d": "Aferente e eferente: X (vago)."
+  },
+  "resposta": "a",
+  "justificativa": "A visão chega por II; a miosis é mediada por fibras parassimpáticas do III, com receptor M3 no esfíncter pupilar.",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B061",
+  "tipo": "multipla_escolha",
+  "tema": "Receptores no ojo e SNA",
+  "fonte": "Quadro do professor · sistema nervioso autónomo + Apostila SINUS §09",
+  "dificuldade": "avançado",
+  "enunciado": "A midriasis pode surgir por mecanismos opostos. Qual afirmação está correta?",
+  "opcoes": {
+   "a": "Por ativação simpática α1 do músculo radial ou por bloqueio muscarínico M3 do esfíncter pupilar.",
+   "b": "Apenas por ativação parassimpática.",
+   "c": "Apenas por bloqueio nicotínico.",
+   "d": "Somente por agonistas β2."
+  },
+  "resposta": "a",
+  "justificativa": "α1 contrai o radial; o bloqueio de M3 no esfíncter também produz midriasis (cicloplejía se bloquear o ciliar).",
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B062",
+  "tipo": "verdadeiro_falso",
+  "tema": "SNA · origem e transmissores",
+  "fonte": "Quadro do professor · sistema nervioso autónomo + Apostila SINUS §01 e §02",
+  "dificuldade": "avançado",
+  "afirmacoes": [
+   {
+    "a": "Todos os ganglios autonómicos utilizam acetilcolina em receptor nicotínico neuronal (Nn).",
+    "r": true,
+    "j": "Apostila §02."
+   },
+   {
+    "a": "A medula suprarrenal é inervada por fibra simpática pré-ganglionar que libera ACh sobre célula cromafín.",
+    "r": true,
+    "j": "Apostila §02."
+   },
+   {
+    "a": "A fibra pré-ganglionar simpática é geralmente longa e a pós-ganglionar, curta.",
+    "r": false,
+    "j": "No simpático a pré é curta e a pós é longa."
+   },
+   {
+    "a": "O parassimpático tem gânglios próximos ou dentro do órgão.",
+    "r": true,
+    "j": "Apostila §01."
+   }
+  ],
+  "grupo": "SNA e pares cranianos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B063",
+  "tipo": "discursiva",
+  "tema": "Agonistas adrenérgicos · classificação",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores",
+  "dificuldade": "avançado",
+  "enunciado": "Classifique os agonistas adrenérgicos como o professor (ação direta seletiva/não seletiva, mista e indireta), com um exemplo e a indicação principal de cada grupo.",
+  "modelo_resposta": "Acción directa selectiva: α1 (fenilefrina, midodrina), α2 (clonidina, alfametildopa), β1 (dobutamina), β2 (salbutamol, terbutalina, salmeterol), β3 (mirabegrón). No selectiva: oximetazolina (α1 y α2), isoproterenol (β1 y β2), adrenalina/dopamina (α1-α2-β1-β2), noradrenalina (α1, α2, β1). Acción mixta: efedrina y pseudoefedrina (hipotensión inducida por anestesia). Acción indirecta: anfetamina, cocaína y tiramina (aumentan la disponibilidad de noradrenalina).",
+  "criterios": [
+   "Quatro blocos de classificação",
+   "Exemplos corretos",
+   "Indicações principais coerentes"
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B064",
+  "tipo": "discursiva",
+  "tema": "Síntese de NA e sítios de ação",
+  "fonte": "Quadro do professor · agonistas adrenérgicos e receptores + Apostila SINUS §12",
+  "dificuldade": "avançado",
+  "enunciado": "Descreva a síntese da noradrenalina e indique em quais etapas atuam reserpina, anfetamina, cocaína e IMAO.",
+  "modelo_resposta": "Tirosina → L-DOPA (tirosina hidroxilasa) → dopamina (DOPA descarboxilasa) → noradrenalina en las vesículas (dopamina β-hidroxilasa). Reserpina: bloquea el transporte de monoaminas a las vesículas (almacenamiento). Anfetamina y tiramina: aumentan la disponibilidad de noradrenalina (liberación). Cocaína: inhibe la recaptación. IMAO: reducen el metabolismo de monoaminas (degradación).",
+  "criterios": [
+   "Cadeia correta com enzimas",
+   "Quatro sítios de ação"
+  ],
+  "grupo": "Adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B065",
+  "tipo": "discursiva",
+  "tema": "β-bloqueadores · classificação e indicações",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos + anotações",
+  "dificuldade": "avançado",
+  "enunciado": "Classifique os β-bloqueadores em não seletivos, β1-seletivos e mistos; cite exemplos, uma indicação característica e uma contraindicação ou RAM de cada grupo.",
+  "modelo_resposta": "No selectivos (propranolol, nadolol, timolol): migraña, hipertensión portal, temblor/hipertiroidismo, glaucoma (timolol); contraindicado en asma. Selectivos β1 (atenolol, bisoprolol, esmolol, metoprolol, nebivolol): fibrilación auricular, angina, post-IAM, insuficiencia cardíaca; contraindicado en IC descompensada; RAM bradicardia. Mixtos α-β (carvedilol, labetalol): IC, crisis hipertensiva; RAM hipotensión ortostática y bradicardia.",
+  "criterios": [
+   "Três grupos",
+   "Exemplos",
+   "Indicação/contraindicação coerentes"
+  ],
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ },
+ {
+  "id": "SIN-FARM-P2-B066",
+  "tipo": "discursiva",
+  "tema": "HTA e antagonistas",
+  "fonte": "Quadro do professor · antagonistas adrenérgicos",
+  "dificuldade": "avançado",
+  "enunciado": "Explique por que α1 e β-bloqueadores não são a primeira linha da hipertensão, e quais classes são, segundo o quadro.",
+  "modelo_resposta": "La primera línea citada incluye IECA (enalapril), ARA II (losartán), tiazídicos (hidroclorotiazida) y BCC (amlodipino). Los α1 tratan HTA pero no son de primera línea, y se destacan en HPB; los β-bloqueadores se eligen según comorbilidades (angina, IC, post-IAM, FA). Además, α1 causan hipotensión ortostática y taquicardia refleja.",
+  "criterios": [
+   "Quatro classes de 1ª línea",
+   "Papel de α1 e β",
+   "RAM relevantes"
+  ],
+  "grupo": "Antagonistas adrenérgicos (quadro)"
+ }
+]

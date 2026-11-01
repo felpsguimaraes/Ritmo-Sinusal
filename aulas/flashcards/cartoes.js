@@ -1444,6 +1444,1574 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "q": "¿Por qué no se deben suspender bruscamente los corticoides?",
    "a": "Após exposição prolongada, o eixo hipotálamo–hipófise–suprarrenal fica suprimido e a produção endógena de cortisol pode estar insuficiente: a retirada abrupta pode causar insuficiência suprarrenal aguda. Tratamentos curtos (&lt; 3–4 semanas) nem sempre exigem desmame (R12).",
    "x": "Pergunta oficial da Clase 9 (páginas 44 e 46)."
+  },
+  {
+   "id": "qp-1",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Feocromocitoma · β-bloqueador isolado",
+   "q": "Paciente com feocromocitoma em crise hipertensiva recebe propranolol isolado e a pressão sobe ainda mais. Qual explicação mecanística é a mais adequada?",
+   "a": "C) Ao bloquear β2 vasculares, retira a vasodilatação que se opunha ao efeito α1 do excesso de catecolaminas, deixando a vasoconstricción sem oposição. Nos feocromocitomas o bloqueio α (fenoxibenzamina, fentolamina) vem primeiro. O β-bloqueador isolado remove o componente β2 vasodilatador e deixa o α1 agir livremente. O propranolol não tem atividade simpaticomimética intrínseca.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-2",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · α-bloqueadores · taquicardia reflexa",
+   "q": "Dois pacientes hipertensos recebem fentolamina e prazosina. Por que a taquicardia reflexa tende a ser mais intensa com a fentolamina?",
+   "a": "D) A fentolamina bloqueia também α2 pré-sinápticos, perde-se o feedback negativo, aumenta a liberação de noradrenalina sobre β1 cardíacos e isso soma-se ao barorreflexo. Antagonistas α1 e α2 (fentolamina, fenoxibenzamina) somam o reflexo barorreceptor ao aumento de liberação de noradrenalina por perda do autorreceptor α2. A prazosina (α1 seletivo) também causa taquicardia reflexa, sem esse componente extra. A fentolamina é competitiva e de ação breve.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-3",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Extravasação de noradrenalina",
+   "q": "Durante infusão periférica de noradrenalina ocorre extravasação com palidez local e risco de necrose dérmica. Qual conduta farmacológica é conceitualmente a mais adequada?",
+   "a": "D) Fentolamina, antagonista α competitivo de ação breve, para reverter a vasoconstricção local. As anotações listam a necrose dérmica por extravasación de noradrenalina entre as indicações da fentolamina; a apostila a descreve como competitiva, de ação mais breve, usada em crises específicas. A fenoxibenzamina é irreversível e associada ao feocromocitoma.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-4",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Noradrenalina · barorreflexo",
+   "q": "No choque séptico, a noradrenalina eleva a pressão arterial, mas a frequência cardíaca pode não aumentar e até cair, apesar de a noradrenalina ser agonista β1. Qual é a melhor explicação?",
+   "a": "B) A elevação pressórica mediada por α1 ativa barorreceptores, e o reflexo vagal supera o efeito β1 direto. Alta afinidade por α (como nas anotações) significa aumento de resistência vascular e pressão. O barorreflexo, com ativação vagal, pode compensar ou superar o efeito β1 direto sobre o coração.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-5",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Catecolaminas · choque e bradicardia",
+   "q": "Associe cada situação ao fármaco com melhor racional: (I) choque séptico com vasodilatação; (II) baixo débito com choque cardiogênico selecionado; (III) bradicardia ou distúrbio de condução selecionado.",
+   "a": "C) I noradrenalina; II dobutamina; III isoproterenol Noradrenalina aumenta resistência vascular (choque com vasodilatação); dobutamina aumenta a força contrátil (baixo débito, choque cardiogênico); isoproterenol (β1 e β2, sem α) é usado em bradicardia e distúrbios de condução.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-6",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Anafilaxia · adrenalina",
+   "q": "Por que a adrenalina, e não o salbutamol, é a primeira escolha na anafilaxia grave?",
+   "a": "B) Porque a adrenalina combina α1 (vasoconstricción e correção da hipotensão), β1 (efeito cardíaco) e β2 (broncodilatación), enquanto o salbutamol atua essencialmente em β2. A anafilaxia combina colapso vascular, edema, broncoespasmo e comprometimento cardíaco; só um agonista de amplo espectro cobre todos. Mapa da apostila: \"Anafilaxia: adrenalina primeiro\".",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-7",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Oximetazolina · rebote",
+   "q": "Paciente usa oximetazolina nasal há três semanas e, ao suspender de golpe, a congestão piora. Qual é a interpretação correta?",
+   "a": "A) É efeito de rebote do uso prolongado de vasoconstritor α tópico, o risco já descrito para o descongestionante. A apostila destaca descongestão com risco de rebote; as anotações listam congestão de rebote ao suspender de golpe. Uso repetido de vasoconstritor tópico gera dessensibilização e vasodilatação compensatória.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-8",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Midriasis × cicloplejía",
+   "q": "Um oftalmologista precisa de midriasis sem perda de acomodação. Qual afirmação é correta?",
+   "a": "A) A fenilefrina contrai o músculo dilatador radial da íris (α1) e produz midriasis sem bloqueio muscarínico, ao contrário da tropicamida e da atropina, que bloqueiam o esfíncter e o músculo ciliar e causam também cicloplejía. A apostila distingue midriasis (dilatação pupilar) de cicloplejía (perda de acomodação por bloqueio do ciliar). A fenilefrina é citada como midriasis sem bloqueio muscarínico. Em olhos predispostos ao cierre angular, qualquer midriasis pode elevar a pressão intraocular.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-9",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · IMAO e tiramina",
+   "q": "Paciente em uso de IMAO ingere queijo curado e desenvolve crise hipertensiva. Qual é o mecanismo?",
+   "a": "C) Sem MAO funcional, a tiramina ingerida escapa da degradação e chega às terminações, deslocando noradrenalina e liberando-a em excesso (agonista indireto). A tiramina é substrato da MAO. Com a enzima inibida, aumenta sua disponibilidade sistêmica e, como agonista indireto, amplia a disponibilidade de noradrenalina: vasoconstricción e crise hipertensiva.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-10",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas indiretos · precisão",
+   "q": "A anotação diz que os agonistas indiretos (anfetamina, cocaína, tiramina) \"evitam a degradação da noradrenalina ao inibir a MAO e a COMT\". Comparando com a apostila, qual descrição é mais precisa?",
+   "a": "B) Anfetamina e tiramina aumentam a disponibilidade/liberação de noradrenalina e a cocaína inibe a recaptação; a inibição da MAO é o mecanismo dos IMAO, não o desses agonistas. A apostila organiza a sinapse em etapas: armazenamento (reserpina), liberação (anfetamina, tiramina), recaptação (cocaína) e degradação (IMAO). Em prova, descreva o ponto de ação de cada fármaco.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-11",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Clonidina e alfametildopa",
+   "q": "Sobre clonidina e alfametildopa, qual afirmação é correta?",
+   "a": "C) Atuam em receptores α2 (Gi): a clonidina age centralmente e a alfametildopa forma um metabólito de ação central; ambas reduzem a saída simpática, e a alfametildopa foi lembrada em contexto obstétrico. As anotações listam clonidina e alfametildopa entre os α2-agonistas (hipertensão, TDAH; hipertensão na gravidez). α2 é Gi: menor liberação de noradrenalina e menor saída simpática central.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-12",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · β-bloqueador tópico · glaucoma e asma",
+   "q": "Paciente com glaucoma de ângulo aberto e asma leve precisa de β-bloqueador tópico. Qual escolha é conceitualmente mais adequada, e com que ressalva?",
+   "a": "D) Betaxolol, predominantemente β1, com a ressalva de que a seletividade é relativa e o uso exige cautela em asma. A apostila alerta para o broncoespasmo dos não seletivos (timolol tópico reduz humor acuoso, mas pode ter efeito sistêmico). O betaxolol está entre os predominantemente β1, e a seletividade é relativa. As anotações registram asma como contraindicação dos não seletivos.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-13",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Seletividade β1 dose-dependente",
+   "q": "Paciente em uso de atenolol em dose alta apresenta sibilância. Qual é a explicação mais coerente?",
+   "a": "B) A seletividade β1 é relativa e diminui em doses altas, com bloqueio β2 bronquial e risco de broncoespasmo. A apostila descreve os predominantemente β1 (atenolol, bisoprolol, metoprolol, betaxolol) como de seletividade relativa, menor em doses altas. O β2 bronquial medeia relaxamento; bloqueá-lo favorece broncoespasmo.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-14",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · β-bloqueadores · vasodilatação adicional",
+   "q": "Qual associação entre β-bloqueador e mecanismo adicional de vasodilatação está correta?",
+   "a": "A) Carvedilol e labetalol: bloqueio α1 associado ao bloqueio β; nebivolol: participação do óxido nítrico. A apostila separa \"β1/β2 + α1\" (carvedilol, labetalol) de \"β1 com vasodilatação\" (nebivolol: óxido nítrico). Nas anotações, carvedilol e labetalol são antagonistas mistos α e β, com hipotensión ortostática entre as RAM.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-15",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Antimuscarínicos · BHE",
+   "q": "Idoso de 78 anos, com leve declínio cognitivo, tem bexiga hiperativa. Para reduzir o risco de efeitos centrais, qual antimuscarínico é o racional mais adequado?",
+   "a": "B) Trospio, amina quaternária hidrofílica que não atravessa a barreira hematoencefálica. Segundo as anotações, aminas terciárias (oxibutinina, tolterodina, solifenacina, benztropina) atravessam a BHE por serem lipofílicas; as quaternárias (trospio, glicopirrolato, ipratrópio, tiotrópio) não. A passagem pela BHE explica delirium, ansiedade e convulsões.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-16",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Intoxicação antimuscarínica · antídoto",
+   "q": "Paciente com intoxicação por antimuscarínico apresenta boca seca, pele quente e seca, midriasis, retención urinaria e delirium. Por que a fisostigmina, e não a neostigmina, é a escolha conceitual para os sintomas centrais?",
+   "a": "C) A fisostigmina é amina terciária e atinge o SNC, enquanto a neostigmina é de ação periférica por ser amônio quaternário; ambas elevam a ACh por inibir a colinesterase. A anotação do professor registra a fisostigmina como antídoto. A apostila a descreve como amina terciária que chega ao SNC, de uso selecionado, e a neostigmina como periférica (amônio quaternário). Aumentar a ACh permite competir com o antagonista.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-17",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Organofosforados · atropina",
+   "q": "Na intoxicação grave por organofosforado, a atropina reverte qual conjunto de manifestações?",
+   "a": "C) Miosis, sialorrea, broncorrea, broncoespasmo, diarrea e bradicardia, mas não a paralisia nicotínica da placa motora. A atropina bloqueia receptores muscarínicos. Fraqueza e paralisia dependem de receptores nicotínicos musculares (Nm), que ela não bloqueia. Por isso a apostila separa os componentes em muscarínico, nicotínico e central, e cita o envejecimiento da enzima fosforilada.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-18",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Escopolamina × butilbromuro",
+   "q": "Sobre escopolamina (hioscina) e butilbromuro de hioscina, qual afirmação é correta?",
+   "a": "C) A escopolamina é alcaloide natural com ação central (inclui efeito antiemético), enquanto o butilbromuro, quaternário hidrofílico, é usado como antiespasmódico em cólicas intestinais e colon irritable. As anotações mostram os dois lados: escopolamina com efeito antiemético; butilbromuro de hioscina indicado em cólicas intestinais, colon irritable e diarrea severa, no grupo das aminas quaternárias. Apostila: moléculas diferentes, mesmo propósito antiespasmódico.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-19",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Glaucoma e cirurgia ocular",
+   "q": "Sobre fármacos usados em glaucoma e cirurgia ocular, qual afirmação é correta?",
+   "a": "A) Pilocarpina (agonista muscarínico) causa miosis e favorece a drenagem do humor acuoso; timolol reduz a produção de humor acuoso; atropina e outros midriáticos são contraindicados em predisposição a ângulo fechado. A apostila cita a pilocarpina (miosis, drenagem do humor acuoso, saliva) e o timolol tópico (reduz humor acuoso). As anotações listam o glaucoma como contraindicação dos antimuscarínicos, pelo aumento da pressão intraocular.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-20",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Atropina × agonista β1 no coração",
+   "q": "A atropina e um agonista β1 podem aumentar a frequência cardíaca. Qual afirmação descreve corretamente a diferença de mecanismo?",
+   "a": "D) A atropina bloqueia M2 (Gi) e retira o freio vagal, enquanto o agonista β1 ativa receptores acoplados a Gs, com aumento de frequência, força e condução. A apostila descreve M2 como Gi nos nodos SA e AV (menor frequência e condução) e β1 como Gs (maior frequência, força e condução). Um efeito parte de retirar o freio vagal; o outro estimula diretamente o coração.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-21",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Paciente do sexo feminino, 37 años, com dolor en epigastrio de intensidad moderada. Indica-se um analgésico opioide em comprimido (codeína). Horas depois, apresenta somnolencia e náuseas. Descobre-se que ela possui uma enzima que lhe confere metabolismo rápido. 1) Qual é o fármaco e qual a sua natureza farmacológica?",
+   "a": "Codeína: analgésico opioide, agonista de receptores opioides, que atua como profármaco (precisa ser metabolizada para a forma ativa, a morfina).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-22",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Paciente do sexo feminino, 37 años, com dolor en epigastrio de intensidad moderada. Indica-se um analgésico opioide em comprimido (codeína). Horas depois, apresenta somnolencia e náuseas. Descobre-se que ela possui uma enzima que lhe confere metabolismo rápido. 2) Qual é a forma de presentación do medicamento?",
+   "a": "Forma sólida: comprimido.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-23",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Paciente do sexo feminino, 37 años, com dolor en epigastrio de intensidad moderada. Indica-se um analgésico opioide em comprimido (codeína). Horas depois, apresenta somnolencia e náuseas. Descobre-se que ela possui uma enzima que lhe confere metabolismo rápido. 3) Qual é a via de administración e quais características dela são relevantes?",
+   "a": "Via oral. Depende de absorção no tracto gastrointestinal e de passagem pelo fígado antes da circulação sistêmica, o que torna o metabolismo hepático determinante para o efeito.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-24",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Paciente do sexo feminino, 37 años, com dolor en epigastrio de intensidad moderada. Indica-se um analgésico opioide em comprimido (codeína). Horas depois, apresenta somnolencia e náuseas. Descobre-se que ela possui uma enzima que lhe confere metabolismo rápido. 4) Onde ocorre o metabolismo e qual enzima é afetada?",
+   "a": "No hígado, pelo sistema do citocromo P450 (CYP450, principal enzima do metabolismo); para a codeína, a conversão em morfina depende sobretudo da isoforma CYP2D6.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-25",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Paciente do sexo feminino, 37 años, com dolor en epigastrio de intensidad moderada. Indica-se um analgésico opioide em comprimido (codeína). Horas depois, apresenta somnolencia e náuseas. Descobre-se que ela possui uma enzima que lhe confere metabolismo rápido. 5) Como o metabolismo rápido explica a somnolencia e as náuseas?",
+   "a": "Mais codeína é convertida em morfina em menos tempo, o que aumenta o efeito opioide no SNC (sedação, náusea e, nos casos graves, depressión respiratoria).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-26",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "No caso da codeína, o quadro inicialmente registrava \"metabolismo lento\" e foi corrigido para \"metabolismo rápido\". Qual leitura é coerente com somnolencia e náuseas após o comprimido?",
+   "a": "B) Metabolismo rápido: maior e mais rápida conversão em morfina, com efeito opioide exagerado. Em um profármaco, a enzima gera a forma ativa. Metabolismo rápido aumenta a formação de morfina e a toxicidade (sedação, náusea). Metabolismo lento tenderia a falha analgésica por pouca morfina.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-27",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Verdadeiro ou falso? Em um metabolizador lento da enzima que ativa a codeína, espera-se menor analgesia por menor formação de morfina.",
+   "a": "Verdadeiro. Menos conversão em forma ativa significa menos efeito analgésico.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-28",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Verdadeiro ou falso? Como a codeína é profármaco, o metabolismo rápido sempre reduz o seu efeito.",
+   "a": "Falso. Em profármacos, metabolismo rápido aumenta a formação do metabólito ativo; reduziria o efeito só em fármacos ativos que são inativados pelo fígado.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-29",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Verdadeiro ou falso? O metabolismo hepático da codeína ocorre predominantemente pelo sistema CYP450.",
+   "a": "Verdadeiro. O quadro destaca o CYP450 como principal enzima do metabolismo.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-30",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Dor epigástrica e AINEs",
+   "q": "Na paciente com dolor en epigastrio, por que o uso de AINE exigiria especial cautela conceitual, segundo a apostila?",
+   "a": "B) AINEs reduzem a proteção da mucosa mediada por prostaglandinas, com risco de úlcera, sangramento ou perfuração. Menor proteção por PG na mucosa gastrointestinal: úlcera, sangramento ou perfuração (apostila §21).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-31",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Semiologia · regiões abdominais",
+   "q": "Semiologia · regiões abdominais: Epigastrio",
+   "a": "Linha superior, central",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-32",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Semiologia · regiões abdominais",
+   "q": "Semiologia · regiões abdominais: Hipogastrio",
+   "a": "Linha inferior, central",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-33",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Semiologia · regiões abdominais",
+   "q": "Semiologia · regiões abdominais: Flanco derecho",
+   "a": "Linha média, lateral direita",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-34",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Semiologia · regiões abdominais",
+   "q": "Semiologia · regiões abdominais: Mesogastrio (periumbilical)",
+   "a": "Linha média, central",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-35",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Semiologia · regiões abdominais",
+   "q": "Semiologia · regiões abdominais: Fosa ilíaca derecha (FID)",
+   "a": "Linha inferior, lateral direita",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-36",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Semiologia · regiões abdominais",
+   "q": "Semiologia · regiões abdominais: Fosa ilíaca izquierda (FII)",
+   "a": "Linha inferior, lateral esquerda",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-37",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Farmacocinética · profármaco",
+   "q": "Explique, em espanhol e em até cinco linhas, por que a velocidade de metabolismo hepático muda o efeito da codeína, usando o conceito de profármaco.",
+   "a": "La codeína es un profármaco opioide: necesita ser metabolizada en el hígado por enzimas del citocromo P450 (CYP2D6) para formar morfina, que es la responsable principal de la analgesia. En un metabolizador rápido se forma más morfina y con mayor rapidez, por lo que aparecen somnolencia, náuseas y riesgo de depresión respiratoria. En un metabolizador lento se forma poca morfina y la analgesia puede ser insuficiente.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-38",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · classificação",
+   "q": "Agonistas colinérgicos · classificação: Pilocarpina, betanecol, carbacol, metacolina",
+   "a": "Agonistas colinérgicos de ação direta",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-39",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · classificação",
+   "q": "Agonistas colinérgicos · classificação: Ecotiofato, paratión, malatión",
+   "a": "Indiretos irreversíveis",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-40",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · classificação",
+   "q": "Agonistas colinérgicos · classificação: Edrofonio",
+   "a": "Indireto reversível de ação curta",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-41",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · classificação",
+   "q": "Agonistas colinérgicos · classificação: Neostigmina, piridostigmina, fisostigmina",
+   "a": "Indiretos reversíveis de ação intermediária",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-42",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · classificação",
+   "q": "Agonistas colinérgicos · classificação: Donepezilo, rivastigmina, galantamina",
+   "a": "Indiretos reversíveis usados na enfermedad de Alzheimer",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-43",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · mecanismo",
+   "q": "Por que a toxicidade dos organofosforados (ecotiofato, paratión, malatión) persiste mais que a de um inibidor reversível como a neostigmina?",
+   "a": "A) Porque fosforilam a acetilcolinesterase, e a enzima pode sofrer envejecimiento, o que dificulta a sua recuperação. A apostila descreve fosforilação da enzima e envejecimiento, com toxicidade muscarínica, nicotínica e central.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-44",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sinapse colinérgica · síntese e liberação",
+   "q": "Coloque na ordem as etapas da síntese e liberação da acetilcolina desenhadas no quadro.",
+   "a": "1) A colina entra no terminal nervioso por um transportador dependente de Na⁺ → 2) Colina + acetil-CoA formam acetilcolina pela colina acetiltransferasa → 3) A acetilcolina é armazenada em vesículas → 4) A despolarização abre canais de Ca²⁺ dependentes de voltagem → 5) As vesículas liberam a acetilcolina na fenda sináptica → 6) A acetilcolina atua em receptores nicotínicos ou muscarínicos → 7) A acetilcolinesterasa hidrolisa a acetilcolina e a colina é recaptada",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-45",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sinapse colinérgica · feedback",
+   "q": "No desenho da sinapse colinérgica, o professor indicou \"receptor M2\" com a seta de \"feedback negativo\" no terminal pré-sináptico. Qual é a interpretação correta?",
+   "a": "B) É um autorreceptor acoplado a Gi que reconhece a própria acetilcolina e reduz a sua liberação. A apostila define autorreceptor pré-sináptico como o que reconhece o transmissor da própria neurona e frequentemente reduz a sua liberação; M2 é Gi.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-46",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos · proteína G",
+   "q": "Receptores colinérgicos · proteína G: M1, M3, M5",
+   "a": "Gq (ativadores)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-47",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos · proteína G",
+   "q": "Receptores colinérgicos · proteína G: M2, M4",
+   "a": "Gi (inibidores)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-48",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos · proteína G",
+   "q": "Receptores colinérgicos · proteína G: Nicotínico neuronal (Nn)",
+   "a": "Canal iônico (receptor ionotrópico)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-49",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos · proteína G",
+   "q": "Receptores colinérgicos · proteína G: Nicotínico muscular (Nm)",
+   "a": "Canal iônico (receptor ionotrópico)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-50",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos",
+   "q": "Verdadeiro ou falso? Os receptores nicotínicos pertencem à família de receptores acoplados à proteína G.",
+   "a": "Falso. São receptores iônicos (canais); só os muscarínicos são acoplados a proteína G.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-51",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos",
+   "q": "Verdadeiro ou falso? M2 está associado à redução de frequência e velocidade de condução nos nodos SA e AV.",
+   "a": "Verdadeiro. M2 (Gi) nos nodos SA e AV: menor frequência e menor velocidade de condução.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-52",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos",
+   "q": "Verdadeiro ou falso? M3 (Gq) participa de secreções glandulares, contração de músculo liso e vasodilatação endotelial.",
+   "a": "Verdadeiro. Descrição da apostila para M3.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-53",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Receptores colinérgicos",
+   "q": "Verdadeiro ou falso? M1, M3 e M5 compartilham a via Gi.",
+   "a": "Falso. M1, M3 e M5 são Gq; M2 e M4 são Gi.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-54",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas colinérgicos · aplicação",
+   "q": "Paciente com retención urinaria. Antes de considerar um agonista muscarínico como o betanecol, qual condição precisa ser excluída?",
+   "a": "A) Obstrução mecânica, pois contrair o detrusor contra uma obstrução é inadequado e perigoso. A apostila lista o betanecol para retención urinaria não obstrutiva; é preciso excluir obstrução mecânica.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-55",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Colinérgicos · síntese",
+   "q": "A acetilcolina é sintetizada a partir de ___ e acetil-CoA pela enzima ___, e é degradada na fenda pela ___.",
+   "a": "colina · colina acetiltransferasa · acetilcolinesterasa",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-56",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Inibidores da colinesterase",
+   "q": "Diferencie, em português com termos em espanhol, inibidores reversíveis e irreversíveis da colinesterase, citando um exemplo do quadro para cada grupo e uma aplicação clínica de um reversível.",
+   "a": "Reversibles inhiben temporalmente la acetilcolinesterasa (edrofonio de acción corta; neostigmina, piridostigmina y fisostigmina de acción intermedia; donepezilo, rivastigmina y galantamina en Alzheimer). Irreversibles, como ecotiofato, paratión y malatión, fosforilan la enzima y pueden provocar envejecimiento. Aplicación: piridostigmina en miastenia gravis, para mejorar la transmisión neuromuscular.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-57",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Alzheimer · inibidores centrais",
+   "q": "Donepezilo, rivastigmina e galantamina são usados na enfermedad de Alzheimer. Qual raciocínio e qual cuidado estão corretos?",
+   "a": "A) Aumentam a ACh central remanescente (benefício sintomático); náuseas, bradicardia e síncope exigem atenção pela intensificação colinérgica. Tratamento sintomático por aumento da sinalização colinérgica; a apostila alerta que não regeneram neuronas nem curam, e que bradicardia e síncope devem ser ligadas à intensificação colinérgica.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-58",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Síntese de catecolaminas",
+   "q": "Ordene as etapas da síntese de catecolaminas esquematizadas no quadro.",
+   "a": "1) Tirosina entra no terminal pelo transportador (com Na⁺) → 2) Tirosina → L-DOPA (tirosina hidroxilasa) → 3) L-DOPA → dopamina (DOPA descarboxilasa) → 4) Dopamina → noradrenalina, nas vesículas (dopamina β-hidroxilasa) → 5) Noradrenalina → adrenalina (feniletanolamina N-metiltransferasa, na medula suprarrenal)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-59",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Síntese de catecolaminas · enzimas",
+   "q": "Síntese de catecolaminas · enzimas: Tirosina hidroxilasa",
+   "a": "Tirosina → L-DOPA",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-60",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Síntese de catecolaminas · enzimas",
+   "q": "Síntese de catecolaminas · enzimas: DOPA descarboxilasa",
+   "a": "L-DOPA → dopamina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-61",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Síntese de catecolaminas · enzimas",
+   "q": "Síntese de catecolaminas · enzimas: Dopamina β-hidroxilasa",
+   "a": "Dopamina → noradrenalina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-62",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Síntese de catecolaminas · enzimas",
+   "q": "Síntese de catecolaminas · enzimas: Feniletanolamina N-metiltransferasa",
+   "a": "Noradrenalina → adrenalina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-63",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Adrenoceptores · proteína G",
+   "q": "Adrenoceptores · proteína G: α1",
+   "a": "Gq: ativador",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-64",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Adrenoceptores · proteína G",
+   "q": "Adrenoceptores · proteína G: α2",
+   "a": "Gi: inibidor",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-65",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Adrenoceptores · proteína G",
+   "q": "Adrenoceptores · proteína G: β1",
+   "a": "Gs: estimulador",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-66",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Adrenoceptores · proteína G",
+   "q": "Adrenoceptores · proteína G: β2",
+   "a": "Gs: estimulador",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-67",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Adrenoceptores · proteína G",
+   "q": "Adrenoceptores · proteína G: β3",
+   "a": "Gs: estimulador",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-68",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Metabolismo da noradrenalina",
+   "q": "Quais enzimas degradam a noradrenalina e qual é o metabólito final comum citado?",
+   "a": "A) MAO (intraneuronal, mitocondrial) e COMT (na fenda), com formação de ácido vanilmandélico. As anotações indicam que a MAO degrada a NA dentro da neurona e a COMT, no espaço sináptico; o resultado final é o ácido vanilmandélico.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-69",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Sinapse noradrenérgica",
+   "q": "Verdadeiro ou falso? A ligação da NA ao receptor α2 pré-sináptico produz feedback negativo direto.",
+   "a": "Verdadeiro. α2 (Gi) reduz a liberação de noradrenalina.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-70",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Sinapse noradrenérgica",
+   "q": "Verdadeiro ou falso? A angiotensina II atua como feedback negativo direto sobre a liberação de noradrenalina.",
+   "a": "Falso. As anotações a descrevem como feedback negativo indireto; o direto é pelo α2.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-71",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Sinapse noradrenérgica",
+   "q": "Verdadeiro ou falso? A reserpina bloqueia o transporte de monoaminas para as vesículas.",
+   "a": "Verdadeiro. Etapa de armazenamento vesicular (apostila §12).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-72",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Sinapse noradrenérgica",
+   "q": "Verdadeiro ou falso? A cocaína inibe a recaptação de monoaminas.",
+   "a": "Verdadeiro. Etapa de recaptação (apostila §12).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-73",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Adrenoceptores",
+   "q": "O receptor α1 acopla-se a ___ (ativador), o α2 a ___ (inibidor) e os receptores β1, β2 e β3 a ___ (estimulador).",
+   "a": "Gq · Gi · Gs",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-74",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Vesículas e feniletanolamina N-metiltransferase",
+   "q": "Segundo as anotações, onde a dopamina é convertida em noradrenalina e como a adrenalina se forma?",
+   "a": "A) A dopamina é convertida em NA nas vesículas; parte da NA é convertida em adrenalina pela feniletanolamina N-metiltransferasa, e a adrenalina também se acumula em vesículas. Conforme as notas de aula: a NA se acumula nas vesículas e, com a enzima feniletanolamina N-metiltransferasa, forma a adrenalina, que também se acumula em vesículas.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-75",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Olho",
+   "a": "Midriasis (contração do músculo radial)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-76",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Coração",
+   "a": "Aumento de FC (cronotropismo +), débito cardíaco e pressão arterial",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-77",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Bronquios",
+   "a": "Broncodilatación e menor secreção",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-78",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Intestino",
+   "a": "Menos peristaltismo, secreção e absorção",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-79",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Páncreas",
+   "a": "Menos insulina e mais glucagon",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-80",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Hígado",
+   "a": "Aumento da glicogenólise e menor fluxo biliar",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-81",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Riñón",
+   "a": "Menos produção de orina e fluxo sanguíneo; maior liberação de renina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-82",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema simpático · efeitos por órgão",
+   "q": "Sistema simpático · efeitos por órgão: Vejiga",
+   "a": "Menor contração do detrusor e maior contração do esfínter",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-83",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Olho",
+   "a": "Miosis (esfíncter pupilar) e contração do músculo ciliar",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-84",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Coração",
+   "a": "Menor FC (cronotropismo negativo) e menor PA",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-85",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Bronquios",
+   "a": "Broncoconstricción e maior secreção",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-86",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Intestino",
+   "a": "Maior peristaltismo, secreção e absorção",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-87",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Páncreas",
+   "a": "Maior secreção de insulina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-88",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Vejiga",
+   "a": "Contração do detrusor e relaxamento do esfíncter",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-89",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Vía biliar",
+   "a": "Contração da vesícula e relaxamento do esfíncter de Oddi",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-90",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Sistema parasimpático · efeitos por órgão",
+   "q": "Sistema parasimpático · efeitos por órgão: Genitais",
+   "a": "Erección e ingurgitamiento del clítoris",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-91",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Organização do sistema nervioso",
+   "q": "Verdadeiro ou falso? O SNC inclui encéfalo e médula espinal.",
+   "a": "Verdadeiro. Organização do quadro: SNC (encéfalo e médula).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-92",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Organização do sistema nervioso",
+   "q": "Verdadeiro ou falso? O sistema nervioso somático (SNS) é voluntário e o autônomo (SNA) é involuntário.",
+   "a": "Verdadeiro. SNS: nervos espinais e pares cranianos; SNA: simpático e parassimpático.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-93",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Organização do sistema nervioso",
+   "q": "Verdadeiro ou falso? O simpático tem origem craneosacra e o parassimpático, toracolumbar.",
+   "a": "Falso. O contrário: simpático toracolumbar (T1–L2) e parassimpático craneosacro.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-94",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Organização do sistema nervioso",
+   "q": "Verdadeiro ou falso? A medula suprarrenal libera adrenalina e noradrenalina.",
+   "a": "Verdadeiro. Células cromafins, estimuladas por acetilcolina em receptor nicotínico (apostila §02).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-95",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pupila · semiologia e SNA",
+   "q": "Paciente apresenta pupila direita em midriasis e esquerda normal. Qual termo descreve o achado e qual influência autonômica gera midriasis?",
+   "a": "B) Anisocoria; ativação simpática α1 do músculo radial (ou bloqueio muscarínico do esfíncter). Anisocoria é a diferença de diâmetro pupilar. A midriasis resulta de contração do dilatador radial (simpático, α1) ou de relaxamento do esfíncter por bloqueio muscarínico (ex.: atropina).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-96",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Glândulas e SNA",
+   "q": "As glândulas sudoríparas ecrinas recebem via simpática, mas o neurotransmissor é diferente da maioria das terminações simpáticas. Qual é a combinação correta?",
+   "a": "B) Acetilcolina em receptor muscarínico. Apostila §02: acetilcolina, apesar da via simpática, com receptor muscarínico.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-97",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Integração autonômica · efeitos do bloqueio",
+   "q": "Paciente intoxicado por antimuscarínico apresenta boca seca, pele quente e seca, midriasis, taquicardia e retención urinaria. 1) Qual efeito parassimpático foi bloqueado em cada achado (olho, glândulas, coração, vejiga)?",
+   "a": "Olho: perda da miosis e da contração ciliar (midriasis, cicloplejía). Glândulas: menos secreção. Coração: perda do freio vagal M2 (taquicardia). Vejiga: menor contração do detrusor (retención).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-98",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Integração autonômica · efeitos do bloqueio",
+   "q": "Paciente intoxicado por antimuscarínico apresenta boca seca, pele quente e seca, midriasis, taquicardia e retención urinaria. 2) Por que a pele fica seca se as sudoríparas ecrinas têm via simpática?",
+   "a": "Porque o transmissor delas é acetilcolina em receptor muscarínico; o antimuscarínico bloqueia a sudoración.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-99",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Integração autonômica · efeitos do bloqueio",
+   "q": "Paciente intoxicado por antimuscarínico apresenta boca seca, pele quente e seca, midriasis, taquicardia e retención urinaria. 3) Qual antídoto foi citado nas anotações e por que ele alcança o SNC?",
+   "a": "Fisostigmina, por ser amina terciária que atravessa a barreira hematoencefálica e aumenta a ACh para competir com o antagonista.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-100",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Mamá",
+   "a": "III · Motor ocular común (oculomotor)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-101",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Papá",
+   "a": "IV · Patético (troclear)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-102",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Traigo",
+   "a": "V · Trigémino",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-103",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Mini",
+   "a": "VI · Motor ocular externo (abducens)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-104",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Falda",
+   "a": "VII · Facial",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-105",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Ahora",
+   "a": "VIII · Auditivo (vestibulococlear)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-106",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Glúteos",
+   "a": "IX · Glosofaríngeo",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-107",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Van",
+   "a": "X · Vago",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-108",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Pares cranianos · mnemônica: Helados",
+   "a": "XII · Hipogloso",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-109",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · parassimpático",
+   "q": "Quais pares cranianos fazem parte da saída parassimpática craneosacra e quais deles têm relação com miosis e com a desaceleração cardíaca?",
+   "a": "A) III, VII, IX e X; o III participa da miosis (esfíncter pupilar) e o X (vago) da redução da frequência cardíaca. A apostila §01 indica origem craneosacra em III, VII, IX, X e S2–S4. O oculomotor (III) leva a via pupilar parassimpática e o vago (X), a via cardíaca (M2).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-110",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Verdadeiro ou falso? Na mnemônica, \"Van\" corresponde ao par X (vago).",
+   "a": "Verdadeiro. X · Vago.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-111",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Verdadeiro ou falso? O par VII é o glosofaríngeo.",
+   "a": "Falso. VII é o facial (\"Falda\"); o glosofaríngeo é o IX (\"Glúteos\").",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-112",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pares cranianos · mnemônica",
+   "q": "Verdadeiro ou falso? O par XI (acessório) e o XII (hipogloso) fecham a sequência.",
+   "a": "Verdadeiro. XI Accesorio, XII Hipogloso.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-113",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Integração SNA · simpático × parasimpático",
+   "q": "Compare, em espanhol e em até seis linhas, simpático e parasimpático quanto a origem, neurotransmissor principal e efeito sobre coração, bronquios e intestino. Aponte uma exceção ao padrão.",
+   "a": "El simpático nace en la región toracolumbar y su neurotransmisor principal en los órganos efectores es la noradrenalina; aumenta la frecuencia cardíaca, produce broncodilatación y disminuye el peristaltismo. El parasimpático tiene origen craneosacro y usa acetilcolina; disminuye la frecuencia cardíaca, produce broncoconstricción y aumenta el peristaltismo. Excepción: las glándulas sudoríparas ecrinas reciben vía simpática pero liberan acetilcolina sobre receptores muscarínicos.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-114",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · HTA",
+   "q": "O professor listou, para HTA de 1ª línea, IECA (enalapril), ARA II (losartán), tiazídicos (hidroclorotiazida) e BCC (amlodipino). O que isso implica para antagonistas α1 e β-bloqueadores?",
+   "a": "B) Não estão entre os grupos de 1ª línea citados no quadro; as anotações dizem que os α1 tratam HTA \"pero no son de 1ª línea\", e os β-bloqueadores têm indicações específicas (angina, IC, pós-IAM, etc.). O quadro lista as 4 classes de 1ª línea; as anotações dos α1 registram \"pero no son de 1ª línea\". O uso dos β-bloqueadores é guiado pela comorbidade.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-115",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · HTA · primeira linha",
+   "q": "HTA · primeira linha: IECA",
+   "a": "Enalapril",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-116",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · HTA · primeira linha",
+   "q": "HTA · primeira linha: ARA II",
+   "a": "Losartán",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-117",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · HTA · primeira linha",
+   "q": "HTA · primeira linha: Tiazídicos",
+   "a": "Hidroclorotiazida",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-118",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · HTA · primeira linha",
+   "q": "HTA · primeira linha: BCC (bloqueadores de canal de cálcio)",
+   "a": "Amlodipino",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-119",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas · vasos",
+   "q": "No desenho do vaso, o professor marcou β2 (vasodilatação) e α1 (vasoconstricción) com setas para RVP e PA. Qual interpretação é coerente?",
+   "a": "A) O bloqueio de α1 reduz a vasoconstricción, com queda de RVP e PA; o bloqueio de β2 vascular retira a vasodilatação e tende a aumentar a RVP. α1 (Gq) contrai o músculo liso vascular; β2 (Gs) relaxa. Bloquear α1 reduz RVP e PA; bloquear β2 retira um mecanismo vasodilatador (relevante em crises catecolaminérgicas).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-120",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · β-bloqueadores · oferta e demanda de O₂",
+   "q": "O professor desenhou uma balança \"oferta × demanda de O₂\". Qual raciocínio os β-bloqueadores usam na angina de pecho e na enfermedad de la arteria coronaria?",
+   "a": "B) Reduzem a demanda miocárdica de O₂ ao diminuir frequência e força de contração, reequilibrando a balança. β1 bloqueado: menor frequência, força e condução (apostila §13); menor trabalho cardíaco e menor consumo de O₂.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-121",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · classificação",
+   "q": "Antagonistas adrenérgicos · classificação: α1 e α2 (não seletivos)",
+   "a": "Fentolamina, fenoxibenzamina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-122",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · classificação",
+   "q": "Antagonistas adrenérgicos · classificação: α1 seletivos",
+   "a": "Prazosina, terazosina, tamsulosina, doxazosina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-123",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · classificação",
+   "q": "Antagonistas adrenérgicos · classificação: α2 seletivo",
+   "a": "Yohimbina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-124",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · classificação",
+   "q": "Antagonistas adrenérgicos · classificação: β1 e β2 (não seletivos)",
+   "a": "Propranolol, nadolol, timolol",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-125",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · classificação",
+   "q": "Antagonistas adrenérgicos · classificação: β1 seletivos",
+   "a": "Atenolol, bisoprolol, esmolol, metoprolol, nebivolol",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-126",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · Antagonistas adrenérgicos · classificação",
+   "q": "Antagonistas adrenérgicos · classificação: Mistos α e β",
+   "a": "Carvedilol, labetalol",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-127",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · α1 antagonistas · cautelas",
+   "q": "Paciente com hiperplasia prostática benigna (HPB) e planejamento de cirurgia de cataratas. O que as anotações destacam sobre o grupo α1 (tamsulosina, doxazosina…)?",
+   "a": "A) São indicados na HPB, por relaxarem próstata e cuello vesical, mas \"cirugía de cataratas\" aparece como contraindicação/cautela e há risco de hipotensión ortostática. Anotações: α1 tratam HTA (não de 1ª línea) e HPB; contraindicação: cirugía de cataratas; hipotensión ortostática. Apostila: preferência funcional urinária (tamsulosina) com relaxamento da próstata e do cuello vesical.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-128",
+   "g": "Antagonistas adrenérgicos (quadro)",
+   "t": "Quadros do professor · α2 antagonista",
+   "q": "Sobre a yohimbina, assinale a opção correta.",
+   "a": "A) α2-antagonista natural, aumenta a saída simpática e foi usada como estimulante sexual; a sua recomendação é limitada por falta de eficácia demonstrada. Anotações: α2, natural, estimulante sexual, não recomendada por falta de eficácia. Apostila: aumenta a saída simpática; utilidade limitada.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-129",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · α1 antagonistas · HPB e HTA",
+   "q": "Homem de 66 años com hiperplasia prostática benigna e hipertensión, iniciando doxazosina. Na primeira semana refere tontura ao levantar e batimentos acelerados. 1) Qual é a classe e o receptor-alvo do fármaco?",
+   "a": "Antagonista α1 seletivo (Gq), com efeito vascular e urinário.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-130",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · α1 antagonistas · HPB e HTA",
+   "q": "Homem de 66 años com hiperplasia prostática benigna e hipertensión, iniciando doxazosina. Na primeira semana refere tontura ao levantar e batimentos acelerados. 2) Por que ele pode melhorar o fluxo urinário?",
+   "a": "Relaxa a musculatura lisa da próstata e do cuello vesical.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-131",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · α1 antagonistas · HPB e HTA",
+   "q": "Homem de 66 años com hiperplasia prostática benigna e hipertensión, iniciando doxazosina. Na primeira semana refere tontura ao levantar e batimentos acelerados. 3) Explique a tontura postural.",
+   "a": "Menos vasoconstricción α1 ao levantar: hipotensión ortostática.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-132",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · α1 antagonistas · HPB e HTA",
+   "q": "Homem de 66 años com hiperplasia prostática benigna e hipertensión, iniciando doxazosina. Na primeira semana refere tontura ao levantar e batimentos acelerados. 4) Explique a taquicardia.",
+   "a": "Taquicardia reflexa (barorreflejo) por queda de PA.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-133",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Fenilefrina, midodrina",
+   "a": "Agonistas α1",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-134",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Clonidina, alfametildopa",
+   "a": "Agonistas α2 (ação central)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-135",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Dobutamina",
+   "a": "Agonista β1",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-136",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Salbutamol, terbutalina, salmeterol",
+   "a": "Agonistas β2",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-137",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Mirabegrón",
+   "a": "Agonista β3",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-138",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Isoproterenol",
+   "a": "β1 e β2 (sem α)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-139",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Efedrina, pseudoefedrina",
+   "a": "Ação mista",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-140",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Agonistas adrenérgicos · receptor e ação",
+   "q": "Agonistas adrenérgicos · receptor e ação: Anfetamina, cocaína, tiramina",
+   "a": "Ação indireta",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-141",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Agonistas adrenérgicos · ação mista",
+   "q": "Durante uma cirurgia, a paciente apresenta hipotensión inducida por anestesia. O anestesiologista usa efedrina. 1) Como a efedrina se classifica quanto ao mecanismo?",
+   "a": "Acción mixta: combina ação direta sobre receptores e indireta, aumentando a disponibilidade de catecolaminas.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-142",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Agonistas adrenérgicos · ação mista",
+   "q": "Durante uma cirurgia, a paciente apresenta hipotensión inducida por anestesia. O anestesiologista usa efedrina. 2) Que receptores participam do efeito pressor?",
+   "a": "α1 (vasoconstricción) e β1 (efeito cardíaco), pelo perfil α1, α2, β1 e β2 descrito no quadro.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-143",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Agonistas adrenérgicos · ação mista",
+   "q": "Durante uma cirurgia, a paciente apresenta hipotensión inducida por anestesia. O anestesiologista usa efedrina. 3) Qual a diferença conceitual para a fenilefrina?",
+   "a": "A fenilefrina é um agonista direto predominantemente α1, sem componente indireto relevante; a efedrina tem componente de liberação.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-144",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Anafilaxia · adrenalina",
+   "q": "Paciente com urticária, edema de lábios, broncoespasmo e hipotensión poucos minutos após exposição a alérgeno. A primeira escolha é adrenalina (epinefrina). 1) Em quais receptores a adrenalina atua e com qual afinidade relativa?",
+   "a": "α1, α2, β1 e β2; nas anotações, mayor afinidad sobre β.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-145",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Anafilaxia · adrenalina",
+   "q": "Paciente com urticária, edema de lábios, broncoespasmo e hipotensión poucos minutos após exposição a alérgeno. A primeira escolha é adrenalina (epinefrina). 2) Qual efeito corrige a hipotensão? E o broncoespasmo?",
+   "a": "Vasoconstricción α1 corrige a hipotensão; β2 produz broncodilatación.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-146",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Anafilaxia · adrenalina",
+   "q": "Paciente com urticária, edema de lábios, broncoespasmo e hipotensión poucos minutos após exposição a alérgeno. A primeira escolha é adrenalina (epinefrina). 3) Por que um β2-agonista isolado não basta?",
+   "a": "Não corrige o colapso vascular nem o componente cardíaco; só relaxa a musculatura bronquial.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-147",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Choque séptico · noradrenalina",
+   "q": "Paciente em choque séptico, com vasodilatação e hipotensión persistente. Indica-se noradrenalina (norepinefrina). 1) Qual a afinidade principal da noradrenalina?",
+   "a": "Mayor afinidad sobre α (α1, α2 e β1 no esquema do quadro).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-148",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Choque séptico · noradrenalina",
+   "q": "Paciente em choque séptico, com vasodilatação e hipotensión persistente. Indica-se noradrenalina (norepinefrina). 2) Que efeito hemodinâmico se espera?",
+   "a": "Aumento da resistência vascular periférica e da pressão arterial.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-149",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Choque séptico · noradrenalina",
+   "q": "Paciente em choque séptico, com vasodilatação e hipotensión persistente. Indica-se noradrenalina (norepinefrina). 3) Por que a FC pode não subir?",
+   "a": "O aumento da pressão ativa barorreceptores e o reflexo vagal compete com o efeito β1.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-150",
+   "g": "Casos clínicos (quadro)",
+   "t": "Quadros do professor · Profármacos e variabilidade enzimática",
+   "q": "Codeína, midodrina e alfametildopa compartilham, nos materiais, a ideia de metabólito ativo. Qual consequência é coerente?",
+   "a": "A) A resposta ao fármaco pode variar com a atividade enzimática que gera o metabólito ativo (ex.: CYP em hepatócitos), e isso importa tanto em metabolismo lento quanto rápido. A apostila descreve a midodrina (ação α1 por metabólito ativo) e a alfametildopa (formação de metabólito de ação central); a codeína depende de CYP2D6. A atividade enzimática modifica a magnitude do efeito.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-151",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Sinalização Gq",
+   "q": "Ordene a cascata de um receptor acoplado a Gq (como α1 e M3).",
+   "a": "1) Agonista liga-se ao receptor → 2) Ativação da proteína Gq → 3) Ativação da fosfolipase C → 4) Formação de IP₃ e DAG → 5) Aumento de Ca²⁺ intracelular → 6) Resposta celular (ex.: contração de músculo liso)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-152",
+   "g": "Adrenérgicos (quadro)",
+   "t": "Quadros do professor · Sinalização Gs e Gi",
+   "q": "Receptores β ativam ___, estimulando a adenilil ciclase e elevando o ___; receptores α2 e M2 ativam ___, o que ___ esse segundo mensageiro.",
+   "a": "Gs · AMPc · Gi · reduz",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-153",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sítios de ação na sinapse colinérgica",
+   "q": "Sítios de ação na sinapse colinérgica: Hemicolinio",
+   "a": "Reduz a captação de colina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-154",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sítios de ação na sinapse colinérgica",
+   "q": "Sítios de ação na sinapse colinérgica: Toxina botulínica",
+   "a": "Impede a liberação de acetilcolina",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-155",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sítios de ação na sinapse colinérgica",
+   "q": "Sítios de ação na sinapse colinérgica: Neostigmina / organofosforados",
+   "a": "Inibem a degradação (acetilcolinesterase)",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-156",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sítios de ação na sinapse colinérgica",
+   "q": "Sítios de ação na sinapse colinérgica: Atropina",
+   "a": "Bloqueia receptores muscarínicos",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-157",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Sítios de ação na sinapse colinérgica",
+   "q": "Sítios de ação na sinapse colinérgica: Tubocurarina / atracúrio",
+   "a": "Bloqueiam a transmissão neuromuscular nicotínica",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-158",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Pilocarpina",
+   "q": "Quais efeitos explicam o uso da pilocarpina?",
+   "a": "A) Agonismo muscarínico com miosis, aumento da drenagem do humor acuoso e aumento de saliva. Apostila §05: agonista muscarínico que atravessa membranas; miosis, drenagem do humor acuoso e aumento de saliva.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-159",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Metacolina",
+   "q": "A metacolina tem qual papel citado na apostila?",
+   "a": "A) Prueba de provocación bronquial em ambiente controlado, pelo efeito muscarínico nos bronquios. Metacolina: efeito muscarínico bronquial; usada em prueba de provocación em ambiente controlado.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-160",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Miastenia gravis · inibidores da colinesterase",
+   "q": "Paciente com miastenia gravis refere fraqueza fatigável. Discutem-se edrofonio, neostigmina e piridostigmina. 1) Qual a base fisiopatológica da fraqueza?",
+   "a": "Transmissão comprometida na unión neuromuscular por processo autoimune (anticorpos contra receptores de ACh).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-161",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Miastenia gravis · inibidores da colinesterase",
+   "q": "Paciente com miastenia gravis refere fraqueza fatigável. Discutem-se edrofonio, neostigmina e piridostigmina. 2) Por que aumentar ACh ajuda?",
+   "a": "Mais ACh na sinapse ajuda a aproveitar os receptores funcionais restantes.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-162",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Miastenia gravis · inibidores da colinesterase",
+   "q": "Paciente com miastenia gravis refere fraqueza fatigável. Discutem-se edrofonio, neostigmina e piridostigmina. 3) Qual dos três é mais associado ao controle sintomático e por quê?",
+   "a": "A piridostigmina: ação periférica mais prolongada.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-163",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Miastenia gravis · inibidores da colinesterase",
+   "q": "Paciente com miastenia gravis refere fraqueza fatigável. Discutem-se edrofonio, neostigmina e piridostigmina. 4) Qual o papel histórico do edrofonio?",
+   "a": "Teste diagnóstico histórico, de ação muito breve, hoje com uso limitado.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-164",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Inibidores da colinesterase",
+   "q": "Verdadeiro ou falso? A neostigmina é amônio quaternário e age sobretudo na periferia.",
+   "a": "Verdadeiro. Apostila §06.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-165",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Inibidores da colinesterase",
+   "q": "Verdadeiro ou falso? A fisostigmina, amina terciária, não chega ao SNC.",
+   "a": "Falso. Ela chega ao SNC.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-166",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Inibidores da colinesterase",
+   "q": "Verdadeiro ou falso? Edrofonio é de ação intermediária, junto de neostigmina e piridostigmina.",
+   "a": "Falso. No quadro, o edrofonio é de ação curta.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-167",
+   "g": "Colinérgicos (quadro)",
+   "t": "Quadros do professor · Inibidores da colinesterase",
+   "q": "Verdadeiro ou falso? Donepezilo, rivastigmina e galantamina têm ação colinérgica central.",
+   "a": "Verdadeiro. Tratamento sintomático de demências selecionadas.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-168",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · piridostigmina oral",
+   "q": "Mulher de 41 años com miastenia gravis recebe piridostigmina em comprimido, por via oral. 1) Qual é o fármaco e o grupo?",
+   "a": "Piridostigmina: inibidor reversível da acetilcolinesterase, ação intermediária.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-169",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · piridostigmina oral",
+   "q": "Mulher de 41 años com miastenia gravis recebe piridostigmina em comprimido, por via oral. 2) Forma de presentación e via?",
+   "a": "Sólida (comprimido), via oral.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-170",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · piridostigmina oral",
+   "q": "Mulher de 41 años com miastenia gravis recebe piridostigmina em comprimido, por via oral. 3) Que característica química limita efeitos centrais?",
+   "a": "É amônio quaternário, de ação periférica; não atravessa a BHE.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-171",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · piridostigmina oral",
+   "q": "Mulher de 41 años com miastenia gravis recebe piridostigmina em comprimido, por via oral. 4) Que efeitos colinérgicos periféricos se esperam?",
+   "a": "Maior ACh em receptores muscarínicos: salivação, cólicas, diarrea, bradicardia, miosis.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-172",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · salbutamol inalado",
+   "q": "Homem de 22 años com crise de asma recebe salbutamol por inalador. 1) Qual o fármaco e o receptor?",
+   "a": "Salbutamol: agonista β2 (Gs).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-173",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · salbutamol inalado",
+   "q": "Homem de 22 años com crise de asma recebe salbutamol por inalador. 2) Forma de presentación e via?",
+   "a": "Aerossol/solução inalatória, via inalatória.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-174",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · salbutamol inalado",
+   "q": "Homem de 22 años com crise de asma recebe salbutamol por inalador. 3) Por que a via inalatória é conveniente?",
+   "a": "Ação local rápida nos bronquios com menor exposição sistêmica.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-175",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · salbutamol inalado",
+   "q": "Homem de 22 años com crise de asma recebe salbutamol por inalador. 4) Que efeito sistêmico pode surgir e por quê?",
+   "a": "Tremor e taquicardia, por exposição de β2 musculares e estimulação cardíaca.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-176",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Caso autoral no formato do professor · salbutamol inalado",
+   "q": "Homem de 22 años com crise de asma recebe salbutamol por inalador. 5) O salbutamol é profármaco?",
+   "a": "Não; não depende de ativação enzimática, ao contrário da codeína.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-177",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · ereção e ejaculação",
+   "q": "Qual associação entre divisão autonômica e função sexual está registrada no quadro?",
+   "a": "A) Parassimpático: erección e ingurgitamiento del clítoris; simpático: eyaculación e contração uterina. O quadro registra erección/ingurgitamiento no parassimpático e eyaculación/contração uterina no simpático.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-178",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · rim e renina",
+   "q": "No simpático, o rim apresenta menor produção de orina, menor fluxo sanguíneo, menor peristaltismo do ureter e maior liberação de renina. Qual receptor está associado à renina?",
+   "a": "A) β1 (Gs) Apostila §13: β1 está ligado a frequência, força e condução cardíaca e à renina.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-179",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · glândulas e secreções",
+   "q": "Verdadeiro ou falso? No simpático, as glândulas lagrimais reduzem lágrimas e a salival aumenta a espessura do muco.",
+   "a": "Verdadeiro. Registro do quadro.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-180",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · glândulas e secreções",
+   "q": "Verdadeiro ou falso? No parassimpático, glândulas lagrimais, salivais e nasais aumentam a secreção.",
+   "a": "Verdadeiro. Registro do quadro.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-181",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · glândulas e secreções",
+   "q": "Verdadeiro ou falso? O parassimpático contrai o músculo ciliar e produz miosis.",
+   "a": "Verdadeiro. Registro do quadro.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-182",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · glândulas e secreções",
+   "q": "Verdadeiro ou falso? O simpático aumenta o peristaltismo, a secreção e a absorção intestinal.",
+   "a": "Falso. O simpático diminui peristaltismo, secreção e absorção.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-183",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pupila · terminologia",
+   "q": "Pupila · terminologia: Isocoria",
+   "a": "Pupilas de tamanhos iguais",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-184",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pupila · terminologia",
+   "q": "Pupila · terminologia: Anisocoria",
+   "a": "Pupilas de tamanhos diferentes",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-185",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pupila · terminologia",
+   "q": "Pupila · terminologia: Miosis",
+   "a": "Constrição pupilar",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-186",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Pupila · terminologia",
+   "q": "Pupila · terminologia: Midriasis",
+   "a": "Dilatação pupilar",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-187",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Reflexo pupilar · pares cranianos",
+   "q": "No reflexo fotomotor, qual par craniano leva a via aferente e qual leva a eferente parassimpática?",
+   "a": "A) Aferente: II (óptico); eferente parassimpática: III (oculomotor). A visão chega por II; a miosis é mediada por fibras parassimpáticas do III, com receptor M3 no esfíncter pupilar.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-188",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · Receptores no ojo e SNA",
+   "q": "A midriasis pode surgir por mecanismos opostos. Qual afirmação está correta?",
+   "a": "A) Por ativação simpática α1 do músculo radial ou por bloqueio muscarínico M3 do esfíncter pupilar. α1 contrai o radial; o bloqueio de M3 no esfíncter também produz midriasis (cicloplejía se bloquear o ciliar).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-189",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · origem e transmissores",
+   "q": "Verdadeiro ou falso? Todos os ganglios autonómicos utilizam acetilcolina em receptor nicotínico neuronal (Nn).",
+   "a": "Verdadeiro. Apostila §02.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-190",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · origem e transmissores",
+   "q": "Verdadeiro ou falso? A medula suprarrenal é inervada por fibra simpática pré-ganglionar que libera ACh sobre célula cromafín.",
+   "a": "Verdadeiro. Apostila §02.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-191",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · origem e transmissores",
+   "q": "Verdadeiro ou falso? A fibra pré-ganglionar simpática é geralmente longa e a pós-ganglionar, curta.",
+   "a": "Falso. No simpático a pré é curta e a pós é longa.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-192",
+   "g": "SNA e pares cranianos (quadro)",
+   "t": "Quadros do professor · SNA · origem e transmissores",
+   "q": "Verdadeiro ou falso? O parassimpático tem gânglios próximos ou dentro do órgão.",
+   "a": "Verdadeiro. Apostila §01.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-193",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Agonistas adrenérgicos · classificação",
+   "q": "Classifique os agonistas adrenérgicos como o professor (ação direta seletiva/não seletiva, mista e indireta), com um exemplo e a indicação principal de cada grupo.",
+   "a": "Acción directa selectiva: α1 (fenilefrina, midodrina), α2 (clonidina, alfametildopa), β1 (dobutamina), β2 (salbutamol, terbutalina, salmeterol), β3 (mirabegrón). No selectiva: oximetazolina (α1 y α2), isoproterenol (β1 y β2), adrenalina/dopamina (α1-α2-β1-β2), noradrenalina (α1, α2, β1). Acción mixta: efedrina y pseudoefedrina (hipotensión inducida por anestesia). Acción indirecta: anfetamina, cocaína y tiramina (aumentan la disponibilidad de noradrenalina).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-194",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · Síntese de NA e sítios de ação",
+   "q": "Descreva a síntese da noradrenalina e indique em quais etapas atuam reserpina, anfetamina, cocaína e IMAO.",
+   "a": "Tirosina → L-DOPA (tirosina hidroxilasa) → dopamina (DOPA descarboxilasa) → noradrenalina en las vesículas (dopamina β-hidroxilasa). Reserpina: bloquea el transporte de monoaminas a las vesículas (almacenamiento). Anfetamina y tiramina: aumentan la disponibilidad de noradrenalina (liberación). Cocaína: inhibe la recaptación. IMAO: reducen el metabolismo de monoaminas (degradación).",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-195",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · β-bloqueadores · classificação e indicações",
+   "q": "Classifique os β-bloqueadores em não seletivos, β1-seletivos e mistos; cite exemplos, uma indicação característica e uma contraindicação ou RAM de cada grupo.",
+   "a": "No selectivos (propranolol, nadolol, timolol): migraña, hipertensión portal, temblor/hipertiroidismo, glaucoma (timolol); contraindicado en asma. Selectivos β1 (atenolol, bisoprolol, esmolol, metoprolol, nebivolol): fibrilación auricular, angina, post-IAM, insuficiencia cardíaca; contraindicado en IC descompensada; RAM bradicardia. Mixtos α-β (carvedilol, labetalol): IC, crisis hipertensiva; RAM hipotensión ortostática y bradicardia.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
+  },
+  {
+   "id": "qp-196",
+   "g": "Respostas abertas",
+   "t": "Quadros do professor · HTA e antagonistas",
+   "q": "Explique por que α1 e β-bloqueadores não são a primeira linha da hipertensão, e quais classes são, segundo o quadro.",
+   "a": "La primera línea citada incluye IECA (enalapril), ARA II (losartán), tiazídicos (hidroclorotiazida) y BCC (amlodipino). Los α1 tratan HTA pero no son de primera línea, y se destacan en HPB; los β-bloqueadores se eligen según comorbilidades (angina, IC, post-IAM, FA). Además, α1 causan hipotensión ortostática y taquicardia refleja.",
+   "x": "Questão autoral baseada nos quadros do professor e na apostila SINUS P2"
   }
  ]
 };
