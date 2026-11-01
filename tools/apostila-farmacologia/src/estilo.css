@@ -291,3 +291,20 @@ table.t td,table.t th{overflow-wrap:anywhere}.cap{overflow-wrap:break-word}
   table.t td::before{content:attr(data-label);display:block;font:800 10.5px/1.2 var(--f);letter-spacing:.07em;text-transform:uppercase;color:var(--acc);margin-bottom:2px}
   table.t td:empty{display:none}
 }
+/* celular: tipografia única — todo texto corrido (aula, complemento, caixas, listas, tabelas/cartões) no mesmo tamanho;
+   só as legendas internas dos esquemas ficam um ponto menores */
+@media (max-width:640px){
+  .cap p,.cap .lead,.cap li,.cap td,.aula p,.aula .lead,.exp p,.box p,.vd-list,.vd-card p,.vd-step,.vd-brace-table td{font-size:15px!important;line-height:1.6!important}
+  .cap .lead,.aula .lead{font-weight:400}
+  .cap .st small,.cap .br span,.cap .dt,.cap .cd li,.cap .cd ul,.vd-step span,.vd-pill{font-size:14px!important;line-height:1.5!important}
+  table.t td:first-child{font-weight:700;color:var(--ink2,#10352a)}
+  table.t td:first-child b{font-weight:700}
+  h3.sub{font-size:16.5px}
+}
+@media (max-width:640px){
+  .cap{padding:16px 14px 14px!important;border-radius:20px!important}
+  .aula{padding:12px 12px 6px;border-radius:14px;margin-left:-4px;margin-right:-4px}
+  .exp{padding-left:10px}
+  .box{padding:11px 12px}
+  table.t td{padding:7px 11px}
+}
