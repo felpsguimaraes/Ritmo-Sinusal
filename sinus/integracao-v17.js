@@ -585,7 +585,8 @@
   }
   function garantirApostila() {
     var box = $id('subjectContent'), s = subjectData(), A = s && APOSTILAS[s.slug];
-    if (!box || !A || UI.tab !== 'apostila') return;
+    /* a visão geral de teoria aparece com «Resumo / Apostila» destacado: a apostila entra nas duas */
+    if (!box || !A || !(UI.tab === 'apostila' || (UI.tab === 'overview' && UI.mode === 'theory'))) return;
     var gal = box.querySelector('.sxMG'), card = box.querySelector('[data-sx-apostila]');
     var bloco = card ? (card.closest('.sxApost') || card) : null;
     if (!bloco) {
