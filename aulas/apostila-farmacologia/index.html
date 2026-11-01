@@ -287,20 +287,14 @@ body.embed .brandbar,body.embed footer.pe{display:none}
 body.embed header.top{padding-top:8px}
 body.embed header.top h1{font-size:clamp(24px,4vw,34px)}
 body.embed .lede{font-size:15.5px}
-table.t td,table.t th{overflow-wrap:anywhere}.cap{overflow-wrap:break-word}
+.cap{overflow-wrap:break-word}
 
-/* celular: tabelas viram cartões empilhados (rótulo em cima, valor embaixo) */
+/* celular: a tabela mantém o formato do computador; colunas com largura mínima e o quadro desliza para o lado */
 @media (max-width:640px){
-  table.t thead{display:none}
-  table.t,table.t tbody,table.t tr,table.t td{display:block;width:100%}
-  table.t{margin:6px 0 12px}
-  table.t tr{border:1px solid var(--line);border-radius:14px;margin:0 0 10px;background:#fff;overflow:hidden}
-  table.t tbody tr:nth-child(even) td{background:none}
-  table.t td{border:0;padding:7px 12px;font-size:14px;line-height:1.5}
-  table.t td+td{border-top:1px solid var(--line2,#eef3f0)}
-  table.t td::before{content:attr(data-label);display:block;font:800 10.5px/1.2 var(--f);letter-spacing:.07em;text-transform:uppercase;color:var(--acc);margin-bottom:2px}
-  table.t td:empty{display:none}
+  .tw{-webkit-overflow-scrolling:touch}
+  table.t th,table.t td{min-width:132px;overflow-wrap:normal;word-break:normal;hyphens:manual}
 }
+
 
 </style>
 </head>
