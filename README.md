@@ -34,10 +34,10 @@ As três aulas e seus PDFs/imagens permanecem nos caminhos originais.
 Para todas as turmas do 5º período (A a G), na matéria Farmacología I:
 
 - **Apostila** (`aulas/apostila-farmacologia/`): 34 capítulos das Clases 6 a 9 com esquemas interativos, mapas para completar, exercícios e flashcards. A aba Apostila da matéria leva até ela (`APOSTILAS` em `sinus/integracao-v17.js`).
-- **Flashcards**: baralho `farmacologia/gimenez` em `aulas/flashcards/cartoes.js` (91 cartões, 23 de resposta aberta, incluindo as nove perguntas da Clase 9). As turmas de outros docentes também o recebem, porque é o único baralho da matéria.
+- **Flashcards**: baralho `farmacologia/gimenez` em `aulas/flashcards/cartoes.js` (101 cartões, 23 de resposta aberta, incluindo as nove perguntas da Clase 9). As turmas de outros docentes também o recebem, porque é o único baralho da matéria.
 - **Mapas guiados**: 33 mapas (níveis Guiado e Desafío) e as questões no nível Prova, em `mapas/dados/farmacologia-apostila.js`.
 
-Esses arquivos são gerados por `materiais/farmacologia-p2/integracao-sinus/gerar.mjs` (repositório Biomaster-Academy). Para atualizar, edite a fonte e rode o gerador; não edite os arquivos gerados à mão.
+A fonte fica em `tools/apostila-farmacologia/` (capítulos em `src/capitulos/`, dados, mapas guiados e a marca). Para atualizar, edite a fonte e rode `node tools/apostila-farmacologia/gerar.mjs` e depois `node tools/testar-mapas.js`; não edite os arquivos gerados à mão. Os capítulos 09 a 18 incorporam os 7 resumos manuscritos do autor (anticolinérgicos e adrenérgicos).
 
 ## Administração
 

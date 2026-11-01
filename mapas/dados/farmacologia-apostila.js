@@ -1,8 +1,7 @@
 /* Sinus · Mapas guiados · Farmacología I · APOSTILA SINUS P2 (Clases 6 a 9)
    Complemento de farmacologia.js: 33 mapas da apostila (níveis Guiado e Desafío) e
    7 blocos de questões de múltipla escolha e V/F (nível Prova).
-   Texto em português com os termos técnicos em espanhol, como na apostila.
-   Gerado por materiais/farmacologia-p2/integracao-sinus/gerar.mjs (Biomaster-Academy). Não editar à mão. */
+   Gerado por tools/apostila-farmacologia/gerar.mjs. Não editar à mão. */
 (function () {
   var F = window.SINUS_MAPAS && window.SINUS_MAPAS.farmacologia;
   if (!F) return;

@@ -721,12 +721,36 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "id": "ap-m2-1",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
+   "q": "Quais são os 3 ramos dos antagonistas colinérgicos pela estrutura química?",
+   "a": "Alcaloides naturais (atropina, escopolamina), aminas terciárias (cruzam a BHE) e aminas quaternárias (não cruzam a BHE).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-2",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Por que benzotropina e triexifenidila ajudam no Parkinson?",
+   "a": "São antimuscarínicos terciários (centrais): reduzem o excesso relativo de ACh frente à falta de dopamina, aliviando o tremor.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-3",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
+   "q": "Para que serve o glicopirrolato?",
+   "a": "Antimuscarínico quaternário: reduz sialorreia e secreção respiratória no pré-operatório / pré-intubação.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m2-4",
+   "g": "Colinérgicos",
+   "t": "Clase 6 · Colinérgicos",
    "q": "Qual é o agonista direto resistente à AChE, seletivo para M3 em bexiga?",
    "a": "Betanecol (éster carbâmico). Não cruza a BHE.",
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-2",
+   "id": "ap-m2-5",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Qual é a diferença entre neostigmina e fisostigmina?",
@@ -734,7 +758,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-3",
+   "id": "ap-m2-6",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Para que serve a piridostigmina na miastenia?",
@@ -742,7 +766,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-4",
+   "id": "ap-m2-7",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Qual é o tripé do tratamento da intoxicação por organofosforados?",
@@ -750,7 +774,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-5",
+   "id": "ap-m2-8",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Por que a atropina não corrige a fraqueza nicotínica?",
@@ -758,7 +782,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-6",
+   "id": "ap-m2-9",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "O que é o envelhecimento da AChE?",
@@ -766,7 +790,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-7",
+   "id": "ap-m2-10",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Quais são as aminas terciárias antimuscarínicas que cruzam a BHE?",
@@ -774,7 +798,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-8",
+   "id": "ap-m2-11",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Qual a síndrome cardinal do excesso antimuscarínico?",
@@ -782,7 +806,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-9",
+   "id": "ap-m2-12",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Qual é o \"DUMBBELSS\" dos efeitos muscarínicos?",
@@ -790,7 +814,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m2-10",
+   "id": "ap-m2-13",
    "g": "Colinérgicos",
    "t": "Clase 6 · Colinérgicos",
    "q": "Fisostigmina é antídoto universal da síndrome anticolinérgica?",
@@ -801,12 +825,68 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "id": "ap-m3-1",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
+   "q": "Quais são os 5 destinos da noradrenalina na fenda?",
+   "a": "1) receptor pós-sináptico; 2) autorreceptor α2 (feedback); 3) recaptação NET (principal); 4) MAO intraneuronal; 5) COMT.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-2",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual metabólito urinário de MAO + COMT ajuda no diagnóstico do feocromocitoma?",
+   "a": "Ácido vanilmandélico (VMA).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-3",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Qual fármaco inibe a tirosina hidroxilase?",
+   "a": "Metirosina (passo limitante da síntese de catecolaminas).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-4",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Selegilina e entacapona: que enzimas inibem?",
+   "a": "Selegilina: MAO-B (IMAO). Entacapona: COMT (ICOMT). São agonistas indiretos por enzima.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-5",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Por que tiramina + IMAO causa crise hipertensiva?",
+   "a": "A tiramina dos alimentos fermentados não é degradada pela MAO e libera grande quantidade de noradrenalina.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-6",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Por que α-bloqueador dá taquicardia e β-bloqueador dá bradicardia?",
+   "a": "α1 bloqueado → vasodilatação → ↓ PA → barorreflexo estimula β1 livre (taquicardia reflexa). β1 bloqueado → ação direta nos nodos SA e AV (bradicardia).",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-7",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
+   "q": "Quais β-bloqueadores aparecem na hipertensão portal?",
+   "a": "Não seletivos como propranolol (e nadolol), e o misto carvedilol: profilaxia de varizes esofágicas.",
+   "x": "Apostila SINUS P2"
+  },
+  {
+   "id": "ap-m3-8",
+   "g": "Adrenérgicos",
+   "t": "Clase 7 · Adrenérgicos",
    "q": "Qual enzima converte NA em adrenalina na medula suprarrenal?",
    "a": "Feniletanolamina N-metiltransferase (PNMT).",
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-2",
+   "id": "ap-m3-9",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Onde ocorre a conversão dopamina → noradrenalina?",
@@ -814,7 +894,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-3",
+   "id": "ap-m3-10",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "O que a reserpina faz e por que o efeito é lento?",
@@ -822,7 +902,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-4",
+   "id": "ap-m3-11",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Qual o efeito de um agonista α2 pré-sináptico?",
@@ -830,7 +910,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-5",
+   "id": "ap-m3-12",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Qual o mecanismo da cocaína?",
@@ -838,7 +918,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-6",
+   "id": "ap-m3-13",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Qual o mecanismo da anfetamina e da tiramina?",
@@ -846,7 +926,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-7",
+   "id": "ap-m3-14",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Por que a clonidina não deve ser suspensa de repente?",
@@ -854,7 +934,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-8",
+   "id": "ap-m3-15",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Em que dose a dopamina ativa D1 renal?",
@@ -862,7 +942,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-9",
+   "id": "ap-m3-16",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Por que a adrenalina pode baixar a pressão após fenoxibenzamina?",
@@ -870,7 +950,7 @@ window.SINUS_CARTOES["farmacologia/gimenez"] = {
    "x": "Apostila SINUS P2"
   },
   {
-   "id": "ap-m3-10",
+   "id": "ap-m3-17",
    "g": "Adrenérgicos",
    "t": "Clase 7 · Adrenérgicos",
    "q": "Qual o uso do esmolol?",

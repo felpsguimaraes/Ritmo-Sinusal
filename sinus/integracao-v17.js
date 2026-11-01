@@ -572,7 +572,7 @@
   var APOSTILAS = {
     anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino' },
     farmacologia: { ler: '/aulas/apostila-farmacologia/', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
-      extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (91 cartões, com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
+      extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
   };
   function renderApostilaMateria() {
     var s = subjectData(), A = s && APOSTILAS[s.slug], off = '<span class="btn sm" style="opacity:.6;cursor:default">Em preparação</span>';
