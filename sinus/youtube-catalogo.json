@@ -4,8 +4,38 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-11-01T15:20:11Z",
+  "updatedAt": "2026-11-02T18:35:13Z",
   "videos": [
+    {
+      "id": "1mL9gHqM_Fs",
+      "title": "Dr. Glória Martinez",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "AVbjiW0A5Pk",
+      "title": "Nematodes, Cestodes, and Trematodes (10/29/2026) - Dr. Noélia Scappini",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "Ru7w_Skksbg",
+      "title": "Neuro VII (10/19/2026) - Dr. Federico Hogë",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "5Vx8od6yY3s",
+      "title": "Gastro Physiology II: Motility I (10/29/2026) - Dr. Federico Hogë",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "-zocUc4fojA",
+      "title": "Neuro IV - Somatic Motor II (10/01/2026) - Dr. Feeerico Hogë",
+      "section": "videos",
+      "description": ""
+    },
     {
       "id": "M8S3wI4wgUQ",
       "title": "Non-Communicable Diseases (10/28/2026) - Dr. Andréa Villamayor",
@@ -20,7 +50,7 @@
     },
     {
       "id": "OKYQlaPLNpA",
-      "title": "Neuro VII (10/22/2026) - Dr. Federico Hogë",
+      "title": "Neuro VIII (22.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -61,20 +91,14 @@
       "description": ""
     },
     {
-      "id": "gkKvMfmnIbE",
-      "title": "Neuro VI (10/19/2026) - Dr. Federico",
-      "section": "videos",
-      "description": ""
-    },
-    {
       "id": "EK22uPNLZME",
-      "title": "Neuro V (10/15/2026) - Dr. Federico Hogë",
+      "title": "Neuro VI (10/15/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "2iMIaRxs-yI",
-      "title": "Neuro IV (10/08/2026) - Dr. Federico Hogë",
+      "title": "Neuro V (10/08/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -104,25 +128,25 @@
     },
     {
       "id": "7yRI1Lcf5Hg",
-      "title": "Vaccines, Epidemiology (10/08/2026) - Dr. Andrea Villamayor",
+      "title": "Vacunas, Epidemiología (08.10.2026) - Dra Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
     {
       "id": "i1U-qU78Lvc",
-      "title": "Krebs Cycle (10/07/2026) - Dr. Glória Martinez",
+      "title": "Ciclo de Krebs (07.10.2026) - Dra Glória Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "oSHrHrGFNtc",
-      "title": "Somatic Motor Control - Dr. Federivo Hogë",
+      "title": "Neuro IV - Motor Somático I (01.10.2026) - Dr Federivo Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "j6Jdukd5JXU",
-      "title": "Blood and Tissue Protozoa - Dr. Noélia Scappini",
+      "title": "Protozoários Sanguíneos y Tisulares - Dra Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -182,7 +206,7 @@
     },
     {
       "id": "9p7ZkKENYLA",
-      "title": "Practical Microbiology (08/26/2026) - Dr. Nilse Cubilla",
+      "title": "Microbiología práctica (26.08.2026) - Dra Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
@@ -272,7 +296,7 @@
     },
     {
       "id": "0D2DOGt07nE",
-      "title": "Micosis Superficiales (13.08.2026) - Dra Noelia Scappini",
+      "title": "Superficial Mycoses (08/13/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -284,7 +308,7 @@
     },
     {
       "id": "dXqgvh3KNWY",
-      "title": "Practical Microbiology (08/12/2026) - Dr. Nilse Cubilla",
+      "title": "Microbiología Práctica (12.08.2026) - Dra Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
@@ -338,7 +362,7 @@
     },
     {
       "id": "OhjMiXlfC1I",
-      "title": "Fisiologia Respiratória (03.08.2026) - Dr Federico Höge",
+      "title": "Respiratory Physiology (08/03/2026) - Dr. Federico Höge",
       "section": "videos",
       "description": ""
     },
@@ -422,7 +446,7 @@
     },
     {
       "id": "otGbXjRTnZA",
-      "title": "Biofísica de la Audición I - Dr Josué Schmidt (02.06.2026)",
+      "title": "Biophysics of Hearing I - Dr. Josué Schmidt (02.06.2026)",
       "section": "videos",
       "description": ""
     },
@@ -464,13 +488,13 @@
     },
     {
       "id": "meIF5x5l4BQ",
-      "title": "Revisión: Biofísica de la Circulación - Dr Josué Schmidt",
+      "title": "Review: Biophysics of Circulation - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ypyf1RtTZhQ",
-      "title": "Biofísica del Sonido - Dr Josué Schmidt",
+      "title": "Biophysics of Sound - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -614,7 +638,7 @@
     },
     {
       "id": "ZfR7fDLp-Gg",
-      "title": "Proteínas V - Dra Andrea López (06.04.26)",
+      "title": "Proteins V - Dr. Andrea López (06.04.26)",
       "section": "videos",
       "description": ""
     },
@@ -692,7 +716,7 @@
     },
     {
       "id": "xqJ9dp-y3to",
-      "title": "Músculo Cardiaco - Dr Carlos Ariel - 11.03.26",
+      "title": "Cardiac Muscle - Dr. Carlos Ariel - 11.03.26",
       "section": "videos",
       "description": ""
     },
@@ -896,7 +920,7 @@
     },
     {
       "id": "Nd_TcsielLE",
-      "title": "Sistema Digestivo I - Dr Eduardo Oviedo",
+      "title": "Digestive System I - Dr. Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -926,7 +950,7 @@
     },
     {
       "id": "C-EJi8B_Er0",
-      "title": "Liver and Gallbladder - Dr. Victor Benitez",
+      "title": "Hígado y Visícula Biliar - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -986,7 +1010,7 @@
     },
     {
       "id": "q_TGSs6rQKE",
-      "title": "Pares craneales: parte final - Dr Gregório Meaurio",
+      "title": "Cranial nerves: final part - Dr. Gregório Meaurio",
       "section": "videos",
       "description": ""
     },
@@ -1010,7 +1034,7 @@
     },
     {
       "id": "p4Fi81H7nUU",
-      "title": "Endocrine System - Dr. Eduardo Oviedo",
+      "title": "Sistema endócrino - Dr Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -1088,7 +1112,7 @@
     },
     {
       "id": "qejAwhTMqfE",
-      "title": "Generalidades del abdomen - Dr Víctor Benítez",
+      "title": "Abdominal Overview - Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1148,7 +1172,7 @@
     },
     {
       "id": "PMbTXCOY2W0",
-      "title": "Generalidades del cráneo - Dr Víctor Benítez",
+      "title": "Generalities of the skull - Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
