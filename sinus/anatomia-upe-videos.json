@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T15:58:29Z",
+  "updatedAt": "2026-11-02T19:26:57Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -27,7 +27,7 @@
     },
     {
       "id": "n6ufOldVq64",
-      "title": "MIDLINE STRUCTURES FROM A SAGITTAL SECTION",
+      "title": "ESTRUCTURAS DE LA LÍNEA MEDIA DESDE UN CORTE SAGITAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=n6ufOldVq64",
@@ -77,7 +77,7 @@
     },
     {
       "id": "f6uVTef7zJs",
-      "title": "CADENA SIMPÁTICA CERVICAL",
+      "title": "CERVICAL SYMPATHETIC CHAIN",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=f6uVTef7zJs",
@@ -97,7 +97,7 @@
     },
     {
       "id": "osl4JYIqOSE",
-      "title": "Spleen",
+      "title": "Bazo",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=osl4JYIqOSE",
@@ -187,7 +187,7 @@
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "CORAZÓN - Configuración Externa - Parte 2",
+      "title": "HEART - External Configuration - Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "CORAZÓN - Configuración Externa - Parte 1",
+      "title": "HEART - External Configuration - Part 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -207,7 +207,7 @@
     },
     {
       "id": "QTCq70XbM1c",
-      "title": "CORAZÓN - GRANDES VASOS",
+      "title": "HEART - LARGE GLASSES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=QTCq70XbM1c",
@@ -227,7 +227,7 @@
     },
     {
       "id": "BllOA4xplp8",
-      "title": "BRAIN Part 2",
+      "title": "CEREBRO 2da Parte",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=BllOA4xplp8",
@@ -267,7 +267,7 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "MÉDULA ESPINAL",
+      "title": "SPINAL CORD",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
@@ -277,7 +277,7 @@
     },
     {
       "id": "nM0xvmPRiD8",
-      "title": "NÚCLEOS BASALES",
+      "title": "BASAL NUCLEI",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=nM0xvmPRiD8",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "Willis's Polygon",
+      "title": "POLÍGONO DE WILLIS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -337,7 +337,7 @@
     },
     {
       "id": "7w96_AG4JWQ",
-      "title": "INFERIOR VENA CAVA",
+      "title": "VENA CAVA INFERIOR",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=7w96_AG4JWQ",
@@ -347,7 +347,7 @@
     },
     {
       "id": "cEuy29taBA0",
-      "title": "AORTA ABDOMINAL",
+      "title": "ABDOMINAL AORTA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cEuy29taBA0",
@@ -788,7 +788,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 41,
+      "newScan": 42,
       "total": 42
     },
     "anatomiaupe2188": {
