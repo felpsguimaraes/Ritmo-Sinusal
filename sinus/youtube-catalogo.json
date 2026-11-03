@@ -4,8 +4,32 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-11-02T18:35:13Z",
+  "updatedAt": "2026-11-03T16:23:02Z",
   "videos": [
+    {
+      "id": "iByFSugGrMs",
+      "title": "Non-Communicable Disease - Dr. Andrea Villamayor",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "nSkcdqF0uFo",
+      "title": "Epidemiology: Cold Chain - Dr. Andrea Villamayor",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "tdhmwdboiEo",
+      "title": "Dr. Andréa Villamayor",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "tLu4iL3S98w",
+      "title": "Communicable and Non-Communicable Diseases - Dr. Andrea Villamayor",
+      "section": "videos",
+      "description": ""
+    },
     {
       "id": "1mL9gHqM_Fs",
       "title": "Dr. Glória Martinez",
@@ -50,7 +74,7 @@
     },
     {
       "id": "OKYQlaPLNpA",
-      "title": "Neuro VIII (22.10.2026) - Dr Federico Hogë",
+      "title": "Neuro VIII (10/22/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -104,7 +128,7 @@
     },
     {
       "id": "2RBXp99Mby4",
-      "title": "Urea Cycle (10/13/2026) - Dr. Glória Martinez",
+      "title": "Ciclo de Urea (13.10.2026) - Dra Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -116,7 +140,7 @@
     },
     {
       "id": "iIwNSlbnskg",
-      "title": "Circulatory Part II (09/03/206) - Dr. Federico Hogë",
+      "title": "Circulatorio Parte II (03.09.206) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -140,7 +164,7 @@
     },
     {
       "id": "oSHrHrGFNtc",
-      "title": "Neuro IV - Motor Somático I (01.10.2026) - Dr Federivo Hogë",
+      "title": "Neuro IV - Somatic Motor I (10/01/2026) - Dr. Federivo Hogë",
       "section": "videos",
       "description": ""
     },
@@ -182,7 +206,7 @@
     },
     {
       "id": "WfCsjF2pWaQ",
-      "title": "Fisiología Neuro I (10.09.2026) - Dr Federico Hogë",
+      "title": "Neurophysiology I (09/10/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -224,7 +248,7 @@
     },
     {
       "id": "srwI5QmCa44",
-      "title": "Glycogenolysis / Glycogenesis (08/25/2026) - Dr. Glória Martinez",
+      "title": "Glucogenólisis / Glucogénesis (25.08.2026) - Dra Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -242,7 +266,7 @@
     },
     {
       "id": "aBCm_wNQEEs",
-      "title": "Primary Health Care (I) - Dr. Andrea Villamayor",
+      "title": "Atención Primária de la Salud (I) - Dra Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
@@ -266,7 +290,7 @@
     },
     {
       "id": "dBLQ4Bpmbes",
-      "title": "Respiratory Physiology VI (08/20/2026) - Dr. Federico Hogë",
+      "title": "Fisiología Respiratória VI (20.08.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -296,7 +320,7 @@
     },
     {
       "id": "0D2DOGt07nE",
-      "title": "Superficial Mycoses (08/13/2026) - Dr. Noelia Scappini",
+      "title": "Micosis Superficiales (13.08.2026) - Dra Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -356,7 +380,7 @@
     },
     {
       "id": "KMSW2qs1rsc",
-      "title": "Introducción Metabolismo (05.08.2026) - Dra Glória Martinez",
+      "title": "Introduction to Metabolism (08/05/2026) - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -368,7 +392,7 @@
     },
     {
       "id": "ugvOpycYEWY",
-      "title": "Introducción a la Nutrición (03.08.26) - Dr Milva Cardozo",
+      "title": "Introduction to Nutrition (08/03/26) - Dr. Milva Cardozo",
       "section": "videos",
       "description": ""
     },
@@ -446,7 +470,7 @@
     },
     {
       "id": "otGbXjRTnZA",
-      "title": "Biophysics of Hearing I - Dr. Josué Schmidt (02.06.2026)",
+      "title": "Biofísica de la Audición I - Dr Josué Schmidt (02.06.2026)",
       "section": "videos",
       "description": ""
     },
@@ -458,19 +482,19 @@
     },
     {
       "id": "XWIBWmhQBKk",
-      "title": "Vitaminas II (01.06.2026) - Dra Andrea López",
+      "title": "Vitamins II (01.06.2026) - Dr. Andrea López",
       "section": "videos",
       "description": ""
     },
     {
       "id": "w83Xq1yfU9g",
-      "title": "Vitaminas - Dra Andrea López (27.05.2026)",
+      "title": "Vitamins - Dr. Andrea López (05/27/2026)",
       "section": "videos",
       "description": ""
     },
     {
       "id": "7j_IxIi-eZU",
-      "title": "Eritrocitos e Hemoglobina - Dr Carlos Ariel (26.05.2026)",
+      "title": "Erythrocytes and Hemoglobin - Dr. Carlos Ariel (05/26/2026)",
       "section": "videos",
       "description": ""
     },
@@ -488,13 +512,13 @@
     },
     {
       "id": "meIF5x5l4BQ",
-      "title": "Review: Biophysics of Circulation - Dr. Josué Schmidt",
+      "title": "Revisión: Biofísica de la Circulación - Dr Josué Schmidt",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ypyf1RtTZhQ",
-      "title": "Biophysics of Sound - Dr. Josué Schmidt",
+      "title": "Biofísica del Sonido - Dr Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -512,19 +536,19 @@
     },
     {
       "id": "OMPKunJMzrc",
-      "title": "Revisión P2 Bioquímica - Dra Andrea López",
+      "title": "P2 Biochemistry Review - Dr. Andrea López",
       "section": "videos",
       "description": ""
     },
     {
       "id": "AU4_jTegrME",
-      "title": "Resistencia Ventricular, Gasto Cardiaco - Dr Carlos Ariel",
+      "title": "Ventricular Resistance, Cardiac Output - Dr. Carlos Ariel",
       "section": "videos",
       "description": ""
     },
     {
       "id": "Dg-2B8Q38l8",
-      "title": "Lípidos - Dra Andrea López",
+      "title": "Lipids - Dr. Andrea López",
       "section": "videos",
       "description": ""
     },
@@ -548,13 +572,13 @@
     },
     {
       "id": "sm23LaJlBvo",
-      "title": "Revisión P2 - Dr Arturo Alexander",
+      "title": "Review P2 - Dr. Arturo Alexander",
       "section": "videos",
       "description": ""
     },
     {
       "id": "LYLd-gsxigY",
-      "title": "Biofísica de la Circulación - Dr Josué Schmidt",
+      "title": "Biophysics of Circulation - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -602,7 +626,7 @@
     },
     {
       "id": "zlnn7Sya18k",
-      "title": "Electrocardiograma, última clase - Dr Carlos Ariel (22.04.2026)",
+      "title": "Electrocardiogram, final class - Dr. Carlos Ariel (04/22/2026)",
       "section": "videos",
       "description": ""
     },
@@ -638,7 +662,7 @@
     },
     {
       "id": "ZfR7fDLp-Gg",
-      "title": "Proteins V - Dr. Andrea López (06.04.26)",
+      "title": "Proteínas V - Dra Andrea López (06.04.26)",
       "section": "videos",
       "description": ""
     },
@@ -650,7 +674,7 @@
     },
     {
       "id": "d5RD4BC8FMU",
-      "title": "Eletrocardiograma - Dr Carlos Ariel",
+      "title": "Electrocardiogram - Dr. Carlos Ariel",
       "section": "videos",
       "description": ""
     },
@@ -716,7 +740,7 @@
     },
     {
       "id": "xqJ9dp-y3to",
-      "title": "Cardiac Muscle - Dr. Carlos Ariel - 11.03.26",
+      "title": "Músculo Cardiaco - Dr Carlos Ariel - 11.03.26",
       "section": "videos",
       "description": ""
     },
@@ -932,7 +956,7 @@
     },
     {
       "id": "POB9Aw7M6sA",
-      "title": "Sistema Urinário - Dr Eduardo Oviedo",
+      "title": "Urinary System - Dr. Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -950,7 +974,7 @@
     },
     {
       "id": "C-EJi8B_Er0",
-      "title": "Hígado y Visícula Biliar - Dr Víctor Benítez",
+      "title": "Liver and Gallbladder - Dr. Victor Benitez",
       "section": "videos",
       "description": ""
     },
@@ -1004,13 +1028,13 @@
     },
     {
       "id": "g5nOZyDCeq4",
-      "title": "Pares craneales: IX, y X, - Dr Gregório Meaurio",
+      "title": "Cranial nerves: IX and X - Dr. Gregório Meaurio",
       "section": "videos",
       "description": ""
     },
     {
       "id": "q_TGSs6rQKE",
-      "title": "Cranial nerves: final part - Dr. Gregório Meaurio",
+      "title": "Pares craneales: parte final - Dr Gregório Meaurio",
       "section": "videos",
       "description": ""
     },
@@ -1034,7 +1058,7 @@
     },
     {
       "id": "p4Fi81H7nUU",
-      "title": "Sistema endócrino - Dr Eduardo Oviedo",
+      "title": "Endocrine System - Dr. Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -1076,7 +1100,7 @@
     },
     {
       "id": "EP89wGf8UX8",
-      "title": "Peritoneum 1 and 2 - Dr. Víctor Benítez",
+      "title": "Peritoneo 1 y 2 - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1172,7 +1196,7 @@
     },
     {
       "id": "PMbTXCOY2W0",
-      "title": "Generalities of the skull - Dr. Víctor Benítez",
+      "title": "Generalidades del cráneo - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
