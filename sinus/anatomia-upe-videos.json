@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T17:10:52Z",
+  "updatedAt": "2026-11-05T17:21:07Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -97,7 +97,7 @@
     },
     {
       "id": "osl4JYIqOSE",
-      "title": "Spleen",
+      "title": "Bazo",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=osl4JYIqOSE",
@@ -357,7 +357,7 @@
     },
     {
       "id": "rx0qaehAcNk",
-      "title": "TRONCO CELIACO",
+      "title": "CELIAC TRUNK",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=rx0qaehAcNk",
@@ -367,7 +367,7 @@
     },
     {
       "id": "vh4Lra7LbvQ",
-      "title": "EXTRAHEPATIC BILE DUCTS",
+      "title": "VÍAS BILIARES EXTRAHEPATICAS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=vh4Lra7LbvQ",
@@ -387,7 +387,7 @@
     },
     {
       "id": "yBaFEDZO4yY",
-      "title": "ARTERIA MESENTERICA SUPERIOR",
+      "title": "SUPERIOR MESENTERIC ARTERY",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=yBaFEDZO4yY",
@@ -798,7 +798,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 41,
+      "newScan": 43,
       "total": 43
     },
     "anatomiaupe2188": {
