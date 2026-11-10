@@ -33,7 +33,7 @@ def passos(*ps):
 def chips(*cs):
     return '<div class="nx-chips">' + ''.join(f'<span class="nx-chip">{c}</span>' for c in cs) + '</div>'
 
-R, A, V, P, B, T, G = '#c8463d', '#d27a1f', '#0f8a6a', '#7a4fc0', '#2f6fb3', '#148a95', '#5e6e82'
+R, A, V, P, B, T, G = '#c8463d', '#d27a1f', '#0f8a6a', '#7a4fc0', '#0b6246', '#0c8059', '#5d7a6c'
 
 # ------------------------------------------------------------------ cabeçalho de cada capítulo
 SUB = {
@@ -422,16 +422,16 @@ CASOS = {
 
 # ------------------------------------------------------------------ capítulo 00 · Lo esencial en 1 minuto
 ESSENCIAL = [
- ('#b3141c', 'necrosis', 'Lesión irreversible = <b>3 fenómenos</b>: no recupera la función mitocondrial · pérdida de membranas (<b>el más importante</b>) · pérdida de la integridad del ADN. El <b>Ca²⁺</b> activa fosfolipasas, proteasas, endonucleasas y ATPasas.'),
- ('#b3141c', 'necrosis', '<b>Necrosis</b>: accidental, siempre patológica, célula aumenta, membrana rota, <b>inflamación</b>. <b>Apoptosis</b>: programada, célula se encoge, membrana íntegra, <b>sin inflamación</b>.'),
- ('#b3141c', 'necrosis', 'Núcleo: <b>picnosis</b> (retracción, ↑ basofilia) → <b>cariorrexis</b> (fragmentación) → <b>cariólisis</b> (pérdida de basofilia). Citoplasma: <b>↑ eosinofilia</b> por pérdida de ARN.'),
- ('#b3141c', 'necrosis', '6 patrones: <b>coagulativa</b> (isquemia, cuña; no en cerebro) · <b>licuefactiva</b> (SNC, absceso) · <b>gangrenosa</b> (seca × húmeda) · <b>caseosa</b> (TB) · <b>grasa</b> (páncreas) · <b>fibrinoide</b> (inmunocomplejos).'),
- ('#b3141c', 'necrosis', 'Infarto <b>blanco</b> = circulación terminal (corazón, bazo, riñón). <b>Rojo</b> = doble circulación, oclusión venosa, tejido laxo, reperfusión (pulmón, intestino).'),
- ('#7a3fe0', 'apoptosis', '<b>Intrínseca</b>: BCL2 ↓ → BAX/BAK → <b>citocromo c</b> → apoptosoma → caspasa 9. <b>Extrínseca</b>: Fas–FasL → FADD → caspasa 8. Ejecutoras <b>3 y 6</b>. Necroptosis: RIPK1/RIPK3/MLKL, sin caspasas.'),
- ('#b45309', 'acumulacion', 'Acumulación: <b>4 mecanismos</b>. Esteatosis = hígado; demostrar en corte congelado con <b>Sudán</b> o <b>aceite rojo O</b>. Glucógeno: <b>PAS</b> / carmín de Best.'),
- ('#b45309', 'acumulacion', 'Ateroma = núcleo lipídico + capa fibrosa. Células: <b>macrófagos (espumosas) + linfocitos T</b>. <b>LDL ↑</b> = factor principal. Capa fina → rotura → trombo.'),
- ('#a21caf', 'clase7', '<b>Amiloide</b>: extracelular, β-plegada, Rojo Congo <b>verde manzana</b>, riñón. Calcificación <b>distrófica</b> (tejido muerto, Ca normal) × <b>metastásica</b> (tejido sano, hipercalcemia).'),
- ('#0c8f8a', 'inflamacion', 'Vasodilatación (rubor, calor) → ↑ permeabilidad en <b>vénulas poscapilares</b> (tumor) → marginación → rodamiento (<b>selectinas</b>) → adhesión (<b>integrinas–ICAM-1</b>) → diapédesis (<b>PECAM-1</b>) → quimiotaxis (IL-8, C5a, LTB4).'),
+ ('#0c8059', 'necrosis', 'Lesión irreversible = <b>3 fenómenos</b>: no recupera la función mitocondrial · pérdida de membranas (<b>el más importante</b>) · pérdida de la integridad del ADN. El <b>Ca²⁺</b> activa fosfolipasas, proteasas, endonucleasas y ATPasas.'),
+ ('#0c8059', 'necrosis', '<b>Necrosis</b>: accidental, siempre patológica, célula aumenta, membrana rota, <b>inflamación</b>. <b>Apoptosis</b>: programada, célula se encoge, membrana íntegra, <b>sin inflamación</b>.'),
+ ('#0c8059', 'necrosis', 'Núcleo: <b>picnosis</b> (retracción, ↑ basofilia) → <b>cariorrexis</b> (fragmentación) → <b>cariólisis</b> (pérdida de basofilia). Citoplasma: <b>↑ eosinofilia</b> por pérdida de ARN.'),
+ ('#0c8059', 'necrosis', '6 patrones: <b>coagulativa</b> (isquemia, cuña; no en cerebro) · <b>licuefactiva</b> (SNC, absceso) · <b>gangrenosa</b> (seca × húmeda) · <b>caseosa</b> (TB) · <b>grasa</b> (páncreas) · <b>fibrinoide</b> (inmunocomplejos).'),
+ ('#0c8059', 'necrosis', 'Infarto <b>blanco</b> = circulación terminal (corazón, bazo, riñón). <b>Rojo</b> = doble circulación, oclusión venosa, tejido laxo, reperfusión (pulmón, intestino).'),
+ ('#0c8059', 'apoptosis', '<b>Intrínseca</b>: BCL2 ↓ → BAX/BAK → <b>citocromo c</b> → apoptosoma → caspasa 9. <b>Extrínseca</b>: Fas–FasL → FADD → caspasa 8. Ejecutoras <b>3 y 6</b>. Necroptosis: RIPK1/RIPK3/MLKL, sin caspasas.'),
+ ('#0c8059', 'acumulacion', 'Acumulación: <b>4 mecanismos</b>. Esteatosis = hígado; demostrar en corte congelado con <b>Sudán</b> o <b>aceite rojo O</b>. Glucógeno: <b>PAS</b> / carmín de Best.'),
+ ('#0c8059', 'acumulacion', 'Ateroma = núcleo lipídico + capa fibrosa. Células: <b>macrófagos (espumosas) + linfocitos T</b>. <b>LDL ↑</b> = factor principal. Capa fina → rotura → trombo.'),
+ ('#0c8059', 'clase7', '<b>Amiloide</b>: extracelular, β-plegada, Rojo Congo <b>verde manzana</b>, riñón. Calcificación <b>distrófica</b> (tejido muerto, Ca normal) × <b>metastásica</b> (tejido sano, hipercalcemia).'),
+ ('#0c8059', 'inflamacion', 'Vasodilatación (rubor, calor) → ↑ permeabilidad en <b>vénulas poscapilares</b> (tumor) → marginación → rodamiento (<b>selectinas</b>) → adhesión (<b>integrinas–ICAM-1</b>) → diapédesis (<b>PECAM-1</b>) → quimiotaxis (IL-8, C5a, LTB4).'),
 ]
 CAP_N = {'necrosis': '01', 'apoptosis': '02', 'acumulacion': '03', 'clase7': '04', 'inflamacion': '05'}
 

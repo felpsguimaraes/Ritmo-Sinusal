@@ -21,7 +21,7 @@ const { chromium } = require('playwright');
     await document.fonts.ready;
   });
   await p.waitForTimeout(800);
-  const foot = '<div style="width:100%;font:500 8px Inter,Arial,sans-serif;color:#8a94a6;padding:0 10mm;display:flex;justify-content:space-between">' +
+  const foot = '<div style="width:100%;font:500 8px Inter,Arial,sans-serif;color:#6d897a;padding:0 10mm;display:flex;justify-content:space-between">' +
     '<span>Anatomía Patológica I · 2ª parcial · Dra. Chamorro · SINUS</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>';
   await p.pdf({ path: out, format: 'A4', printBackground: true, scale: 0.8, displayHeaderFooter: true,
     headerTemplate: '<span></span>', footerTemplate: foot, margin: { top: '10mm', bottom: '14mm', left: '9mm', right: '9mm' } });

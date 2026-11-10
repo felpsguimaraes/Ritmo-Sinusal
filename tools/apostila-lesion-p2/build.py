@@ -126,7 +126,7 @@ LIMPA = [
     ('no slide da sua Clase 6', 'no slide da Clase 6'),
     ('Não há prova antiga dela sobre a Clase 7 no material enviado; as perguntas', 'Não há prova antiga da Dra. sobre a Clase 7; as perguntas'),
     (', enviada pelo Felipe em 28/09/2026.', '.'),
-    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=3" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
+    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=4" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
     ('Proteínas, amiloide, calcio<span class="new">novo</span>', 'Proteínas, amiloide, calcio'),
     (' <span class="pillx">novo</span>', ''),
     ('<span class="pillx">novo · sem prova antiga</span>', '<span class="pillx">sem prova antiga</span>'),
@@ -369,7 +369,11 @@ fl[0]['href'] = ('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wg
 
 # 5) CSS, defs, JS, lightbox com imagem grande
 st = soup.find_all('style')[-1]
-st.append(CSS)
+from verde import verde_html, CSS_VERDE
+st.append(CSS + CSS_VERDE)
+for mc in soup.select('.mini-card[style]'):
+    if mc['style'].startswith('--c:') and ';' not in mc['style']:
+        mc['style'] = '--c:#0c8059'
 out = str(soup)
 for k, v in PH.items():
     tag = f'<div data-ph="{k}"></div>'
@@ -382,5 +386,6 @@ old = "lb.querySelector('img').src=im.src;"
 assert out.count(old) == 1
 out = out.replace(old, "lb.querySelector('img').src=im.dataset.full||im.src;")
 out = out.replace('</body>', '<script>' + JS + '</script></body>')
+out = verde_html(out)
 open(OUT, 'w', encoding='utf-8').write(out)
 print('ok', len(out), 'slide', n_sl, 'repaso', n_rep, 'laminas', n_lam, 'placeholders', len(PH))
