@@ -1,13 +1,16 @@
 // Gera aulas/lesion/p2/banco-questoes-p2.pdf: o banco de questões da 2ª parcial (p2/dados.js) no visual SINUS,
 // com as questões de cada tema e, logo depois, o gabarito comentado. Também grava o .html ao lado (versão de tela).
-// Uso: node tools/apostila-lesion-p2/banco-pdf.js aulas/lesion/p2/dados.js /tmp/banco.pdf [--respondido]
+// Uso: node tools/apostila-lesion-p2/banco-pdf.js aulas/lesion/p2/dados.js /tmp/banco.pdf [--respondido|--questoes]
 // Com --respondido, cada questão já vem com a resposta certa e a justificativa logo abaixo (sem gabarito separado).
+// Com --questoes, só as questões, para resolver (sem respostas).
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
 const [, , DADOS, SAIDA, MODO] = process.argv;
 const RESP = MODO === '--respondido';
+const SO_Q = MODO === '--questoes';
+const NOME = SO_Q ? 'Caderno de questões' : RESP ? 'Banco respondido' : 'Banco de questões';
 global.window = {};
 require(path.resolve(DADOS));
 const D = window.SINUSAL_P2_DADOS;
@@ -75,23 +78,25 @@ function respondida(q) {
 const capa = '<section class="capa">' +
   '<div class="brand">sinus<span>.</span></div>' +
   '<p class="eyebrow">Anatomía Patológica I · 2ª parcial · Dra. Eliana Chamorro</p>' +
-  '<h1>Banco de <em>questões</em>.</h1>' +
-  '<p class="lead">As questões das provas da Dra. Chamorro e dos bancos Robbins e PEF que ela usa, com o enunciado igual ao original' + (RESP ? ', já respondidas e justificadas, uma a uma.' : ' e o porquê de cada alternativa.') + '</p>' +
+  '<h1>' + (SO_Q ? 'Caderno de <em>questões</em>.' : RESP ? 'Banco <em>respondido</em>.' : 'Banco de <em>questões</em>.') + '</h1>' +
+  '<p class="lead">As questões das provas da Dra. Chamorro e dos bancos Robbins e PEF que ela usa, com o enunciado igual ao original' + (RESP ? ', já respondidas e justificadas, uma a uma.' : SO_Q ? ', para resolver como na prova.' : ' e o porquê de cada alternativa.') + '</p>' +
   '<div class="stats">' +
     [[total, 'questões'], [conta('mc'), 'múltipla escolha'], [conta('cita'), 'cita'], [conta('comp'), 'completa'], [conta('vf'), 'verdadero o falso']]
       .map(([n, t]) => '<div><b>' + n + '</b><span>' + t + '</span></div>').join('') +
   '</div>' +
   '<div class="indice"><p class="lab">Temas</p>' + porTema.map((t, i) =>
-    '<p class="it"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><a class="t" href="#t-' + t.id + '">' + esc(t.nome) + '</a><span class="c">' + t.qs.length + ' questões · ' + t.qs[0].N + '–' + t.qs[t.qs.length - 1].N + '</span>' + (RESP ? '' : '<a class="gl" href="#g-' + t.id + '">gabarito</a>') + '</p>').join('') +
+    '<p class="it"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><a class="t" href="#t-' + t.id + '">' + esc(t.nome) + '</a><span class="c">' + t.qs.length + ' questões · ' + t.qs[0].N + '–' + t.qs[t.qs.length - 1].N + '</span>' + (RESP || SO_Q ? '' : '<a class="gl" href="#g-' + t.id + '">gabarito</a>') + '</p>').join('') +
   '</div>' +
-  '<div class="como"><p class="lab">Como usar</p>' + (RESP
+  '<div class="como"><p class="lab">Como usar</p>' + (SO_Q
+    ? '<p>Este caderno traz <b>só as questões</b>, para resolver como na prova. As respostas certas e o porquê de cada alternativa estão no <b>banco respondido</b>, a outra versão deste PDF.</p>'
+    : RESP
     ? '<p>Cada questão já vem <b>respondida e justificada</b>: logo abaixo do enunciado aparece a resposta certa e o porquê. Nas de múltipla escolha, cada alternativa é explicada, a certa e as erradas.</p>'
     : '<p>Cada tema traz primeiro as questões e, logo depois, o <b>gabarito comentado</b>. Resolva o tema inteiro antes de olhar as respostas. Nas de múltipla escolha, o gabarito explica cada alternativa, a certa e as erradas.</p>') +
   '<p>Os enunciados estão em espanhol, como na prova. As explicações estão em português. A fonte de cada questão aparece em cima dela, com as páginas do PDF das provas originais.</p></div>' +
   '</section>';
 
 const cabTema = (t, i) => '<header class="th"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><div><p class="k">Tema</p><h2>' + esc(t.nome) + '</h2><p class="s">' + t.qs.length + ' questões · ' + t.qs[0].N + ' a ' + t.qs[t.qs.length - 1].N + '</p></div></header>';
-const temas = RESP ? porTema.map((t, i) => '<section class="tema" id="t-' + t.id + '">' + cabTema(t, i) + t.qs.map(respondida).join('') + '</section>').join('') : porTema.map((t, i) =>
+const temas = (RESP || SO_Q) ? porTema.map((t, i) => '<section class="tema" id="t-' + t.id + '">' + cabTema(t, i) + t.qs.map(RESP ? respondida : questao).join('') + '</section>').join('') : porTema.map((t, i) =>
   '<section class="tema" id="t-' + t.id + '">' +
     '<header class="th"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><div><p class="k">Tema</p><h2>' + esc(t.nome) + '</h2><p class="s">' + t.qs.length + ' questões · ' + t.qs[0].N + ' a ' + t.qs[t.qs.length - 1].N + '</p></div></header>' +
     t.qs.map(questao).join('') +
@@ -206,7 +211,7 @@ a{color:inherit;text-decoration:none}
 .nt b{font-family:var(--mono);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--g);font-size-adjust:none}
 `;
 
-const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Banco de questões · 2ª parcial · Anatomía Patológica I</title>' +
+const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>' + NOME + ' · 2ª parcial · Anatomía Patológica I</title>' +
   '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@800&display=swap">' +
   '<style>' + CSS + '</style></head><body>' + capa + temas + '</body></html>';
 
@@ -219,7 +224,7 @@ const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><met
   await p.evaluate(() => document.fonts.ready);
   const fontes = await p.evaluate(() => [...document.fonts].filter(f => f.status === 'loaded').map(f => f.family).filter((v, i, a) => a.indexOf(v) === i));
   const rodape = '<div style="width:100%;padding:0 14mm;display:flex;justify-content:space-between;font-family:Menlo,monospace;font-size:7px;letter-spacing:.08em;color:#6d897a">' +
-    '<span>BANCO DE QUESTÕES · 2ª PARCIAL · ANATOMÍA PATOLÓGICA I · SINUS</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>';
+    '<span>' + NOME.toUpperCase() + ' · 2ª PARCIAL · ANATOMÍA PATOLÓGICA I · SINUS</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>';
   await p.pdf({ path: SAIDA, format: 'A4', printBackground: true, displayHeaderFooter: true, headerTemplate: '<span></span>', footerTemplate: rodape,
     margin: { top: '14mm', bottom: '16mm', left: '14mm', right: '14mm' } });
   await b.close();
