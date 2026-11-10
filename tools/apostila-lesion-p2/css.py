@@ -266,3 +266,33 @@ CSS += r'''
   .footer{padding-top:14px}
 }
 '''
+CSS += r'''
+/* ===== tipografia da aula 3D (SINUS): Fraunces no texto e nos títulos, JetBrains Mono nos rótulos ===== */
+:root{--f-serif:'Fraunces',Georgia,'Times New Roman',serif;--f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+body{font-family:var(--f-serif);font-optical-sizing:auto;font-size-adjust:.52;font-weight:400;letter-spacing:0}
+button,input,select,textarea{font-family:inherit}
+b,strong{font-weight:620}
+h1,h2,h3,h4{font-family:var(--f-serif);font-size-adjust:none}
+.hero h1{font-weight:300;letter-spacing:-.02em;font-size:clamp(34px,5vw,54px);line-height:1.04}
+.section h2{font-weight:400;letter-spacing:-.015em}
+.topic>.section>.section-head h2{font-weight:400;font-size:32px;letter-spacing:-.02em}
+h3{font-weight:500;letter-spacing:-.01em}
+h4{font-weight:600}
+.nx-why>.ttl{font-weight:600;font-size:16.5px}
+.eyebrow,.side-label,.brand-sub,.section-kicker,.section-number,.stat span,.sum60 .t,.facil .t,.exam .t,.exam b.t,.pitfall .t,.pitfall b.t,
+.callout b.t,.callout .t,.verify b.t,.verify .t,.gbadge,.lam-t,.laminas .lam-t,.flow-t,.tap,.quiz-count,.qp-gt,.qp-t small,.aud-caps .lbl,
+.vs2 .tag,.sig i,.nx-case .t,th,.pill,.pillx,.nx-ref,.nav-num,.nav-link .score,.nav-link .new,h3 .no,.nx-flow .num,.nx-ess .ic,
+.nx-steps li::before,.stp-bar button,.aud-top .d,.qdot,.radar .t,.mm,h4.mm,.org .lvl,.complete-btn,.nx-ess-btn,.aud-ctl button,details.slidebox>summary:after,details.repbox>summary:after
+{font-family:var(--f-mono)!important;font-size-adjust:none}
+.eyebrow,.side-label,.section-kicker,.sum60 .t,.facil .t,.exam b.t,.pitfall b.t,.callout b.t,.verify b.t,.gbadge,.lam-t,.flow-t,.qp-gt,
+.aud-caps .lbl,.nx-case .t,th,h4.mm{font-weight:500;letter-spacing:.16em}
+.section-number,h3 .no,.nx-flow .num,.nx-ess .ic,.nav-num{font-weight:600;letter-spacing:0}
+.stat strong{font-family:var(--f-serif);font-weight:300;font-size-adjust:none}
+.stat span{font-weight:500;letter-spacing:.12em}
+.pill,.pillx{font-weight:500;letter-spacing:.04em}
+.brand-word{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size-adjust:none}
+.sum60.dec li,.sum60.dec p{font-size:15px}
+details.slidebox>summary,details.repbox>summary{font-weight:600;font-size:13.5px}
+.nav-link{font-weight:500;font-size:14px}
+.toc a{font-weight:600;font-size:12.5px}
+'''

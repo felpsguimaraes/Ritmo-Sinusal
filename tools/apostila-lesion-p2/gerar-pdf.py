@@ -2,7 +2,7 @@
 Uso (na raiz do repo): python3 tools/apostila-lesion-p2/gerar-pdf.py
 Saída: aulas/lesion/p2/apostila/apostila-p2.pdf
 As fotos 3D entram em JPEG (o webp viraria imagem sem compressão e o PDF passaria de 80 MB).
-Precisa de Pillow, Node e Playwright (Chromium) e acesso ao Google Fonts (Inter)."""
+Precisa de Pillow, Node e Playwright (Chromium) e acesso ao Google Fonts (Fraunces e JetBrains Mono)."""
 import os, subprocess, sys, tempfile, threading, functools, http.server, socketserver, glob
 from PIL import Image
 
