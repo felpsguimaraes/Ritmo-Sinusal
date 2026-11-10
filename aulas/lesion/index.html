@@ -14,7 +14,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="../config.js?v=5"></script>
-<script>window.SINUSAL_AULA = { id: 'lesion', titulo: 'Lesión celular', materia: 'Anatomía Patológica I', capa: 'necrosis-apoptosis', temas: 44 }</script>
+<script>window.SINUSAL_AULA = { id: 'lesion', titulo: 'Lesión celular', materia: 'Anatomía Patológica I', capa: 'necrosis-apoptosis', temas: 44,
+  extra: { titulo: 'Provas antigas', js: ['p2/dados.js?v=1', 'p2/p2.js?v=1'], css: 'p2/p2.css?v=1',
+    hub: ['Provas antigas e aulas gravadas', '176 questões das provas da Dra. Chamorro com o porquê de cada alternativa, as folhas originais, a clase repaso, as gravações e os organogramas da 2ª parcial.'] } }</script>
 <link rel="stylesheet" href="../sinus-identidade.css?v=16">
 <meta name="application-name" content="SINUS">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261024">
@@ -93,12 +95,13 @@
       <a href="#/3d" data-v="3d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>Aula 3D</a>
       <a href="#/pdf" data-v="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>PDF</a>
       <a href="#/treino" data-v="treino"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Treino</a>
+      <a href="#/provas" data-v="provas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3z"/><path d="m9 13 2 2 4-4"/></svg>Provas</a>
     </nav>
   </header>
   <main class="sx-view" id="sx-view"></main>
   <footer class="sx-appfoot"><span>sinusal. · Anatomía Patológica I</span><span><span id="sx-quem"></span> · <button class="sx-link" type="button" id="sx-sair">Sair da conta</button></span><span>© FELPS</span></footer>
 </div>
 
-<script src="../app.js?v=7"></script>
+<script src="../app.js?v=8"></script>
 </body>
 </html>
