@@ -24,13 +24,13 @@
 
   // gravações (arquivos em p2/audio). tema null = ainda não identificado
   var AUDIOS = [
-    { arq: 'grabacion-5.m4a', t: 'Nueva grabación 5', s: 3220, tema: null },
-    { arq: 'grabacion-6.m4a', t: 'Nueva grabación 6', s: 3048, tema: null },
-    { arq: 'plaza-city.m4a', t: 'Plaza City', s: 499, tema: null },
-    { arq: 'plaza-city-2.m4a', t: 'Plaza City 2', s: 3390, tema: null },
-    { arq: 'plaza-city-3.m4a', t: 'Plaza City 3', s: 2865, tema: null },
-    { arq: 'plaza-city-4.m4a', t: 'Plaza City 4', s: 1378, tema: null },
-    { arq: 'alto-parana.m4a', t: 'Departamento del Alto Paraná', s: 1405, tema: null }
+    { arq: 'grabacion-5.m4a', t: 'Apoptosis · clase completa', s: 3220, tema: 'apo' },
+    { arq: 'grabacion-6.m4a', t: 'Proteínas y amiloide', s: 3048, tema: 'c7' },
+    { arq: 'plaza-city.m4a', t: 'Vía extrínseca · receptores de muerte (Fas)', s: 499, tema: 'apo' },
+    { arq: 'plaza-city-2.m4a', t: 'Placa de ateroma: cápsula fibrosa, rotura y trombo', s: 3390, tema: 'acu' },
+    { arq: 'plaza-city-3.m4a', t: 'Mecanismos de acumulación, colesterol y aterosclerosis', s: 2865, tema: 'acu' },
+    { arq: 'plaza-city-4.m4a', t: 'Esteatosis (cambio graso)', s: 1378, tema: 'acu' },
+    { arq: 'alto-parana.m4a', t: 'Calcificación patológica', s: 1405, tema: 'c7' }
   ]
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
@@ -101,7 +101,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html' + (tema && /^[a-z0-9-]+$/.test(tema) ? '?t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=4' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis, acumulaciones, Clase 7 e inflamación aguda, com o radar da prova e o simulado</small></span>' +
