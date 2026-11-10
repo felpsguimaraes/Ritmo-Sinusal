@@ -1,11 +1,13 @@
 // Gera aulas/lesion/p2/banco-questoes-p2.pdf: o banco de questões da 2ª parcial (p2/dados.js) no visual SINUS,
 // com as questões de cada tema e, logo depois, o gabarito comentado. Também grava o .html ao lado (versão de tela).
-// Uso: node tools/apostila-lesion-p2/banco-pdf.js aulas/lesion/p2/dados.js /tmp/banco.pdf
+// Uso: node tools/apostila-lesion-p2/banco-pdf.js aulas/lesion/p2/dados.js /tmp/banco.pdf [--respondido]
+// Com --respondido, cada questão já vem com a resposta certa e a justificativa logo abaixo (sem gabarito separado).
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
-const [, , DADOS, SAIDA] = process.argv;
+const [, , DADOS, SAIDA, MODO] = process.argv;
+const RESP = MODO === '--respondido';
 global.window = {};
 require(path.resolve(DADOS));
 const D = window.SINUSAL_P2_DADOS;
@@ -40,7 +42,7 @@ function questao(q) {
   return '<article class="q"><p class="meta"><span class="num">' + q.N + '</span><span class="src">' + origem(q) + '</span><span class="tp">' + TIPO[q.t] + '</span></p>' +
     '<p class="enun" lang="es">' + esc(q.q) + '</p>' + corpo + '</article>';
 }
-function resposta(q) {
+function gabarito(q) {
   let cab = '', corpo = '';
   if (q.t === 'mc') {
     cab = (q.ok.length > 1 ? 'Certas: ' : 'Certa: ') + q.ok.map(j => LET[j]).join(' e ');
@@ -55,28 +57,41 @@ function resposta(q) {
     cab = 'Resposta';
     corpo = '<p class="ans" lang="es">' + esc(q.a) + '</p><p class="ex">' + esc(q.e) + '</p>';
   }
+  return { cab, corpo: corpo + (q.nt ? '<p class="nt"><b>Obs.</b> ' + esc(q.nt) + '</p>' : '') };
+}
+function resposta(q) {
+  const { cab, corpo } = gabarito(q);
   const f = FONTE[q.p] || {};
   return '<article class="g"><p class="gh"><span class="num">' + q.N + '</span><b>' + cab + '</b><span class="src">' + origem(q) + (f.pags ? ' · págs. ' + esc(f.pags) + ' do PDF das provas' : '') + '</span></p>' +
-    corpo + (q.nt ? '<p class="nt"><b>Obs.</b> ' + esc(q.nt) + '</p>' : '') + '</article>';
+    corpo + '</article>';
+}
+// questão já respondida: enunciado, resposta certa e o porquê, no mesmo cartão
+function respondida(q) {
+  const { cab, corpo } = gabarito(q);
+  return '<article class="q qr"><p class="meta"><span class="num">' + q.N + '</span><span class="src">' + origem(q) + '</span><span class="tp">' + TIPO[q.t] + '</span></p>' +
+    '<p class="enun" lang="es">' + esc(q.q) + '</p><p class="rc"><b>' + cab + '</b></p>' + corpo + '</article>';
 }
 
 const capa = '<section class="capa">' +
   '<div class="brand">sinus<span>.</span></div>' +
   '<p class="eyebrow">Anatomía Patológica I · 2ª parcial · Dra. Eliana Chamorro</p>' +
   '<h1>Banco de <em>questões</em>.</h1>' +
-  '<p class="lead">As questões das provas da Dra. Chamorro e dos bancos Robbins e PEF que ela usa, com o enunciado igual ao original e o porquê de cada alternativa.</p>' +
+  '<p class="lead">As questões das provas da Dra. Chamorro e dos bancos Robbins e PEF que ela usa, com o enunciado igual ao original' + (RESP ? ', já respondidas e justificadas, uma a uma.' : ' e o porquê de cada alternativa.') + '</p>' +
   '<div class="stats">' +
     [[total, 'questões'], [conta('mc'), 'múltipla escolha'], [conta('cita'), 'cita'], [conta('comp'), 'completa'], [conta('vf'), 'verdadero o falso']]
       .map(([n, t]) => '<div><b>' + n + '</b><span>' + t + '</span></div>').join('') +
   '</div>' +
   '<div class="indice"><p class="lab">Temas</p>' + porTema.map((t, i) =>
-    '<p class="it"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><a class="t" href="#t-' + t.id + '">' + esc(t.nome) + '</a><span class="c">' + t.qs.length + ' questões · ' + t.qs[0].N + '–' + t.qs[t.qs.length - 1].N + '</span><a class="gl" href="#g-' + t.id + '">gabarito</a></p>').join('') +
+    '<p class="it"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><a class="t" href="#t-' + t.id + '">' + esc(t.nome) + '</a><span class="c">' + t.qs.length + ' questões · ' + t.qs[0].N + '–' + t.qs[t.qs.length - 1].N + '</span>' + (RESP ? '' : '<a class="gl" href="#g-' + t.id + '">gabarito</a>') + '</p>').join('') +
   '</div>' +
-  '<div class="como"><p class="lab">Como usar</p><p>Cada tema traz primeiro as questões e, logo depois, o <b>gabarito comentado</b>. Resolva o tema inteiro antes de olhar as respostas. Nas de múltipla escolha, o gabarito explica cada alternativa, a certa e as erradas.</p>' +
+  '<div class="como"><p class="lab">Como usar</p>' + (RESP
+    ? '<p>Cada questão já vem <b>respondida e justificada</b>: logo abaixo do enunciado aparece a resposta certa e o porquê. Nas de múltipla escolha, cada alternativa é explicada, a certa e as erradas.</p>'
+    : '<p>Cada tema traz primeiro as questões e, logo depois, o <b>gabarito comentado</b>. Resolva o tema inteiro antes de olhar as respostas. Nas de múltipla escolha, o gabarito explica cada alternativa, a certa e as erradas.</p>') +
   '<p>Os enunciados estão em espanhol, como na prova. As explicações estão em português. A fonte de cada questão aparece em cima dela, com as páginas do PDF das provas originais.</p></div>' +
   '</section>';
 
-const temas = porTema.map((t, i) =>
+const cabTema = (t, i) => '<header class="th"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><div><p class="k">Tema</p><h2>' + esc(t.nome) + '</h2><p class="s">' + t.qs.length + ' questões · ' + t.qs[0].N + ' a ' + t.qs[t.qs.length - 1].N + '</p></div></header>';
+const temas = RESP ? porTema.map((t, i) => '<section class="tema" id="t-' + t.id + '">' + cabTema(t, i) + t.qs.map(respondida).join('') + '</section>').join('') : porTema.map((t, i) =>
   '<section class="tema" id="t-' + t.id + '">' +
     '<header class="th"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><div><p class="k">Tema</p><h2>' + esc(t.nome) + '</h2><p class="s">' + t.qs.length + ' questões · ' + t.qs[0].N + ' a ' + t.qs[t.qs.length - 1].N + '</p></div></header>' +
     t.qs.map(questao).join('') +
@@ -149,6 +164,12 @@ h1 em{color:var(--g);font-style:italic}
 .ex{margin:0;font-size:9.6pt}
 .nt{margin:1.6mm 0 0;font-size:8.8pt;color:var(--ink2);background:var(--bg);border-left:2px solid var(--g2);padding:1.4mm 2.6mm;border-radius:0 6px 6px 0}
 a{color:inherit;text-decoration:none}
+/* respondido: a resposta dentro do cartão da questão */
+.qr{break-inside:avoid}
+.qr .enun{margin-bottom:2.4mm}
+.rc{margin:0 0 1.6mm;padding-top:2mm;border-top:1px dashed var(--line)}
+.rc b{font-family:var(--mono);font-size:8pt;letter-spacing:.06em;color:var(--g);text-transform:uppercase;font-size-adjust:none}
+@media screen{.rc b{font-size:12px}}
 .indice .gl,.irgab a,.volta{font-family:var(--mono);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--g);font-size-adjust:none}
 .irgab,.volta{display:none}
 @media screen{
