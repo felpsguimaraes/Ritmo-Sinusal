@@ -126,7 +126,7 @@ LIMPA = [
     ('no slide da sua Clase 6', 'no slide da Clase 6'),
     ('Não há prova antiga dela sobre a Clase 7 no material enviado; as perguntas', 'Não há prova antiga da Dra. sobre a Clase 7; as perguntas'),
     (', enviada pelo Felipe em 28/09/2026.', '.'),
-    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
+    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=2" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
     ('Proteínas, amiloide, calcio<span class="new">novo</span>', 'Proteínas, amiloide, calcio'),
     (' <span class="pillx">novo</span>', ''),
     ('<span class="pillx">novo · sem prova antiga</span>', '<span class="pillx">sem prova antiga</span>'),
