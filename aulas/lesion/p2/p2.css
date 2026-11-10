@@ -1,6 +1,6 @@
 /* sinusal. · Provas antigas e aulas gravadas da 2ª parcial (rota #/provas da aula Lesión celular) */
-.p2 .tr-seg{grid-template-columns:repeat(4,minmax(0,1fr))}
-@media (max-width:719px){.p2 .tr-seg{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.p2 .tr-seg{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:719px){.p2 .tr-seg{grid-template-columns:repeat(2,minmax(0,1fr))}.p2 .tr-seg button:first-child{grid-column:1/-1}}
 .p2 .tr-seg button{text-decoration:none}
 .p2-lead{margin:0;color:var(--sx-ink2);font-size:16px;line-height:1.55;max-width:40em}
 .p2-sec{margin-top:26px}
@@ -128,3 +128,16 @@ html.p2-trava,html.p2-trava body{overflow:hidden}
 /* controles dos áudios */
 .p2-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:space-between}
 .p2-a .d .onde{color:var(--sx-green-d);font-weight:600}
+
+/* apostila da parcial (p2/apostila/), aberta dentro da aba */
+.p2-apos{margin-top:16px}
+.p2-apos .p2-vbar{flex-wrap:nowrap}
+.p2-apos .p2-vbar .t{margin-right:auto;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p2-apos .p2-vbar .t small{overflow:hidden;text-overflow:ellipsis}
+.p2-apos .p2-ib{flex:none}
+.p2-apos .p2-vbar a.p2-ib{text-decoration:none}
+.p2-apos-frame{display:block;width:100%;height:calc(100vh - 150px);height:calc(100dvh - 150px);min-height:520px;border:0;background:#fff}
+.p2-apos.full{position:fixed;inset:0;z-index:2147483000;margin:0;display:flex;flex-direction:column;border-radius:0!important;background:#fff!important;backdrop-filter:none}
+.p2-apos.full .p2-vbar{padding-top:max(12px,env(safe-area-inset-top,0px))}
+.p2-apos.full .p2-apos-frame{flex:1;height:auto;min-height:0}
+@media (max-width:719px){.p2-apos-frame{height:calc(100vh - 210px);height:calc(100dvh - 210px);min-height:460px}.p2-apos .p2-vbar .t small{display:none}}

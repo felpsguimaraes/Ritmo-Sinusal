@@ -69,17 +69,19 @@
 
   function render(v, p) {
     fecharLeitor()
+    document.documentElement.classList.remove('p2-trava')
     view = v
     var alvo = p && p[0], antes = view && view.querySelector('.p2') ? parte : null
-    parte = ['banco', 'originais', 'aulas', 'mapas'].indexOf(alvo) >= 0 ? alvo : 'banco'
+    parte = ['apostila', 'banco', 'originais', 'aulas', 'mapas'].indexOf(alvo) >= 0 ? alvo : 'apostila'
     if (antes && antes !== parte) scrollTo(0, 0)
     var nPag = D.paginas.reduce(function (a, g) { return a + g.pages.length }, 0)
     var nOrg = D.orgs.reduce(function (a, g) { return a + g.h.length }, 0)
     view.innerHTML = '<div class="tr-wrap p2">' +
       '<span class="sx-tag">Anatomía Patológica I · 2ª parcial · Dra. Chamorro</span>' +
-      '<h1 class="sx-h1">Provas <em>antigas.</em></h1>' +
-      '<p class="p2-lead">As questões das provas dela, com o enunciado igual ao original e o porquê de cada alternativa. Também as folhas originais, a aula de repaso, as gravações e os organogramas da parcial.</p>' +
+      '<h1 class="sx-h1">2ª <em>parcial.</em></h1>' +
+      '<p class="p2-lead">A apostila da parcial e as questões das provas dela, com o enunciado igual ao original e o porquê de cada alternativa. Também as folhas originais, a aula de repaso, as gravações e os organogramas.</p>' +
       '<div class="tr-seg" role="tablist" aria-label="Parte">' +
+        aba('apostila', 'Apostila', 'Teoria, organogramas e simulados') +
         aba('banco', 'Banco', D.qs.length + ' questões comentadas') +
         aba('originais', 'Provas originais', nPag + ' páginas e o PDF') +
         aba('aulas', 'Aulas gravadas', 'Vídeo e ' + AUDIOS.length + ' áudios') +
@@ -90,10 +92,34 @@
     $$('.p2 .tr-seg [role=tab]', view).forEach(function (b) {
       b.addEventListener('click', function () { location.hash = '#/provas/' + b.dataset.p })
     })
+    if (parte === 'apostila') apostila(p[1])
     if (parte === 'banco') banco()
     if (parte === 'originais') originais(p[1], p[2])
     if (parte === 'aulas') aulas()
     if (parte === 'mapas') mapas()
+  }
+  // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
+  function apostila(tema) {
+    var box = $('#p2-parte')
+    var src = BASE + 'apostila/index.html' + (tema && /^[a-z0-9-]+$/.test(tema) ? '?t=' + tema : '')
+    box.innerHTML =
+      '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
+        '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis, acumulaciones, Clase 7 e inflamación aguda, com o radar da prova e o simulado</small></span>' +
+          '<a class="p2-ib" href="' + BASE + 'apostila/index.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>' +
+          ib('p2-afull', 'Tela cheia', '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>') +
+        '</div>' +
+        '<iframe class="p2-apos-frame" src="' + src + '" title="Apostila da 2ª parcial"></iframe>' +
+      '</section>' +
+      '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
+    $('#p2-afull').addEventListener('click', function () { aposCheia() })
+  }
+  function aposCheia(on) {
+    var s = $('#p2-apos'); if (!s) return
+    if (on == null) on = !s.classList.contains('full')
+    s.classList.toggle('full', on)
+    document.documentElement.classList.toggle('p2-trava', on)
+    var b = $('#p2-afull'); b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? 'Sair da tela cheia' : 'Tela cheia'); b.title = b.getAttribute('aria-label')
+    b.querySelector('svg').innerHTML = on ? '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>' : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'
   }
   function aba(id, t, s) {
     return '<button type="button" role="tab" data-p="' + id + '" aria-selected="' + (parte === id) + '"><b>' + t + '</b><small>' + s + '</small></button>'
@@ -321,6 +347,7 @@
     var nx = gr.pages[vp + 1]; if (nx) { var im = new Image(); im.src = BASE + 'provas/p' + pad(nx.p) + '.jpg' }
   }
   document.addEventListener('keydown', function (e) {
+    if (view && parte === 'apostila' && e.key === 'Escape' && $('#p2-apos.full')) { e.preventDefault(); aposCheia(false); return }
     if (!view || parte !== 'originais') return
     if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName || '')) return
     var L = leitor && document.contains(leitor.box) ? leitor : null
@@ -508,7 +535,10 @@
     redesenhar(L)
     if (on) L.box.focus({ preventScroll: true })
   }
-  addEventListener('hashchange', function () { if (!/^#\/provas\/originais\/pdf/.test(location.hash)) fecharLeitor() })
+  addEventListener('hashchange', function () {
+    document.documentElement.classList.remove('p2-trava')
+    if (!/^#\/provas\/originais\/pdf/.test(location.hash)) fecharLeitor()
+  })
 
   // ------------------------------------------------------------ aulas gravadas
   function aulas() {
