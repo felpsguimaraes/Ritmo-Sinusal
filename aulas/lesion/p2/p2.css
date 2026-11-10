@@ -101,3 +101,30 @@
 .p2-org .org-note{margin:12px auto 0;max-width:820px;text-align:center;font-size:13px;color:#3c4a44;background:var(--sx-soft);border-radius:10px;padding:8px 12px}
 .p2-org .org-title{display:none}
 @media (max-width:719px){.p2-org .org-cols{min-width:0;grid-template-columns:1fr}.p2-org .org-cols::before,.p2-org .org-col::before{display:none}}
+
+/* fotos das folhas ou PDF */
+.p2-modo{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:14px;background:var(--sx-soft);align-self:flex-start}
+.p2-modo a{min-height:36px;padding:0 14px;border-radius:10px;display:inline-flex;align-items:center;font:600 14px var(--sx-sans);color:var(--sx-ink2);text-decoration:none}
+.p2-modo a:hover{color:var(--sx-green-d)}
+.p2-modo a[aria-current=true]{background:#fff;color:var(--sx-green-d);box-shadow:0 1px 3px rgba(11,87,54,.12)}
+.p2-modo a:focus-visible{outline:2px solid var(--sx-green);outline-offset:2px}
+
+/* leitor do PDF das provas */
+.p2-pdf-pages{position:relative;height:78vh;max-height:1100px;overflow:auto;background:#eef3f0;padding:12px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.p2-pdf-pages:focus-visible{outline:2px solid var(--sx-green);outline-offset:-2px}
+.p2-pp{position:relative;width:calc(min(100%, 900px) * var(--z, 1));margin:0 auto 12px;background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(15,40,30,.14)}
+.p2-pp:last-child{margin-bottom:0}
+.p2-pp canvas{display:block;width:100%;height:100%;border-radius:4px}
+.p2-pp:not(.ok)::after{content:"";position:absolute;inset:0;margin:auto;width:28px;height:28px;border-radius:50%;border:3px solid #cfe3d9;border-top-color:var(--sx-green);animation:p2-gira .9s linear infinite}
+@keyframes p2-gira{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.p2-pp:not(.ok)::after{animation:none}}
+.p2-perr{display:flex;flex-direction:column;align-items:center;gap:12px;padding:48px 16px;text-align:center}
+.p2-pdf.full{position:fixed;inset:0;z-index:2147483000;margin:0;display:flex;flex-direction:column;border-radius:0!important;background:#f6faf8!important;backdrop-filter:none}
+.p2-pdf.full .p2-vbar{padding-top:max(12px,env(safe-area-inset-top,0px))}
+.p2-pdf.full .p2-pdf-pages{flex:1;height:auto;max-height:none;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))}
+html.p2-trava,html.p2-trava body{overflow:hidden}
+@media (max-width:719px){.p2-pdf-pages{height:70vh;padding:8px}.p2-pp{margin-bottom:8px}.p2-pdf .p2-vbar{gap:8px 6px}.p2-pdf .p2-vbar .t{flex-basis:100%}.p2-pdf .p2-vbar .pg{margin:0 auto 0 0}.p2-pdf .p2-ib{width:38px;height:38px}}
+
+/* controles dos áudios */
+.p2-ctl{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:space-between}
+.p2-a .d .onde{color:var(--sx-green-d);font-weight:600}

@@ -32,6 +32,10 @@
     { arq: 'plaza-city-4.m4a', t: 'Plaza City 4', s: 1378, tema: null },
     { arq: 'alto-parana.m4a', t: 'Departamento del Alto Paraná', s: 1405, tema: null }
   ]
+  // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
+  var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
+  var PDF_ARQ = BASE + 'provas-antigas-chamorro.pdf'
+  var ZOOMS = [1, 1.5, 2, 3]
   var VIDEO = {
     id: '19FqmuZrIucxmY-0QrC5GTx-S5jJeAjy7',
     t: 'Clase repaso · Anatomía Patológica I',
@@ -47,9 +51,12 @@
   st.r = st.r || {}            // respostas: id -> {k|g}
   st.f = st.f || { tema: '', fonte: '', sit: '' }
   st.vel = st.vel || 1
+  st.pos = st.pos || {}        // áudio -> segundo em que parou
 
   var FONTE = {}
   D.fontes.forEach(function (f) { FONTE[f.id] = f })
+  var INICIO = [], TOTAL_PAG = 0  // página do PDF em que cada prova começa (mesma ordem de D.paginas)
+  D.paginas.forEach(function (g) { INICIO.push(TOTAL_PAG + 1); TOTAL_PAG += g.pages.length })
   D.qs.forEach(function (q) { q.id = q.p + '-' + q.n + (q.t === 'vf' ? 'v' : '') })
   // ids únicos mesmo se duas questões tiverem o mesmo número na mesma prova
   var vistos = {}
@@ -61,6 +68,7 @@
   var view = null, parte = 'banco', mostrando = POR_VEZ
 
   function render(v, p) {
+    fecharLeitor()
     view = v
     var alvo = p && p[0], antes = view && view.querySelector('.p2') ? parte : null
     parte = ['banco', 'originais', 'aulas', 'mapas'].indexOf(alvo) >= 0 ? alvo : 'banco'
@@ -74,7 +82,7 @@
       '<div class="tr-seg" role="tablist" aria-label="Parte">' +
         aba('banco', 'Banco', D.qs.length + ' questões comentadas') +
         aba('originais', 'Provas originais', nPag + ' páginas e o PDF') +
-        aba('aulas', 'Aulas gravadas', 'Repaso e ' + AUDIOS.length + ' áudios') +
+        aba('aulas', 'Aulas gravadas', 'Vídeo e ' + AUDIOS.length + ' áudios') +
         aba('mapas', 'Organogramas', nOrg + ' mapas da parcial') +
       '</div>' +
       '<div id="p2-parte"></div>' +
@@ -247,13 +255,18 @@
 
   // ------------------------------------------------------------ provas originais
   var vg = 0, vp = 0
+  function chipsProva() {
+    return '<div class="p2-filtros sx-glass"><div class="p2-modo" role="group" aria-label="Como ver as provas">' +
+        '<a href="#/provas/originais" data-m="fotos">Fotos das folhas</a><a href="#/provas/originais/pdf" data-m="pdf">Ler o PDF aqui</a>' +
+      '</div><div class="p2-fl" role="group" aria-label="Prova">' +
+        D.paginas.map(function (gr, i) { return '<button type="button" class="p2-chip" data-g="' + i + '">' + esc(gr.g) + ' <span class="c">' + gr.pages.length + '</span></button>' }).join('') +
+      '</div></div>'
+  }
   function originais(g, p) {
+    if (g === 'pdf') return leitorPdf(p)
     vg = Math.min(Math.max(+g || 0, 0), D.paginas.length - 1); vp = Math.max(+p || 0, 0)
     var box = $('#p2-parte')
-    box.innerHTML =
-      '<div class="p2-filtros sx-glass"><div class="p2-fl" role="group" aria-label="Prova">' +
-        D.paginas.map(function (gr, i) { return '<button type="button" class="p2-chip" data-g="' + i + '">' + esc(gr.g) + ' <span class="c">' + gr.pages.length + '</span></button>' }).join('') +
-      '</div></div>' +
+    box.innerHTML = chipsProva() +
       '<section class="p2-viewer sx-glass" aria-label="Páginas da prova">' +
         '<div class="p2-vbar"><span class="t" id="p2-vt"></span><span class="pg" id="p2-vpg" aria-live="polite"></span>' +
           '<button class="p2-ib" type="button" id="p2-ant" aria-label="Página anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>' +
@@ -263,8 +276,9 @@
         '<div class="p2-stage" id="p2-stage"><img id="p2-img" alt="" decoding="async"></div>' +
         '<div class="p2-thumbs" id="p2-thumbs"></div>' +
       '</section>' +
-      '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'provas-antigas-chamorro.pdf" download="Provas antigas Chamorro.pdf">Baixar o PDF das provas (8,6 MB)</a><span>As 49 páginas, só com as provas, com marcadores por prova.</span></p>' +
+      '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/originais/pdf" id="p2-lerpdf">Ler o PDF aqui</a><a class="linkbtn" href="' + PDF_ARQ + '" download="Provas antigas Chamorro.pdf">Baixar o PDF (8,6 MB)</a><span>As 49 páginas, só com as provas, com marcadores por prova.</span></p>' +
       '<p class="p2-aviso">As marcas de resposta nas fotos são de alunos e às vezes estão erradas. O gabarito comentado está no Banco.</p>'
+    $('[data-m=fotos]', box).setAttribute('aria-current', 'true')
     $$('[data-g]', box).forEach(function (b) { b.addEventListener('click', function () { vg = +b.dataset.g; vp = 0; pagina(true) }) })
     $('#p2-ant').addEventListener('click', function () { mover(-1) })
     $('#p2-prox').addEventListener('click', function () { mover(1) })
@@ -301,15 +315,200 @@
     $$('#p2-thumbs button').forEach(function (b) { b.setAttribute('aria-current', String(+b.dataset.i === vp)) })
     $('#p2-stage').scrollTop = 0
     try { history.replaceState(null, '', '#/provas/originais/' + vg + '/' + vp) } catch (e) {}
+    var noPdf = '#/provas/originais/pdf/' + (INICIO[vg] + vp)
+    $$('[data-m=pdf], #p2-lerpdf').forEach(function (a) { a.setAttribute('href', noPdf) })
     // pré-carrega a próxima
     var nx = gr.pages[vp + 1]; if (nx) { var im = new Image(); im.src = BASE + 'provas/p' + pad(nx.p) + '.jpg' }
   }
   document.addEventListener('keydown', function (e) {
-    if (!view || parte !== 'originais' || !$('#p2-stage')) return
+    if (!view || parte !== 'originais') return
     if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName || '')) return
+    var L = leitor && document.contains(leitor.box) ? leitor : null
+    if (L) {
+      if (e.key === 'Escape' && $('#p2-pdf').classList.contains('full')) { e.preventDefault(); telaCheia(L, false) }
+      if (e.key === 'ArrowRight') { e.preventDefault(); irPag(L, L.at + 1) }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); irPag(L, L.at - 1) }
+      return
+    }
+    if (!$('#p2-stage')) return
     if (e.key === 'ArrowRight') { e.preventDefault(); mover(1) }
     if (e.key === 'ArrowLeft') { e.preventDefault(); mover(-1) }
   })
+
+  // ------------------------------------------------------------ leitor do PDF das provas (pdf.js, como o PDF da aula)
+  var pdfLibP = null, pdfDocP = null, leitor = null
+  function carregar(src) {
+    return new Promise(function (ok, erro) {
+      var s = document.createElement('script'); s.src = src; s.async = true
+      s.onload = function () { ok() }
+      s.onerror = function () { s.parentNode && s.parentNode.removeChild(s); erro(new Error(src)) }
+      document.head.appendChild(s)
+    })
+  }
+  function pdfDoc() {
+    if (!pdfLibP) pdfLibP = (window.pdfjsLib ? Promise.resolve() : carregar(PDFJS + 'pdf.min.js')).then(function () {
+      var lib = window.pdfjsLib
+      if (!lib.GlobalWorkerOptions.workerSrc) lib.GlobalWorkerOptions.workerSrc = PDFJS + 'pdf.worker.min.js'
+      return lib
+    }).catch(function (e) { pdfLibP = null; throw e })
+    if (!pdfDocP) pdfDocP = pdfLibP.then(function (lib) { return lib.getDocument({ url: PDF_ARQ }).promise }).catch(function (e) { pdfDocP = null; throw e })
+    return pdfDocP
+  }
+  function ib(id, rotulo, svg) {
+    return '<button class="p2-ib" type="button" id="' + id + '" aria-label="' + rotulo + '" title="' + rotulo + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + svg + '</svg></button>'
+  }
+  function grupoDaPag(n) { var g = 0; INICIO.forEach(function (ini, i) { if (n >= ini) g = i }); return g }
+  function fecharLeitor() {
+    var L = leitor; if (!L) return
+    leitor = null
+    if (L.io) L.io.disconnect()
+    Object.keys(L.tarefas).forEach(function (n) { try { L.tarefas[n].cancel() } catch (e) {} })
+    removeEventListener('resize', L.onResize)
+    document.documentElement.classList.remove('p2-trava')
+  }
+  function leitorPdf(pag) {
+    var box = $('#p2-parte'), dims = []
+    D.paginas.forEach(function (g) { g.pages.forEach(function (x) { dims.push(x) }) })
+    box.innerHTML = chipsProva() +
+      '<section class="p2-viewer p2-pdf sx-glass" id="p2-pdf" aria-label="PDF das provas">' +
+        '<div class="p2-vbar"><span class="t">Provas antigas · Dra. Chamorro<small id="p2-pgr">&nbsp;</small></span>' +
+          '<span class="pg" id="p2-ppg" aria-live="polite">Abrindo o PDF…</span>' +
+          ib('p2-pant', 'Página anterior', '<path d="m15 18-6-6 6-6"/>') +
+          ib('p2-pprox', 'Próxima página', '<path d="m9 18 6-6-6-6"/>') +
+          ib('p2-pmenos', 'Diminuir', '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11h6"/>') +
+          ib('p2-pmais', 'Ampliar', '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/>') +
+          ib('p2-pfull', 'Tela cheia', '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>') +
+        '</div>' +
+        '<div class="p2-pdf-pages" id="p2-pp" tabindex="0" aria-label="Páginas do PDF">' +
+          dims.map(function (x, i) { return '<div class="p2-pp" data-n="' + (i + 1) + '" style="aspect-ratio:' + x.w + ' / ' + x.h + '" role="img" aria-label="Página ' + (i + 1) + ' de ' + dims.length + '"></div>' }).join('') +
+        '</div>' +
+      '</section>' +
+      '<p class="p2-dl"><a class="linkbtn" href="' + PDF_ARQ + '" download="Provas antigas Chamorro.pdf">Baixar o PDF (8,6 MB)</a><span>Role dentro do quadro para passar as páginas. As setas do teclado também passam.</span></p>' +
+      '<p class="p2-aviso">As marcas de resposta nas folhas são de alunos e às vezes estão erradas. O gabarito comentado está no Banco.</p>'
+    $('[data-m=pdf]', box).setAttribute('aria-current', 'true')
+    var pp = $('#p2-pp')
+    var L = leitor = { box: pp, at: 0, z: ZOOMS.indexOf(st.pz) >= 0 ? st.pz : 1, ver: 1, feitos: {}, tarefas: {}, pdf: null, io: null, larg: 0 }
+    $$('[data-g]', box).forEach(function (b) { b.addEventListener('click', function () { irPag(L, INICIO[+b.dataset.g]) }) })
+    $('#p2-pant').addEventListener('click', function () { irPag(L, L.at - 1) })
+    $('#p2-pprox').addEventListener('click', function () { irPag(L, L.at + 1) })
+    $('#p2-pmenos').addEventListener('click', function () { zoomPdf(L, -1) })
+    $('#p2-pmais').addEventListener('click', function () { zoomPdf(L, 1) })
+    $('#p2-pfull').addEventListener('click', function () { telaCheia(L) })
+    var agendado = false
+    pp.addEventListener('scroll', function () {
+      if (agendado) return
+      agendado = true
+      requestAnimationFrame(function () { agendado = false; if (leitor === L) atual(L) })
+    }, { passive: true })
+    var t = 0
+    L.onResize = function () { clearTimeout(t); t = setTimeout(function () { if (leitor === L && Math.abs(pp.clientWidth - L.larg) > 40) redesenhar(L) }, 200) }
+    addEventListener('resize', L.onResize)
+    aplicarZoom(L)
+    irPag(L, +pag || 1)
+    pdfDoc().then(function (pdf) {
+      if (leitor !== L) return
+      L.pdf = pdf
+      redesenhar(L)
+    }).catch(function () {
+      if (leitor !== L) return
+      $('#p2-ppg').textContent = 'Não abriu'
+      pp.innerHTML = '<div class="p2-perr"><p class="sx-msg sx-erro">Não foi possível abrir o PDF agora. Verifique a conexão.</p>' +
+        '<button class="sx-btn sx-small" type="button" id="p2-ptentar">Tentar de novo</button>' +
+        '<a class="linkbtn" href="' + PDF_ARQ + '" target="_blank" rel="noopener">Abrir o PDF numa aba nova</a></div>'
+      $('#p2-ptentar').addEventListener('click', function () { var n = L.at; fecharLeitor(); leitorPdf(n) })
+    })
+  }
+  function redesenhar(L) {
+    L.ver++; L.larg = L.box.clientWidth
+    if (!L.pdf) return
+    if (L.io) L.io.disconnect()
+    // desenha só as páginas perto da vista e libera as que ficaram longe, para o celular não ficar sem memória
+    L.io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var n = +e.target.dataset.n
+        if (e.isIntersecting) desenhar(L, n, e.target)
+        else if (L.feitos[n]) {
+          L.feitos[n] = 0
+          if (L.tarefas[n]) { try { L.tarefas[n].cancel() } catch (x) {} delete L.tarefas[n] }
+          e.target.innerHTML = ''; e.target.classList.remove('ok')
+        }
+      })
+    }, { root: L.box, rootMargin: '1200px 0px' })
+    $$('.p2-pp', L.box).forEach(function (el) { L.io.observe(el) })
+  }
+  function desenhar(L, n, el) {
+    var ver = L.ver
+    if (!L.pdf || L.feitos[n] === ver) return
+    L.feitos[n] = ver
+    L.pdf.getPage(n).then(function (pg) {
+      if (leitor !== L || L.feitos[n] !== ver) return
+      var v1 = pg.getViewport({ scale: 1 })
+      var k = (el.clientWidth || L.box.clientWidth) * Math.min(window.devicePixelRatio || 1, 2) / v1.width
+      var teto = Math.sqrt(6e6 / (v1.width * v1.height)); if (k > teto) k = teto
+      var vp = pg.getViewport({ scale: k })
+      var cv = document.createElement('canvas'); cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height)
+      if (L.tarefas[n]) { try { L.tarefas[n].cancel() } catch (x) {} }
+      var tarefa = L.tarefas[n] = pg.render({ canvasContext: cv.getContext('2d'), viewport: vp })
+      return tarefa.promise.then(function () {
+        if (L.tarefas[n] === tarefa) delete L.tarefas[n]
+        if (leitor !== L || L.feitos[n] !== ver) return
+        el.style.aspectRatio = v1.width + ' / ' + v1.height
+        el.innerHTML = ''; el.appendChild(cv); el.classList.add('ok')
+      })
+    }).catch(function () { if (L.feitos[n] === ver) L.feitos[n] = 0 })
+  }
+  function atual(L) {
+    var lim = L.box.scrollTop + L.box.clientHeight * 0.35, els = L.box.children, at = els.length
+    for (var j = 0; j < els.length; j++) { if (els[j].offsetTop + els[j].offsetHeight > lim) { at = j + 1; break } }
+    marcarPag(L, at)
+  }
+  function marcarPag(L, at) {
+    if (at === L.at || !$('#p2-ppg')) return
+    L.at = at
+    var g = grupoDaPag(at), gr = D.paginas[g], dentro = at - INICIO[g]
+    $('#p2-ppg').textContent = 'Página ' + at + ' de ' + TOTAL_PAG
+    $('#p2-pgr').textContent = gr.g + ' · folha ' + (dentro + 1) + ' de ' + gr.pages.length
+    $$('[data-g]').forEach(function (b) { b.setAttribute('aria-pressed', String(+b.dataset.g === g)) })
+    $('#p2-pant').disabled = at <= 1
+    $('#p2-pprox').disabled = at >= TOTAL_PAG
+    var f = $('[data-m=fotos]'); if (f) f.setAttribute('href', '#/provas/originais/' + g + '/' + dentro)
+    try { history.replaceState(null, '', '#/provas/originais/pdf/' + at) } catch (e) {}
+  }
+  function irPag(L, n) {
+    n = Math.min(Math.max(n | 0, 1), TOTAL_PAG)
+    var el = L.box.children[n - 1]; if (!el) return
+    L.box.scrollTop = el.offsetTop - 12
+    marcarPag(L, n)
+  }
+  function aplicarZoom(L) {
+    L.box.style.setProperty('--z', String(L.z))
+    L.box.classList.toggle('zoom', L.z > 1)
+    $('#p2-pmenos').disabled = L.z === ZOOMS[0]
+    $('#p2-pmais').disabled = L.z === ZOOMS[ZOOMS.length - 1]
+  }
+  function zoomPdf(L, d) {
+    var i = ZOOMS.indexOf(L.z) + d; if (i < 0 || i >= ZOOMS.length) return
+    var b = L.box, el = b.children[L.at - 1]
+    var fy = el ? (b.scrollTop - el.offsetTop) / el.offsetHeight : 0
+    var fx = (b.scrollLeft + b.clientWidth / 2) / b.scrollWidth
+    L.z = ZOOMS[i]; st.pz = L.z; gravar()
+    aplicarZoom(L)
+    if (el) b.scrollTop = el.offsetTop + fy * el.offsetHeight
+    b.scrollLeft = fx * b.scrollWidth - b.clientWidth / 2
+    redesenhar(L)
+  }
+  function telaCheia(L, on) {
+    var s = $('#p2-pdf'), at = L.at
+    if (on == null) on = !s.classList.contains('full')
+    s.classList.toggle('full', on)
+    document.documentElement.classList.toggle('p2-trava', on)
+    var b = $('#p2-pfull'); b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? 'Sair da tela cheia' : 'Tela cheia'); b.title = b.getAttribute('aria-label')
+    b.querySelector('svg').innerHTML = on ? '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>' : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'
+    L.at = 0; irPag(L, at)
+    redesenhar(L)
+    if (on) L.box.focus({ preventScroll: true })
+  }
+  addEventListener('hashchange', function () { if (!/^#\/provas\/originais\/pdf/.test(location.hash)) fecharLeitor() })
 
   // ------------------------------------------------------------ aulas gravadas
   function aulas() {
@@ -317,34 +516,54 @@
     var porTema = {}, semTema = []
     AUDIOS.forEach(function (a) { if (a.tema && TEMAS[a.tema]) (porTema[a.tema] = porTema[a.tema] || []).push(a); else semTema.push(a) })
     var bloco = function (lst) { return '<div class="p2-aud">' + lst.map(function (a) {
-      return '<div class="p2-a sx-glass"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + hms(a.s) + '</span></div>' +
-        '<audio controls preload="none" src="' + BASE + 'audio/' + a.arq + '"></audio>' +
-        '<div class="p2-vel" role="group" aria-label="Velocidade">' + [1, 1.25, 1.5, 2].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (st.vel === v) + '">' + String(v).replace('.', ',') + '×</button>' }).join('') + '</div></div>'
+      return '<div class="p2-a sx-glass" data-arq="' + esc(a.arq) + '"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + hms(a.s) + '<span class="onde"></span></span></div>' +
+        '<audio controls preload="metadata" src="' + BASE + 'audio/' + a.arq + '"></audio>' +
+        '<div class="p2-ctl"><div class="p2-vel" role="group" aria-label="Pular">' +
+          '<button type="button" data-s="-15" aria-label="Voltar 15 segundos">−15 s</button><button type="button" data-s="15" aria-label="Avançar 15 segundos">+15 s</button></div>' +
+        '<div class="p2-vel" role="group" aria-label="Velocidade">' + [1, 1.25, 1.5, 2].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (st.vel === v) + '">' + String(v).replace('.', ',') + '×</button>' }).join('') + '</div></div></div>'
     }).join('') + '</div>' }
     box.innerHTML =
       '<section class="p2-sec"><h2 class="sx-h2">Clase repaso</h2><p>A aula de revisão da professora para a parcial.</p>' +
         '<div class="p2-video sx-glass"><span class="t">' + esc(VIDEO.t) + '<small>' + esc(VIDEO.d) + '</small></span>' +
-          '<div id="p2-vslot"><button class="sx-btn sx-primary" type="button" id="p2-vplay">Carregar o vídeo aqui</button></div>' +
+          '<div class="p2-frame"><iframe src="https://drive.google.com/file/d/' + VIDEO.id + '/preview" title="' + esc(VIDEO.t) + '" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>' +
           '<div class="p2-links"><a href="https://drive.google.com/file/d/' + VIDEO.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></div>' +
         '</div></section>' +
       Object.keys(TEMAS).filter(function (k) { return porTema[k] }).map(function (k) {
         return '<section class="p2-sec"><h2 class="sx-h2">' + esc(TEMAS[k][0]) + '</h2>' + bloco(porTema[k]) + '</section>'
       }).join('') +
       (semTema.length ? '<section class="p2-sec"><h2 class="sx-h2">Gravações das aulas</h2><p>As ' + semTema.length + ' gravações da parcial. Toque no play para ouvir aqui mesmo; a velocidade escolhida vale para todas.</p>' + bloco(semTema) + '</section>' : '')
-    $('#p2-vplay').addEventListener('click', function () {
-      $('#p2-vslot').innerHTML = '<div class="p2-frame"><iframe src="https://drive.google.com/file/d/' + VIDEO.id + '/preview" title="' + esc(VIDEO.t) + '" allow="autoplay; fullscreen" allowfullscreen></iframe></div>'
-    })
     $$('.p2-a', box).forEach(function (c) {
-      var au = $('audio', c)
+      var au = $('audio', c), arq = c.dataset.arq, onde = $('.onde', c), salvo = 0
+      var mostrarOnde = function () { var s = st.pos[arq]; onde.textContent = s > 30 ? ' · parou em ' + hms(s) : '' }
+      mostrarOnde()
+      au.addEventListener('loadedmetadata', function () {
+        var s = st.pos[arq]
+        if (s > 10 && au.currentTime < 1 && (!au.duration || s < au.duration - 5)) au.currentTime = s
+      })
       au.addEventListener('play', function () {
         au.playbackRate = st.vel
         $$('.p2-a audio', box).forEach(function (o) { if (o !== au && !o.paused) o.pause() })
       })
-      $$('.p2-vel button', c).forEach(function (b) {
+      // guarda onde parou, para continuar dali na próxima vez
+      au.addEventListener('timeupdate', function () {
+        if (Math.abs(au.currentTime - salvo) < 5) return
+        salvo = au.currentTime; st.pos[arq] = Math.floor(salvo); gravar(); mostrarOnde()
+      })
+      au.addEventListener('pause', function () { if (au.currentTime > 0) { st.pos[arq] = Math.floor(au.currentTime); gravar(); mostrarOnde() } })
+      au.addEventListener('ended', function () { delete st.pos[arq]; gravar(); mostrarOnde() })
+      $$('[data-s]', c).forEach(function (b) {
+        b.addEventListener('click', function () {
+          var alvo = Math.max(0, (au.currentTime || st.pos[arq] || 0) + +b.dataset.s)
+          if (au.duration) alvo = Math.min(alvo, au.duration - 1)
+          au.currentTime = alvo
+          if (au.paused) { st.pos[arq] = Math.floor(alvo); gravar(); mostrarOnde() }
+        })
+      })
+      $$('[data-v]', c).forEach(function (b) {
         b.addEventListener('click', function () {
           st.vel = +b.dataset.v; gravar()
           $$('.p2-a audio', box).forEach(function (o) { o.playbackRate = st.vel })
-          $$('.p2-vel button', box).forEach(function (x) { x.setAttribute('aria-pressed', String(+x.dataset.v === st.vel)) })
+          $$('[data-v]', box).forEach(function (x) { x.setAttribute('aria-pressed', String(+x.dataset.v === st.vel)) })
         })
       })
     })
