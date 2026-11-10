@@ -240,7 +240,7 @@
     if (!h || h === '/') return { v: sess.get('modo') === '3d' ? '3d' : (A.apostila ? 'apostila' : 'inicio'), p: [] }
     if (h.charAt(0) !== '/') return { v: '3d', p: [h] }
     var p = h.slice(1).split('/')
-    var v = ['inicio', '3d', 'pdf', 'treino', 'apostila'].indexOf(p[0]) >= 0 ? p[0] : 'inicio'
+    var v = ['inicio', '3d', 'pdf', 'treino', 'apostila', 'provas'].indexOf(p[0]) >= 0 && (p[0] !== 'provas' || A.extra) ? p[0] : 'inicio'
     return { v: v, p: p.slice(1) }
   }
   var vistaAtual = ''
@@ -259,9 +259,31 @@
     if (r.v === 'pdf') { marcarModo('pdf'); pdfAbrir(r.p[0], +r.p[1] || 0); document.title = 'PDF · ' + TITULO + ' · sinusal.' }
     if (r.v === 'treino') { marcarModo('treino'); treino(r.p[0] || ''); document.title = 'Treino · ' + TITULO + ' · sinusal.' }
     if (r.v === 'apostila') { marcarModo('apostila'); apostilaAbrir(); document.title = 'Apostila · ' + TITULO + ' · sinusal.' }
+    if (r.v === 'provas') { marcarModo('provas'); extraAbrir(r.p); document.title = (A.extra.titulo || 'Provas') + ' · ' + TITULO + ' · sinusal.' }
     if (mudou && !(r.v === 'pdf' && r.p[1])) scrollTo(0, 0)
   }
   function ir(h) { if (location.hash === h) rota(); else location.hash = h }
+
+  // parte extra da aula (ex.: provas antigas e aulas gravadas), em arquivos estáticos da própria aula
+  var extraP = null
+  function extraAbrir(p) {
+    view.innerHTML = '<div class="tr-wrap"><div class="sx-load"><span class="sx-spin"></span>Carregando…</div></div>'
+    if (!extraP) extraP = new Promise(function (ok, no) {
+      if (A.extra.css) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = A.extra.css; document.head.appendChild(l) }
+      var lista = (A.extra.js || []).slice()
+      ;(function proximo() {
+        if (!lista.length) { ok(); return }
+        script(lista.shift()).then(proximo, no)
+      })()
+    }).catch(function (e) { extraP = null; throw e })
+    extraP.then(function () {
+      if (vistaAtual !== 'provas') return
+      window.SINUSAL_EXTRA.render(view, p || [])
+    }).catch(function () {
+      view.innerHTML = '<div class="tr-wrap"><p class="sx-lead">Não foi possível abrir esta parte agora. Verifique a internet e tente de novo.</p><p style="margin-top:14px"><button class="sx-btn sx-primary" type="button" id="ex-de-novo">Tentar de novo</button></p></div>'
+      $('#ex-de-novo').addEventListener('click', function () { extraAbrir(p) })
+    })
+  }
 
   // ---------------- apostila: HTML cifrado (AES-GCM) no GitHub; chave só para quem entrou ----------------
   function apostilaAbrir() {
@@ -327,6 +349,7 @@
         (A.apostila ? '<a class="mode sx-glass" href="#/apostila"><span class="mode-art mode-apos" aria-hidden="true"><i></i><i></i></span>' +
           '<span class="mode-txt"><b>Apostila</b><span>Teoria em português com os termos em espanhol, o que caiu em cada prova, imagens e cartões de revisão.</span><span class="go">Abrir a apostila</span></span></a>' : '') +
       '</div>' +
+      (A.extra && A.extra.hub ? '<a class="hub-tr sx-glass" href="#/provas"><span><b class="t">' + esc(A.extra.hub[0]) + '</b><span class="d">' + esc(A.extra.hub[1]) + '</span></span><span class="go">Abrir</span></a>' : '') +
       '<a class="hub-tr sx-glass" href="#/treino"><span><b class="t">Treino</b><span class="d" id="hub-tr-d">As perguntas das provas antigas e do repaso, uma por vez, com gabarito comentado.</span></span>' +
         '<span class="nums" id="hub-nums"><span><b>·</b>dominadas</span><span><b>·</b>para revisar</span><span><b>·</b>novas</span></span><span class="go">Treinar</span></a>' +
       outrasAulas() +
