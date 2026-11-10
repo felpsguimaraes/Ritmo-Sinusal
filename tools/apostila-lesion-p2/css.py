@@ -135,6 +135,81 @@ CSS += r'''
 .vid-a{display:inline-block;margin-top:8px;color:#9fe8e1;font-size:12px;font-weight:700;text-decoration:none}
 '''
 CSS += r'''
+/* ===== método SINUS (modelo Neuroimagenología): decorar, cards, tabelas, fluxos, casos ===== */
+.section-head .nx-sub{margin:9px 0 0;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.95);font-weight:500;max-width:760px;text-transform:none;letter-spacing:0}
+p.nx-sub{color:var(--muted);font-size:14.5px;margin:-2px 0 12px}
+.sum60.dec{background:linear-gradient(135deg,#0f2a44,#173f5c);border-left:6px solid var(--acc2);color:#e9f3f6;box-shadow:0 12px 28px -14px rgba(15,42,68,.6)}
+.sum60.dec .t{color:#7fe0e6;font-size:11.5px;letter-spacing:.16em}
+.sum60.dec li{margin:.28em 0}
+.sum60.dec li::marker{color:#7fe0e6}
+h3 .no{color:var(--acc);font-weight:900;font-size:.88em;font-variant-numeric:tabular-nums}
+.nx-why{margin:18px 0;padding:13px 16px 12px;border-left:4px solid var(--acc);background:linear-gradient(90deg,var(--accs),rgba(255,255,255,0) 80%);border-radius:0 16px 16px 0}
+.nx-why>.ttl{font-size:15px;font-weight:850;color:var(--acc);margin:0 0 8px;line-height:1.35}
+.nx-why>p{font-size:14.5px;margin:9px 0 4px}
+.nx-why>ul{margin:6px 0;padding-left:20px}.nx-why>ul li{font-size:14.5px;margin:3px 0}
+.nx-g2,.nx-g3,.nx-g4{display:grid;gap:10px;margin:10px 0}
+.nx-g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.nx-g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.nx-g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.nx-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 13px;font-size:14px;line-height:1.45;box-shadow:0 3px 10px rgba(15,27,51,.05)}
+.nx-card.c{border-top:4px solid var(--b,var(--acc))}
+.nx-card h4{margin:0 0 5px;font-size:14.5px;line-height:1.3;color:var(--navy)}
+.nx-card p{margin:.2em 0;font-size:14px}
+.nx-card ul{margin:.2em 0;padding-left:1.1em}.nx-card li{margin:.15em 0;font-size:14px}
+.nx-tw{margin:10px 0;border-radius:14px;box-shadow:0 4px 16px rgba(15,27,51,.06);overflow-x:auto}
+.nx-tbl{border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:13.8px}
+.nx-tbl th{font-size:11px}
+.nx-tbl td{line-height:1.45}
+.nx-tbl td:first-child{font-weight:700;color:var(--navy)}
+.nx-flow{display:flex;gap:24px;align-items:stretch;margin:12px 0}
+.nx-flow>.st{flex:1 1 0;min-width:0;position:relative;background:var(--accs);border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:13.5px;line-height:1.42}
+.nx-flow>.st:not(:last-child)::after{content:"";position:absolute;right:-19px;top:50%;width:14px;height:14px;transform:translateY(-50%);background:var(--acc);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 7h9M7.5 3l4 4-4 4' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 7h9M7.5 3l4 4-4 4' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.nx-flow .h{display:block;font-weight:800;color:var(--navy);font-size:14px;margin-bottom:3px}
+.nx-flow .num{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:12px;align-items:center;justify-content:center;margin-right:6px;vertical-align:1px}
+.nx-flow .ex{display:block;margin-top:6px;font-size:12px;font-weight:700;color:var(--acc);background:#fff;border-radius:7px;padding:3px 7px;border:1px solid var(--line)}
+.nx-steps{counter-reset:nx;list-style:none;padding:0;margin:10px 0}
+.nx-steps li{counter-increment:nx;position:relative;padding:8px 12px 8px 44px;margin:0 0 6px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:14px;line-height:1.45}
+.nx-steps li::before{content:counter(nx);position:absolute;left:11px;top:8px;width:22px;height:22px;border-radius:50%;background:var(--acc);color:#fff;font-weight:800;font-size:12px;display:grid;place-items:center}
+.nx-chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.nx-chip{background:#fff;border:1px solid var(--line);color:var(--navy);border-radius:999px;padding:4px 11px;font-size:12.5px;font-weight:700}
+.nx-case{background:#fff;border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:16px;padding:14px 18px;margin:14px 0;box-shadow:0 4px 14px rgba(15,27,51,.05)}
+.nx-case .t{font-size:11.5px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--acc);margin-bottom:6px}
+.nx-case>p{margin:0 0 6px;font-size:14.5px}
+.nx-case details{margin-top:7px;background:var(--accs);border-radius:12px;padding:9px 14px}
+.nx-case summary{cursor:pointer;font-weight:800;color:var(--acc);font-size:14px}
+.nx-case details p{margin:6px 0 0;font-size:14px}
+.nx-ess{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:4px 0 0}
+.nx-ess .nx-card{padding:11px 13px 11px 50px;border-left:4px solid var(--b)}
+.nx-ess .ic{position:absolute;left:13px;top:11px;width:26px;height:26px;border-radius:8px;background:var(--b,var(--acc));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:12.5px}
+.nx-ref{appearance:none;border:1px solid var(--line);background:#fff;color:var(--b,var(--acc));border-radius:999px;padding:1px 9px;font:inherit;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.nx-ref:hover{border-color:var(--b,var(--acc))}
+.nx-how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.nx-how>div{background:#fff;border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:14px;padding:11px 13px;font-size:13.5px;line-height:1.45;color:#3a4660}
+.nx-how b{display:block;color:var(--navy);font-size:14.5px;margin-bottom:3px}
+.pitfall{background:#fdf1f0;border:0;border-left:4px solid #c8463d;border-radius:0 16px 16px 0}
+.exam{background:#fff7e8;border:0;border-left:4px solid #d27a1f;border-radius:0 16px 16px 0}
+.nx-ess-btn{white-space:nowrap;flex:none;cursor:pointer}
+.nx-ess-btn[aria-pressed="true"]{background:#0f2a44;color:#7fe0e6;border-color:#0f2a44}
+body.esencial .det{display:none!important}
+@media (max-width:950px){.nx-how{grid-template-columns:repeat(2,minmax(0,1fr))}.nx-g4{grid-template-columns:repeat(2,minmax(0,1fr))}.nx-g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.nx-flow{flex-direction:column;gap:20px}.nx-flow>.st:not(:last-child)::after{right:auto;left:50%;top:auto;bottom:-18px;transform:translateX(-50%) rotate(90deg)}.nx-ess{grid-template-columns:1fr}}
+@media (max-width:640px){
+ .nx-g2,.nx-g3{grid-template-columns:1fr}
+ .nx-tw{overflow:visible}
+ .nx-tbl thead{display:none}
+ .nx-tbl,.nx-tbl tbody,.nx-tbl tr,.nx-tbl td{display:block;width:100%}
+ .nx-tbl tr{border-top:1px solid var(--line);padding:8px 12px}
+ .nx-tbl tbody tr:first-child{border-top:0}
+ .nx-tbl tbody tr:nth-child(even){background:#fafbfd}
+ .nx-tbl tbody tr:nth-child(even) td{background:transparent}
+ .nx-tbl td{border:0;padding:2px 0}
+ .nx-tbl td::before{content:attr(data-l);display:block;font-size:10.5px;font-weight:800;color:var(--acc);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+ .nx-tbl td[data-l=""]::before{display:none}
+ .nx-tbl td:first-child{font-size:15px}
+}
+@media (max-width:480px){.nx-how,.nx-g4{grid-template-columns:1fr}.nx-ess-btn{padding:7px 10px;font-size:12px}}
+'''
+CSS += r'''
 /* ---------- versão impressa / PDF: mesmo visual da tela ---------- */
 .g3d-print,.stp-print,.qprint{display:none}
 .pill.pdf-dl{background:#fff;color:#1b3478;border-color:#fff;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
@@ -167,7 +242,9 @@ CSS += r'''
   .gp-tx>b:first-child{font-size:13.5px;color:var(--acc)}
   .gp-i small{display:block;font-size:10px;color:#6b7383;margin-bottom:2px;text-transform:uppercase;letter-spacing:.6px}
   .hero{break-inside:avoid}
-  #inicio .btn,#inicio .section:has(.grid4),.pdf-dl{display:none!important}
+  #inicio .btn,#inicio .section:has(.nx-how),.pdf-dl,.nx-ess-btn{display:none!important}
+  .nx-card,.nx-case,.nx-flow>.st,.nx-steps li,.nx-tbl tr,.nx-how>div,.sum60.dec{break-inside:avoid}
+  .nx-why>.ttl,.nx-case .t{break-after:avoid}
   .hero:after{display:none}
   .stp-print{display:block;margin:10px 0 0;padding-left:22px;font-size:13px;line-height:1.5}
   .stp-print li{margin:0 0 8px}

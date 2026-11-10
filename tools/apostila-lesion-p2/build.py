@@ -309,6 +309,58 @@ for tid in ('necrosis', 'apoptosis', 'acumulacion', 'clase7', 'inflamacion'):
     if h:
         topic(tid).select_one('.section-head').insert_after(ph(h))
 
+# 4c) método SINUS (modelo Neuroimagenología): ⚡ Decorar, subtemas numerados, explicações em cards/tabelas/fluxos,
+#     casos resolvidos, "Lo esencial en 1 minuto", respostas-modelo e modo "Solo lo esencial" (.det some)
+import metodo as M
+for tid, itens in M.EXPL.items():
+    eas = topic(tid).select('.easy')
+    assert len(eas) == len(itens), (tid, len(eas), len(itens))
+    for e, (tt, html) in zip(eas, itens):
+        e.replace_with(ph(f'<div class="nx-why"><div class="ttl">💡 {tt}</div>{html}</div>'))
+assert not soup.select('.easy')
+for tid in M.CAP_N:
+    sm = topic(tid).select_one('.sum60')
+    sm['class'] = ['sum60', 'dec']
+    t = sm.select_one('.t')
+    nome = t.get_text().split('·', 1)[1].strip()
+    t.string = f'⚡ Decorar · {nome}'
+    head = topic(tid).select_one('.section-head')
+    sub = soup.new_tag('p'); sub['class'] = 'nx-sub'; sub.string = M.SUB[tid]
+    head.select_one('.section-kicker').insert_after(sub)
+    sec = topic(tid).select_one('.section')
+    qz = sec.select_one('.quiz')
+    hc = soup.new_tag('h3'); hc['id'] = f'casos-{tid}'; hc['data-short'] = 'Casos resueltos'; hc.string = M.TITULO_CASOS
+    qz.insert_before(hc)
+    qz.insert_before(ph(''.join(M.CASOS[tid])))
+    cap = int(M.CAP_N[tid])
+    hs = [h for h in sec.find_all('h3') if h.find_parent(class_='quiz') is None]
+    for i, h in enumerate(hs, 1):
+        no = soup.new_tag('span'); no['class'] = 'no'; no.string = f'{cap}.{i}'
+        h.insert(0, no); no.insert_after(' ')
+for el in soup.select('details.slidebox, details.repbox, .facil, .laminas'):
+    c = el.get('class') or []
+    el['class'] = (c.split() if isinstance(c, str) else list(c)) + ['det']
+for b in soup.select('.pitfall > b.t'):
+    b.insert(0, '⚠ ')
+for b in soup.select('.exam > b.t'):
+    b.insert(0, '📌 ')
+ini = topic('inicio')
+hero_p = ini.select_one('.hero > p')
+hero_p.clear()
+hero_p.append(BeautifulSoup('Os slides das <strong>Clases 4 a 8</strong> em formato <strong>resumen para decorar</strong>: ⚡ quadro para decorar, tabelas, fluxos e organogramas em cada tema, com os termos da Dra. em espanhol e a explicação em português, mais casos resolvidos, pegadinhas e as perguntas das provas antigas.', 'html.parser'))
+pl = soup.new_tag('span'); pl['class'] = 'pill'; pl.string = f'{sum(len(v) for v in M.CASOS.values())} casos resueltos'
+ini.select_one('.hero-meta .pill').insert_after(pl)
+ini.select_one('.stats').insert_after(ph(M.essencial_html()))
+g4 = ini.select_one('.grid4')
+g4.replace_with(ph(M.COMO))
+pr = topic('prueba').select_one('.section > .complete-btn')
+pr.insert_before(ph(M.RESPOSTAS))
+tb = soup.select_one('header.topbar .search-wrap')
+bt = soup.new_tag('button'); bt['class'] = 'btn nx-ess-btn'; bt['id'] = 'essBtn'; bt['type'] = 'button'; bt['aria-pressed'] = 'false'
+bt['title'] = 'Mostra só o essencial: esconde slides literais, lâminas e explicações longas'
+bt.string = '⚡ Solo lo esencial'
+tb.insert_after(bt)
+
 # 5) CSS, defs, JS, lightbox com imagem grande
 st = soup.find_all('style')[-1]
 st.append(CSS)

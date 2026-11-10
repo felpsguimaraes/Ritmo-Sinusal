@@ -68,3 +68,16 @@ JS += r'''
   window.__abrirTudo=antes;
 })();
 '''
+
+JS += r'''
+(function(){
+  var K='apos-p2-esencial',b=document.getElementById('essBtn');if(!b)return;
+  function aplica(on){document.body.classList.toggle('esencial',on);b.setAttribute('aria-pressed',String(on));
+    b.textContent=on?'⚡ Esencial: ON':'⚡ Solo lo esencial'}
+  var on=false;try{on=localStorage.getItem(K)==='1'}catch(e){}
+  aplica(on);
+  b.addEventListener('click',function(){on=!on;aplica(on);try{localStorage.setItem(K,on?'1':'0')}catch(e){}});
+  window.addEventListener('beforeprint',function(){document.body.classList.remove('esencial')});
+  window.addEventListener('afterprint',function(){document.body.classList.toggle('esencial',on)});
+})();
+'''

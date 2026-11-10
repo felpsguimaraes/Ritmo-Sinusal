@@ -101,7 +101,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=5' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=6' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis, acumulaciones, Clase 7 e inflamación aguda, com o radar da prova e o simulado</small></span>' +
