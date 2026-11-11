@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T16:59:49Z",
+  "updatedAt": "2026-11-11T17:04:29Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -27,7 +27,7 @@
     },
     {
       "id": "n6ufOldVq64",
-      "title": "MIDLINE STRUCTURES FROM A SAGITTAL SECTION",
+      "title": "ESTRUCTURAS DE LA LÍNEA MEDIA DESDE UN CORTE SAGITAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=n6ufOldVq64",
@@ -107,7 +107,7 @@
     },
     {
       "id": "1Ubtg0UOzRg",
-      "title": "Tronco celiaco",
+      "title": "Celiac Trunk",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=1Ubtg0UOzRg",
@@ -167,7 +167,7 @@
     },
     {
       "id": "JUzZXhrMVCo",
-      "title": "RIÑÓN - Configuración Interna",
+      "title": "KIDNEY - Internal Configuration",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=JUzZXhrMVCo",
@@ -177,7 +177,7 @@
     },
     {
       "id": "CsMUNIslmeU",
-      "title": "CORAZÓN - Configuración Interna - Aurícula Derecha",
+      "title": "HEART - Internal Configuration - Right Atrium",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=CsMUNIslmeU",
@@ -207,7 +207,7 @@
     },
     {
       "id": "QTCq70XbM1c",
-      "title": "CORAZÓN - GRANDES VASOS",
+      "title": "HEART - LARGE GLASSES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=QTCq70XbM1c",
@@ -217,7 +217,7 @@
     },
     {
       "id": "sr3oNjOQvXc",
-      "title": "HILIO PULMONAR",
+      "title": "PULMONARY HILUM",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=sr3oNjOQvXc",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
+      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -267,7 +267,7 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "SPINAL CORD",
+      "title": "MÉDULA ESPINAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
@@ -307,7 +307,7 @@
     },
     {
       "id": "cU6MngfQ3rQ",
-      "title": "UPPER LIMB PART 2 ARM MUSCLES",
+      "title": "MIEMBRO SUPERIOR PARTE 2 MÚSCULOS DEL BRAZO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cU6MngfQ3rQ",
@@ -317,7 +317,7 @@
     },
     {
       "id": "o4XSz3Wy27A",
-      "title": "PLEXO BRAQUIAL",
+      "title": "BRACHIAL PLEXUS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=o4XSz3Wy27A",
@@ -347,7 +347,7 @@
     },
     {
       "id": "cEuy29taBA0",
-      "title": "AORTA ABDOMINAL",
+      "title": "ABDOMINAL AORTA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cEuy29taBA0",
@@ -357,7 +357,7 @@
     },
     {
       "id": "rx0qaehAcNk",
-      "title": "TRONCO CELIACO",
+      "title": "CELIAC TRUNK",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=rx0qaehAcNk",
@@ -798,7 +798,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 42,
+      "newScan": 41,
       "total": 43
     },
     "anatomiaupe2188": {
