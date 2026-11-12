@@ -904,8 +904,7 @@ renderSubjectOverview=function(){
   ['Vídeos','videos',counts.videos],
   ['Áudios','audios',counts.audios],
   ['Transcrever aula','transcribe',null],
-  ['Treino da matéria','training',v11Questions().length],
-  ['Revisão','review',errors],
+  ['Treino','training',v11Questions().length],
   ['Caderno','notebook',null]
  ];
  const linksHtml=links.map(([label,tab,count])=>`<button type="button" class="sxSubjectHubAction" onclick="setTab('${tab}')"><span>${label}</span>${count>0?`<small class="sxSubjectHubCount">${count}</small>`:''}<span class="sxSubjectHubArrow" aria-hidden="true">→</span></button>`).join('');
@@ -998,7 +997,7 @@ function renderV11Hub(){
 HUB_LABELS.study='Central de estudos';
 renderStudy=renderV11Hub;
 const _v11OldNav=nav;
-nav=function(page,btn){const oldRoutes=['flashcards','errors','stats','questions','simulado','reinforce','weak','dna','mentoring','saved','daily'];const dest=oldRoutes.includes(page)?'study':page;_v11OldNav(dest,btn);if(dest==='study')renderV11Hub()};
+nav=function(page,btn){const trainingRoutes=['flashcards','questions','simulado','reinforce','daily'];const dest=trainingRoutes.includes(page)?'study':page;_v11OldNav(dest,btn)};
 // Old saved mode should be honoured without allowing a tab from another environment.
 resumeCourse=function(name){const recent=readCourse(name);openSubject(name);if(recent){UI.mode=recent.mode==='practice'?'practice':'theory';UI.tab=V11_SUBJECT_TABS[UI.mode].some(x=>x[0]===recent.tab)?recent.tab:'overview';UI.training=null;renderSubject()}};
 // Every note and transcription is scoped by subject and mode. Legacy theory notes remain accessible by migration.

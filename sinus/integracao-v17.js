@@ -565,7 +565,6 @@
     $id('subjectContent').insertAdjacentHTML('afterbegin', '<div class="glass sxBlock"><span class="eyebrow">Da sua turma ' + H(S.turma) + '</span>' +
       '<h3>' + H(prof || 'Professor a definir') + '</h3><p class="soft" style="font-size:12px;line-height:1.6">O material do professor da sua turma aparece primeiro. O das outras turmas vem depois, sem esconder nada.</p>' +
       '<div class="heroActions">' + (temApost ? '<button class="btn primary sm" onclick="setTab(\'apostila\')">Abrir a apostila</button>' : '') +
-      (decks.length ? '<button class="btn sm" onclick="setTab(\'cartoes\')">Flashcards</button>' : '') +
       '<button class="btn sm" onclick="setTab(\'' + (UI.mode === 'practice' ? 'laminas' : 'slides') + '\')">' + (UI.mode === 'practice' ? 'Lâminas' : 'Slides') + '</button></div></div>');
   };
 
@@ -573,7 +572,7 @@
   var APOSTILAS = {
     anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino' },
     farmacologia: { ler: '/aulas/apostila-farmacologia/', pdf: '/aulas/apostila-farmacologia/apostila-farmacologia-p2.pdf', gabarito: '/aulas/apostila-farmacologia/exercicios-respondidos-p2.pdf', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
-      extra: 'Os exercícios desta apostila também estão nas abas da matéria: <b>Flashcards</b> (com as respostas abertas), <b>Mapas guiados</b> (33 mapas para completar) e, no nível 3 Prova dos mapas, as questões de múltipla escolha e V/F.' }
+      extra: 'Os exercícios, os flashcards e os mapas desta apostila estão na aba Treino da matéria.' }
   };
   /* cartão «Apostila SINUS» no topo da aba Resumo / Apostila (mesmo quando a matéria tem resumos do Drive) */
   /* visão geral: cartão que leva à aba Resumo / Apostila (dentro do app) */
@@ -582,8 +581,7 @@
       '<span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span>' +
       '<h3 style="margin:4px 0 6px">Ler a apostila completa</h3>' +
       '<p class="soft" style="font-size:12.5px;line-height:1.6;margin:0 0 10px">Teoria em português com os termos em espanhol, esquemas interativos e destaques do que cai na prova. Marque «Já estudei» e acompanhe seu progresso.</p>' +
-      '<div class="heroActions"><button type="button" class="btn primary sm" onclick="setTab(\'apostila\')">Abrir a apostila</button>' +
-      '<button type="button" class="btn sm" onclick="UI.trainingPane=\'exercises\';setTab(\'training\')">Exercícios</button><button type="button" class="btn sm" onclick="setTab(\'cartoes\')">Flashcards</button><button type="button" class="btn sm" onclick="setTab(\'mapas\')">Mapas mentais</button></div></div>';
+      '<div class="heroActions"><button type="button" class="btn primary sm" onclick="setTab(\'apostila\')">Abrir a apostila</button></div></div>';
   }
   /* aba Resumo / Apostila: a apostila embutida no próprio app */
   function apostilaEmbutida(A) {
@@ -591,7 +589,7 @@
     return '<section class="glass" data-sx-apostila="embutida" style="padding:0;border-radius:18px;margin:0 0 14px;overflow:hidden;border:1.5px solid rgba(22,110,91,.28)">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid rgba(17,40,30,.08)">' +
       '<div><span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span></div>' +
-      '<div class="heroActions" style="margin:0"><button type="button" class="btn sm" data-sx-ir="training">Exercícios</button><button type="button" class="btn sm" data-sx-ir="cartoes">Flashcards</button><button type="button" class="btn sm" data-sx-ir="mapas">Mapas mentais</button>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '" target="_blank" rel="noopener">PDF</a>' : '') + (A.gabarito ? '<a class="btn sm" href="' + A.gabarito + '" target="_blank" rel="noopener">Gabarito PDF</a>' : '') + '<a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
+      '<div class="heroActions" style="margin:0">' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '" target="_blank" rel="noopener">PDF</a>' : '') + (A.gabarito ? '<a class="btn sm" href="' + A.gabarito + '" target="_blank" rel="noopener">Gabarito PDF</a>' : '') + '<a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
       '<iframe src="' + src + '" title="Apostila ' + H(A.titulo || '') + '" loading="lazy" style="display:block;width:100%;max-width:100%;height:calc(100vh - 140px);min-height:560px;border:0;background:#f1f8f4"></iframe></section>';
   }
   function garantirApostila() {
@@ -638,7 +636,7 @@
       '<div class="heroActions">' + (A ? '<a class="btn primary sm" href="' + A.ler + '">Abrir a apostila</a>' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '">Versão em PDF</a>' : '') : off) + '</div></div>' +
       (A && A.extra ? '<div class="glass"><span class="eyebrow">Exercícios · na matéria</span><h3>Onde praticar</h3><p>' + A.extra + '</p></div>' :
       '<div class="glass"><span class="eyebrow">Apostila · em 3D</span><h3>Ver em 3D</h3><p>Os temas um a um, com as lâminas em 3D: a câmera aproxima cada achado e o texto da professora aparece por cima.</p>' +
-      '<div class="heroActions">' + (A && A.d3 ? '<a class="btn primary sm" href="' + A.d3 + '">Abrir em 3D</a><a class="btn sm" href="' + A.treino + '">Treino para prova</a>' : off) + '</div></div>') + '</div>';
+      '<div class="heroActions">' + (A && A.d3 ? '<a class="btn primary sm" href="' + A.d3 + '">Abrir em 3D</a><button type="button" class="btn sm" onclick="setTab(\'training\')">Treino</button>' : off) + '</div></div>') + '</div>';
   }
 
   // ---------------- flashcards (cartões do Sinus, com progresso na conta)
@@ -878,7 +876,7 @@
         '<span aria-hidden="true" style="margin-left:auto;font-size:24px;padding:0 6px">›</span></a>'+
       '<div class="sxHomeActions">'+
       '<button class="glass" onclick="nav(\'subjects\')"><span>▤</span><h2>Estudar</h2><p>Apostilas, slides e aulas</p></button>'+
-      '<button class="glass" onclick="nav(\'questions\')"><span>◎</span><h2>Treinar</h2><p>Questões e exercícios</p></button>'+
+      '<button class="glass" onclick="nav(\'study\')"><span>◎</span><h2>Treinar</h2><p>Questões, cartões e mapas</p></button>'+
       '<button class="glass" onclick="nav(\'schedule\')"><span>▦</span><h2>Horários</h2><p>Aulas e compromissos</p></button>'+
       '<button class="glass" onclick="nav(\'errors\')"><span>↻</span><h2>Revisar</h2><p>Retome suas dificuldades</p></button></div>';
   };
