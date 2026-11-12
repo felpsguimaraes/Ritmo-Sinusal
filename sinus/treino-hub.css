@@ -45,3 +45,5 @@ html[data-theme="dark"] .sxLaminaPick select{background:#1c3a2d}
 .sxLamFiltros{margin:0 0 16px}
 .sxLamFiltros .sxParciais{margin-bottom:10px}
 .sxLamFiltros .sxGrupos{margin-bottom:10px}
+.sxLamVazio{margin:8px 0 14px;padding:14px 16px;border:1px dashed #c5ddd0;border-radius:14px;background:#f7fbf8;color:#3d5c4c;font-size:14px}
+html[data-theme="dark"] .sxLamVazio{background:#1c3a2d;border-color:#3d6b52;color:#d5eee2}

@@ -42,6 +42,7 @@ jobs:
           node tools/test_catedra_periodos.js
           node tools/test_acervo_fotos_provas.js
           node tools/test_slides_biblioteca.js
+          node tools/test_laminario_periodos.js
           test -s sinus/anatomia-upe-videos.json
           test -s sinus/anatomia-pratica-videos.json
           test -s sinus/youtube-catalogo.json

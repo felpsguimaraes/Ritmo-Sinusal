@@ -10,7 +10,7 @@
   function subj(){try{return subjectEntries()}catch(e){return []}}
   function sigla(n){return String(n).replace(/\b(I|II|III|IV|V)\b/g,'').split(/\s+/).filter(Boolean).map(function(x){return x[0]}).join('').slice(0,2).toUpperCase()}
   function keys(slug){return Object.keys(DK()).filter(function(k){return slug&&k.indexOf(slug+'/')===0&&!DK()[k]._oculto}).sort(function(a,b){return (DK()[a].ordem||99)-(DK()[b].ordem||99)})}
-  function parcial(k){var d=DK()[k],c=String(d.curto||'');if(/^P1$/i.test(c)||/\/p1/.test(k))return 'P1';if(/P2/i.test(c)||/\/p2/.test(k))return 'P2';return ''}
+  function parcial(k){var d=DK()[k],c=String(d.curto||'');if(/^P1$/i.test(c)||/\/p1$/.test(k))return 'P1';if(/^Final$/i.test(c)||/\/final$/.test(k))return 'Final';if(/^P2$/i.test(c)||/\/p2$/.test(k))return 'P2';return ''}
   function prog(k){try{return W.sxTreinoProg?W.sxTreinoProg(k):{}}catch(e){return {}}}
   function stat(k,g){
     var d=DK()[k],cs=g?d.cartoes.filter(function(c){return c.g===g}):d.cartoes,p=prog(k),dom=0,pend=0;
@@ -39,12 +39,18 @@
       if(!(ap.blocos||[]).length)items.push({tipo:'apostila',t:'Exercícios da apostila',sub:ap.titulo||'apostila'});
     }
     if(MAPAS[s.slug])items.push({tipo:'mapas',t:'Mapas guiados',sub:'O esquema da matéria, para completar'});
-    assuntos(name,'Todos','').forEach(function(a){
+    var slug=s.slug, teoria=assuntos(name,'Todos','teoria'), pratica=assuntos(name,'Todos','pratica');
+    if(slug==='anatopato'&&pratica.length){
+      var fotos=pratica.reduce(function(n,a){return n+((/\/(p1|p2|final)$/.test(a.k)&&a.g!=='Vídeos')?a.st.total:0)},0);
+      items.push({tipo:'laminario',k:'anatopato/p2',g:'',t:'Laminário',area:'pratica',sub:'P1, P2 e Final · '+fotos+' fotos'});
+      teoria.forEach(empurrar);
+    }else assuntos(name,'Todos','').forEach(empurrar);
+    function empurrar(a){
       var d=DK()[a.k]||{},pa=parcial(a.k),ex=temEscrita(a.k,a.g);
       var tag=(d.area==='pratica'?'Prática':'Teoria')+(pa?' · '+pa:'');
       var n=a.st.total;
       items.push({tipo:ex?'exercicio':'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',parcial:rotuloParcial(a.k),total:n,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+(ex?(n+(n===1?' exercício':' exercícios')):nc(n))+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
-    });
+    }
     return items;
   }
   function assuntos(name,tab,area){
@@ -108,7 +114,12 @@
   function materia(){
     var name=ST.name;
     if(temPratica(name)&&!ST.area)return escolhaArea();
-    var area=ST.area,tabs=tabsDe(name,area);
+    var area=ST.area;
+    if(area==='pratica'&&((DB.subjects||{})[name]||{}).slug==='anatopato'){
+      return crumb('Treinar › '+H(name)+' › <b>Prática</b>')+'<div class="thHead"><h1>Prática</h1><p>O Laminário junta P1, P2 e Final. O assunto é escolhido dentro dele.</p></div>'+
+        '<button class="thRow" data-th-laminario="1"><span class="thIc">🔬</span><span class="thT"><b>Laminário</b><small>P1, P2 e Final</small></span><span class="thCh">›</span></button>';
+    }
+    var tabs=tabsDe(name,area);
     if(tabs&&!ST.tab)ST.tab=tabInicial(name,area);
     var h=crumb('Treinar › '+H(name)+(area?' › <b>'+(area==='pratica'?'Prática':'Teoria')+'</b>':''))+'<div class="thHead"><h1>'+H(area==='pratica'?'Prática':area==='teoria'?'Teoria':name)+'</h1><p>'+H(name)+' · escolha o assunto.</p></div>';
     if(tabs)h+='<div class="thTabs">'+tabs.map(function(t){return '<button class="'+(ST.tab===t?'on':'')+'" data-th-tab="'+t+'">'+t+'</button>'}).join('')+'</div>';
@@ -165,18 +176,8 @@
   function pintarNaMateria(){
     var root=D.getElementById('subjectContent');
     if(!root||typeof UI==='undefined'||!UI.subject)return;
-    var all=catalogo(UI.subject);
-    var fs=filtrosDe(UI.subject),f=FILTRO[UI.subject]||'Todos';
-    if(fs&&fs.indexOf(f)<0)f='Todos';
-    var assuntos={}, ordem=[];
-    all.forEach(function(a){ if(a.tipo==='exercicio'&&a.g&&!assuntos[a.g]){assuntos[a.g]=1;ordem.push(a.g)} });
-    var fa=FILTRO[UI.subject+'#a']||'';
-    var fixos=all.filter(function(a){return a.tipo!=='exercicio'});
-    var lams=all.filter(function(a){return a.tipo==='exercicio'&&(f==='Todos'||a.parcial===f)&&(!fa||a.g===fa)});
-    var items=fixos.concat(lams);
-    var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria.</p></div>';
-    if(fs)h+='<div class="thSec">Parcial</div><div class="thTabs" role="group" aria-label="Parcial">'+fs.map(function(t){return '<button type="button" class="'+(f===t?'on':'')+'" data-sx-filtro="'+H(t)+'">'+H(t)+'</button>'}).join('')+'</div>';
-    if(ordem.length)h+='<div class="thSec">Assunto</div><div class="thTabs" role="group" aria-label="Assunto"><button type="button" class="'+(!fa?'on':'')+'" data-sx-assunto="">Todos</button>'+ordem.map(function(g){return '<button type="button" class="'+(fa===g?'on':'')+'" data-sx-assunto="'+H(g)+'">'+H(String(g).replace(/^\d+\s*·\s*/,''))+'</button>'}).join('')+'</div>';
+    var items=catalogo(UI.subject);
+    var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria. No Laminário, o período e o assunto ficam na própria lâmina.</p></div>';
     if(!items.length)h+='<div class="thNote">Esta matéria ainda não tem treino.</div>';
     else h+='<div class="thList">'+items.map(function(a,i){
       var ic=a.tipo==='apostila'||a.tipo==='exercicio'?'✎':a.tipo==='mapas'?'🗺':String(i+1);
@@ -217,10 +218,6 @@
     });
   }
   D.addEventListener('click',function(e){
-    var filtro=e.target.closest&&e.target.closest('[data-sx-filtro]');
-    if(filtro&&typeof UI!=='undefined'&&UI.subject){e.preventDefault();FILTRO[UI.subject]=filtro.getAttribute('data-sx-filtro')||'Todos';return pintarNaMateria()}
-    var assunto=e.target.closest&&e.target.closest('[data-sx-assunto]');
-    if(assunto&&typeof UI!=='undefined'&&UI.subject){e.preventDefault();FILTRO[UI.subject+'#a']=assunto.getAttribute('data-sx-assunto')||'';return pintarNaMateria()}
     var unif=e.target.closest&&e.target.closest('[data-sx-unif]');
     if(unif){
       var root=D.getElementById('subjectContent');
@@ -229,6 +226,12 @@
       e.preventDefault();
       if(a.tipo==='apostila'){UI.trainingPane='exercises';UI.mode='theory';W.SINUS_EX_BLOCO=a.bloco||'';return W.renderSubject()}
       if(a.tipo==='mapas'){UI.trainingPane='mindmaps';UI.mode='theory';return W.renderSubject()}
+      if(a.tipo==='laminario'){
+        UI.mode='practice';
+        if(W.sxTreinoAbrir)W.sxTreinoAbrir(a.k||'anatopato/p2','');
+        try{localStorage.setItem(KEY,JSON.stringify({name:UI.subject,k:a.k||'anatopato/p2',g:'',modo:'cartoes',area:'pratica'}))}catch(e){}
+        return W.setTab('cartoes');
+      }
       if(a.tipo==='exercicio'){
         UI.mode='practice';UI.trainingPane='exercises';
         if(W.sxTreinoAbrir)W.sxTreinoAbrir(a.k,a.g||'');
@@ -245,6 +248,7 @@
     if(t.hasAttribute('data-th-mat'))return abrirMateria(t.getAttribute('data-th-mat'));
     if(t.hasAttribute('data-th-area'))return go('mat',{area:t.getAttribute('data-th-area'),tab:''});
     if(t.hasAttribute('data-th-tab'))return go('mat',{tab:t.getAttribute('data-th-tab')});
+    if(t.hasAttribute('data-th-laminario')){ST.k='anatopato/p2';ST.g='';ST.area='pratica';ST.titulo='Laminário';return launch('cartoes',ST.name,'anatopato/p2','')}
     if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];ST.k=a.k;ST.g=a.g;ST.titulo=a.t;return launch('cartoes')}
     if(t.hasAttribute('data-th-all')){
       var ks=ST._as.map(function(x){return x.k}).filter(function(v,i,arr){return arr.indexOf(v)===i});

@@ -645,6 +645,24 @@
   var GRAUS = [['errou', 'Errei'], ['dificil', 'Difícil'], ['normal', 'Normal'], ['facil', 'Fácil']], RANK = { errou: 0, dificil: 1, normal: 3, facil: 4 };
   function lerLocal(k) { try { return JSON.parse(localStorage.getItem('sinus_cartoes_' + k) || '{}') } catch (e) { return {} } }
   function gravarLocal(k, o) { try { localStorage.setItem('sinus_cartoes_' + k, JSON.stringify(o)) } catch (e) {} }
+  /* As 40 fotos do Final saíram de anatopato/p2. O progresso salvo com esses IDs acompanha o cartão. */
+  (function migrarProgressoFinal() {
+    var de = 'anatopato/p2', para = 'anatopato/final';
+    if (!DECKS[para]) return;
+    try { if (localStorage.getItem('sinus_cartoes_migrou_final') === '1') return; } catch (e) { return; }
+    var ids = {};
+    (DECKS[para].cartoes || []).forEach(function (c) { ids[c.id] = 1; });
+    var old = lerLocal(de), moved = {}, keep = {}, n = 0;
+    Object.keys(old).forEach(function (id) {
+      if (ids[id]) { moved[id] = old[id]; n++; }
+      else keep[id] = old[id];
+    });
+    if (n) {
+      gravarLocal(para, Object.assign(moved, lerLocal(para)));
+      gravarLocal(de, keep);
+    }
+    try { localStorage.setItem('sinus_cartoes_migrou_final', '1'); } catch (e) {}
+  })();
   function docProg(k) { return db.doc('progresso/' + S.uid + '_cartoes-' + k.replace('/', '-')) }
   function montarFila(cards) { return cards.map(function (c, n) { var g = PROG[c.id]; return { c: c, r: (g in RANK) ? RANK[g] : 2, n: n } }).sort(function (a, b) { return a.r - b.r || a.n - b.n }).map(function (x) { return x.c }) }
   /* cartões ativos do baralho: todos, ou só os do assunto (g) escolhido no filtro */
@@ -781,13 +799,60 @@
     var fonte = (c.x && !/drive\.google|auditoria|revisión visual|pendiente/i.test(c.x)) ? '<small class="sxBalFonte">' + H(c.x) + '</small>' : '';
     return '<div class="sxBalWrap">' + html + fonte + '</div>';
   }
+  function ehVideoLam(c) { return !!(c && (c.video || c.g === 'Vídeos')); }
+  function fotosLam(cards) { return (cards || []).filter(function (c) { return !ehVideoLam(c); }); }
+  function periodosLaminario() {
+    return ['anatopato/p1', 'anatopato/p2', 'anatopato/final'].filter(function (x) { return DECKS[x] && !DECKS[x]._oculto; });
+  }
+  function rotuloPeriodo(k) {
+    if (/\/p1$/.test(k)) return 'P1';
+    if (/\/p2$/.test(k)) return 'P2';
+    if (/\/final$/.test(k)) return 'Final';
+    return (DECKS[k] && (DECKS[k].curto || DECKS[k].nome)) || k;
+  }
+  function htmlLaminario(atual) {
+    var ordem = periodosLaminario();
+    var tabs = '<div class="sxParciais"><span class="sxParcialLbl">Período</span><div class="sxParcialBtns" role="tablist" aria-label="Período do laminário">' + ordem.map(function (x) {
+      var n = fotosLam(DECKS[x].cartoes).length;
+      var on = x === atual;
+      return '<button type="button" class="sxParcial' + (on ? ' active' : '') + '" role="tab" aria-selected="' + (on ? 'true' : 'false') + '" data-sx-deck="' + H(x) + '"><b>' + rotuloPeriodo(x) + '</b><small>' + n + (n === 1 ? ' foto' : ' fotos') + '</small></button>';
+    }).join('') + '</div></div>';
+    var deck = DECKS[atual] || { cartoes: [] };
+    var gs = [], gn = {};
+    fotosLam(deck.cartoes).forEach(function (c) {
+      var g = c.g || ((c.b && c.b[0] && c.b[0].x) || c.t || 'Sem assunto');
+      if (!gn[g]) { gn[g] = 0; gs.push(g); }
+      gn[g]++;
+    });
+    var nvid = (deck.cartoes || []).filter(ehVideoLam).length;
+    var nfotos = fotosLam(deck.cartoes).length;
+    var gsel = GRUPO[atual] || '';
+    var assuntos = '<div class="sxGrupos" aria-label="Assunto"><span class="sxParcialLbl">Assunto</span>';
+    if (!gs.length && !nvid) assuntos += '<p class="sxLamVazio">Este período ainda não tem fotos.</p>';
+    else {
+      assuntos += '<button type="button" class="chip' + (gsel ? '' : ' active') + '" data-sx-grupo="" data-sx-grupo-local="1">Todos <small>' + nfotos + '</small></button>';
+      assuntos += gs.map(function (g) {
+        return '<button type="button" class="chip' + (gsel === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '" data-sx-grupo-local="1">' + H(String(g).replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>';
+      }).join('');
+      if (nvid) assuntos += '<button type="button" class="chip' + (gsel === 'Vídeos' ? ' active' : '') + '" data-sx-grupo="Vídeos" data-sx-grupo-local="1">Vídeos <small>' + nvid + '</small></button>';
+    }
+    assuntos += '</div>';
+    return '<div class="sxLamFiltros">' + tabs + assuntos + '</div>';
+  }
   function renderCartoes() {
     var s = subjectData(), slug = s && s.slug, area = UI.mode === 'practice' ? 'pratica' : 'teoria';
     var ks = Object.keys(DECKS).filter(function (x) { return x.indexOf(slug + '/') === 0 && (DECKS[x].area || 'teoria') === area && !DECKS[x]._oculto; });
     var box = $id('subjectContent');
     if (!ks.length) { box.innerHTML = emptyBox('Os flashcards desta matéria ainda não foram feitos.', 'Enquanto isso, utilize os Exercícios ou os Mapas mentais.'); return }
     ks.sort(function (a, b) { return (DECKS[a].ordem || 99) - (DECKS[b].ordem || 99) });
+    var laminarioAnato = slug === 'anatopato' && area === 'pratica';
+    var periodos = laminarioAnato ? periodosLaminario() : [];
     var k = ESCOLHA[slug] && ks.indexOf(ESCOLHA[slug]) >= 0 ? ESCOLHA[slug] : (ks.filter(function (x) { return DECKS[x].padrao })[0] || (ks.indexOf(deckPadrao(slug)) >= 0 ? deckPadrao(slug) : ks[0]));
+    if (laminarioAnato && periodos.indexOf(k) < 0 && k !== 'anatopato/laminario') k = (periodos.indexOf('anatopato/p2') >= 0 ? 'anatopato/p2' : periodos[0] || k);
+    if (laminarioAnato && GRUPO[k]) {
+      var existe = (DECKS[k].cartoes || []).some(function (c) { return c.g === GRUPO[k]; });
+      if (!existe) delete GRUPO[k];
+    }
     abrirDeck(k);
     var deck = CART.deck, c = CART.fila[CART.i], lista = ativos(CART.key), total = lista.length;
     var exercicio = !!(W.SINUS_EXERCICIO_LAMINA && area === 'pratica');
@@ -796,12 +861,22 @@
     if (!exercicio) CART._exOn = false;
     if (laminario) CART.mostrar = true;
     var dom = lista.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
-    var temParcial = ks.some(function (x) { return DECKS[x].curto });
-    var chips = ks.length > 1 ? '<div class="sxParciais"><span class="sxParcialLbl">' + (temParcial ? 'Qual parcial você vai estudar?' : 'Baralho') + '</span><div class="sxParcialBtns">' + ks.map(function (x) { var d = DECKS[x]; return '<button class="sxParcial' + (x === CART.key ? ' active' : '') + (d.curto ? '' : ' longo') + '" data-sx-deck="' + H(x) + '"><b>' + H(d.curto || d.nome || x.split('/')[1]) + '</b>' + (d.curto ? '<small>' + d.cartoes.length + ' cartões</small>' : '') + '</button>' }).join('') + '</div></div>' : '';
-    var gs = [], gn = {};
-    ks.forEach(function (dk) { (DECKS[dk].cartoes || []).forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } }); });
-    if (gs.length) chips += '<div class="sxGrupos" aria-label="Assunto"><span class="sxParcialLbl">Assunto</span><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + ks.reduce(function (n, dk) { return n + (DECKS[dk].cartoes || []).length }, 0) + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g.replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
+    var chips = '';
+    if (laminarioAnato) { if (laminario) chips = htmlLaminario(CART.key); }
+    else if (ks.length > 1) {
+      var temParcial = ks.some(function (x) { return DECKS[x].curto });
+      chips = '<div class="sxParciais"><span class="sxParcialLbl">' + (temParcial ? 'Qual parcial você vai estudar?' : 'Baralho') + '</span><div class="sxParcialBtns">' + ks.map(function (x) { var d = DECKS[x]; return '<button class="sxParcial' + (x === CART.key ? ' active' : '') + (d.curto ? '' : ' longo') + '" data-sx-deck="' + H(x) + '"><b>' + H(d.curto || d.nome || x.split('/')[1]) + '</b>' + (d.curto ? '<small>' + d.cartoes.length + ' cartões</small>' : '') + '</button>' }).join('') + '</div></div>';
+      var gs = [], gn = {};
+      (DECKS[CART.key].cartoes || []).forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
+      if (gs.length) chips += '<div class="sxGrupos" aria-label="Assunto"><span class="sxParcialLbl">Assunto</span><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="" data-sx-grupo-local="1">Todos <small>' + (DECKS[CART.key].cartoes || []).length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '" data-sx-grupo-local="1">' + H(g.replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
+    }
     if ((exercicio || laminario) && lista.length > 1) chips += '<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select data-sx-lamina aria-label="Escolher lâmina">' + lista.map(function (c, i) { return '<option value="' + i + '"' + (i === CART.i ? ' selected' : '') + '>' + H(c.t || ('Lâmina ' + (i + 1))) + '</option>'; }).join('') + '</select></label>';
+    if (laminarioAnato && !c) {
+      box.innerHTML = '<section class="sxFlashStudy">' + chips + '<div class="sxLamVazio">Não há fotos deste assunto neste período.</div></section>';
+      return;
+    }
+    var nfotosRod = fotosLam(lista).length, nvidsRod = lista.filter(ehVideoLam).length;
+    var contaLam = nvidsRod ? (nfotosRod + ' fotos · ' + nvidsRod + (nvidsRod === 1 ? ' vídeo' : ' vídeos')) : (nfotosRod + (nfotosRod === 1 ? ' foto' : ' fotos'));
     var midia = !!(c && (c.img || c.video));
     var destaque = laminario || exercicio;
     var pergunta = '<p class="sxQ' + (midia ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>';
@@ -817,7 +892,7 @@
       (CART.mostrar && !exercicio && c && c.k && c.k.t ? '<aside class="sxComent"><h4>Comentário da lámina</h4>' + sxRico(c.k.t) + sxPorqueErrei(c.k.e) + (c.k.f ? '<div class="sxComentFonte"><span>Fonte</span><em>' + H(c.k.f) + '</em></div>' : '') + '</aside>' : '') +
       (!laminario && !exercicio && CART.mostrar ? '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>' : '') + '</div>' +
       '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">' + (laminario || exercicio ? 'Próxima →' : 'Pular →') + '</button></nav>' +
-      '<footer class="sxFlashFooter">' + (laminario || exercicio ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>') + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + '</details></footer></section>';
+      '<footer class="sxFlashFooter">' + (laminarioAnato ? '<b>' + contaLam + '</b>' : (laminario || exercicio ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>')) + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + (laminarioAnato && DECKS['anatopato/laminario'] ? '<p><button type="button" class="btn sm" data-sx-deck="anatopato/laminario">Tabela da cátedra (' + DECKS['anatopato/laminario'].cartoes.length + ')</button></p>' : '') + '</details></footer></section>';
   }
   function gravarGrau(g) {
     var c = CART.fila[CART.i]; if (!c) return;
@@ -1026,7 +1101,7 @@
     if (t.hasAttribute('data-sx-grupo')) {
       var g = t.getAttribute('data-sx-grupo') || '';
       var dest = CART.key;
-      if (g) {
+      if (g && !t.hasAttribute('data-sx-grupo-local')) {
         var achou = Object.keys(DECKS).filter(function (k) { return (DECKS[k].cartoes || []).some(function (c) { return c.g === g }) });
         if (achou.length && achou.indexOf(CART.key) < 0) dest = achou[0];
       }
@@ -1131,16 +1206,6 @@
     if (!c || !c.b || !c.b[0]) return null;
     var b = c.b[0];
     var alt = Array.isArray(b.d) ? b.d.join('; ') : (b.d || '');
-    if (/cirrosis|esteatosis/i.test(b.x || '') || /t13|lam-t13/i.test(c.id || '')) {
-      return { o: 'Hígado', p: 'Inflamatorio crónico / Acúmulos intracelulares',
-        alt: 'Parénquima hepático con histoarquitectura alterada y reemplazada por nódulos regenerativos, separados por tabiques de tejido conectivo. Hepatocitos con vacuolas lipídicas. Infiltrado inflamatorio crónico sobreagregado.',
-        dx: 'Cirrosis hepática / Esteatosis hepática' };
-    }
-    if (/colecistit|colesterolos/i.test(b.x || '') || /colesterolosis|vesicula/i.test(c.id || '')) {
-      return { o: 'Vesícula biliar', p: 'Inflamación crónica - Acúmulos intracelulares',
-        alt: 'Proceso inflamatorio crónico con presencia de linfocitos aislados y en nidos. Hipertrofia de la capa muscular con acentuación de los senos de Rokitansky-Aschoff. Macrófagos espumosos en la lámina propria.',
-        dx: 'Colecistitis crónica / Colesterolosis' };
-    }
     return { o: b.o || '', p: b.p || '', alt: alt, dx: b.x || '' };
   }
   W.renderExercicios = function () {
