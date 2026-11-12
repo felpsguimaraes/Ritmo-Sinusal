@@ -1,0 +1,256 @@
+/* SINUS · layout: entrada sem moldura falsa, balões e botões do painel. */
+
+#landing{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.15fr) minmax(260px,.72fr)!important;
+  align-items:center!important;
+  gap:22px!important;
+  min-height:100dvh;
+  padding:28px clamp(16px,4vw,48px)!important;
+  background:
+    radial-gradient(ellipse at 88% 18%,rgba(68,185,117,.16),transparent 42%),
+    linear-gradient(180deg,#f7fbf8,#eef6f1)!important;
+}
+#landing .blob{display:none!important}
+#landing .hero{
+  max-width:none!important;
+  width:auto!important;
+  min-height:0!important;
+  padding:32px clamp(22px,3vw,40px)!important;
+  border-radius:28px!important;
+  overflow:hidden;
+}
+#landing .hero:before,#landing .hero:after{display:none!important}
+#landing .previewShell{display:none!important}
+#landing .hero h1{max-width:12em;margin:18px 0 12px!important}
+#landing .sxEntrada{max-width:420px}
+#landing .metrics{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#landing .metric b{font-size:15px!important;line-height:1.35;font-weight:750}
+
+.sxLandMark{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:18px;
+  padding:28px 26px 26px;
+  border-radius:28px;
+  border:1px solid #d7ebdf;
+  background:#fff;
+  box-shadow:0 18px 50px rgba(18,90,52,.06);
+  min-height:0;
+}
+.sxLandMark img{
+  width:148px;
+  height:148px;
+  object-fit:contain;
+  align-self:center;
+  filter:drop-shadow(0 18px 28px rgba(12,110,62,.16));
+}
+.sxLandMark ol{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+  width:100%;
+}
+.sxLandMark li{
+  display:grid;
+  gap:2px;
+  padding:12px 14px;
+  border-radius:16px;
+  background:#f4faf6;
+  border:1px solid #e1f0e7;
+}
+.sxLandMark b{font-size:14px;letter-spacing:-.02em;color:#14382a}
+.sxLandMark span{font-size:13px;line-height:1.45;color:#5d7468}
+
+html[data-theme="dark"] #landing{background:#0e1713!important}
+html[data-theme="dark"] .sxLandMark{background:#15241c;border-color:#2c4035;color:#e7f4ee}
+html[data-theme="dark"] .sxLandMark li{background:#1c3228;border-color:#345445}
+html[data-theme="dark"] .sxLandMark b{color:#e7f4ee}
+html[data-theme="dark"] .sxLandMark span{color:#b7c9c0}
+
+@media(max-width:900px){
+  #landing{grid-template-columns:minmax(0,1fr)!important;padding:16px!important}
+  .sxLandMark{flex-direction:row;align-items:center;padding:16px;gap:14px}
+  .sxLandMark img{width:72px;height:72px;align-self:center}
+  .sxLandMark ol{gap:6px}
+  .sxLandMark li{padding:8px 10px}
+}
+
+/* Botões do aluno: uma altura, uma hierarquia, sem pulo. */
+#app .btn,#subjectView .btn,#admin .btn{
+  border-radius:12px!important;
+  min-height:42px;
+  padding:8px 14px!important;
+  font-size:13px!important;
+  font-weight:650!important;
+  line-height:1.2;
+  letter-spacing:0;
+  box-shadow:none!important;
+  transform:none!important;
+  white-space:normal;
+}
+#app .btn:hover,#subjectView .btn:hover,#admin .btn:hover{transform:none!important}
+#app .btn.sm,#subjectView .btn.sm,#admin .btn.sm{
+  min-height:36px;
+  padding:6px 12px!important;
+  font-size:12px!important;
+  border-radius:10px!important;
+}
+#app .btn.primary,#app .btn.violet,
+#subjectView .btn.primary,#subjectView .btn.violet,
+#admin .btn.primary,#admin .btn.violet{
+  background:#176650!important;
+  color:#fff!important;
+  border:1px solid #145c48!important;
+}
+#app .btn.secondary,
+#subjectView .btn.secondary{
+  background:#e7f4ec!important;
+  color:#145c42!important;
+  border:1px solid #c5e4d4!important;
+}
+#app .btn:not(.primary):not(.violet):not(.secondary),
+#subjectView .btn:not(.primary):not(.violet):not(.secondary),
+#admin .btn:not(.primary):not(.violet):not(.secondary){
+  background:#fff!important;
+  color:#1b3a2c!important;
+  border:1px solid #d5e4db!important;
+}
+#app .btn:disabled,#subjectView .btn:disabled{opacity:.45;cursor:not-allowed}
+#app .heroActions,#subjectView .heroActions,#app .mediaActions,#subjectView .mediaActions,#app .controlRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+#app .pill,#subjectView .pill{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px!important;
+  padding:4px 10px!important;
+  font-size:11px!important;
+  font-weight:700!important;
+  line-height:1.3!important;
+  max-width:100%;
+  white-space:nowrap;
+}
+#subjectTabs>button{min-height:38px!important}
+
+#app .sxHomeActions{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px!important;
+  align-items:stretch;
+}
+#app .sxHomeActions>button{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  min-height:156px;
+  height:100%;
+  text-align:left;
+  border-radius:18px!important;
+  padding:18px!important;
+}
+#app .sxHomeActions>button>span{
+  width:42px;height:42px;margin:0 0 14px!important;
+  border-radius:13px;font-size:20px;
+  background:#e5f3eb;color:#176650;
+}
+#app .sxHomeActions h2{font-size:18px!important;margin:0}
+#app .sxHomeActions p{font-size:13px!important;line-height:1.4;margin-top:6px!important}
+@media(max-width:900px){#app .sxHomeActions{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:520px){#app .sxHomeActions{grid-template-columns:1fr!important}#app .sxHomeActions>button{min-height:0}}
+
+/* Balões do treino: leem inteiros, não ficam cortados ao lado da imagem. */
+.sxFlashStudy .sxBalWrap{display:grid;gap:10px;margin:0 0 14px}
+.sxFlashStudy .sxBal{
+  overflow:visible;
+  padding:12px 14px 14px;
+  border-radius:16px 16px 16px 5px;
+}
+.sxFlashStudy .sxBal .sxBalLbl{
+  font-size:10px;
+  letter-spacing:.04em;
+  margin-bottom:6px;
+}
+.sxFlashStudy .sxBal p,.sxFlashStudy .sxBal li{font-size:15px;line-height:1.45}
+.sxFlashStudy.sxMedia .sxCard{
+  align-items:start;
+}
+.sxFlashStudy.sxMedia .sxSide{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  container-type:normal;
+}
+.sxFlashStudy.sxMedia .sxBalWrap{overflow:visible!important;gap:10px!important;margin:0}
+.sxFlashStudy.sxMedia .sxBal{
+  overflow:visible!important;
+  flex:none!important;
+  padding:12px 14px 14px!important;
+  border-radius:16px 16px 16px 5px!important;
+}
+.sxFlashStudy.sxMedia .sxBal p,
+.sxFlashStudy.sxMedia .sxBal li,
+.sxFlashStudy.sxMedia .sxBal.x p{
+  font-size:15px!important;
+  line-height:1.45!important;
+}
+.sxFlashStudy.sxMedia .sxBal .sxBalLbl{font-size:10px!important;padding:3px 8px!important}
+.sxFlashStudy.sxMedia .sxCardImg,
+.sxFlashStudy.sxMedia .sxCardVideo{height:auto!important}
+.sxFlashStudy.sxMedia .sxCardImg img{max-height:min(58vh,520px);height:auto!important}
+
+.sxFlashStudy.sxExercicio .sxExInput{
+  background:rgba(255,255,255,.62);
+  border:1px solid rgba(23,60,42,.08);
+  border-radius:10px;
+  padding:8px 10px!important;
+  min-height:44px;
+}
+.sxFlashStudy.sxExercicio .sxBal.d .sxExInput{min-height:84px}
+.sxFlashStudy .sxExActs{
+  display:flex;
+  gap:8px;
+  margin-top:4px;
+}
+.sxFlashStudy .sxExActs .btn{flex:1;min-height:44px}
+.sxFlashStudy .sxCard>.btn.primary{width:100%;margin-top:6px}
+.sxFlashStudy .sxGrades{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  margin-top:14px;
+}
+.sxFlashStudy .sxGrades button{
+  min-height:46px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:750;
+}
+.sxFlashStudy .sxFlashNav{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.sxFlashStudy .sxFlashNav .btn{width:100%;min-height:44px}
+.sxFlashStudy .sxParcialBtns{align-items:stretch}
+.sxFlashStudy .sxParcial{min-height:52px;justify-content:center}
+@media(max-width:640px){
+  .sxFlashStudy .sxGrades{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sxFlashStudy .sxFlashNav{grid-template-columns:1fr}
+}
+
+html[data-theme="dark"] #app .btn:not(.primary):not(.violet):not(.secondary),
+html[data-theme="dark"] #subjectView .btn:not(.primary):not(.violet):not(.secondary){
+  background:#1c3228!important;
+  color:#e7f4ee!important;
+  border-color:#345445!important;
+}
+html[data-theme="dark"] .sxFlashStudy.sxExercicio .sxExInput{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.08);color:inherit}

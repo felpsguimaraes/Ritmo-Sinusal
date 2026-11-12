@@ -16,7 +16,7 @@ html[data-theme="dark"] #landing .previewCard.big,
 html[data-theme="dark"] #landing .previewSurface{background:#13241c!important;color:#e7f4ee!important}
 html[data-theme="dark"] #landing .previewShell{background:#0c1814!important}
 html[data-theme="dark"] #landing .preview p,html[data-theme="dark"] #landing .eyebrow{color:#b7c9c0!important}
-#landing .previewShell{display:block!important}
+#landing .previewShell{display:none!important}
 @media(max-width:820px){
   #landing .previewShell{margin-top:16px}
   #landing .hero h1{font-size:34px!important}
