@@ -5,7 +5,7 @@
   var W = window, D = document;
   var LISTA = [
     '/aulas/catalogo.js?v=4',
-    '/aulas/flashcards/cartoes.js?v=15',
+    '/aulas/flashcards/cartoes.js?v=16',
     '/aulas/apostila-farmacologia/exercicios.js?v=1',
     '/aulas/agenda.js?v=3',
     '/sinus/transcricao-real.js?v=20261025-2',
