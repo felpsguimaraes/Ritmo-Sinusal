@@ -7,7 +7,7 @@ const assert=require('node:assert/strict');
 const core=fs.readFileSync('sinus/painel-v17.js','utf8');
 const anatomy=fs.readFileSync('sinus/anatomia-pratica-videos.js','utf8');
 const catalog=fs.readFileSync('sinus/ucp-catedra-catalog.js','utf8');
-const html=fs.readFileSync('index.html','utf8');
+const html=fs.readFileSync('index.html','utf8')+'\n'+fs.readFileSync('sinus/entrada.js','utf8');
 const dbSrc=core.match(/const DEFAULT_DB = (\{.*\});\s*\nlet DB;/s);
 const gradeSrc=core.match(/const DRIVE_CATALOG = (\{.*\});\s*\nconst DEFAULT_DB =/s);
 assert.ok(dbSrc && gradeSrc,'Grade base do SINUS indisponível');

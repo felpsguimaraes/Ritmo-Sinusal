@@ -5,7 +5,7 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync('sinus/subject-resource-balloons.js', 'utf8');
 const gallery = fs.readFileSync('sinus/materias-galeria-acervo.js', 'utf8');
-const html = fs.readFileSync('index.html', 'utf8');
+const html = fs.readFileSync('index.html', 'utf8')+'\n'+fs.readFileSync('sinus/entrada.js','utf8');
 
 // A preferência editorial do administrador não deve aparecer como bloco prioritário aos alunos.
 assert.doesNotMatch(source, /SUGESTÕES PRIORITÁRIAS|function renderExamHighlights|sxAOExamHighlights|Fotos de provas/);
