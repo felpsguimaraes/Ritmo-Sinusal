@@ -4,6 +4,7 @@ window.SINUS_EXERCICIOS_APOSTILA = window.SINUS_EXERCICIOS_APOSTILA || {};
 window.SINUS_EXERCICIOS_APOSTILA.anatopato = {
  "titulo": "Anatomía Patológica I · 2ª parcial (provas antigas e bancos)",
  "area": "teoria",
+ "banco": "2ª parcial",
  "pdf": "/aulas/lesion/p2/banco-questoes-p2.pdf?v=1",
  "blocos": [
   {

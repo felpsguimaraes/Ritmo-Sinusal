@@ -564,6 +564,7 @@
     $id('subjectContent').insertAdjacentHTML('afterbegin', '<div class="glass sxBlock"><span class="eyebrow">Da sua turma ' + H(S.turma) + '</span>' +
       '<h3>' + H(prof || 'Professor a definir') + '</h3><p class="soft" style="font-size:12px;line-height:1.6">O material do professor da sua turma aparece primeiro. O das outras turmas vem depois, sem esconder nada.</p>' +
       '<div class="heroActions">' + (temApost ? '<button class="btn primary sm" onclick="setTab(\'apostila\')">Abrir a apostila</button>' : '') +
+      (exApostila() ? '<button class="btn primary sm" data-sx-ir="training">Banco de questões</button>' : '') +
       (decks.length ? '<button class="btn sm" onclick="setTab(\'cartoes\')">Flashcards</button>' : '') +
       '<button class="btn sm" onclick="setTab(\'' + (UI.mode === 'practice' ? 'laminas' : 'slides') + '\')">' + (UI.mode === 'practice' ? 'Lâminas' : 'Slides') + '</button></div></div>');
   };

@@ -51,6 +51,7 @@ const out = '/* Sinus · Exercícios de Anatomía Patológica I · 2ª parcial (
   'window.SINUS_EXERCICIOS_APOSTILA.anatopato = ' + JSON.stringify({
     titulo: 'Anatomía Patológica I · 2ª parcial (provas antigas e bancos)',
     area: 'teoria',
+    banco: '2ª parcial',
     pdf: '/aulas/lesion/p2/banco-questoes-p2.pdf?v=1',
     blocos
   }, null, 1) + ';\n';
