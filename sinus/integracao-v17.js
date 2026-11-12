@@ -5,6 +5,7 @@
 (function () {
   'use strict';
   var W = window, D = document;
+  W.SINUS_APP_PRONTA = true;
   var $id = function (i) { return D.getElementById(i) };
   var qsa = function (s, r) { return Array.prototype.slice.call((r || D).querySelectorAll(s)) };
   var H = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) };
@@ -918,7 +919,7 @@
   };
 
   W.renderPlans = function () {
-    $id('page-plans').innerHTML = '<div class="heading"><div><span class="eyebrow">Planos</span><h1>Assinatura</h1><p>Os planos ainda não estão à venda. Por enquanto, todo o conteúdo do Sinus está liberado para você.</p></div><span class="pill green">Acesso completo</span></div>' +
+    $id('page-plans').innerHTML = '<div class="heading"><div><span class="eyebrow">Planos</span><h1>Assinatura</h1><p>Neste lançamento o acervo do seu período está liberado. Grátis, Básico (R$ 29,90) e Premium (R$ 49,90) aparecem abaixo, sem cobrança automática.</p></div><span class="pill green">Acesso completo</span></div>' +
       '<div class="grid3">' + DB.plans.filter(function (p) { return p.active !== false }).map(function (p) {
         return '<div class="glass adminBlock"><span class="pill ' + (p.id === 'premium' ? 'violet' : p.id === 'basic' ? 'green' : 'amber') + '">' + H(p.name) + '</span><h2 style="font-size:24px;margin:12px 0 4px">R$ ' + (p.priceCents / 100).toFixed(2).replace('.', ',') + '</h2><p class="soft" style="font-size:11px;line-height:1.7">' + H(p.description || '') + '</p><div class="stack" style="margin-top:12px">' + (p.features || []).slice(0, 6).map(function (f) { return '<div class="quickItem"><span>' + H(f) + '</span></div>' }).join('') + '</div><button class="btn" style="margin-top:14px" disabled>Em breve</button></div>';
       }).join('') + '</div>';

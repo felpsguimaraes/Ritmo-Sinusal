@@ -14,7 +14,7 @@
   var auth={currentUser:null,onAuthStateChanged:function(f){listeners.push(f);if(current)setTimeout(function(){f(current)},0)},signOut:async function(){if(demo){emit(null);return}var r=await client.auth.signOut();if(r.error)throw r.error;emit(null)}};
   W.SinusBackend={client:client,auth:auth,db:{doc:doc,collection:function(c){return {limit:function(n){return {get:async function(){if(demo)return {forEach:function(){}};var r=await client.from('sinus_documents').select('id,payload').eq('collection',c).limit(n);if(r.error)throw r.error;return {forEach:function(f){r.data.forEach(function(row){f(snap(row))})}}}}}}}},signIn:async function(){
     if(demo){await doc('perfis/demo').set({nome:'Estudante Demo',turma:'G',whatsapp:'595981000000',email:'demo@sinus.local'});await doc('progresso/demo_sinus-perfil').set({prog:{onboarding:true,periodo:5,turma:'G',idioma:'pt',faculdade:'UCP',campus:'Ciudad del Este'}});emit({uid:'demo',email:'demo@sinus.local',displayName:'Estudante Demo',isAdmin:false});return}
-    if(location.origin!=='https://meusinus.pages.dev')throw Error('Abra o SINUS em meusinus.pages.dev para entrar com segurança.');
+    if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1')throw Error('Abra o SINUS em https para entrar com segurança.');
     var r=await client.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+'/',queryParams:{prompt:'select_account'}}});if(r.error)throw r.error;
   }};
   // Ao conceder leitura do Drive, voltar diretamente ao importador, nunca ao portal do aluno.

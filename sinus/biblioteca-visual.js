@@ -13,7 +13,13 @@ async function loadUploads(){
  uploads.loading=true;
  try {
   const {data:session,error:authErr}=await backend().auth.getUser();
-  if(authErr)throw authErr;
+  if(authErr){
+    const msg=String(authErr.message||authErr.name||'');
+    if(/session missing|AuthSessionMissing/i.test(msg)||authErr.name==='AuthSessionMissingError'||authErr.code==='session_missing'){
+      uploads.items=[];uploads.user=null;uploads.ready=false;return;
+    }
+    throw authErr;
+  }
   const uid=session?.user?.id;
   if(!uid){uploads.items=[];uploads.user=null;uploads.ready=false;W.dispatchEvent(new CustomEvent('sinus:library-uploads-ready',{detail:{count:0}}));return;}
   const {data,error}=await backend().from('sinus_library_files').select('id,file_name,title,subject,academic_period,category,mime_type,file_size,storage_path,created_at').eq('user_id',uid).order('created_at',{ascending:false}).limit(500);

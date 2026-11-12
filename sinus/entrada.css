@@ -1,0 +1,27 @@
+/* Entrada: planos, preview no celular e tema escuro do exemplo. */
+.sxPlanosLead{font-size:13px;line-height:1.55;color:var(--muted);margin:16px 0 10px}
+.sxPlanosGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 8px}
+.sxPlanosGrid article{border:1px solid var(--line,#e1e9e5);border-radius:14px;padding:10px 10px 12px;background:#fff}
+.sxPlanosGrid span{display:block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#5d6b64}
+.sxPlanosGrid b{display:block;margin-top:4px;font-size:18px;letter-spacing:-.03em}
+.sxPlanosGrid small{display:block;margin-top:2px;color:#6d7b74;font-size:11px}
+.sxLandLinks{margin:16px 0 0;font-size:13px}
+.sxLandLinks a{color:#176650;font-weight:700;text-decoration:none}
+.sxLandLinks a:hover{text-decoration:underline}
+html[data-theme="dark"] .sxPlanosGrid article{background:#14241c;border-color:rgba(255,255,255,.08);color:#e7f4ee}
+html[data-theme="dark"] .sxPlanosGrid span,html[data-theme="dark"] .sxPlanosGrid small{color:#b7c9c0}
+html[data-theme="dark"] #landing .preview,
+html[data-theme="dark"] #landing .previewCard,
+html[data-theme="dark"] #landing .previewCard.big,
+html[data-theme="dark"] #landing .previewSurface{background:#13241c!important;color:#e7f4ee!important}
+html[data-theme="dark"] #landing .previewShell{background:#0c1814!important}
+html[data-theme="dark"] #landing .preview p,html[data-theme="dark"] #landing .eyebrow{color:#b7c9c0!important}
+#landing .previewShell{display:block!important}
+@media(max-width:820px){
+  #landing .previewShell{margin-top:16px}
+  #landing .hero h1{font-size:34px!important}
+  .sxPlanosGrid{grid-template-columns:1fr}
+  .sxPlanosGrid article{display:flex;align-items:baseline;gap:10px}
+  .sxPlanosGrid b{margin-top:0}
+  .sxPlanosGrid small{margin-left:auto}
+}
