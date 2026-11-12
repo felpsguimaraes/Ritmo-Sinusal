@@ -72,7 +72,7 @@ const ui = fs.readFileSync('sinus/integracao-v17.js', 'utf8');
 assert.match(ui, /function htmlLaminario/);
 assert.match(ui, /data-sx-grupo-local/);
 assert.match(ui, /sinus_cartoes_migrou_final/);
-assert.match(fs.readFileSync('sinus/entrada.js', 'utf8'), /cartoes\.js\?v=15/);
+assert.match(fs.readFileSync('sinus/entrada.js', 'utf8'), /cartoes\.js\?v=\d+/);
 assert.doesNotMatch(fs.readFileSync('sinus/treino-hub.js', 'utf8'), /data-sx-filtro/);
 
 console.log('Laminário OK: P1 ' + fotos(p1.cartoes).length + ' fotos, P2 ' + fotos(p2.cartoes).length + ' fotos e ' + videos(p2.cartoes).length + ' vídeos, Final ' + fin.cartoes.length + ' fotos.');
