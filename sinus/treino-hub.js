@@ -40,7 +40,7 @@
     }
     if(MAPAS[s.slug])items.push({tipo:'mapas',t:'Mapas guiados',sub:'O esquema da matéria, para completar'});
     assuntos(name,'Todos','').forEach(function(a){
-      var d=DK()[a.k]||{},pa=parcial(a.k),ex=temEscrita(a.k,a.g);
+      var d=DK()[a.k]||{},pa=parcial(a.k),ex=(d.area==='pratica')||temEscrita(a.k,a.g);
       var tag=(d.area==='pratica'?'Prática':'Teoria')+(pa?' · '+pa:'');
       var n=a.st.total;
       items.push({tipo:ex?'exercicio':'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',parcial:rotuloParcial(a.k),total:n,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+(ex?(n+(n===1?' exercício':' exercícios')):nc(n))+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
@@ -128,8 +128,8 @@
     var name=ST.name,d=ST.k&&DK()[ST.k],q=qCount(name,ST.area),slug=((DB.subjects||{})[name]||{}).slug,h='';
     if(d){
       var x=stat(ST.k,ST.g),prat=d.area==='pratica';
-      h+='<button class="thMode full" data-th-modo="cartoes"><i>'+(prat?'🔬':'🗂')+'</i><span><b>'+(prat?'Laminário':'Flashcards')+'</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
-      if(prat) h+='<button class="thMode full" data-th-modo="exercicios"><i>✏️</i><span><b>Exercícios</b><small>escreva antes de ver o gabarito</small></span></button>';
+      if(prat) h+='<button class="thMode full" data-th-modo="exercicios"><i>🔬</i><span><b>Laminário</b><small>'+x.total+' lâminas · filtre por assunto</small></span></button>';
+      else h+='<button class="thMode full" data-th-modo="cartoes"><i>🗂</i><span><b>Flashcards</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
     }
     h+='<div class="thGrid">';
     h+='<button class="thMode" data-th-modo="exercises"><i>❓</i><b>Questões</b><small>'+(q?q+' disponíveis':'da matéria')+'</small></button>';
@@ -166,13 +166,13 @@
     var root=D.getElementById('subjectContent');
     if(!root||typeof UI==='undefined'||!UI.subject)return;
     var all=catalogo(UI.subject);
-    var fs=filtrosDe(UI.subject),f=FILTRO[UI.subject]||'Todos';
+    var fs=null,f='Todos';
     if(fs&&fs.indexOf(f)<0)f='Todos';
     var assuntos={}, ordem=[];
     all.forEach(function(a){ if(a.tipo==='exercicio'&&a.g&&!assuntos[a.g]){assuntos[a.g]=1;ordem.push(a.g)} });
     var fa=FILTRO[UI.subject+'#a']||'';
     var fixos=all.filter(function(a){return a.tipo!=='exercicio'});
-    var lams=all.filter(function(a){return a.tipo==='exercicio'&&(f==='Todos'||a.parcial===f)&&(!fa||a.g===fa)});
+    var lams=all.filter(function(a){return a.tipo==='exercicio'&&(!fa||a.g===fa)});
     var items=fixos.concat(lams);
     var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria.</p></div>';
     if(fs)h+='<div class="thSec">Parcial</div><div class="thTabs" role="group" aria-label="Parcial">'+fs.map(function(t){return '<button type="button" class="'+(f===t?'on':'')+'" data-sx-filtro="'+H(t)+'">'+H(t)+'</button>'}).join('')+'</div>';
@@ -245,10 +245,10 @@
     if(t.hasAttribute('data-th-mat'))return abrirMateria(t.getAttribute('data-th-mat'));
     if(t.hasAttribute('data-th-area'))return go('mat',{area:t.getAttribute('data-th-area'),tab:''});
     if(t.hasAttribute('data-th-tab'))return go('mat',{tab:t.getAttribute('data-th-tab')});
-    if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];ST.k=a.k;ST.g=a.g;ST.titulo=a.t;return launch('cartoes')}
+    if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];ST.k=a.k;ST.g=a.g;ST.titulo=a.t;return launch(DK()[a.k]&&DK()[a.k].area==='pratica'?'exercicios':'cartoes')}
     if(t.hasAttribute('data-th-all')){
       var ks=ST._as.map(function(x){return x.k}).filter(function(v,i,arr){return arr.indexOf(v)===i});
-      ST.k=ks[0];ST.g='';ST.titulo='Todos os assuntos';return launch('cartoes');
+      ST.k=ks[0];ST.g='';ST.titulo='Todos os assuntos';return launch(DK()[ks[0]]&&DK()[ks[0]].area==='pratica'?'exercicios':'cartoes');
     }
     if(t.hasAttribute('data-th-modo'))return launch(t.getAttribute('data-th-modo'));
     var act=t.getAttribute('data-th');
