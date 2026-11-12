@@ -1,4 +1,4 @@
-const NAME='sinus-shell-v14';
+const NAME='sinus-shell-v15';
 const PRECACHE=['./favicon.ico','./favicon.svg','./favicon.png','./icon-192.png','./icon-512.png','./apple-touch-icon.png','./icons/sinus-app-192-v3.png','./icons/sinus-app-512-v3.png','./icons/sinus-app-maskable-512-v3.png','./og/sinus-card.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(NAME).then(cache=>cache.addAll(PRECACHE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('sinus-')&&k!==NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

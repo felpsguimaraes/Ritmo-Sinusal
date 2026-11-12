@@ -5,7 +5,7 @@
   var W = window, D = document;
   var LISTA = [
     '/aulas/catalogo.js?v=4',
-    '/aulas/flashcards/cartoes.js?v=16',
+    '/aulas/flashcards/cartoes.js?v=17',
     '/aulas/apostila-farmacologia/exercicios.js?v=1',
     '/aulas/agenda.js?v=3',
     '/sinus/transcricao-real.js?v=20261025-2',
@@ -17,7 +17,7 @@
     '/sinus/calendario-motor.js?v=20261024',
     '/sinus/academico-oficial-drive.js?v=20261025-oficial-ucp',
     '/sinus/ucp-catedra-catalog.js?v=20261025-anatomia2-folderfix-publish-2',
-    '/sinus/integracao-v17.js?v=20261112-laminario-bc',
+    '/sinus/integracao-v17.js?v=20261112-laminario-bc2',
     '/sinus/mapas-guiados.js?v=3',
     '/sinus/agenda-liquid-v4.js?v=20261024',
     '/sinus/identidade-esfera.js?v=2',
