@@ -5,7 +5,9 @@
   var originalRender=W.renderSubject,originalSetTab=W.setTab;
   var host=function(){return D.getElementById('subjectContent')};
   var safe=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-  function pane(){var p=UI.trainingPane;return p==='exercises'||p==='flashcards'||p==='mindmaps'||p==='catalog'?p:'catalog'}
+  /* Anatomía Patológica I: o Treino é só o Laminário, sem a lista de treinos. */
+  function soLaminario(){var s=(typeof DB!=='undefined'&&DB.subjects)?DB.subjects[UI.subject]:null;return !!(s&&s.slug==='anatopato')}
+  function pane(){var p=UI.trainingPane;p=p==='exercises'||p==='flashcards'||p==='mindmaps'||p==='catalog'?p:'catalog';if(p==='catalog'&&soLaminario()){UI.trainingPane=p='flashcards';UI.mode='practice'}return p}
   function nav(){
     if(UI.tab!=='training')return;
     var root=host();if(!root)return;
@@ -20,6 +22,7 @@
     var intro=root.querySelector('.sxUnifiedIntro');
     var slug=((typeof DB!=='undefined'&&DB.subjects&&DB.subjects[UI.subject])||{}).slug;
     if(pane()==='exercises'&&intro&&/em preparação/i.test(intro.textContent)&&(W.SINUS_EXERCICIOS_APOSTILA||{})[slug])intro.remove();
+    if(soLaminario()){root.querySelectorAll('.sxUnifiedTrainNav').forEach(function(el){el.remove()});return;}
     if(root.querySelector('.sxUnifiedTrainNav'))return;
     root.insertAdjacentHTML('afterbegin','<button type="button" class="sxUnifiedTrainNav thBackRow" data-sx-treino-voltar>‹ Treinos da matéria</button>');
   }
@@ -78,8 +81,15 @@
     if(tab==='review'){UI.trainingPane='exercises';tab='training'}
     else if(tab==='cartoes'){UI.trainingPane='flashcards';tab='training'}
     else if(tab==='mapas'){UI.trainingPane='mindmaps';tab='training'}
+    else if(tab==='training'&&soLaminario()){UI.trainingPane='flashcards';UI.mode='practice'}
     else if(tab==='training'&&UI.tab!=='training')UI.trainingPane='catalog';
     return originalSetTab(tab);
+  };
+  /* No Treino de Anatomía Patológica I, trocar para Teoria leva ao Resumo/Apostila (o Laminário é da prática). */
+  var originalSetMode=W.setSubjectMode;
+  if(typeof originalSetMode==='function')W.setSubjectMode=function(mode){
+    if(mode==='theory'&&UI.tab==='training'&&soLaminario())UI.tab='apostila';
+    return originalSetMode.apply(this,arguments);
   };
   function laminaExercicio(){
     if(UI.mode!=='practice')return false;

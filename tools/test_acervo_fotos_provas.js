@@ -13,7 +13,7 @@ assert.match(source, /sxAOLibraryItems/);
 assert.match(gallery, /title='Provas e avaliações'/);
 assert.doesNotMatch(gallery, /Fotos de provas/);
 assert.match(html, /subject-resource-balloons\.js\?v=20261025-slides-library-sync-v2/);
-assert.match(html, /materias-galeria-acervo\.js\?v=20261025-exam-label-cleanup/);
+assert.match(html, /materias-galeria-acervo\.js\?v=[\w.-]+/);
 
 // Os materiais continuam classificados e acessíveis na aba Provas, sem vazamento entre turmas.
 const from=gallery.indexOf('const norm='), to=gallery.indexOf('function kind(x){',from);

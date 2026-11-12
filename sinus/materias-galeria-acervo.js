@@ -77,6 +77,7 @@ function render(){
  }else if(tab==='apostila'){
   list=summaries;title='Resumos e apostilas';desc='Revisões desta disciplina.';label='ESTUDAR';
  }else if(['training','cartoes'].includes(tab)){
+  if(((DB.subjects||{})[subject]||{}).slug==='anatopato')return;
   list=examPhotos.slice(0,6);title='Provas de referência';desc='Imagens de avaliações para consultar durante o treino.';label='APOIO';
  }else return;
  if(!html&&list.length)html=gallery(title,desc,list,label);
