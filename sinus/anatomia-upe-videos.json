@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T17:04:29Z",
+  "updatedAt": "2026-11-12T17:32:45Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -7,7 +7,7 @@
   "videos": [
     {
       "id": "NbspWagqMoU",
-      "title": "SAGITTAL SECTION PART 1",
+      "title": "CORTE SAGITAL PARTE 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=NbspWagqMoU",
@@ -107,7 +107,7 @@
     },
     {
       "id": "1Ubtg0UOzRg",
-      "title": "Celiac Trunk",
+      "title": "Tronco celiaco",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=1Ubtg0UOzRg",
@@ -187,7 +187,7 @@
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "CORAZÓN - Configuración Externa - Parte 2",
+      "title": "HEART - External Configuration - Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "CORAZÓN - Configuración Externa - Parte 1",
+      "title": "HEART - External Configuration - Part 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
+      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -247,7 +247,7 @@
     },
     {
       "id": "bM3vsmRIdDE",
-      "title": "VISIÓN MEDIAL DEL TRONCO ENCEFÁLICO",
+      "title": "MEDIAL VIEW OF THE BRAINSTEM",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=bM3vsmRIdDE",
@@ -257,7 +257,7 @@
     },
     {
       "id": "81SOI7dXwkQ",
-      "title": "BULBO RAQUÍDEO",
+      "title": "MEDULLA OBLONGATA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "POLÍGONO DE WILLIS",
+      "title": "Willis's Polygon",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -297,7 +297,7 @@
     },
     {
       "id": "L_rCAQf3duk",
-      "title": "MIEMBRO SUPERIOR PARTE 1 - MÚSCULOS",
+      "title": "UPPER LIMB PART 1 - MUSCLES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=L_rCAQf3duk",
@@ -307,7 +307,7 @@
     },
     {
       "id": "cU6MngfQ3rQ",
-      "title": "MIEMBRO SUPERIOR PARTE 2 MÚSCULOS DEL BRAZO",
+      "title": "UPPER LIMB PART 2 ARM MUSCLES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cU6MngfQ3rQ",
@@ -357,7 +357,7 @@
     },
     {
       "id": "rx0qaehAcNk",
-      "title": "CELIAC TRUNK",
+      "title": "TRONCO CELIACO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=rx0qaehAcNk",
@@ -367,7 +367,7 @@
     },
     {
       "id": "vh4Lra7LbvQ",
-      "title": "VÍAS BILIARES EXTRAHEPATICAS",
+      "title": "EXTRAHEPATIC BILE DUCTS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=vh4Lra7LbvQ",
@@ -377,7 +377,7 @@
     },
     {
       "id": "3fB4_gaPsFs",
-      "title": "ARTERIA MESENTERICA INFERIOR",
+      "title": "INFERIOR MESENTERIC ARTERY",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=3fB4_gaPsFs",
@@ -387,7 +387,7 @@
     },
     {
       "id": "yBaFEDZO4yY",
-      "title": "ARTERIA MESENTERICA SUPERIOR",
+      "title": "SUPERIOR MESENTERIC ARTERY",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=yBaFEDZO4yY",
@@ -798,7 +798,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 41,
+      "newScan": 43,
       "total": 43
     },
     "anatomiaupe2188": {
