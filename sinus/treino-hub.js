@@ -82,12 +82,20 @@
       '<div class="thGrid thArea"><button class="thMode" data-th-area="teoria"><i>📚</i><b>Teoria</b><small>'+H(sub('teoria'))+'</small></button>'+
       '<button class="thMode" data-th-area="pratica"><i>🔬</i><b>Prática</b><small>'+H(sub('pratica'))+'</small></button></div>';
   }
+  /* banco de questões das apostilas SINUS (Treino → Exercícios da matéria), ex.: Anatopato 2ª parcial */
+  function exBanco(name,area){
+    var s=(DB.subjects||{})[name]||{},d=(W.SINUS_EXERCICIOS_APOSTILA||{})[s.slug];
+    if(!d||(d.area||'teoria')!==(area||'teoria'))return '';
+    var n=d.blocos.reduce(function(t,b){return t+b.questoes.length},0);
+    return '<button class="thCta" data-th-modo="exercises"><i>❓</i><span><b>Banco de questões'+(d.banco?' · '+H(d.banco):'')+'</b><small>'+n+' questões com gabarito comentado, por tema</small></span></button>';
+  }
   function materia(){
     var name=ST.name;
     if(temPratica(name)&&!ST.area)return escolhaArea();
     var area=ST.area,tabs=tabsDe(name,area);
     if(tabs&&!ST.tab)ST.tab=tabInicial(name,area);
     var h=crumb('Treinar › '+H(name)+(area?' › <b>'+(area==='pratica'?'Prática':'Teoria')+'</b>':''))+'<div class="thHead"><h1>'+H(area==='pratica'?'Prática':area==='teoria'?'Teoria':name)+'</h1><p>'+H(name)+' · escolha o assunto.</p></div>';
+    h+=exBanco(name,area);
     if(tabs)h+='<div class="thTabs">'+tabs.map(function(t){return '<button class="'+(ST.tab===t?'on':'')+'" data-th-tab="'+t+'">'+t+'</button>'}).join('')+'</div>';
     var as=tabs?assuntos(name,ST.tab,area):assuntos(name,'Todos',area);
     if(!as.length){
@@ -103,6 +111,7 @@
   }
   function modos(a){
     var name=ST.name,d=ST.k&&DK()[ST.k],q=qCount(name,ST.area),slug=((DB.subjects||{})[name]||{}).slug,h='';
+    if(ST.v==='modo')h+=exBanco(name,ST.area||(d&&d.area));
     if(d){
       var x=stat(ST.k,ST.g),prat=d.area==='pratica';
       h+='<button class="thMode full" data-th-modo="cartoes"><i>'+(prat?'🔬':'🗂')+'</i><span><b>'+(prat?'Laminário':'Flashcards')+'</b><small>'+x.total+' cartões'+(x.pend?' · '+x.pend+' para revisar':'')+'</small></span></button>';
