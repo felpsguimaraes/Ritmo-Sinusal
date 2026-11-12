@@ -356,6 +356,24 @@
         qs.push({ id: 'fc_' + key.replace('/', '_') + '_' + c.id, subject: nome, period: 'Geral', mode: (deck.area === 'pratica' ? 'practice' : 'theory'), type: 'flashcard', difficulty: 'hard', prompt: c.q, options: [], pairs: [], answer: c.a, explanation: (c.x || '') + (deck.nome ? ' · ' + deck.nome : ''), image: c.img || null, video: c.video || null, balloons: c.b || null, active: true, deck: key, topic: c.t });
       });
     });
+    /* bancos das apostilas SINUS (exercicios.js de cada apostila) entram no Treino → Exercícios nativo da matéria */
+    var EXA = W.SINUS_EXERCICIOS_APOSTILA || {}, L = 'ABCDEFGH';
+    Object.keys(EXA).forEach(function (slug) {
+      var d = EXA[slug], nome = NOMES[slug], modo = (d.area || 'teoria') === 'pratica' ? 'practice' : 'theory';
+      if (!nome || !d.blocos) return;
+      d.blocos.forEach(function (b) {
+        b.questoes.forEach(function (q, i) {
+          var base = { id: 'ap_' + slug + '_' + b.id + '_' + i, subject: nome, period: b.clase || 'Geral', mode: modo, difficulty: 'hard', topic: b.titulo, pairs: [], active: true };
+          var fonte = q.f ? '\n\nFonte: ' + q.f : '';
+          if (q.aberta) { qs.push(Object.assign(base, { type: 'cita', prompt: q.q, options: [], answer: q.a, explanation: (q.ex || '') + fonte })); return; }
+          var rs = Array.isArray(q.r) ? q.r : [q.r], vf = q.ops.length === 2 && /^(verdader|falso)/i.test(q.ops[0]);
+          if (vf) { qs.push(Object.assign(base, { type: 'truefalse', prompt: q.q, options: ['Verdadeiro', 'Falso'], answer: q.r ? 'Falso' : 'Verdadeiro', explanation: (q.ex || '') + fonte })); return; }
+          var porOp = q.w ? q.ops.map(function (o, j) { return '**' + L[j] + ') ' + o + '**' + (rs.indexOf(j) >= 0 ? ' (correta)' : '') + '\n' + (q.w[j] || '') }).join('\n\n') : '';
+          qs.push(Object.assign(base, { type: 'multiple', prompt: q.q, options: q.ops.slice(), answer: q.ops[rs[0]],
+            explanation: [rs.length > 1 ? 'Também está correta: ' + rs.slice(1).map(function (j) { return L[j] + ') ' + q.ops[j] }).join('; ') + '.' : '', q.ex || '', porOp].filter(Boolean).join('\n\n') + fonte }));
+        });
+      });
+    });
     return qs;
   }
   function gruposDoAluno() { var g = Object.assign({}, (S.prefs && S.prefs.gruposMateria) || {}); return g }
@@ -744,7 +762,7 @@
         (feita ? '<p style="margin:8px 0 0;font-size:13px;border-radius:10px;padding:8px 10px;background:' + (certa ? '#e1f3e8' : '#fbe6e3') + '"><b>' + (certa ? 'Correto.' : 'Resposta: ' + (q.ops.length === 2 && letra(q, 0) === 'V' ? (q.r ? 'Falso' : 'Verdadeiro') : rs.map(function (j) { return L[j] }).join(' e ')) + '.') + '</b>' + (q.ex ? ' ' + H(q.ex) : '') + '</p>' : '');
     }
     return '<section class="glass" data-sx-ex-apostila style="padding:18px 20px;border-radius:18px;margin:0 0 14px">' +
-      '<span class="eyebrow">Exercícios · ' + H(x.d.titulo) + '</span>' +
+      '<span class="eyebrow">Banco por tema · ' + H(x.d.titulo) + '</span>' +
       '<div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:8px 0 12px;font-size:12.5px"><span><b style="font-size:20px">' + certas + '</b> acertos</span><span><b style="font-size:20px">' + feitas + '/' + tot + '</b> respondidas</span><span><b style="font-size:20px">' + (feitas - certas) + '</b> para revisar</span><span style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">' + (x.d.pdf ? '<a class="btn sm" href="' + x.d.pdf + '" target="_blank" rel="noopener">Banco em PDF</a>' : '') + '<button type="button" class="btn sm" data-sx-exa-zerar>Refazer</button></span></div>' +
       '<div class="sxExaChips" role="group" aria-label="Módulo" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">' + bl.map(function (y) { return '<button type="button" class="btn sm ' + (y.id === b.id ? 'primary' : '') + '" data-sx-exa-bloco="' + y.id + '">' + H(y.titulo) + ' <span style="opacity:.7">' + y.questoes.length + '</span></button>' }).join('') + '</div>' +
       b.questoes.map(function (q, i) {
@@ -757,8 +775,9 @@
   function garantirExercicios() {
     var root = $id('subjectContent'), x = exApostila();
     if (!root || !x || UI.tab !== 'training' || (UI.trainingPane || 'exercises') !== 'exercises' || root.querySelector('[data-sx-ex-apostila]')) return;
-    var nav = root.querySelector('.sxUnifiedTrainNav');
-    if (nav) nav.insertAdjacentHTML('afterend', exHtml(x)); else root.insertAdjacentHTML('afterbegin', exHtml(x));
+    /* só na tela inicial dos Exercícios (abaixo do «Pratique sem complicações»), nunca durante uma sessão */
+    var intro = root.querySelector('.sxUnifiedIntro'); if (!intro || root.querySelector('.sxQuestionRun')) return;
+    intro.insertAdjacentHTML('afterend', exHtml(x));
   }
   function exRedesenhar() { var el = D.querySelector('[data-sx-ex-apostila]'), x = exApostila(); if (el && x) el.outerHTML = exHtml(x) }
   D.addEventListener('click', function (e) {
