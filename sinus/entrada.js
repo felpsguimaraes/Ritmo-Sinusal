@@ -17,7 +17,7 @@
     '/sinus/calendario-motor.js?v=20261024',
     '/sinus/academico-oficial-drive.js?v=20261025-oficial-ucp',
     '/sinus/ucp-catedra-catalog.js?v=20261025-anatomia2-folderfix-publish-2',
-    '/sinus/integracao-v17.js?v=20261112-laminario',
+    '/sinus/integracao-v17.js?v=20261112-laminario-bc',
     '/sinus/mapas-guiados.js?v=3',
     '/sinus/agenda-liquid-v4.js?v=20261024',
     '/sinus/identidade-esfera.js?v=2',

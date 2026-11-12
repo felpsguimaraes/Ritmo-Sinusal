@@ -1,0 +1,54 @@
+/* Laminário · estrutura da prévia Branco Clínico: filtros compactos, lâmina + resposta e fila ao lado. */
+.sxFlashStudy.sxLamBC{max-width:1240px;margin:8px auto 28px;font-family:Inter,system-ui,"Segoe UI",sans-serif;color:#334155}
+.sxLamBC .sxLamFiltros{display:grid;gap:10px;background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:12px;margin-bottom:16px;box-shadow:0 1px 2px rgba(15,23,42,.05)}
+.sxLamBC .sxParciais,.sxLamBC .sxGrupos{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0}
+.sxLamBC .sxParcialLbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#047857;min-width:64px}
+.sxLamBC .sxParcialBtns{display:inline-flex;gap:4px;padding:4px;background:#F1F5F9;border:1px solid #E2E8F0;border-radius:12px;flex-wrap:wrap}
+.sxLamBC .sxParcial{display:inline-flex;align-items:baseline;gap:6px;padding:6px 12px;min-height:0;border:0;border-radius:8px;background:transparent;color:#64748B;font-size:12px;font-weight:600;box-shadow:none}
+.sxLamBC .sxParcial b{font-size:12px;font-weight:700}
+.sxLamBC .sxParcial small{font-size:11px;font-weight:500;color:#64748B}
+.sxLamBC .sxParcial.active{background:#fff;color:#0F172A;font-weight:800;box-shadow:0 1px 2px rgba(15,23,42,.08)}
+.sxLamBC .sxGrupos .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;min-height:0;border-radius:8px;border:1px solid rgba(16,185,129,.25);background:#ECFDF5;color:#065F46;font-size:12px;font-weight:700;box-shadow:none}
+.sxLamBC .sxGrupos .chip small{font-size:11px;font-weight:600;opacity:.8}
+.sxLamBC .sxGrupos .chip.active{background:#059669;border-color:#059669;color:#fff}
+.sxLamBC .sxGrupos .chip.active small{opacity:.9}
+.sxLamBC .sxLamGrid{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:16px;align-items:start}
+.sxLamBC .sxLamMain{min-width:0}
+.sxLamBC .sxFlashHeader{margin-bottom:10px}
+.sxLamBC .sxFlashHeader .eyebrow{font-size:12px;font-weight:700;letter-spacing:.05em;color:#047857}
+.sxLamBC .sxFlashHeader h2{font-size:22px;font-weight:800;letter-spacing:-.025em;color:#0F172A;margin:2px 0 0}
+.sxLamBC .sxFlashCount{font-family:ui-monospace,monospace;font-size:12px;font-weight:700;color:#047857}
+.sxLamBC .sxFlashProgress{height:6px;background:#E2E8F0;margin-bottom:14px}
+.sxLamBC .sxFlashProgress i{background:#10B981}
+.sxLamBC .sxCard{background:#fff;border:1px solid #E2E8F0;border-radius:12px!important;padding:12px;box-shadow:0 1px 2px rgba(15,23,42,.05);backdrop-filter:none}
+.sxLamBC .sxDeckRow .pill{background:#ECFDF5;color:#065F46;border:1px solid rgba(16,185,129,.25);border-radius:8px;font-size:12px;font-weight:700}
+.sxLamBC .sxDeckRow .soft{font-size:12px;color:#64748B}
+.sxLamBC .sxCardImg img{background:#F1F5F9;border-radius:8px}
+.sxLamBC .sxBalWrap{gap:8px}
+.sxLamBC .sxBal{border-radius:12px;padding:10px 12px}
+.sxLamBC .sxBal p{font-size:15px;font-weight:700}
+.sxLamBC .sxBal ul{font-size:14px}
+.sxLamBC .sxFlashNav{margin-top:12px;gap:8px}
+.sxLamBC .sxFlashNav .btn{flex:1;min-height:40px;border-radius:12px;border:1px solid #CBD5E1;background:#fff;color:#334155;font-size:12px;font-weight:700}
+.sxLamBC .sxFlashNav .btn:last-child{background:#059669;border-color:#059669;color:#fff}
+.sxLamBC .sxFlashNav .btn:disabled{opacity:.5}
+.sxLamBC .sxFlashFooter{margin-top:12px;color:#64748B}
+.sxLamBC .sxFila{position:sticky;top:12px;display:flex;flex-direction:column;gap:8px;max-height:min(78vh,720px);overflow:auto;padding-right:2px}
+.sxLamBC .sxFilaT{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#047857;margin:0 0 2px}
+.sxLamBC .sxFilaItem{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;padding:10px 12px;border:1px solid #E2E8F0;border-radius:12px;background:#fff;color:#334155;font-size:13px;line-height:1.35;cursor:pointer;box-shadow:none}
+.sxLamBC .sxFilaN{flex:none;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;color:#64748B;min-width:22px}
+.sxLamBC .sxFilaItem.on{background:#ECFDF5;border-color:#10B981;color:#0F172A;font-weight:700}
+.sxLamBC .sxFilaItem.on .sxFilaN{color:#059669}
+.sxLamBC .sxFilaItem:focus-visible{outline:2px solid #059669;outline-offset:2px}
+html[data-theme="dark"] .sxLamBC .sxLamFiltros,html[data-theme="dark"] .sxLamBC .sxCard,html[data-theme="dark"] .sxLamBC .sxFilaItem{background:#192d23;border-color:#ffffff1c;color:#e5f1e9}
+html[data-theme="dark"] .sxLamBC .sxFlashHeader h2{color:#e5f1e9}
+html[data-theme="dark"] .sxLamBC .sxFilaItem.on{background:#1f3d2e;border-color:#10B981}
+@media(max-width:900px){.sxLamBC .sxLamGrid{grid-template-columns:1fr}.sxLamBC .sxFila{position:static;max-height:260px}}
+.sxLamBC .sxParciais{flex-direction:row}
+.sxLamBC .sxParcialBtns{display:inline-flex;flex-direction:row;width:auto;max-width:100%;grid-template-columns:none}
+.sxLamBC .sxParcialBtns .sxParcial{display:inline-flex;flex-direction:row;width:auto;min-width:0;flex:0 0 auto;text-align:center;justify-content:center}
+.sxLamBC .sxParcial.active small{color:#047857}
+.sxLamBC .sxBalFonte,.sxLamBC .sxBalWrap>small{display:block;font-size:12px!important;line-height:1.5;font-weight:400;color:#64748B;margin-top:2px}
+.sxLamBC .sxParcialBtns .sxParcial{height:32px;align-items:center}
+.sxLamBC .sxFlashNav .btn:last-child:not(:disabled){background:#059669!important;border-color:#059669!important;color:#fff!important}
+.sxLamBC .sxLamFiltros{padding-bottom:10px}

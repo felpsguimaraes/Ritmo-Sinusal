@@ -870,7 +870,7 @@
       (DECKS[CART.key].cartoes || []).forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
       if (gs.length) chips += '<div class="sxGrupos" aria-label="Assunto"><span class="sxParcialLbl">Assunto</span><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="" data-sx-grupo-local="1">Todos <small>' + (DECKS[CART.key].cartoes || []).length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '" data-sx-grupo-local="1">' + H(g.replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
     }
-    if ((exercicio || laminario) && lista.length > 1) chips += '<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select data-sx-lamina aria-label="Escolher lâmina">' + lista.map(function (c, i) { return '<option value="' + i + '"' + (i === CART.i ? ' selected' : '') + '>' + H(c.t || ('Lâmina ' + (i + 1))) + '</option>'; }).join('') + '</select></label>';
+    if ((exercicio || laminario) && lista.length > 1 && !(laminarioAnato && laminario && !exercicio)) chips += '<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select data-sx-lamina aria-label="Escolher lâmina">' + lista.map(function (c, i) { return '<option value="' + i + '"' + (i === CART.i ? ' selected' : '') + '>' + H(c.t || ('Lâmina ' + (i + 1))) + '</option>'; }).join('') + '</select></label>';
     if (laminarioAnato && !c) {
       box.innerHTML = '<section class="sxFlashStudy">' + chips + '<div class="sxLamVazio">Não há fotos deste assunto neste período.</div></section>';
       return;
@@ -884,15 +884,21 @@
     var lado = exercicio
       ? '<p class="sxExQ">' + H(c ? c.q : '') + '</p>' + (c ? camposExercicio(c) : '')
       : pergunta + (CART.mostrar ? resposta : '<button class="btn primary" data-sx-virar>Mostrar resposta</button>');
+    var bc = !!(laminarioAnato && laminario && !exercicio), filaHtml = '';
+    if (bc) filaHtml = '<aside class="sxFila" aria-label="Fila de lâminas"><p class="sxFilaT">Fila · ' + lista.length + (lista.length === 1 ? ' item' : ' itens') + '</p>' + lista.map(function (x, i) {
+      var on = i === CART.i, nome = String(x.t || ('Lâmina ' + (i + 1))).replace(/^Láminas?\s*(P1|P2|Final)?\s*·\s*/i, '');
+      return '<button type="button" class="sxFilaItem' + (on ? ' on' : '') + '" data-sx-fila="' + i + '"' + (on ? ' aria-current="true"' : '') + '><span class="sxFilaN">' + (i + 1) + '</span><span class="sxFilaTx">' + H(nome) + '</span></button>';
+    }).join('') + '</aside>';
     var acaoEx = exercicio ? '<div class="sxExActs">' + (CART.mostrar ? '<button type="button" class="btn" data-sx-ocultar>Ocultar gabarito</button>' : '<button type="button" class="btn primary" data-sx-virar>Ver gabarito</button>') + '</div>' : '';
-    box.innerHTML = '<section class="sxFlashStudy' + (midia ? ' sxMedia' : '') + (exercicio ? ' sxExercicio' : '') + '">' + chips + '<header class="sxFlashHeader"><div><span class="eyebrow">' + (exercicio ? 'EXERCÍCIOS' : laminario ? 'LAMINÁRIO' : 'FLASHCARDS') + '</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
+    box.innerHTML = '<section class="sxFlashStudy' + (midia ? ' sxMedia' : '') + (exercicio ? ' sxExercicio' : '') + (bc ? ' sxLamBC' : '') + '">' + chips + (bc ? '<div class="sxLamGrid"><div class="sxLamMain">' : '') + '<header class="sxFlashHeader"><div><span class="eyebrow">' + (exercicio ? 'EXERCÍCIOS' : laminario ? 'LAMINÁRIO' : 'FLASHCARDS') + '</span><h2>' + H(deck.nome || UI.subject) + '</h2></div><span class="sxFlashCount">' + (CART.i + 1) + ' / ' + CART.fila.length + '</span></header>' +
       '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso no baralho" aria-valuemin="0" aria-valuemax="' + CART.fila.length + '" aria-valuenow="' + CART.i + '"><i style="width:' + (100*CART.i/Math.max(1,CART.fila.length)) + '%"></i></div>' +
       '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">' + H(c ? c.t : '') + '</span><span class="soft">' + (exercicio ? 'Escreva nos quadros. O gabarito fica oculto.' : laminario ? 'Imagem e resposta' : CART.mostrar ? 'Confira sua resposta' : 'Pense antes de revelar') + '</span></div>' +
       (c && c.video ? '<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/' + H(c.video) + '/preview" title="' + H(c.t || 'Video') + '" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>' : '') + (c && c.img ? '<figure class="sxCardImg' + (destaque ? ' sxLamDestaque' : '') + '"><img src="' + H(c.img) + '" alt="Lámina al microscopio: ' + H(c.t || '') + '" loading="lazy" decoding="async"' + (destaque ? ' data-laminario-zoom' : '') + '></figure>' : '') + '<div class="sxSide">' + lado + '</div>' + acaoEx +
       (CART.mostrar && !exercicio && c && c.k && c.k.t ? '<aside class="sxComent"><h4>Comentário da lámina</h4>' + sxRico(c.k.t) + sxPorqueErrei(c.k.e) + (c.k.f ? '<div class="sxComentFonte"><span>Fonte</span><em>' + H(c.k.f) + '</em></div>' : '') + '</aside>' : '') +
       (!laminario && !exercicio && CART.mostrar ? '<div class="sxGrades">' + GRAUS.map(function (g) { return '<button class="' + g[0] + '" data-sx-grau="' + g[0] + '">' + g[1] + '</button>' }).join('') + '</div>' : '') + '</div>' +
       '<nav class="sxFlashNav" aria-label="Navegação dos cartões"><button class="btn" data-sx-card-move="-1" ' + (CART.i===0?'disabled':'') + '>← Anterior</button><button class="btn" data-sx-card-move="1">' + (laminario || exercicio ? 'Próxima →' : 'Pular →') + '</button></nav>' +
-      '<footer class="sxFlashFooter">' + (laminarioAnato ? '<b>' + contaLam + '</b>' : (laminario || exercicio ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>')) + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + (laminarioAnato && DECKS['anatopato/laminario'] ? '<p><button type="button" class="btn sm" data-sx-deck="anatopato/laminario">Tabela da cátedra (' + DECKS['anatopato/laminario'].cartoes.length + ')</button></p>' : '') + '</details></footer></section>';
+      '<footer class="sxFlashFooter">' + (laminarioAnato ? '<b>' + contaLam + '</b>' : (laminario || exercicio ? '<b>' + total + ' lâminas</b>' : '<b>' + dom + ' de ' + total + ' dominados</b><span>Seu progresso fica salvo na conta.</span>')) + '<details><summary>Fonte do baralho</summary>' + H(deck.fonte || '') + (laminarioAnato && DECKS['anatopato/laminario'] ? '<p><button type="button" class="btn sm" data-sx-deck="anatopato/laminario">Tabela da cátedra (' + DECKS['anatopato/laminario'].cartoes.length + ')</button></p>' : '') + '</details></footer>' + (bc ? '</div>' + filaHtml + '</div>' : '') + '</section>';
+    if (bc) { var fl = box.querySelector('.sxFila'), on = fl && fl.querySelector('.sxFilaItem.on'); if (on) fl.scrollTop = Math.max(0, on.offsetTop - fl.offsetTop - 70); }
   }
   function gravarGrau(g) {
     var c = CART.fila[CART.i]; if (!c) return;
@@ -1072,6 +1078,15 @@
     var sel = e.target.closest ? e.target.closest('[data-sx-lamina]') : null;
     if (!sel) return;
     var i = Number(sel.value);
+    if (isNaN(i)) return;
+    CART.i = Math.max(0, Math.min(CART.fila.length - 1, i));
+    CART.mostrar = false;
+    renderCartoes();
+  });
+  D.addEventListener('click', function (e) {
+    var f = e.target.closest ? e.target.closest('[data-sx-fila]') : null;
+    if (!f) return;
+    var i = Number(f.getAttribute('data-sx-fila'));
     if (isNaN(i)) return;
     CART.i = Math.max(0, Math.min(CART.fila.length - 1, i));
     CART.mostrar = false;
