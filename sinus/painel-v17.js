@@ -433,7 +433,7 @@ function sxExOcultar(){sxExSave(); var q=UI.training.questions[UI.training.index
 function sxExMove(d){
   sxExSave();
   var T=UI.training, q=T.questions[T.index];
-  if(q) sxExState().show[q.id]=false;
+  if(q) sxExState().show[q.id]=true;
   if(d>0 && T.index+1>=T.questions.length){T.index++; T.answered=false; return renderTrainingResult()}
   T.index=Math.max(0, T.index+Number(d)); T.answered=false; renderQuestion();
 }
@@ -451,20 +451,34 @@ function sxExFiltrar(deck,grupo){
   var T=UI.training; if(!T) return;
   var pool=(DB.training&&DB.training.questions||[]).filter(function(q){return q.subject===UI.subject&&q.mode==='practice'&&q.type==='flashcard'&&(!deck||q.deck===deck)&&(!grupo||q.g===grupo)});
   if(!pool.length) return;
-  T.questions=pool; T.index=0; T.answered=false;
-  window.__sxLamFiltro={deck:deck||pool[0].deck,grupo:grupo||''};
+  T.questions=pool; T.index=0; T.answered=true;
+  window.__sxLamFiltro={deck:deck||'',grupo:grupo||''};
+  sxExMarcarRespondidos(pool);
   renderQuestion();
+}
+function sxExMarcarRespondidos(pool){
+  var st=sxExState();
+  (pool||[]).forEach(function(q){
+    st.show[q.id]=true;
+    var card=typeof laminaDaQuestao==='function'?laminaDaQuestao(q):null;
+    var g=card&&card.b&&card.b[0];
+    if(!st.draft[q.id]) st.draft[q.id]={};
+    if(g){['o','p','d','x'].forEach(function(k){var v=g[k];st.draft[q.id][k]=Array.isArray(v)?v.join('\n'):(v||'')})}
+    else if(card) st.draft[q.id].a=card.a||q.answer||'';
+  });
 }
 function sxExIr(i){var T=UI.training; if(!T) return; T.index=Math.max(0,Math.min(T.questions.length-1,Number(i)||0)); T.answered=false; renderQuestion()}
 function renderLaminaQuestao(q,card){
   var T=UI.training, st=sxExState(), draft=st.draft[q.id]||{}, show=!!st.show[q.id];
-  var decks=sxLamDecks(), atual=q.deck||(window.__sxLamFiltro&&window.__sxLamFiltro.deck)||decks[0]||'';
+  var decks=sxLamDecks(), atual=(window.__sxLamFiltro&&window.__sxLamFiltro.deck)||'';
   var grupos=[], gn={};
-  (DB.training.questions||[]).forEach(function(x){ if(x.deck===atual&&x.g&&!gn[x.g]){gn[x.g]=1;grupos.push(x.g)} });
-  var grupo=(window.__sxLamFiltro&&window.__sxLamFiltro.grupo)||q.g||'';
+  (DB.training.questions||[]).forEach(function(x){ if(x.subject===UI.subject&&x.mode==='practice'&&x.g&&!gn[x.g]){gn[x.g]=1;grupos.push(x.g)} });
+  var grupo=(window.__sxLamFiltro&&window.__sxLamFiltro.grupo)||'';
+  if(!window.__sxLamMarcados){ sxExMarcarRespondidos(DB.training&&DB.training.questions||[]); window.__sxLamMarcados=true }
+  if(!st.show[q.id]){ sxExMarcarRespondidos([q]); show=true; draft=st.draft[q.id]||{} }
   var filtros='<div class="sxLamFiltros">';
-  if(decks.length>1) filtros+='<div class="sxParciais"><span class="sxParcialLbl">Qual parcial você vai estudar?</span><div class="sxParcialBtns">'+decks.map(function(k){return '<button type="button" class="sxParcial'+(k===atual?' active':'')+'" onclick="sxExFiltrar(\''+k+'\',\'\')">'+esc(sxLamRotulo(k))+'</button>'}).join('')+'</div></div>';
-  if(grupos.length>1) filtros+='<div class="sxGrupos" aria-label="Assunto"><button type="button" class="chip'+(!grupo?' active':'')+'" onclick="sxExFiltrar(\''+atual+'\',\'\')">Todos</button>'+grupos.map(function(g){return '<button type="button" class="chip'+(g===grupo?' active':'')+'" onclick="sxExFiltrar(\''+atual+'\','+("\'"+String(g).replace(/\'/g,"\\\'")+"\'")+')">'+esc(String(g).replace(/^\d+\s*·\s*/,''))+'</button>'}).join('')+'</div>';
+  if(decks.length>1) filtros+='<div class="sxParciais"><span class="sxParcialLbl">Parcial</span><div class="sxParcialBtns"><button type="button" class="sxParcial'+(!atual?' active':'')+'" onclick="sxExFiltrar(\'\',\''+(grupo||'')+'\')">Todos</button>'+decks.map(function(k){return '<button type="button" class="sxParcial'+(k===atual?' active':'')+'" onclick="sxExFiltrar(\''+k+'\',\''+(grupo||'')+'\')">'+esc(sxLamRotulo(k))+'</button>'}).join('')+'</div></div>';
+  if(grupos.length) filtros+='<div class="sxGrupos" aria-label="Assunto"><span class="sxParcialLbl">Assunto</span><button type="button" class="chip'+(!grupo?' active':'')+'" onclick="sxExFiltrar(\''+(atual||'')+'\',\'\')">Todos</button>'+grupos.map(function(g){return '<button type="button" class="chip'+(g===grupo?' active':'')+'" onclick="sxExFiltrar(\''+(atual||'')+'\','+("\'"+String(g).replace(/\'/g,"\\\'")+"\'")+')">'+esc(String(g).replace(/^\d+\s*·\s*/,''))+'</button>'}).join('')+'</div>';
   if(T.questions.length>1) filtros+='<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select onchange="sxExIr(this.value)" aria-label="Escolher lâmina">'+T.questions.map(function(x,i){return '<option value="'+i+'"'+(i===T.index?' selected':'')+'>'+esc(x.topic||('Lâmina '+(i+1)))+'</option>'}).join('')+'</select></label>';
   filtros+='</div>';
   var g=card.b&&card.b[0];

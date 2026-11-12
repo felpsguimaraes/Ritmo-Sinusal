@@ -168,11 +168,15 @@
     var all=catalogo(UI.subject);
     var fs=filtrosDe(UI.subject),f=FILTRO[UI.subject]||'Todos';
     if(fs&&fs.indexOf(f)<0)f='Todos';
+    var assuntos={}, ordem=[];
+    all.forEach(function(a){ if(a.tipo==='exercicio'&&a.g&&!assuntos[a.g]){assuntos[a.g]=1;ordem.push(a.g)} });
+    var fa=FILTRO[UI.subject+'#a']||'';
     var fixos=all.filter(function(a){return a.tipo!=='exercicio'});
-    var lams=all.filter(function(a){return a.tipo==='exercicio'&&(f==='Todos'||a.parcial===f)});
+    var lams=all.filter(function(a){return a.tipo==='exercicio'&&(f==='Todos'||a.parcial===f)&&(!fa||a.g===fa)});
     var items=fixos.concat(lams);
     var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria.</p></div>';
-    if(fs)h+='<div class="thSec">Lâminas</div><div class="thTabs" role="group" aria-label="Filtro das lâminas">'+fs.map(function(t){return '<button type="button" class="'+(f===t?'on':'')+'" data-sx-filtro="'+H(t)+'">'+H(t)+'</button>'}).join('')+'</div>';
+    if(fs)h+='<div class="thSec">Parcial</div><div class="thTabs" role="group" aria-label="Parcial">'+fs.map(function(t){return '<button type="button" class="'+(f===t?'on':'')+'" data-sx-filtro="'+H(t)+'">'+H(t)+'</button>'}).join('')+'</div>';
+    if(ordem.length)h+='<div class="thSec">Assunto</div><div class="thTabs" role="group" aria-label="Assunto"><button type="button" class="'+(!fa?'on':'')+'" data-sx-assunto="">Todos</button>'+ordem.map(function(g){return '<button type="button" class="'+(fa===g?'on':'')+'" data-sx-assunto="'+H(g)+'">'+H(String(g).replace(/^\d+\s*·\s*/,''))+'</button>'}).join('')+'</div>';
     if(!items.length)h+='<div class="thNote">Esta matéria ainda não tem treino.</div>';
     else h+='<div class="thList">'+items.map(function(a,i){
       var ic=a.tipo==='apostila'||a.tipo==='exercicio'?'✎':a.tipo==='mapas'?'🗺':String(i+1);
@@ -215,6 +219,8 @@
   D.addEventListener('click',function(e){
     var filtro=e.target.closest&&e.target.closest('[data-sx-filtro]');
     if(filtro&&typeof UI!=='undefined'&&UI.subject){e.preventDefault();FILTRO[UI.subject]=filtro.getAttribute('data-sx-filtro')||'Todos';return pintarNaMateria()}
+    var assunto=e.target.closest&&e.target.closest('[data-sx-assunto]');
+    if(assunto&&typeof UI!=='undefined'&&UI.subject){e.preventDefault();FILTRO[UI.subject+'#a']=assunto.getAttribute('data-sx-assunto')||'';return pintarNaMateria()}
     var unif=e.target.closest&&e.target.closest('[data-sx-unif]');
     if(unif){
       var root=D.getElementById('subjectContent');

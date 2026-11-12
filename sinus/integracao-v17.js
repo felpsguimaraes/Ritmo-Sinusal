@@ -660,10 +660,16 @@
   /* API para o hub de Treino: escolhe baralho/assunto e lê o progresso sem abrir a matéria antes */
   W.sxTreinoAbrir = function (k, g) { var s = subjectData(); if (!s || !DECKS[k]) return false; ESCOLHA[s.slug] = k; if (g) GRUPO[k] = g; else delete GRUPO[k]; CART.key = ''; return true };
   W.sxTreinoProg = function (k) { return lerLocal(k) };
+  function marcarRespondidos(k) {
+    var d = DECKS[k]; if (!d) return;
+    (d.cartoes || []).forEach(function (c) { if (!PROG[c.id]) PROG[c.id] = 'normal' });
+    gravarLocal(k, PROG);
+  }
   function abrirDeck(k) {
     if (CART.key === k) return;
     var rascunho = CART.rascunho || {};
     PROG = lerLocal(k);
+    marcarRespondidos(k);
     CART = { key: k, deck: DECKS[k], fila: montarFila(ativos(k)), i: 0, mostrar: false, rascunho: rascunho };
     if (S.uid) docProg(k).get().then(function (snap) {
       if (CART.key !== k || !snap.exists || !snap.data().prog) return;
@@ -786,15 +792,15 @@
     var deck = CART.deck, c = CART.fila[CART.i], lista = ativos(CART.key), total = lista.length;
     var exercicio = !!(W.SINUS_EXERCICIO_LAMINA && area === 'pratica');
     var laminario = area === 'pratica' && !exercicio;
-    if (exercicio && !CART._exOn) { CART.mostrar = false; CART._exOn = true; }
+    if (exercicio && !CART._exOn) { CART.mostrar = true; CART._exOn = true; }
     if (!exercicio) CART._exOn = false;
     if (laminario) CART.mostrar = true;
     var dom = lista.filter(function (x) { return PROG[x.id] === 'normal' || PROG[x.id] === 'facil' }).length;
     var temParcial = ks.some(function (x) { return DECKS[x].curto });
     var chips = ks.length > 1 ? '<div class="sxParciais"><span class="sxParcialLbl">' + (temParcial ? 'Qual parcial você vai estudar?' : 'Baralho') + '</span><div class="sxParcialBtns">' + ks.map(function (x) { var d = DECKS[x]; return '<button class="sxParcial' + (x === CART.key ? ' active' : '') + (d.curto ? '' : ' longo') + '" data-sx-deck="' + H(x) + '"><b>' + H(d.curto || d.nome || x.split('/')[1]) + '</b>' + (d.curto ? '<small>' + d.cartoes.length + ' cartões</small>' : '') + '</button>' }).join('') + '</div></div>' : '';
     var gs = [], gn = {};
-    deck.cartoes.forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
-    if (gs.length > 1) chips += '<div class="sxGrupos" aria-label="Assunto"><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + deck.cartoes.length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g.replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
+    ks.forEach(function (dk) { (DECKS[dk].cartoes || []).forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } }); });
+    if (gs.length) chips += '<div class="sxGrupos" aria-label="Assunto"><span class="sxParcialLbl">Assunto</span><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + ks.reduce(function (n, dk) { return n + (DECKS[dk].cartoes || []).length }, 0) + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g.replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
     if ((exercicio || laminario) && lista.length > 1) chips += '<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select data-sx-lamina aria-label="Escolher lâmina">' + lista.map(function (c, i) { return '<option value="' + i + '"' + (i === CART.i ? ' selected' : '') + '>' + H(c.t || ('Lâmina ' + (i + 1))) + '</option>'; }).join('') + '</select></label>';
     var midia = !!(c && (c.img || c.video));
     var destaque = laminario || exercicio;
@@ -1017,7 +1023,17 @@
       if (b) b.innerHTML = htmlSemana(SCHEDULE_UI.className);
       return;
     }
-    if (t.hasAttribute('data-sx-grupo')) { GRUPO[CART.key] = t.getAttribute('data-sx-grupo'); CART.fila = montarFila(ativos(CART.key)); CART.i = 0; CART.mostrar = false; return renderCartoes() }
+    if (t.hasAttribute('data-sx-grupo')) {
+      var g = t.getAttribute('data-sx-grupo') || '';
+      var dest = CART.key;
+      if (g) {
+        var achou = Object.keys(DECKS).filter(function (k) { return (DECKS[k].cartoes || []).some(function (c) { return c.g === g }) });
+        if (achou.length && achou.indexOf(CART.key) < 0) dest = achou[0];
+      }
+      var s0 = subjectData(); if (s0 && dest) ESCOLHA[s0.slug] = dest;
+      if (g) GRUPO[dest] = g; else delete GRUPO[dest];
+      CART.key = ''; CART.mostrar = true; return renderCartoes();
+    }
     if (t.hasAttribute('data-sx-deck')) { var s = subjectData(); ESCOLHA[s.slug] = t.getAttribute('data-sx-deck'); CART.key = ''; return renderCartoes() }
     if (t.hasAttribute('data-sx-virar')) { CART.mostrar = true; return renderCartoes() }
     if (t.hasAttribute('data-sx-ocultar')) { CART.mostrar = false; return renderCartoes() }
