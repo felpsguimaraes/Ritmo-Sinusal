@@ -17,7 +17,7 @@
     '/sinus/calendario-motor.js?v=20261024',
     '/sinus/academico-oficial-drive.js?v=20261025-oficial-ucp',
     '/sinus/ucp-catedra-catalog.js?v=20261025-anatomia2-folderfix-publish-2',
-    '/sinus/integracao-v17.js?v=20261112-treino',
+    '/sinus/integracao-v17.js?v=20261112-direto',
     '/sinus/mapas-guiados.js?v=3',
     '/sinus/agenda-liquid-v4.js?v=20261024',
     '/sinus/identidade-esfera.js?v=2',
@@ -105,6 +105,7 @@
     carregando = LISTA.reduce(function (p, src) { return p.then(function () { return um(src) }) }, Promise.resolve()).catch(function (e) {
       console.error('SINUS', e);
       carregando = null;
+      D.documentElement.classList.remove('sxSessao');
       var b = D.getElementById('sxEntrar');
       if (b) b.disabled = false;
       msg('Não foi possível carregar o painel. Atualize a página e tente de novo.', true);
@@ -124,6 +125,7 @@
 
   aplicarTema(temaAtual());
   definirIdioma(idioma());
+  if (D.documentElement.classList.contains('sxSessao')) carregarApp();
   if (W.SinusBackend && W.SinusBackend.auth) {
     W.SinusBackend.auth.onAuthStateChanged(function (u) {
       if (u) carregarApp();

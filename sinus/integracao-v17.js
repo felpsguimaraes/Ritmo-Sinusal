@@ -76,6 +76,7 @@
 
   // ---------------------------------------------------------------- telas
   function mostrar(qual) {
+    D.documentElement.classList.remove('sxSessao');
     $id('landing').classList.toggle('hidden', qual !== 'entrada');
     $id('sxOnboarding').classList.toggle('hidden', qual !== 'personalizacao');
     if (qual !== 'painel') { $id('app').classList.add('hidden'); $id('subjectView').classList.add('hidden'); $id('admin').classList.add('hidden') }
