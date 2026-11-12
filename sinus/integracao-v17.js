@@ -794,7 +794,8 @@
     var chips = ks.length > 1 ? '<div class="sxParciais"><span class="sxParcialLbl">' + (temParcial ? 'Qual parcial você vai estudar?' : 'Baralho') + '</span><div class="sxParcialBtns">' + ks.map(function (x) { var d = DECKS[x]; return '<button class="sxParcial' + (x === CART.key ? ' active' : '') + (d.curto ? '' : ' longo') + '" data-sx-deck="' + H(x) + '"><b>' + H(d.curto || d.nome || x.split('/')[1]) + '</b>' + (d.curto ? '<small>' + d.cartoes.length + ' cartões</small>' : '') + '</button>' }).join('') + '</div></div>' : '';
     var gs = [], gn = {};
     deck.cartoes.forEach(function (x) { if (x.g) { if (!gn[x.g]) { gn[x.g] = 0; gs.push(x.g) } gn[x.g]++ } });
-    if (gs.length > 1) chips += '<div class="sxGrupos" aria-label="Assunto"><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + deck.cartoes.length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
+    if (gs.length > 1) chips += '<div class="sxGrupos" aria-label="Assunto"><button class="chip' + (GRUPO[CART.key] ? '' : ' active') + '" data-sx-grupo="">Todos <small>' + deck.cartoes.length + '</small></button>' + gs.map(function (g) { return '<button class="chip' + (GRUPO[CART.key] === g ? ' active' : '') + '" data-sx-grupo="' + H(g) + '">' + H(g.replace(/^\d+\s*·\s*/, '')) + ' <small>' + gn[g] + '</small></button>' }).join('') + '</div>';
+    if ((exercicio || laminario) && lista.length > 1) chips += '<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select data-sx-lamina aria-label="Escolher lâmina">' + lista.map(function (c, i) { return '<option value="' + i + '"' + (i === CART.i ? ' selected' : '') + '>' + H(c.t || ('Lâmina ' + (i + 1))) + '</option>'; }).join('') + '</select></label>';
     var midia = !!(c && (c.img || c.video));
     var destaque = laminario || exercicio;
     var pergunta = '<p class="sxQ' + (midia ? ' comImg' : '') + '">' + H(c ? c.q : '') + '</p>';
@@ -986,6 +987,15 @@
     var fc = $id('focusClock'); if (fc && page !== 'subject') { fc.classList.remove('pip-mode'); fc.removeAttribute('draggable'); }
   };
 
+  D.addEventListener('change', function (e) {
+    var sel = e.target.closest ? e.target.closest('[data-sx-lamina]') : null;
+    if (!sel) return;
+    var i = Number(sel.value);
+    if (isNaN(i)) return;
+    CART.i = Math.max(0, Math.min(CART.fila.length - 1, i));
+    CART.mostrar = false;
+    renderCartoes();
+  });
   D.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('[data-sx-tema],[data-sx-tema-set],[data-sx-lang],[data-sx-sair],[data-sx-menu],[data-sx-menu-fechar],[data-sx-go],[data-sx-onb],[data-sx-foco],[data-sx-estilo],[data-sx-instalar],[data-sx-deck],[data-sx-grupo],[data-sx-virar],[data-sx-ocultar],[data-sx-grau],[data-sx-card-move],[data-sx-dia],[data-sx-personalizar],[data-sx-icone],[data-sx-libmat],#sxEntrar') : null;
     if (!t) return;

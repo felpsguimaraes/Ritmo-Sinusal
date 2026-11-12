@@ -43,7 +43,7 @@
       var d=DK()[a.k]||{},pa=parcial(a.k),ex=temEscrita(a.k,a.g);
       var tag=(d.area==='pratica'?'Prática':'Teoria')+(pa?' · '+pa:'');
       var n=a.st.total;
-      items.push({tipo:ex?'exercicio':'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',total:n,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+(ex?(n+(n===1?' exercício':' exercícios')):nc(n))+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
+      items.push({tipo:ex?'exercicio':'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',parcial:rotuloParcial(a.k),total:n,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+(ex?(n+(n===1?' exercício':' exercícios')):nc(n))+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
     });
     return items;
   }
@@ -151,11 +151,28 @@
       if(W.setTab)W.setTab('training');
     });
   }
+  var FILTRO={};
+  function rotuloParcial(k){var d=DK()[k]||{};return parcial(k)||d.curto||'Prática'}
+  function filtrosDe(name){
+    var s=(DB.subjects||{})[name]||{},seen={},out=[];
+    keys(s.slug).forEach(function(k){
+      var d=DK()[k];if(!d||(d.area||'teoria')!=='pratica')return;
+      var pa=rotuloParcial(k);
+      if(pa&&!seen[pa]){seen[pa]=1;out.push(pa)}
+    });
+    return out.length>1?out.concat(['Todos']):null;
+  }
   function pintarNaMateria(){
     var root=D.getElementById('subjectContent');
     if(!root||typeof UI==='undefined'||!UI.subject)return;
-    var items=catalogo(UI.subject);
+    var all=catalogo(UI.subject);
+    var fs=filtrosDe(UI.subject),f=FILTRO[UI.subject]||'Todos';
+    if(fs&&fs.indexOf(f)<0)f='Todos';
+    var fixos=all.filter(function(a){return a.tipo!=='exercicio'});
+    var lams=all.filter(function(a){return a.tipo==='exercicio'&&(f==='Todos'||a.parcial===f)});
+    var items=fixos.concat(lams);
     var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria.</p></div>';
+    if(fs)h+='<div class="thSec">Lâminas</div><div class="thTabs" role="group" aria-label="Filtro das lâminas">'+fs.map(function(t){return '<button type="button" class="'+(f===t?'on':'')+'" data-sx-filtro="'+H(t)+'">'+H(t)+'</button>'}).join('')+'</div>';
     if(!items.length)h+='<div class="thNote">Esta matéria ainda não tem treino.</div>';
     else h+='<div class="thList">'+items.map(function(a,i){
       var ic=a.tipo==='apostila'||a.tipo==='exercicio'?'✎':a.tipo==='mapas'?'🗺':String(i+1);
@@ -196,6 +213,8 @@
     });
   }
   D.addEventListener('click',function(e){
+    var filtro=e.target.closest&&e.target.closest('[data-sx-filtro]');
+    if(filtro&&typeof UI!=='undefined'&&UI.subject){e.preventDefault();FILTRO[UI.subject]=filtro.getAttribute('data-sx-filtro')||'Todos';return pintarNaMateria()}
     var unif=e.target.closest&&e.target.closest('[data-sx-unif]');
     if(unif){
       var root=D.getElementById('subjectContent');

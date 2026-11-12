@@ -37,3 +37,7 @@
 html[data-theme="dark"] .thIc,html[data-theme="dark"] .thMode.full,html[data-theme="dark"] .thRow.thAll{background:#1c3a2d}
 html[data-theme="dark"] .thTabs button.on{background:#223a2e;color:#9fe0c3}
 @media(max-width:380px){.thGrid{grid-template-columns:1fr}}
+
+.sxLaminaPick{display:block;margin:0 0 14px}
+.sxLaminaPick select{width:100%;margin-top:6px;padding:10px 12px;border-radius:12px;border:1px solid var(--line,#dce7df);background:var(--bg2,#fff);color:inherit;font:inherit;font-size:14px}
+html[data-theme="dark"] .sxLaminaPick select{background:#1c3a2d}
