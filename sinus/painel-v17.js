@@ -437,8 +437,36 @@ function sxExMove(d){
   if(d>0 && T.index+1>=T.questions.length){T.index++; T.answered=false; return renderTrainingResult()}
   T.index=Math.max(0, T.index+Number(d)); T.answered=false; renderQuestion();
 }
+function sxLamDecks(){
+  var bancos=window.SINUS_CARTOES||{}, slug='';
+  Object.keys(window.SINUS_CATALOGO&&window.SINUS_CATALOGO.materias||[]).forEach(function(){});
+  var nome=UI.subject||'';
+  var map={'Anatomía Patológica I':'anatopato','Farmacología I':'farmacologia','Fisiopatología I':'fisiopatologia','Imagenología':'imagenologia','Medicina de la Familia':'familia','Semiología Médica I':'semiologia'};
+  slug=map[nome]||'';
+  if(!slug) Object.keys(bancos).some(function(k){ if((bancos[k].nome||'').toLowerCase().indexOf(nome.toLowerCase().slice(0,6))>=0){slug=k.split('/')[0];return true} return false });
+  return Object.keys(bancos).filter(function(k){var d=bancos[k];return slug&&k.indexOf(slug+'/')===0&&(d.area||'teoria')==='pratica'&&!d._oculto}).sort(function(a,b){return (bancos[a].ordem||99)-(bancos[b].ordem||99)});
+}
+function sxLamRotulo(k){var d=(window.SINUS_CARTOES||{})[k]||{};if(/\/p1/.test(k))return 'P1';if(/\/p2/.test(k))return 'P2';return d.curto||d.nome||k.split('/')[1]}
+function sxExFiltrar(deck,grupo){
+  var T=UI.training; if(!T) return;
+  var pool=(DB.training&&DB.training.questions||[]).filter(function(q){return q.subject===UI.subject&&q.mode==='practice'&&q.type==='flashcard'&&(!deck||q.deck===deck)&&(!grupo||q.g===grupo)});
+  if(!pool.length) return;
+  T.questions=pool; T.index=0; T.answered=false;
+  window.__sxLamFiltro={deck:deck||pool[0].deck,grupo:grupo||''};
+  renderQuestion();
+}
+function sxExIr(i){var T=UI.training; if(!T) return; T.index=Math.max(0,Math.min(T.questions.length-1,Number(i)||0)); T.answered=false; renderQuestion()}
 function renderLaminaQuestao(q,card){
   var T=UI.training, st=sxExState(), draft=st.draft[q.id]||{}, show=!!st.show[q.id];
+  var decks=sxLamDecks(), atual=q.deck||(window.__sxLamFiltro&&window.__sxLamFiltro.deck)||decks[0]||'';
+  var grupos=[], gn={};
+  (DB.training.questions||[]).forEach(function(x){ if(x.deck===atual&&x.g&&!gn[x.g]){gn[x.g]=1;grupos.push(x.g)} });
+  var grupo=(window.__sxLamFiltro&&window.__sxLamFiltro.grupo)||q.g||'';
+  var filtros='<div class="sxLamFiltros">';
+  if(decks.length>1) filtros+='<div class="sxParciais"><span class="sxParcialLbl">Qual parcial você vai estudar?</span><div class="sxParcialBtns">'+decks.map(function(k){return '<button type="button" class="sxParcial'+(k===atual?' active':'')+'" onclick="sxExFiltrar(\''+k+'\',\'\')">'+esc(sxLamRotulo(k))+'</button>'}).join('')+'</div></div>';
+  if(grupos.length>1) filtros+='<div class="sxGrupos" aria-label="Assunto"><button type="button" class="chip'+(!grupo?' active':'')+'" onclick="sxExFiltrar(\''+atual+'\',\'\')">Todos</button>'+grupos.map(function(g){return '<button type="button" class="chip'+(g===grupo?' active':'')+'" onclick="sxExFiltrar(\''+atual+'\','+("\'"+String(g).replace(/\'/g,"\\\'")+"\'")+')">'+esc(String(g).replace(/^\d+\s*·\s*/,''))+'</button>'}).join('')+'</div>';
+  if(T.questions.length>1) filtros+='<label class="sxLaminaPick"><span class="sxParcialLbl">Qual lâmina você vai estudar?</span><select onchange="sxExIr(this.value)" aria-label="Escolher lâmina">'+T.questions.map(function(x,i){return '<option value="'+i+'"'+(i===T.index?' selected':'')+'>'+esc(x.topic||('Lâmina '+(i+1)))+'</option>'}).join('')+'</select></label>';
+  filtros+='</div>';
   var g=card.b&&card.b[0];
   var fields=g?[['o','Órgano'],['p','Proceso'],['d','Alteraciones (descripción)'],['x','Diagnóstico presuntivo']]:[['a','Resposta']];
   var boxes=fields.map(function(f){
@@ -448,7 +476,7 @@ function renderLaminaQuestao(q,card){
   }).join('');
   var img=card.img?'<figure class="sxCardImg sxLamDestaque"><img src="'+esc(card.img)+'" alt="Lámina al microscopio: '+esc(card.t||'')+'" style="display:block;width:100%;max-height:min(62vh,560px);object-fit:contain;border-radius:18px;background:#14101c" loading="eager" decoding="async"></figure>':'';
   var video=(!card.img&&card.video)?'<div class="sxCardVideo"><iframe src="https://drive.google.com/file/d/'+esc(card.video)+'/preview" title="'+esc(card.t||'Vídeo')+'" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>':'';
-  $('subjectContent').innerHTML='<section class="sxFlashStudy'+((card.img||card.video)?' sxMedia':'')+' sxExercicio">'+
+  $('subjectContent').innerHTML='<section class="sxFlashStudy'+((card.img||card.video)?' sxMedia':'')+' sxExercicio">'+filtros+
     '<header class="sxFlashHeader"><div><span class="eyebrow">EXERCÍCIOS</span><h2>'+esc(card.t||q.topic||'Lâmina')+'</h2></div><span class="sxFlashCount">'+(T.index+1)+' / '+T.questions.length+'</span></header>'+
     '<div class="sxFlashProgress" role="progressbar" aria-label="Progresso"><i style="width:'+(100*T.index/Math.max(1,T.questions.length))+'%"></i></div>'+
     '<div class="glass sxCard"><div class="sxDeckRow"><span class="pill green">'+esc(q.period||'Geral')+' · Prática</span><span class="soft">Escreva nos quadros. O gabarito fica oculto.</span></div>'+
