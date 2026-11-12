@@ -696,7 +696,9 @@
   function exGravar(slug, o) { try { localStorage.setItem('sinus_ex_apostila_' + slug, JSON.stringify(o)) } catch (e) {} }
   var EXA = {};
   function exHtml(x) {
-    var st = exLer(x.slug), bl = x.d.blocos, cur = EXA[x.slug] || bl[0].id, b = bl.filter(function (y) { return y.id === cur })[0] || bl[0];
+    var st = exLer(x.slug), bl = x.d.blocos, cur = W.SINUS_EX_BLOCO || EXA[x.slug] || bl[0].id;
+    if (W.SINUS_EX_BLOCO) { EXA[x.slug] = W.SINUS_EX_BLOCO; W.SINUS_EX_BLOCO = ''; }
+    var b = bl.filter(function (y) { return y.id === cur })[0] || bl[0];
     var tot = 0, feitas = 0, certas = 0;
     bl.forEach(function (y) { y.questoes.forEach(function (q, i) { tot++; var a = st[y.id + '.' + i]; if (a != null) { feitas++; if (a === q.r) certas++ } }) });
     var L = 'ABCD';

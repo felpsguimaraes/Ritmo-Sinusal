@@ -17,7 +17,7 @@
     '/sinus/calendario-motor.js?v=20261024',
     '/sinus/academico-oficial-drive.js?v=20261025-oficial-ucp',
     '/sinus/ucp-catedra-catalog.js?v=20261025-anatomia2-folderfix-publish-2',
-    '/sinus/integracao-v17.js?v=20261112-direto',
+    '/sinus/integracao-v17.js?v=20261112-exercicios',
     '/sinus/mapas-guiados.js?v=3',
     '/sinus/agenda-liquid-v4.js?v=20261024',
     '/sinus/identidade-esfera.js?v=2',
@@ -37,7 +37,7 @@
     '/sinus/estudo-acervo-disciplinas.js?v=20261025-video-curadoria-v1',
     '/sinus/materias-galeria-acervo.js?v=20261025-exam-label-cleanup',
     '/sinus/subject-resource-balloons.js?v=20261025-slides-library-sync-v2',
-    '/sinus/treino-hub.js?v=20261112-unificado',
+    '/sinus/treino-hub.js?v=20261112-exercicios',
     '/sinus/subject-viewer-order.js?v=20261025-players-by-tab-v1',
     '/sinus/video-player-materias.js?v=20261025-audio-preview-fix2',
     '/laminario-zoom.js'

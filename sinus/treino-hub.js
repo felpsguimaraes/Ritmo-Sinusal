@@ -19,23 +19,31 @@
   }
   function temPratica(name){var s=(DB.subjects||{})[name]||{};return keys(s.slug).some(function(k){return DK()[k].area==='pratica'})||(s.pratica||[]).length>0}
   function qCount(name,area){var tr=((typeof DB!=="undefined"&&DB)||{}).training||{},q=tr.questions||[];return q.filter(function(x){return x&&x.active!==false&&x.subject===name&&x.type!=='flashcard'&&(!area||(x.mode==='practice'?'pratica':'teoria')===area)}).length}
+  function temEscrita(k,g){
+    var d=DK()[k];if(!d||(d.area||'teoria')!=='pratica')return false;
+    return (d.cartoes||[]).some(function(c){return c.b&&(!g||c.g===g)});
+  }
   function resumo(name){
     var itens=catalogo(name),cartoes=0,dom=0,pend=0;
-    itens.forEach(function(x){if(x.tipo!=='cartoes')return;cartoes+=x.total||0;dom+=x.dom||0;pend+=x.pend||0});
+    itens.forEach(function(x){if(x.tipo!=='cartoes'&&x.tipo!=='exercicio')return;cartoes+=x.total||0;dom+=x.dom||0;pend+=x.pend||0});
     return {itens:itens.length,total:cartoes,dom:dom,pend:pend,assuntos:itens.length,q:0};
   }
   var MAPAS={anatopato:1,farmacologia:1,fisiopatologia:1,imagenologia:1,semiologia:1,familia:1};
   function catalogo(name){
     var s=(DB.subjects||{})[name]||{},items=[],ap=(W.SINUS_EXERCICIOS_APOSTILA||{})[s.slug];
     if(ap){
-      var n=0;(ap.blocos||[]).forEach(function(b){n+=(b.questoes||[]).length});
-      items.push({tipo:'apostila',t:'Exercícios da apostila',sub:(n?n+' questões · ':'')+(ap.titulo||'apostila')});
+      (ap.blocos||[]).forEach(function(b){
+        var n=(b.questoes||[]).length;
+        items.push({tipo:'apostila',bloco:b.id,t:b.titulo||'Exercícios da apostila',sub:(b.clase?b.clase+' · ':'')+(n?n+' questões':'apostila')});
+      });
+      if(!(ap.blocos||[]).length)items.push({tipo:'apostila',t:'Exercícios da apostila',sub:ap.titulo||'apostila'});
     }
     if(MAPAS[s.slug])items.push({tipo:'mapas',t:'Mapas guiados',sub:'O esquema da matéria, para completar'});
     assuntos(name,'Todos','').forEach(function(a){
-      var d=DK()[a.k]||{},pa=parcial(a.k);
+      var d=DK()[a.k]||{},pa=parcial(a.k),ex=temEscrita(a.k,a.g);
       var tag=(d.area==='pratica'?'Prática':'Teoria')+(pa?' · '+pa:'');
-      items.push({tipo:'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',total:a.st.total,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+nc(a.st.total)+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
+      var n=a.st.total;
+      items.push({tipo:ex?'exercicio':'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',total:n,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+(ex?(n+(n===1?' exercício':' exercícios')):nc(n))+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
     });
     return items;
   }
@@ -84,7 +92,7 @@
     }
     if(pt.best)h+='<button class="thCta alt" data-th="pendentes"><i>↻</i><span><b>Revisar '+pt.tot+' pendente'+(pt.tot>1?'s':'')+'</b><small>Cartões que você errou ou achou difícil · começa por '+H(pt.best.name)+'</small></span></button>';
     h+='<div class="thSec">Matérias</div><div class="thList">';
-    h+=es.map(function(x){var n=x[0],r=x[1],sub=r.itens?(r.itens+' treino'+(r.itens>1?'s':'')+(r.total?' · '+nc(r.total):'')+(r.pend?' · '+r.pend+' p/ revisar':'')):'em breve';
+    h+=es.map(function(x){var n=x[0],r=x[1],sub=r.itens?(r.itens+' treino'+(r.itens>1?'s':'')+(r.total?' · '+r.total+(r.total===1?' item':' itens'):'')+(r.pend?' · '+r.pend+' p/ revisar':'')):'em breve';
       return '<button class="thRow'+(r.itens?'':' vazio')+'" data-th-mat="'+H(n)+'"><span class="thIc">'+H(sigla(n))+'</span><span class="thT"><b>'+H(n)+'</b><small>'+H(sub)+'</small>'+(r.total?bar(pct(r)):'')+'</span><span class="thCh">›</span></button>'}).join('')||'<div class="emptyBox">Sem matérias cadastradas para este período.</div>';
     h+='</div>';
     return h;
@@ -150,7 +158,7 @@
     var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria.</p></div>';
     if(!items.length)h+='<div class="thNote">Esta matéria ainda não tem treino.</div>';
     else h+='<div class="thList">'+items.map(function(a,i){
-      var ic=a.tipo==='apostila'?'✎':a.tipo==='mapas'?'🗺':String(i+1);
+      var ic=a.tipo==='apostila'||a.tipo==='exercicio'?'✎':a.tipo==='mapas'?'🗺':String(i+1);
       return '<button type="button" class="thRow" data-sx-unif="'+i+'"><span class="thIc">'+ic+'</span><span class="thT"><b>'+H(a.t)+'</b><small>'+H(a.sub)+'</small></span><span class="thCh">›</span></button>';
     }).join('')+'</div>';
     root.innerHTML=h+'</div>';
@@ -178,9 +186,10 @@
         return W.setTab('cartoes');
       }
       if(modo==='exercicios'){
+        UI.mode='practice';
+        UI.trainingPane='exercises';
         if(W.sxTreinoAbrir)W.sxTreinoAbrir(k,g);
-        if(W.renderExercicios) return W.renderExercicios();
-        return W.setTab('cartoes');
+        return W.renderSubject();
       }
       if(modo==='mindmaps')return W.setTab('mapas');
       return W.setTab('review');
@@ -193,8 +202,14 @@
       var items=root&&root._sxItens,a=items&&items[Number(unif.getAttribute('data-sx-unif'))];
       if(!a)return;
       e.preventDefault();
-      if(a.tipo==='apostila'){UI.trainingPane='exercises';UI.mode='theory';return W.renderSubject()}
+      if(a.tipo==='apostila'){UI.trainingPane='exercises';UI.mode='theory';W.SINUS_EX_BLOCO=a.bloco||'';return W.renderSubject()}
       if(a.tipo==='mapas'){UI.trainingPane='mindmaps';UI.mode='theory';return W.renderSubject()}
+      if(a.tipo==='exercicio'){
+        UI.mode='practice';UI.trainingPane='exercises';
+        if(W.sxTreinoAbrir)W.sxTreinoAbrir(a.k,a.g||'');
+        try{localStorage.setItem(KEY,JSON.stringify({name:UI.subject,k:a.k,g:a.g||'',modo:'exercicios',area:'pratica'}))}catch(e){}
+        return W.renderSubject();
+      }
       ST.name=UI.subject;ST.k=a.k;ST.g=a.g||'';ST.area=a.area||'teoria';ST.titulo=a.t;
       return launch('cartoes',UI.subject,a.k,a.g||'');
     }
