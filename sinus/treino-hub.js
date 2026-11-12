@@ -42,7 +42,7 @@
     var slug=s.slug, teoria=assuntos(name,'Todos','teoria'), pratica=assuntos(name,'Todos','pratica');
     if(slug==='anatopato'&&pratica.length){
       var fotos=pratica.reduce(function(n,a){return n+((/\/(p1|p2|final)$/.test(a.k)&&a.g!=='Vídeos')?a.st.total:0)},0);
-      items.push({tipo:'laminario',k:'anatopato/p2',g:'',t:'Laminário',area:'pratica',sub:'P1, P2 e Final · '+fotos+' fotos'});
+      items.push({tipo:'laminario',k:'anatopato/final',g:'',t:'Laminário',area:'pratica',sub:'P1, P2 e Final · '+fotos+' fotos'});
       teoria.forEach(empurrar);
     }else assuntos(name,'Todos','').forEach(empurrar);
     function empurrar(a){
@@ -228,8 +228,8 @@
       if(a.tipo==='mapas'){UI.trainingPane='mindmaps';UI.mode='theory';return W.renderSubject()}
       if(a.tipo==='laminario'){
         UI.mode='practice';
-        if(W.sxTreinoAbrir)W.sxTreinoAbrir(a.k||'anatopato/p2','');
-        try{localStorage.setItem(KEY,JSON.stringify({name:UI.subject,k:a.k||'anatopato/p2',g:'',modo:'cartoes',area:'pratica'}))}catch(e){}
+        if(W.sxTreinoAbrir)W.sxTreinoAbrir(a.k||'anatopato/final','');
+        try{localStorage.setItem(KEY,JSON.stringify({name:UI.subject,k:a.k||'anatopato/final',g:'',modo:'cartoes',area:'pratica'}))}catch(e){}
         return W.setTab('cartoes');
       }
       if(a.tipo==='exercicio'){
@@ -248,7 +248,7 @@
     if(t.hasAttribute('data-th-mat'))return abrirMateria(t.getAttribute('data-th-mat'));
     if(t.hasAttribute('data-th-area'))return go('mat',{area:t.getAttribute('data-th-area'),tab:''});
     if(t.hasAttribute('data-th-tab'))return go('mat',{tab:t.getAttribute('data-th-tab')});
-    if(t.hasAttribute('data-th-laminario')){ST.k='anatopato/p2';ST.g='';ST.area='pratica';ST.titulo='Laminário';return launch('cartoes',ST.name,'anatopato/p2','')}
+    if(t.hasAttribute('data-th-laminario')){ST.k='anatopato/final';ST.g='';ST.area='pratica';ST.titulo='Laminário';return launch('cartoes',ST.name,'anatopato/final','')}
     if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];ST.k=a.k;ST.g=a.g;ST.titulo=a.t;return launch('cartoes')}
     if(t.hasAttribute('data-th-all')){
       var ks=ST._as.map(function(x){return x.k}).filter(function(v,i,arr){return arr.indexOf(v)===i});

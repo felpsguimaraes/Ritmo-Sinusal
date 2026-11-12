@@ -91,3 +91,10 @@ html[data-theme="dark"] .sxLamBC .sxFilaItem.on{background:#1f3d2e;border-color:
   .sxLamBC .sxFlashNav .btn{min-height:38px}
   .sxLamBC .sxFlashFooter{margin-top:8px;font-size:11px}
 }
+/* Diapositiva da professora: a foto do slide com o gabarito, abaixo da resposta */
+.sxFlashStudy .sxDocente{grid-column:1/-1;margin-top:10px;padding:10px;border:1px solid #E2E8F0;border-radius:12px;background:#F8FAFC;min-width:0}
+.sxFlashStudy .sxDocente h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#047857;margin:0 0 8px}
+.sxFlashStudy .sxDocenteImgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.sxFlashStudy .sxDocenteImgs img{display:block;width:100%;height:auto;max-height:240px;object-fit:contain;border-radius:8px;background:#0F172A;cursor:zoom-in}
+html[data-theme="dark"] .sxFlashStudy .sxDocente{background:#14241c;border-color:#ffffff1c}
+@media(max-width:600px){.sxFlashStudy .sxDocenteImgs{grid-template-columns:repeat(2,minmax(0,1fr))}.sxFlashStudy .sxDocenteImgs img{max-height:160px}}
