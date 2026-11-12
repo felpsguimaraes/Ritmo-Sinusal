@@ -9,7 +9,7 @@
   function box(){return D.getElementById('page-hub')}
   function subj(){try{return subjectEntries()}catch(e){return []}}
   function sigla(n){return String(n).replace(/\b(I|II|III|IV|V)\b/g,'').split(/\s+/).filter(Boolean).map(function(x){return x[0]}).join('').slice(0,2).toUpperCase()}
-  function keys(slug){return Object.keys(DK()).filter(function(k){return slug&&k.indexOf(slug+'/')===0}).sort(function(a,b){return (DK()[a].ordem||99)-(DK()[b].ordem||99)})}
+  function keys(slug){return Object.keys(DK()).filter(function(k){return slug&&k.indexOf(slug+'/')===0&&!DK()[k]._oculto}).sort(function(a,b){return (DK()[a].ordem||99)-(DK()[b].ordem||99)})}
   function parcial(k){var d=DK()[k],c=String(d.curto||'');if(/^P1$/i.test(c)||/\/p1/.test(k))return 'P1';if(/P2/i.test(c)||/\/p2/.test(k))return 'P2';return ''}
   function prog(k){try{return W.sxTreinoProg?W.sxTreinoProg(k):{}}catch(e){return {}}}
   function stat(k,g){
@@ -20,9 +20,24 @@
   function temPratica(name){var s=(DB.subjects||{})[name]||{};return keys(s.slug).some(function(k){return DK()[k].area==='pratica'})||(s.pratica||[]).length>0}
   function qCount(name,area){var tr=((typeof DB!=="undefined"&&DB)||{}).training||{},q=tr.questions||[];return q.filter(function(x){return x&&x.active!==false&&x.subject===name&&x.type!=='flashcard'&&(!area||(x.mode==='practice'?'pratica':'teoria')===area)}).length}
   function resumo(name){
-    var s=(DB.subjects||{})[name]||{},ks=keys(s.slug),t=0,d=0,p=0,n=0;
-    ks.forEach(function(k){var x=stat(k);t+=x.total;d+=x.dom;p+=x.pend;var gs={};DK()[k].cartoes.forEach(function(c){gs[c.g||'']=1});n+=Object.keys(gs).length});
-    return {ks:ks,total:t,dom:d,pend:p,assuntos:n,q:qCount(name)};
+    var itens=catalogo(name),cartoes=0,dom=0,pend=0;
+    itens.forEach(function(x){if(x.tipo!=='cartoes')return;cartoes+=x.total||0;dom+=x.dom||0;pend+=x.pend||0});
+    return {itens:itens.length,total:cartoes,dom:dom,pend:pend,assuntos:itens.length,q:0};
+  }
+  var MAPAS={anatopato:1,farmacologia:1,fisiopatologia:1,imagenologia:1,semiologia:1,familia:1};
+  function catalogo(name){
+    var s=(DB.subjects||{})[name]||{},items=[],ap=(W.SINUS_EXERCICIOS_APOSTILA||{})[s.slug];
+    if(ap){
+      var n=0;(ap.blocos||[]).forEach(function(b){n+=(b.questoes||[]).length});
+      items.push({tipo:'apostila',t:'Exercícios da apostila',sub:(n?n+' questões · ':'')+(ap.titulo||'apostila')});
+    }
+    if(MAPAS[s.slug])items.push({tipo:'mapas',t:'Mapas guiados',sub:'O esquema da matéria, para completar'});
+    assuntos(name,'Todos','').forEach(function(a){
+      var d=DK()[a.k]||{},pa=parcial(a.k);
+      var tag=(d.area==='pratica'?'Prática':'Teoria')+(pa?' · '+pa:'');
+      items.push({tipo:'cartoes',k:a.k,g:a.g,t:a.t,area:d.area||'teoria',total:a.st.total,dom:a.st.dom,pend:a.st.pend,sub:tag+' · '+nc(a.st.total)+(a.st.pend?' · '+a.st.pend+' p/ revisar':'')});
+    });
+    return items;
   }
   function assuntos(name,tab,area){
     var s=(DB.subjects||{})[name]||{},out=[];
@@ -59,18 +74,18 @@
 
   function home(){
     var es=subj().map(function(e){return [e[0],resumo(e[0])]});
-    es.sort(function(a,b){return (b[1].total+b[1].q>0)-(a[1].total+a[1].q>0)});
+    es.sort(function(a,b){return (b[1].itens>0)-(a[1].itens>0)});
     var u=ultimo(),pt=pendTotal(),est=estudados(),h='';
     h+='<div class="thHead"><h1>Treinar</h1><p>Escolha uma matéria e comece.</p></div>';
-    h+='<div class="thStats"><div><b>'+est+'</b><span>cartões estudados</span></div><div><b>'+pt.tot+'</b><span>para revisar</span></div><div><b>'+es.filter(function(x){return x[1].total}).length+'</b><span>matérias com treino</span></div></div>';
+    h+='<div class="thStats"><div><b>'+est+'</b><span>cartões estudados</span></div><div><b>'+pt.tot+'</b><span>para revisar</span></div><div><b>'+es.filter(function(x){return x[1].itens}).length+'</b><span>matérias com treino</span></div></div>';
     if(u&&((DB||{}).subjects||{})[u.name]){
       var d=u.k&&DK()[u.k];
       h+='<button class="thCta" data-th="continuar"><i>▶</i><span><b>Continuar de onde parou</b><small>'+H(u.name)+(u.g?' · '+H(u.g):d?' · '+H(d.curto||d.nome):'')+'</small></span></button>';
     }
     if(pt.best)h+='<button class="thCta alt" data-th="pendentes"><i>↻</i><span><b>Revisar '+pt.tot+' pendente'+(pt.tot>1?'s':'')+'</b><small>Cartões que você errou ou achou difícil · começa por '+H(pt.best.name)+'</small></span></button>';
     h+='<div class="thSec">Matérias</div><div class="thList">';
-    h+=es.map(function(x){var n=x[0],r=x[1],sub=r.total?r.assuntos+' assunto'+(r.assuntos>1?'s':'')+' · '+nc(r.total)+(r.pend?' · '+r.pend+' p/ revisar':''):r.q?r.q+' questões':'em breve';
-      return '<button class="thRow'+(r.total||r.q?'':' vazio')+'" data-th-mat="'+H(n)+'"><span class="thIc">'+H(sigla(n))+'</span><span class="thT"><b>'+H(n)+'</b><small>'+H(sub)+'</small>'+(r.total?bar(pct(r)):'')+'</span><span class="thCh">›</span></button>'}).join('')||'<div class="emptyBox">Sem matérias cadastradas para este período.</div>';
+    h+=es.map(function(x){var n=x[0],r=x[1],sub=r.itens?(r.itens+' treino'+(r.itens>1?'s':'')+(r.total?' · '+nc(r.total):'')+(r.pend?' · '+r.pend+' p/ revisar':'')):'em breve';
+      return '<button class="thRow'+(r.itens?'':' vazio')+'" data-th-mat="'+H(n)+'"><span class="thIc">'+H(sigla(n))+'</span><span class="thT"><b>'+H(n)+'</b><small>'+H(sub)+'</small>'+(r.total?bar(pct(r)):'')+'</span><span class="thCh">›</span></button>'}).join('')||'<div class="emptyBox">Sem matérias cadastradas para este período.</div>';
     h+='</div>';
     return h;
   }
@@ -120,6 +135,28 @@
     var t=ST.titulo||ST.name;
     return crumb('Treinar › '+H(ST.name)+' › <b>'+H(t)+'</b>')+'<div class="thHead"><h1>'+H(t)+'</h1><p>Como você quer treinar agora?</p></div>'+modos();
   }
+  function abrirMateria(name){
+    if(!name||typeof W.openSubject!=='function')return;
+    Promise.resolve(W.openSubject(name)).then(function(){
+      if(typeof UI==='undefined'||UI.subject!==name)return;
+      UI.trainingPane='catalog';
+      if(W.setTab)W.setTab('training');
+    });
+  }
+  function pintarNaMateria(){
+    var root=D.getElementById('subjectContent');
+    if(!root||typeof UI==='undefined'||!UI.subject)return;
+    var items=catalogo(UI.subject);
+    var h='<div class="sxTreinoUnico"><div class="thHead"><h1>Treinos</h1><p>Tudo o que dá para treinar nesta matéria.</p></div>';
+    if(!items.length)h+='<div class="thNote">Esta matéria ainda não tem treino.</div>';
+    else h+='<div class="thList">'+items.map(function(a,i){
+      var ic=a.tipo==='apostila'?'✎':a.tipo==='mapas'?'🗺':String(i+1);
+      return '<button type="button" class="thRow" data-sx-unif="'+i+'"><span class="thIc">'+ic+'</span><span class="thT"><b>'+H(a.t)+'</b><small>'+H(a.sub)+'</small></span><span class="thCh">›</span></button>';
+    }).join('')+'</div>';
+    root.innerHTML=h+'</div>';
+    root._sxItens=items;
+  }
+  W.sxPintarTreinoUnificado=pintarNaMateria;
   function draw(){
     var b=box();if(!b)return;
     b.innerHTML='<div class="thApp">'+(ST.v==='home'?home():ST.v==='mat'?materia():modoTela())+'</div>';
@@ -150,9 +187,22 @@
     });
   }
   D.addEventListener('click',function(e){
+    var unif=e.target.closest&&e.target.closest('[data-sx-unif]');
+    if(unif){
+      var root=D.getElementById('subjectContent');
+      var items=root&&root._sxItens,a=items&&items[Number(unif.getAttribute('data-sx-unif'))];
+      if(!a)return;
+      e.preventDefault();
+      if(a.tipo==='apostila'){UI.trainingPane='exercises';UI.mode='theory';return W.renderSubject()}
+      if(a.tipo==='mapas'){UI.trainingPane='mindmaps';UI.mode='theory';return W.renderSubject()}
+      ST.name=UI.subject;ST.k=a.k;ST.g=a.g||'';ST.area=a.area||'teoria';ST.titulo=a.t;
+      return launch('cartoes',UI.subject,a.k,a.g||'');
+    }
+    var voltar=e.target.closest&&e.target.closest('[data-sx-treino-voltar]');
+    if(voltar){e.preventDefault();UI.trainingPane='catalog';return W.renderSubject()}
     var t=e.target.closest&&e.target.closest('[data-th],[data-th-mat],[data-th-tab],[data-th-area],[data-th-as],[data-th-all],[data-th-modo]');
     if(!t||!box()||!box().contains(t))return;
-    if(t.hasAttribute('data-th-mat'))return go('mat',{name:t.getAttribute('data-th-mat'),tab:'',k:'',g:'',area:''});
+    if(t.hasAttribute('data-th-mat'))return abrirMateria(t.getAttribute('data-th-mat'));
     if(t.hasAttribute('data-th-area'))return go('mat',{area:t.getAttribute('data-th-area'),tab:''});
     if(t.hasAttribute('data-th-tab'))return go('mat',{tab:t.getAttribute('data-th-tab')});
     if(t.hasAttribute('data-th-as')){var a=ST._as[Number(t.getAttribute('data-th-as'))];ST.k=a.k;ST.g=a.g;ST.titulo=a.t;return launch('cartoes')}

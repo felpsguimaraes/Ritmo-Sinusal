@@ -5,15 +5,23 @@
   var originalRender=W.renderSubject,originalSetTab=W.setTab;
   var host=function(){return D.getElementById('subjectContent')};
   var safe=function(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-  function pane(){return ['exercises','flashcards','mindmaps'].indexOf(UI.trainingPane)>=0?UI.trainingPane:'exercises'}
+  function pane(){var p=UI.trainingPane;return p==='exercises'||p==='flashcards'||p==='mindmaps'||p==='catalog'?p:'catalog'}
   function nav(){
     if(UI.tab!=='training')return;
     var root=host();if(!root)return;
     root.querySelectorAll('.sxExerciseChoices').forEach(function(el){el.remove()});
+    if(pane()==='catalog'){
+      if(root.getAttribute('data-sx-cat')==='1')return;
+      root.setAttribute('data-sx-cat','1');
+      if(W.sxPintarTreinoUnificado)W.sxPintarTreinoUnificado();
+      return;
+    }
+    root.removeAttribute('data-sx-cat');
+    var intro=root.querySelector('.sxUnifiedIntro');
+    var slug=((typeof DB!=='undefined'&&DB.subjects&&DB.subjects[UI.subject])||{}).slug;
+    if(pane()==='exercises'&&intro&&/em preparação/i.test(intro.textContent)&&(W.SINUS_EXERCICIOS_APOSTILA||{})[slug])intro.remove();
     if(root.querySelector('.sxUnifiedTrainNav'))return;
-    var active=pane(),items=[['exercises','Exercícios'],['flashcards','Flashcards'],['mindmaps','Mapas mentais']];
-    var links=items.map(function(item){return '<button type="button" data-sx-training-pane="'+item[0]+'" class="'+(active===item[0]?'active':'')+'" '+(active===item[0]?'aria-current="page"':'')+'>'+item[1]+'</button>'}).join('');
-    root.insertAdjacentHTML('afterbegin','<nav class="sxUnifiedTrainNav" aria-label="Modalidades do treino">'+links+'</nav>');
+    root.insertAdjacentHTML('afterbegin','<button type="button" class="sxUnifiedTrainNav thBackRow" data-sx-treino-voltar>‹ Treinos da matéria</button>');
   }
   function mindmaps(){
     var root=host(),subject=(DB.subjects||{})[UI.subject]||{},qbank=((DB.training||{}).questions||[]);
@@ -70,7 +78,7 @@
     if(tab==='review'){UI.trainingPane='exercises';tab='training'}
     else if(tab==='cartoes'){UI.trainingPane='flashcards';tab='training'}
     else if(tab==='mapas'){UI.trainingPane='mindmaps';tab='training'}
-    else if(tab==='training'&&UI.tab!=='training')UI.trainingPane='exercises';
+    else if(tab==='training'&&UI.tab!=='training')UI.trainingPane='catalog';
     return originalSetTab(tab);
   };
   function laminaExercicio(){
