@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T15:45:41Z",
+  "updatedAt": "2026-11-15T16:18:46Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -167,7 +167,7 @@
     },
     {
       "id": "JUzZXhrMVCo",
-      "title": "KIDNEY - Internal Configuration",
+      "title": "RIÑÓN - Configuración Interna",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=JUzZXhrMVCo",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "CORAZÓN - Configuración Externa - Parte 1",
+      "title": "HEART - External Configuration - Part 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -207,7 +207,7 @@
     },
     {
       "id": "QTCq70XbM1c",
-      "title": "CORAZÓN - GRANDES VASOS",
+      "title": "HEART - LARGE GLASSES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=QTCq70XbM1c",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
+      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -247,7 +247,7 @@
     },
     {
       "id": "bM3vsmRIdDE",
-      "title": "MEDIAL VIEW OF THE BRAINSTEM",
+      "title": "VISIÓN MEDIAL DEL TRONCO ENCEFÁLICO",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=bM3vsmRIdDE",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "POLÍGONO DE WILLIS",
+      "title": "Willis's Polygon",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -297,7 +297,7 @@
     },
     {
       "id": "L_rCAQf3duk",
-      "title": "UPPER LIMB PART 1 - MUSCLES",
+      "title": "MIEMBRO SUPERIOR PARTE 1 - MÚSCULOS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=L_rCAQf3duk",
@@ -367,7 +367,7 @@
     },
     {
       "id": "vh4Lra7LbvQ",
-      "title": "EXTRAHEPATIC BILE DUCTS",
+      "title": "VÍAS BILIARES EXTRAHEPATICAS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=vh4Lra7LbvQ",
@@ -808,7 +808,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 42,
+      "newScan": 43,
       "total": 44
     },
     "anatomiaupe2188": {
