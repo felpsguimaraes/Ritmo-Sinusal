@@ -4,7 +4,7 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-11-15T15:44:14Z",
+  "updatedAt": "2026-11-16T18:42:17Z",
   "videos": [
     {
       "id": "ssDAXB8EmYU",
@@ -32,7 +32,7 @@
     },
     {
       "id": "iByFSugGrMs",
-      "title": "Enfermedad no Transmisible - Dra Andrea Villamayor",
+      "title": "Non-Communicable Disease - Dr. Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
@@ -68,7 +68,7 @@
     },
     {
       "id": "Ru7w_Skksbg",
-      "title": "Neuro VII (10/19/2026) - Dr. Federico Hogë",
+      "title": "Neuro VII (19.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -98,7 +98,7 @@
     },
     {
       "id": "OKYQlaPLNpA",
-      "title": "Neuro VIII (10/22/2026) - Dr. Federico Hogë",
+      "title": "Neuro VIII (22.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -116,7 +116,7 @@
     },
     {
       "id": "g4R5mnylaI0",
-      "title": "Micosis Cutáneas y Subcutáneas - Dra Noélia Scappini",
+      "title": "Cutaneous and Subcutaneous Mycoses - Dr. Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -128,25 +128,25 @@
     },
     {
       "id": "YlS4_SRXNXg",
-      "title": "Acondicionamiento de las Vacunas (22.10.2026) - Dra Andréa Villamayor",
+      "title": "Vaccine Storage (10/22/2026) - Dr. Andréa Villamayor",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ufH0VzERifM",
-      "title": "Microbiology Lab (10/21/2026) - Dr. Nilse Cubilla",
+      "title": "Micro Práctica (21.10.2026) - Dra Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
     {
       "id": "EK22uPNLZME",
-      "title": "Neuro VI (10/15/2026) - Dr. Federico Hogë",
+      "title": "Neuro VI (15.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "2iMIaRxs-yI",
-      "title": "Neuro V (10/08/2026) - Dr. Federico Hogë",
+      "title": "Neuro V (08.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -182,7 +182,7 @@
     },
     {
       "id": "i1U-qU78Lvc",
-      "title": "Krebs Cycle (10/07/2026) - Dr. Glória Martinez",
+      "title": "Ciclo de Krebs (07.10.2026) - Dra Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -200,13 +200,13 @@
     },
     {
       "id": "enK_1FIk9Nw",
-      "title": "Parasitología (01.10.2026) - Dra Noelia Scappini",
+      "title": "Parasitology (10/01/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "1x-tnaTusVE",
-      "title": "Fisiología Respiratória V (16.08.2026) - Dr Federico Hogë",
+      "title": "Respiratory Physiology V (08/16/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -290,7 +290,7 @@
     },
     {
       "id": "aBCm_wNQEEs",
-      "title": "Atención Primária de la Salud (I) - Dra Andrea Villamayor",
+      "title": "Primary Health Care (I) - Dr. Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
@@ -302,13 +302,13 @@
     },
     {
       "id": "OfwHKGiRTks",
-      "title": "Microbiología Práctica (19.08.2026) - Dra Nilse Cubilla",
+      "title": "Practical Microbiology (08/19/2026) - Dr. Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
     {
       "id": "_lxoKd2OM5g",
-      "title": "Micosis Oportunistas (20.08.2026) - Dra Noelia Scappini",
+      "title": "Opportunistic Mycoses (08/20/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -404,7 +404,7 @@
     },
     {
       "id": "KMSW2qs1rsc",
-      "title": "Introducción Metabolismo (05.08.2026) - Dra Glória Martinez",
+      "title": "Introduction to Metabolism (08/05/2026) - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
@@ -494,7 +494,7 @@
     },
     {
       "id": "otGbXjRTnZA",
-      "title": "Biofísica de la Audición I - Dr Josué Schmidt (02.06.2026)",
+      "title": "Biophysics of Hearing I - Dr. Josué Schmidt (02.06.2026)",
       "section": "videos",
       "description": ""
     },
@@ -536,13 +536,13 @@
     },
     {
       "id": "meIF5x5l4BQ",
-      "title": "Revisión: Biofísica de la Circulación - Dr Josué Schmidt",
+      "title": "Review: Biophysics of Circulation - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
     {
       "id": "ypyf1RtTZhQ",
-      "title": "Biofísica del Sonido - Dr Josué Schmidt",
+      "title": "Biophysics of Sound - Dr. Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -632,7 +632,7 @@
     },
     {
       "id": "cuShdoK03Pk",
-      "title": "Gardnerella y Chlamydia - Dr Arturo Alexander (30.04.26)",
+      "title": "Gardnerella and Chlamydia - Dr Arturo Alexander (30.04.26)",
       "section": "videos",
       "description": ""
     },
@@ -896,7 +896,7 @@
     },
     {
       "id": "P2aqFBoDR4o",
-      "title": "Membrane Potential - Dr Carlos Ariel - 20.02.26",
+      "title": "Potencial de Membrana - Dr Carlos Ariel - 20.02.26",
       "section": "videos",
       "description": ""
     },
@@ -998,7 +998,7 @@
     },
     {
       "id": "C-EJi8B_Er0",
-      "title": "Liver and Gallbladder - Dr. Victor Benitez",
+      "title": "Hígado y Visícula Biliar - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1118,7 +1118,7 @@
     },
     {
       "id": "WQ2OfTpidnY",
-      "title": "Inferior Vena Cava - Dr. Ronald Martinez",
+      "title": "Vena cava inferior -  Dr Ronald Martinez",
       "section": "videos",
       "description": ""
     },
@@ -1160,7 +1160,7 @@
     },
     {
       "id": "qejAwhTMqfE",
-      "title": "Abdominal Overview - Dr. Víctor Benítez",
+      "title": "Generalidades del abdomen - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1214,13 +1214,13 @@
     },
     {
       "id": "Pt09Y9jxS24",
-      "title": "Sacrum and coccyx bones - Dr. Víctor Benítez",
+      "title": "Huesos sacro y cóccix - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "PMbTXCOY2W0",
-      "title": "Generalities of the skull - Dr. Víctor Benítez",
+      "title": "Generalidades del cráneo - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
