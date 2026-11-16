@@ -13,7 +13,7 @@ const D = window.SINUSAL_P2_DADOS;
 
 const TEMAS = [
   ['nec', 'Necrosis'], ['apo', 'Apoptosis'], ['acu', 'Acumulación: lípidos y glucógeno'],
-  ['c7', 'Proteínas, amiloide, calcio'], ['pig', 'Pigmentos'], ['inf', 'Inflamación aguda'], ['cro', 'Fora do slide atual']
+  ['c7', 'Proteínas, amiloide, calcio'], ['pig', 'Pigmentos'], ['inf', 'Inflamación aguda'], ['neo', 'Neoplasias'], ['cro', 'Fora do slide atual']
 ];
 const TIPO = { mc: 'Múltipla escolha', vf: 'Verdadero o falso', cita: 'Cita', comp: 'Completa' };
 const LET = 'ABCDEFGHIJ';

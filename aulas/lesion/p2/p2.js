@@ -12,7 +12,7 @@
   var TEMAS = {
     nec: ['Necrosis', '#b3141c'], apo: ['Apoptosis', '#7a3fe0'], acu: ['Acumulación: lípidos y glucógeno', '#b45309'],
     c7: ['Proteínas, amiloide, calcio', '#a21caf'], pig: ['Pigmentos', '#7c4a1e'], inf: ['Inflamación aguda', '#0c8f8a'],
-    cro: ['Fora do slide atual', '#64748b']
+    neo: ['Neoplasias', '#0c8059'], cro: ['Fora do slide atual', '#64748b']
   }
   var GRUPOS_FONTE = [
     ['p2', 'P2 antigas', ['p2c', 'p2d', 'p2f1', 'p2f2', 'reg24', 'rec23']],
@@ -101,11 +101,11 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=9' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=10' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis, acumulaciones, Clase 7 e inflamación aguda, com o radar da prova e o simulado</small></span>' +
-          '<a class="p2-ib" href="' + BASE + 'apostila/apostila-p2.pdf?v=4" download="Apostila 2a parcial Anatomia Patologica I.pdf" aria-label="Baixar a apostila em PDF" title="Baixar a apostila em PDF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>' +
+          '<a class="p2-ib" href="' + BASE + 'apostila/apostila-p2.pdf?v=6" download="Apostila 2a parcial Anatomia Patologica I.pdf" aria-label="Baixar a apostila em PDF" title="Baixar a apostila em PDF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>' +
           '<a class="p2-ib" href="' + BASE + 'apostila/index.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>' +
           ib('p2-afull', 'Tela cheia', '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>') +
         '</div>' +
@@ -149,7 +149,7 @@
       GRUPOS_FONTE.map(function (g) { return '<option value="' + g[0] + '">' + esc(g[1]) + '</option>' }).join('') +
       '<optgroup label="Uma prova">' + D.fontes.map(function (f) { return '<option value="' + f.id + '">' + esc(f.titulo) + ' (' + f.n + ')</option>' }).join('') + '</optgroup>'
     box.innerHTML =
-      '<p class="p2-dl" style="margin:0 0 14px"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'banco-questoes-p2.pdf?v=1" download="Banco de questoes 2a parcial Anatomia Patologica I.pdf">Baixar o banco em PDF (2,5 MB)</a><span>As ' + D.qs.length + ' questões com o gabarito comentado no fim de cada tema, para imprimir.</span></p>' +
+      '<p class="p2-dl" style="margin:0 0 14px"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'banco-questoes-p2.pdf?v=2" download="Banco de questoes 2a parcial Anatomia Patologica I.pdf">Baixar o banco em PDF (2,5 MB)</a><span>As ' + D.qs.length + ' questões com o gabarito comentado no fim de cada tema, para imprimir.</span></p>' +
       '<div class="p2-filtros sx-glass">' +
         '<div class="p2-fl" role="group" aria-label="Tema"><span class="lbl">Tema</span>' +
           '<button type="button" class="p2-chip" data-tema="">Todos <span class="c">' + D.qs.length + '</span></button>' +
