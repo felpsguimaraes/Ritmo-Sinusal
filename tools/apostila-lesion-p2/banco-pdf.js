@@ -98,13 +98,15 @@ const temas = porTema.map((t, i) =>
 
 const CSS = `
 :root{--g:#0c8059;--g2:#08a86e;--gd:#0b6246;--mint:#e7f6eb;--ink:#102d25;--ink2:#365d49;--ink3:#6d897a;--line:#d9e9de;--bg:#f5fbf7;--red:#c8463d;
-  --serif:'Fraunces',Georgia,'Times New Roman',serif;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--mono:'Inter',system-ui,Arial,sans-serif;--sans:'Inter',system-ui,Arial,sans-serif}
 *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-html,body{margin:0;background:#fff;color:var(--ink);font-family:var(--serif);font-size:10.4pt;line-height:1.45;font-size-adjust:.52}
-b{font-weight:620}
+html,body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);font-size:9.8pt;line-height:1.5}
+h1,h2,h3,.indice .t,.stats b{font-family:var(--serif)}
+b{font-weight:650}
 .lab,.eyebrow,.k,.meta,.gh .src,.stats span,.indice .n,.indice .c,.th .n,.th .s,.num,.L,.tp{font-family:var(--mono);font-size-adjust:none}
 /* capa */
 .capa{break-after:page;padding:6mm 2mm 0}
+.lab,.eyebrow,.k,.stats span,.th .k{text-transform:none!important;letter-spacing:0!important;font-weight:650}
 .brand{font-family:'Inter',system-ui,sans-serif;font-weight:800;font-size:22pt;letter-spacing:-.04em;color:#155B48;font-size-adjust:none}
 .brand span{color:var(--g2)}
 .eyebrow{margin:16mm 0 3mm;font-size:8pt;letter-spacing:.22em;text-transform:uppercase;color:var(--g)}
@@ -181,7 +183,7 @@ mark{background:#ffe94a;color:inherit;padding:0 .14em;border-radius:2px;-webkit-
 `;
 
 const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Banco de questões · 2ª parcial · Anatomía Patológica I</title>' +
-  '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@800&display=swap">' +
+  '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700;800&display=swap">' +
   '<style>' + CSS + '</style></head><body>' + capa + temas + '</body></html>';
 
 (async () => {
@@ -192,7 +194,7 @@ const html = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><met
   await p.goto('file://' + path.resolve(htmlPath), { waitUntil: 'networkidle' });
   await p.evaluate(() => document.fonts.ready);
   const fontes = await p.evaluate(() => [...document.fonts].filter(f => f.status === 'loaded').map(f => f.family).filter((v, i, a) => a.indexOf(v) === i));
-  const rodape = '<div style="width:100%;padding:0 14mm;display:flex;justify-content:space-between;font-family:Menlo,monospace;font-size:7px;letter-spacing:.08em;color:#6d897a">' +
+  const rodape = '<div style="width:100%;padding:0 14mm;display:flex;justify-content:space-between;font-family:Inter,Arial,sans-serif;font-size:7.5px;letter-spacing:0;color:#6d897a">' +
     '<span>BANCO DE QUESTÕES · 2ª PARCIAL · ANATOMÍA PATOLÓGICA I · SINUS</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>';
   await p.pdf({ path: SAIDA, format: 'A4', printBackground: true, displayHeaderFooter: true, headerTemplate: '<span></span>', footerTemplate: rodape,
     margin: { top: '14mm', bottom: '16mm', left: '14mm', right: '14mm' } });

@@ -126,7 +126,7 @@ LIMPA = [
     ('no slide da sua Clase 6', 'no slide da Clase 6'),
     ('Não há prova antiga dela sobre a Clase 7 no material enviado; as perguntas', 'Não há prova antiga da Dra. sobre a Clase 7; as perguntas'),
     (', enviada pelo Felipe em 28/09/2026.', '.'),
-    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=6" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
+    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=7" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
     ('Proteínas, amiloide, calcio<span class="new">novo</span>', 'Proteínas, amiloide, calcio'),
     (' <span class="pillx">novo</span>', ''),
     ('<span class="pillx">novo · sem prova antiga</span>', '<span class="pillx">sem prova antiga</span>'),
@@ -394,16 +394,17 @@ bt['title'] = 'Mostra só o essencial: esconde slides literais, lâminas e expli
 bt.string = '⚡ Solo lo esencial'
 tb.insert_after(bt)
 
-# 4d) fontes da aula 3D: Fraunces (texto e títulos) e JetBrains Mono (rótulos)
+# 4d) fontes do PDF da aula: Fraunces (títulos) e Inter (texto e rótulos)
 fl = [l for l in soup.find_all('link') if 'fonts.googleapis.com/css2' in (l.get('href') or '')]
 assert len(fl) == 1
-fl[0]['href'] = ('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700'
-                 '&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@800&display=swap')
+import tipo as TIPO
+fl[0]['href'] = TIPO.FONTES
+print('títulos em itálico', TIPO.italico_titulos(soup))
 
 # 5) CSS, defs, JS, lightbox com imagem grande
 st = soup.find_all('style')[-1]
 from verde import verde_html, CSS_VERDE
-st.append(CSS + CSS_VERDE)
+st.append(CSS + CSS_VERDE + TIPO.CSS_TIPO)
 for mc in soup.select('.mini-card[style]'):
     if mc['style'].startswith('--c:') and ';' not in mc['style']:
         mc['style'] = '--c:#0c8059'
