@@ -127,3 +127,6 @@ html[data-theme="dark"] .sxFlashStudy .sxDocente{background:#14241c;border-color
 }
 /* Laminário: sem a linha de crédito "Fuente docente…" sob as respostas */
 .sxFlashStudy.sxLamBC .sxBalWrap .sxBalFonte,.sxFlashStudy.sxLamBC .sxBalWrap>small{display:none!important}
+/* Foto del órgano: primeiro bloco depois dos botões, fotos maiores */
+.sxFlashStudy.sxLamBC .sxOrgao .sxDocenteImgs{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.sxFlashStudy.sxLamBC .sxOrgao .sxDocenteImgs img{max-height:260px;background:#0A0C10}
