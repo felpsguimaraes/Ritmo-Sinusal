@@ -10,7 +10,7 @@
     '/aulas/agenda.js?v=3',
     '/sinus/transcricao-real.js?v=20261025-2',
     '/sinus/texto-rico.js?v=1',
-    '/sinus/painel-v17.js?v=20261112-laminario',
+    '/sinus/painel-v17.js?v=20261118-neoplasias',
     '/sinus/drive-sync.js?v=20261024-grade',
     '/sinus/acervo-materias.js?v=20261024-grade',
     '/sinus/calendario-dados.js?v=20261023',
