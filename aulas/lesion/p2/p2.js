@@ -17,7 +17,6 @@
   var GRUPOS_FONTE = [
     ['p2', 'P2 antigas', ['p2c', 'p2d', 'p2f1', 'p2f2', 'reg24', 'rec23']],
     ['par', 'Parciais e final', ['par1', 'p1c', 'par1r', 'final24']],
-    ['neo', 'Neoplasias (Clase 10 e 11)', ['neoap', 'coba']],
     ['banco', 'Bancos Robbins e PEF', ['robbins', 'pef']]
   ]
   // prova -> grupo de páginas no visualizador
@@ -154,7 +153,7 @@
       GRUPOS_FONTE.map(function (g) { return '<option value="' + g[0] + '">' + esc(g[1]) + '</option>' }).join('') +
       '<optgroup label="Uma prova">' + D.fontes.map(function (f) { return '<option value="' + f.id + '">' + esc(f.titulo) + ' (' + f.n + ')</option>' }).join('') + '</optgroup>'
     box.innerHTML =
-      '<p class="p2-dl" style="margin:0 0 14px"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'banco-questoes-p2.pdf?v=1" download="Banco de questoes 2a parcial Anatomia Patologica I.pdf">Baixar o banco em PDF (2,5 MB)</a><span>As ' + D.qs.length + ' questões com o gabarito comentado no fim de cada tema, para imprimir.</span></p>' +
+      '<p class="p2-dl" style="margin:0 0 14px"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'banco-questoes-p2.pdf?v=1" download="Banco de questoes 2a parcial Anatomia Patologica I.pdf">Baixar o banco em PDF (2,5 MB)</a><span>176 questões com o gabarito comentado no fim de cada tema, para imprimir. As de Neoplasias ainda não estão no PDF.</span></p>' +
       '<div class="p2-filtros sx-glass">' +
         '<div class="p2-fl" role="group" aria-label="Tema"><span class="lbl">Tema</span>' +
           '<button type="button" class="p2-chip" data-tema="">Todos <span class="c">' + D.qs.length + '</span></button>' +
