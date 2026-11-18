@@ -87,6 +87,17 @@ terato.forEach(function (c) {
     assert.ok(fs.existsSync(u.replace(/^\//, '')), 'Imagem inexistente: ' + u);
   });
 });
+/* Fotos dos órgãos (peças macroscópicas) das diapositivas da Clase 6 · Neoplasias (prática). */
+assert.match(ui, /c\.fo && c\.fo\.length/, 'A foto do órgão (fo) precisa ser exibida no Laminário');
+const orgaos = { '14 · Lipoma': 2, '15 · Liposarcoma': 1, '11 · Adenoma pleomorfo': 1, '17 · Leiomiosarcoma': 1, '18 · Teratoma ovárico maduro': 3 };
+Object.keys(orgaos).forEach(function (g) {
+  const cs = fin.cartoes.filter(function (c) { return c.g === g; });
+  assert.ok(cs.length > 0, 'Grupo ausente: ' + g);
+  cs.forEach(function (c) {
+    assert.equal((c.fo || []).length, orgaos[g], 'Fotos do órgão em ' + c.id);
+    c.fo.forEach(function (u) { assert.ok(fs.existsSync(u.replace(/^\//, '')), 'Imagem inexistente: ' + u); });
+  });
+});
 assert.doesNotMatch(fs.readFileSync('sinus/treino-hub.js', 'utf8'), /data-sx-filtro/);
 
 console.log('Laminário OK: P1 ' + fotos(p1.cartoes).length + ' fotos, P2 ' + fotos(p2.cartoes).length + ' fotos e ' + videos(p2.cartoes).length + ' vídeos, Final ' + fin.cartoes.length + ' fotos.');
