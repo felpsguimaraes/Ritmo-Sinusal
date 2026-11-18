@@ -12,11 +12,12 @@
   var TEMAS = {
     nec: ['Necrosis', '#b3141c'], apo: ['Apoptosis', '#7a3fe0'], acu: ['Acumulación: lípidos y glucógeno', '#b45309'],
     c7: ['Proteínas, amiloide, calcio', '#a21caf'], pig: ['Pigmentos', '#7c4a1e'], inf: ['Inflamación aguda', '#0c8f8a'],
-    cro: ['Fora do slide atual', '#64748b']
+    neo: ['Neoplasias', '#be185d'], cro: ['Fora do slide atual', '#64748b']
   }
   var GRUPOS_FONTE = [
     ['p2', 'P2 antigas', ['p2c', 'p2d', 'p2f1', 'p2f2', 'reg24', 'rec23']],
     ['par', 'Parciais e final', ['par1', 'p1c', 'par1r', 'final24']],
+    ['neo', 'Neoplasias (Clase 10 e 11)', ['neoap', 'coba']],
     ['banco', 'Bancos Robbins e PEF', ['robbins', 'pef']]
   ]
   // prova -> grupo de páginas no visualizador
@@ -34,6 +35,10 @@
   ]
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
+  var SLIDES = [
+    { t: 'Clase 10 · Generalidades de las neoplasias', arq: 'clase10-neoplasias.pdf', d: 'Unidad IV · Dra. Eliana Chamorro Krauer' },
+    { t: 'Clase 11 · Neoplasias', arq: 'clase11-neoplasias.pdf', d: 'Unidad IV · 61 slides · Dra. Eliana Chamorro Krauer' }
+  ]
   var PDF_ARQ = BASE + 'provas-antigas-chamorro.pdf'
   var ZOOMS = [1, 1.5, 2, 3]
   var VIDEO = {
@@ -101,7 +106,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=9' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=10' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis, acumulaciones, Clase 7 e inflamación aguda, com o radar da prova e o simulado</small></span>' +
@@ -215,7 +220,7 @@
     function links() {
       var i = PAG_DA_FONTE[q.p]
       var f = FONTE[q.p] || {}
-      return '<div class="p2-links">' + (i != null ? '<a href="#/provas/originais/' + i + '">Ver a prova original (pág. ' + esc(f.pags) + ' do PDF)</a>' : '<span class="ts-meta">Fonte: ' + esc(f.titulo) + ', págs. ' + esc(f.pags) + ' do PDF</span>') + '</div>'
+      return '<div class="p2-links">' + (i != null ? '<a href="#/provas/originais/' + i + '">Ver a prova original (pág. ' + esc(f.pags) + ' do PDF)</a>' : '<span class="ts-meta">Fonte: ' + esc(f.titulo) + (f.pags ? ', págs. ' + esc(f.pags) + ' do PDF' : '') + '</span>') + '</div>'
     }
     function notaHtml() { return q.nt ? '<p class="ts-nt">' + esc(q.nt) + '</p>' : '' }
     if (q.t === 'mc') {
@@ -560,6 +565,8 @@
           '<div class="p2-frame"><iframe src="https://drive.google.com/file/d/' + VIDEO.id + '/preview" title="' + esc(VIDEO.t) + '" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>' +
           '<div class="p2-links"><a href="https://drive.google.com/file/d/' + VIDEO.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></div>' +
         '</div></section>' +
+      '<section class="p2-sec"><h2 class="sx-h2">Neoplasias · slides das aulas</h2><p>Os PDFs originais da professora (Clase 10 e 11). A apostila e o banco de questões de neoplasias estão nas outras abas.</p>' +
+        SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>' +
       Object.keys(TEMAS).filter(function (k) { return porTema[k] }).map(function (k) {
         return '<section class="p2-sec"><h2 class="sx-h2">' + esc(TEMAS[k][0]) + '</h2>' + bloco(porTema[k]) + '</section>'
       }).join('') +

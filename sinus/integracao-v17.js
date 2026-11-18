@@ -571,7 +571,7 @@
 
   /* apostilas do Sinus por matéria (vale para todas as turmas do período) */
   var APOSTILAS = {
-    anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino' },
+    anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino', banco: '/aulas/lesion/#/provas/banco', hub: '/aulas/lesion/' },
     farmacologia: { ler: '/aulas/apostila-farmacologia/', pdf: '/aulas/apostila-farmacologia/apostila-farmacologia-p2.pdf', gabarito: '/aulas/apostila-farmacologia/exercicios-respondidos-p2.pdf', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
       extra: 'Os exercícios, os flashcards e os mapas desta apostila estão na aba Treino da matéria.' }
   };
@@ -590,7 +590,7 @@
     return '<section class="glass" data-sx-apostila="embutida" style="padding:0;border-radius:18px;margin:0 0 14px;overflow:hidden;border:1.5px solid rgba(22,110,91,.28)">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid rgba(17,40,30,.08)">' +
       '<div><span class="eyebrow">Apostila SINUS' + (A.titulo ? ' · ' + H(A.titulo) : '') + '</span></div>' +
-      '<div class="heroActions" style="margin:0">' + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '" target="_blank" rel="noopener">PDF</a>' : '') + (A.gabarito ? '<a class="btn sm" href="' + A.gabarito + '" target="_blank" rel="noopener">Gabarito PDF</a>' : '') + '<a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
+      '<div class="heroActions" style="margin:0">' + (A.banco ? '<a class="btn sm" href="' + A.banco + '" target="_blank" rel="noopener">Banco de questões</a>' : '') + (A.hub ? '<a class="btn sm" href="' + A.hub + '" target="_blank" rel="noopener">Tudo da matéria ↗</a>' : '') + (A.pdf ? '<a class="btn sm" href="' + A.pdf + '" target="_blank" rel="noopener">PDF</a>' : '') + (A.gabarito ? '<a class="btn sm" href="' + A.gabarito + '" target="_blank" rel="noopener">Gabarito PDF</a>' : '') + '<a class="btn sm" href="' + A.ler + '" target="_blank" rel="noopener">Tela cheia ↗</a></div></div>' +
       '<iframe src="' + src + '" title="Apostila ' + H(A.titulo || '') + '" loading="lazy" style="display:block;width:100%;max-width:100%;height:calc(100vh - 140px);min-height:560px;border:0;background:#f1f8f4"></iframe></section>';
   }
   function garantirApostila() {
