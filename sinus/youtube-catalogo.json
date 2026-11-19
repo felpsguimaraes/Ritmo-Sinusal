@@ -4,8 +4,14 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-11-18T17:22:46Z",
+  "updatedAt": "2026-11-19T17:28:04Z",
   "videos": [
+    {
+      "id": "75N9vqnIdmc",
+      "title": "Cohort Study (18.11.2026) - Dr. Andrea Villamayor",
+      "section": "videos",
+      "description": ""
+    },
     {
       "id": "ssDAXB8EmYU",
       "title": "Micro Práctica Hepatitis (12.10.2026) - Dra Nilse Cubilla",
@@ -14,7 +20,7 @@
     },
     {
       "id": "100BhkeWBm8",
-      "title": "Gastro (12.10.2026) - Dr Federico Hogë",
+      "title": "Gastro (10/12/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -62,7 +68,7 @@
     },
     {
       "id": "AVbjiW0A5Pk",
-      "title": "Nematodos, Cestodos y Trematodos (29.10.2026) - Dra Noélia Scappini",
+      "title": "Nematodes, Cestodes, and Trematodes (10/29/2026) - Dr. Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -104,13 +110,13 @@
     },
     {
       "id": "Min-nhLqVR8",
-      "title": "Helminths - Dr. Nilse Cubilla",
+      "title": "Helmintos - Dra Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
     {
       "id": "3PVZ9vp-4IM",
-      "title": "Intestinal Nematodes (10/22/2026) - Dr. Noélia Scappini",
+      "title": "Nemátodos Intestinales (22.10.2026) - Dra Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -170,7 +176,7 @@
     },
     {
       "id": "NoQbp9EDd1U",
-      "title": "Neuro II: Somatosensory (09/21/2026) - Dr. Federico Hogë",
+      "title": "Neuro II: Somatosensitivo (21.09.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -188,19 +194,19 @@
     },
     {
       "id": "oSHrHrGFNtc",
-      "title": "Neuro IV - Motor Somático I (01.10.2026) - Dr Federivo Hogë",
+      "title": "Neuro IV - Somatic Motor I (10/01/2026) - Dr. Federivo Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "j6Jdukd5JXU",
-      "title": "Blood and Tissue Protozoa (10/01/2026) - Dr. Noélia Scappini",
+      "title": "Protozoários Sanguíneos y Tisulares (01.10.2026) - Dra Noélia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "enK_1FIk9Nw",
-      "title": "Parasitología (01.10.2026) - Dra Noelia Scappini",
+      "title": "Parasitology (10/01/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -230,7 +236,7 @@
     },
     {
       "id": "WfCsjF2pWaQ",
-      "title": "Fisiología Neuro I (10.09.2026) - Dr Federico Hogë",
+      "title": "Neurophysiology I (09/10/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -344,7 +350,7 @@
     },
     {
       "id": "0D2DOGt07nE",
-      "title": "Micosis Superficiales (13.08.2026) - Dra Noelia Scappini",
+      "title": "Superficial Mycoses (08/13/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -356,7 +362,7 @@
     },
     {
       "id": "dXqgvh3KNWY",
-      "title": "Microbiología Práctica (12.08.2026) - Dra Nilse Cubilla",
+      "title": "Practical Microbiology (08/12/2026) - Dr. Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
@@ -404,13 +410,13 @@
     },
     {
       "id": "KMSW2qs1rsc",
-      "title": "Introducción Metabolismo (05.08.2026) - Dra Glória Martinez",
+      "title": "Introduction to Metabolism (08/05/2026) - Dr. Glória Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "OhjMiXlfC1I",
-      "title": "Fisiologia Respiratória (03.08.2026) - Dr Federico Höge",
+      "title": "Respiratory Physiology (08/03/2026) - Dr. Federico Höge",
       "section": "videos",
       "description": ""
     },
@@ -428,7 +434,7 @@
     },
     {
       "id": "nglt3O7L0lI",
-      "title": "Biophysics Review (III) Final Exam - Dr. Josué Schmidt",
+      "title": "Biofísica Repaso (III)  Prueba Final - Dr Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -560,7 +566,7 @@
     },
     {
       "id": "OMPKunJMzrc",
-      "title": "P2 Biochemistry Review - Dr. Andrea López",
+      "title": "Revisión P2 Bioquímica - Dra Andrea López",
       "section": "videos",
       "description": ""
     },
@@ -596,7 +602,7 @@
     },
     {
       "id": "sm23LaJlBvo",
-      "title": "Review P2 - Dr. Arturo Alexander",
+      "title": "Revisión P2 - Dr Arturo Alexander",
       "section": "videos",
       "description": ""
     },
@@ -656,7 +662,7 @@
     },
     {
       "id": "8Tj9iQnbq2I",
-      "title": "Enterobacteriaceae - Dr. Arturo Alexander (23.04.26)",
+      "title": "Enterobacterias - Dr Arturo Alexander (23.04.26)",
       "section": "videos",
       "description": ""
     },
@@ -710,7 +716,7 @@
     },
     {
       "id": "ExnrRYePZYE",
-      "title": "Review for the Microbiology Test - Dr. Arturo Alexander - 19.03.26",
+      "title": "Revisión para la Prueba de Microbiología - Dr Arturo Alexander - 19.03.26",
       "section": "videos",
       "description": ""
     },
@@ -914,7 +920,7 @@
     },
     {
       "id": "5iNUh8d_zkE",
-      "title": "Dr. Carlos Ariel (audio) - 02/26/18",
+      "title": "Dr Carlos Ariel (áudio) - 18/02/26",
       "section": "videos",
       "description": ""
     },
@@ -968,7 +974,7 @@
     },
     {
       "id": "Nd_TcsielLE",
-      "title": "Digestive System I - Dr. Eduardo Oviedo",
+      "title": "Sistema Digestivo I - Dr Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -998,7 +1004,7 @@
     },
     {
       "id": "C-EJi8B_Er0",
-      "title": "Liver and Gallbladder - Dr. Victor Benitez",
+      "title": "Hígado y Visícula Biliar - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1160,7 +1166,7 @@
     },
     {
       "id": "qejAwhTMqfE",
-      "title": "Abdominal Overview - Dr. Víctor Benítez",
+      "title": "Generalidades del abdomen - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1196,7 +1202,7 @@
     },
     {
       "id": "4cq1xIrCYCU",
-      "title": "Skull Bones - Dr. Ronald Martinez",
+      "title": "Huesos del cráneo - Dr Ronald Martinez",
       "section": "videos",
       "description": ""
     },
@@ -1214,13 +1220,13 @@
     },
     {
       "id": "Pt09Y9jxS24",
-      "title": "Sacrum and coccyx bones - Dr. Víctor Benítez",
+      "title": "Huesos sacro y cóccix - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "PMbTXCOY2W0",
-      "title": "Generalities of the skull - Dr. Víctor Benítez",
+      "title": "Generalidades del cráneo - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
