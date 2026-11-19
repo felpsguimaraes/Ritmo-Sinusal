@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-16T19:32:12Z",
+  "updatedAt": "2026-11-18T17:59:28Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -227,7 +227,7 @@
     },
     {
       "id": "BllOA4xplp8",
-      "title": "CEREBRO 2da Parte",
+      "title": "BRAIN Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=BllOA4xplp8",
@@ -247,7 +247,7 @@
     },
     {
       "id": "bM3vsmRIdDE",
-      "title": "VISIÓN MEDIAL DEL TRONCO ENCEFÁLICO",
+      "title": "MEDIAL VIEW OF THE BRAINSTEM",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=bM3vsmRIdDE",
@@ -257,7 +257,7 @@
     },
     {
       "id": "81SOI7dXwkQ",
-      "title": "BULBO RAQUÍDEO",
+      "title": "MEDULLA OBLONGATA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -808,7 +808,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 43,
+      "newScan": 42,
       "total": 44
     },
     "anatomiaupe2188": {

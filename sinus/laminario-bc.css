@@ -98,3 +98,35 @@ html[data-theme="dark"] .sxLamBC .sxFilaItem.on{background:#1f3d2e;border-color:
 .sxFlashStudy .sxDocenteImgs img{display:block;width:100%;height:auto;max-height:240px;object-fit:contain;border-radius:8px;background:#0F172A;cursor:zoom-in}
 html[data-theme="dark"] .sxFlashStudy .sxDocente{background:#14241c;border-color:#ffffff1c}
 @media(max-width:600px){.sxFlashStudy .sxDocenteImgs{grid-template-columns:repeat(2,minmax(0,1fr))}.sxFlashStudy .sxDocenteImgs img{max-height:160px}}
+/* Extras (comentário, diapositiva, esquema e foto do órgão) ficam depois dos botões, fora da primeira tela */
+.sxLamBC .sxLamExtras{display:grid;gap:10px;margin-top:12px;min-width:0}
+.sxLamBC .sxLamExtras:empty{display:none}
+.sxLamBC .sxLamExtras .sxDocente,.sxLamBC .sxLamExtras .sxComent{margin-top:0}
+/* Celular: foto, as 4 respostas e Anterior/Próxima cabem juntas numa tela, em proporção.
+   A foto ocupa o espaço que sobra; só encolhe até 80px se as respostas forem longas (aí a página rola). */
+@media(max-width:600px){
+  .sxFlashStudy.sxLamBC .sxFlashHeader{margin:0 0 4px;justify-content:flex-end}
+  .sxFlashStudy.sxLamBC .sxFlashHeader>div{display:none}
+  .sxFlashStudy.sxLamBC .sxFlashProgress{height:4px;margin-bottom:6px}
+  .sxFlashStudy.sxLamBC.sxMedia .sxCard{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(80px,1fr) auto;row-gap:6px;align-items:stretch;padding:8px;min-height:calc(100vh - 215px);min-height:calc(100dvh - 215px)}
+  .sxFlashStudy.sxLamBC.sxMedia .sxDeckRow{grid-row:1;margin:0}
+  .sxFlashStudy.sxLamBC.sxMedia .sxDeckRow .pill{display:block;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis!important;font-size:11px;padding:3px 9px}
+  .sxFlashStudy.sxLamBC.sxMedia .sxCardImg{grid-row:2;position:relative;margin:0!important;min-height:80px;height:auto!important;overflow:hidden;border-radius:8px;background:#0A0C10}
+  .sxFlashStudy.sxLamBC.sxMedia .sxCardImg img{position:absolute;inset:0;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain;border-radius:0;background:transparent}
+  .sxFlashStudy.sxLamBC.sxMedia .sxSide .sxQ{display:none}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap{grid-row:3;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px!important;margin:0!important}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal{padding:5px 9px 6px!important;border-radius:11px 11px 11px 4px!important;min-width:0}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal.d,.sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal.x{grid-column:1/-1}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal .sxBalLbl{font-size:9px!important;padding:2px 7px!important;margin-bottom:3px!important;letter-spacing:.04em}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal p,.sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal.x p{font-size:13px!important;line-height:1.3!important}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal ul{font-size:12px;line-height:1.3;padding-left:15px;margin:0}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBal li{font-size:12px!important;line-height:1.3!important;margin:0}
+  .sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBalFonte,.sxFlashStudy.sxLamBC.sxMedia .sxBalWrap>small,.sxFlashStudy.sxLamBC.sxMedia .sxBalWrap .sxBalTitle{font-size:10px!important;line-height:1.3;margin:0}
+  .sxFlashStudy.sxLamBC .sxFlashNav{margin-top:8px;gap:8px}
+  .sxFlashStudy.sxLamBC .sxFlashNav .btn{min-height:40px}
+}
+/* Laminário: sem a linha de crédito "Fuente docente…" sob as respostas */
+.sxFlashStudy.sxLamBC .sxBalWrap .sxBalFonte,.sxFlashStudy.sxLamBC .sxBalWrap>small{display:none!important}
+/* Foto del órgano: primeiro bloco depois dos botões, fotos maiores */
+.sxFlashStudy.sxLamBC .sxOrgao .sxDocenteImgs{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.sxFlashStudy.sxLamBC .sxOrgao .sxDocenteImgs img{max-height:260px;background:#0A0C10}

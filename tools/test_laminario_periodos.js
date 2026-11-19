@@ -24,7 +24,7 @@ assert.equal(fotos(p1.cartoes).length, 5, 'P1 deve manter as 5 lâminas originai
 assert.equal(fotos(p2.cartoes).length, 143, 'P2 deve ter exatamente as 143 lâminas originais');
 assert.equal(videos(p2.cartoes).length, 7, 'Os 7 vídeos continuam no complemento da P2');
 assert.equal(p2.cartoes.length, 150);
-assert.equal(fin.cartoes.length, 40, 'Final deve ter exatamente as 40 fotos adicionais');
+assert.equal(fin.cartoes.length, 46, 'Final deve ter as 40 fotos adicionais + 6 campos de teratoma ovárico');
 assert.equal(videos(fin.cartoes).length, 0);
 
 const esperados = {
@@ -34,7 +34,8 @@ const esperados = {
   '14 · Lipoma': 5,
   '15 · Liposarcoma': 5,
   '16 · Leiomioma intramural': 7,
-  '17 · Leiomiosarcoma': 2
+  '17 · Leiomiosarcoma': 2,
+  '18 · Teratoma ovárico maduro': 6
 };
 const contagem = {};
 fin.cartoes.forEach(function (c) { contagem[c.g] = (contagem[c.g] || 0) + 1; });
@@ -73,6 +74,30 @@ assert.match(ui, /function htmlLaminario/);
 assert.match(ui, /data-sx-grupo-local/);
 assert.match(ui, /sinus_cartoes_migrou_final/);
 assert.match(fs.readFileSync('sinus/entrada.js', 'utf8'), /cartoes\.js\?v=\d+/);
+assert.match(ui, /c\.fe && c\.fe\.length/, 'O esquema do quadro (fe) precisa ser exibido no Laminário');
+
+/* Teratoma ovárico maduro: resposta do slide (Clase 6, diapositiva 42), diapositiva e esquemas do quadro. */
+const terato = fin.cartoes.filter(function (c) { return c.g === '18 · Teratoma ovárico maduro'; });
+terato.forEach(function (c) {
+  assert.equal(c.b[0].o, 'Ovario');
+  assert.equal(c.b[0].p, 'Neoplásico benigno');
+  assert.equal(c.b[0].x, 'Teratoma ovárico maduro');
+  assert.ok(c.fd && c.fd.length === 1 && c.fe && c.fe.length === 2, 'Teratoma precisa de diapositiva e 2 esquemas: ' + c.id);
+  [c.img].concat(c.fd, c.fe).forEach(function (u) {
+    assert.ok(fs.existsSync(u.replace(/^\//, '')), 'Imagem inexistente: ' + u);
+  });
+});
+/* Fotos dos órgãos (peças macroscópicas) das diapositivas da Clase 6 · Neoplasias (prática). */
+assert.match(ui, /c\.fo && c\.fo\.length/, 'A foto do órgão (fo) precisa ser exibida no Laminário');
+const orgaos = { '14 · Lipoma': 2, '15 · Liposarcoma': 1, '11 · Adenoma pleomorfo': 1, '17 · Leiomiosarcoma': 1, '18 · Teratoma ovárico maduro': 3 };
+Object.keys(orgaos).forEach(function (g) {
+  const cs = fin.cartoes.filter(function (c) { return c.g === g; });
+  assert.ok(cs.length > 0, 'Grupo ausente: ' + g);
+  cs.forEach(function (c) {
+    assert.equal((c.fo || []).length, orgaos[g], 'Fotos do órgão em ' + c.id);
+    c.fo.forEach(function (u) { assert.ok(fs.existsSync(u.replace(/^\//, '')), 'Imagem inexistente: ' + u); });
+  });
+});
 assert.doesNotMatch(fs.readFileSync('sinus/treino-hub.js', 'utf8'), /data-sx-filtro/);
 
 console.log('Laminário OK: P1 ' + fotos(p1.cartoes).length + ' fotos, P2 ' + fotos(p2.cartoes).length + ' fotos e ' + videos(p2.cartoes).length + ' vídeos, Final ' + fin.cartoes.length + ' fotos.');
