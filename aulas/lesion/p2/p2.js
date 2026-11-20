@@ -32,6 +32,24 @@
     { arq: 'plaza-city-4.m4a', t: 'Esteatosis (cambio graso)', s: 1378, tema: 'acu' },
     { arq: 'alto-parana.m4a', t: 'Calcificación patológica', s: 1405, tema: 'c7' }
   ]
+  // gravações novas na pasta "Anatopatologia I" do Drive (20/11/2026): tocam pelo player do Drive, sem hospedar o arquivo.
+  // O tema ainda não foi identificado (os arquivos são grandes demais para baixar e transcrever aqui).
+  var DRIVE_AUD = [
+    { id: '1pF3V95ZXDpeC3ywcMTKx4T9eDkvVh3Xd', t: 'Nova Gravação 2', mb: 61 },
+    { id: '1qJCpB6ABq5NSZAiaUUWFHPdC5AcimvKz', t: 'Nueva grabación', mb: 41 },
+    { id: '1nFw-odPuXKOs9dEjtB21Tpl4y8t7vG6V', t: 'Nueva grabación 3', mb: 40 },
+    { id: '1bzIFfeKP8tnfXjDTDCXNOTDwr03lxlt_', t: 'Nueva grabación 2', mb: 21 },
+    { id: '1kSZvXq_Yy-gIWnGO6xZzMEQQhMw0qwR9', t: 'Nueva grabación 6', mb: 50 },
+    { id: '12-YN3dX-KopBE7uRTqsagr0VvYCNKIZl', t: 'Departamento del Alto Paraná', mb: 23 }
+  ]
+  function driveAud() {
+    return '<section class="p2-sec"><h2 class="sx-h2">Gravações novas do Drive</h2><p>Gravações da pasta Anatopatologia I, ainda sem tema identificado. Tocam pelo player do Google Drive (sem controle de velocidade); no Drive, o ícone de engrenagem permite acelerar.</p><div class="p2-aud">' +
+      DRIVE_AUD.map(function (a) {
+        return '<div class="p2-a p2-d sx-glass"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + a.mb + ' MB</span></div>' +
+          '<div class="p2-frame" style="aspect-ratio:auto;height:90px"><iframe src="https://drive.google.com/file/d/' + a.id + '/preview" title="' + esc(a.t) + '" loading="lazy" allow="autoplay" style="width:100%;height:100%;border:0"></iframe></div>' +
+          '<div class="p2-links"><a href="https://drive.google.com/file/d/' + a.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></div></div>'
+      }).join('') + '</div></section>'
+  }
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
   var SLIDES = [
@@ -157,8 +175,7 @@
     } else if (sub === 'mapas') {
       mapas(FO)
     } else if (sub === 'aulas') {
-      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Aulas gravadas do Final</h2><p>Ainda não há gravações das Clases 9, 10 e 11 (inflamação aguda e neoplasias) nesta área. Quando você tiver o áudio ou o vídeo dessas aulas, é só me enviar que eu coloco aqui, com o mesmo player da 2ª parcial (velocidade e pulo de 15 s).</p>' +
-        '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/aulas">Ver as aulas gravadas da 2ª parcial</a></p></section>'
+      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Aulas gravadas do Final</h2><p>Ainda não há gravação identificada das Clases 9, 10 e 11. As gravações novas do Drive estão abaixo, sem tema definido.</p><p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/aulas">Ver as aulas gravadas da 2ª parcial</a></p></section>' + driveAud()
     } else if (sub === 'slides') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clase 9, 10 e 11).</p>' +
         SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
@@ -607,8 +624,9 @@
       Object.keys(TEMAS).filter(function (k) { return porTema[k] }).map(function (k) {
         return '<section class="p2-sec"><h2 class="sx-h2">' + esc(TEMAS[k][0]) + '</h2>' + bloco(porTema[k]) + '</section>'
       }).join('') +
+      driveAud() +
       (semTema.length ? '<section class="p2-sec"><h2 class="sx-h2">Gravações das aulas</h2><p>As ' + semTema.length + ' gravações da parcial. Toque no play para ouvir aqui mesmo; a velocidade escolhida vale para todas.</p>' + bloco(semTema) + '</section>' : '')
-    $$('.p2-a', box).forEach(function (c) {
+    $$('.p2-a:not(.p2-d)', box).forEach(function (c) {
       var au = $('audio', c), arq = c.dataset.arq, onde = $('.onde', c), salvo = 0
       var mostrarOnde = function () { var s = st.pos[arq]; onde.textContent = s > 30 ? ' · parou em ' + hms(s) : '' }
       mostrarOnde()
