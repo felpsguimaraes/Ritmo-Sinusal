@@ -142,4 +142,4 @@ html.p2-trava,html.p2-trava body{overflow:hidden}
 .p2-apos.full .p2-apos-frame{flex:1;height:auto;min-height:0}
 @media (max-width:719px){.p2-apos-frame{height:calc(100vh - 210px);height:calc(100dvh - 210px);min-height:460px}.p2-apos .p2-vbar .t small{display:none}}
 
-.p2 .tr-seg.tr4{grid-template-columns:repeat(4,minmax(0,1fr))}@media (max-width:719px){.p2 .tr-seg.tr4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.p2 .tr-seg.tr5{grid-template-columns:repeat(5,minmax(0,1fr))}@media (max-width:719px){.p2 .tr-seg.tr5{grid-template-columns:repeat(2,minmax(0,1fr))}}

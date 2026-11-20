@@ -129,14 +129,15 @@
   }
   // ------------------------------------------------------------ Final (apostila + provas do Examen Final)
   function final(sub) {
-    sub = sub === 'provas' || sub === 'slides' ? sub : 'apostila'
+    sub = sub === 'provas' || sub === 'slides' || sub === 'apunte' ? sub : 'apostila'
     var tab = function (id, t, s) { return '<button type="button" role="tab" data-f="' + id + '" aria-selected="' + (sub === id) + '"><b>' + t + '</b><small>' + s + '</small></button>' }
     view.innerHTML = '<div class="tr-wrap p2">' +
       '<span class="sx-tag">Anatomía Patológica · Final · Dra. Chamorro</span>' +
       '<h1 class="sx-h1"><em>Final.</em></h1>' +
-      '<p class="p2-lead">A apostila do final (inflamação aguda, neoplasias e o apunte por aparelho), o mesmo banco de questões da 2ª parcial com filtro de Neoplasias e Inflamación, as folhas originais e os slides das clases de neoplasias.</p>' +
-      '<div class="tr-seg tr4" role="tablist" aria-label="Parte do Final">' +
-        tab('apostila', 'Apostila', 'Inflamación, neoplasias e apunte') +
+      '<p class="p2-lead">A apostila do final (inflamação aguda e neoplasias, a partir dos slides), o apunte do digestivo, o mesmo banco de questões da 2ª parcial com filtro de Neoplasias e Inflamación, as folhas originais e os slides das clases de neoplasias.</p>' +
+      '<div class="tr-seg tr5" role="tablist" aria-label="Parte do Final">' +
+        tab('apostila', 'Apostila', 'Inflamación y neoplasias') +
+        tab('apunte', 'Apunte', 'Digestivo · Anatopato II') +
         tab('provas', 'Banco de provas', D.qs.length + ' questões comentadas') +
         tab('slides', 'Slides', 'Clase 10 e 11 · Neoplasias') +
         tab('originais', 'Provas originais', 'Folhas e PDF') +
@@ -145,10 +146,15 @@
     var box = $('#p2-parte')
     if (sub === 'apostila') {
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
-        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda, neoplasias e o apunte do final</small></span>' +
+        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda y neoplasias</small></span>' +
         '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=2" title="Apostila do Final"></iframe></section>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=4" title="Apostila do Final"></iframe></section>' +
         '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
+    } else if (sub === 'apunte') {
+      box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apunte do Final">' +
+        '<div class="p2-vbar"><span class="t">Apunte Anatopato II · Dra. Chamorro<small>Boca, salivares, esôfago, estômago, Crohn × CU, cólon e fígado</small></span>' +
+        '<a class="p2-ib" href="' + BASE + 'apostila/apunte.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/apunte.html?v=1" title="Apunte do Final"></iframe></section>'
     } else if (sub === 'slides') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Neoplasias · slides das aulas</h2><p>Os PDFs originais da professora (Clase 10 e 11).</p>' +
         SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
