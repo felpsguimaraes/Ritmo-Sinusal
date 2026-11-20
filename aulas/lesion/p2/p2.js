@@ -206,7 +206,7 @@
     var feitas = 0, pontos = 0, base = st.fSalvo ? D.qs.filter(function (q) { return q.p === 'final24' }) : D.qs
     base.forEach(function (q) { var g = nota(q); if (g != null) { feitas++; pontos += g } })
     var el = $('#p2-placar'); if (!el) return
-    el.innerHTML = '<span><b>' + feitas + '</b> de ' + D.qs.length + ' respondidas</span>' +
+    el.innerHTML = '<span><b>' + feitas + '</b> de ' + base.length + ' respondidas</span>' +
       (feitas ? '<span>Acerto <b>' + Math.round(pontos / feitas * 100) + '%</b></span>' : '') +
       (feitas ? '<button class="linkbtn" type="button" id="p2-zerar">Zerar respostas</button>' : '')
     var z = $('#p2-zerar'), armado = false
