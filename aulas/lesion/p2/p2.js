@@ -43,12 +43,16 @@
     { id: '12-YN3dX-KopBE7uRTqsagr0VvYCNKIZl', t: 'Departamento del Alto Paraná', mb: 23 }
   ]
   function driveAud() {
-    return '<section class="p2-sec"><h2 class="sx-h2">Gravações novas do Drive</h2><p>Gravações da pasta Anatopatologia I, ainda sem tema identificado. Tocam pelo player do Google Drive (sem controle de velocidade); no Drive, o ícone de engrenagem permite acelerar.</p><div class="p2-aud">' +
+    return '<section class="p2-sec"><h2 class="sx-h2">Gravações novas do Drive</h2><p>Gravações da pasta Anatopatologia I, ainda sem tema identificado. Toque em <b>Ouvir no Drive</b> para tocar com o app do Google Drive (no iPhone é o jeito que funciona melhor, e lá você escolhe a velocidade). O player embutido é opcional.</p><div class="p2-aud">' +
       DRIVE_AUD.map(function (a) {
         return '<div class="p2-a p2-d sx-glass"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + a.mb + ' MB</span></div>' +
-          '<div class="p2-frame" style="aspect-ratio:auto;height:90px"><iframe src="https://drive.google.com/file/d/' + a.id + '/preview" title="' + esc(a.t) + '" loading="lazy" allow="autoplay" style="width:100%;height:100%;border:0"></iframe></div>' +
-          '<div class="p2-links"><a href="https://drive.google.com/file/d/' + a.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></div></div>'
+          '<div class="p2-links" style="display:flex;gap:10px;flex-wrap:wrap"><a class="sx-btn sx-small sx-primary" href="https://drive.google.com/file/d/' + a.id + '/view" target="_blank" rel="noopener">Ouvir no Drive</a></div>' +
+          '<details class="p2-emb" style="margin-top:8px"><summary style="cursor:pointer;font-size:13px;color:var(--sx-ink3)">Tocar aqui mesmo (player embutido)</summary>' +
+          '<div class="p2-frame" style="aspect-ratio:auto;height:90px;margin-top:8px"><iframe data-src="https://drive.google.com/file/d/' + a.id + '/preview" title="' + esc(a.t) + '" allow="autoplay" style="width:100%;height:100%;border:0"></iframe></div></details></div>'
       }).join('') + '</div></section>'
+  }
+  function ligaDrive(box) {
+    $$('.p2-emb', box).forEach(function (d) { d.addEventListener('toggle', function () { var f = $('iframe', d); if (d.open && f && !f.src) f.src = f.dataset.src }) })
   }
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
@@ -176,6 +180,7 @@
       mapas(FO)
     } else if (sub === 'aulas') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Aulas gravadas do Final</h2><p>Ainda não há gravação identificada das Clases 9, 10 e 11. As gravações novas do Drive estão abaixo, sem tema definido.</p><p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/aulas">Ver as aulas gravadas da 2ª parcial</a></p></section>' + driveAud()
+      ligaDrive(box)
     } else if (sub === 'slides') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clase 9, 10 e 11).</p>' +
         SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
@@ -626,6 +631,7 @@
       }).join('') +
       driveAud() +
       (semTema.length ? '<section class="p2-sec"><h2 class="sx-h2">Gravações das aulas</h2><p>As ' + semTema.length + ' gravações da parcial. Toque no play para ouvir aqui mesmo; a velocidade escolhida vale para todas.</p>' + bloco(semTema) + '</section>' : '')
+    ligaDrive(box)
     $$('.p2-a:not(.p2-d)', box).forEach(function (c) {
       var au = $('audio', c), arq = c.dataset.arq, onde = $('.onde', c), salvo = 0
       var mostrarOnde = function () { var s = st.pos[arq]; onde.textContent = s > 30 ? ' · parou em ' + hms(s) : '' }
