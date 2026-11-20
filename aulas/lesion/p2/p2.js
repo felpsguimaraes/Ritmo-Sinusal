@@ -107,11 +107,10 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=10' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=11' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
-        '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis, acumulaciones, Clase 7 e inflamación aguda, com o radar da prova e o simulado</small></span>' +
-          '<a class="p2-ib" href="' + BASE + 'apostila/apostila-p2.pdf?v=4" download="Apostila 2a parcial Anatomia Patologica I.pdf" aria-label="Baixar a apostila em PDF" title="Baixar a apostila em PDF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg></a>' +
+        '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis y acumulaciones, com o radar da prova e o simulado</small></span>' +
           '<a class="p2-ib" href="' + BASE + 'apostila/index.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>' +
           ib('p2-afull', 'Tela cheia', '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>') +
         '</div>' +
@@ -130,30 +129,31 @@
   }
   // ------------------------------------------------------------ Final (apostila + provas do Examen Final)
   function final(sub) {
-    sub = sub === 'provas' ? 'provas' : 'apostila'
-    var nFinal = D.qs.filter(function (q) { return q.p === 'final24' }).length
+    sub = sub === 'provas' || sub === 'slides' ? sub : 'apostila'
     var tab = function (id, t, s) { return '<button type="button" role="tab" data-f="' + id + '" aria-selected="' + (sub === id) + '"><b>' + t + '</b><small>' + s + '</small></button>' }
     view.innerHTML = '<div class="tr-wrap p2">' +
       '<span class="sx-tag">Anatomía Patológica · Final · Dra. Chamorro</span>' +
       '<h1 class="sx-h1"><em>Final.</em></h1>' +
-      '<p class="p2-lead">O apunte do final organizado por aparelho e as questões do Examen Final com o enunciado original.</p>' +
-      '<div class="tr-seg tr3" role="tablist" aria-label="Parte do Final">' +
-        tab('apostila', 'Apostila', 'Apunte por aparelho') +
-        tab('provas', 'Provas', nFinal + ' questões do Examen Final') +
-        tab('originais', 'Folhas originais', 'Examen Final em imagem') +
+      '<p class="p2-lead">A apostila do final (inflamação aguda, neoplasias e o apunte por aparelho), o mesmo banco de questões da 2ª parcial com filtro de Neoplasias e Inflamación, as folhas originais e os slides das clases de neoplasias.</p>' +
+      '<div class="tr-seg tr4" role="tablist" aria-label="Parte do Final">' +
+        tab('apostila', 'Apostila', 'Inflamación, neoplasias e apunte') +
+        tab('provas', 'Banco de provas', D.qs.length + ' questões comentadas') +
+        tab('slides', 'Slides', 'Clase 10 e 11 · Neoplasias') +
+        tab('originais', 'Provas originais', 'Folhas e PDF') +
       '</div><div id="p2-parte"></div></div>'
-    $$('[data-f]', view).forEach(function (b) { b.addEventListener('click', function () { location.hash = b.dataset.f === 'apostila' ? '#/final' : b.dataset.f === 'originais' ? '#/provas/originais/5' : '#/final/provas' }) })
+    $$('[data-f]', view).forEach(function (b) { b.addEventListener('click', function () { location.hash = b.dataset.f === 'apostila' ? '#/final' : b.dataset.f === 'originais' ? '#/provas/originais' : '#/final/' + b.dataset.f }) })
     var box = $('#p2-parte')
     if (sub === 'apostila') {
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
-        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica II<small>Boca, salivares, esôfago, estômago, Crohn × CU, cólon e fígado</small></span>' +
-        '<a class="p2-ib" href="' + BASE + 'final/apostila/index.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'final/apostila/index.html?v=1" title="Apostila do Final"></iframe></section>'
+        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda, neoplasias e o apunte do final</small></span>' +
+        '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=1" title="Apostila do Final"></iframe></section>' +
+        '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
+    } else if (sub === 'slides') {
+      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Neoplasias · slides das aulas</h2><p>Os PDFs originais da professora (Clase 10 e 11).</p>' +
+        SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
     } else {
-      st.fSalvo = st.f; st.f = { tema: '', fonte: 'final24', sit: st.f.sit || '' }
       banco()
-      var sel = $('#p2-fonte'); if (sel && sel.parentNode) sel.parentNode.style.display = 'none'
-      var dl = $('.p2-dl', box); if (dl) dl.style.display = 'none'
     }
   }
   function aba(id, t, s) {
@@ -594,8 +594,6 @@
           '<div class="p2-frame"><iframe src="https://drive.google.com/file/d/' + VIDEO.id + '/preview" title="' + esc(VIDEO.t) + '" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>' +
           '<div class="p2-links"><a href="https://drive.google.com/file/d/' + VIDEO.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></div>' +
         '</div></section>' +
-      '<section class="p2-sec"><h2 class="sx-h2">Neoplasias · slides das aulas</h2><p>Os PDFs originais da professora (Clase 10 e 11). A apostila e o banco de questões de neoplasias estão nas outras abas.</p>' +
-        SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>' +
       Object.keys(TEMAS).filter(function (k) { return porTema[k] }).map(function (k) {
         return '<section class="p2-sec"><h2 class="sx-h2">' + esc(TEMAS[k][0]) + '</h2>' + bloco(porTema[k]) + '</section>'
       }).join('') +
