@@ -2,7 +2,7 @@
 Uso (na raiz do repo): python3 tools/apostila-lesion-p2/build.py && python3 tools/apostila-lesion-p2/gerar-pdf.py
 Lê base.html (texto da apostila v4), escreve aulas/lesion/p2/apostila/index.html e img3d/.
 Precisa de beautifulsoup4 e Pillow. O texto da apostila é para alunos: nada de recados ao autor (ver LIMPA)."""
-import os, re, sys
+import os, re, sys, json
 sys.path.insert(0, os.path.dirname(__file__))
 from bs4 import BeautifulSoup, Comment
 from PIL import Image
@@ -126,7 +126,7 @@ LIMPA = [
     ('no slide da sua Clase 6', 'no slide da Clase 6'),
     ('Não há prova antiga dela sobre a Clase 7 no material enviado; as perguntas', 'Não há prova antiga da Dra. sobre a Clase 7; as perguntas'),
     (', enviada pelo Felipe em 28/09/2026.', '.'),
-    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=4" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
+    ('<span class="pill">Clase 7 nova</span>', '<a class="pill pdf-dl" href="apostila-p2.pdf?v=8" download="Apostila 2a parcial Anatomia Patologica I.pdf">⬇ Baixar em PDF</a>'),
     ('Proteínas, amiloide, calcio<span class="new">novo</span>', 'Proteínas, amiloide, calcio'),
     (' <span class="pillx">novo</span>', ''),
     ('<span class="pillx">novo · sem prova antiga</span>', '<span class="pillx">sem prova antiga</span>'),
@@ -138,6 +138,39 @@ for a, b in LIMPA:
     assert s.count(a) == 1, a[:60]
     s = s.replace(a, b)
 s = s.replace('(só citada no slide novo)', '(só citada no slide atual)')
+# 0) capítulo 06 · Neoplasias (Clase 11) e acréscimos à Inflamación aguda (pptx da Clase 9) — ver neo.py
+import neo as NEO
+def troca(a, b_, n=1):
+    global s
+    assert s.count(a) == n, (s.count(a), a[:70])
+    s = s.replace(a, b_)
+troca('<section class="topic" id="repaso"', NEO.SECAO + '<section class="topic" id="repaso"')
+troca('<a class="nav-link" data-go="repaso" href="#repaso"><span class="nav-num">06</span>Repaso', NEO.NAV + '<a class="nav-link" data-go="repaso" href="#repaso"><span class="nav-num">07</span>Repaso')
+troca('<div class="section-number">06</div><div><h2>Repaso final', '<div class="section-number">07</div><div><h2>Repaso final')
+troca('<div class="mini-card" style="--c:#13244a"><h4>06 · Repaso final + simulado</h4>', NEO.CARD + '<div class="mini-card" style="--c:#13244a"><h4>07 · Repaso final + simulado</h4>')
+troca('id="progressText">0/7<', 'id="progressText">0/8<')
+troca('Muerte celular, acumulaciones<br>e inflamación aguda.', 'Muerte celular, acumulaciones,<br>inflamación aguda y neoplasias.')
+troca('<span class="pill">5 temas + radar + repaso</span>', '<span class="pill">6 temas + radar + repaso</span>')
+troca('<span class="pill">105 preguntas comentadas</span>', f'<span class="pill">{105 + len(NEO.QUIZ)} preguntas comentadas</span>')
+troca('<strong>05</strong><span>CLASES', '<strong>06</strong><span>CLASES')
+troca('<strong>105</strong><span>PREGUNTAS', f'<strong>{105 + len(NEO.QUIZ)}</strong><span>PREGUNTAS')
+troca('<strong>23</strong><span>ORGANOGRAMAS', '<strong>26</strong><span>ORGANOGRAMAS')
+troca('<span class="pill">23 organogramas</span>', '<span class="pill">26 organogramas</span>')
+_q = re.search(r'window\.QUIZZES=(\{.*?\});?\s*</script>', s, re.S)
+_Q = json.loads(_q.group(1)); _Q['neoplasias'] = NEO.QUIZ
+s = s[:_q.start(1)] + json.dumps(_Q, ensure_ascii=False) + s[_q.end(1):]
+# inflamación: tabela do slide 52 completa, lâminas novas do pptx e notas da Dra. nos slides
+troca('<td>Histamina y serotonina · PG D2, E2 · Bradicinina</td>', '<td>Histamina y serotonina · C3a y C5a · LT C4, D4, E4 · PG D2, E2 · Bradicinina</td>')
+troca('<td>TNF, IL-1 · Quimiocinas (y C5a, LTB4 del slide de quimiotaxia)</td>', '<td>TNF, IL-1 · Quimiocinas (IL-8) · C3a, C5a · LT B4</td>')
+troca('<figcaption>Slide 52 original.</figcaption></figure>', '<figcaption>Slide 52 original (toque para ampliar).</figcaption></figure>' + NEO.NOTA_MED)
+troca('<figcaption>Fibrinosa ao MO: rede eosinófila de fibrina + PMN.</figcaption>', '<figcaption>Fibrinosa ao MO: rede eosinófila de fibrina + PMN nos <b>espacios alveolares</b>.</figcaption>')
+troca('<figcaption>Coleção de bactérias cercada de PMN.</figcaption>', '<figcaption>Esq.: coleção de bactérias cercada de PMN no <b>miocardio</b> (abscesso). Dir.: PMN na <b>apendicitis aguda</b>.</figcaption>')
+_f51 = re.search(r'<figure class="photo" style="display:block"><img alt="Células de la sangre"[^>]*/><figcaption>.*?</figcaption></figure>', s)
+s = s[:_f51.end()] + NEO.grid(NEO.FIG_INF_04, NEO.FIG_INF_08) + s[_f51.end():]
+_f53 = re.search(r'<figure class="photo" style="display:block"><img alt="Presiones: normal, exudado, trasudado"[^>]*/><figcaption>.*?</figcaption></figure>', s)
+s = s[:_f53.end()] + NEO.grid(NEO.FIG_INF_15) + s[_f53.end():]
+_f54 = re.search(r'<figure class="photo"><img alt="Trayecto de los leucocitos"[^>]*/><figcaption>.*?</figcaption></figure>', s)
+s = s[:_f54.start()] + NEO.FIG_INF_29 + s[_f54.start():]
 soup = BeautifulSoup(s, 'html.parser')
 PH = {}
 def ph(html):
@@ -304,7 +337,7 @@ for qz in soup.select('.quiz[data-quiz]'):
 
 # 4b) players das aulas gravadas no topo de cada tema
 from midia import bloco
-for tid in ('necrosis', 'apoptosis', 'acumulacion', 'clase7', 'inflamacion'):
+for tid in ('necrosis', 'apoptosis', 'acumulacion', 'clase7', 'inflamacion', 'neoplasias'):
     h = bloco(tid)
     if h:
         topic(tid).select_one('.section-head').insert_after(ph(h))
@@ -347,7 +380,7 @@ for b in soup.select('.exam > b.t'):
 ini = topic('inicio')
 hero_p = ini.select_one('.hero > p')
 hero_p.clear()
-hero_p.append(BeautifulSoup('Os slides das <strong>Clases 4 a 8</strong> em formato <strong>resumen para decorar</strong>: ⚡ quadro para decorar, tabelas, fluxos e organogramas em cada tema, com os termos da Dra. em espanhol e a explicação em português, mais casos resolvidos, pegadinhas e as perguntas das provas antigas.', 'html.parser'))
+hero_p.append(BeautifulSoup('Os slides das <strong>Clases 4 a 8 e 11</strong> em formato <strong>resumen para decorar</strong>: ⚡ quadro para decorar, tabelas, fluxos e organogramas em cada tema, com os termos da Dra. em espanhol e a explicação em português, mais casos resolvidos, pegadinhas e as perguntas das provas antigas.', 'html.parser'))
 pl = soup.new_tag('span'); pl['class'] = 'pill'; pl.string = f'{sum(len(v) for v in M.CASOS.values())} casos resueltos'
 ini.select_one('.hero-meta .pill').insert_after(pl)
 ini.select_one('.stats').insert_after(ph(M.essencial_html()))
@@ -361,16 +394,17 @@ bt['title'] = 'Mostra só o essencial: esconde slides literais, lâminas e expli
 bt.string = '⚡ Solo lo esencial'
 tb.insert_after(bt)
 
-# 4d) fontes da aula 3D: Fraunces (texto e títulos) e JetBrains Mono (rótulos)
+# 4d) fontes do PDF da aula: Fraunces (títulos) e Inter (texto e rótulos)
 fl = [l for l in soup.find_all('link') if 'fonts.googleapis.com/css2' in (l.get('href') or '')]
 assert len(fl) == 1
-fl[0]['href'] = ('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700'
-                 '&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@800&display=swap')
+import tipo as TIPO
+fl[0]['href'] = TIPO.FONTES
+print('títulos em itálico', TIPO.italico_titulos(soup))
 
 # 5) CSS, defs, JS, lightbox com imagem grande
 st = soup.find_all('style')[-1]
 from verde import verde_html, CSS_VERDE
-st.append(CSS + CSS_VERDE)
+st.append(CSS + CSS_VERDE + TIPO.CSS_TIPO)
 for mc in soup.select('.mini-card[style]'):
     if mc['style'].startswith('--c:') and ';' not in mc['style']:
         mc['style'] = '--c:#0c8059'

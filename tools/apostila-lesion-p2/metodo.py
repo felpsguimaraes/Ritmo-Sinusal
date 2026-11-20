@@ -474,3 +474,71 @@ RESPOSTAS = (
    '<li>Conferi as palavras-armadilha: <b>siempre, nunca, pérdida, aumento</b>, MO × ME?</li><li>No V/F com justificativa, corrigi a frase?</li></ul></div>')
 
 TITULO_CASOS = 'Casos resueltos · raciocínio passo a passo'
+
+# ------------------------------------------------------------------ capítulo 06 · Neoplasias (Clase 11)
+SUB['neoplasias'] = 'O tumor do começo ao fim: o que é, como se chama, como se vê, como avança e como se estadia.'
+CAP_N['neoplasias'] = '06'
+EXPL['neoplasias'] = [
+('O que é um tumor, em português simples',
+ '<p>Uma célula acumula <b>mutações</b> e passa a se dividir sem obedecer aos sinais do tecido: cresce <b>demais</b>, <b>sem coordenação</b> e <b>sem depender</b> do estímulo que a iniciou (por isso "autónomo"). Toda a massa descende dessa <b>única célula</b>: é um <b>clone</b>.</p>'
+ + grade(2, card('Parénquima · "quem é" o tumor', '<ul><li>as células neoplásicas</li><li>dá o <b>nome</b> e o <b>comportamento</b></li></ul>', P),
+            card('Estroma · "a casa" do tumor', '<ul><li>conjuntivo, vasos, células imunes</li><li>define <b>velocidade</b> e <b>propagação</b></li><li>pouco = mole e carnoso · muito colágeno = <b>desmoplasia</b>, duro (<b>escirro</b>)</li></ul>', A))),
+('Como dar nome a qualquer tumor',
+ passos(('Pergunte a origem.', '<b>Epitélio</b> (revestimento, glândula) ou <b>mesênquima</b> (conjuntivo, músculo, osso, gordura, cartilagem)? Ou <b>sangue</b>?'),
+        ('Pergunte o comportamento.', 'Benigno ou maligno?'),
+        ('Junte as duas respostas.', 'Benigno = <b>tecido + "oma"</b> (fibroma, leiomioma) ou nome por padrão (adenoma, papiloma, cistoadenoma, pólipo). Maligno mesenquimático = <b>tecido + "sarcoma"</b>. Maligno epitelial = <b>carcinoma</b> (escamoso/epidermoide se imita pele; adenocarcinoma se forma glândulas).'))
+ + tabela(['Tecido', 'Benigno', 'Maligno'], [
+   ['Fibroso', 'Fibroma', 'Fibrosarcoma'], ['Cartílago', 'Condroma', 'Condrosarcoma'], ['Músculo liso', '<b>Leiomioma</b>', '<b>Leiomiosarcoma</b>'],
+   ['Músculo esquelético', 'Rabdomioma', 'Rabdomiosarcoma'], ['Hueso', 'Osteoma', 'Osteosarcoma'], ['Grasa', 'Lipoma', 'Liposarcoma'],
+   ['Epitelio glandular', '<b>Adenoma</b>', '<b>Adenocarcinoma</b>'], ['Epitelio escamoso', 'Papiloma', '<b>Carcinoma epidermoide</b>']])),
+('Mixto, teratoma, hamartoma, coristoma: a lógica',
+ grade(2, card('Tumor mixto', '<p><b>Um</b> clone que sabe fazer dois tipos de célula (epitelial e mioepitelial). <b>Uma</b> capa germinal. Ex.: <b>adenoma pleomorfo</b> da parótida.</p>', T),
+          card('Teratoma', '<p>Célula <b>totipotente</b> (gônada) que faz tecidos das <b>3 capas</b>: pele, pelo, dente, cartilagem, tireoide. Ex.: <b>quiste dermoide</b>.</p>', P),
+          card('Hamartoma', '<p>Tecido <b>do próprio lugar</b>, mas desorganizado ("bagunça local"). Ex.: <b>hamartoma pulmonar</b>.</p>', A),
+          card('Coristoma', '<p>Tecido <b>normal</b> no lugar <b>errado</b> ("visitante"). Ex.: <b>pâncreas</b> na submucosa gástrica.</p>', G))),
+('Anaplasia sem decoreba',
+ '<p>A célula maligna "<b>esquece</b>" o que era: volta a um estado mais primitivo. Tudo o que se vê na lâmina sai disso:</p>'
+ + fluxo(('Pleomorfismo', 'células de tamanhos e formas diferentes, até <b>células gigantes</b>.'),
+         ('Núcleo anómalo', 'grande (N:C <b>1:1</b>), <b>hipercromático</b>, cromatina grosseira, <b>nucléolo grande</b>.'),
+         ('Mitosis atípicas', 'muitas e <b>grotescas</b>: fusos tri, tetra, multipolares.'),
+         ('Pérdida de polaridad', 'crescimento <b>anárquico</b>, sem orientação.'))
+ + '<p><b>Função:</b> quanto mais diferenciada, mais a célula faz o que o tecido fazia (queratina, bile, hormônio <b>próprio</b>). A anaplásica perde isso e às vezes ganha funções <b>novas</b> (ACTH num tumor de pulmão): <b>síndrome paraneoplásico</b>.</p>'),
+('A escada até o câncer invasor',
+ fluxo(('Metaplasia', 'troca de um epitélio por outro (Barrett). Adaptação; ainda não é neoplasia.', 'reversível'),
+       ('Displasia', '"crecimiento desordenado": pleomorfismo, núcleos grandes e escuros, mais mitoses.', 'leve/moderada pode regredir'),
+       ('Carcinoma in situ', 'displasia em <b>todo o espesor</b>, <b>membrana basal intacta</b>.', 'não metastatiza'),
+       ('Carcinoma invasor', 'rompeu a <b>membrana basal</b>: chega aos vasos.', 'pode metastatizar'))
+ + '<p>Por isso o <b>Papanicolaou</b> (citologia exfoliativa) rastreia o colo: pega a lesão nos degraus de cima.</p>'),
+('Cápsula, seudocápsula e caranguejo',
+ grade(2, card('Benigno = balão que empurra', '<p>Cresce devagar e <b>empurra</b> o tecido vizinho, que se comprime numa <b>cápsula fibrosa</b>. Resultado: bem delimitado, <b>móvel</b>, sai inteiro por <b>enucleação</b>. Exceção: <b>hemangioma</b> (vasos entrelaçados, sem cápsula).</p>', V),
+          card('Maligno = caranguejo', '<p><b>Infiltra</b> entre as estruturas: limites mal definidos, <b>fixo</b>, exige margem cirúrgica. Mesmo quando parece ter cápsula (<b>seudocápsula</b>), o microscópio mostra cordões atravessando a margem: as <b>"patas de cangrejo"</b> (daí o nome "câncer").</p>', R))),
+('Por que fígado e pulmão?',
+ '<p>A célula tumoral entra mais fácil na <b>veia</b> (parede fina) do que na artéria. Depois segue o sangue venoso:</p>'
+ + fluxo(('Tubo digestivo', 'veia porta → primeiro filtro: <b>fígado</b>.'),
+         ('Resto do corpo', 'veias cavas → coração direito → primeiro filtro: <b>pulmões</b>.'),
+         ('Linfa', 'carcinomas entram nos linfáticos vizinhos → <b>ganglio centinela</b> primeiro.'),
+         ('Cavidades', 'ovário e apêndice "semeiam" o peritônio → <b>seudomixoma</b> se produzem muco.'))),
+('TNM em 3 perguntas',
+ fluxo(('T · quão grande?', 'tamanho/extensão do primário: <b>T0 (in situ) → T4</b>.'),
+       ('N · chegou nos linfonodos?', '<b>N0</b> não; <b>N1–N3</b> cada vez mais linfonodos.'),
+       ('M · foi longe?', '<b>M0</b> não; <b>M1</b> sim (via hematógena).'))
+ + '<p><b>Gradación</b> responde outra pergunta: "quão feia é a célula?" (diferenciação, mitoses). É <b>histológica</b>. A <b>estadificación</b> (TNM) é <b>clínica</b> e pesa mais no prognóstico.</p>'),
+]
+CASOS['neoplasias'] = [
+ caso(1, 'massa uterina', 'Mulher de 45 anos com sangramento e útero aumentado. A peça mostra um nódulo de 12 cm, mal delimitado, com áreas de necrose; ao microscópio, células fusiformes de músculo liso com núcleos atípicos e muitas mitoses.',
+  [('1) Origem e comportamento?', '<b>Mesenquimático</b> (músculo liso) e <b>maligno</b> (mal delimitado, atipia, mitoses).'),
+   ('2) Nome?', '<b>Leiomiosarcoma</b>. O benigno equivalente, bem delimitado, seria o <b>leiomioma</b>.'),
+   ('3) E se o laudo dissesse "bien diferenciado"?', 'Continua <b>maligno mesenquimático</b>: diferenciação muda o grau, não o tipo.'),
+   ('4) Via de metástase esperada?', '<b>Hematógena</b> (característica dos sarcomas), com <b>pulmões</b> como alvo frequente.')]),
+ caso(2, 'colo uterino', 'Mulher de 32 anos com Papanicolaou alterado. A biópsia mostra atipia em todo o espesor do epitélio escamoso, sem ultrapassar a membrana basal.',
+  [('1) Diagnóstico?', '<b>Carcinoma in situ</b> (neoplasia preinvasiva).'),
+   ('2) Pode ter metástase?', '<b>Não</b>: sem romper a membrana basal não alcança vasos.'),
+   ('3) Se a atipia ocupasse só o terço inferior?', '<b>Displasia leve</b>: pode <b>regredir</b> se a causa sumir.'),
+   ('4) Quando passa a invasor?', 'Quando as células <b>rompem a membrana basal</b>.')]),
+ caso(3, 'mama com nódulos pulmonares', 'Mulher de 48 anos com massa de 4 cm na mama direita, fixa à parede torácica, linfonodo axilar de 2 cm e vários nódulos nos dois pulmões.',
+  [('1) T?', '<b>T4</b>: a fixação à parede torácica é extensão local.'),
+   ('2) N?', '<b>N1</b>: linfonodo axilar comprometido.'),
+   ('3) M?', '<b>M1</b>: nódulos pulmonares = metástase hematógena.'),
+   ('4) Isso é gradação ou estadificación?', '<b>Estadificación</b> (clínica). A gradação viria da lâmina.')]),
+]
+ESSENCIAL.append(('#0c8059', 'neoplasias', 'Neoplasia = clon de <b>una sola célula</b>. Benigno <b>-oma</b> · <b>sarcoma</b> (mesénquima) · <b>carcinoma</b> (epitelio). Anaplasia: pleomorfismo, núcleo 1:1 hipercromático, <b>mitosis atípicas</b>, pérdida de polaridad. In situ = <b>membrana basal intacta</b>. Carcinoma → <b>linfática</b>; sarcoma → <b>hematógena</b> (hígado, pulmón). Gradación histológica × estadificación clínica (<b>TNM</b>).'))

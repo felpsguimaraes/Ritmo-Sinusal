@@ -2,7 +2,7 @@
 Uso (na raiz do repo): python3 tools/apostila-lesion-p2/gerar-pdf.py
 Saída: aulas/lesion/p2/apostila/apostila-p2.pdf
 As fotos 3D entram em JPEG (o webp viraria imagem sem compressão e o PDF passaria de 80 MB).
-Precisa de Pillow, Node e Playwright (Chromium) e acesso ao Google Fonts (Fraunces e JetBrains Mono)."""
+Precisa de Pillow, Node e Playwright (Chromium) e acesso ao Google Fonts (Fraunces e Inter)."""
 import os, subprocess, sys, tempfile, threading, functools, http.server, socketserver, glob
 from PIL import Image
 
@@ -16,7 +16,15 @@ with tempfile.TemporaryDirectory() as jpg:
         im = Image.open(f).convert('RGB')
         if im.width > 1200:
             im = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)
-        im.save(os.path.join(jpg, os.path.basename(f)[:-5] + '.jpg'), quality=74, optimize=True, progressive=True)
+        im.save(os.path.join(jpg, os.path.basename(f)[:-5] + '.jpg'), quality=60, optimize=True, progressive=True)
+    # lâminas dos slides (1600–2400 px na tela) entram reduzidas no PDF, para o arquivo caber no limite de 25 MB do Pages
+    os.makedirs(os.path.join(jpg, 'img'))
+    for f in glob.glob(APOS + '/img/*.jpg'):
+        im = Image.open(f).convert('RGB')
+        lim = 1250 if im.width > 2000 else 820
+        if im.width > lim:
+            im = im.resize((lim, round(im.height * lim / im.width)), Image.LANCZOS)
+        im.save(os.path.join(jpg, 'img', os.path.basename(f)), quality=60, optimize=True, progressive=True)
     class Quieto(http.server.SimpleHTTPRequestHandler):
         def log_message(self, *a):
             pass

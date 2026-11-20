@@ -12,6 +12,8 @@ const { chromium } = require('playwright');
   const JPG = process.env.JPG_DIR;
   if (JPG) await p.route(/img3d\/[^/?]+\.webp/, r => { const n = r.request().url().split('/').pop().split('?')[0].replace('.webp', '.jpg');
     r.fulfill({ path: JPG + '/' + n, contentType: 'image/jpeg' }) });
+  if (JPG) await p.route(/apostila\/img\/[^/?]+\.jpg/, r => { const n = r.request().url().split('/').pop().split('?')[0];
+    r.fulfill({ path: JPG + '/img/' + n, contentType: 'image/jpeg' }) });
   await p.goto(url, { waitUntil: 'networkidle' });
   await p.emulateMedia({ media: 'print' });
   await p.evaluate(async () => {

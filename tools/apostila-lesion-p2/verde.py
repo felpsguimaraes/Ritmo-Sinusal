@@ -55,7 +55,7 @@ def verde_html(out):
 CSS_VERDE = r'''
 /* ===== paleta SINUS (verde) ===== */
 :root{--acc:#0c8059;--acc2:#08a86e;--accs:#e7f6eb;--navy:#102d25;--ink:#102d25;--muted:#56715f;--line:#d9e9de;--bg:#f5fbf7}
-#inicio,#prueba,#repaso,#necrosis,#apoptosis,#acumulacion,#clase7,#inflamacion{--acc:#0c8059;--acc2:#08a86e;--accs:#e7f6eb}
+#inicio,#prueba,#repaso,#necrosis,#apoptosis,#acumulacion,#clase7,#inflamacion,#neoplasias{--acc:#0c8059;--acc2:#08a86e;--accs:#e7f6eb}
 body{background:#f5fbf7;color:#17362c}
 .hero{background:radial-gradient(120% 140% at 100% 0%,#0c8059 0%,#0b6246 40%,#0b3d2e 100%)}
 .nav-link[data-go] .nav-num{background:#e7f6eb;color:#0c8059}
