@@ -344,7 +344,7 @@
         '<h1 class="sx-h1">' + (nome ? 'Olá, <em>' + esc(nome) + '.</em>' : 'Bons <em>estudos.</em>') + '</h1>' +
         '<p class="sx-lead">' + esc(A.home.lead || '') + '</p>' +
         '<div class="hub-modes">' + A.home.cards.map(function (c) {
-          return '<a class="mode sx-glass" href="' + esc(c.href) + '"><span class="mode-art ' + esc(c.art) + '" aria-hidden="true"><i></i><i></i><i></i></span>' +
+          return '<a class="mode sx-glass" href="' + esc(c.href) + '">' + (c.img ? '<span class="mode-art"><img src="' + esc(c.img) + '" alt="" width="1280" height="720"></span>' : '<span class="mode-art ' + esc(c.art) + '" aria-hidden="true"><i></i><i></i><i></i></span>') +
             '<span class="mode-txt"><b>' + esc(c.t) + '</b><span>' + esc(c.d) + '</span><span class="go">' + esc(c.go) + '</span></span></a>'
         }).join('') + '</div></div>'
       return
