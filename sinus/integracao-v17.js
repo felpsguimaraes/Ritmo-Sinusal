@@ -562,7 +562,7 @@
     _overview();
     var s = subjectData(); if (!s) return;
     var prof = UI.mode === 'practice' ? (s.practiceTeacher || s.teacher) : s.teacher;
-    var temApost = s.slug === 'anatopato', decks = Object.keys(DECKS).filter(function (k) { return k.indexOf(s.slug + '/') === 0 });
+    var temApost = s.slug === 'anatopato' || s.slug === 'familia', decks = Object.keys(DECKS).filter(function (k) { return k.indexOf(s.slug + '/') === 0 });
     $id('subjectContent').insertAdjacentHTML('afterbegin', '<div class="glass sxBlock"><span class="eyebrow">Da sua turma ' + H(S.turma) + '</span>' +
       '<h3>' + H(prof || 'Professor a definir') + '</h3><p class="soft" style="font-size:12px;line-height:1.6">O material do professor da sua turma aparece primeiro. O das outras turmas vem depois, sem esconder nada.</p>' +
       '<div class="heroActions">' + (temApost ? '<button class="btn primary sm" onclick="setTab(\'apostila\')">Abrir a apostila</button>' : '') +
@@ -572,6 +572,8 @@
   /* apostilas do Sinus por matéria (vale para todas as turmas do período) */
   var APOSTILAS = {
     anatopato: { ler: '/aulas/lesion/apostila/', pdf: '/aulas/lesion/#/pdf', d3: '/aulas/lesion/#/3d', treino: '/aulas/lesion/#/treino', banco: '/aulas/lesion/#/provas/banco', hub: '/aulas/lesion/' },
+    familia: { ler: '/aulas/apostila-familia/', pdf: '/aulas/apostila-familia/apostila-medicina-familia.pdf', titulo: 'Medicina de la Familia · Unidades III y IV',
+      extra: 'Os exercícios desta apostila (122 questões com correção na hora) estão na aba Treino da matéria.' },
     farmacologia: { ler: '/aulas/apostila-farmacologia/', pdf: '/aulas/apostila-farmacologia/apostila-farmacologia-p2.pdf', gabarito: '/aulas/apostila-farmacologia/exercicios-respondidos-p2.pdf', titulo: 'Farmacologia · P2 (Clases 6 a 9)',
       extra: 'Os exercícios, os flashcards e os mapas desta apostila estão na aba Treino da matéria.' }
   };
