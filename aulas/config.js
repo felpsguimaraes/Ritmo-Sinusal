@@ -9,5 +9,5 @@ window.SINUSAL_DONO = "felpsguimaraes@gmail.com";
 
 // aulas publicadas (aparecem em "Outras aulas" no início de cada uma)
 window.SINUSAL_AULAS = [
-  { id: "lesion", titulo: "Lesión celular", capa: "necrosis-apoptosis" }
+  { id: "lesion", titulo: "Lesión, inflamación y neoplasias", capa: "necrosis-apoptosis" }
 ];
