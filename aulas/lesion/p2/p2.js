@@ -50,7 +50,7 @@
   var $ = function (s, r) { return (r || document).querySelector(s) }
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)) }
   function ler() { try { var v = JSON.parse(localStorage.getItem(KEY)); return v && typeof v === 'object' ? v : {} } catch (e) { return {} } }
-  function gravar() { try { localStorage.setItem(KEY, JSON.stringify(st)) } catch (e) {} }
+  function gravar() { try { var o = Object.assign({}, st); if (st.fSalvo) o.f = st.fSalvo; delete o.fSalvo; localStorage.setItem(KEY, JSON.stringify(o)) } catch (e) {} }
   var st = ler()
   st.r = st.r || {}            // respostas: id -> {k|g}
   st.f = st.f || { tema: '', fonte: '', sit: '' }
@@ -75,6 +75,8 @@
     fecharLeitor()
     document.documentElement.classList.remove('p2-trava')
     view = v
+    if (st.fSalvo) { st.f = st.fSalvo; st.fSalvo = null }
+    if (p && p[0] === 'final') { final(p[1]); return }
     var alvo = p && p[0], antes = view && view.querySelector('.p2') ? parte : null
     parte = ['apostila', 'banco', 'originais', 'aulas', 'mapas'].indexOf(alvo) >= 0 ? alvo : 'apostila'
     if (antes && antes !== parte) scrollTo(0, 0)
@@ -126,6 +128,34 @@
     var b = $('#p2-afull'); b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? 'Sair da tela cheia' : 'Tela cheia'); b.title = b.getAttribute('aria-label')
     b.querySelector('svg').innerHTML = on ? '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>' : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'
   }
+  // ------------------------------------------------------------ Final (apostila + provas do Examen Final)
+  function final(sub) {
+    sub = sub === 'provas' ? 'provas' : 'apostila'
+    var nFinal = D.qs.filter(function (q) { return q.p === 'final24' }).length
+    var tab = function (id, t, s) { return '<button type="button" role="tab" data-f="' + id + '" aria-selected="' + (sub === id) + '"><b>' + t + '</b><small>' + s + '</small></button>' }
+    view.innerHTML = '<div class="tr-wrap p2">' +
+      '<span class="sx-tag">Anatomía Patológica · Final · Dra. Chamorro</span>' +
+      '<h1 class="sx-h1"><em>Final.</em></h1>' +
+      '<p class="p2-lead">O apunte do final organizado por aparelho e as questões do Examen Final com o enunciado original.</p>' +
+      '<div class="tr-seg tr3" role="tablist" aria-label="Parte do Final">' +
+        tab('apostila', 'Apostila', 'Apunte por aparelho') +
+        tab('provas', 'Provas', nFinal + ' questões do Examen Final') +
+        tab('originais', 'Folhas originais', 'Examen Final em imagem') +
+      '</div><div id="p2-parte"></div></div>'
+    $$('[data-f]', view).forEach(function (b) { b.addEventListener('click', function () { location.hash = b.dataset.f === 'apostila' ? '#/final' : b.dataset.f === 'originais' ? '#/provas/originais/5' : '#/final/provas' }) })
+    var box = $('#p2-parte')
+    if (sub === 'apostila') {
+      box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
+        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica II<small>Boca, salivares, esôfago, estômago, Crohn × CU, cólon e fígado</small></span>' +
+        '<a class="p2-ib" href="' + BASE + 'final/apostila/index.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'final/apostila/index.html?v=1" title="Apostila do Final"></iframe></section>'
+    } else {
+      st.fSalvo = st.f; st.f = { tema: '', fonte: 'final24', sit: st.f.sit || '' }
+      banco()
+      var sel = $('#p2-fonte'); if (sel && sel.parentNode) sel.parentNode.style.display = 'none'
+      var dl = $('.p2-dl', box); if (dl) dl.style.display = 'none'
+    }
+  }
   function aba(id, t, s) {
     return '<button type="button" role="tab" data-p="' + id + '" aria-selected="' + (parte === id) + '"><b>' + t + '</b><small>' + s + '</small></button>'
   }
@@ -173,8 +203,8 @@
     lista()
   }
   function placar() {
-    var feitas = 0, pontos = 0
-    D.qs.forEach(function (q) { var g = nota(q); if (g != null) { feitas++; pontos += g } })
+    var feitas = 0, pontos = 0, base = st.fSalvo ? D.qs.filter(function (q) { return q.p === 'final24' }) : D.qs
+    base.forEach(function (q) { var g = nota(q); if (g != null) { feitas++; pontos += g } })
     var el = $('#p2-placar'); if (!el) return
     el.innerHTML = '<span><b>' + feitas + '</b> de ' + D.qs.length + ' respondidas</span>' +
       (feitas ? '<span>Acerto <b>' + Math.round(pontos / feitas * 100) + '%</b></span>' : '') +

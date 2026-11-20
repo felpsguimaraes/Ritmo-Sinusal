@@ -15,7 +15,10 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="../config.js?v=5"></script>
 <script>window.SINUSAL_AULA = { id: 'lesion', titulo: 'Lesión celular', materia: 'Anatomía Patológica I', capa: 'necrosis-apoptosis', temas: 44,
-  extra: { titulo: '2ª parcial', js: ['p2/dados.js?v=3', 'p2/p2.js?v=12'], css: 'p2/p2.css?v=4',
+  home: { lead: 'Escolha o que você vai estudar agora.', cards: [
+    { href: '#/provas', art: 'mode-apos', t: 'Apostila e provas da 2ª parcial', d: 'A apostila da parcial (com Neoplasias), 187 questões das provas da Dra. Chamorro com o porquê de cada alternativa, as folhas originais, os slides, a clase repaso e as gravações.', go: 'Abrir a 2ª parcial' },
+    { href: '#/final', art: 'mode-pdf', t: 'Apostila e provas do Final', d: 'O apunte do final organizado por aparelho (boca, esôfago, estômago, intestino e fígado) e as questões e folhas originais do Examen Final.', go: 'Abrir o Final' } ] },
+  extra: { titulo: '2ª parcial', js: ['p2/dados.js?v=4', 'p2/p2.js?v=13'], css: 'p2/p2.css?v=5',
     hub: ['Apostila e provas da 2ª parcial', 'A apostila da parcial (com Neoplasias) com organogramas e simulado, 187 questões das provas da Dra. Chamorro (11 delas de Neoplasias, do Examen Final) com o porquê de cada alternativa, as folhas originais, os slides das clases 10 e 11, a clase repaso e as gravações.'] } }</script>
 <link rel="stylesheet" href="../sinus-identidade.css?v=16">
 <meta name="application-name" content="SINUS">
@@ -50,7 +53,7 @@
       <span class="sx-tag">Anatomía Patológica I</span>
       <h1 id="sx-title">Lesión celular: <em>necrosis, apoptosis y acumulaciones.</em></h1>
     </div>
-    <p class="sx-sub">A apostila em PDF ou em 3D, com as lâminas, o texto da professora e o treino com as questões das provas antigas.</p>
+    <p class="sx-sub">A apostila e as provas da 2ª parcial e do Final de Anatomía Patológica, com as questões das provas da Dra. Chamorro.</p>
 
     <form class="sx-form" id="f-dados" novalidate hidden>
       <p class="sx-info" id="dados-info" hidden></p>
@@ -92,16 +95,14 @@
     <a class="sx-logo" href="#/inicio" aria-label="sinusal. Início"><img class="sinus-brand-logo" src="/icons/sinus-brand.svg" alt="Sinus"></a>
     <nav class="sx-tabs" aria-label="Modos de estudo">
       <a href="#/inicio" data-v="inicio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Início</span></a>
-      <a href="#/3d" data-v="3d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>Aula 3D</a>
-      <a href="#/pdf" data-v="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>PDF</a>
-      <a href="#/treino" data-v="treino"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Treino</a>
-      <a href="#/provas" data-v="provas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3z"/><path d="m9 13 2 2 4-4"/></svg>Provas</a>
+      <a href="#/provas" data-v="provas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6l1 2h3a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h3z"/><path d="m9 13 2 2 4-4"/></svg>2ª parcial</a>
+      <a href="#/final" data-v="final"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 6.5 7 .9-5.1 4.8 1.3 7-6.2-3.4-6.2 3.4 1.3-7L2 9.4l7-.9z"/></svg>Final</a>
     </nav>
   </header>
   <main class="sx-view" id="sx-view"></main>
   <footer class="sx-appfoot"><span>sinusal. · Anatomía Patológica I</span><span><span id="sx-quem"></span> · <button class="sx-link" type="button" id="sx-sair">Sair da conta</button></span><span>© FELPS</span></footer>
 </div>
 
-<script src="../app.js?v=8"></script>
+<script src="../app.js?v=9"></script>
 </body>
 </html>
