@@ -152,7 +152,7 @@
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
         '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda y neoplasias</small></span>' +
         '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=12" title="Apostila do Final"></iframe></section>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=13" title="Apostila do Final"></iframe></section>' +
         '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
     } else if (sub === 'mapas') {
       mapas(FO)
