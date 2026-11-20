@@ -130,16 +130,20 @@
   }
   // ------------------------------------------------------------ Final (apostila + provas do Examen Final)
   function final(sub) {
-    sub = sub === 'provas' || sub === 'slides' ? sub : 'apostila'
+    sub = sub === 'provas' || sub === 'slides' || sub === 'mapas' || sub === 'aulas' ? sub : 'apostila'
+    var FO = window.SINUSAL_FINAL_ORGS || []
+    var nFO = FO.reduce(function (a, g) { return a + g.h.length }, 0)
     var tab = function (id, t, s) { return '<button type="button" role="tab" data-f="' + id + '" aria-selected="' + (sub === id) + '"><b>' + t + '</b><small>' + s + '</small></button>' }
     view.innerHTML = '<div class="tr-wrap p2">' +
       '<span class="sx-tag">Anatomía Patológica · Final · Dra. Chamorro</span>' +
       '<h1 class="sx-h1"><em>Final.</em></h1>' +
-      '<p class="p2-lead">A apostila do final (inflamação aguda e neoplasias, a partir dos slides), o mesmo banco de questões da 2ª parcial com filtro de Neoplasias e Inflamación, as folhas originais e os slides das clases 9, 10 e 11.</p>' +
-      '<div class="tr-seg tr4" role="tablist" aria-label="Parte do Final">' +
+      '<p class="p2-lead">A apostila do final (inflamação aguda e neoplasias, a partir dos slides), os organogramas, as aulas gravadas, o mesmo banco de questões da 2ª parcial com filtro de Neoplasias e Inflamación, as folhas originais e os slides das clases 9, 10 e 11.</p>' +
+      '<div class="tr-seg tr6" role="tablist" aria-label="Parte do Final">' +
         tab('apostila', 'Apostila', 'Inflamación y neoplasias') +
+        tab('mapas', 'Organogramas', nFO + ' mapas do Final') +
+        tab('aulas', 'Aulas gravadas', 'Clases 9, 10 e 11') +
         tab('provas', 'Banco de provas', D.qs.length + ' questões comentadas') +
-        tab('slides', 'Slides', 'Clase 10 e 11 · Neoplasias') +
+        tab('slides', 'Slides', 'Clase 9, 10 e 11') +
         tab('originais', 'Provas originais', 'Folhas e PDF') +
       '</div><div id="p2-parte"></div></div>'
     $$('[data-f]', view).forEach(function (b) { b.addEventListener('click', function () { location.hash = b.dataset.f === 'apostila' ? '#/final' : b.dataset.f === 'originais' ? '#/provas/originais' : '#/final/' + b.dataset.f }) })
@@ -148,10 +152,15 @@
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
         '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda y neoplasias</small></span>' +
         '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=6" title="Apostila do Final"></iframe></section>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=7" title="Apostila do Final"></iframe></section>' +
         '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
+    } else if (sub === 'mapas') {
+      mapas(FO)
+    } else if (sub === 'aulas') {
+      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Aulas gravadas do Final</h2><p>Ainda não há gravações das Clases 9, 10 e 11 (inflamação aguda e neoplasias) nesta área. Quando você tiver o áudio ou o vídeo dessas aulas, é só me enviar que eu coloco aqui, com o mesmo player da 2ª parcial (velocidade e pulo de 15 s).</p>' +
+        '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/aulas">Ver as aulas gravadas da 2ª parcial</a></p></section>'
     } else if (sub === 'slides') {
-      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Neoplasias · slides das aulas</h2><p>Os PDFs originais da professora (Clase 10 e 11).</p>' +
+      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clase 9, 10 e 11).</p>' +
         SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
     } else {
       banco()
@@ -637,9 +646,9 @@
   }
 
   // ------------------------------------------------------------ organogramas
-  function mapas() {
+  function mapas(orgs) {
     var box = $('#p2-parte')
-    box.innerHTML = '<div class="p2-orgs">' + D.orgs.map(function (g) {
+    box.innerHTML = '<div class="p2-orgs">' + (orgs || D.orgs).map(function (g) {
       return '<h3 class="sx-h2" style="font-size:22px">' + esc(g.g) + '</h3>' + g.h.map(function (h) { return '<div class="p2-org">' + h + '</div>' }).join('')
     }).join('') + '</div>'
   }
