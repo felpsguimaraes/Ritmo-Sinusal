@@ -4,8 +4,38 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-11-19T17:28:04Z",
+  "updatedAt": "2026-11-20T17:03:52Z",
   "videos": [
+    {
+      "id": "QR5Amc-BUOw",
+      "title": "Introducción Endócrino (16.11.2026) - Dr Federico Hogë",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "PevbvWeIMcw",
+      "title": "Patologías Intestinales (16.11.2026) - Dra Milva Cardozo",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "Sg__eZZ-2oA",
+      "title": "Virología (19.11.2026) - Dra Scappini",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "hsF41sfYRUw",
+      "title": "Endocrine II (11/19/2026) Part 2 - Dr. Federico Hogë",
+      "section": "videos",
+      "description": ""
+    },
+    {
+      "id": "vVJfqEUVA9c",
+      "title": "Endocrine II (11/19/2026) - Part 1 - Dr. Federico Hogë",
+      "section": "videos",
+      "description": ""
+    },
     {
       "id": "75N9vqnIdmc",
       "title": "Cohort Study (18.11.2026) - Dr. Andrea Villamayor",
@@ -68,7 +98,7 @@
     },
     {
       "id": "AVbjiW0A5Pk",
-      "title": "Nematodes, Cestodes, and Trematodes (10/29/2026) - Dr. Noélia Scappini",
+      "title": "Nematodos, Cestodos y Trematodos (29.10.2026) - Dra Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -116,13 +146,13 @@
     },
     {
       "id": "3PVZ9vp-4IM",
-      "title": "Nemátodos Intestinales (22.10.2026) - Dra Noélia Scappini",
+      "title": "Intestinal Nematodes (10/22/2026) - Dr. Noélia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "g4R5mnylaI0",
-      "title": "Micosis Cutáneas y Subcutáneas - Dra Noélia Scappini",
+      "title": "Cutaneous and Subcutaneous Mycoses - Dr. Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -176,7 +206,7 @@
     },
     {
       "id": "NoQbp9EDd1U",
-      "title": "Neuro II: Somatosensitivo (21.09.2026) - Dr Federico Hogë",
+      "title": "Neuro II: Somatosensory (09/21/2026) - Dr. Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -194,13 +224,13 @@
     },
     {
       "id": "oSHrHrGFNtc",
-      "title": "Neuro IV - Somatic Motor I (10/01/2026) - Dr. Federivo Hogë",
+      "title": "Neuro IV - Motor Somático I (01.10.2026) - Dr Federivo Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "j6Jdukd5JXU",
-      "title": "Protozoários Sanguíneos y Tisulares (01.10.2026) - Dra Noélia Scappini",
+      "title": "Blood and Tissue Protozoa (10/01/2026) - Dr. Noélia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -236,7 +266,7 @@
     },
     {
       "id": "WfCsjF2pWaQ",
-      "title": "Neurophysiology I (09/10/2026) - Dr. Federico Hogë",
+      "title": "Fisiología Neuro I (10.09.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -302,7 +332,7 @@
     },
     {
       "id": "hTGbWq_rseA",
-      "title": "Respiratory Physiology VII (08/24/2026) - Dr. Federico Hogë",
+      "title": "Fisiología Respiratória VII (24.08.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -314,7 +344,7 @@
     },
     {
       "id": "_lxoKd2OM5g",
-      "title": "Opportunistic Mycoses (08/20/2026) - Dr. Noelia Scappini",
+      "title": "Micosis Oportunistas (20.08.2026) - Dra Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -350,7 +380,7 @@
     },
     {
       "id": "0D2DOGt07nE",
-      "title": "Superficial Mycoses (08/13/2026) - Dr. Noelia Scappini",
+      "title": "Micosis Superficiales (13.08.2026) - Dra Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -362,7 +392,7 @@
     },
     {
       "id": "dXqgvh3KNWY",
-      "title": "Practical Microbiology (08/12/2026) - Dr. Nilse Cubilla",
+      "title": "Microbiología Práctica (12.08.2026) - Dra Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
@@ -416,7 +446,7 @@
     },
     {
       "id": "OhjMiXlfC1I",
-      "title": "Respiratory Physiology (08/03/2026) - Dr. Federico Höge",
+      "title": "Fisiologia Respiratória (03.08.2026) - Dr Federico Höge",
       "section": "videos",
       "description": ""
     },
@@ -974,13 +1004,13 @@
     },
     {
       "id": "Nd_TcsielLE",
-      "title": "Sistema Digestivo I - Dr Eduardo Oviedo",
+      "title": "Digestive System I - Dr. Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
     {
       "id": "5NntAzgVPVE",
-      "title": "Sistema Digestivo - Dr Eduardo Oviedo",
+      "title": "Digestive System - Dr. Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -1154,7 +1184,7 @@
     },
     {
       "id": "jBoibtElxvw",
-      "title": "Inguinal canal / anterolateral abdominal muscles - Dr. Víctor Benitez",
+      "title": "Conducto inguinal / músculos de la región anterolateral del abdomen - Dr Víctor Benitez",
       "section": "videos",
       "description": ""
     },
@@ -1166,7 +1196,7 @@
     },
     {
       "id": "qejAwhTMqfE",
-      "title": "Generalidades del abdomen - Dr Víctor Benítez",
+      "title": "Abdominal Overview - Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1226,7 +1256,7 @@
     },
     {
       "id": "PMbTXCOY2W0",
-      "title": "Generalidades del cráneo - Dr Víctor Benítez",
+      "title": "Generalities of the skull - Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
