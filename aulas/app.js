@@ -240,7 +240,7 @@
     if (!h || h === '/') return { v: sess.get('modo') === '3d' ? '3d' : (A.apostila ? 'apostila' : 'inicio'), p: [] }
     if (h.charAt(0) !== '/') return { v: '3d', p: [h] }
     var p = h.slice(1).split('/')
-    var v = ['inicio', '3d', 'pdf', 'treino', 'apostila', 'provas'].indexOf(p[0]) >= 0 && (p[0] !== 'provas' || A.extra) ? p[0] : 'inicio'
+    var v = ['inicio', '3d', 'pdf', 'treino', 'apostila', 'provas', 'final'].indexOf(p[0]) >= 0 && ((p[0] !== 'provas' && p[0] !== 'final') || A.extra) ? p[0] : 'inicio'
     return { v: v, p: p.slice(1) }
   }
   var vistaAtual = ''
@@ -260,6 +260,7 @@
     if (r.v === 'treino') { marcarModo('treino'); treino(r.p[0] || ''); document.title = 'Treino · ' + TITULO + ' · sinusal.' }
     if (r.v === 'apostila') { marcarModo('apostila'); apostilaAbrir(); document.title = 'Apostila · ' + TITULO + ' · sinusal.' }
     if (r.v === 'provas') { marcarModo('provas'); extraAbrir(r.p); document.title = (A.extra.titulo || 'Provas') + ' · ' + TITULO + ' · sinusal.' }
+    if (r.v === 'final') { marcarModo('final'); extraAbrir(['final'].concat(r.p)); document.title = 'Final · ' + TITULO + ' · sinusal.' }
     if (mudou && !(r.v === 'pdf' && r.p[1])) scrollTo(0, 0)
   }
   function ir(h) { if (location.hash === h) rota(); else location.hash = h }
@@ -277,7 +278,7 @@
       })()
     }).catch(function (e) { extraP = null; throw e })
     extraP.then(function () {
-      if (vistaAtual !== 'provas') return
+      if (vistaAtual !== 'provas' && vistaAtual !== 'final') return
       window.SINUSAL_EXTRA.render(view, p || [])
     }).catch(function () {
       view.innerHTML = '<div class="tr-wrap"><p class="sx-lead">Não foi possível abrir esta parte agora. Verifique a internet e tente de novo.</p><p style="margin-top:14px"><button class="sx-btn sx-primary" type="button" id="ex-de-novo">Tentar de novo</button></p></div>'
@@ -337,6 +338,17 @@
   // ---------------- início: escolher 3D ou PDF ----------------
   function hub() {
     var nome = perfil && perfil.nome ? perfil.nome.split(' ')[0] : ''
+    if (A.home) {
+      view.innerHTML = '<div class="sx-wrap">' +
+        '<span class="sx-tag">' + esc(A.materia || '') + '</span>' +
+        '<h1 class="sx-h1">' + (nome ? 'Olá, <em>' + esc(nome) + '.</em>' : 'Bons <em>estudos.</em>') + '</h1>' +
+        '<p class="sx-lead">' + esc(A.home.lead || '') + '</p>' +
+        '<div class="hub-modes">' + A.home.cards.map(function (c) {
+          return '<a class="mode sx-glass" href="' + esc(c.href) + '"><span class="mode-art ' + esc(c.art) + '" aria-hidden="true"><i></i><i></i><i></i></span>' +
+            '<span class="mode-txt"><b>' + esc(c.t) + '</b><span>' + esc(c.d) + '</span><span class="go">' + esc(c.go) + '</span></span></a>'
+        }).join('') + '</div></div>'
+      return
+    }
     view.innerHTML = '<div class="sx-wrap">' +
       '<span class="sx-tag">' + esc((A.materia || 'Anatomía Patológica I') + ' · ' + TITULO) + '</span>' +
       '<h1 class="sx-h1">' + (nome ? 'Olá, <em>' + esc(nome) + '.</em>' : 'Bons <em>estudos.</em>') + '</h1>' +
