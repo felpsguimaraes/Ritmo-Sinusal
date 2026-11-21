@@ -12,15 +12,16 @@
   var TEMAS = {
     nec: ['Necrosis', '#b3141c'], apo: ['Apoptosis', '#7a3fe0'], acu: ['Acumulación: lípidos y glucógeno', '#b45309'],
     c7: ['Proteínas, amiloide, calcio', '#a21caf'], pig: ['Pigmentos', '#7c4a1e'], inf: ['Inflamación aguda', '#0c8f8a'],
-    neo: ['Neoplasias', '#be185d'], cro: ['Fora do slide atual', '#64748b']
+    neo: ['Neoplasias', '#be185d'], les: ['Lesão celular e adaptação (1ª parcial)', '#475569'], cro: ['Fora do slide atual', '#64748b']
   }
   var GRUPOS_FONTE = [
     ['p2', 'P2 antigas', ['p2c', 'p2d', 'p2f1', 'p2f2', 'reg24', 'rec23']],
+    ['n26', 'Provas de 2026', ['p2_26', 'r26g', 'p1g26']],
     ['par', 'Parciais e final', ['par1', 'p1c', 'par1r', 'final24']],
     ['banco', 'Bancos Robbins e PEF', ['robbins', 'pef']]
   ]
   // prova -> grupo de páginas no visualizador
-  var PAG_DA_FONTE = { p2c: 0, p2d: 1, p2f1: 2, p2f2: 2, reg24: 3, rec23: 4, final24: 5, par1: 6, par1r: 7, p1c: 8 }
+  var PAG_DA_FONTE = { p2c: 0, p2d: 1, p2f1: 2, p2f2: 2, reg24: 3, rec23: 4, final24: 5, par1: 6, par1r: 7, p1c: 8, p2_26: 9, r26g: 9, p1g26: 10 }
 
   // gravações (arquivos em p2/audio). tema null = ainda não identificado
   var AUDIOS = [
@@ -61,7 +62,7 @@
     { t: 'Clase 10 · Generalidades de las neoplasias', arq: 'clase10-neoplasias.pdf', d: 'Unidad IV · Dra. Eliana Chamorro Krauer' },
     { t: 'Clase 11 · Neoplasias', arq: 'clase11-neoplasias.pdf', d: 'Unidad IV · 61 slides · Dra. Eliana Chamorro Krauer' }
   ]
-  var PDF_ARQ = BASE + 'provas-antigas-chamorro.pdf'
+  var PDF_ARQ = BASE + 'provas-antigas-chamorro.pdf?v=2'
   var ZOOMS = [1, 1.5, 2, 3]
   var VIDEO = {
     id: '19FqmuZrIucxmY-0QrC5GTx-S5jJeAjy7',
@@ -130,7 +131,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=24' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=25' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis y acumulaciones, com o radar da prova e o simulado</small></span>' +
@@ -174,7 +175,7 @@
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
         '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda y neoplasias</small></span>' +
         '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=19" title="Apostila do Final"></iframe></section>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=20" title="Apostila do Final"></iframe></section>' +
         '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
     } else if (sub === 'mapas') {
       mapas(FO)
@@ -215,7 +216,7 @@
       GRUPOS_FONTE.map(function (g) { return '<option value="' + g[0] + '">' + esc(g[1]) + '</option>' }).join('') +
       '<optgroup label="Uma prova">' + D.fontes.map(function (f) { return '<option value="' + f.id + '">' + esc(f.titulo) + ' (' + f.n + ')</option>' }).join('') + '</optgroup>'
     box.innerHTML =
-      '<p class="p2-dl" style="margin:0 0 14px"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'banco-questoes-p2.pdf?v=1" download="Banco de questoes 2a parcial Anatomia Patologica I.pdf">Baixar o banco em PDF (2,5 MB)</a><span>176 questões com o gabarito comentado no fim de cada tema, para imprimir. As de Neoplasias ainda não estão no PDF.</span></p>' +
+      '<p class="p2-dl" style="margin:0 0 14px"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'banco-questoes-p2.pdf?v=2" download="Banco de questoes 2a parcial Anatomia Patologica I.pdf">Baixar o banco em PDF (2,5 MB)</a><span>176 questões com o gabarito comentado no fim de cada tema, para imprimir. As de Neoplasias ainda não estão no PDF.</span></p>' +
       '<div class="p2-filtros sx-glass">' +
         '<div class="p2-fl" role="group" aria-label="Tema"><span class="lbl">Tema</span>' +
           '<button type="button" class="p2-chip" data-tema="">Todos <span class="c">' + D.qs.length + '</span></button>' +
