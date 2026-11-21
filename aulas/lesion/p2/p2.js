@@ -43,17 +43,20 @@
     { id: '1kSZvXq_Yy-gIWnGO6xZzMEQQhMw0qwR9', t: 'Nueva grabación 6', mb: 50 },
     { id: '12-YN3dX-KopBE7uRTqsagr0VvYCNKIZl', t: 'Departamento del Alto Paraná', mb: 23 }
   ]
-  function driveAud() {
-    return '<section class="p2-sec"><h2 class="sx-h2">Gravações novas do Drive</h2><p>Gravações da pasta Anatopatologia I, ainda sem tema identificado. Toque em <b>Ouvir no Drive</b> para tocar com o app do Google Drive (no iPhone é o jeito que funciona melhor, e lá você escolhe a velocidade). O player embutido é opcional.</p><div class="p2-aud">' +
-      DRIVE_AUD.map(function (a) {
-        return '<div class="p2-a p2-d sx-glass"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + a.mb + ' MB</span></div>' +
-          '<div class="p2-links" style="display:flex;gap:10px;flex-wrap:wrap"><a class="sx-btn sx-small sx-primary" href="https://drive.google.com/file/d/' + a.id + '/view" target="_blank" rel="noopener">Ouvir no Drive</a></div>' +
-          '<details class="p2-emb" style="margin-top:8px"><summary style="cursor:pointer;font-size:13px;color:var(--sx-ink3)">Tocar aqui mesmo (player embutido)</summary>' +
-          '<div class="p2-frame" style="aspect-ratio:auto;height:90px;margin-top:8px"><iframe data-src="https://drive.google.com/file/d/' + a.id + '/preview" title="' + esc(a.t) + '" allow="autoplay" style="width:100%;height:100%;border:0"></iframe></div></details></div>'
-      }).join('') + '</div></section>'
+  // cartão de áudio único (arquivo do site ou do Drive): mesmo player, pular 15 s, velocidade e "parou em"
+  function cardAudio(a) {
+    var drive = !!a.id, key = a.arq || ('drive-' + a.id)
+    var src = drive ? 'https://drive.usercontent.google.com/download?id=' + a.id + '&export=download' : BASE + 'audio/' + a.arq
+    return '<div class="p2-a sx-glass" data-arq="' + esc(key) + '"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + (a.s ? hms(a.s) : a.mb + ' MB') + '<span class="onde"></span></span></div>' +
+      '<audio controls preload="' + (drive ? 'none' : 'metadata') + '" src="' + src + '"></audio>' +
+      (drive ? '<p class="p2-erro" hidden>Não carregou aqui. <a href="https://drive.google.com/file/d/' + a.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></p>' : '') +
+      '<div class="p2-ctl"><div class="p2-vel" role="group" aria-label="Pular">' +
+        '<button type="button" data-s="-15" aria-label="Voltar 15 segundos">−15 s</button><button type="button" data-s="15" aria-label="Avançar 15 segundos">+15 s</button></div>' +
+      '<div class="p2-vel" role="group" aria-label="Velocidade">' + [1, 1.25, 1.5, 2].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (st.vel === v) + '">' + String(v).replace('.', ',') + '×</button>' }).join('') + '</div></div></div>'
   }
-  function ligaDrive(box) {
-    $$('.p2-emb', box).forEach(function (d) { d.addEventListener('toggle', function () { var f = $('iframe', d); if (d.open && f && !f.src) f.src = f.dataset.src }) })
+  function driveAud() {
+    return '<section class="p2-sec"><h2 class="sx-h2">Gravações novas do Drive</h2><p>Gravações da pasta Anatopatologia I, ainda sem tema identificado. Toque no play para ouvir aqui mesmo; a velocidade e o ponto onde você parou ficam salvos.</p><div class="p2-aud">' +
+      DRIVE_AUD.map(cardAudio).join('') + '</div></section>'
   }
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
@@ -181,7 +184,7 @@
       mapas(FO)
     } else if (sub === 'aulas') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Aulas gravadas do Final</h2><p>Ainda não há gravação identificada das Clases 9, 10 e 11. As gravações novas do Drive estão abaixo, sem tema definido.</p><p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/aulas">Ver as aulas gravadas da 2ª parcial</a></p></section>' + driveAud()
-      ligaDrive(box)
+      ligaAudios(box)
     } else if (sub === 'slides') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clase 9, 10 e 11).</p>' +
         SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
@@ -614,13 +617,7 @@
     var box = $('#p2-parte')
     var porTema = {}, semTema = []
     AUDIOS.forEach(function (a) { if (a.tema && TEMAS[a.tema]) (porTema[a.tema] = porTema[a.tema] || []).push(a); else semTema.push(a) })
-    var bloco = function (lst) { return '<div class="p2-aud">' + lst.map(function (a) {
-      return '<div class="p2-a sx-glass" data-arq="' + esc(a.arq) + '"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + hms(a.s) + '<span class="onde"></span></span></div>' +
-        '<audio controls preload="metadata" src="' + BASE + 'audio/' + a.arq + '"></audio>' +
-        '<div class="p2-ctl"><div class="p2-vel" role="group" aria-label="Pular">' +
-          '<button type="button" data-s="-15" aria-label="Voltar 15 segundos">−15 s</button><button type="button" data-s="15" aria-label="Avançar 15 segundos">+15 s</button></div>' +
-        '<div class="p2-vel" role="group" aria-label="Velocidade">' + [1, 1.25, 1.5, 2].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (st.vel === v) + '">' + String(v).replace('.', ',') + '×</button>' }).join('') + '</div></div></div>'
-    }).join('') + '</div>' }
+    var bloco = function (lst) { return '<div class="p2-aud">' + lst.map(cardAudio).join('') + '</div>' }
     box.innerHTML =
       '<section class="p2-sec"><h2 class="sx-h2">Clase repaso</h2><p>A aula de revisão da professora para a parcial.</p>' +
         '<div class="p2-video sx-glass"><span class="t">' + esc(VIDEO.t) + '<small>' + esc(VIDEO.d) + '</small></span>' +
@@ -632,9 +629,12 @@
       }).join('') +
       driveAud() +
       (semTema.length ? '<section class="p2-sec"><h2 class="sx-h2">Gravações das aulas</h2><p>As ' + semTema.length + ' gravações da parcial. Toque no play para ouvir aqui mesmo; a velocidade escolhida vale para todas.</p>' + bloco(semTema) + '</section>' : '')
-    ligaDrive(box)
-    $$('.p2-a:not(.p2-d)', box).forEach(function (c) {
-      var au = $('audio', c), arq = c.dataset.arq, onde = $('.onde', c), salvo = 0
+    ligaAudios(box)
+  }
+  function ligaAudios(box) {
+    $$('.p2-a', box).forEach(function (c) {
+      var au = $('audio', c), arq = c.dataset.arq, onde = $('.onde', c), salvo = 0, er = $('.p2-erro', c)
+      if (er) au.addEventListener('error', function () { er.hidden = false })
       var mostrarOnde = function () { var s = st.pos[arq]; onde.textContent = s > 30 ? ' · parou em ' + hms(s) : '' }
       mostrarOnde()
       au.addEventListener('loadedmetadata', function () {

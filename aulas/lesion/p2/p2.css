@@ -143,3 +143,4 @@ html.p2-trava,html.p2-trava body{overflow:hidden}
 @media (max-width:719px){.p2-apos-frame{height:calc(100vh - 210px);height:calc(100dvh - 210px);min-height:460px}.p2-apos .p2-vbar .t small{display:none}}
 
 .p2 .tr-seg.tr6{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:719px){.p2 .tr-seg.tr6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.p2-erro{margin:0;font-size:13.5px;color:var(--sx-ink2)}.p2-erro a{font-weight:700}
