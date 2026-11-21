@@ -781,7 +781,8 @@
     ['Todas as funções continuam disponíveis.', 'En este lanzamiento el acervo de tu semestre está liberado.', 'During this launch, your semester’s archive is open.'],
     ['Restaurar demo', 'Restaurar demo', 'Reset demo'], ['Mais', 'Más', 'More'], ['← Voltar', '← Volver', '← Back'],
     ['Comercial', 'Comercial', 'Business'], ['← Painel do aluno', '← Panel del alumno', '← Student panel'], ['Persistência local', 'Guardado local', 'Saved locally'], ['Salvar alterações', 'Guardar cambios', 'Save changes'], ['Cancelar', 'Cancelar', 'Cancel'],
-    ['Navegação rápida', 'Navegación rápida', 'Quick navigation']
+    ['Navegação rápida', 'Navegación rápida', 'Quick navigation'],
+    ['Suas matérias', 'Tus materias', 'Your subjects']
   ];
 
   var DICT = { es: Object.create(null), en: Object.create(null) };
@@ -792,6 +793,7 @@
 
   // padrões com partes variáveis (contagens, nomes, turma, período)
   var P = [
+    [/^Olá, ([^·]+)$/, function (m, l) { return (l === 'es' ? 'Hola, ' : 'Hi, ') + m[1] }],
     [/^(\d+)º período$/, function (m, l) { return l === 'es' ? m[1] + '.º semestre' : ord(m[1]) + ' semester' }],
     [/^(\d+)º semestre$/, function (m, l) { return l === 'es' ? m[1] + '.º semestre' : ord(m[1]) + ' semester' }],
     [/^Turma ([A-Z])$/, function (m, l) { return (l === 'es' ? 'Sección ' : 'Class ') + m[1] }],

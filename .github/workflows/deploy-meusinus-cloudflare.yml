@@ -144,7 +144,7 @@ jobs:
                grep -Fq '.sxAVPGrid' /tmp/sinus-video-player.css &&
                node --check /tmp/sinus-video-player.js &&
                grep -Fq 'subject-resource-balloons.js?v=20261025-slides-library-sync-v2' /tmp/sinus-boot.js &&
-               grep -Fq 'biblioteca-visual.js?v=20261112-sessao' /tmp/sinus-boot.js &&
+               grep -Fq 'biblioteca-visual.js?v=20261120-inicio' /tmp/sinus-boot.js &&
                grep -Fq 'function showUploadedSlide' /tmp/sinus-slides-by-tab.js &&
                grep -Fq 'previewUploaded' /tmp/sinus-library.js &&
                grep -Fq 'subject-viewer-order.js?v=20261025-players-by-tab-v1' /tmp/sinus-boot.js &&

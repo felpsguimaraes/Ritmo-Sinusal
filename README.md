@@ -12,6 +12,13 @@ O catálogo inicial acrescenta 87 PDFs, nove coleções com 158 fotos e sete ví
 
 A aplicação atual tem APIs e armazenamento próprios. O espelhamento integral de sua fonte neste repositório e a migração para Firebase ainda estão pendentes. O acesso público pelo GitHub Pages funciona como entrada para a publicação atual.
 
+## Entrada, Início e cobrança (nov/2026)
+
+- **Entrada** (`index.html`, `#landing.sxLandSimples`, estilos em `sinus/entrada.css`): só a esfera, o nome, uma frase e **Entrar com Google**. Sem planos, valores, métricas ou seletor de idioma (o idioma segue o navegador e pode ser trocado dentro do painel). Os links de Privacidade e Termos ficam porque o Google exige a política de privacidade na página do login.
+- **Início** (`renderHome` em `sinus/integracao-v17.js`): o aluno cai direto nas matérias do período dele e, logo abaixo, na Biblioteca. A biblioteca (`sinus/biblioteca-visual.js`) se desenha em `#sxHomeLib` quando o Início está aberto e em `#page-library` na própria aba. Sem os atalhos Estudar/Treinar; o calendário continua em Horários.
+- **Cobrança desligada**: o SINUS ainda não cobra. O aluno não vê Assinatura, planos nem preços (links antigos para `plans` voltam ao Início). No painel `/admin/control/`, a chave `COBRANCA=false` em `admin/control/app.js` esconde Financeiro, Planos e preços, Acessos e limites por plano e as colunas/botões de plano. Para voltar a cobrar, troque para `true`. O backend (Supabase) não foi alterado.
+- **Campus SINUS (jogo) desativado**: sem links no painel; `/jogo/` e `/campus/` voltam ao início (regras no `_redirects` e um bloco no topo de cada página). Os arquivos continuam no repositório para reativar depois.
+
 ## Versão anterior e aulas
 
 A versão anterior do arquivo único foi preservada em `index-legacy.html`, no mesmo diretório, e no histórico Git. As aulas existentes continuam na pasta `aulas/`:

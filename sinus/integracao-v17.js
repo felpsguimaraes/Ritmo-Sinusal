@@ -962,20 +962,30 @@
     return html;
   }
 
+  // Início: o aluno cai direto nas matérias do período dele e, logo abaixo, na biblioteca.
+  // Sem os atalhos Estudar/Treinar e sem o cartão do jogo (Campus desativado em nov/2026).
+  function cartaoMateria(par) {
+    var nome = par[0], s = par[1] || {};
+    var sigla = nome.split(/\s+/).map(function (x) { return x.charAt(0) }).join('').slice(0, 2);
+    // o <h3> deixa o icones-materias.js escolher o ícone certo da matéria
+    return '<button type="button" class="card sxHomeCard" onclick="openSubject(' + H(JSON.stringify(nome)) + ')">' +
+      '<span class="iconWrap" aria-hidden="true">' + H(sigla) + '</span>' +
+      '<span class="sxHomeCardTxt"><h3>' + H(nome) + '</h3><small>' + H(s.teacher || 'Professor não informado') + '</small></span>' +
+      '<span class="sxHomeCardSeta" aria-hidden="true">›</span></button>';
+  }
   W.renderHome = function () {
     var el=$id('page-home');if(!el)return;
-    var first=(S.nome||S.nomeGoogle||'estudante').split(' ')[0];
-    try { localStorage.setItem('sinus_aluno', JSON.stringify({ nome:(S.nome||S.nomeGoogle) ? first : '', periodo:(S.prefs&&S.prefs.periodo)||5, turma:S.turma||(S.prefs&&S.prefs.turma)||'' })) } catch (e) {}
-    el.innerHTML='<div class="sxHomeWelcome"><span class="eyebrow">Seu espaço no SINUS</span><h1>Olá, '+H(first)+'.</h1><p>O que vamos fazer hoje?</p></div>'+
-      '<a class="glass" href="/jogo/" style="display:flex;gap:16px;align-items:center;margin:0 0 14px;padding:12px;text-decoration:none;color:inherit;overflow:hidden">'+
-        '<img src="/jogo/assets/sinus-campus-vazio.jpg" alt="" loading="lazy" style="width:clamp(96px,26vw,180px);aspect-ratio:3/2;object-fit:cover;border-radius:12px;flex:none">'+
-        '<span style="min-width:0"><span class="eyebrow">Novo · Campus SINUS</span><h2 style="margin:4px 0 4px">Estude jogando</h2><span class="soft" style="display:block;font-size:13px;line-height:1.45">Entre nas salas das suas matérias, conte o foco do dia e estude com playlist e sons de hospital.</span></span>'+
-        '<span aria-hidden="true" style="margin-left:auto;font-size:24px;padding:0 6px">›</span></a>'+
-      '<div class="sxHomeActions">'+
-      '<button class="glass" onclick="nav(\'subjects\')"><span>▤</span><h2>Estudar</h2><p>Apostilas, slides e aulas</p></button>'+
-      '<button class="glass" onclick="nav(\'study\')"><span>◎</span><h2>Treinar</h2><p>Questões, cartões e mapas</p></button>'+
-      '<button class="glass" onclick="nav(\'schedule\')"><span>▦</span><h2>Horários</h2><p>Aulas e compromissos</p></button>'+
-      '<button class="glass" onclick="nav(\'errors\')"><span>↻</span><h2>Revisar</h2><p>Retome suas dificuldades</p></button></div>';
+    var nome=String(S.nome||S.nomeGoogle||'').trim(), first=(nome||'estudante').split(' ')[0];
+    try { localStorage.setItem('sinus_aluno', JSON.stringify({ nome:nome ? first : '', periodo:(S.prefs&&S.prefs.periodo)||5, turma:S.turma||(S.prefs&&S.prefs.turma)||'' })) } catch (e) {}
+    var u = (typeof user === 'function' && user()) || {};
+    var meta = [nome ? 'Olá, ' + first : '', u.period || '', u['class'] ? 'Turma ' + u['class'] : ''].filter(Boolean).join(' · ');
+    var lista = subjectEntries();
+    el.innerHTML='<div class="sxHomeHead">'+(meta?'<span class="eyebrow">'+H(meta)+'</span>':'')+'<h1>Suas matérias</h1></div>'+
+      (lista.length ? '<div class="sxHomeMaterias">' + lista.map(cartaoMateria).join('') + '</div>'
+        : emptyBox('As matérias deste período ainda não estão no Sinus.', 'Você pode trocar o período no Perfil.'))+
+      '<section id="sxHomeLib" class="sxHomeLib" aria-label="Biblioteca"></section>';
+    // a biblioteca (biblioteca-visual.js) desenha a si mesma em #sxHomeLib enquanto o Início estiver aberto
+    if (W.SinusLibrary && typeof W.SinusLibrary.render === 'function') W.SinusLibrary.render();
   };
 
   var _schedule = W.renderSchedule;
@@ -1013,11 +1023,10 @@
     filterApostilas();
   };
 
+  // O SINUS ainda não cobra: não existe tela de Assinatura. Links antigos para ela voltam ao Início.
   W.renderPlans = function () {
-    $id('page-plans').innerHTML = '<div class="heading"><div><span class="eyebrow">Planos</span><h1>Assinatura</h1><p>Neste lançamento o acervo do seu período está liberado. Grátis, Básico (R$ 29,90) e Premium (R$ 49,90) aparecem abaixo, sem cobrança automática.</p></div><span class="pill green">Acesso completo</span></div>' +
-      '<div class="grid3">' + DB.plans.filter(function (p) { return p.active !== false }).map(function (p) {
-        return '<div class="glass adminBlock"><span class="pill ' + (p.id === 'premium' ? 'violet' : p.id === 'basic' ? 'green' : 'amber') + '">' + H(p.name) + '</span><h2 style="font-size:24px;margin:12px 0 4px">R$ ' + (p.priceCents / 100).toFixed(2).replace('.', ',') + '</h2><p class="soft" style="font-size:11px;line-height:1.7">' + H(p.description || '') + '</p><div class="stack" style="margin-top:12px">' + (p.features || []).slice(0, 6).map(function (f) { return '<div class="quickItem"><span>' + H(f) + '</span></div>' }).join('') + '</div><button class="btn" style="margin-top:14px" disabled>Em breve</button></div>';
-      }).join('') + '</div>';
+    var el = $id('page-plans'); if (el) el.innerHTML = '';
+    setTimeout(function () { if (UI.page === 'plans') nav('home') }, 0);
   };
 
   W.renderLibrary = function () {

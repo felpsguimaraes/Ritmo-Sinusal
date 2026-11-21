@@ -254,3 +254,46 @@ html[data-theme="dark"] #subjectView .btn:not(.primary):not(.violet):not(.second
   border-color:#345445!important;
 }
 html[data-theme="dark"] .sxFlashStudy.sxExercicio .sxExInput{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.08);color:inherit}
+
+/* Início: o aluno cai direto nas matérias do período e, logo abaixo, na biblioteca. */
+#page-home .sxHomeHead{margin:2px 0 14px}
+#page-home .sxHomeHead h1{margin:6px 0 0;font-size:clamp(24px,3vw,32px);line-height:1.1;letter-spacing:-.03em}
+#page-home .sxHomeMaterias{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#app #page-home .sxHomeCard{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  gap:12px;
+  width:100%;
+  min-height:0!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  border-radius:18px!important;
+  text-align:left;
+  color:inherit;
+  font:inherit;
+  cursor:pointer;
+  transition:border-color .2s,transform .2s;
+}
+#app #page-home .sxHomeCard:hover{border-color:#8db8a4!important;transform:translateY(-1px)}
+#app #page-home .sxHomeCard .iconWrap{width:44px!important;height:44px!important;border-radius:14px!important;flex:none;margin:0!important}
+#app #page-home .sxHomeCard .iconWrap svg{width:26px;height:26px}
+#page-home .sxHomeCardTxt{display:grid;gap:3px;min-width:0}
+#app #page-home .sxHomeCard h3{margin:0!important;font-size:15px!important;line-height:1.25;font-weight:700;letter-spacing:-.01em}
+#page-home .sxHomeCard small{font-size:12px;line-height:1.3;color:#5d7468;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-home .sxHomeCardSeta{margin-left:auto;padding-left:4px;font-size:20px;line-height:1;color:#8aa597}
+#page-home .sxHomeLib{margin-top:20px}
+#page-home .sxHomeLib .sxLibHeader{margin-top:0}
+#page-home .sxHomeLib .sxLibHeader h2{margin:8px 0;font-size:clamp(24px,3vw,32px);line-height:1.1;letter-spacing:-.03em}
+/* se o administrador desligar Matérias ou Biblioteca em "Funções e avisos", o Início acompanha */
+body:has(.navBtn[data-page="subjects"][hidden]) #page-home .sxHomeMaterias,
+body:has(.navBtn[data-page="library"][hidden]) #page-home .sxHomeLib{display:none}
+html[data-theme="dark"] #page-home .sxHomeCard small{color:#b7c9c0}
+html[data-theme="dark"] #page-home .sxHomeCardSeta{color:#7f9b8d}
+@media(max-width:900px){#page-home .sxHomeMaterias{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){
+  #page-home .sxHomeMaterias{grid-template-columns:1fr;gap:8px}
+  #app #page-home .sxHomeCard{padding:10px 12px!important;border-radius:16px!important}
+  #app #page-home .sxHomeCard .iconWrap{width:40px!important;height:40px!important;border-radius:12px!important}
+  #page-home .sxHomeLib{margin-top:18px}
+}

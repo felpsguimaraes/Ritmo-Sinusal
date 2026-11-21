@@ -1,2 +1,8 @@
 # A raiz é o painel do Sinus. Endereços antigos levam para dentro dele.
 /painel    /    302
+
+# Campus SINUS (jogo) desativado em nov/2026: os endereços voltam para o início.
+/jogo      /    302
+/jogo/*    /    302
+/campus    /    302
+/campus/*  /    302

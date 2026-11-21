@@ -260,6 +260,9 @@ function load(force=false){
   if(root&&!root.querySelector('iframe')){root.remove();mount()}
   const home=D.querySelector('[data-apv-shortcut]');if(home)home.remove();
   ensureLauncher();
+  // A Biblioteca (no Início ou na própria aba) passa a contar estes vídeos assim que o catálogo chega,
+  // sem atrapalhar quem está digitando na busca.
+  try{if(typeof UI!=='undefined'&&(UI.page==='library'||UI.page==='home')&&!D.activeElement?.matches?.('[data-lib-search]'))W.renderLibrary?.()}catch(e){}
  });
  return cache.loading;
 }
