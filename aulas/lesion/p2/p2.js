@@ -12,16 +12,16 @@
   var TEMAS = {
     nec: ['Necrosis', '#b3141c'], apo: ['Apoptosis', '#7a3fe0'], acu: ['Acumulación: lípidos y glucógeno', '#b45309'],
     c7: ['Proteínas, amiloide, calcio', '#a21caf'], pig: ['Pigmentos', '#7c4a1e'], inf: ['Inflamación aguda', '#0c8f8a'],
-    neo: ['Neoplasias', '#be185d'], les: ['Lesão celular e adaptação (1ª parcial)', '#475569'], cro: ['Fora do slide atual', '#64748b']
+    neo: ['Neoplasias', '#be185d'], les: ['Lesión celular y adaptación', '#475569'], cro: ['Inflamación crónica y reparación', '#0b6246']
   }
   var GRUPOS_FONTE = [
     ['p2', 'P2 antigas', ['p2c', 'p2d', 'p2f1', 'p2f2', 'reg24', 'rec23']],
     ['n26', 'Provas de 2026', ['p2_26', 'r26g', 'p1g26']],
-    ['par', 'Parciais e final', ['par1', 'p1c', 'par1r', 'final24']],
+    ['par', 'Parciais e final', ['par1', 'p1c', 'par1r', 'final24', 'f24t']],
     ['banco', 'Bancos Robbins e PEF', ['robbins', 'pef']]
   ]
   // prova -> grupo de páginas no visualizador
-  var PAG_DA_FONTE = { p2c: 0, p2d: 1, p2f1: 2, p2f2: 2, reg24: 3, rec23: 4, final24: 5, par1: 6, par1r: 7, p1c: 8, p2_26: 9, r26g: 9, p1g26: 10 }
+  var PAG_DA_FONTE = { p2c: 0, p2d: 1, p2f1: 2, p2f2: 2, reg24: 3, rec23: 4, final24: 5, f24t: 5, par1: 6, par1r: 7, p1c: 8, p2_26: 9, r26g: 9, p1g26: 10 }
 
   // gravações das aulas, todas hospedadas em p2/audio (nada toca pelo Google Drive).
   // Nome no padrão "Assunto · recorte"; o arquivo repete o nome em minúsculas. parte: 'p2' ou 'final'.
@@ -59,7 +59,9 @@
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
   var SLIDES = [
+    { t: 'Clase 2 · Adaptación celular', arq: 'clase2-adaptacion-celular.pdf', d: 'Unidad I · 34 slides · Dra. Eliana Chamorro' },
     { t: 'Clase 9 · Inflamación aguda', arq: 'clase9-inflamacion-aguda.pdf', d: 'Inflamación y reparación tisular · 53 slides · Dra. Eliana Chamorro' },
+    { t: 'Clase 10 · Inflamación crónica', arq: 'clase10-inflamacion-cronica.pdf', d: 'Inflamación y reparación tisular · 30 slides · Dra. Eliana Chamorro' },
     { t: 'Clase 10 · Generalidades de las neoplasias', arq: 'clase10-neoplasias.pdf', d: 'Unidad IV · Dra. Eliana Chamorro Krauer' },
     { t: 'Clase 11 · Neoplasias', arq: 'clase11-neoplasias.pdf', d: 'Unidad IV · 61 slides · Dra. Eliana Chamorro Krauer' }
   ]
@@ -137,7 +139,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=28' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=29' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis y acumulaciones, com o radar da prova e o simulado</small></span>' +
@@ -166,31 +168,31 @@
     view.innerHTML = '<div class="tr-wrap p2">' +
       '<span class="sx-tag">Anatomía Patológica · Final · Dra. Chamorro</span>' +
       '<h1 class="sx-h1"><em>Final.</em></h1>' +
-      '<p class="p2-lead">A apostila do final (inflamação aguda e neoplasias, a partir dos slides), os organogramas, as aulas gravadas, o mesmo banco de questões da 2ª parcial com filtro de Neoplasias e Inflamación, as folhas originais e os slides das clases 9, 10 e 11.</p>' +
+      '<p class="p2-lead">A apostila do final (inflamação aguda e crônica, granulomas, reparação, adaptação com o coração hipertrofiado e neoplasias, a partir dos slides e do Robbins), os organogramas, as aulas gravadas, o mesmo banco de questões da 2ª parcial com filtro por tema, as folhas originais e os slides das clases 2, 9, 10 e 11.</p>' +
       '<div class="tr-seg tr6" role="tablist" aria-label="Parte do Final">' +
-        tab('apostila', 'Apostila', 'Inflamación y neoplasias') +
+        tab('apostila', 'Apostila', 'Inflamación, adaptación y neoplasias') +
         tab('mapas', 'Organogramas', nFO + ' mapas do Final') +
         tab('aulas', 'Aulas gravadas', AUD_FINAL.length + ' áudios de Neoplasias') +
         tab('provas', 'Banco de provas', D.qs.length + ' questões comentadas') +
-        tab('slides', 'Slides', 'Clase 9, 10 e 11') +
+        tab('slides', 'Slides', 'Clases 2, 9, 10 e 11') +
         tab('originais', 'Provas originais', 'Folhas e PDF') +
       '</div><div id="p2-parte"></div></div>'
     $$('[data-f]', view).forEach(function (b) { b.addEventListener('click', function () { location.hash = b.dataset.f === 'apostila' ? '#/final' : b.dataset.f === 'originais' ? '#/provas/originais' : '#/final/' + b.dataset.f }) })
     var box = $('#p2-parte')
     if (sub === 'apostila') {
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
-        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda y neoplasias</small></span>' +
+        '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación, adaptación y neoplasias</small></span>' +
         '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=23" title="Apostila do Final"></iframe></section>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=24" title="Apostila do Final"></iframe></section>' +
         '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
     } else if (sub === 'mapas') {
       mapas(FO)
     } else if (sub === 'aulas') {
       box.innerHTML = secoesAudio(AUD_FINAL) +
-        '<section class="p2-sec"><p>Ainda não há gravação de Inflamación aguda. A correção da 2ª parcial e as aulas da parcial estão em <a href="#/provas/aulas">Aulas gravadas da 2ª parcial</a>.</p></section>'
+        '<section class="p2-sec"><p>Ainda não há gravação de Inflamación (aguda ou crónica) nem de Adaptación. A correção da 2ª parcial e as aulas da parcial estão em <a href="#/provas/aulas">Aulas gravadas da 2ª parcial</a>.</p></section>'
       ligaAudios(box)
     } else if (sub === 'slides') {
-      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clase 9, 10 e 11).</p>' +
+      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clases 2, 9, 10 e 11).</p>' +
         SLIDES.map(function (x) { return '<p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="' + BASE + 'slides/' + x.arq + '?v=1" target="_blank" rel="noopener">' + esc(x.t) + '</a><span>' + esc(x.d) + '</span></p>' }).join('') + '</section>'
     } else {
       banco()

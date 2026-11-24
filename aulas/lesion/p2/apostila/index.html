@@ -1334,7 +1334,7 @@ go(location.hash.slice(1)||new URLSearchParams(location.search).get('t')||order[
   window.addEventListener('beforeprint',function(){document.body.classList.remove('esencial')});
   window.addEventListener('afterprint',function(){document.body.classList.toggle('esencial',on)});
 })();
-</script><script id="rcjs">(function(){try{document.body.classList.add("rc");function sync(b){var a=b.querySelectorAll(".ac-a"),on=b.querySelectorAll(".ac-a.on").length===a.length;b.querySelector(".ac-all").textContent=on?"Ocultar respostas":"Mostrar respostas"}document.querySelectorAll(".alerta-cai").forEach(function(b){var t=b.querySelector(".ac-bar")||b.querySelector(".ac-t");if(t.querySelector(".ac-all"))return;var x=document.createElement("button");x.type="button";x.className="ac-all";t.appendChild(x);sync(b);x.onclick=function(){var a=b.querySelectorAll(".ac-a"),on=b.querySelectorAll(".ac-a.on").length===a.length;a.forEach(function(e){e.classList.toggle("on",!on)});sync(b)};b.querySelectorAll(".ac-a").forEach(function(a){a.onclick=function(){a.classList.toggle("on");sync(b)}})})}catch(e){}})();</script><script data-trn src="../dados.js?v=6"></script><script data-trn>(function () {
+</script><script id="rcjs">(function(){try{document.body.classList.add("rc");function sync(b){var a=b.querySelectorAll(".ac-a"),on=b.querySelectorAll(".ac-a.on").length===a.length;b.querySelector(".ac-all").textContent=on?"Ocultar respostas":"Mostrar respostas"}document.querySelectorAll(".alerta-cai").forEach(function(b){var t=b.querySelector(".ac-bar")||b.querySelector(".ac-t");if(t.querySelector(".ac-all"))return;var x=document.createElement("button");x.type="button";x.className="ac-all";t.appendChild(x);sync(b);x.onclick=function(){var a=b.querySelectorAll(".ac-a"),on=b.querySelectorAll(".ac-a.on").length===a.length;a.forEach(function(e){e.classList.toggle("on",!on)});sync(b)};b.querySelectorAll(".ac-a").forEach(function(a){a.onclick=function(){a.classList.toggle("on");sync(b)}})})}catch(e){}})();</script><script data-trn src="../dados.js?v=7"></script><script data-trn>(function () {
   'use strict';
   var caixas = [].slice.call(document.querySelectorAll('.trn'));
   if (!caixas.length) return;
@@ -1343,7 +1343,7 @@ go(location.hash.slice(1)||new URLSearchParams(location.search).get('t')||order[
 
   var Q = {};
   D.qs.forEach(function (q) { Q[q.p + ':' + q.n] = q; });
-  var FONTE = { final24: 'Final 2024', pef: 'Banco PEF', robbins: 'Banco Robbins', p2d: 'P2 · Turma D', p2c: 'P2 · Turma C',
+  var FONTE = { final24: 'Final 2024', f24t: 'Final 2024 digitada', pef: 'Banco PEF', robbins: 'Banco Robbins', p2d: 'P2 · Turma D', p2c: 'P2 · Turma C',
     p2_26: '2ª parcial 2026 · 5º F', r26g: '2ª parcial 2026 · 5º G', par1r: '1º Parcial + Recup.', p1c: 'P1 · Turma C',
     p2f1: 'P2 · folha original', p2f2: 'P2 · folha original', par1: '1º Parcial', rec23: 'Recuperatoria 2023',
     reg24: 'Regularización 2024', p1g26: '1ª parcial 2026' };
