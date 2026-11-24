@@ -12,7 +12,7 @@ ROTULO = {  # rótulo curto do balão → id da prova em dados.js
     'Final 2024': ['final24'], 'Final 2024 digitada': ['f24t'], 'Banco PEF': ['pef'], 'Banco Robbins': ['robbins'], 'P2 · Turma D': ['p2d'],
     'P2 · Turma C': ['p2c'], '2ª parcial 2026 · 5º F': ['p2_26'], '2ª parcial 2026 · 5º G': ['r26g'],
     '1º Parcial + Recup.': ['par1r'], 'P1 · Turma C': ['p1c'], 'P2 · folha original': ['p2f1', 'p2f2'],
-    '1º Parcial': ['par1'], 'Recuperatoria 2023': ['rec23'], 'Regularización 2024': ['reg24'], '1ª parcial 2026': ['p1g26'],
+    '1º Parcial': ['par1'], 'Recuperatoria 2023': ['rec23'], 'Regularización 2024': ['reg24'], '1ª parcial 2026': ['p1g26'], 'Recuperatoria 2026 · 5º F': ['rec26f'],
 }
 
 def norm(t):

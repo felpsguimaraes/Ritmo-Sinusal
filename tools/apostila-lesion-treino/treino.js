@@ -10,7 +10,7 @@
   var FONTE = { final24: 'Final 2024', f24t: 'Final 2024 digitada', pef: 'Banco PEF', robbins: 'Banco Robbins', p2d: 'P2 · Turma D', p2c: 'P2 · Turma C',
     p2_26: '2ª parcial 2026 · 5º F', r26g: '2ª parcial 2026 · 5º G', par1r: '1º Parcial + Recup.', p1c: 'P1 · Turma C',
     p2f1: 'P2 · folha original', p2f2: 'P2 · folha original', par1: '1º Parcial', rec23: 'Recuperatoria 2023',
-    reg24: 'Regularización 2024', p1g26: '1ª parcial 2026' };
+    reg24: 'Regularización 2024', p1g26: '1ª parcial 2026', rec26f: 'Recuperatoria 2026 · 5º F' };
   var BANCO = { pef: 1, robbins: 1 };
   var TIPO = { mc: 'Marca la opción correcta', cita: 'Cita', comp: 'Completa', vf: 'Verdadero o falso' };
   var LET = 'abcdefghij';

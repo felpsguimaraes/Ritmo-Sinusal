@@ -16,7 +16,7 @@
   }
   var GRUPOS_FONTE = [
     ['p2', 'P2 antigas', ['p2c', 'p2d', 'p2f1', 'p2f2', 'reg24', 'rec23']],
-    ['n26', 'Provas de 2026', ['p2_26', 'r26g', 'p1g26']],
+    ['n26', 'Provas de 2026', ['p2_26', 'r26g', 'rec26f', 'p1g26']],
     ['par', 'Parciais e final', ['par1', 'p1c', 'par1r', 'final24', 'f24t']],
     ['banco', 'Bancos Robbins e PEF', ['robbins', 'pef']]
   ]
@@ -139,7 +139,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=29' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=30' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis y acumulaciones, com o radar da prova e o simulado</small></span>' +
