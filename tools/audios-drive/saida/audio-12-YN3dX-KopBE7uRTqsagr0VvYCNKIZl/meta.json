@@ -1,0 +1,20 @@
+{
+ "id": "12-YN3dX-KopBE7uRTqsagr0VvYCNKIZl",
+ "nome": "Departamento del Alto Paraná",
+ "dur": 1405.3,
+ "bytes_original": 23149721,
+ "formato_original": {
+  "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+  "duration": "1405.333333",
+  "bit_rate": "131782"
+ },
+ "streams_original": [
+  {
+   "codec_name": "aac",
+   "sample_rate": "48000",
+   "channels": 2
+  }
+ ],
+ "kbps_saida": 32,
+ "bytes_saida": 5773740
+}

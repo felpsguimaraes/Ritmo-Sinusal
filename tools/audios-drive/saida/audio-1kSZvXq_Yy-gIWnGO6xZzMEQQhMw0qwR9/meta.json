@@ -1,0 +1,20 @@
+{
+ "id": "1kSZvXq_Yy-gIWnGO6xZzMEQQhMw0qwR9",
+ "nome": "Nueva grabación 6",
+ "dur": 3048.2,
+ "bytes_original": 49794693,
+ "formato_original": {
+  "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+  "duration": "3048.170667",
+  "bit_rate": "130687"
+ },
+ "streams_original": [
+  {
+   "codec_name": "aac",
+   "sample_rate": "48000",
+   "channels": 2
+  }
+ ],
+ "kbps_saida": 32,
+ "bytes_saida": 12523137
+}

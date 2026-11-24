@@ -1,0 +1,20 @@
+{
+ "id": "1qJCpB6ABq5NSZAiaUUWFHPdC5AcimvKz",
+ "nome": "Nueva grabación",
+ "dur": 2517.5,
+ "bytes_original": 40936863,
+ "formato_original": {
+  "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+  "duration": "2517.482667",
+  "bit_rate": "130088"
+ },
+ "streams_original": [
+  {
+   "codec_name": "aac",
+   "sample_rate": "48000",
+   "channels": 2
+  }
+ ],
+ "kbps_saida": 32,
+ "bytes_saida": 10343712
+}
