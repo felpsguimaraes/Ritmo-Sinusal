@@ -1,0 +1,89 @@
+name: Importar gravações do Drive (Anatomía Patológica I)
+
+# Roda só na branch audios-drive: baixa as gravações listadas em tools/audios-drive/lista.json,
+# comprime para o site e devolve na própria branch (a transcrição volta criptografada com chave-publica.pem).
+on:
+  push:
+    branches: [audios-drive]
+    paths:
+      - "tools/audios-drive/lista.json"
+      - "tools/audios-drive/processar.py"
+      - ".github/workflows/importar-audios-drive.yml"
+
+concurrency:
+  group: sinus-audios-drive
+  cancel-in-progress: true
+
+jobs:
+  lista:
+    runs-on: ubuntu-latest
+    outputs:
+      matriz: ${{ steps.m.outputs.matriz }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: m
+        run: echo "matriz=$(jq -c '.' tools/audios-drive/lista.json)" >> "$GITHUB_OUTPUT"
+
+  audio:
+    needs: lista
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        item: ${{ fromJson(needs.lista.outputs.matriz) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar ffmpeg, faster-whisper e gdown
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+          python -m pip install -q faster-whisper gdown
+      - name: Baixar, comprimir e transcrever
+        env:
+          FID: ${{ matrix.item.id }}
+          NOME: ${{ matrix.item.nome }}
+        run: python tools/audios-drive/processar.py "$FID" "$NOME" "saida/$FID"
+      - name: Criptografar a transcrição
+        env:
+          FID: ${{ matrix.item.id }}
+        run: |
+          cd "saida/$FID"
+          openssl rand -hex 32 > chave.txt
+          openssl enc -aes-256-cbc -pbkdf2 -salt -in transcricao.json -out transcricao.json.enc -pass file:chave.txt
+          openssl pkeyutl -encrypt -pubin -inkey "$GITHUB_WORKSPACE/tools/audios-drive/chave-publica.pem" \
+            -pkeyopt rsa_padding_mode:oaep -in chave.txt -out chave.bin
+          rm -f transcricao.json chave.txt
+          ls -la
+      - uses: actions/upload-artifact@v4
+        with:
+          name: audio-${{ matrix.item.id }}
+          path: saida/${{ matrix.item.id }}
+          retention-days: 3
+
+  publicar:
+    needs: audio
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: audios-drive
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: audio-*
+          path: tools/audios-drive/saida
+      - name: Devolver para a branch audios-drive
+        run: |
+          ls -laR tools/audios-drive/saida | head -60
+          git config user.name "SINUS Áudios"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/audios-drive/saida
+          if git diff --cached --quiet; then echo "Nada para publicar."; exit 0; fi
+          git commit -m "chore(audios): gravações do Drive comprimidas e transcrições criptografadas"
+          git push origin HEAD:audios-drive
