@@ -62,12 +62,15 @@ subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(orig), '-vn', '-
 assert audio.stat().st_size < 25 * 1024 * 1024, audio.stat().st_size
 print(f'{NOME}: {dur / 60:.1f} min, {orig.stat().st_size / 1e6:.1f} MB -> {audio.stat().st_size / 1e6:.1f} MB a {br // 1000} kbps')
 
-wav = OUT / 'tmp.wav'
-subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(orig), '-ac', '1', '-ar', '16000', str(wav)], check=True)
+# áudio decodificado aqui mesmo (PCM 16 kHz) e entregue como array: evita o PyAV do faster-whisper
+import numpy as np  # noqa: E402
+pcm = subprocess.run(['ffmpeg', '-loglevel', 'error', '-i', str(orig), '-f', 's16le', '-ac', '1', '-ar', '16000', '-'],
+                     capture_output=True, check=True).stdout
+amostras = np.frombuffer(pcm, dtype=np.int16).astype(np.float32) / 32768.0
 from faster_whisper import WhisperModel  # noqa: E402
 modelo = WhisperModel('small', device='cpu', compute_type='int8', cpu_threads=os.cpu_count() or 4)
 t0 = time.time()
-segs, _ = modelo.transcribe(str(wav), language='es', vad_filter=True, beam_size=1, condition_on_previous_text=False)
+segs, _ = modelo.transcribe(amostras, language='es', vad_filter=True, beam_size=1, condition_on_previous_text=False)
 trechos = [[round(s.start, 1), round(s.end, 1), s.text.strip()] for s in segs]
 print(f'transcrição: {len(trechos)} trechos em {(time.time() - t0) / 60:.1f} min')
 (OUT / 'transcricao.json').write_text(json.dumps({'id': FID, 'nome': NOME, 'dur': dur, 'trechos': trechos}, ensure_ascii=False), encoding='utf-8')
@@ -76,4 +79,3 @@ meta = {'id': FID, 'nome': NOME, 'dur': round(dur, 1), 'bytes_original': orig.st
         'kbps_saida': br // 1000, 'bytes_saida': audio.stat().st_size}
 (OUT / 'meta.json').write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding='utf-8')
 orig.unlink()
-wav.unlink()
