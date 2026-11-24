@@ -23,40 +23,38 @@
   // prova -> grupo de páginas no visualizador
   var PAG_DA_FONTE = { p2c: 0, p2d: 1, p2f1: 2, p2f2: 2, reg24: 3, rec23: 4, final24: 5, par1: 6, par1r: 7, p1c: 8, p2_26: 9, r26g: 9, p1g26: 10 }
 
-  // gravações (arquivos em p2/audio). tema null = ainda não identificado
+  // gravações das aulas, todas hospedadas em p2/audio (nada toca pelo Google Drive).
+  // Nome no padrão "Assunto · recorte"; o arquivo repete o nome em minúsculas. parte: 'p2' ou 'final'.
   var AUDIOS = [
-    { arq: 'grabacion-5.m4a', t: 'Apoptosis · clase completa', s: 3220, tema: 'apo' },
-    { arq: 'grabacion-6.m4a', t: 'Proteínas y amiloide', s: 3048, tema: 'c7' },
-    { arq: 'plaza-city.m4a', t: 'Vía extrínseca · receptores de muerte (Fas)', s: 499, tema: 'apo' },
-    { arq: 'plaza-city-2.m4a', t: 'Placa de ateroma: cápsula fibrosa, rotura y trombo', s: 3390, tema: 'acu' },
-    { arq: 'plaza-city-3.m4a', t: 'Mecanismos de acumulación, colesterol y aterosclerosis', s: 2865, tema: 'acu' },
-    { arq: 'plaza-city-4.m4a', t: 'Esteatosis (cambio graso)', s: 1378, tema: 'acu' },
-    { arq: 'alto-parana.m4a', t: 'Calcificación patológica', s: 1405, tema: 'c7' }
+    { arq: 'apoptosis-clase-completa.m4a', t: 'Apoptosis · clase completa', s: 3220, tema: 'apo', parte: 'p2' },
+    { arq: 'apoptosis-via-extrinseca-fas.m4a', t: 'Apoptosis · vía extrínseca y receptores de muerte (Fas)', s: 499, tema: 'apo', parte: 'p2' },
+    { arq: 'lipidos-mecanismos-colesterol-aterosclerosis.m4a', t: 'Lípidos · mecanismos de acumulación, colesterol y aterosclerosis', s: 2865, tema: 'acu', parte: 'p2' },
+    { arq: 'lipidos-placa-de-ateroma.m4a', t: 'Lípidos · placa de ateroma: cápsula fibrosa, rotura y trombo', s: 3390, tema: 'acu', parte: 'p2' },
+    { arq: 'lipidos-esteatosis.m4a', t: 'Lípidos · esteatosis (cambio graso)', s: 1378, tema: 'acu', parte: 'p2' },
+    { arq: 'proteinas-y-amiloide.m4a', t: 'Proteínas y amiloide · depósitos de proteínas y amiloidosis', s: 3048, tema: 'c7', parte: 'p2' },
+    { arq: 'calcificacion-patologica.m4a', t: 'Calcificación · distrófica y metastásica', s: 1405, tema: 'c7', parte: 'p2' },
+    { arq: 'correccion-2a-parcial-2026.m4a', t: 'Corrección · 2ª parcial 2026 en aula', s: 2434, tema: 'cor', parte: 'p2' },
+    { arq: 'neoplasias-definicion-y-nomenclatura.m4a', t: 'Neoplasias · definición y nomenclatura', s: 2517, tema: 'neo', parte: 'final' },
+    { arq: 'neoplasias-diferenciacion-y-anaplasia.m4a', t: 'Neoplasias · diferenciación y anaplasia', s: 1302, tema: 'neo', parte: 'final' }
   ]
-  // gravações novas na pasta "Anatopatologia I" do Drive (20/11/2026): tocam pelo player do Drive, sem hospedar o arquivo.
-  // O tema ainda não foi identificado (os arquivos são grandes demais para baixar e transcrever aqui).
-  var DRIVE_AUD = [
-    { id: '1pF3V95ZXDpeC3ywcMTKx4T9eDkvVh3Xd', t: 'Nova Gravação 2', mb: 61 },
-    { id: '1qJCpB6ABq5NSZAiaUUWFHPdC5AcimvKz', t: 'Nueva grabación', mb: 41 },
-    { id: '1nFw-odPuXKOs9dEjtB21Tpl4y8t7vG6V', t: 'Nueva grabación 3', mb: 40 },
-    { id: '1bzIFfeKP8tnfXjDTDCXNOTDwr03lxlt_', t: 'Nueva grabación 2', mb: 21 },
-    { id: '1kSZvXq_Yy-gIWnGO6xZzMEQQhMw0qwR9', t: 'Nueva grabación 6', mb: 50 },
-    { id: '12-YN3dX-KopBE7uRTqsagr0VvYCNKIZl', t: 'Departamento del Alto Paraná', mb: 23 }
-  ]
-  // cartão de áudio único (arquivo do site ou do Drive): mesmo player, pular 15 s, velocidade e "parou em"
+  var AUD_P2 = AUDIOS.filter(function (a) { return a.parte === 'p2' }), AUD_FINAL = AUDIOS.filter(function (a) { return a.parte === 'final' })
+  // nomes antigos (arquivo do site ou id do Drive) -> nome novo, para não perder o "parou em" de quem já ouvia
+  var RENOMEADOS = {
+    'grabacion-5.m4a': 'apoptosis-clase-completa.m4a', 'plaza-city.m4a': 'apoptosis-via-extrinseca-fas.m4a',
+    'plaza-city-3.m4a': 'lipidos-mecanismos-colesterol-aterosclerosis.m4a', 'plaza-city-2.m4a': 'lipidos-placa-de-ateroma.m4a',
+    'plaza-city-4.m4a': 'lipidos-esteatosis.m4a', 'grabacion-6.m4a': 'proteinas-y-amiloide.m4a', 'alto-parana.m4a': 'calcificacion-patologica.m4a',
+    'drive-1kSZvXq_Yy-gIWnGO6xZzMEQQhMw0qwR9': 'proteinas-y-amiloide.m4a', 'drive-12-YN3dX-KopBE7uRTqsagr0VvYCNKIZl': 'calcificacion-patologica.m4a',
+    'drive-1nFw-odPuXKOs9dEjtB21Tpl4y8t7vG6V': 'correccion-2a-parcial-2026.m4a', 'drive-1qJCpB6ABq5NSZAiaUUWFHPdC5AcimvKz': 'neoplasias-definicion-y-nomenclatura.m4a',
+    'drive-1bzIFfeKP8tnfXjDTDCXNOTDwr03lxlt_': 'neoplasias-diferenciacion-y-anaplasia.m4a'
+  }
+  // cartão de áudio: player do site, pular 15 s, velocidade e "parou em"
   function cardAudio(a) {
-    var drive = !!a.id, key = a.arq || ('drive-' + a.id)
-    var src = drive ? 'https://drive.usercontent.google.com/download?id=' + a.id + '&export=download' : BASE + 'audio/' + a.arq
-    return '<div class="p2-a sx-glass" data-arq="' + esc(key) + '"><div class="top"><span class="t">' + esc(a.t) + '</span><span class="d">' + (a.s ? hms(a.s) : a.mb + ' MB') + '<span class="onde"></span></span></div>' +
-      '<audio controls preload="' + (drive ? 'none' : 'metadata') + '" src="' + src + '"></audio>' +
-      (drive ? '<p class="p2-erro" hidden>Não carregou aqui. <a href="https://drive.google.com/file/d/' + a.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></p>' : '') +
+    return '<div class="p2-a sx-glass" data-arq="' + esc(a.arq) + '"><div class="top"><span class="t" lang="es">' + esc(a.t) + '</span><span class="d">' + hms(a.s) + '<span class="onde"></span></span></div>' +
+      '<audio controls preload="metadata" src="' + BASE + 'audio/' + esc(a.arq) + '"></audio>' +
+      '<p class="p2-erro" hidden>Não carregou. Confira a internet e toque no play de novo.</p>' +
       '<div class="p2-ctl"><div class="p2-vel" role="group" aria-label="Pular">' +
         '<button type="button" data-s="-15" aria-label="Voltar 15 segundos">−15 s</button><button type="button" data-s="15" aria-label="Avançar 15 segundos">+15 s</button></div>' +
       '<div class="p2-vel" role="group" aria-label="Velocidade">' + [1, 1.25, 1.5, 2].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (st.vel === v) + '">' + String(v).replace('.', ',') + '×</button>' }).join('') + '</div></div></div>'
-  }
-  function driveAud() {
-    return '<section class="p2-sec"><h2 class="sx-h2">Gravações novas do Drive</h2><p>Gravações da pasta Anatopatologia I, ainda sem tema identificado. Toque no play para ouvir aqui mesmo; a velocidade e o ponto onde você parou ficam salvos.</p><div class="p2-aud">' +
-      DRIVE_AUD.map(cardAudio).join('') + '</div></section>'
   }
   // PDF das provas, lido aqui mesmo com o mesmo pdf.js do leitor da aula (aulas/app.js)
   var PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/'
@@ -83,6 +81,11 @@
   st.f = st.f || { tema: '', fonte: '', sit: '' }
   st.vel = st.vel || 1
   st.pos = st.pos || {}        // áudio -> segundo em que parou
+  Object.keys(RENOMEADOS).forEach(function (velho) {
+    if (st.pos[velho] == null) return
+    if (st.pos[RENOMEADOS[velho]] == null) st.pos[RENOMEADOS[velho]] = st.pos[velho]
+    delete st.pos[velho]
+  })
 
   var FONTE = {}
   D.fontes.forEach(function (f) { FONTE[f.id] = f })
@@ -117,7 +120,7 @@
         aba('apostila', 'Apostila', 'Teoria, organogramas e simulados') +
         aba('banco', 'Banco', D.qs.length + ' questões comentadas') +
         aba('originais', 'Provas originais', nPag + ' páginas e o PDF') +
-        aba('aulas', 'Aulas gravadas', 'Vídeo e ' + AUDIOS.length + ' áudios') +
+        aba('aulas', 'Aulas gravadas', 'Vídeo e ' + AUD_P2.length + ' áudios') +
         aba('mapas', 'Organogramas', nOrg + ' mapas da parcial') +
       '</div>' +
       '<div id="p2-parte"></div>' +
@@ -134,7 +137,7 @@
   // ------------------------------------------------------------ apostila (página própria em p2/apostila/, aberta aqui dentro)
   function apostila(tema) {
     var box = $('#p2-parte')
-    var src = BASE + 'apostila/index.html?v=27' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
+    var src = BASE + 'apostila/index.html?v=28' + (tema && /^[a-z0-9-]+$/.test(tema) ? '&t=' + tema : '')
     box.innerHTML =
       '<section class="p2-viewer p2-apos sx-glass" id="p2-apos" aria-label="Apostila da 2ª parcial">' +
         '<div class="p2-vbar"><span class="t">Apostila · Anatomía Patológica I<small>Necrosis, apoptosis y acumulaciones, com o radar da prova e o simulado</small></span>' +
@@ -167,7 +170,7 @@
       '<div class="tr-seg tr6" role="tablist" aria-label="Parte do Final">' +
         tab('apostila', 'Apostila', 'Inflamación y neoplasias') +
         tab('mapas', 'Organogramas', nFO + ' mapas do Final') +
-        tab('aulas', 'Aulas gravadas', 'Clases 9, 10 e 11') +
+        tab('aulas', 'Aulas gravadas', AUD_FINAL.length + ' áudios de Neoplasias') +
         tab('provas', 'Banco de provas', D.qs.length + ' questões comentadas') +
         tab('slides', 'Slides', 'Clase 9, 10 e 11') +
         tab('originais', 'Provas originais', 'Folhas e PDF') +
@@ -178,12 +181,13 @@
       box.innerHTML = '<section class="p2-viewer p2-apos sx-glass" aria-label="Apostila do Final">' +
         '<div class="p2-vbar"><span class="t">Apostila do Final · Anatomía Patológica<small>Inflamación aguda y neoplasias</small></span>' +
         '<a class="p2-ib" href="' + BASE + 'apostila/final.html" target="_blank" rel="noopener" aria-label="Abrir numa aba nova" title="Abrir numa aba nova"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 14v6H4V6h6"/></svg></a></div>' +
-        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=22" title="Apostila do Final"></iframe></section>' +
+        '<iframe class="p2-apos-frame" src="' + BASE + 'apostila/final.html?v=23" title="Apostila do Final"></iframe></section>' +
         '<p class="p2-dl"><span>O que você marca como estudado e as notas dos simulados ficam salvos neste aparelho.</span></p>'
     } else if (sub === 'mapas') {
       mapas(FO)
     } else if (sub === 'aulas') {
-      box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Aulas gravadas do Final</h2><p>Ainda não há gravação identificada das Clases 9, 10 e 11. As gravações novas do Drive estão abaixo, sem tema definido.</p><p class="p2-dl"><a class="sx-btn sx-small sx-primary" href="#/provas/aulas">Ver as aulas gravadas da 2ª parcial</a></p></section>' + driveAud()
+      box.innerHTML = secoesAudio(AUD_FINAL) +
+        '<section class="p2-sec"><p>Ainda não há gravação de Inflamación aguda. A correção da 2ª parcial e as aulas da parcial estão em <a href="#/provas/aulas">Aulas gravadas da 2ª parcial</a>.</p></section>'
       ligaAudios(box)
     } else if (sub === 'slides') {
       box.innerHTML = '<section class="p2-sec"><h2 class="sx-h2">Slides das aulas do Final</h2><p>Os arquivos originais da professora (Clase 9, 10 e 11).</p>' +
@@ -613,22 +617,26 @@
   })
 
   // ------------------------------------------------------------ aulas gravadas
+  // uma seção por tema (ordem de TEMAS); a correção da prova vem por último
+  function secoesAudio(lista) {
+    var porTema = {}
+    lista.forEach(function (a) { (porTema[a.tema] = porTema[a.tema] || []).push(a) })
+    var titulo = function (k) { return k === 'cor' ? 'Corrección de la prueba' : TEMAS[k] ? TEMAS[k][0] : 'Outras gravações' }
+    var ordem = Object.keys(TEMAS).concat(['cor']).filter(function (k) { return porTema[k] })
+    Object.keys(porTema).forEach(function (k) { if (ordem.indexOf(k) < 0) ordem.push(k) })
+    return ordem.map(function (k) {
+      return '<section class="p2-sec"><h2 class="sx-h2">' + esc(titulo(k)) + '</h2><div class="p2-aud">' + porTema[k].map(cardAudio).join('') + '</div></section>'
+    }).join('')
+  }
   function aulas() {
     var box = $('#p2-parte')
-    var porTema = {}, semTema = []
-    AUDIOS.forEach(function (a) { if (a.tema && TEMAS[a.tema]) (porTema[a.tema] = porTema[a.tema] || []).push(a); else semTema.push(a) })
-    var bloco = function (lst) { return '<div class="p2-aud">' + lst.map(cardAudio).join('') + '</div>' }
     box.innerHTML =
       '<section class="p2-sec"><h2 class="sx-h2">Clase repaso</h2><p>A aula de revisão da professora para a parcial.</p>' +
         '<div class="p2-video sx-glass"><span class="t">' + esc(VIDEO.t) + '<small>' + esc(VIDEO.d) + '</small></span>' +
           '<div class="p2-frame"><iframe src="https://drive.google.com/file/d/' + VIDEO.id + '/preview" title="' + esc(VIDEO.t) + '" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>' +
           '<div class="p2-links"><a href="https://drive.google.com/file/d/' + VIDEO.id + '/view" target="_blank" rel="noopener">Abrir no Google Drive</a></div>' +
         '</div></section>' +
-      Object.keys(TEMAS).filter(function (k) { return porTema[k] }).map(function (k) {
-        return '<section class="p2-sec"><h2 class="sx-h2">' + esc(TEMAS[k][0]) + '</h2>' + bloco(porTema[k]) + '</section>'
-      }).join('') +
-      driveAud() +
-      (semTema.length ? '<section class="p2-sec"><h2 class="sx-h2">Gravações das aulas</h2><p>As ' + semTema.length + ' gravações da parcial. Toque no play para ouvir aqui mesmo; a velocidade escolhida vale para todas.</p>' + bloco(semTema) + '</section>' : '')
+      secoesAudio(AUD_P2)
     ligaAudios(box)
   }
   function ligaAudios(box) {
