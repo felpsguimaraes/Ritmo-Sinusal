@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-23T21:15:32Z",
+  "updatedAt": "2026-11-24T20:06:49Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -7,7 +7,7 @@
   "videos": [
     {
       "id": "NbspWagqMoU",
-      "title": "CORTE SAGITAL PARTE 1",
+      "title": "SAGITTAL SECTION PART 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=NbspWagqMoU",
@@ -97,7 +97,7 @@
     },
     {
       "id": "osl4JYIqOSE",
-      "title": "Spleen",
+      "title": "Bazo",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=osl4JYIqOSE",
@@ -187,7 +187,7 @@
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "CORAZÓN - Configuración Externa - Parte 2",
+      "title": "HEART - External Configuration - Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "CORAZÓN - Configuración Externa - Parte 1",
+      "title": "HEART - External Configuration - Part 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -227,7 +227,7 @@
     },
     {
       "id": "BllOA4xplp8",
-      "title": "CEREBRO 2da Parte",
+      "title": "BRAIN Part 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=BllOA4xplp8",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
+      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -267,7 +267,7 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "SPINAL CORD",
+      "title": "MÉDULA ESPINAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "POLÍGONO DE WILLIS",
+      "title": "Willis's Polygon",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -347,7 +347,7 @@
     },
     {
       "id": "cEuy29taBA0",
-      "title": "AORTA ABDOMINAL",
+      "title": "ABDOMINAL AORTA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=cEuy29taBA0",
@@ -357,7 +357,7 @@
     },
     {
       "id": "rx0qaehAcNk",
-      "title": "TRONCO CELIACO",
+      "title": "CELIAC TRUNK",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=rx0qaehAcNk",
@@ -367,7 +367,7 @@
     },
     {
       "id": "vh4Lra7LbvQ",
-      "title": "VÍAS BILIARES EXTRAHEPATICAS",
+      "title": "EXTRAHEPATIC BILE DUCTS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=vh4Lra7LbvQ",
@@ -387,7 +387,7 @@
     },
     {
       "id": "yBaFEDZO4yY",
-      "title": "ARTERIA MESENTERICA SUPERIOR",
+      "title": "SUPERIOR MESENTERIC ARTERY",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=yBaFEDZO4yY",
@@ -427,7 +427,7 @@
     },
     {
       "id": "xIutwVbGDVg",
-      "title": "MUSCULOS PELVITROCANTERICOS Y DEL MUSLO",
+      "title": "PELVITROCHANTERIC AND THIGH MUSCLES",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=xIutwVbGDVg",
@@ -808,7 +808,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 42,
+      "newScan": 43,
       "total": 44
     },
     "anatomiaupe2188": {
