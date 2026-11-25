@@ -24,18 +24,18 @@ assert.equal(fotos(p1.cartoes).length, 5, 'P1 deve manter as 5 lâminas originai
 assert.equal(fotos(p2.cartoes).length, 143, 'P2 deve ter exatamente as 143 lâminas originais');
 assert.equal(videos(p2.cartoes).length, 7, 'Os 7 vídeos continuam no complemento da P2');
 assert.equal(p2.cartoes.length, 150);
-assert.equal(fin.cartoes.length, 51, 'Final deve ter as 40 fotos adicionais + 6 de teratoma + 5 enviadas em 25/11');
+assert.equal(fin.cartoes.length, 55, 'Final deve ter as 40 fotos adicionais + 6 de teratoma + 9 enviadas em 25/11');
 assert.equal(videos(fin.cartoes).length, 0);
 
 const esperados = {
   '11 · Adenoma pleomorfo': 7,
   '12 · Adenocarcinoma de esófago': 6,
   '13 · Carcinoma escamoso de piel': 9,
-  '14 · Lipoma': 5,
-  '15 · Liposarcoma': 5,
+  '14 · Lipoma': 6,
+  '15 · Liposarcoma': 6,
   '16 · Leiomioma intramural': 10,
   '17 · Leiomiosarcoma': 2,
-  '18 · Teratoma ovárico maduro': 7
+  '18 · Teratoma ovárico maduro': 9
 };
 const contagem = {};
 fin.cartoes.forEach(function (c) { contagem[c.g] = (contagem[c.g] || 0) + 1; });
