@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-24T20:06:49Z",
+  "updatedAt": "2026-11-25T19:12:03Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -27,7 +27,7 @@
     },
     {
       "id": "n6ufOldVq64",
-      "title": "MIDLINE STRUCTURES FROM A SAGITTAL SECTION",
+      "title": "ESTRUCTURAS DE LA LÍNEA MEDIA DESDE UN CORTE SAGITAL",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=n6ufOldVq64",
@@ -47,7 +47,7 @@
     },
     {
       "id": "6KwT9LHsq5U",
-      "title": "PRACTICAL NEUROANATOMY - Full Video",
+      "title": "NEUROANATOMIA PRACTICA - Video Completo",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=6KwT9LHsq5U",
@@ -107,7 +107,7 @@
     },
     {
       "id": "1Ubtg0UOzRg",
-      "title": "Celiac Trunk",
+      "title": "Tronco celiaco",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=1Ubtg0UOzRg",
@@ -257,7 +257,7 @@
     },
     {
       "id": "81SOI7dXwkQ",
-      "title": "BULBO RAQUÍDEO",
+      "title": "MEDULLA OBLONGATA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -267,7 +267,7 @@
     },
     {
       "id": "GAFw1clRXQw",
-      "title": "MÉDULA ESPINAL",
+      "title": "SPINAL CORD",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=GAFw1clRXQw",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "Willis's Polygon",
+      "title": "POLÍGONO DE WILLIS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -808,7 +808,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 43,
+      "newScan": 42,
       "total": 44
     },
     "anatomiaupe2188": {
