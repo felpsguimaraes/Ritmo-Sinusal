@@ -41,7 +41,8 @@
     '/sinus/treino-hub.js?v=20261112-laminario-final',
     '/sinus/subject-viewer-order.js?v=20261025-players-by-tab-v1',
     '/sinus/video-player-materias.js?v=20261025-audio-preview-fix2',
-    '/laminario-zoom.js'
+    '/laminario-zoom.js',
+    '/sinus/abas-limpas.js?v=1'
   ];
   var carregando = null;
 
