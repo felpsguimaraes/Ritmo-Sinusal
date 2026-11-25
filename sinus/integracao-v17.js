@@ -102,7 +102,8 @@
       if (S.prefs.idioma && S.prefs.idioma !== idioma()) definirIdioma(S.prefs.idioma, false);
       if (S.prefs.tema && S.prefs.tema !== temaAtual()) aplicarTema(S.prefs.tema);
       msg('');
-      var completo = !!(S.perfil && S.perfil.nome && S.perfil.turma && S.perfil.whatsapp);
+      // Acesso: só Google + período e turma. Nome vem da conta Google; WhatsApp deixou de ser exigido.
+      var completo = !!(S.perfil && S.perfil.turma && S.prefs.periodo);
       if (!completo || !S.prefs.onboarding) return abrirPersonalizacao();
       entrarNoPainel();
     }).catch(function (error) {
@@ -117,7 +118,8 @@
   W.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferredInstall = e; if (P && PASSOS[P.passo] === 'icone') renderOnb() });
   W.addEventListener('appinstalled', function () { deferredInstall = null; if (P) { P.instalou = true; renderOnb() } });
 
-  var PASSOS = ['nome', 'icone', 'apresentacao', 'turma', 'foco', 'jeito', 'indicacao', 'pronto'];
+  // Depois do Google, uma única tela: período e turma.
+  var PASSOS = ['turma'];
   var P = null;
   function turmasDoPeriodo(periodo) { var n = {1:7,2:12,3:8,4:13,5:7,6:10,7:5,8:6,9:3,10:5}[Number(periodo)] || 7; return 'ABCDEFGHIJKLM'.slice(0,n).split('') }
   var GRUPOS_MATERIA = ['Semiología Médica I', 'Anatomía Patológica I'];
@@ -171,15 +173,10 @@
         '<div class="sxConnect"><span class="eyebrow">Meu espaço · Tudo se conecta</span><h3>Seu estudo, do seu jeito.</h3><div class="row"><span>Materiais</span><span>Aulas</span><span>Caderno</span></div><small>Tudo salvo no seu espaço. Você continua de onde parou.</small></div>'
     };
     if (k === 'turma') {
-      var g = '<div id="pAcademic">'+academicFields('p',P.periodo,P.turma,P)+'</div>';
       return {
-        eyebrow: 'Um espaço que entende sua turma', titulo: 'Qual é o seu <em>momento na Medicina?</em>', lead: 'Vamos organizar suas matérias e seus horários a partir daqui. Você pode mudar tudo no Perfil depois.',
-        corpo: '<div class="grid2">' + campoSel('pFac', 'Faculdade', ['UCP', 'Outra'], P.faculdade) +
-          '<label class="field"><span>Campus</span><input id="pCampus" value="' + H(P.campus) + '" placeholder="Ciudad del Este"></label></div>' +
-          '<div class="grid2">' + campoSel('pPer', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), P.periodo) +
-          campoSel('pTurma', 'Turma (sección)', [['', 'Escolha']].concat(turmasDoPeriodo(P.periodo).map(function (x) { return [x, x] })), P.turma) + '</div>' +
-          campoSel('pPapel', 'Você participa como', ['Estudante', 'Monitor', 'Delegado'], P.papel) + g +
-          '<p class="sxHint">As escolhas são guardadas por faculdade, campus, período e turma. As aulas teóricas continuam na agenda.</p>'
+        eyebrow: 'Seu período e sua turma', titulo: 'Qual é o seu <em>período e turma?</em>', lead: 'Suas matérias e seus horários saem daqui. Você pode mudar no Perfil depois.',
+        corpo: '<div class="grid2">' + campoSel('pPer', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), P.periodo) +
+          campoSel('pTurma', 'Turma (sección)', [['', 'Escolha']].concat(turmasDoPeriodo(P.periodo).map(function (x) { return [x, x] })), P.turma) + '</div>'
       };
     }
     if (k === 'foco') return {
@@ -209,20 +206,20 @@
   function renderOnb() {
     if (!P) return;
     var k = PASSOS[P.passo], c = corpoPasso(k), n = P.passo + 1, total = PASSOS.length;
-    var ultimo = k === 'pronto';
+    var ultimo = P.passo >= PASSOS.length - 1;
     $id('sxOnboarding').innerHTML = '<section class="glass sxOnb">' +
       '<div class="sxOnbTop"><div class="logo"><span class="logoMark">S</span><span>sinus.</span></div><div class="topbarRight">' +
       '<select class="sxLangMini" data-sx-lang-select aria-label="Idioma do painel"><option value="pt">PT</option><option value="es">ES</option><option value="en">EN</option></select>' +
       '<button class="btn sm sxThemeBtn" type="button" data-sx-tema aria-label="Alternar fundo claro ou escuro">☾</button></div></div>' +
-      '<div class="sxBar"><i style="width:' + Math.round(n / total * 100) + '%"></i></div>' +
+      (total > 1 ? '<div class="sxBar"><i style="width:' + Math.round(n / total * 100) + '%"></i></div>' : '') +
       '<span class="eyebrow">' + c.eyebrow + '</span><h2>' + c.titulo + '</h2><p class="lead">' + c.lead + '</p>' +
       '<div class="sxOnbBody">' + c.corpo + '</div>' +
       '<p class="sxErr" id="pErr">' + H(P.erro || '') + '</p>' +
-      '<div class="sxOnbFoot"><span class="sxStep">' + n + ' de ' + total + ' · seu espaço, no seu ritmo</span><div class="btns">' +
+      '<div class="sxOnbFoot"><span class="sxStep">' + (total > 1 ? n + ' de ' + total + ' · ' : '') + 'seu espaço, no seu ritmo</span><div class="btns">' +
       (P.passo > 0 ? '<button class="btn" type="button" data-sx-onb="voltar">Voltar</button>' : (S.dentro ? '<button class="btn" type="button" data-sx-onb="cancelar">Voltar ao painel</button>' : '<button class="btn" type="button" data-sx-sair>Sair</button>')) +
       (c.pular ? '<button class="btn" type="button" data-sx-onb="pular">Pular esta etapa</button>' : '') +
       '<button class="btn primary" type="button" data-sx-onb="seguir"' + (P.salvando ? ' disabled' : '') + '>' + (ultimo ? (P.salvando ? 'Salvando…' : 'Entrar no meu espaço') : 'Continuar') + '</button>' +
-      '</div></div><p class="sxHint" style="margin-top:10px">Você pode voltar e editar quando quiser.</p></section>';
+      '</div></div></section>';
     aplicarTema(temaAtual()); definirIdioma(idioma(), false);
   }
 
@@ -230,9 +227,8 @@
     var k = PASSOS[P.passo], v = function (id) { var e = $id(id); return e ? e.value : '' };
     if (k === 'nome') { P.nome = v('pNome').trim(); P.whatsapp = v('pZap').replace(/\D/g, '') }
     if (k === 'turma') {
-      P.faculdade = v('pFac') || 'UCP'; P.campus = v('pCampus').trim(); P.periodo = Number(v('pPer') || 5);
-      P.turma = v('pTurma'); P.practiceAssignments=readAcademic('p'); P.papel = v('pPapel') || 'Estudante';
-      P.gruposMateria={}; Object.keys(P.practiceAssignments).forEach(function(k){if(k.endsWith('::practice'))P.gruposMateria[k.split('::')[0]]=P.practiceAssignments[k].group});
+      P.periodo = Number(v('pPer') || P.periodo || 5);
+      P.turma = v('pTurma');
     }
     if (k === 'indicacao') P.indicacao = v('pInd').trim();
   }
@@ -249,12 +245,14 @@
   function salvarPersonalizacao() {
     P.salvando = true; P.erro = ''; renderOnb();
     var zap = P.whatsapp;
-    var perfil = { nome: P.nome, turma: P.turma, whatsapp: zap, email: S.email, ultimo_acesso: agora() };
+    var nome = P.nome || S.nomeGoogle || String(S.email || '').split('@')[0] || 'Aluno Sinus';
+    var perfil = { nome: nome, turma: P.turma, email: S.email, ultimo_acesso: agora() };
+    if (zap) perfil.whatsapp = zap;
     if (!S.perfil) perfil.primeiro_acesso = agora();
     db.doc('perfis/' + S.uid).set(perfil, { merge: true }).then(function () {
 
-      S.perfil = Object.assign({}, S.perfil || {}, { nome: P.nome, turma: P.turma, whatsapp: zap, email: S.email });
-      S.nome = P.nome; S.turma = P.turma; S.whatsapp = zap;
+      S.perfil = Object.assign({}, S.perfil || {}, perfil);
+      S.nome = nome; S.turma = P.turma; S.whatsapp = zap;
       return salvarPrefs({
         onboarding: true, idioma: idioma(), tema: temaAtual(), faculdade: P.faculdade, campus: P.campus, periodo: P.periodo,
         turma: P.turma, grupo: P.grupo, practiceAssignments:P.practiceAssignments, papel: P.papel, gruposMateria: P.gruposMateria, foco: P.foco, estilos: P.estilos, indicacao: P.indicacao
@@ -1067,7 +1065,9 @@
     var nome = ($id('pfName').value || '').trim(), turma = $id('pfClass').value, per = Number($id('pfPeriod').value || 5);
     var assignments=readAcademic('pf'),gm={};Object.keys(assignments).forEach(function(k){if(k.endsWith('::practice'))gm[k.split('::')[0]]=assignments[k].group});
     if (nome.length < 3) { $id('pfErr').textContent = 'Escreva seu nome (pelo menos 3 letras).'; return }
-    db.doc('perfis/' + S.uid).set({ nome: nome, turma: turma, whatsapp: S.whatsapp, email: S.email, ultimo_acesso: agora() }, { merge: true }).then(function () {
+    var dadosPerfil = { nome: nome, turma: turma, email: S.email, ultimo_acesso: agora() };
+    if (S.whatsapp) dadosPerfil.whatsapp = S.whatsapp;
+    db.doc('perfis/' + S.uid).set(dadosPerfil, { merge: true }).then(function () {
       S.nome = nome; S.turma = turma;
       return salvarPrefs({ periodo: per, turma: turma, grupo:'', gruposMateria:gm, practiceAssignments:assignments });
     }).then(function () { montarDados(); renderAll(); toast('Perfil salvo') }).catch(function () { $id('pfErr').textContent = 'Não foi possível salvar. Tente de novo.' });
@@ -1155,7 +1155,7 @@
       if (acao === 'pular') { P.erro = ''; P.passo = Math.min(PASSOS.length - 1, P.passo + 1); return renderOnb() }
       var er = validarPasso(); if (er) { P.erro = er; return renderOnb() }
       P.erro = '';
-      if (PASSOS[P.passo] === 'pronto') return salvarPersonalizacao();
+      if (P.passo >= PASSOS.length - 1) return salvarPersonalizacao();
       P.passo++; return renderOnb();
     }
   });

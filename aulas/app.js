@@ -49,7 +49,7 @@
     info.hidden = !(modo === 'migrar' || modo === 'completar')
     if (modo === 'migrar') info.textContent = 'Seus dados e seu progresso continuam. Entre com a sua conta Google para salvar tudo nela.'
     if (modo === 'completar') {
-      info.innerHTML = 'Falta pouco: complete seus dados para liberar a aula. Você entrou como <b></b>. <button type="button" class="sx-link" id="sx-trocar">Usar outra conta</button>'
+      info.innerHTML = 'Falta pouco: informe seu período e sua turma para liberar a aula. Você entrou como <b></b>. <button type="button" class="sx-link" id="sx-trocar">Usar outra conta</button>'
       $('b', info).textContent = (auth.currentUser && auth.currentUser.email) || 'sua conta'
       $('#sx-trocar').addEventListener('click', sair)
     }
@@ -65,11 +65,21 @@
   }
   function ocupar(t) { ocupado = true; $$('button[type=submit]', gate).forEach(function (b) { b.disabled = true }); gBtn.disabled = true; sayLoading(t) }
   function liberar() { ocupado = false; $$('button[type=submit]', gate).forEach(function (b) { b.disabled = false }); gBtn.disabled = false }
+  // turmas por período (mesma grade do painel do Sinus)
+  function turmasDoPeriodo(per) { var n = { 1: 7, 2: 12, 3: 8, 4: 13, 5: 7, 6: 10, 7: 5, 8: 6, 9: 3, 10: 5 }[Number(per)] || 7; return 'ABCDEFGHIJKLM'.slice(0, n).split('') }
+  var selPer = $('#sx-periodo'), boxTurmas = $('#sx-turmas')
+  function montarTurmas(marcar) {
+    if (!boxTurmas) return
+    boxTurmas.innerHTML = turmasDoPeriodo(selPer ? selPer.value : 5).map(function (t, i) {
+      return '<label><input type="radio" name="turma" value="' + t + '"' + (i ? '' : ' required') + (t === marcar ? ' checked' : '') + '><span>' + t + '</span></label>'
+    }).join('')
+  }
+  if (selPer) selPer.addEventListener('change', function () { var m = fDados.querySelector('input[name="turma"]:checked'); montarTurmas(m && m.value) })
+  montarTurmas('')
   function preencher(p) {
     p = p || {}
-    if (p.nome != null) $('#sx-nome').value = p.nome
-    $$('input[name="turma"]', fDados).forEach(function (r) { r.checked = r.value === p.turma })
-    if (p.whatsapp) $('#sx-whats').value = '+' + p.whatsapp
+    if (selPer && p.periodo) selPer.value = String(p.periodo)
+    montarTurmas(p.turma || '')
   }
   function sair() { auth.signOut().then(function () { sess.del('modo'); location.hash = ''; location.reload() }) }
   function bloqueado() { app.hidden = true; gate.hidden = false; fDados.hidden = gBtn.hidden = ou.hidden = true; say('O seu acesso foi bloqueado. Fale com quem te enviou o link.', true) }
@@ -131,6 +141,11 @@
         preencher({ nome: user.displayName || '', email: user.email || '' }); tela('completar'); return
       }
       perfil = s.data()
+      // sem WhatsApp: basta ter período e turma
+      if (!perfil.whatsapp) {
+        if (perfil.turma) { entrar(user); return }
+        preencher(perfil); tela('completar'); return
+      }
       return db.doc('whats/' + perfil.whatsapp).get().then(function (w) {
         if (w.exists && w.data().uid === user.uid) { entrar(user); return }
         if (w.exists) { preencher(perfil); tela('completar', 'Esse WhatsApp já está em outra conta. Entre com ela ou escreva outro número.', true); return }
@@ -147,30 +162,22 @@
     })
   }
 
-  // reserva o WhatsApp (1 conta por número) e grava o cadastro, juntos
+  // grava o cadastro: nome da conta Google, período e turma
   function salvarPerfil(user, dados, junta) {
-    var wref = db.doc('whats/' + dados.whatsapp)
     perfilRef = db.doc('perfis/' + user.uid)
-    return wref.get().then(function (w) {
-      if (w.exists && w.data().uid !== user.uid) throw { code: 'whats-ocupado' }
-      var b = db.batch()
-      if (!w.exists) b.set(wref, { uid: user.uid, em: FV.serverTimestamp() })
-      var p = { nome: dados.nome, turma: dados.turma, whatsapp: dados.whatsapp }
-      if (dados.email) p.email = dados.email
-      if (!junta) { p.primeiro_acesso = FV.serverTimestamp(); p.temas = {} }
-      b.set(perfilRef, p, { merge: !!junta })
-      return b.commit()
-    })
+    var nome = String(user.displayName || (perfil && perfil.nome) || String(user.email || '').split('@')[0] || 'Aluno Sinus').slice(0, 80)
+    var p = { nome: nome, turma: dados.turma, periodo: dados.periodo }
+    if (dados.email) p.email = dados.email
+    if (!junta) { p.primeiro_acesso = FV.serverTimestamp(); p.temas = {} }
+    return perfilRef.set(p, { merge: !!junta })
   }
 
   function lerDados(semConta) {
     $$('[aria-invalid]', fDados).forEach(function (n) { n.removeAttribute('aria-invalid') })
-    var d = { nome: $('#sx-nome').value.replace(/\s+/g, ' ').trim(), whatsapp: soDigitos($('#sx-whats').value) }
+    var d = { periodo: Number(selPer ? selPer.value : 5) || 5 }
     var marcada = fDados.querySelector('input[name="turma"]:checked')
-    if (d.nome.length < 3 || d.nome.indexOf(' ') < 0) { erroCampo('sx-nome', 'Escreva o seu nome e sobrenome.'); return null }
-    if (!marcada) { say('Escolha a sua turma (A a G).', true); fDados.querySelector('input[name="turma"]').focus(); return null }
+    if (!marcada) { say('Escolha a sua turma.', true); var r = fDados.querySelector('input[name="turma"]'); if (r) r.focus(); return null }
     d.turma = marcada.value
-    if (d.whatsapp.length < 8 || d.whatsapp.length > 15) { erroCampo('sx-whats', 'Confira o WhatsApp: use o código do país e o número completo.'); return null }
     return d
   }
 
@@ -188,7 +195,7 @@
       })
     }).then(function (x) {
       liberar()
-      perfil = Object.assign({}, perfilAntigo || perfil || {}, { nome: d.nome, turma: d.turma, whatsapp: d.whatsapp })
+      perfil = Object.assign({}, perfilAntigo || perfil || {}, { nome: x.user.displayName || (perfil && perfil.nome) || '', turma: d.turma, periodo: d.periodo })
       entrar(x.user)
     }).catch(erroAuth)
   })
@@ -214,7 +221,7 @@
     if (entrou) return
     entrou = true; usuario = user
     if (!perfil || !perfil.dono) registrar(user)
-    $('#sx-quem').textContent = perfil && perfil.nome ? perfil.nome + (perfil.turma ? ' · turma ' + perfil.turma : '') : ''
+    $('#sx-quem').textContent = perfil && perfil.nome ? perfil.nome + (perfil.periodo ? ' · ' + perfil.periodo + 'º período' : '') + (perfil.turma ? ' · turma ' + perfil.turma : '') : ''
     nuvemProg()
     addEventListener('hashchange', rota)
     rota()
