@@ -24,18 +24,18 @@ assert.equal(fotos(p1.cartoes).length, 5, 'P1 deve manter as 5 lâminas originai
 assert.equal(fotos(p2.cartoes).length, 143, 'P2 deve ter exatamente as 143 lâminas originais');
 assert.equal(videos(p2.cartoes).length, 7, 'Os 7 vídeos continuam no complemento da P2');
 assert.equal(p2.cartoes.length, 150);
-assert.equal(fin.cartoes.length, 55, 'Final deve ter as 40 fotos adicionais + 6 de teratoma + 9 enviadas em 25/11');
+assert.equal(fin.cartoes.length, 61, 'Final deve ter as 40 fotos adicionais + 6 de teratoma + 15 enviadas em 25/11');
 assert.equal(videos(fin.cartoes).length, 0);
 
 const esperados = {
   '11 · Adenoma pleomorfo': 7,
   '12 · Adenocarcinoma de esófago': 6,
   '13 · Carcinoma escamoso de piel': 9,
-  '14 · Lipoma': 6,
-  '15 · Liposarcoma': 6,
+  '14 · Lipoma': 9,
+  '15 · Liposarcoma': 7,
   '16 · Leiomioma intramural': 10,
   '17 · Leiomiosarcoma': 2,
-  '18 · Teratoma ovárico maduro': 9
+  '18 · Teratoma ovárico maduro': 11
 };
 const contagem = {};
 fin.cartoes.forEach(function (c) { contagem[c.g] = (contagem[c.g] || 0) + 1; });
@@ -82,7 +82,7 @@ terato.forEach(function (c) {
   assert.equal(c.b[0].o, 'Ovario');
   assert.equal(c.b[0].p, 'Neoplásico benigno');
   assert.equal(c.b[0].x, 'Teratoma ovárico maduro');
-  assert.ok(c.fd && c.fd.length === 1 && c.fe && c.fe.length === 2, 'Teratoma precisa de diapositiva e 2 esquemas: ' + c.id);
+  assert.ok(c.fd && c.fd.length >= 1 && c.fe && c.fe.length === 2, 'Teratoma precisa de diapositiva e 2 esquemas: ' + c.id);
   [c.img].concat(c.fd, c.fe).forEach(function (u) {
     assert.ok(fs.existsSync(u.replace(/^\//, '')), 'Imagem inexistente: ' + u);
   });
