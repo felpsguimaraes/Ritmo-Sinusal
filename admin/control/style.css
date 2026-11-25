@@ -11,3 +11,15 @@ nav button.nav-drive-special.active{background:#fff;color:#145139;border-color:#
 button.drive-primary-button{background:#217c50;color:#fff;border-color:#217c50;font-weight:720;box-shadow:0 6px 18px #1b67432e}
 button.drive-primary-button:hover{background:#186640}
 @media(max-width:650px){.admin-header-actions{width:100%;justify-content:stretch}.admin-header-actions button{flex:1 1 155px}}
+
+.grid.four{grid-template-columns:repeat(4,1fr)}@media(max-width:1100px){.grid.four{grid-template-columns:repeat(2,1fr)}}@media(max-width:640px){.grid.four{grid-template-columns:1fr}}
+.count{display:inline-block;min-width:26px;padding:2px 9px;border-radius:99px;background:#e6f1e9;color:#236349;font-size:13px;font-weight:600;text-align:center;vertical-align:middle;margin-left:6px}
+.who{display:flex;align-items:center;gap:10px;min-width:200px}.who b{font-weight:600}.who small{display:block}
+.av{position:relative;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#d9eadf;color:#236349;display:grid;place-items:center;overflow:hidden;font-size:12px;font-weight:700}.av i{font-style:normal}.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pill{font-size:10px;padding:2px 7px;border-radius:99px;background:#f2e8d5;color:#7a5a1d;vertical-align:middle}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#c3ccc6;margin-right:6px;flex:0 0 9px}.dot.on{background:#1fa463;box-shadow:0 0 0 4px #1fa46325;animation:pulse 2s infinite}.dot.recent{background:#7cc79a}.dot.today{background:#e0b84f}
+@keyframes pulse{50%{box-shadow:0 0 0 7px #1fa46310}}@media(prefers-reduced-motion:reduce){.dot.on{animation:none}}
+.status{display:inline-flex;align-items:center;white-space:nowrap;font-size:12px}.status.on{color:#13814c;font-weight:600}
+.online-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.online-item{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:12px;border:1px solid #e1e8e1;border-radius:12px;background:white}.online-item>small{width:100%;padding-left:59px}
+.hours{display:grid;grid-template-columns:repeat(24,1fr);gap:4px;height:130px;align-items:end}.hours>div{display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-align:center}.hours span{display:block;background:#236349;border-radius:5px 5px 2px 2px;min-height:2px;color:white;font-size:10px;line-height:16px}.hours small{font-size:9px;margin-top:4px}
+.live{margin-left:auto;font-size:11px}

@@ -23,3 +23,7 @@ begin
 end; $$;
 revoke all on function public.sinus_owner_access_log(int,int) from public, anon;
 grant execute on function public.sinus_owner_access_log(int,int) to authenticated;
+
+-- v5 (25/11/2026): public.sinus_owner_presence(p_days) — online agora, última hora, 24 h, novos cadastros,
+-- nome/foto/turma/período (perfis do Sinus + Google), última página, tempo ativo e pessoas por hora.
+-- Aplicada no projeto via migração "sinus_owner_presence_v5". Também conta como atividade o salvamento em sinus_documents.

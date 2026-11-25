@@ -30,7 +30,7 @@
     '/sinus/medicina-import.js?v=20261024-grade',
     '/sinus/acervo-provas-auditado.js?v=20261120-inicio',
     '/sinus/atlas-revalida.js?v=revalida-20261101-areas',
-    '/sinus/admin-integration.js?v=20261120-sem-cobranca',
+    '/sinus/admin-integration.js?v=20261125-presenca',
     '/sinus/compromissos-integrados.js?v=20261025-aoblocks1',
     '/sinus/agenda-semanal-v5.js?v=20261024-preview1',
     '/sinus/treino-unificado-v1.js?v=20261112-so-laminario',
