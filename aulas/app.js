@@ -26,38 +26,40 @@
   function sayOk(t) { say(t); msg.classList.add('sx-ok') }
   function sayLoading(t) { msg.innerHTML = '<span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>'; msg.appendChild(document.createTextNode(t)); msg.classList.remove('sx-erro', 'sx-ok') }
 
-  var cfg = window.SINUSAL_FIREBASE || {}
-  if (!window.firebase || !cfg.apiKey) { say('A aula ainda está sendo configurada. Volte em instantes.', true); return }
-  firebase.initializeApp(cfg)
-  var auth = firebase.auth(), db = firebase.firestore(), FV = firebase.firestore.FieldValue
-  auth.languageCode = 'pt'
-  var google = new firebase.auth.GoogleAuthProvider(); google.setCustomParameters({ prompt: 'select_account' })
-  var DONO = String(window.SINUSAL_DONO || '').toLowerCase()
-  var montada = false, entrou = false, ocupado = false, perfilRef = null, perfil = null, usuario = null, perfilAntigo = null
+  // ---------------- conta: o mesmo Supabase do painel (meusinus.pages.dev), um diretório só ----------------
+  var B = window.SinusBackend
+  if (!B || !B.auth) { say('Não foi possível carregar a entrada. Atualize a página.', true); return }
+  var auth = B.auth
+  var agoraISO = function () { return new Date().toISOString() }
+  var FV = { serverTimestamp: agoraISO, increment: function (n) { return n } }
+  var db = {
+    doc: function (p) { return B.db.doc(p) },
+    collection: function (c) {
+      return { add: function (dados) { return B.db.doc(c + '/' + ((dados && dados.uid) || 'anon') + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7)).set(dados) } }
+    }
+  }
+  var montada = false, entrou = false, ocupado = false, perfilRef = null, perfil = null, usuario = null, prefsRef = null, prefs = {}
 
   function aparelho() { return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'celular' : 'computador' }
   function soDigitos(t) { return String(t || '').replace(/\D/g, '') }
-  function ehDono(u) { return !!(u && u.email && u.email.toLowerCase() === DONO && u.emailVerified) }
 
-  // ---------------- telas da entrada: entrar, criar conta, completar dados, esqueci a senha ----------------
+  // ---------------- telas da entrada: Google e, se faltar, período + turma + WhatsApp ----------------
   var fDados = $('#f-dados'), gBtn = $('#sx-google'), ou = $('#sx-ou'), info = $('#dados-info')
   var modo = ''
   function tela(m, aviso, erro) {
-    modo = m === 'migrar' || m === 'completar' ? m : 'entrar'
+    modo = m === 'completar' ? m : 'entrar'
     gate.hidden = false; app.hidden = true
     fDados.hidden = modo === 'entrar'
-    info.hidden = !(modo === 'migrar' || modo === 'completar')
-    if (modo === 'migrar') info.textContent = 'Seus dados e seu progresso continuam. Entre com a sua conta Google para salvar tudo nela.'
+    info.hidden = modo !== 'completar'
     if (modo === 'completar') {
-      info.innerHTML = 'Falta pouco: informe seu período e sua turma para liberar a aula. Você entrou como <b></b>. <button type="button" class="sx-link" id="sx-trocar">Usar outra conta</button>'
-      $('b', info).textContent = (auth.currentUser && auth.currentUser.email) || 'sua conta'
+      info.innerHTML = 'Falta pouco: informe período, turma e WhatsApp para liberar a aula. Você entrou como <b></b>. <button type="button" class="sx-link" id="sx-trocar">Usar outra conta</button>'
+      $('b', info).textContent = (usuario && usuario.email) || 'sua conta'
       $('#sx-trocar').addEventListener('click', sair)
     }
     $('#dados-ok').textContent = 'Salvar e entrar'
-    $('#dados-ok').hidden = modo === 'migrar'
     gBtn.hidden = modo === 'completar'
     ou.hidden = true
-    gBtn.textContent = modo === 'migrar' ? 'Usar minha conta Google' : 'Entrar com Google'
+    gBtn.textContent = 'Entrar com Google'
     $$('[aria-invalid]', gate).forEach(function (n) { n.removeAttribute('aria-invalid') })
     $$('button[type=submit]', gate).forEach(function (b) { b.disabled = false })
     gBtn.disabled = false
@@ -65,6 +67,7 @@
   }
   function ocupar(t) { ocupado = true; $$('button[type=submit]', gate).forEach(function (b) { b.disabled = true }); gBtn.disabled = true; sayLoading(t) }
   function liberar() { ocupado = false; $$('button[type=submit]', gate).forEach(function (b) { b.disabled = false }); gBtn.disabled = false }
+
   // turmas por período (mesma grade do painel do Sinus)
   function turmasDoPeriodo(per) { var n = { 1: 7, 2: 12, 3: 8, 4: 13, 5: 7, 6: 10, 7: 5, 8: 6, 9: 3, 10: 5 }[Number(per)] || 7; return 'ABCDEFGHIJKLM'.slice(0, n).split('') }
   var selPer = $('#sx-periodo'), boxTurmas = $('#sx-turmas')
@@ -80,140 +83,82 @@
     p = p || {}
     if (selPer && p.periodo) selPer.value = String(p.periodo)
     montarTurmas(p.turma || '')
+    if (p.whatsapp) $('#sx-whats').value = '+' + p.whatsapp
   }
   function sair() { auth.signOut().then(function () { sess.del('modo'); location.hash = ''; location.reload() }) }
   function bloqueado() { app.hidden = true; gate.hidden = false; fDados.hidden = gBtn.hidden = ou.hidden = true; say('O seu acesso foi bloqueado. Fale com quem te enviou o link.', true) }
   function erroCampo(id, texto) { var el = document.getElementById(id); if (el) { el.setAttribute('aria-invalid', 'true'); el.focus() } say(texto, true) }
   var ERROS = {
-    'auth/invalid-email': 'Confira o e-mail: parece incompleto.',
-    'auth/missing-email': 'Escreva o seu e-mail.',
-    'auth/email-already-in-use': 'Este e-mail já tem conta no sinusal. Use Entrar.',
-    'auth/credential-already-in-use': 'Esta conta já existe. Use Entrar.',
-    'auth/weak-password': 'A senha precisa ter pelo menos 6 caracteres.',
-    'auth/missing-password': 'Escreva a sua senha.',
-    'auth/wrong-password': 'E-mail ou senha incorretos.',
-    'auth/user-not-found': 'E-mail ou senha incorretos.',
-    'auth/invalid-credential': 'E-mail ou senha incorretos.',
-    'auth/invalid-login-credentials': 'E-mail ou senha incorretos.',
-    'auth/too-many-requests': 'Muitas tentativas seguidas. Espere alguns minutos ou use Esqueci minha senha.',
-    'auth/network-request-failed': 'Sem conexão com a internet. Tente de novo.',
-    'auth/operation-not-allowed': 'Esse jeito de entrar ainda não foi ativado. Tente com o Google.',
-    'auth/user-disabled': 'Esta conta foi desativada.',
-    'whats-ocupado': 'Este WhatsApp já tem uma conta no sinusal. Entre com o e-mail dessa conta; se esqueceu a senha, use Esqueci minha senha.',
-    'permission-denied': 'O seu acesso foi bloqueado. Fale com quem te enviou o link.'
+    'whats-ocupado': 'Este WhatsApp já está em outra conta do Sinus. Entre com ela ou use outro número.',
+    'permission-denied': 'O seu acesso foi bloqueado. Fale com quem te enviou o link.',
+    '42501': 'O seu acesso foi bloqueado. Fale com quem te enviou o link.'
   }
   function erroAuth(e) {
     liberar()
     var c = e && e.code
-    if (c === 'auth/popup-closed-by-user' || c === 'auth/cancelled-popup-request') { say(''); return }
-    if (c === 'auth/email-already-in-use' || c === 'auth/credential-already-in-use') { tela('entrar', ERROS[c], true); return }
-    if (c === 'whats-ocupado' && modo !== 'completar') { tela('entrar', ERROS[c], true); return }
-    say(ERROS[c] || 'Não foi possível concluir agora. Tente de novo.', true)
+    say(ERROS[c] || (e && e.message) || 'Não foi possível concluir agora. Tente de novo.', true)
   }
 
-  $$('.sx-olho').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var i = document.getElementById(b.getAttribute('aria-controls')), ver = i.type === 'password'
-      i.type = ver ? 'text' : 'password'; b.textContent = ver ? 'Ocultar' : 'Mostrar'; b.setAttribute('aria-pressed', String(ver))
-    })
-  })
-
-  // quem já tem conta neste aparelho entra direto
+  // quem já entrou no Sinus (painel ou aula) entra direto: a sessão é a mesma
   auth.onAuthStateChanged(function (user) {
+    if (!user) { usuario = null; if (!entrou) tela('entrar'); return }
     if (montada || entrou || ocupado) return
-    if (!user) { tela('entrar'); return }
     verificar(user)
   })
-  auth.getRedirectResult().catch(function (e) { if (e && e.code === 'auth/credential-already-in-use' && e.credential) auth.signInWithCredential(e.credential); else if (e && e.code) erroAuth(e) })
 
   function verificar(user) {
     usuario = user
     perfilRef = db.doc('perfis/' + user.uid)
+    prefsRef = db.doc('progresso/' + user.uid + '_sinus-perfil')
     sayLoading('Entrando…')
-    return perfilRef.get().then(function (s) {
-      if (user.isAnonymous) {
-        // cadastro antigo, preso a este aparelho: pede e-mail e senha e mantém tudo
-        if (s.exists) { perfilAntigo = s.data(); preencher(perfilAntigo); tela('migrar'); return }
-        return auth.signOut()
-      }
-      if (!s.exists) {
-        if (ehDono(user)) { perfil = { nome: user.displayName || 'Felipe', turma: '', dono: true }; entrar(user); return }
-        preencher({ nome: user.displayName || '', email: user.email || '' }); tela('completar'); return
-      }
-      perfil = s.data()
-      // sem WhatsApp: basta ter período e turma
-      if (!perfil.whatsapp) {
-        if (perfil.turma) { entrar(user); return }
-        preencher(perfil); tela('completar'); return
-      }
-      return db.doc('whats/' + perfil.whatsapp).get().then(function (w) {
-        if (w.exists && w.data().uid === user.uid) { entrar(user); return }
-        if (w.exists) { preencher(perfil); tela('completar', 'Esse WhatsApp já está em outra conta. Entre com ela ou escreva outro número.', true); return }
-        // cadastro de antes da conta: reserva o WhatsApp agora
-        var b = db.batch()
-        b.set(w.ref, { uid: user.uid, em: FV.serverTimestamp() })
-        var up = { nome: perfil.nome }; if (!perfil.email && user.email) up.email = user.email
-        b.set(perfilRef, up, { merge: true })
-        return b.commit().then(function () { entrar(user) })
-      })
+    return Promise.all([perfilRef.get(), prefsRef.get().catch(function () { return null })]).then(function (r) {
+      perfil = r[0].exists ? r[0].data() : null
+      prefs = (r[1] && r[1].exists && r[1].data().prog) || {}
+      if (user.isAdmin) { perfil = Object.assign({ nome: user.displayName || 'Felipe', turma: '' }, perfil || {}, { dono: true }); entrar(user); return }
+      var p = Object.assign({}, perfil || {}, { periodo: prefs.periodo })
+      if (perfil && perfil.turma && perfil.whatsapp && prefs.periodo) { perfil.periodo = prefs.periodo; entrar(user); return }
+      preencher(p); tela('completar')
     }).catch(function (e) {
-      if (e && e.code === 'permission-denied') { bloqueado(); return }
+      if (e && (e.code === 'permission-denied' || e.code === '42501')) { bloqueado(); return }
       tela('entrar', 'Não foi possível entrar agora. Verifique a conexão e tente de novo.', true)
     })
   }
 
-  // grava o cadastro: nome da conta Google, período e turma
-  function salvarPerfil(user, dados, junta) {
-    perfilRef = db.doc('perfis/' + user.uid)
-    var nome = String(user.displayName || (perfil && perfil.nome) || String(user.email || '').split('@')[0] || 'Aluno Sinus').slice(0, 80)
-    var p = { nome: nome, turma: dados.turma, periodo: dados.periodo }
-    if (dados.email) p.email = dados.email
-    if (!junta) { p.primeiro_acesso = FV.serverTimestamp(); p.temas = {} }
-    return perfilRef.set(p, { merge: !!junta })
+  // grava o cadastro no mesmo lugar do painel: perfis/{uid} + preferências (período e turma)
+  function salvarPerfil(user, dados) {
+    var nome = String((perfil && perfil.nome) || user.displayName || String(user.email || '').split('@')[0] || 'Aluno Sinus').slice(0, 80)
+    var p = { nome: nome, turma: dados.turma, whatsapp: dados.whatsapp, email: String(user.email || '').toLowerCase(), ultimo_acesso: agoraISO() }
+    if (!perfil) p.primeiro_acesso = agoraISO()
+    return perfilRef.set(p, { merge: true }).then(function () {
+      var novo = Object.assign({}, prefs, { periodo: dados.periodo, turma: dados.turma, onboarding: true, faculdade: prefs.faculdade || 'UCP', campus: prefs.campus || 'Ciudad del Este', atualizado: agoraISO() })
+      try { localStorage.setItem('sinus_prefs_' + user.uid, JSON.stringify(novo)) } catch (e) {}
+      prefs = novo
+      return prefsRef.set({ uid: user.uid, aula: 'sinus-perfil', prog: novo, em: agoraISO() }, { merge: true })
+    }).then(function () { perfil = Object.assign({}, perfil || {}, p, { periodo: dados.periodo }) })
   }
 
-  function lerDados(semConta) {
+  function lerDados() {
     $$('[aria-invalid]', fDados).forEach(function (n) { n.removeAttribute('aria-invalid') })
-    var d = { periodo: Number(selPer ? selPer.value : 5) || 5 }
+    var d = { periodo: Number(selPer ? selPer.value : 5) || 5, whatsapp: soDigitos($('#sx-whats').value) }
     var marcada = fDados.querySelector('input[name="turma"]:checked')
     if (!marcada) { say('Escolha a sua turma.', true); var r = fDados.querySelector('input[name="turma"]'); if (r) r.focus(); return null }
     d.turma = marcada.value
+    if (d.whatsapp.length < 8 || d.whatsapp.length > 15) { erroCampo('sx-whats', 'Confira o WhatsApp: use o código do país e o número completo.'); return null }
     return d
   }
 
   fDados.addEventListener('submit', function (ev) {
     ev.preventDefault()
-    var d = lerDados(); if (!d) return
+    var d = lerDados(); if (!d || !usuario) return
     ocupar('Salvando…')
-    var u0 = auth.currentUser
-    d.email = (u0 && u0.email) || ''
-    var passo = Promise.resolve({ user: u0, junta: !!perfil })
-    passo.then(function (x) {
-      return salvarPerfil(x.user, d, x.junta).then(function () { return x }, function (err) {
-        if (x.novo) return x.user.delete().catch(function () {}).then(function () { throw err })
-        throw err
-      })
-    }).then(function (x) {
-      liberar()
-      perfil = Object.assign({}, perfilAntigo || perfil || {}, { nome: x.user.displayName || (perfil && perfil.nome) || '', turma: d.turma, periodo: d.periodo })
-      entrar(x.user)
-    }).catch(erroAuth)
+    salvarPerfil(usuario, d).then(function () { liberar(); entrar(usuario) }).catch(erroAuth)
   })
 
   gBtn.addEventListener('click', function () {
-    var cur = auth.currentUser, migrando = modo === 'migrar' && cur && cur.isAnonymous
-    var d = null
-    if (migrando) { d = lerDados(true); if (!d) return }
     ocupar('Abrindo o Google…')
-    var p = migrando ? cur.linkWithPopup(google) : auth.signInWithPopup(google)
-    p.then(function (r) {
-      if (migrando) { d.email = r.user.email || ''; return r.user.getIdToken(true).then(function () { return salvarPerfil(r.user, d, true) }).then(function () { liberar(); perfil = Object.assign({}, perfilAntigo, d); delete perfil.senha; entrar(r.user) }) }
-      liberar(); return verificar(r.user)
-    }).catch(function (e) {
-      if (e && e.code === 'auth/credential-already-in-use' && e.credential) return auth.signInWithCredential(e.credential).then(function (r) { liberar(); verificar(r.user) }).catch(erroAuth)
-      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) return (migrando ? cur.linkWithRedirect(google) : auth.signInWithRedirect(google))
-      erroAuth(e)
-    })
+    // volta para esta mesma página depois do Google
+    try { sessionStorage.setItem('sinus_voltar', location.pathname + location.search + location.hash) } catch (e) {}
+    B.signIn().catch(erroAuth)
   })
 
   // ---------------- depois da entrada ----------------
@@ -228,10 +173,10 @@
   }
   $('#sx-sair').addEventListener('click', sair)
 
-  // conta a entrada (uma vez por visita) e cria um registro com data e aparelho
+  // registra a entrada (uma vez por visita) com data e aparelho
   function registrar(user) {
-    perfilRef.set({ ultimo_acesso: FV.serverTimestamp(), acessos: FV.increment(1) }, { merge: true }).catch(function () {})
-    db.collection('acessos').add({ uid: user.uid, aula: AULA, em: FV.serverTimestamp(), aparelho: aparelho() }).catch(function () {})
+    perfilRef.set({ ultimo_acesso: agoraISO(), acessos: Number((perfil && perfil.acessos) || 0) + 1 }, { merge: true }).catch(function () {})
+    db.collection('acessos').add({ uid: user.uid, aula: AULA, em: agoraISO(), aparelho: aparelho() }).catch(function () {})
   }
   var modosMarcados = {}
   function marcarModo(v) {

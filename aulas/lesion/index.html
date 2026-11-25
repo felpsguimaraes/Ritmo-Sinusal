@@ -10,10 +10,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="../sinusal.css?v=5">
 <link rel="stylesheet" href="../estudo.css?v=6">
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="../config.js?v=5"></script>
+<!-- conta e dados no mesmo Supabase do painel (um diretório só) -->
+<script src="/sinus/vendor/supabase.min.js"></script>
+<script src="/sinus/supabase.js?v=15"></script>
 <script>window.SINUSAL_AULA = { id: 'lesion', titulo: 'Lesión, inflamación y neoplasias', materia: 'Anatomía Patológica I', capa: 'necrosis-apoptosis', temas: 44,
   home: { lead: 'Escolha o que você vai estudar agora.', cards: [
     { href: '#/provas', img: 'img/capa-p2.jpg', t: 'Apostila e provas da 2ª parcial', d: 'A apostila da parcial (necrose, apoptose e acumulações), o banco de 187 questões das provas da Dra. Chamorro com o porquê de cada alternativa, as folhas originais, os slides, a clase repaso e as gravações.', go: 'Abrir a 2ª parcial' },
@@ -70,6 +69,11 @@
         <span class="sx-label" id="sx-turma-l">Turma (sección)</span>
         <div class="sx-turmas" id="sx-turmas" role="radiogroup" aria-labelledby="sx-turma-l"></div>
       </div>
+      <div class="sx-field">
+        <label for="sx-whats">WhatsApp</label>
+        <input id="sx-whats" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+595 981 123 456">
+        <span class="sx-hint">Com o código do país: +595 para Paraguai, +55 para Brasil. Cada número tem uma conta só.</span>
+      </div>
       <button class="sx-btn sx-primary" type="submit" id="dados-ok">Salvar e entrar</button>
     </form>
 
@@ -77,7 +81,7 @@
     <button class="sx-btn" type="button" id="sx-google" hidden>Entrar com Google</button>
 
     <p class="sx-msg" id="sx-msg" role="status" aria-live="polite"><span class="sx-spin" style="display:inline-block;vertical-align:-3px;margin-right:8px"></span>Carregando…</p>
-    <p class="sx-note">Entre com sua conta Google e informe seu período e turma para liberar as aulas. Não passamos seus dados para ninguém.</p>
+    <p class="sx-note">Entre com sua conta Google (a mesma do painel Sinus) e informe período, turma e WhatsApp para liberar as aulas. Usamos o WhatsApp só para avisar quando sair aula nova. Não passamos seus dados para ninguém.</p>
     <div class="sx-foot"><span>sinusal.</span><span>© FELPS</span></div>
   </section>
 </main>
@@ -95,6 +99,6 @@
   <footer class="sx-appfoot"><span>sinusal. · Anatomía Patológica I</span><span><span id="sx-quem"></span> · <button class="sx-link" type="button" id="sx-sair">Sair da conta</button></span><span>© FELPS</span></footer>
 </div>
 
-<script src="../app.js?v=11"></script>
+<script src="../app.js?v=12"></script>
 </body>
 </html>

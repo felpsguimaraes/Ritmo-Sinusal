@@ -102,8 +102,8 @@
       if (S.prefs.idioma && S.prefs.idioma !== idioma()) definirIdioma(S.prefs.idioma, false);
       if (S.prefs.tema && S.prefs.tema !== temaAtual()) aplicarTema(S.prefs.tema);
       msg('');
-      // Acesso: só Google + período e turma. Nome vem da conta Google; WhatsApp deixou de ser exigido.
-      var completo = !!(S.perfil && S.perfil.turma && S.prefs.periodo);
+      // Acesso: Google + período, turma e WhatsApp. Nome vem da conta Google.
+      var completo = !!(S.perfil && S.perfil.turma && S.perfil.whatsapp && S.prefs.periodo);
       if (!completo || !S.prefs.onboarding) return abrirPersonalizacao();
       entrarNoPainel();
     }).catch(function (error) {
@@ -118,7 +118,7 @@
   W.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferredInstall = e; if (P && PASSOS[P.passo] === 'icone') renderOnb() });
   W.addEventListener('appinstalled', function () { deferredInstall = null; if (P) { P.instalou = true; renderOnb() } });
 
-  // Depois do Google, uma única tela: período e turma.
+  // Depois do Google, uma única tela: período, turma e WhatsApp.
   var PASSOS = ['turma'];
   var P = null;
   function turmasDoPeriodo(periodo) { var n = {1:7,2:12,3:8,4:13,5:7,6:10,7:5,8:6,9:3,10:5}[Number(periodo)] || 7; return 'ABCDEFGHIJKLM'.slice(0,n).split('') }
@@ -176,7 +176,9 @@
       return {
         eyebrow: 'Seu período e sua turma', titulo: 'Qual é o seu <em>período e turma?</em>', lead: 'Suas matérias e seus horários saem daqui. Você pode mudar no Perfil depois.',
         corpo: '<div class="grid2">' + campoSel('pPer', 'Período', Array.from({ length: 10 }, function (_, i) { return [String(i + 1), (i + 1) + 'º período'] }), P.periodo) +
-          campoSel('pTurma', 'Turma (sección)', [['', 'Escolha']].concat(turmasDoPeriodo(P.periodo).map(function (x) { return [x, x] })), P.turma) + '</div>'
+          campoSel('pTurma', 'Turma (sección)', [['', 'Escolha']].concat(turmasDoPeriodo(P.periodo).map(function (x) { return [x, x] })), P.turma) + '</div>' +
+          '<label class="field"><span>WhatsApp, só números, com código do país</span><input id="pZap" inputmode="numeric" autocomplete="tel" value="' + H(P.whatsapp) + '" placeholder="595981234567"></label>' +
+          '<p class="sxHint">Cada número fica com uma conta só. Usamos para avisar quando sair aula nova.</p>'
       };
     }
     if (k === 'foco') return {
@@ -229,6 +231,7 @@
     if (k === 'turma') {
       P.periodo = Number(v('pPer') || P.periodo || 5);
       P.turma = v('pTurma');
+      P.whatsapp = v('pZap').replace(/\D/g, '');
     }
     if (k === 'indicacao') P.indicacao = v('pInd').trim();
   }
@@ -239,6 +242,7 @@
       if (!/^[0-9]{8,15}$/.test(P.whatsapp)) return 'Confira o WhatsApp: só números, com o código do país (8 a 15 dígitos).';
     }
     if (k === 'turma' && !P.turma) return 'Escolha a sua turma (sección).';
+    if (k === 'turma' && !/^[0-9]{8,15}$/.test(P.whatsapp || '')) return 'Confira o WhatsApp: só números, com o código do país (8 a 15 dígitos).';
     return '';
   }
 

@@ -21,14 +21,13 @@ service cloud.firestore {
     function whatsDele(num) {
       return getAfter(/databases/$(database)/documents/whats/$(num)).data.uid == request.auth.uid;
     }
-    // cadastro = conta Google + período e turma; WhatsApp ficou opcional (cadastros antigos)
     function perfilValido(d) {
-      return d.keys().hasOnly(['nome', 'turma', 'periodo', 'whatsapp', 'email', 'primeiro_acesso', 'ultimo_acesso', 'acessos', 'temas'])
-        && d.nome is string && d.nome.size() >= 1 && d.nome.size() <= 80
-        && d.turma in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
-        && (!('periodo' in d) || (d.periodo is int && d.periodo >= 1 && d.periodo <= 10))
+      return d.keys().hasOnly(['nome', 'turma', 'whatsapp', 'email', 'primeiro_acesso', 'ultimo_acesso', 'acessos', 'temas'])
+        && d.nome is string && d.nome.size() >= 3 && d.nome.size() <= 80
+        && d.turma in ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+        && d.whatsapp is string && d.whatsapp.matches('^[0-9]{8,15}$')
         && (!('email' in d) || (d.email is string && d.email.size() <= 120))
-        && (!('whatsapp' in d) || (d.whatsapp is string && d.whatsapp.matches('^[0-9]{8,15}$') && whatsDele(d.whatsapp)));
+        && whatsDele(d.whatsapp);
     }
 
     // conteúdo das aulas, PDFs e perguntas do treino: só quem tem conta, preencheu o cadastro e não foi bloqueado

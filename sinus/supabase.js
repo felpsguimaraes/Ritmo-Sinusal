@@ -28,6 +28,14 @@
       W.location.replace('/admin/control/');
     });
   }
+  // Entrou pelo Google a partir de uma aula (ex.: /aulas/lesion/): depois da troca do código, volta para ela.
+  var voltar='';try{voltar=W.sessionStorage?.getItem('sinus_voltar')||''}catch(e){}
+  if(!demo&&W.location.pathname==='/'&&voltar&&voltar.charAt(0)==='/'&&voltar.charAt(1)!=='/'){
+    client.auth.getSession().then(function(reply){
+      try{sessionStorage.removeItem('sinus_voltar')}catch(e){}
+      if(reply&&reply.data&&reply.data.session)W.location.replace(voltar);
+    }).catch(function(){try{sessionStorage.removeItem('sinus_voltar')}catch(e){}});
+  }
   if(!demo){client.auth.onAuthStateChange(function(event,session){var u=user(session?.user),key=u?.uid||'';auth.currentUser=u;if(event==='INITIAL_SESSION'||event==='SIGNED_OUT'||key!==active){active=key;emit(u)}})}
   else{setTimeout(function(){var b=document.getElementById('sxEntrar');if(b)b.querySelector('span').textContent='Explorar demo da V13';var p=document.getElementById('sxMsg');if(p)p.textContent='Demonstração local · sem login e sem alterações na sua conta.';emit(null)},0)}
 })(window);
