@@ -24,18 +24,21 @@ assert.equal(fotos(p1.cartoes).length, 5, 'P1 deve manter as 5 lâminas originai
 assert.equal(fotos(p2.cartoes).length, 143, 'P2 deve ter exatamente as 143 lâminas originais');
 assert.equal(videos(p2.cartoes).length, 7, 'Os 7 vídeos continuam no complemento da P2');
 assert.equal(p2.cartoes.length, 150);
-assert.equal(fin.cartoes.length, 61, 'Final deve ter as 40 fotos adicionais + 6 de teratoma + 15 enviadas em 25/11');
+assert.equal(fin.cartoes.length, 79, 'Final: 40 fotos + 6 de teratoma + 23 enviadas em 25/11 + 10 do Repaso parte 1');
 assert.equal(videos(fin.cartoes).length, 0);
 
 const esperados = {
-  '11 · Adenoma pleomorfo': 7,
+  '11 · Adenoma pleomorfo': 9,
   '12 · Adenocarcinoma de esófago': 6,
   '13 · Carcinoma escamoso de piel': 9,
-  '14 · Lipoma': 9,
-  '15 · Liposarcoma': 7,
-  '16 · Leiomioma intramural': 10,
-  '17 · Leiomiosarcoma': 2,
-  '18 · Teratoma ovárico maduro': 11
+  '14 · Lipoma': 10,
+  '15 · Liposarcoma': 9,
+  '16 · Leiomioma intramural': 12,
+  '17 · Leiomiosarcoma': 3,
+  '18 · Teratoma ovárico maduro': 11,
+  '19 · Hiperplasia prostática benigna': 5,
+  '20 · Bocio coloide multinodular': 2,
+  '21 · Hipertrofia cardíaca': 3
 };
 const contagem = {};
 fin.cartoes.forEach(function (c) { contagem[c.g] = (contagem[c.g] || 0) + 1; });
