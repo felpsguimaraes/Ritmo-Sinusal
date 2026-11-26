@@ -4,8 +4,14 @@
   "channelHandle": "@aislanfernandes4039",
   "channelId": "UCmKS0xp-JZ1hlxayh-WFR6A",
   "uploadsPlaylistId": "UUmKS0xp-JZ1hlxayh-WFR6A",
-  "updatedAt": "2026-11-25T18:43:24Z",
+  "updatedAt": "2026-11-26T18:31:22Z",
   "videos": [
+    {
+      "id": "QEHymutiaB8",
+      "title": "Epidemiological Research (11/25/2026) - Dr. Andréa Villamayor",
+      "section": "videos",
+      "description": ""
+    },
     {
       "id": "QR5Amc-BUOw",
       "title": "Endocrine Introduction (11/16/2026) - Dr. Federico Hogë",
@@ -122,19 +128,19 @@
     },
     {
       "id": "M8S3wI4wgUQ",
-      "title": "Non-Communicable Diseases (10/28/2026) - Dr. Andréa Villamayor",
+      "title": "Enfermedades no Transmisibles (28.10.2026) - Dra Andréa Villamayor",
       "section": "videos",
       "description": ""
     },
     {
       "id": "DMicstsSpD4",
-      "title": "Gastro Physiology I (10/26/2026) - Dr. Federico Hogë",
+      "title": "Fisio Gastro I (26.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "OKYQlaPLNpA",
-      "title": "Neuro VIII (10/22/2026) - Dr. Federico Hogë",
+      "title": "Neuro VIII (22.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -146,25 +152,25 @@
     },
     {
       "id": "3PVZ9vp-4IM",
-      "title": "Intestinal Nematodes (10/22/2026) - Dr. Noélia Scappini",
+      "title": "Nemátodos Intestinales (22.10.2026) - Dra Noélia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "g4R5mnylaI0",
-      "title": "Cutaneous and Subcutaneous Mycoses - Dr. Noélia Scappini",
+      "title": "Micosis Cutáneas y Subcutáneas - Dra Noélia Scappini",
       "section": "videos",
       "description": ""
     },
     {
       "id": "Z470t50gSUU",
-      "title": "Glycolysis (09/18/2026) - Dr. Glória Martinez",
+      "title": "Glucólisis (18.09.2026) -  Dra Glória Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "YlS4_SRXNXg",
-      "title": "Vaccine Storage (10/22/2026) - Dr. Andréa Villamayor",
+      "title": "Acondicionamiento de las Vacunas (22.10.2026) - Dra Andréa Villamayor",
       "section": "videos",
       "description": ""
     },
@@ -176,13 +182,13 @@
     },
     {
       "id": "EK22uPNLZME",
-      "title": "Neuro VI (10/15/2026) - Dr. Federico Hogë",
+      "title": "Neuro VI (15.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
     {
       "id": "2iMIaRxs-yI",
-      "title": "Neuro V (10/08/2026) - Dr. Federico Hogë",
+      "title": "Neuro V (08.10.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -242,7 +248,7 @@
     },
     {
       "id": "1x-tnaTusVE",
-      "title": "Respiratory Physiology V (08/16/2026) - Dr. Federico Hogë",
+      "title": "Fisiología Respiratória V (16.08.2026) - Dr Federico Hogë",
       "section": "videos",
       "description": ""
     },
@@ -272,7 +278,7 @@
     },
     {
       "id": "KqdjuG-YWME",
-      "title": "Lipids II (09/09/2026) - Dr. Gloria Martinez",
+      "title": "Lípidos II (09.09.2026) - Dra Gloria Martinez",
       "section": "videos",
       "description": ""
     },
@@ -326,7 +332,7 @@
     },
     {
       "id": "aBCm_wNQEEs",
-      "title": "Atención Primária de la Salud (I) - Dra Andrea Villamayor",
+      "title": "Primary Health Care (I) - Dr. Andrea Villamayor",
       "section": "videos",
       "description": ""
     },
@@ -380,7 +386,7 @@
     },
     {
       "id": "0D2DOGt07nE",
-      "title": "Micosis Superficiales (13.08.2026) - Dra Noelia Scappini",
+      "title": "Superficial Mycoses (08/13/2026) - Dr. Noelia Scappini",
       "section": "videos",
       "description": ""
     },
@@ -392,7 +398,7 @@
     },
     {
       "id": "dXqgvh3KNWY",
-      "title": "Microbiología Práctica (12.08.2026) - Dra Nilse Cubilla",
+      "title": "Practical Microbiology (08/12/2026) - Dr. Nilse Cubilla",
       "section": "videos",
       "description": ""
     },
@@ -464,7 +470,7 @@
     },
     {
       "id": "nglt3O7L0lI",
-      "title": "Biophysics Review (III) Final Exam - Dr. Josué Schmidt",
+      "title": "Biofísica Repaso (III)  Prueba Final - Dr Josué Schmidt",
       "section": "videos",
       "description": ""
     },
@@ -560,7 +566,7 @@
     },
     {
       "id": "d0Y2AJF2FB8",
-      "title": "Corrección de Prueba P2 / Lípidos - Dra Andrea López",
+      "title": "P2 Exam Correction / Lipids - Dr. Andrea López",
       "section": "videos",
       "description": ""
     },
@@ -596,7 +602,7 @@
     },
     {
       "id": "OMPKunJMzrc",
-      "title": "Revisión P2 Bioquímica - Dra Andrea López",
+      "title": "P2 Biochemistry Review - Dr. Andrea López",
       "section": "videos",
       "description": ""
     },
@@ -968,7 +974,7 @@
     },
     {
       "id": "m4YgiQet2Sc",
-      "title": "Ciego, Apendice y Cólon ( I ) Dr Víctor Benítez",
+      "title": "Cecum, Appendix and Colon ( I ) Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -980,7 +986,7 @@
     },
     {
       "id": "lZe_kcaKogM",
-      "title": "Pelvic Girdle and Thigh Muscles ( I ) - Dr. Víctor Benítez",
+      "title": "Músculos de la Cintura Pelviana y del Muslo ( I ) - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -992,13 +998,13 @@
     },
     {
       "id": "3tSmr908qcA",
-      "title": "Nerves of the Lower Limb - Dr. Ronald Martinez",
+      "title": "Nervios del Miembro Inferior - Dr Ronald Martinez",
       "section": "videos",
       "description": ""
     },
     {
       "id": "TXcxaDA1Lcs",
-      "title": "Nerves of the Lower Limb II - Dr. Ronald Martinez",
+      "title": "Nervios del Miembro Inferior II - Dr Ronald Martinez",
       "section": "videos",
       "description": ""
     },
@@ -1016,7 +1022,7 @@
     },
     {
       "id": "POB9Aw7M6sA",
-      "title": "Urinary System - Dr. Eduardo Oviedo",
+      "title": "Sistema Urinário - Dr Eduardo Oviedo",
       "section": "videos",
       "description": ""
     },
@@ -1040,7 +1046,7 @@
     },
     {
       "id": "fsBYDslVPzQ",
-      "title": "Large Intestine I - Dr. Víctor Benítez",
+      "title": "Intestino Grueso I - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1058,7 +1064,7 @@
     },
     {
       "id": "dsfHIUdPbCM",
-      "title": "Pancreas and Liver - Dr. Víctor Benítez",
+      "title": "Páncreas y hígado - Dr Víctor Benítez",
       "section": "videos",
       "description": ""
     },
@@ -1184,7 +1190,7 @@
     },
     {
       "id": "jBoibtElxvw",
-      "title": "Inguinal canal / anterolateral abdominal muscles - Dr. Víctor Benitez",
+      "title": "Conducto inguinal / músculos de la región anterolateral del abdomen - Dr Víctor Benitez",
       "section": "videos",
       "description": ""
     },
@@ -1256,7 +1262,7 @@
     },
     {
       "id": "PMbTXCOY2W0",
-      "title": "Generalidades del cráneo - Dr Víctor Benítez",
+      "title": "Generalities of the skull - Dr. Víctor Benítez",
       "section": "videos",
       "description": ""
     },
