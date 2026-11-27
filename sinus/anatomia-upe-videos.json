@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T18:58:04Z",
+  "updatedAt": "2026-11-27T18:54:36Z",
   "sources": [
     "https://www.youtube.com/@anatomiaupefranco",
     "https://www.youtube.com/@anatomiaupe2188"
@@ -157,7 +157,7 @@
     },
     {
       "id": "hSW-BgLeN8Y",
-      "title": "LARYNX",
+      "title": "LARINGE",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=hSW-BgLeN8Y",
@@ -187,7 +187,7 @@
     },
     {
       "id": "MYN2nZOARqk",
-      "title": "HEART - External Configuration - Part 2",
+      "title": "CORAZÓN - Configuración Externa - Parte 2",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=MYN2nZOARqk",
@@ -197,7 +197,7 @@
     },
     {
       "id": "khwLkCGvyIQ",
-      "title": "HEART - External Configuration - Part 1",
+      "title": "CORAZÓN - Configuración Externa - Parte 1",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=khwLkCGvyIQ",
@@ -237,7 +237,7 @@
     },
     {
       "id": "p9Zw4gpdnoI",
-      "title": "CEREBRO PARTE 1 - Lóbulos, Surcos y Circunvoluciones",
+      "title": "BRAIN PART 1 - Lobes, Sulci and Gyri",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=p9Zw4gpdnoI",
@@ -247,7 +247,7 @@
     },
     {
       "id": "bM3vsmRIdDE",
-      "title": "VISIÓN MEDIAL DEL TRONCO ENCEFÁLICO",
+      "title": "MEDIAL VIEW OF THE BRAINSTEM",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=bM3vsmRIdDE",
@@ -257,7 +257,7 @@
     },
     {
       "id": "81SOI7dXwkQ",
-      "title": "BULBO RAQUÍDEO",
+      "title": "MEDULLA OBLONGATA",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=81SOI7dXwkQ",
@@ -287,7 +287,7 @@
     },
     {
       "id": "TgcfnH4LQSs",
-      "title": "Willis's Polygon",
+      "title": "POLÍGONO DE WILLIS",
       "channelHandle": "@anatomiaupefranco",
       "channelUrl": "https://www.youtube.com/@anatomiaupefranco",
       "url": "https://www.youtube.com/watch?v=TgcfnH4LQSs",
@@ -808,7 +808,7 @@
   ],
   "counts": {
     "anatomiaupefranco": {
-      "newScan": 42,
+      "newScan": 41,
       "total": 44
     },
     "anatomiaupe2188": {
